@@ -1,0 +1,34 @@
+%h2
+  Query
+%p
+  =image_tag("query_panel.png")
+  %br
+  To start using 3DBioNotes, users have to click in Query button. Then, they have to write in the input text field a valid identifier of EMDB, PDB or UniProt databases. When clicking in the Submit button, the identifier is checked, and if it's not valid, a pop up is shown. If the query is correct, the systems redirects users to the application.
+%h2
+  3DBioNotes application
+%p
+  The 3DBioNotes application consists on a menu and three panels with information about the input identifier:
+%h3
+  Menu
+%p
+  =image_tag("select_panel.png")
+  %br
+  The menu contains a select menu with information about the different alignments of the identifier with other databases (EMDB, PDB and UniProt).
+%h3
+  Molecule viewer
+%p
+  =image_tag("view_panel.png")
+  %br
+  The molecule viewer consists on a 3d viewer of the queried molecule and a buttons' menu to modify its representation. It contains a reset button, which removes any selection in the selected chain. There is also a neightbours button, which changes the color of the atoms 10 nanometers around the selected ones. The "load more atoms" button adds a balls and sticks representation to the selected part of the chain. Using the "show/hide heteroatoms" buttoms, users can hide the heteroatoms if they are present in the molecule. If the query comes from an EMDB identifier, there is also a button to hide the surface of the volume, and a slider to choose the contour level, which comes by default with the level recommended by the author.
+%h3
+  Annotations panel
+%p
+  =image_tag("ann_panel.png")
+  %br
+  When users choose any of the alignments of the select menu, if it includes an alignment with a UniProt identifier, sequence annotations belonging to UniProt, Immuno Epitope Database and PhosphoSitePlus databases will be shown. These annotations are classified first by database, and then by type of annotation. There is an interactive graphic with the position of each annotation, and when it's clicked, the selected region is highlighted in the other panels. There is also additional information for each annotation, which includes descriptions and links to the original websites.
+%h3
+  Sequence panel
+%p
+  =image_tag("seq_panel.png")
+  %br
+  When an alignment is chosen, this panel shows the sequence alignment between the UniProt sequence of the protein, and the chain of its PDB structure. This alignment is interactive, and when a region of is selected, it will be highlighted in the other panels.

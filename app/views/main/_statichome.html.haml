@@ -1,0 +1,120 @@
+=stylesheet_link_tag('start.css') 
+:javascript
+  function change(site){
+    $j('.menu_div').css('display','none');
+    $j('.'+site).css('display','block');
+  }
+  $j(document).ready(function(){
+    if(window.location.hash){
+      tag = window.location.hash;
+      if(tag=="#query"){
+        change('query_div');
+      }else if(tag=="#help"){
+        change('help_div');
+      }else if(tag=="#disclaimer"){
+        change('disclaimer_div');
+      }
+    }
+    $j('#query_form').submit(function( event ){
+      var e_name = 'queryId';
+      if ($j('[name='+e_name+']').val() == '') {
+        event.preventDefault();
+        sweetAlert('Error','Missing query Id','error');
+      }else{
+        $j('.menu_div').css('display','none');
+          $j('.wait_div').css('display','block');
+          return;
+        }
+      });
+    });
+.start_panel
+  .start_inner_panel
+    .title_container
+      =image_tag("3dbionotes_logo.png")
+    .biocomp
+      @
+      %span{:onclick => "window.open('http://biocomp.cnb.csic.es')"} Biocomputing Unit
+      \-
+      %span{:onclick => "window.open('http://www.cnb.csic.es/index.php/en/')"} CNB
+      \-
+      %span{:onclick => "window.open('http://www.csic.es/web/guest/home')"} CSIC
+    .options_div
+      %table
+        %tr
+          %td
+            %span{:onclick => "change('home_div')"} Home
+          %td
+            %span{:onclick => "change('query_div')"} Query
+          %td
+            %span{:onclick => "change('help_div')"} Help
+          %td
+            %span{:onclick => "change('disclaimer_div')"} Disclaimer
+    .main_div
+      .intro_text
+        / wait.html
+        .menu_div.wait_div
+          %h1 PLEASE WAIT
+          %div{:style => "width:235px;margin:auto;"}
+            =image_tag("wait.gif")
+        / home.html
+        .menu_div.home_div
+          %a 3DBIONOTES
+          is a web based application designed to integrate protein structure, protein sequence and protein annotations in a unique graphical environment. The current version of the application offers a unified, enriched and interactive view of
+          %a{:href=>"http://www.emdatabank.org/"} EMDB
+          volumes,
+          %a{:href=>"http://www.rcsb.org/"} PDB
+          structures and
+          %a{:href=>"http://www.uniprot.org/"} Uniprot
+          sequences where the protein annotations stored in
+          = succeed "," do
+            %a{:href=>"http://www.uniprot.org/"} Uniprot
+          %a{:href=>"http://www.iedb.org/"} Immune Epitope DB
+          and
+          %a{:href=>"http://www.phosphosite.org/"} Phospho Site Plus
+          can be explored interactively at sequence and structural level.
+        / query.html
+        .menu_div.query_div
+          = form_tag({controller: "main", action: "home",anchor: "query"}, :method => :get,id: "query_form",:style=>"margin-top:20px;") do 
+            %h3
+              Search by
+              %a{:href=>"http://www.emdatabank.org/"} EMDB
+              code,
+              %a{:href=>"http://www.rcsb.org/"} PDB
+              ID or
+              %a{:href=>"http://www.uniprot.org/"} Uniprot
+              accession
+            =text_field_tag(:queryId)
+            = hidden_field_tag(:viewer_type,@viewerType)
+            %br
+            %br
+            %br
+            = button_tag("Submit")
+            %br
+            %br
+            %a{:href=>'javascript:window.location.href=\'http://3dbionotes.cnb.csic.es/?utf8=%E2%9C%93&queryId=emd-2924&viewer_type=jsmol&button=#query\''} Example
+        / help.html
+        .menu_div.help_div
+          = render "help" 
+        / disclaimer.html
+        .menu_div.disclaimer_div
+          This service is available AS IS and at your own risk.
+          %span{:onclick => "window.open('http://www.cnb.csic.es/index.php/en/')"} CNB
+          and
+          %span{:onclick => "window.open('http://www.csic.es/web/guest/home')"} CSIC
+          do not give any representation or warranty nor assume any liability or responsibility for the service or the results posted (whether as to their accuracy, completeness, quality or otherwise). Access to the service is available free of charge for the scientific community for ordinary use in the course of research.
+    .footer_div
+      %div
+        3DBIONOTES web-server was developed and is maintained at the
+        %a{:href => "http://biocomp.cnb.csic.es"}
+          Biocomputing Unit
+        \-
+        %a{:href => "http://www.cnb.csic.es"}
+          CNB
+      %div
+        by
+        %a{:href => "http://biocomp.cnb.csic.es/staff"}
+          Daniel Tabas Madrid and Joan Segura Mora
+      %div
+        Citing the web-server?
+        %a{:href => ""}
+          =image_tag("pubmed.png",:style=>"border:0;height:12;")

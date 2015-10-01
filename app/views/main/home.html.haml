@@ -1,0 +1,158 @@
+:javascript
+  $j(document).ready(function(){
+    $j('#chanceSlider').on('change', function(){
+      var myVal = $j('#chanceSlider').val();
+      $j('#chance').val(myVal);
+      var evtSlider = document.createEvent("CustomEvent");
+      evtSlider.initCustomEvent("ThresholdInfo",true,true,myVal);
+      document.getElementById("leftBottomFrame").contentWindow.dispatchEvent(evtSlider);
+      var els = document.getElementsByClassName("showVolume");
+      for(var i=0;i<els.length;i++){
+        els[i].className="hideVolume";
+      }
+    });
+
+    $j('#chance').on('keyup', function(){
+      var myVal = $j('#chance').val();
+      $j('#chanceSlider').val(myVal);
+      var evtSlider = document.createEvent("CustomEvent");
+      evtSlider.initCustomEvent("ThresholdInfo",true,true,myVal);
+      document.getElementById("leftBottomFrame").contentWindow.dispatchEvent(evtSlider);
+      var els = document.getElementsByClassName("showVolume");
+      for(var i=0;i<els.length;i++){
+        els[i].className="hideVolume";
+      }
+    });
+  });
+-if (@optionsArray.nil? or @optionsArray.empty?)
+  :javascript
+    $j(document).ready(function(){
+      document.body.style.backgroundColor = '#E9E9E9';
+      document.body.parentNode.style.backgroundColor = '#E9E9E9';
+    });
+  = render "statichome"
+  -if @badName
+    :javascript
+      $j(document).ready(function(){
+        change('query_div');
+        sweetAlert('Error','Incorrect #{@identifierType} identifier name','error');
+      });
+  -elsif @notExists
+    :javascript
+      $j(document).ready(function(){
+        change('query_div');
+        sweetAlert('Error','Input #{@identifierType} identifier name doesn\'t exist','error');
+      });
+    -#%h1
+      Input
+    -##firstForm
+      = form_tag({controller: "main", action: "home"}, :method => :get,id: "identifierForm") do #remote: true 
+        = label_tag(:labelForm, "Input your EMDB, PDB or Uniprot identifier:")
+        = text_field_tag(:queryId)
+        = hidden_field_tag(:viewer_type,@viewerType)
+        = button_tag("Search")
+-else
+  #menu
+    =image_tag("3dbionotes_logo_small.png",height:'50',width:'140')
+    %ul#topnav{:style=>"display:inline-block;"}
+      %li
+        %a.nostyle.menu{:href=>"/",:style=>"font-weight:bold;"}HOME
+      %li
+        %a.nostyle.menu{:href=>"/#query",:style=>"font-weight:bold;"}QUERY
+      %li
+        %a.nostyle.menu{:href=>"/#help",:style=>"font-weight:bold;"}HELP
+      %li
+        %a.nostyle.menu{:href=>"/#disclaimer",:style=>"font-weight:bold;"}DISCLAIMER
+  #topFrame
+    #secondForm
+      = form_tag({controller: "main", action: "home"}, :method => :get,id: "selectOptionForm") do
+        %h1{:style=>"display:inline;"}
+          -if @identifierType=="EMDB"
+            %a.nostyle.menu{:href=>"http://www.ebi.ac.uk/pdbe/entry/emdb/#{@identifierName}",:target=>"_blank",:style=>"font-family: Verdana, Arial, Helvetica, sans-serif;color:#074987;font-size:18px;"}
+              =@identifierName.upcase 
+          -elsif @identifierType=="PDB"
+            %a.nostyle.menu{:href=>"http://www.rcsb.org/pdb/explore/explore.do?structureId=#{@identifierName}",:target=>"_blank",:style=>"font-family: Verdana, Arial, Helvetica, sans-serif;color:#074987;font-size:18px;"}
+              =@identifierName.upcase
+          -elsif @identifierType=="Uniprot"
+            %a.nostyle.menu{:href=>"http://www.uniprot.org/uniprot/#{@identifierName}",:target=>"_blank",:style=>"font-family: Verdana, Arial, Helvetica, sans-serif;color:#074987;font-size:18px;"}
+              =@identifierName.upcase
+        -if @identifierType == "EMDB" or @identifierType == "PDB"
+          = label_tag(:labelForm, "PROTEINS IN THIS MODEL:",:style=>"font-family: Verdana, Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;color:#606060;")
+        -elsif @identifierType=="Uniprot"
+          = label_tag(:labelForm, "PDB STRUCTURES:",:style=>"font-family: Verdana, Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;color:#606060;")
+        = select_tag(:alignment, options_for_select(@optionsArray),:onchange=>"firstTime=getValueSelection(this,firstTime);",:title=>"Choose one of the alignments",:prompt=>"Select Menu",:style=>"margin-left:10px;font-family: 'Lucida Console', Monaco, monospace")
+        #uniprotLogo{:style=>"display:inline;position:relative;top:5px;left:3px;"}
+          =link_to(image_tag("uniprot.png",size:"18x18"),"http://www.uniprot.org/",:target=>"_blank")
+        #controls
+          = image_tag("reset.gif",:onclick=>"javascript:resetEvent();",:align=>"center",:title=>"Reset view",:style=>"margin-left:0px;vertical-align:middle;")
+          = image_tag("neight.gif",:onclick=>"javascript:highlightNeightboursEvent();",:align=>"center",:title=>"Select neighbours (10Å)",:style=>"vertical-align:middle;")
+          = image_tag("atoms.gif",:onclick=>"javascript:addAtomsEvent(this);",:align=>"center",:title=>"View atoms of selected residues",:style=>"vertical-align:middle;")
+          = image_tag("hetero.gif",:onclick=>"javascript:toggleHeteroEvent(this);",:align=>"center",:title=>"View/hide heteroatoms",:class=>"hideHetero",:style=>"vertical-align:middle;")
+          -if @emdb!=""
+            = image_tag("volume.gif",:onclick=>"javascript:toggleVolumeEvent(this);",:align=>"center",:title=>"View/hide volume",:class=>"hideVolume",:style=>"vertical-align:middle;")
+            %input{:type=>"range",:id=>"chanceSlider",:class=>"vHorizon",:min=>@stThr,:max=>@endThr,:step=>@step,:value=>@threshold,:style=>"width:300px;margin:5px;margin-top:10px;vertical-align:middle",:title=>"Change threshold"}
+            %input{:type=>"text",:name=>"chance",:id=>"chance",:class=>"text",:value=>@threshold,:style=>"width:55px;margin:5px;vertical-align:middle",:title=>"Change threshold"}
+  -if @changeSelector==true
+    :javascript
+      $j(document).ready(function(){
+        document.getElementById('alignment').selectedIndex=1;
+        firstTime=getValueSelection(document.getElementById('alignment'),firstTime);
+      });
+  :javascript
+    var firstTime = true;
+    var alignmentTranslation;
+    var uniprotLength = '#{@uniprotLength}';
+    $j(document).ready(function(){
+      $j('#chance').keypress(function(event){
+        if(event.keyCode==13){
+          event.preventDefault();
+        }
+      });
+      $j('#upRightBottomFrame').load(function(){
+        document.getElementById('upRightBottomFrame').contentWindow.body.addEventListener("AnnotsCoordinatesInfo",function(evt){
+          var start = evt.detail[0];
+          var end = evt.detail[1];
+          var evtOut = document.createEvent("CustomEvent");
+          evtOut.initCustomEvent("RangeInfo",true,true,[start,end]);
+          document.getElementById("downRightBottomFrame").contentWindow.dispatchEvent(evtOut);
+          if(alignmentTranslation!=undefined){
+            console.log(start+"-"+end);
+            var evtOut2 = document.createEvent("CustomEvent");
+            var pdbPosList = getRangesFromTranslation(start,end,alignmentTranslation);
+            evtOut2.initCustomEvent("RangeMolInfo",true,true,pdbPosList);
+            document.getElementById("leftBottomFrame").contentWindow.dispatchEvent(evtOut2);
+          }
+        });
+      });
+      $j('#downRightBottomFrame').load(function(){
+        document.getElementById('downRightBottomFrame').contentWindow.body.addEventListener("SequenceCoordinates",function(evt){
+          var start = evt.detail[0];
+          var end = evt.detail[1];
+          var evtOut = document.createEvent("CustomEvent");
+          evtOut.initCustomEvent("RangeFamInfo",true,true,[start,end]);
+          document.getElementById("upRightBottomFrame").contentWindow.dispatchEvent(evtOut);
+          if(alignmentTranslation!=undefined){
+            var evtOut2 = document.createEvent("CustomEvent");
+            console.log(start+"-"+end);
+            var pdbPosList = getRangesFromTranslation(start,end,alignmentTranslation);
+            evtOut2.initCustomEvent("RangeMolInfo",true,true,pdbPosList);
+            document.getElementById("leftBottomFrame").contentWindow.dispatchEvent(evtOut2);
+          }
+        });
+      });
+      $j('#leftBottomFrame').load(function(){
+        if($j('#leftBottomFrame').attr('src')=="jsmolIFrame"){
+          $j('#leftBottomFrame')[0].src = "/jsmolIFrame/?viewer_type=#{@viewerType}&origin=#{@identifierType}&pdbs="+encodeURI('#{@pdbs.to_json}'+"&emdb=#{@emdb}");
+        }
+      });
+     });
+  #wrapperBottomFrame
+    #bottomFrame
+      #leftBottom
+        -if @viewerType=="chimera"
+          %iframe#leftBottomFrame{:src=>"jsmolIFrame",:scrolling=>"yes",:style=>"display:none"}
+        -else
+          %iframe#leftBottomFrame{:src=>"jsmolIFrame",:scrolling=>"yes"}
+      #rightBottom
+        %iframe#upRightBottomFrame{:src=>"iframeAnnots",:scrolling=>"yes"}
+        %iframe#downRightBottomFrame{:src=>"sequenceIFrame",:scrolling=>"yes"}

@@ -1,0 +1,77 @@
+-if !@viewerType.nil?
+  #mainFrames
+    :javascript
+      var viewerType = "#{@viewerType}";
+      var infoGlobal;
+      var options = {
+        viewer_id: 'bionotes_jsmol'
+      }
+      var miApplet;
+      if (viewerType=="jsmol"){
+        bionotes_jsmol();
+        miApplet = new JSmolClass();
+      }else if(viewerType=="chimera"){
+        miApplet = new chimeraClass();
+      }
+      miApplet.start(options);
+      $j(window).load(function(){
+        var size = {};
+        size["width"]=window.innerWidth;
+        size["height"]=window.innerHeight;
+        miApplet.resize(size);
+        window.addEventListener("ResetInfo", function(evt){
+          miApplet.reset_view();
+          if(infoGlobal!=undefined){
+            if(infoGlobal.activepdb!=undefined && infoGlobal.activechain!=undefined){
+              miApplet.highlight_chain(infoGlobal.activepdb,infoGlobal.activechain);
+            }
+          }
+        });
+      });
+      window.onresize = function(event){
+        var size = {};
+        size["width"]=window.innerWidth;
+          size["height"]=window.innerHeight;
+          miApplet.resize(size);
+      }
+      $j(window).load(function(){
+        window.addEventListener("highlightNeight", function(evt){
+          miApplet.highlight_neightbours();
+        });
+        window.addEventListener("addAtoms", function(evt){
+          if(infoGlobal.activepdb!=undefined && infoGlobal.activechain!=undefined){
+            miApplet.load_more_atoms(infoGlobal.activepdb,infoGlobal.activechain);
+          }
+        });
+        window.addEventListener("volumeInfo", function(evt){
+          showHide = evt.detail;
+          if(showHide=="showVolume"){
+            miApplet.show_volume();
+          }else{
+            miApplet.hide_volume();
+          }
+        });
+        window.addEventListener("heteroInfo", function(evt){
+          showHide = evt.detail;
+          if(showHide=="showHetero"){
+            miApplet.show_hetero();
+          }else{
+            miApplet.hide_hetero();
+          }
+        });
+        window.addEventListener("ThresholdInfo", function(evt){
+          level = evt.detail;
+          miApplet.load_surface("#{@emdb}",level,"#{@maxSizeVol}");
+        });
+      });
+    -if @origin=="Uniprot"
+      :javascript
+        displayMessage("USE THE SELECT MENU TO VISUALIZE A PROTEIN STRUCTURE");
+    -if !@pdbList.nil?
+      :javascript
+        loadPDB('#{@pdbList}');
+    -if !@emdb.nil? and !@emdb.empty?
+      :javascript
+        loadEMDB('#{@emdb}','#{@threshold}','#{@maxSizeVol}');
+    :javascript
+      resetView();
