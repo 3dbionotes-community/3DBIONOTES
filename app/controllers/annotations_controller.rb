@@ -1,6 +1,7 @@
 class AnnotationsController < ApplicationController
 
   UniprotURL = "http://www.uniprot.org/uniprot/"
+  DsysmapURL = "http://dsysmap.irbbarcelona.org/api/getMutationsForProteins?protein_ids="
 
   UniprotSections = {'Function'=>['active site','binding site','calcium-binding region','DNA-binding region','lipid moiety-binding region','metal ion-binding site','nucleotide phosphate-binding region','site','zinc finger region'],'PTM/Processing'=>['chain','cross-link','disulfide bond','glycosylation site','initiator methionine','modified residue','peptide','propeptide','signal peptide','transit peptide'],'Family and Domains'=>['coiled-coil region','compositionally biased region','domain','region of interest','repeat','short sequence motif'],'Structure'=>['helix','strand','turn'],'Subcellular location'=>['transmembrane region','topological domain','intramembrane region'],'Pathology and Biotech'=>['mutagenesis site'],'Sequence'=>['non-consecutive residues','non-terminal residue','non-standard amino acid','sequence conflict','sequence variant','unsure residue','splice variant']}
 
@@ -94,6 +95,78 @@ class AnnotationsController < ApplicationController
     return hash
   end
 
+  def fetchDsysmapAnnots(hashData)
+    output = []
+    if !hashData["results"].nil?
+      if !hashData["results"]["mutations"].nil?
+        if !hashData["results"]["mutations"]["mutation"].nil?
+          mutations = []
+          if hashData["results"]["mutations"]["mutation"].class == Hash
+            mutations = [hashData["results"]["mutations"]["mutation"]]
+          elsif hashData["results"]["mutations"]["mutation"].class == Array
+            mutations = hashData["results"]["mutations"]["mutation"]
+          end
+          mutations.each do |mut|
+            tmp = {}
+            characts = []
+            if !mut["disease"].nil? and !mut["mim"].nil?
+              tmp["disease"] = {"text"=>mut["disease"],"reference"=>mut["mim"]}
+            end
+            if !mut["phenotype"].nil?
+              characts.push("Phenotype: "+mut["phenotype"])
+            end
+            if !mut["res_num"].nil?
+              tmp["start"] = mut["res_num"].to_i
+              tmp["end"] = mut["res_num"].to_i
+              tmp["position"] = mut["res_num"]
+            end
+            if !mut["res_orig"].nil?
+              tmp["original"] = mut["res_orig"]
+            end
+            if !mut["res_mut"].nil?
+              tmp["variation"] = mut["res_mut"]
+            end
+            references = []
+            if !mut["swissvar_id"].nil?
+              references.push({"references"=>["swissvar:"+mut["swissvar_id"]]})
+            end
+            if !references.empty?
+              tmp["evidence"] = references
+            end
+            if !characts.empty?
+              tmp["description"] = ";;"+characts.join(";;")
+            end
+            tmp["type"] = "Pathology and Biotech"
+            output.push(tmp)
+          end
+        end
+      end
+    end
+    return output
+  end
+
+  def getDsysmapFromUniprot
+    source = "dsysmap"
+    uniprotAc = params[:name]
+    url = DsysmapURL + uniprotAc
+    rawData = getUrlWithDigest(url)
+    digest = rawData["checksum"]
+    dbData = Annotation.find_by(proteinId: uniprotAc,source: source)
+    if !dbData.nil? and (dbData.digest == digest)
+      # lo que buscamos es lo que esta guardado
+      info = JSON.parse(dbData.data)
+    else
+      # hay que guardar otra vez
+      hashData = getXml(rawData["data"])
+      info = fetchDsysmapAnnots(hashData)
+      if !dbData.nil?
+        dbData.destroy
+      end
+      Annotation.create(proteinId: uniprotAc, source: source, digest: digest, data: info.to_json)
+    end
+    return render json: info, status: :ok
+  end
+
   def getUniprotAnnotations
     source = "uniprot"
     uniprotAc = params[:name]
@@ -108,8 +181,6 @@ class AnnotationsController < ApplicationController
       # hay que guardar otra vez
       hashData = getXml(rawData["data"])
       info = fetchUniprotAnnots(hashData)
-      # Si descomentas esto sobrepasas la base de datos para probar anotaciones nuevas
-      #return render json: info, status: :ok
       if !dbData.nil?
         dbData.destroy
       end

@@ -53,6 +53,15 @@ class FramesController < ApplicationController
         else
           @annotsData["biomuta"] = []
         end
+        url = BaseUrl+"api/annotations/dsysmap/Uniprot/"+@alignment["uniprot"]
+        jsonData = getUrl(url)
+        if jsonData!="[]"
+          jsonDataParsed = JSON.parse(jsonData)
+          @annotsData["dsysmap"] = jsonDataParsed.group_by{|x| x["type"]}
+        else
+          @annotsData["dsysmap"] = []
+        end
+
       end
     elsif !alignment.nil?
       @alignment = JSON.parse(alignment)

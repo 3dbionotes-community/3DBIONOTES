@@ -97,9 +97,14 @@
               %a.nostyle{:id=>"#{aOut}",:href=>"javascript:toggleClass('#{liOut}');toggleVisibility('#{divOut}');"}
                 BioMuta
               =#link_to(image_tag("uniprot.png",size:"20x20"),"http://www.uniprot.org/uniprot/#{@alignment["uniprot"]}",:target=>"_blank")
+          -elsif annClass=="dsysmap"
+            %h1{:style=>"display:inline-block"}
+              %a.nostyle{:id=>"#{aOut}",:href=>"javascript:toggleClass('#{liOut}');toggleVisibility('#{divOut}');"}
+                dSysMap
+              =#link_to(image_tag("uniprot.png",size:"20x20"),"http://www.uniprot.org/uniprot/#{@alignment["uniprot"]}",:target=>"_blank")
           %div{:id=>"#{divOut}",:class=>"hideContent",:style=>"display:none"}
             %ul
-              -if annClass=="uniprot" or annClass=="iedb" or annClass=="phosphosite" or annClass=="biomuta"
+              -if annClass=="uniprot" or annClass=="iedb" or annClass=="phosphosite" or annClass=="biomuta" or annClass=="dsysmap"
                 -if annData.empty?
                   %p
                     %img{:src=>asset_path("minus_red.png"),:style=>"position:relative;top:4px;"}
@@ -136,7 +141,7 @@
                         -if !@generalData[annClass].nil?
                           -if !@generalData[annClass][annType].nil?
                             %p{:style=>"font-size:10px;padding-right:15px;text-align:justify;margin-top:0px;"}
-                              -@generalData[annClass][annType].split("\n").sort.each_with_index do |gEach,index|
+                              -@generalData[annClass][annType].split("\n").sort.reverse.each_with_index do |gEach,index|
                                 -if gEach =~ /^Note:/
                                   %span{:style=>"color:grey;"}
                                     =gEach
@@ -164,7 +169,7 @@
                                     -else
                                       -if annClass=="iedb"
                                         ="Linear region"
-                                      -elsif annClass=="biomuta"
+                                      -elsif annClass=="biomuta" or annClass=="dsysmap"
                                         ="Mutagenesis site (#{ annotation["original"]} " + "→".html_safe + " #{annotation["variation"]} )"
                                   -if !annotation["subtype"].nil?
                                     -if !subsection[(annotation["subtype"].capitalize)].nil?
@@ -207,7 +212,13 @@
                                     %br
                                   -if !annotation["disease"].nil?
                                     ="Disease: "
-                                    =link_to(annotation["disease"].split("/")[1].strip,"http://disease-ontology.org/term/#{annotation["disease"].split("/")[0].strip}",target: "_blank")
+                                    -if annClass=="dsysmap"
+                                      =link_to(annotation["disease"]["text"],"http://www.omim.org/entry/#{annotation["disease"]["reference"]}",target: "_blank")
+                                    -else
+                                      -if annotation["disease"].include?("/")
+                                        =link_to(annotation["disease"].split("/")[1].strip,"http://disease-ontology.org/term/#{annotation["disease"].split("/")[0].strip}",target: "_blank")
+                                      -else
+                                        =annotation["disease"]
                                     %br
                                   -if !annotation["evidence"].nil? or !annotation["link"].nil?
                                     -if annClass == "phosphosite"
@@ -217,7 +228,7 @@
                                     #evidence
                                       %a.nostyle{:href=>"javascript:toggleVisibility('#{divEvidences}');"}
                                         %img{:src=>asset_path("label.png")}
-                                        -if annClass=="uniprot" or annClass=="phosphosite"
+                                        -if annClass=="uniprot" or annClass=="phosphosite" or annClass=="dsysmap"
                                           = evidences.length.to_s + " evidences"
                                         -elsif annClass=="iedb" or annClass=="biomuta"
                                           = "1 evidence"
@@ -233,9 +244,11 @@
                                             -myEvidences = [evidences]
                                           -if annClass=="biomuta" 
                                             -myEvidences = evidences
+                                          -if annClass=="dsysmap" 
+                                            -myEvidences = evidences
                                           -myEvidences.each do |evidence|
-                                            -if annClass=="uniprot" or annClass=="biomuta"
-                                              -if !evidence["code"].nil? or annClass=="biomuta"
+                                            -if annClass=="uniprot" or annClass=="biomuta" or annClass=="dsysmap"
+                                              -if !evidence["code"].nil? or annClass=="biomuta" or annClass=="dsysmap"
                                                 %li.standard
                                                   #infoDiv
                                                     %p{:style=>"margin:0;"}
@@ -258,6 +271,14 @@
                                                           -elsif refType=="UniProtKB"
                                                             UniProt:
                                                             %a{:href=>"http://www.uniprot.org/uniprot/#{myref.split(":")[1]}",:target=>"_blank"}
+                                                              =myref.split(":")[1]
+                                                          -elsif refType=="omim"
+                                                            OMIM:
+                                                            %a{:href=>"http://www.omim.org/entry/#{myref.split(":")[1]}",:target=>"_blank"}
+                                                              =myref.split(":")[1]
+                                                          -elsif refType=="swissvar"
+                                                            SwissVar:
+                                                            %a{:href=>"http://web.expasy.org/variant_pages/#{myref.split(":")[1]}",:target=>"_blank"}
                                                               =myref.split(":")[1]
                                                           -else
                                                             =myref
