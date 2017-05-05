@@ -1,4 +1,6 @@
-=stylesheet_link_tag('start.css') 
+= stylesheet_link_tag('main_frame/start.css') 
+:javascript
+  $j("body").css({"min-width":"750px"});
 :javascript
   function change(site){
     $j('.menu_div').css('display','none');
@@ -13,6 +15,10 @@
         change('help_div');
       }else if(tag=="#disclaimer"){
         change('disclaimer_div');
+      }else if(tag=="#api"){
+        change('api_div');
+      }else if(tag=="#ws"){
+        change('ws_div');
       }
     }
     $j('#query_form').submit(function( event ){
@@ -35,9 +41,9 @@
       @
       %span{:onclick => "window.open('http://biocomp.cnb.csic.es')"} Biocomputing Unit
       \-
-      %span{:onclick => "window.open('http://www.cnb.csic.es/index.php/en/')"} CNB
+      %span{:onclick => "window.open('http://www.inab.org')"} INB
       \-
-      %span{:onclick => "window.open('http://www.csic.es/web/guest/home')"} CSIC
+      %span{:onclick => "window.open('https://www.elixir-europe.org/')"} ELIXIR
     .options_div
       %table
         %tr
@@ -62,36 +68,50 @@
           is a web based application designed to integrate protein structure, protein sequence and protein annotations in a unique graphical environment. The current version of the application offers a unified, enriched and interactive view of
           %a{:href=>"http://www.emdatabank.org/"} EMDB
           volumes,
-          %a{:href=>"http://www.rcsb.org/"} PDB
+          %a{:href=>"http://wwpdb.org/"} PDB
           structures and
           %a{:href=>"http://www.uniprot.org/"} Uniprot
           sequences where the protein annotations stored in
           = succeed "," do
             %a{:href=>"http://www.uniprot.org/"} Uniprot
-          %a{:href=>"http://www.iedb.org/"} Immune Epitope DB
+          = succeed "," do
+            %a{:href=>"http://www.iedb.org/"} Immune Epitope DB
+          = succeed "," do
+            %a{:href=>"http://www.phosphosite.org/"} Phospho Site Plus
+          %a{:href=>"https://hive.biochemistry.gwu.edu/tools/biomuta/"} BioMuta
           and
-          %a{:href=>"http://www.phosphosite.org/"} Phospho Site Plus
+          %a{:href=>"http://dsysmap.irbbarcelona.org/"} dSysMap
           can be explored interactively at sequence and structural level.
         / query.html
         .menu_div.query_div
           = form_tag({controller: "main", action: "home",anchor: "query"}, :method => :get,id: "query_form",:style=>"margin-top:20px;") do 
             %h3
               Search by
-              %a{:href=>"http://www.emdatabank.org/"} EMDB
+              %a{:href=>"javascript:window.open('http://www.emdatabank.org/')", :title=>"E.g. EMD-2810"} EMDB
               code,
-              %a{:href=>"http://www.rcsb.org/"} PDB
+              %a{:href=>"javascript:window.open('http://www.rcsb.org/')", :title=>"E.g. 101M"} PDB
               ID or
-              %a{:href=>"http://www.uniprot.org/"} Uniprot
+              %a{:href=>"javascript:window.open('http://www.uniprot.org/')", :title=>"E.g. P01112"} Uniprot
               accession
             =text_field_tag(:queryId)
             = hidden_field_tag(:viewer_type,@viewerType)
             %br
             %br
+            %div{:style=>"color:#666666;vertical-align:middle;font-size:14px;"}
+              = check_box_tag(:devel_check,1,false,{:style=>"position:relative;top:4px;"})
+              Include genomic annotations (under development)
+              :javascript
+                $j("#devel_check").attr('checked',false);
+                $j("#devel_check").change(function(){
+                  document.location.href="/devel#query";
+                });
             %br
             = button_tag("Submit")
             %br
             %br
-            %a{:href=>'javascript:window.location.href=\'http://3dbionotes.cnb.csic.es/?utf8=%E2%9C%93&queryId=emd-2924&viewer_type=jsmol&button=#query\''} Example
+            %a{:href=>'javascript:window.location.href=\'http://3dbionotes.cnb.csic.es/?queryId=P01112&viewer_type=ngl&button=#query\''} Example (HRAS)
+            %br
+            %a{:href=>'javascript:window.location.href=\'http://3dbionotes.cnb.csic.es/?&queryId=emd-2924&viewer_type=ngl&button=#query\''} Example (Human APC/C-Cdh1-Emi1)
         / help.html
         .menu_div.help_div
           = render "help" 
@@ -101,7 +121,22 @@
           %span{:onclick => "window.open('http://www.cnb.csic.es/index.php/en/')"} CNB
           and
           %span{:onclick => "window.open('http://www.csic.es/web/guest/home')"} CSIC
-          do not give any representation or warranty nor assume any liability or responsibility for the service or the results posted (whether as to their accuracy, completeness, quality or otherwise). Access to the service is available free of charge for the scientific community for ordinary use in the course of research.
+          do not give any representation or warranty nor assume any liability or responsibility for the service or the results posted (whether as to their accuracy, completeness, quality or otherwise). Access to the service is available free of charge.
+        .menu_div.api_div
+          = render "api"
+        / web server
+        .menu_div.ws_div
+          = form_tag({controller: "main", action: "upload"}, :multipart => true, :method => :post,id: "query_form",:style=>"margin-top:20px;") do 
+            %h3
+              Upload your atomic struture
+            %br
+            = file_field_tag(:structure_file)
+            = hidden_field_tag(:viewer_type,@viewerType)
+            %br
+            %br
+
+            = button_tag("Submit")
+
     .footer_div
       %div
         3DBIONOTES web-server was developed and is maintained at the

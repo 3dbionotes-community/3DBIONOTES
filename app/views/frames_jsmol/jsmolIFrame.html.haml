@@ -4,12 +4,18 @@
       var viewerType = "#{@viewerType}";
       var infoGlobal;
       var options = {
-        viewer_id: 'bionotes_jsmol'
+        viewer_id: 'bionotes_jsmol',
+        pdb_list: #{@pdbList},
+        emdb: '#{@emdb}',
+        origin: '#{@origin}',
+        n_models: '#{@n_models}'
       }
       var miApplet;
       if (viewerType=="jsmol"){
         bionotes_jsmol();
         miApplet = new JSmolClass();
+      }else if(viewerType=="ngl"){
+        miApplet = new nglClass( options );
       }else if(viewerType=="chimera"){
         miApplet = new chimeraClass();
       }
@@ -20,6 +26,7 @@
         size["height"]=window.innerHeight;
         miApplet.resize(size);
         window.addEventListener("ResetInfo", function(evt){
+          $j('#selected_residues').css( 'visibility','hidden' );
           miApplet.reset_view();
           if(infoGlobal!=undefined){
             if(infoGlobal.activepdb!=undefined && infoGlobal.activechain!=undefined){
@@ -64,13 +71,17 @@
           miApplet.load_surface("#{@emdb}",level,"#{@maxSizeVol}");
         });
       });
+    -if @viewerType=="ngl"
+      %div{:class => "ngl_loading"}
+      %div{:class => "ngl_em_loading"}
+      %div{:id => "viewport", :style=>"width:100%; height:100%;"}
     -if @origin=="Uniprot"
       :javascript
         displayMessage("USE THE SELECT MENU TO VISUALIZE A PROTEIN STRUCTURE");
-    -if !@pdbList.nil?
+    -if !@pdbList.nil? and @viewerType != 'ngl'
       :javascript
         loadPDB('#{@pdbList}');
-    -if !@emdb.nil? and !@emdb.empty?
+    -if !@emdb.nil? and !@emdb.empty? and @viewerType != 'ngl'
       :javascript
         loadEMDB('#{@emdb}','#{@threshold}','#{@maxSizeVol}');
     :javascript

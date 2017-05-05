@@ -278,7 +278,7 @@
                                                               =myref.split(":")[1]
                                                           -elsif refType=="swissvar"
                                                             SwissVar:
-                                                            %a{:href=>"http://web.expasy.org/variant_pages/#{myref.split(":")[1]}",:target=>"_blank"}
+                                                            %a{:href=>"http://web.expasy.org/variant_pages/#{myref.split(":")[1]}.html",:target=>"_blank"}
                                                               =myref.split(":")[1]
                                                           -else
                                                             =myref
@@ -320,7 +320,8 @@
                                                 #infoDiv
                                                   %p
                                                     Evidence: 
-                                                    %a{:href=>"http://www.phosphosite.org/siteGroupAction.do?id=#{evidence[0]}&protOrg=#{evidence[1]}&showAllSites=true",:target=>"_blank"}
+                                                    //%a{:href=>"http://www.phosphosite.org/siteGroupAction.do?id=#{evidence[0]}&protOrg=#{evidence[1]}&showAllSites=true",:target=>"_blank"}
+                                                    %a{:href=>"http://www.phosphosite.org/uniprotAccAction.do?id=#{@alignment["uniprot"]}",:target=>"_blank"}
                                                       =evidence[0]
                                 %br
   :javascript

@@ -5,16 +5,15 @@
     %meta{:name => "keywords", :content => "bioinformatics, proteins, PDB, emdb, Uniprot"}
     %title= title
     =csrf_meta_tag
-    = stylesheet_link_tag('biojs_sequence.css')
-    = #render 'layouts/stylesheets'
-    = javascript_include_tag('iframeResizer.contentWindow.min')
-    = javascript_include_tag('biojs/jquery-1.4.2.min')
-    = javascript_include_tag('biojs/jquery-ui-1.8.2.custom.min')
-    = javascript_include_tag('ownFrame')
-    = javascript_include_tag('own')
-    = javascript_include_tag('biojs/Biojs')
-    = javascript_include_tag('biojs/Biojs.Sequence_alignment')
-    = javascript_include_tag('biojs/Biojs.Tooltip')
+    = stylesheet_link_tag('sequence_viewer/biojs_sequence.css')
+    = javascript_include_tag('sequence_viewer/jquery-1.4.2.min')
+    = javascript_include_tag('sequence_viewer/jquery-ui-1.8.2.custom.min')
+    = javascript_include_tag('sequence_viewer/Biojs')
+    = javascript_include_tag('sequence_viewer/Biojs.Sequence_alignment')
+    = javascript_include_tag('sequence_viewer/Biojs.Tooltip')
+    = javascript_include_tag('sequence_frame/sequence_lib')
+    = javascript_include_tag('sequence_frame/sequence_init')
+
   %body{:id => "body"}
     %div{:id => "main"}
       = yield

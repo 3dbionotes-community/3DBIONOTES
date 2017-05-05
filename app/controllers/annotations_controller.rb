@@ -2,18 +2,32 @@ class AnnotationsController < ApplicationController
 
   UniprotURL = "http://www.uniprot.org/uniprot/"
   DsysmapURL = "http://dsysmap.irbbarcelona.org/api/getMutationsForProteins?protein_ids="
-
-  UniprotSections = {'Function'=>['active site','binding site','calcium-binding region','DNA-binding region','lipid moiety-binding region','metal ion-binding site','nucleotide phosphate-binding region','site','zinc finger region'],'PTM/Processing'=>['chain','cross-link','disulfide bond','glycosylation site','initiator methionine','modified residue','peptide','propeptide','signal peptide','transit peptide'],'Family and Domains'=>['coiled-coil region','compositionally biased region','domain','region of interest','repeat','short sequence motif'],'Structure'=>['helix','strand','turn'],'Subcellular location'=>['transmembrane region','topological domain','intramembrane region'],'Pathology and Biotech'=>['mutagenesis site'],'Sequence'=>['non-consecutive residues','non-terminal residue','non-standard amino acid','sequence conflict','sequence variant','unsure residue','splice variant']}
+  EnsemblURL = "http://rest.ensembl.org/"
+  PfamURL = "http://pfam.xfam.org/"
+  MobiURL = "http://mobidb.bio.unipd.it/ws/entries/"
+  SmartURL = "http://smart.embl.de/smart/batch.pl?TEXTONLY=1&INCLUDE_SIGNALP=1&IDS="
+  InterproURL = "https://www.ebi.ac.uk/interpro/protein/"
 
   helper_method :generateDigest
   helper_method :getXml
   helper_method :getUrlWithDigest
-  helper_method :fetchUniprotAnnots
   helper_method :getUniprotSequence
   helper_method :getIEDB
 
-
   def getBiomutaFromUniprot
+    uniprotAc = params[:name]
+    info = Biomutaentry.where(proteinId: uniprotAc)
+    toReturn = []
+    if !info.nil?
+      info.each do |i|
+        d = JSON.parse(i["data"])
+        toReturn.push(*d)
+      end
+    end
+    return render json: toReturn, status: :ok
+  end
+
+  def __getBiomutaFromUniprot
     uniprotAc = params[:name]
     info = Biomutaentry.find_by(proteinId: uniprotAc)
     toReturn = []
@@ -33,23 +47,28 @@ class AnnotationsController < ApplicationController
     return render json: toReturn, status: :ok
   end
 
+  def getDbptmFromUniprot 
+    uniprotAc = params[:name]
+    info = Dbptmentry.find_by(proteinId: uniprotAc)
+    toReturn = []
+    if !info.nil? and !info["data"].nil?
+      toReturn=info["data"]
+    end
+    return render json: toReturn, status: :ok
+  end
+
   def getIEDB(uniprot)
     client = Mysql2::Client.new(
       username: "root",
       database: "IEDB",
       password: "peron-1"
     )
-    gi = Iedbdictionary.find_by(uniprot: uniprot)
     out = []
-    if !gi.nil? and !gi["gi"].nil? and !gi["gi"].empty?
-      giComillas = "\""+gi["gi"].gsub(",","\",\"")+"\""
-      query = "select distinct e.epitope_id, ee.linear_peptide_seq, o.starting_position, o.ending_position from epitope ee, epitope_object e, object o where ee.epitope_id=e.epitope_id and  e.object_id=o.object_id and e.source_antigen_accession in (#{giComillas}) and o.object_type = \"Fragment of a Natural Sequence Molecule\";"
-      client.query(query).each do |row|
-        out.push({ 'start':row['starting_position'],'end':row['ending_position'],'type':'epitope','description':row['linear_peptide_seq'],'evidence':row['epitope_id'] })
-        print "\n"
-      end
+    query = "select distinct e.epitope_id, ee.linear_peptide_seq, o.starting_position, o.ending_position from epitope ee, epitope_object e, object o where ee.epitope_id=e.epitope_id and  e.object_id=o.object_id and e.source_antigen_accession in (\""+uniprot+"\",\""+uniprot+".1\") and o.object_type = \"Fragment of a Natural Sequence Molecule\";"
+    client.query(query).each do |row|
+      out.push({ 'start':row['starting_position'],'end':row['ending_position'],'type':'epitope','description':row['linear_peptide_seq'],'evidence':row['epitope_id'] })
+      print "\n"
     end
-
     return out
   end
 
@@ -61,6 +80,22 @@ class AnnotationsController < ApplicationController
 
   def getUniprotSequence(uniprotAc)
     begin
+      data = `ssh  jsegura@campins '~/apps/BLAST/ncbi-blast-2.5.0+/bin/blastdbcmd -entry #{uniprotAc} -db /home/jsegura/databases/UNIPROT/blast/sprot/sprot'`
+      if data.length == 0
+        data = `ssh  jsegura@campins '~/apps/BLAST/ncbi-blast-2.5.0+/bin/blastdbcmd -entry #{uniprotAc} -db /home/jsegura/databases/UNIPROT/blast/trembl/trembl'`
+      end
+      if data.length == 0
+        data = Net::HTTP.get_response(URI.parse(UniprotURL+uniprotAc+".fasta")).body
+      end
+    rescue
+      puts "Error: #{$!}"
+    end
+    fasta = Bio::FastaFormat.new(data)
+    return fasta
+  end
+
+  def __getUniprotSequence(uniprotAc)
+    begin
       data = Net::HTTP.get_response(URI.parse(UniprotURL+uniprotAc+".fasta"))
     rescue
       puts "Error: #{$!}"
@@ -70,6 +105,74 @@ class AnnotationsController < ApplicationController
       fasta = Bio::FastaFormat.new(data.body)
     end
     return fasta
+  end
+
+  def __getUniprotMultipleSequences
+    uniprotAc = params[:name]
+    returnValue = {}
+    begin
+
+      data = `ssh  jsegura@campins '~/apps/BLAST/ncbi-blast-2.5.0+/bin/blastdbcmd -entry #{uniprotAc} -db /home/jsegura/databases/UNIPROT/blast/sprot/sprot'`
+      if data.length == 0
+        data = `ssh  jsegura@campins '~/apps/BLAST/ncbi-blast-2.5.0+/bin/blastdbcmd -entry #{uniprotAc} -db /home/jsegura/databases/UNIPROT/blast/trembl/trembl'`
+      end
+      if data.length == 0
+        if uniprotAc.split(",").length > 1
+          data = Net::HTTP.get_response(URI.parse(UniprotURL+"?query="+uniprotAc+"&format=fasta")).body
+        else
+          data = Net::HTTP.get_response(URI.parse(UniprotURL+uniprotAc+".fasta")).body
+        end
+      end
+
+    rescue
+      puts "Error: #{$!}"
+      data = 404
+    end
+    fasta = nil
+    if data != "404"
+      fasta = Bio::Alignment::MultiFastaFormat.new(data)
+    end
+    fasta.entries.each do |entry|
+      definition = ""
+      accession = ""
+      if entry.definition =~/sp/
+        definition = entry.definition.split(/\|/)[2].split(/\sOS=/)[0].split(/\s/,2)[1].upcase
+        accession = entry.accession
+      else
+        aux = entry.definition
+        accession = aux.split(/\s/)[0]
+        aux = aux.sub  "\s" , "|"
+        definition = aux.split(/\|/)[1].split(/\sOS=/)[0].split(/\s/,2)[1].upcase
+      end
+      returnValue[accession] = [entry.seq.length,definition]
+    end
+    return render json: returnValue, status: :ok
+  end
+
+  def getUniprotMultipleSequences
+    uniprotAc = params[:name]
+    returnValue = {}
+    begin
+      if uniprotAc.split(",").length > 1
+        data = Net::HTTP.get_response(URI.parse(UniprotURL+"?query="+uniprotAc+"&format=fasta"))
+      else
+        data = Net::HTTP.get_response(URI.parse(UniprotURL+uniprotAc+".fasta"))
+      end
+    rescue
+      puts "Error: #{$!}"
+    end
+    fasta = nil
+    if data.code != "404"
+      fasta = Bio::Alignment::MultiFastaFormat.new(data.body)
+    end
+    fasta.entries.each do |entry|
+      entry_definition = "Unknown"
+      if !entry.definition.nil? and entry.definition.include? "|" and entry.definition.include? "OS="
+        entry_definition = entry.definition.split(/\|/)[2].split(/\sOS=/)[0].split(/\s/,2)[1].upcase
+      end
+      returnValue[entry.accession] = [entry.seq.length,entry_definition]
+    end
+    return render json: returnValue, status: :ok
   end
  
   def generateDigest(cadena)
@@ -167,233 +270,297 @@ class AnnotationsController < ApplicationController
     return render json: info, status: :ok
   end
 
-  def getUniprotAnnotations
-    source = "uniprot"
-    uniprotAc = params[:name]
-    url = UniprotURL+uniprotAc+".xml"
-    rawData = getUrlWithDigest(url)
-    digest = rawData["checksum"]
-    dbData = Annotation.find_by(proteinId: uniprotAc,source: source)
-    if !dbData.nil? and (dbData.digest == digest)
-      # lo que buscamos es lo que esta guardado
-      info = JSON.parse(dbData.data)
-    else
-      # hay que guardar otra vez
-      hashData = getXml(rawData["data"])
-      info = fetchUniprotAnnots(hashData)
-      if !dbData.nil?
-        dbData.destroy
-      end
-      Annotation.create(proteinId: uniprotAc, source: source, digest: digest, data: info.to_json)
-    end
-    return render json: info, status: :ok
-  end
-
   def getUniprotLength
     uniprotAc = params[:name]
     uniLength = getUniprotSequence(uniprotAc).seq.length
     return render json: uniLength, status: :ok
   end
 
-  def fetchUniprotAnnots(hashData)
-    data = {}
-    data["general"] = {} 
-    data["particular"] = []
-    if !hashData.empty?
-      featuresList = []
-      # miro que haya features y las paso siempre a array
-      if hashData["uniprot"]["entry"]["feature"].class == Array
-        featuresList = hashData["uniprot"]["entry"]["feature"]
-      elsif hashData["uniprot"]["entry"]["feature"] == Hash
-        featuresList.push(hashData["uniprot"]["entry"]["feature"])
-      end
-      #solo se hace algo si la lista de features es mayor que 0
-      if featuresList.length > 0
-        evidencesList = []
-        # miramos que haya evidencias
-        if hashData["uniprot"]["entry"]["evidence"].class == Array
-          evidencesList = hashData["uniprot"]["entry"]["evidence"]
-        elsif hashData["uniprot"]["entry"]["evidence"].class == Hash
-          evidencesList.push(hashData["uniprot"]["entry"]["evidence"])
+  def getENSEMBLvariants
+    ensembl_id = params[:name]
+    out = {'variation'=>[],'somatic_variation'=>[]}
+    returnValue = {}
+    begin
+      data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=variation;variant_set=ph_variants;content-type=application/json"))
+    rescue
+      puts "Error: #{$!}"
+    end
+    if data.code != "404"
+      returnValue = JSON.parse(data.body)
+    end
+    if returnValue.is_a?(Array)
+      returnValue.each do |i|
+        __start = i['start']
+        __end = i['end']
+        if i['end'] < i['start']
+          __start = i['end']
+          __end = i['start']
         end
-        commentsList = []
-        if hashData["uniprot"]["entry"]["comment"].class == Array
-          commentsList = hashData["uniprot"]["entry"]["comment"]
-        elsif hashData["uniprot"]["entry"]["comment"] == Hash
-          commentsList.push(hashData["uniprot"]["entry"]["comment"])
-        end
-        tmpComments = {}
-        tmpGeneralComments = {}
-        commentsList.each do |comment|
-          evidence = nil
-          if !comment["@evidence"].nil?
-            evidence = comment["@evidence"].split(" ")
-          end
-          if !comment["text"].nil?
-            if !comment["text"].attributes.empty?
-              if !comment["text"].attributes["evidence"].nil?
-                evidence = comment["text"].attributes["evidence"].split(" ")
-              end
-            end
-          end
-          if !evidence.nil?
-            evidence.each do |myEvi|
-              miTmpComment = {}
-              miTmpComment["type"] = comment["@type"]
-              if !comment["@name"].nil?
-                miTmpComment["name"] = comment["@name"]
-              end
-              if !comment["text"].nil?
-                miTmpComment["description"] = comment["text"]
-              end
-              if comment["@type"]=="disease"
-                if !comment["disease"].nil?
-                  miTmpComment["additional"] = {}
-                  miTmpComment["additional"]["disease"] = {}
-                  tmpDiseaseText = ""
-                  if !comment["disease"]["name"].nil?
-                    tmpDiseaseText+="Name: "+ comment["disease"]["name"] +"\n"
-                  end
-                  if !comment["disease"]["acronym"].nil?
-                    tmpDiseaseText+="Acronym: "+ comment["disease"]["acronym"] +"\n"
-                  end
-                  if !comment["disease"]["description"].nil?
-                    tmpDiseaseText+="Description: "+ comment["disease"]["description"] +"\n"
-                  end
-                  if !tmpDiseaseText.empty?
-                    miTmpComment["additional"]["disease"]["text"] = tmpDiseaseText
-                  end
-                  if !comment["disease"]["dbReference"].nil?
-                    miTmpComment["additional"]["disease"]["reference"] = "#{comment["disease"]["dbReference"]["@type"]}:#{comment["disease"]["dbReference"]["@id"]}"
-                  end
-                end
-              end
-              if tmpComments[myEvi].nil?
-                tmpComments[myEvi] = []
-              end
-              tmpComments[myEvi].push(miTmpComment)
-            end
-          end
-          if comment["@evidence"].nil?
-            if !comment["@type"].nil?
-              # Esto significa que el tipo del comentario es una subseccion, y se puede anadir
-              # como comentario general
-              if (UniprotSections.keys).include?(comment["@type"].capitalize)
-                miTmpGeneralComment = ""
-                if !comment["text"].nil?
-                  miTmpGeneralComment += "Note: " + comment["text"] + "\n"
-                end
-                clavesNoTerm = comment.keys.select{|el| el[0]!="@"}.uniq
-                clavesNoTerm.each do |clave|
-                  if !comment[clave].nil?
-                    miComments = []
-                    if comment[clave].class == Hash
-                      miComments = [comment[clave]]
-                    elsif comment[clave].class == Array
-                      miComments = comment[clave]
-                    end
-                    miComments.each do |miComment|
-                      clavesIn = miComment.keys.select{|el| el[0]!="@"}
-                      inTmpGeneralComment = "•"
-                      clavesIn.each do |clavin|
-                        if !miComment[clavin].nil?
-                          if miComment[clavin].class == Array
-                            inTmpGeneralComment += miComment[clavin].join(", ") + "; "
-                          elsif miComment[clavin].class == String or miComment[clavin].class == Nori::StringWithAttributes
-                            inTmpGeneralComment += miComment[clavin] + "; "
-                          end
-                        end
-                      end
-                      inTmpGeneralComment = inTmpGeneralComment[0..-3]
-                      miTmpGeneralComment += inTmpGeneralComment + "\n"
-                    end
-                  end
-                  if miTmpGeneralComment!=""
-                    if tmpGeneralComments[comment["@type"].capitalize].nil?
-                      tmpGeneralComments[comment["@type"].capitalize] = ""
-                    end
-                    tmpGeneralComments[comment["@type"].capitalize] = miTmpGeneralComment
-                  end
-                end
-              end
-            end
-          end
-        end
-        data["general"] = tmpGeneralComments
-        tmpEvidences = {}
-        evidencesList.each do |evidence|
-          # key campo obligatorio en xsd
-          tmpEvidences[evidence["@key"]] = {}
-          # datos de lo anterior
-  
-          if !tmpComments[evidence["@key"]].nil?
-            tmpEvidences[evidence["@key"]]["info"] = tmpComments[evidence["@key"]]
-          end
-          # campo obligatorio
-          tmpEvidences[evidence["@key"]]["code"] = evidence["@type"]
-          # campo opcional
-          if !evidence["source"].nil?
-            # campo opcional (es una lista)
-            if !evidence["source"]["dbReference"].nil?
-              dbRefs = []
-              tmpDbRefs = []
-              if evidence["source"]["dbReference"].class == Hash
-                dbRefs.push(evidence["source"]["dbReference"])
-              elsif evidence["source"]["dbReference"].class == Array
-                dbRefs = evidence["source"]["dbReference"]
-              end
-              dbRefs.each do |dbRef|
-                tmpDbRefs.push("#{dbRef["@type"]}:#{dbRef["@id"]}")
-              end
-              # campos obligatorios
-              tmpEvidences[evidence["@key"]]["references"] = tmpDbRefs
-            end
-          end
-        end
-        # itero a traves de los features
-        featuresList.each do |feature|
-          tmpHash = {}
-          # opcional
-          if !feature["location"].nil?
-            if !feature["location"]["position"].nil?
-              tmpHash["start"]=feature["location"]["position"]["@position"].to_i
-              tmpHash["end"]=feature["location"]["position"]["@position"].to_i
-            elsif !feature["location"]["begin"].nil? and !feature["location"]["end"].nil?
-              tmpHash["start"]=feature["location"]["begin"]["@position"].to_i
-              tmpHash["end"]=feature["location"]["end"]["@position"].to_i
-            end
-            UniprotSections.each do |k,v|
-              if v.include?(feature["@type"])
-                tmpHash["type"] = k
-              end
-            end
-            # obligatorio en el xsd
-            tmpHash["subtype"] = feature["@type"]
-            # opcional
-            if !feature["original"].nil?
-              tmpHash["original"] = feature["original"]
-            end
-            if !feature["variation"].nil?
-              tmpHash["variation"] = feature["variation"]
-            end
-            # opcional
-            if !feature["@description"].nil?
-              tmpHash["description"] = feature["@description"]
-            end
-            # opcional
-            if !feature["@evidence"].nil?
-              evidences = feature["@evidence"].split(" ")
-              tmpHash["evidence"] = Array.new
-              evidences.each do |evi|
-                tmpHash["evidence"].push(tmpEvidences[evi])
-              end
-            end
-            data["particular"].push(tmpHash)
-          end
-        end
+        out['variation'].push({'x'=>__start,'y'=>__end,'alleles'=>i['alleles'],'clinical_significance'=>i['clinical_significance'],'consequence_type'=>i['consequence_type'],'strand'=>i['strand']})
       end
     end
-    return data
+   
+    returnValue = {}
+    begin
+      data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=somatic_variation;variant_set=ph_variants;content-type=application/json"))
+    rescue
+      puts "Error: #{$!}"
+    end
+    if data.code != "404"
+      returnValue = JSON.parse(data.body)
+    end
+    returnValue.each do |i|
+      __start = i['start']
+      __end = i['end']
+      if i['end'] < i['start']
+        __start = i['end']
+        __end = i['start']
+      end
+      out['somatic_variation'].push({'x'=>__start,'y'=>__end,'alleles'=>i['alleles'],'clinical_significance'=>i['clinical_significance'],'consequence_type'=>i['consequence_type'],'strand'=>i['strand']})
+    end
+
+    return render json: out, status: :ok
+  end
+
+  def getENSEMBLannotations
+    ensembl_id = params[:name]
+    out = {'repeat'=>[],'simple'=>[],'constrained'=>[],'motif'=>[]}
+    returnValue = {}
+    begin
+      data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=repeat;content-type=application/json"))
+    rescue
+      puts "Error: #{$!}"
+    end
+    if data.code != "404"
+      returnValue = JSON.parse(data.body)
+    end
+    returnValue.each do |i|
+      out['repeat'].push({'x'=>i['start'],'y'=>i['end'],'description'=>i['description'],'strand'=>i['strand']})
+    end
+   
+    begin
+      data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=simple;content-type=application/json"))
+    rescue
+      puts "Error: #{$!}"
+    end
+    if data.code != "404"
+      returnValue = JSON.parse(data.body)
+    end
+    returnValue.each do |i|
+      out['simple'].push({'x'=>i['start'],'y'=>i['end'],'description'=>i['logic_name'],'strand'=>i['strand']})
+    end
+
+    begin
+      data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=constrained;content-type=application/json"))
+    rescue
+      puts "Error: #{$!}"
+    end
+    if data.code != "404"
+      returnValue = JSON.parse(data.body)
+    end
+    returnValue.each do |i|
+      out['constrained'].push({'x'=>i['start'],'y'=>i['end'],'description'=>i['logic_name'],'strand'=>i['strand']})
+    end
+
+    begin
+      data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=motif;content-type=application/json"))
+    rescue
+      puts "Error: #{$!}"
+    end
+    if data.code != "404"
+      returnValue = JSON.parse(data.body)
+    end
+    returnValue.each do |i|
+      out['motif'].push({'x'=>i['start'],'y'=>i['end'],'description'=>i['motif_feature_type'],'strand'=>i['strand']})
+    end
+
+    begin
+      data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=transcript;feature=exon;content-type=application/json"))
+    rescue
+      puts "Error: #{$!}"
+    end
+    if data.code != "404"
+      returnValue = JSON.parse(data.body)
+    end
+
+    out['transcripts'] = {'coding'=>{},'non_coding'=>{} }
+    transcript = {}
+
+    returnValue.each do |i|
+      if i['feature_type'] == 'transcript' && i['Parent'] == ensembl_id
+        transcript[ i['transcript_id'] ] = { 'external_name'=>i['external_name'],'biotype'=>i['biotype'] }
+      end
+    end
+
+    
+
+    returnValue.each do |i|
+      if (i['feature_type'] != 'exon') or (not transcript.key?( i['Parent'] ))
+        next
+      end
+      type = 'non_coding'
+      if transcript[ i['Parent'] ][ 'biotype' ] == 'protein_coding'
+        type = 'coding'
+      end
+      name = transcript[ i['Parent'] ][ 'external_name' ]
+
+      if out['transcripts'][ type ].key?( name )
+        out['transcripts'][ type ][ name ].push( {'x'=>i['start'],'y'=>i['end']} )
+      else
+        out['transcripts'][ type ][ name ] = []
+        out['transcripts'][ type ][ name ].push( {'x'=>i['start'],'y'=>i['end']} )
+      end
+    end
+    return render json: out, status: :ok
+  end
+
+  def getELMDBfromUniprot
+    uniprot_acc = params[:name]
+    cmd = "/home/joan/tools/ELMDB_tool/get_elm_data "+uniprot_acc
+    out = `#{cmd}`
+    return render json: out, status: :ok
+  end
+
+  def getPfamInfo(pfam_acc)
+    url = PfamURL+"family/"+pfam_acc+"?output=xml"
+    begin
+      data = Net::HTTP.get_response(URI.parse(url)).body
+    rescue
+      puts "Error downloading data:\n#{$!}"
+    end   
+    hash = Nori.new(:parser=> :nokogiri, :advanced_typecasting => false).parse(data)   
+    description = hash["pfam"]["entry"]["description"].gsub(/\n/, "")
+    category = []
+    if hash["pfam"]["entry"].key?("go_terms") && hash["pfam"]["entry"]["go_terms"]["category"].class == Hash
+      category = [ hash["pfam"]["entry"]["go_terms"]["category"] ]
+    elsif hash["pfam"]["entry"].key?("go_terms")
+      category = hash["pfam"]["entry"]["go_terms"]["category"]
+    end
+    go = {}
+    category.each do |c|
+      go_class = c["@name"]
+      go[ go_class ] = []
+
+      if c["term"].class != Array
+        terms = [ c["term"] ]
+      else
+        terms = c["term"]
+      end
+      terms.each do |t|
+        go[ go_class ].push( t )
+      end
+    end
+
+    out = {'description'=>description,'go'=>go}
+    return out
+  end
+
+  def getPfamFromUniprot
+    uniprot_acc = params[:name]
+    url = PfamURL+"protein/"+uniprot_acc+"?output=xml"
+    begin
+      data = Net::HTTP.get_response(URI.parse(url)).body
+    rescue
+      puts "Error downloading data:\n#{$!}"
+    end   
+    hash = Nori.new(:parser=> :nokogiri, :advanced_typecasting => false).parse(data)
+    data = []
+    if  !hash.nil? && !hash["pfam"].nil? && !hash["pfam"]["entry"].nil? && hash["pfam"]["entry"].key?("matches") && hash["pfam"]["entry"]["matches"]["match"].class == Hash
+      data = [ hash["pfam"]["entry"]["matches"]["match"] ]
+    elsif !hash.nil? && !hash["pfam"].nil? && !hash["pfam"]["entry"].nil? && hash["pfam"]["entry"].key?("matches")
+      data  = hash["pfam"]["entry"]["matches"]["match"]
+    end
+    out = []
+    data.each do |i|
+      info = getPfamInfo( i['@accession'] )
+      out.push( {'start'=>i['location']['@start'],'end'=>i['location']['@end'],'acc'=>i['@accession'],'id'=>i['@id'], 'info'=>info} )
+    end
+    return render json: out, status: :ok
+  end
+
+  def getMobiFromUniprot
+    uniprot_acc = params[:name]
+    url = MobiURL+"/"+uniprot_acc+"/disorder"
+    begin
+      data = Net::HTTP.get_response(URI.parse(url)).body
+    rescue
+      puts "Error downloading data:\n#{$!}"
+    end   
+    data = JSON.parse(data)
+    out = {}
+    if data.key?("consensus") 
+        for j in ['disprot','pdb_nmr','pdb_xray','predictors']
+          if data['consensus'].key?(j)
+            out[j] = []
+    	    data['consensus'][j].each do |i|
+              if i['ann'] == "D" or i['ann'] == "d"
+    	        out[j].push( {'start'=>i['start'],'end'=>i['end']} )
+              end
+    	    end
+          end
+        end
+    end
+    return render json: out, status: :ok
+  end
+
+  def getSMARTfromUniprot
+    uniprot_acc = params[:name]
+    url = SmartURL+uniprot_acc
+    begin
+      data = Net::HTTP.get_response(URI.parse(url)).body
+    rescue
+      puts "Error downloading data:\n#{$!}"
+    end   
+    data = data.gsub(/\n\n/,"\n")
+    data = data.split("\n")
+
+    k = data.shift()
+    while k && k.exclude?("DOMAIN") && k.exclude?("FINISHED") do
+      k = data.shift()
+    end
+
+    out = []
+    while k && k.exclude?("FINISHED") do
+      ann = {}
+      if k.include?("DOMAIN")
+        r = k.split("=")
+        ann[r[0].downcase]=r[1]
+      end
+      k = data.shift()
+      while k && k.exclude?("FINISHED") && k.exclude?("DOMAIN") do
+        r = k.split("=")
+        ann[r[0].downcase]=r[1]       
+        k = data.shift()
+      end 
+      if ann['type'].exclude?("PFAM") && ann['status'].include?("visible") 
+        out.push(ann)
+      end
+    end
+
+    return render json: out, status: :ok
+  end
+
+  def getInterproFromUniprot
+    uniprot_acc = params[:name]
+    url = InterproURL+uniprot_acc
+    wget = `wget -qO- https://www.ebi.ac.uk/interpro/protein/#{uniprot_acc}  | grep '/interpro/popup/supermatch' | sed 's/"//g'`
+    data = wget.split("\n")
+    out = []
+    data.each do |i|
+      r = i.split("&")
+      ann = {}
+      r.each do |j|
+        s = j.split("=")
+        ann[s[0]]=s[1]
+      end
+      ids = ann['entryAcs'].split(',')
+      id = ids.pop()
+      info = Interproentry.find_by(proteinId: id)
+      if !info.nil?
+        out.push({'id'=>id,'start'=>ann['start'],'end'=>ann['end'],'description'=>JSON.parse(info['data'])})
+      end
+    end
+    return render json: out, status: :ok
   end
 
 end

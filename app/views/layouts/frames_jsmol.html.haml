@@ -5,17 +5,29 @@
     %meta{:name => "keywords", :content => "bioinformatics, proteins, PDB, emdb, Uniprot"}
     %title= title
     =csrf_meta_tag
-    = #render 'layouts/stylesheets'
-    = javascript_include_tag('iframeResizer.contentWindow.min')
+    = stylesheet_link_tag('jsmol_frame/jsmol_style.css')
     = javascript_include_tag('jsmol/jquery/jquery')
-    = javascript_include_tag('ownFrame')
-    = javascript_include_tag('own')
-    = javascript_include_tag('jsmol/JSmol.min')
-    = javascript_include_tag('jsmol/JSmol.GLmol.min')
-    = javascript_include_tag('mols/chimeraClass')
-    = javascript_include_tag('mols/JSmolClass')
-    = javascript_include_tag('mols/bionotes_jsmol')
-    = javascript_include_tag('ownjsmol')
-  %body{:id => "body"}
+    -if @viewerType == "jsmol"
+      = javascript_include_tag('jsmol/JSmol.min')
+      = javascript_include_tag('jsmol/JSmol.GLmol.min')
+      = javascript_include_tag('jsmol_viewer/chimeraClass')
+      = javascript_include_tag('jsmol_viewer/JSmolClass')
+      = javascript_include_tag('jsmol_viewer/bionotes_jsmol')
+    -if @viewerType == "ngl"
+      = javascript_include_tag('jsmol_viewer/nglClass')
+      = javascript_include_tag('/ngl/ngl.embedded.min.js')
+    = javascript_include_tag('jsmol_frame/jsmol_lib') 
+    = javascript_include_tag('jsmol_frame/jsmol_init')
+  %body{:id => "body", :style => "margin-left:0px;margin-right:0px;margin-top:0px;" }
+    %div.label_display
+      %span.label_display_close
+        x
+      %span{:style=>"font-weight:bold;margin-bottom:10px;"}
+        CURRENT LABELS
+    %div{:id => "selected_residues"}
+      SELECTED RESIDUES&nbsp;&nbsp;
+      %span{:id => "res_start"}
+      \-
+      %span{:id => "res_end"}
     %div{:id => "main"}
       = yield

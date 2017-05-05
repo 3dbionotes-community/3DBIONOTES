@@ -11,6 +11,9 @@ class MappingsController < ApplicationController
   helper_method :getPDBsFromEMDB
   helper_method :getUniprotExistence
   helper_method :getPDBExistence
+  helper_method :ensembl_transcript
+  helper_method :uniprot_mapping
+
 
   def getUniprotExistence(uniprotAc)
     begin
@@ -158,5 +161,100 @@ class MappingsController < ApplicationController
     end
     return render json: uniprotFromPDB, status: myStatus
   end
+
+  #ENSEMBL MAPPINGS
+  def getENSEMBLtranscriptFromUniprot
+    acc = params[:name].upcase
+    __out = uniprot_mapping(acc,'ENSEMBL_ID')
+    if __out.length == 0
+      myStatus = :ok
+      return render json: {'gene'=>nil,'transcript'=>nil}, status: myStatus
+    end 
+    ens_g = ''
+    v = 0
+    __out.each do |g|
+      info = JSON.parse( makeRequest('http://rest.ensembl.org','/lookup/id/'+g+'?content-type=application/json') )
+      if Integer(info['version'])>v
+        v = Integer(info['version'])
+        ens_g = info 
+      end
+    end
+    __out_1 = uniprot_mapping(acc,'ENSEMBL_TRS_ID')
+    __out_2 = ensembl_transcript(ens_g['id'])
+    __out = []
+    ( __out_2.keys & __out_1 ).each do |o|
+    #( __out_2.keys )..each do |o|
+      __out.push( {'id'=>o,'name'=>__out_2[o]} )
+    end
+    myStatus = :ok
+    return render json: {'gene'=>ens_g,'transcript'=>__out}, status: myStatus
+  end
+  def ensembl_transcript(id)
+    path = '/lookup/id/'+id+'?expand=1&content-type=application/json'
+    __out = JSON.parse( makeRequest('http://rest.ensembl.org',path) )
+    out = {}
+    __out['Transcript'].each do |o|
+      if o['object_type'] == 'Transcript'
+        out[ o['id'] ] =  o['display_name'] 
+      end
+    end
+    return out
+  end
+
+  def uniprot_mapping_ws(acc,id_type='ENSEMBL_ID')
+    base = 'www.uniprot.org'
+    tool = 'mapping'
+    params = {
+      'from' => 'ACC', 'to' => id_type, 'format' => 'tab',
+      'query' => acc
+    }
+    if request.port==3000
+      puts "\n======================================\n"
+      puts 'http://' + base + '/' + tool + '/?' + params.keys.map {|key| key + '=' + params[key]}.join('&')
+      puts "\n======================================\n"
+    end
+    http = Net::HTTP.new base
+    response = http.request_post '/' + tool + '/', params.keys.map {|key| key + '=' + params[key]}.join('&')
+    if request.port==3000
+      puts "\nDONE!!!!\n"
+    end
+    loc = nil
+    while response.code == '302'
+      loc = response['Location']
+      response = http.request_get loc
+    end
     
+    while loc
+      wait = response['Retry-After'] or break
+      sleep wait.to_i
+      response = http.request_get loc
+    end
+    
+    response.value # raises http error if not 2xx
+    __out = response.body.split("\n")
+    __out.shift
+    out = []
+    __out.each do |g|
+      i = g.split("\t")
+      out.push( i[1] )
+    end
+    return out
+  end   
+
+  def uniprot_mapping(acc,id_type='ENSEMBL_ID')
+    info = Uniprotmappingentry.find_by(proteinId: acc)
+    if info.nil?
+      return []
+    end
+    out = []
+    if id_type == 'ENSEMBL_ID'
+      out = JSON.parse(info['gene'])
+    end
+
+    if id_type == 'ENSEMBL_TRS_ID'
+      out = JSON.parse(info['transcript'])
+    end
+
+    return out
+  end
 end

@@ -11,38 +11,6 @@
     -if !@alignment["uniprot"].nil?
       #seq_div
       :javascript
-        $j(document).ready(function(){
-          sequence_panel = new Biojs.Sequence_alignment({
-            sequence : '#{@alignmentData["uniprotSeq"]}',
-            seq_alig : '#{@alignmentData["pdbSeq"]}',
-            target : "seq_div"
-          });
-        });
-  :javascript
-    var sequence_panel;
-    $j(document).ready(function(){
-      window.addEventListener("RangeInfo", function(evt){
-        var start = evt.detail[0];
-        var end = evt.detail[1];
-        sequence_panel.setSelection(start-1,end-1);
-        var miStart = start-1;
-        var divSelected = "#0_"+miStart;
-        $j(body).scrollTop($j(divSelected).offset().top);
-      });
-    });
-    $j(window).load(function(){
-      window.addEventListener("HideInfo", function(evt){
-        document.getElementById('loading').style.display = "block";
-        document.getElementById('mainFrames').style.display = "none";
-      });
-      window.addEventListener("ShowInfo", function(evt){
-        document.getElementById('loading').style.display = "none";
-        document.getElementById('mainFrames').style.display = "block";
-      });
-      window.addEventListener("ResetInfo", function(evt){
-        if(sequence_panel!==undefined){
-          sequence_panel.setSelection();
-        }
-        $j(body).scrollTop(0); 
-      });
-    });
+        build_sequence_viewer('#{@alignmentData["uniprotSeq"]}','#{@alignmentData["pdbSeq"]}');
+      :javascript
+        #{@log}

@@ -1,7 +1,10 @@
 class AlignmentsController < ApplicationController
  
   SIFTSUrl = "http://ftp.ebi.ac.uk/pub/databases/msd/sifts/xml/"
+  SIFTSFile =  "/home/joan/databases/SIFTS/XML/"
   UniprotURL = "http://www.uniprot.org/uniprot/"
+  LocalPath =  "/home/joan/apps/bionotes/public/upload/"
+
 
   AminoDic = {'CYS'=>'C', 'ASP'=>'D', 'SER'=>'S', 'GLN'=>'Q', 'LYS'=>'K','ILE'=>'I', 'PRO'=>'P', 'THR'=>'T', 'PHE'=>'F', 'ASN'=>'N', 'GLY'=>'G', 'HIS'=>'H', 'LEU'=>'L', 'ARG'=>'R', 'TRP'=>'W','ALA'=>'A', 'VAL'=>'V', 'GLU'=>'E', 'TYR'=>'Y', 'MET'=>'M'}
   ModifiedResidues = {'CSD'=>'CYS','HYP'=>'PRO','BMT'=>'THR','5HP'=>'GLU','ABA'=>'ALA','AIB'=>'ALA','CSW'=>'CYS','OCS'=>'CYS','DAL'=>'ALA','DAR'=>'ARG','DSG'=>'ASN','DSP'=>'ASP','DCY'=>'CYS','DGL'=>'GLU','DGN'=>'GLN','DHI'=>'HIS','DIL'=>'ILE','DIV'=>'VAL','DLE'=>'LEU','DLY'=>'LYS','DPN'=>'PHE','DPR'=>'PRO','DSN'=>'SER','DTH'=>'THR','DTY'=>'TYR','DVA'=>'VAL','CGU'=>'GLU','KCX'=>'LYS','LLP'=>'LYS','CXM'=>'MET','FME'=>'MET','MLE'=>'LEU','MVA'=>'VAL','NLE'=>'LEU','PTR'=>'TYR','ORN'=>'ALA','SEP'=>'SER','TPO'=>'THR','PCA'=>'GLU','SAR'=>'GLY','CEA'=>'CYS','CSO'=>'CYS','CSS'=>'CYS','CSX'=>'CYS','CME'=>'CYS','TYS'=>'TYR','TPQ'=>'PHE','STY'=>'TYR'}
@@ -9,6 +12,7 @@ class AlignmentsController < ApplicationController
   helper_method :generateDigest
   helper_method :getXml
   helper_method :getUrlWithDigest
+  helper_method :getFileWithDigest
   helper_method :unzipData
   helper_method :processSIFTS
   helper_method :pdbInfo
@@ -20,14 +24,37 @@ class AlignmentsController < ApplicationController
 
   def getUrlWithDigest(url)
     begin
+      if request.port==3000
+        puts "\n\n==========================================================\n"
+        puts url
+        puts "==========================================================\n\n"
+      end
       data = Net::HTTP.get_response(URI.parse(url)).body
+      if request.port==3000
+        puts "\n\n==========================================================\nDONE\n==========================================================\n\n"
+      end
       digest = generateDigest(data)
     rescue
       puts "Error downloading data:\n#{$!}"
     end
     return {"data"=>data,"checksum"=>digest}
   end
-  
+
+  def getFileWithDigest(file)
+    data = nil
+    digest = nil
+    if !File.exist? File.expand_path file
+      return {"data"=>data,"checksum"=>digest}
+    end
+    begin
+      data = `cat #{file}` 
+      digest = generateDigest(data)
+    rescue
+      puts "Error in cat #{file} data:\n#{$!}"
+    end
+    return {"data"=>data,"checksum"=>digest}
+  end 
+
   def unzipData(data)
     begin
       gz = Zlib::GzipReader.new(StringIO.new(data))
@@ -50,27 +77,140 @@ class AlignmentsController < ApplicationController
   def getPDBalignment
     info = nil
     pdbId = params[:name]
-    url = SIFTSUrl+pdbId+".xml.gz"
-    rawData = getUrlWithDigest(url)
-    digest = rawData["checksum"]
-    dbData = PdbDatum.find_by(pdbId: pdbId)
-    if !dbData.nil? and (dbData.digest == digest)
-      # lo que buscamos es lo que esta guardado
-      info = JSON.parse(dbData.data)
+    if pdbId =~ /[A-Z]{20}/
+      info = getLocalPDBalignment(pdbId)
     else
-      unzipped = unzipData(rawData["data"])
-      dataXml = getXml(unzipped)
-      # hay que guardar otra vez
-      sifts = processSIFTS(dataXml)
-      info = pdbInfo(sifts)
-      if !dbData.nil?
-        dbData.destroy
+      dbData = PdbDatum.find_by(pdbId: pdbId)
+      if !dbData.nil? 
+        # lo que buscamos es lo que esta guardado
+        info = JSON.parse(dbData.data)
+      else
+        file = SIFTSFile+pdbId.downcase[1..2]+"/"+pdbId.downcase+".xml.gz"
+        rawData = getFileWithDigest(file)
+        if rawData["data"] == nil
+          url = SIFTSUrl+pdbId+".xml.gz"
+          rawData = getUrlWithDigest(url)
+        end
+        digest = rawData["checksum"]
+        unzipped = unzipData(rawData["data"])
+        dataXml = getXml(unzipped)
+        # hay que guardar otra vez
+        sifts = processSIFTS(dataXml)
+        info = pdbInfo(sifts)
+        if !dbData.nil?
+          dbData.destroy
+        end
+        PdbDatum.create(pdbId: pdbId, digest: digest, data: info.to_json)
       end
-      PdbDatum.create(pdbId: pdbId, digest: digest, data: info.to_json)
     end
     return render json: info, status: :ok
   end
 
+  def getLocalPDBalignment(rand)
+    return File.read(LocalPath+"/"+rand+"/alignment.json")
+  end
+
+  def getPDBcoverage
+    verbose = 0
+    info = nil
+    pdbId_ch = params[:name]
+    pdbId = ''
+    ch = ''
+
+    if pdbId_ch.length < 20
+      pdbId = pdbId_ch[0,4]#pdbId_ch.chop()
+      ch = pdbId_ch[4,pdbId_ch.length]
+      dbData = PdbDatum.find_by(pdbId: pdbId)
+      if !dbData.nil? 
+        # lo que buscamos es lo que esta guardado
+        info = JSON.parse(dbData.data)
+      else
+        file = SIFTSFile+pdbId.downcase[1..2]+"/"+pdbId.downcase+".xml.gz"
+        rawData = getFileWithDigest(file)
+        if rawData["data"] == nil
+          url = SIFTSUrl+pdbId+".xml.gz"
+          rawData = getUrlWithDigest(url)
+        end
+        digest = rawData["checksum"]
+        unzipped = unzipData(rawData["data"])
+        dataXml = getXml(unzipped)
+        # hay que guardar otra vez
+        sifts = processSIFTS(dataXml)
+        info = pdbInfo(sifts)
+        if !dbData.nil?
+          dbData.destroy
+        end
+        PdbDatum.create(pdbId: pdbId, digest: digest, data: info.to_json)
+      end
+    else
+      rand, pdb, ch = pdbId_ch.split("::")
+      info = JSON.parse(File.read(LocalPath+"/"+rand+"/alignment.json"))
+      info  = info[pdb.gsub! '_dot_','.']
+    end
+
+    __map = Array.new
+    info[ch].each do |uniprot,mapping|
+      __map = mapping["mapping"]
+    end
+
+    coverage = Array.new
+    __e = {"start"=>-1,"end"=>-1}
+    __n = 1
+    __map.each do |i|
+      if i.has_key?("pdbIndex")
+        if __e["start"]<0
+          __e = {"start"=>__n,"end"=>-1}
+        end
+      else
+        if __e["start"]>0
+          __e["end"] = __n-1
+          coverage.push(__e)
+          __e = {"start"=>-1,"end"=>-1}
+        end
+      end
+      __n += 1
+    end
+    if __e["start"]>0 &&  __e["end"]<0
+      __e["end"] = __n-1
+      coverage.push(__e)
+    end
+    return render json: {"Structure coverage"=>coverage}, status: :ok
+  end
+
+  def getPDBalignmentJSONP
+    info = nil
+    pdbId = params[:name]
+    if pdbId == "undefined"
+      toReturnInfo = ""
+    else
+      dbData = PdbDatum.find_by(pdbId: pdbId)
+      if !dbData.nil?
+        # lo que buscamos es lo que esta guardado
+        info = JSON.parse(dbData.data)
+      else
+        file = SIFTSFile+pdbId.downcase[1..2]+"/"+pdbId.downcase+".xml.gz"
+        rawData = getFileWithDigest(file)
+        if rawData["data"] == nil
+          url = SIFTSUrl+pdbId+".xml.gz"
+          rawData = getUrlWithDigest(url)
+        end
+        digest = rawData["checksum"]
+        unzipped = unzipData(rawData["data"])
+        dataXml = getXml(unzipped)
+        # hay que guardar otra vez
+        sifts = processSIFTS(dataXml)
+        info = pdbInfo(sifts)
+        if !dbData.nil?
+          dbData.destroy
+        end
+        PdbDatum.create(pdbId: pdbId, digest: digest, data: info.to_json)
+      end
+      toReturnInfo = "processAlignment("+info.to_json+")"
+    end
+    return render text: toReturnInfo, status: :ok
+  end
+
+=begin
   def getPDBalignmentJSONP
     info = nil
     pdbId = params[:name]
@@ -99,6 +239,7 @@ class AlignmentsController < ApplicationController
     end
     return render text: toReturnInfo, status: :ok
   end
+=end
 
   # TODO el alineamiento entre PDB y Uniprot no es completo
   # para la parte del string, cuando el PDB empieza antes de
@@ -108,6 +249,9 @@ class AlignmentsController < ApplicationController
     siftSalida = Hash.new
     # cada entidad es una cadena
     miEntity = []
+    if not hash
+      return siftSalida
+    end
     if hash["entry"]["entity"].class == Hash
       miEntity.push(hash["entry"]["entity"])
     elsif hash["entry"]["entity"].class == Array
@@ -245,6 +389,22 @@ class AlignmentsController < ApplicationController
   end
 
   def getUniprotSequence(uniprotAc)
+    begin
+      data = `ssh  jsegura@campins '~/apps/BLAST/ncbi-blast-2.5.0+/bin/blastdbcmd -entry #{uniprotAc} -db /home/jsegura/databases/UNIPROT/blast/sprot/sprot'`
+      if data.length == 0
+        data = `ssh  jsegura@campins '~/apps/BLAST/ncbi-blast-2.5.0+/bin/blastdbcmd -entry #{uniprotAc} -db /home/jsegura/databases/UNIPROT/blast/trembl/trembl'`
+      end
+      if data.length == 0
+        data = Net::HTTP.get_response(URI.parse(UniprotURL+uniprotAc+".fasta")).body
+      end
+    rescue
+      puts "Error: #{$!}"
+    end
+    fasta = Bio::FastaFormat.new(data)
+    return fasta
+  end
+
+  def __getUniprotSequence(uniprotAc)
     begin
       data = Net::HTTP.get_response(URI.parse(UniprotURL+uniprotAc+".fasta")).body
     rescue

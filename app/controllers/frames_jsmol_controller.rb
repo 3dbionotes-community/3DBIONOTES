@@ -20,6 +20,7 @@ class FramesJsmolController < ApplicationController
     @origin = origin
     @emdb = emdbRaw
     @viewerType = params[:viewer_type]
+    @n_models = params[:n_models]
     if !emdbRaw.nil? and !emdbRaw.empty?
       @emdb = emdbRaw
       url = BaseUrl+"api/info/EMDB/data/"+@emdb

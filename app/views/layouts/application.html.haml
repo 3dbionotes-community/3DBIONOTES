@@ -1,14 +1,1 @@
-%html#parent(lang="en")
-  %head
-    %meta{:content => "text/html; charset=utf-8", 'http-equiv' => "Content-Type"}
-    %meta{:name => "description", :content => "Web site that displays sequence-associated annotations combining them into a structural view"}
-    %meta{:name => "keywords", :content => "bioinformatics, proteins, PDB, emdb, Uniprot"}
-    %title= title
-    =csrf_meta_tag
-    =render 'layouts/stylesheets'
-    = stylesheet_link_tag('main.css')
-    = javascript_include_tag('iframeResizer.min')
-    = javascript_include_tag('sweetalert.min')
-    = javascript_include_tag('ownParent')
-  %body.parentBody{:id => "body"}
-    = yield
+= yield
