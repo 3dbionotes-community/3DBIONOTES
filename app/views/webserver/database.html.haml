@@ -1,0 +1,39 @@
+.ws_main_div
+  .database_form
+    = form_tag({controller: "main", action: "home",anchor: "query"}, :method => :get,id: "query_form",:style=>"margin-top:20px;") do 
+      %h3
+        Search by
+        %a{:href=>"javascript:window.open('http://www.emdatabank.org/')", :title=>"E.g. EMD-2810"} EMDB
+        code,
+        %a{:href=>"javascript:window.open('http://www.rcsb.org/')", :title=>"E.g. 101M"} PDB
+        ID or
+        %a{:href=>"javascript:window.open('http://www.uniprot.org/')", :title=>"E.g. P01112"} Uniprot
+        accession
+      =text_field_tag(:queryId)
+      = hidden_field_tag(:viewer_type,@viewerType)
+      %br
+      %br
+      %div{:style=>"color:#666666;vertical-align:middle;font-size:14px;"}
+        = check_box_tag(:devel_check,1,false,{:style=>"position:relative;top:4px;"})
+        Include genomic annotations (under development)
+        :javascript
+          $j("#devel_check").attr('checked',false);
+          $j("#devel_check").change(function(){
+            document.location.href="/devel#query";
+          });
+      %br
+      = button_tag("Submit")
+      %br
+      %br
+      %a{:href=>'javascript:window.location.href=\'http://3dbionotes.cnb.csic.es/?queryId=P01112&viewer_type=ngl&button=#query\''} Example (HRAS)
+      %br
+      %a{:href=>'javascript:window.location.href=\'http://3dbionotes.cnb.csic.es/?&queryId=emd-2924&viewer_type=ngl&button=#query\''} Example (Human APC/C-Cdh1-Emi1)
+  .wait_div{:style=>'display:none'}
+    %span.wait_text PLEASE BE PATIENT
+    %br
+    %br
+    =image_tag("loading.gif",size:"300x300")
+    %br
+    %br
+    %span.wait_text THIS PROCESS MAY TAKE A FEW MINUTES
+

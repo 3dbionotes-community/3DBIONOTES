@@ -1,0 +1,1728 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib/TooltipFactory.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">lib/TooltipFactory.js</span></h1>
+    <h2>
+        Statements: <span class="metric">11.33% <small>(35 / 309)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 161)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">2% <small>(1 / 50)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">11.33% <small>(35 / 309)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">lib/</a> &#187; TooltipFactory.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span></td><td class="text"><pre class="prettyprint lang-js">/*jslint node: true */
+/*jshint laxbreak: true */
+/*jshint laxcomma: true */
+"use strict";
+&nbsp;
+var d3 = require("d3");
+var _ = require("underscore");
+var Evidence = require('./Evidence');
+&nbsp;
+var createTooltipBox = <span class="fstat-no" title="function not covered" >function(container) {</span>
+<span class="cstat-no" title="statement not covered" >    d3.select('.up_pftv_tooltip-container').remove();</span>
+<span class="cstat-no" title="statement not covered" >    var tooltipContainer = container.append('div')</span>
+        .attr('class','up_pftv_tooltip-container');
+<span class="cstat-no" title="statement not covered" >    tooltipContainer.append('span')</span>
+        .text('x')
+        .attr('class','up_pftv_tooltip-close')
+        .on('click',<span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >            tooltipContainer.transition(20)</span>
+                .style('opacity',0)
+                .style('display','none');
+<span class="cstat-no" title="statement not covered" >            tooltipContainer.remove();</span>
+        });
+<span class="cstat-no" title="statement not covered" >    return tooltipContainer;</span>
+};
+&nbsp;
+var getEvidenceText = <span class="fstat-no" title="function not covered" >function(tooltip, code, sources) {</span>
+<span class="cstat-no" title="statement not covered" >    var acronym = Evidence.acronym[code];</span>
+<span class="cstat-no" title="statement not covered" >    var publications = _.where(sources, {name: 'PubMed'}).length;</span>
+<span class="cstat-no" title="statement not covered" >    publications += _.where(sources, {name: 'Citation'}).length;</span>
+<span class="cstat-no" title="statement not covered" >    var evidenceText = '';</span>
+<span class="cstat-no" title="statement not covered" >    if ((acronym === 'EXP') || (acronym === 'NAS')) {</span>
+<span class="cstat-no" title="statement not covered" >        publications += _.filter(sources, <span class="fstat-no" title="function not covered" >function(s) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if (s.id &amp;&amp; (s.id.indexOf('ref.') === 0)) {</span>
+<span class="cstat-no" title="statement not covered" >                s.name = 'Citation';</span>
+<span class="cstat-no" title="statement not covered" >                s.url = 'http://www.uniprot.org/uniprot/' + tooltip.accession + '#ref' + s.id.slice(4);</span>
+<span class="cstat-no" title="statement not covered" >                return true;</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                return false;</span>
+            }
+        }).length;
+<span class="cstat-no" title="statement not covered" >        evidenceText = publications + (publications &gt; 1 ? ' Publications' : ' Publication');</span>
+    } else <span class="cstat-no" title="statement not covered" >if (acronym === 'IC') {</span>
+<span class="cstat-no" title="statement not covered" >        evidenceText = publications === 0</span>
+            ? 'Curated'
+            : publications + (publications &gt; 1 ? ' Publications' : ' Publication');
+    } else <span class="cstat-no" title="statement not covered" >if (acronym === 'ISS') {</span>
+<span class="cstat-no" title="statement not covered" >        evidenceText = 'By similarity';</span>
+    } else <span class="cstat-no" title="statement not covered" >if (acronym === 'ISM') {</span>
+<span class="cstat-no" title="statement not covered" >        evidenceText = !sources || sources.length === 0 ? 'Sequence Analysis': sources[0].name + ' annotation';</span>
+    } else <span class="cstat-no" title="statement not covered" >if ((acronym === 'MIXM') || (acronym === 'MIXA')) {</span>
+<span class="cstat-no" title="statement not covered" >        evidenceText = 'Combined sources';</span>
+    } else <span class="cstat-no" title="statement not covered" >if ((acronym === 'MI') || (acronym === 'AI')){</span>
+<span class="cstat-no" title="statement not covered" >        evidenceText = 'Imported';</span>
+    } else <span class="cstat-no" title="statement not covered" >if (acronym === 'AA') {</span>
+<span class="cstat-no" title="statement not covered" >        var unirule = sources</span>
+            ? _.find(sources, <span class="fstat-no" title="function not covered" >function(source) {</span>
+<span class="cstat-no" title="statement not covered" >                return source.url &amp;&amp; (sources.url.indexOf('unirule') !== -1);</span>
+            })
+            : false;
+<span class="cstat-no" title="statement not covered" >        var saas = sources</span>
+            ? _.find(sources, <span class="fstat-no" title="function not covered" >function(source) {</span>
+<span class="cstat-no" title="statement not covered" >            return source.url &amp;&amp; (sources.url.indexOf('SAAS') !== -1);</span>
+        })
+            : false;
+<span class="cstat-no" title="statement not covered" >        evidenceText =  unirule ? 'UniRule annotation'</span>
+            : saas ? 'SAAS annotation'
+            : sources ? sources[0].name + ' annotation' : 'Automatic annotation';
+    } else {
+<span class="cstat-no" title="statement not covered" >        evidenceText = code;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return evidenceText +</span>
+        (Evidence.text[code] ? ' (' + Evidence.text[code] + ')' : '');
+};
+&nbsp;
+var addPinPad = <span class="fstat-no" title="function not covered" >function(fv, tooltip, descRow, tooltipTitle) {</span>
+<span class="cstat-no" title="statement not covered" >    if (fv.pinPad) {</span>
+<span class="cstat-no" title="statement not covered" >        var th = descRow.append('th')</span>
+            .attr('colspan',2);
+<span class="cstat-no" title="statement not covered" >        var pinClass = 'up_pftv_iconContainer-unpinned';</span>
+<span class="cstat-no" title="statement not covered" >        var pinTitle = 'Pin tooltip';</span>
+<span class="cstat-no" title="statement not covered" >        if (tooltip.data.pinned === true) {</span>
+<span class="cstat-no" title="statement not covered" >            pinClass = 'up_pftv_iconContainer-pinned';</span>
+<span class="cstat-no" title="statement not covered" >            pinTitle = 'Unpin tooltip';</span>
+        }
+<span class="cstat-no" title="statement not covered" >        var pinContainer = th.append('div').classed('up_pftv_tooltip-pin-container', true)</span>
+            .append('div').attr('class', 'up_pp_iconContainer ' + pinClass);
+<span class="cstat-no" title="statement not covered" >        pinContainer.attr('title', pinTitle);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        pinContainer.append('div').attr('class', 'icon-pin up_pp_icon up_pp_clickable-icon')</span>
+            .on('click', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >                if (tooltip.data.pinned === true) {</span>
+<span class="cstat-no" title="statement not covered" >                    tooltip.data.pinned = false;</span>
+<span class="cstat-no" title="statement not covered" >                    pinContainer.classed('up_pftv_iconContainer-unpinned', true);</span>
+<span class="cstat-no" title="statement not covered" >                    pinContainer.classed('up_pftv_iconContainer-pinned', false);</span>
+<span class="cstat-no" title="statement not covered" >                    pinContainer.attr('title', 'Pin tooltip');</span>
+<span class="cstat-no" title="statement not covered" >                    fv.pinPad.removeElement(tooltip.pinData.id);</span>
+                } else {
+<span class="cstat-no" title="statement not covered" >                    tooltip.data.pinned = true;</span>
+<span class="cstat-no" title="statement not covered" >                    fv.pinPad.addElement(tooltip.pinData);</span>
+<span class="cstat-no" title="statement not covered" >                    pinContainer.classed('up_pftv_iconContainer-unpinned', false);</span>
+<span class="cstat-no" title="statement not covered" >                    pinContainer.classed('up_pftv_iconContainer-pinned', true);</span>
+<span class="cstat-no" title="statement not covered" >                    pinContainer.attr('title', 'Unpin tooltip');</span>
+                }
+            });
+<span class="cstat-no" title="statement not covered" >        th.append('div').style('display', 'inline-block').text(tooltipTitle);</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >        descRow.append('th').attr('colspan',2).text(tooltipTitle);</span>
+    }
+};
+&nbsp;
+var parseVariantDescription = <span class="fstat-no" title="function not covered" >function(data) {</span>
+<span class="cstat-no" title="statement not covered" >    if (data.description) {</span>
+<span class="cstat-no" title="statement not covered" >        var descriptionArray = data.description.replace(/\s*Ftid:/g, '|Ftid:').replace(/\s*LSS:/g,'|LSS:').split('|');</span>
+<span class="cstat-no" title="statement not covered" >        descriptionArray = _.groupBy(descriptionArray, <span class="fstat-no" title="function not covered" >function(d){</span></span>
+<span class="cstat-no" title="statement not covered" >            return d.indexOf(':') &gt; -1 ? d.split(/:/)[0] : 'UP';</span>
+        });
+<span class="cstat-no" title="statement not covered" >        data.ftId = descriptionArray.Ftid ? descriptionArray.Ftid.toString().replace(/Ftid:/g, '') : undefined;</span>
+<span class="cstat-no" title="statement not covered" >        data.up_description = descriptionArray.UP ? descriptionArray.UP.toString() : undefined;</span>
+<span class="cstat-no" title="statement not covered" >        data.lss_description = descriptionArray.LSS</span>
+            ? descriptionArray.LSS.toString().replace(/LSS:/g, '') : undefined;
+    }
+<span class="cstat-no" title="statement not covered" >    if (Evidence.existAssociation(data.association)) {</span>
+<span class="cstat-no" title="statement not covered" >        _.each(data.association, <span class="fstat-no" title="function not covered" >function(association) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if (association.description) {</span>
+<span class="cstat-no" title="statement not covered" >                var index = association.description.indexOf('Ftid: ');</span>
+<span class="cstat-no" title="statement not covered" >                if (index !== -1) {</span>
+<span class="cstat-no" title="statement not covered" >                    data.ftId = association.description.substr(index+6, 10);</span>
+<span class="cstat-no" title="statement not covered" >                    association.description = (association.description.slice(0, index)</span>
+                    + association.description.slice(index+16)).trim();
+                }
+            }
+        });
+    }
+};
+&nbsp;
+var addFtId = <span class="fstat-no" title="function not covered" >function(tooltip, pinDataSection) {</span>
+<span class="cstat-no" title="statement not covered" >    if (tooltip.data.ftId !== undefined) {</span>
+<span class="cstat-no" title="statement not covered" >        var dataId = tooltip.table.append('tr');</span>
+<span class="cstat-no" title="statement not covered" >        dataId.append('td').text('Feature ID');</span>
+<span class="cstat-no" title="statement not covered" >        dataId.append('td').text(tooltip.data.ftId);</span>
+<span class="cstat-no" title="statement not covered" >        pinDataSection.information.styled_feature_id = {</span>
+            key: "Feature ID",
+            value: tooltip.data.ftId
+        };
+    }
+};
+&nbsp;
+var addDescription = <span class="fstat-no" title="function not covered" >function(tooltip, description, pinDataSection, descriptionType){</span>
+<span class="cstat-no" title="statement not covered" >    if (description) {</span>
+<span class="cstat-no" title="statement not covered" >        var dataDes = tooltip.table.append('tr');</span>
+<span class="cstat-no" title="statement not covered" >        dataDes.append('td').text('Description');</span>
+<span class="cstat-no" title="statement not covered" >        dataDes.append('td').text(description);</span>
+<span class="cstat-no" title="statement not covered" >        pinDataSection.information['styled_' + descriptionType] = {</span>
+            key: "Description",
+            value: description
+        };
+    }
+};
+&nbsp;
+var Tooltip = <span class="fstat-no" title="function not covered" >function(fv, catTitle, d, container, coordinates) {</span>
+<span class="cstat-no" title="statement not covered" >    var tooltip = this;</span>
+<span class="cstat-no" title="statement not covered" >    tooltip.data = d;</span>
+<span class="cstat-no" title="statement not covered" >    tooltip.pinData = {</span>
+        category: catTitle, id: d.internalId,
+        ordering: {
+            type: tooltip.data.type.name,
+            start: +tooltip.data.begin,
+            end: tooltip.data.end ? +tooltip.data.end : +tooltip.data.begin
+        },
+        sections: []
+    };
+<span class="cstat-no" title="statement not covered" >    tooltip.sequence = fv.sequence;</span>
+<span class="cstat-no" title="statement not covered" >    tooltip.accession = fv.accession;</span>
+<span class="cstat-no" title="statement not covered" >    tooltip.tooltipViewer = undefined;</span>
+<span class="cstat-no" title="statement not covered" >    tooltip.tooltipViewer = undefined;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var tooltipContainer = createTooltipBox(container);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (coordinates) {</span>
+<span class="cstat-no" title="statement not covered" >        tooltipContainer.style('left', (coordinates.x + 10) + 'px')</span>
+            .style('top', coordinates.y + 'px')
+            .transition(200)
+            .style('opacity',1)
+            .style('display','block');
+    } else {
+<span class="cstat-no" title="statement not covered" >        tooltipContainer.style('left', (d3.mouse(container.node())[0] + 10) + 'px')</span>
+            .style('top', d3.mouse(container.node())[1] + 'px')
+            .transition(200)
+            .style('opacity',1)
+            .style('display','block');
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    d3.select('.up_pftv_tooltip-container table').remove();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    tooltip.table = d3.select('.up_pftv_tooltip-container').append('table');</span>
+<span class="cstat-no" title="statement not covered" >    tooltip.table</span>
+        .on('mousedown', <span class="fstat-no" title="function not covered" >function() {</span> <span class="cstat-no" title="statement not covered" >fv.overTooltip = true; </span>})
+        .on('mouseup', <span class="fstat-no" title="function not covered" >function() {</span>  <span class="cstat-no" title="statement not covered" >fv.overTooltip = false; </span>});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var descRow = tooltip.table.append('tr');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var tooltipTitle = tooltip.data.type.label + ' ' + tooltip.data.begin +</span>
+        (tooltip.data.end ? '-' + tooltip.data.end : '');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    tooltip.pinData.sections.push({title: tooltipTitle, information: {}});</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    addPinPad(fv, tooltip, descRow, tooltipTitle);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (tooltip.data.sourceType !== undefined) {</span>
+<span class="cstat-no" title="statement not covered" >        var dataSource = tooltip.table.append('tr');</span>
+<span class="cstat-no" title="statement not covered" >        dataSource.append('td').text('Source');</span>
+<span class="cstat-no" title="statement not covered" >        var sourceText = '';</span>
+<span class="cstat-no" title="statement not covered" >        if (tooltip.data.sourceType === Evidence.variantSourceType.mixed) {</span>
+<span class="cstat-no" title="statement not covered" >            tooltip.pinData.sections[0].information.source = 'UniProt and large scale studies';</span>
+<span class="cstat-no" title="statement not covered" >            sourceText = 'UniProt and large scale studies';</span>
+        } else <span class="cstat-no" title="statement not covered" >if (tooltip.data.sourceType === Evidence.variantSourceType.uniprot) {</span>
+<span class="cstat-no" title="statement not covered" >            tooltip.pinData.sections[0].information.source = 'UniProt';</span>
+<span class="cstat-no" title="statement not covered" >            sourceText = 'UniProt';</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            tooltip.pinData.sections[0].information.source = 'Large scale studies';</span>
+<span class="cstat-no" title="statement not covered" >            sourceText = 'Large scale studies';</span>
+        }
+<span class="cstat-no" title="statement not covered" >        dataSource.append('td').text(sourceText);</span>
+<span class="cstat-no" title="statement not covered" >        parseVariantDescription(tooltip.data);</span>
+<span class="cstat-no" title="statement not covered" >        if (sourceText === 'UniProt') {</span>
+<span class="cstat-no" title="statement not covered" >            addFtId(tooltip, tooltip.pinData.sections[0]);</span>
+<span class="cstat-no" title="statement not covered" >            addDescription(tooltip, tooltip.data.up_description, tooltip.pinData.sections[0], 'up_description');</span>
+        } else <span class="cstat-no" title="statement not covered" >if (sourceText === 'Large scale studies'){</span>
+<span class="cstat-no" title="statement not covered" >            addDescription(tooltip, tooltip.data.lss_description, tooltip.pinData.sections[0], 'lss_description');</span>
+        }
+    } else {
+<span class="cstat-no" title="statement not covered" >        addFtId(tooltip, tooltip.pinData.sections[0]);</span>
+<span class="cstat-no" title="statement not covered" >        addDescription(tooltip, tooltip.data.description, tooltip.pinData.sections[0], 'description');</span>
+    }
+};
+&nbsp;
+var addEvidenceXRefLinks = <span class="fstat-no" title="function not covered" >function(tooltip, section, sourceRow, info) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!sourceRow) {</span>
+<span class="cstat-no" title="statement not covered" >        sourceRow = tooltip.table.append('tr')</span>
+            .attr('class','up_pftv_evidence-source');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        sourceRow.append('td')</span>
+            .text('');
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    section.information['styled_'+ info.attrText + 'Array_' + info.index + '_' + info.counter] = {</span>
+        key: info.index,
+        key_right: true,
+        value: []
+    };
+<span class="cstat-no" title="statement not covered" >    var list = sourceRow.append('td').text(info.index + ' ');</span>
+<span class="cstat-no" title="statement not covered" >    _.each(info.elem, <span class="fstat-no" title="function not covered" >function(el, i) {</span></span>
+<span class="cstat-no" title="statement not covered" >        var url = info.alternative === true ? el.alternativeUrl: el.url;</span>
+<span class="cstat-no" title="statement not covered" >        list.append('span').append('a')</span>
+            .attr('href', url)
+            .attr('target', '_blank')
+            .text(el.id);
+<span class="cstat-no" title="statement not covered" >        if (i !== (info.elem.length-1)) {</span>
+<span class="cstat-no" title="statement not covered" >            list.append('span').text(', ');</span>
+        }
+<span class="cstat-no" title="statement not covered" >        section.information['styled_'+ info.attrText + 'Array_' + info.index + '_' + info.counter].value.push({</span>
+            value: el.id,
+            link: url
+        });
+    });
+};
+&nbsp;
+Tooltip.prototype.addEvidences = <span class="fstat-no" title="function not covered" >function(evidences, section) {</span>
+<span class="cstat-no" title="statement not covered" >    var tooltip = this;</span>
+<span class="cstat-no" title="statement not covered" >    _.each(evidences, <span class="fstat-no" title="function not covered" >function(e, counter) {</span></span>
+<span class="cstat-no" title="statement not covered" >        var typeRow = tooltip.table.append('tr')</span>
+            .attr('class','up_pftv_evidence-col');
+<span class="cstat-no" title="statement not covered" >        typeRow.append('td')</span>
+            .text('Evidence');
+<span class="cstat-no" title="statement not covered" >        var evidenceText = getEvidenceText(tooltip, e.code, e.sources);</span>
+<span class="cstat-no" title="statement not covered" >        typeRow.append('td')</span>
+            .text(evidenceText);
+<span class="cstat-no" title="statement not covered" >        section.information['styled_evidence_' + counter] = {</span>
+            key: 'Evidence',
+            value: evidenceText
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var groupedSources = _.groupBy(e.sources, 'name');</span>
+<span class="cstat-no" title="statement not covered" >        delete groupedSources['undefined'];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        _.each(groupedSources, <span class="fstat-no" title="function not covered" >function(elem, index) {</span></span>
+<span class="cstat-no" title="statement not covered" >            addEvidenceXRefLinks(tooltip, section, undefined, {</span>
+                counter: counter, elem: elem, index: index, attrText: 'evidence'
+            });
+<span class="cstat-no" title="statement not covered" >            if (index === 'PubMed') {</span>
+<span class="cstat-no" title="statement not covered" >                addEvidenceXRefLinks(tooltip, section, undefined, {</span>
+                    counter:counter, elem: elem, index: 'EuropePMC', attrText: 'evidence', alternative: true
+                });
+            }
+        });
+    });
+};
+&nbsp;
+var BasicTooltipViewer = <span class="fstat-no" title="function not covered" >function(tooltip) {</span>
+<span class="cstat-no" title="statement not covered" >    tooltip.addEvidences(tooltip.data.evidences, tooltip.pinData.sections[0]);</span>
+};
+&nbsp;
+var AlternativeTooltipViewer = <span class="fstat-no" title="function not covered" >function(tooltip, change, field) {</span>
+<span class="cstat-no" title="statement not covered" >    if (tooltip.data[field]) {</span>
+<span class="cstat-no" title="statement not covered" >        var seqRow = tooltip.table.append('tr');</span>
+<span class="cstat-no" title="statement not covered" >        seqRow.append('td').text(change);</span>
+<span class="cstat-no" title="statement not covered" >        seqRow.append('td')</span>
+            .text(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >                var end = tooltip.data.end ? tooltip.data.end : tooltip.data.begin;</span>
+<span class="cstat-no" title="statement not covered" >                var original = tooltip.sequence.substring(+tooltip.data.begin - 1, +end);</span>
+<span class="cstat-no" title="statement not covered" >                var text = original + ' &gt; ' + tooltip.data[field];</span>
+<span class="cstat-no" title="statement not covered" >                tooltip.pinData.sections[0].information[change] = text;</span>
+<span class="cstat-no" title="statement not covered" >                return text;</span>
+            });
+    }
+<span class="cstat-no" title="statement not covered" >    tooltip.addEvidences(tooltip.data.evidences, tooltip.pinData.sections[0]);</span>
+};
+&nbsp;
+var addPredictions = <span class="fstat-no" title="function not covered" >function(tooltip, section) {</span>
+<span class="cstat-no" title="statement not covered" >    if (tooltip.data.frequency &amp;&amp; (tooltip.data.frequency !== 0)) {</span>
+<span class="cstat-no" title="statement not covered" >        var freqRow = tooltip.table.append('tr');</span>
+<span class="cstat-no" title="statement not covered" >        freqRow.append('td').append('span').append('a')</span>
+            .attr('href', 'http://www.ncbi.nlm.nih.gov/projects/SNP/docs/rs_attributes.html#gmaf')
+            .attr('target', '_blank').text('Frequency (MAF)');
+<span class="cstat-no" title="statement not covered" >        freqRow.append('td').text(tooltip.data.frequency);</span>
+<span class="cstat-no" title="statement not covered" >        section.information.frequency = tooltip.data.frequency;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (tooltip.data.polyphenPrediction &amp;&amp; (tooltip.data.polyphenPrediction !== '-')</span>
+        &amp;&amp; (tooltip.data.polyphenPrediction !== 'unknown')) {
+<span class="cstat-no" title="statement not covered" >        var polyRow = tooltip.table.append('tr');</span>
+<span class="cstat-no" title="statement not covered" >        polyRow.append('td').append('span').append('a')</span>
+            .attr('href', 'http://genetics.bwh.harvard.edu/pph2/dokuwiki/about')
+            .attr('target', '_blank').text('Polyphen');
+<span class="cstat-no" title="statement not covered" >        var text = tooltip.data.polyphenPrediction + ', score ' + tooltip.data.polyphenScore;</span>
+<span class="cstat-no" title="statement not covered" >        polyRow.append('td').text(text);</span>
+<span class="cstat-no" title="statement not covered" >        section.information.polyphen = text;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (tooltip.data.siftPrediction &amp;&amp; (tooltip.data.siftPrediction !== '-')</span>
+        &amp;&amp; (tooltip.data.siftPrediction !== 'unknown')) {
+<span class="cstat-no" title="statement not covered" >        var siftRow = tooltip.table.append('tr');</span>
+<span class="cstat-no" title="statement not covered" >        siftRow.append('td').append('span').append('a')</span>
+            .attr('href', 'http://sift.jcvi.org/')
+            .attr('target', '_blank').text('SIFT');
+<span class="cstat-no" title="statement not covered" >        var predictionText = tooltip.data.siftPrediction + ', score ' + tooltip.data.siftScore;</span>
+<span class="cstat-no" title="statement not covered" >        siftRow.append('td').text(predictionText);</span>
+<span class="cstat-no" title="statement not covered" >        section.information.sift = predictionText;</span>
+    }
+};
+&nbsp;
+var havePredictions = <span class="fstat-no" title="function not covered" >function(data) {</span>
+<span class="cstat-no" title="statement not covered" >    var response = false;</span>
+<span class="cstat-no" title="statement not covered" >    if (data.frequency &amp;&amp; (data.frequency !== 0)) {</span>
+<span class="cstat-no" title="statement not covered" >        response = true;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (data.polyphenPrediction &amp;&amp; (data.polyphenPrediction !== '-')</span>
+        &amp;&amp; (data.polyphenPrediction !== 'unknown')) {
+<span class="cstat-no" title="statement not covered" >        response = true;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (data.siftPrediction &amp;&amp; (data.siftPrediction !== '-')</span>
+        &amp;&amp; (data.siftPrediction !== 'unknown')) {
+<span class="cstat-no" title="statement not covered" >        response = true;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return response;</span>
+};
+&nbsp;
+var addAssociation = <span class="fstat-no" title="function not covered" >function(tooltip, section) {</span>
+<span class="cstat-no" title="statement not covered" >    if (Evidence.existAssociation(tooltip.data.association)) {</span>
+<span class="cstat-no" title="statement not covered" >        var assocRow = tooltip.table.append('tr');</span>
+<span class="cstat-no" title="statement not covered" >        assocRow.append('td').attr('colspan', 2).classed('up_pftv_subsection',true).text('Disease Association');</span>
+<span class="cstat-no" title="statement not covered" >        section.information.subsection_disease = {</span>
+            title: 'Disease Association',
+            information: {}
+        };
+<span class="cstat-no" title="statement not covered" >        _.each(tooltip.data.association, <span class="fstat-no" title="function not covered" >function(association, counter){</span></span>
+<span class="cstat-no" title="statement not covered" >            if (association.name) {</span>
+<span class="cstat-no" title="statement not covered" >                var diseaseRow = tooltip.table.append('tr');</span>
+<span class="cstat-no" title="statement not covered" >                diseaseRow.append('td').text('Disease');</span>
+<span class="cstat-no" title="statement not covered" >                diseaseRow.append('td').append('span').append('a')</span>
+                    .attr('href', 'http://www.uniprot.org/diseases/?query=' + association.name)
+                    .attr('target', '_blank').text(association.name);
+<span class="cstat-no" title="statement not covered" >                section.information.subsection_disease.information['styled_evidenceArray_disease_' + counter] = {</span>
+                    key: 'Disease',
+                    value: {
+                        value: association.name,
+                        link: 'http://www.uniprot.org/diseases/?query=' + association.name
+                    }
+                };
+            }
+<span class="cstat-no" title="statement not covered" >            if (association.description) {</span>
+<span class="cstat-no" title="statement not covered" >                var descRow = tooltip.table.append('tr');</span>
+<span class="cstat-no" title="statement not covered" >                descRow.append('td').text('Description');</span>
+<span class="cstat-no" title="statement not covered" >                descRow.append('td').text(association.description);</span>
+<span class="cstat-no" title="statement not covered" >                section.information.subsection_disease.information['styled_evidenceArray_description_' + counter] = {</span>
+                    key: 'Description',
+                    value: association.description
+                };
+            }
+<span class="cstat-no" title="statement not covered" >            if (association.moreInfo) {</span>
+<span class="cstat-no" title="statement not covered" >                var groupedSources = _.groupBy(association.moreInfo, 'name');</span>
+<span class="cstat-no" title="statement not covered" >                _.each(groupedSources, <span class="fstat-no" title="function not covered" >function(elem, index) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    var moreInfo = tooltip.table.append('tr');</span>
+<span class="cstat-no" title="statement not covered" >                    moreInfo.append('td');</span>
+<span class="cstat-no" title="statement not covered" >                    var list = moreInfo.append('td').text(index + ' ');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    section.information.subsection_disease.information</span>
+                        ['styled_associationArray_' + index + '_' + counter] = {
+                        key: index,
+                        key_right: true,
+                        value: []
+                    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    _.each(elem, <span class="fstat-no" title="function not covered" >function(el) {</span></span>
+<span class="cstat-no" title="statement not covered" >                        list.append('span').append('a').attr('href', el.url)</span>
+                            .attr('target', '_blank').text(el.id);
+<span class="cstat-no" title="statement not covered" >                        section.information.subsection_disease.information</span>
+                            ['styled_associationArray_' + index + '_' + counter].value.push({
+                                value: el.id,
+                                link: el.url
+                            });
+                    });
+                });
+            }
+        });
+    }
+};
+&nbsp;
+var addMutation = <span class="fstat-no" title="function not covered" >function(tooltip, section) {</span>
+<span class="cstat-no" title="statement not covered" >    var mutRow = tooltip.table.append('tr');</span>
+<span class="cstat-no" title="statement not covered" >    mutRow.append('td').text('Variant');</span>
+<span class="cstat-no" title="statement not covered" >    var text = tooltip.data.wildType + ' &gt; ' + tooltip.data.mutation;</span>
+<span class="cstat-no" title="statement not covered" >    mutRow.append('td').text(text);</span>
+<span class="cstat-no" title="statement not covered" >    section.information.mutation = text;</span>
+};
+&nbsp;
+var addXRefs = <span class="fstat-no" title="function not covered" >function(tooltip, section) {</span>
+<span class="cstat-no" title="statement not covered" >    if (tooltip.data.xrefs) {</span>
+<span class="cstat-no" title="statement not covered" >        var sourceRow = tooltip.table.append('tr')</span>
+            .attr('class','up_pftv_evidence-source');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        sourceRow.append('td')</span>
+            .text('Cross-references');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var groupedSources = _.uniq(tooltip.data.xrefs, <span class="fstat-no" title="function not covered" >function(ref) {</span></span>
+<span class="cstat-no" title="statement not covered" >            return ref.name + ref.id + ref.url;</span>
+        });
+<span class="cstat-no" title="statement not covered" >        groupedSources = _.groupBy(groupedSources, 'name');</span>
+<span class="cstat-no" title="statement not covered" >        delete groupedSources['undefined'];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var first = true;</span>
+<span class="cstat-no" title="statement not covered" >        _.each(groupedSources, <span class="fstat-no" title="function not covered" >function (elem, key) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if (first) {</span>
+<span class="cstat-no" title="statement not covered" >                addEvidenceXRefLinks(tooltip, section, sourceRow, {</span>
+                    counter: 0, elem: elem, index: key, attrText: 'xref'
+                });
+<span class="cstat-no" title="statement not covered" >                first = false;</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                addEvidenceXRefLinks(tooltip, section, undefined, {</span>
+                    counter: 0, elem: elem, index: key, attrText: 'xref'
+                });
+            }
+&nbsp;
+&nbsp;
+        });
+    }
+};
+&nbsp;
+var addUPSection = <span class="fstat-no" title="function not covered" >function(tooltip, upEvidences) {</span>
+<span class="cstat-no" title="statement not covered" >    if (tooltip.data.ftId || tooltip.data.up_description || (upEvidences.length !== 0) || tooltip.data.association) {</span>
+<span class="cstat-no" title="statement not covered" >        var upRow = tooltip.table.append('tr').classed('up_pftv_section', true);</span>
+<span class="cstat-no" title="statement not covered" >        upRow.append('td').attr('colspan',2).text('UniProt');</span>
+<span class="cstat-no" title="statement not covered" >        var length = tooltip.pinData.sections.push({title: 'UniProt', information: {}});</span>
+<span class="cstat-no" title="statement not covered" >        addFtId(tooltip, tooltip.pinData.sections[length-1]);</span>
+<span class="cstat-no" title="statement not covered" >        addDescription(tooltip, tooltip.data.up_description, tooltip.pinData.sections[length-1], 'up_description');</span>
+<span class="cstat-no" title="statement not covered" >        tooltip.addEvidences(upEvidences, tooltip.pinData.sections[length-1]);</span>
+<span class="cstat-no" title="statement not covered" >        addAssociation(tooltip, tooltip.pinData.sections[length-1]);</span>
+    }
+};
+&nbsp;
+var addLSSSection = <span class="fstat-no" title="function not covered" >function(tooltip, lssEvidences) {</span>
+<span class="cstat-no" title="statement not covered" >    if (tooltip.data.lss_description || (lssEvidences.length !== 0) || havePredictions(tooltip.data)) {</span>
+<span class="cstat-no" title="statement not covered" >        var lssRow = tooltip.table.append('tr').classed('up_pftv_section', true);</span>
+<span class="cstat-no" title="statement not covered" >        lssRow.append('td').attr('colspan',2).text('Large Scale Studies');</span>
+<span class="cstat-no" title="statement not covered" >        var length = tooltip.pinData.sections.push({title: 'Large Scale Studies', information: {}});</span>
+<span class="cstat-no" title="statement not covered" >        addDescription(tooltip, tooltip.data.lss_description, tooltip.pinData.sections[length-1], 'lss_description');</span>
+<span class="cstat-no" title="statement not covered" >        addPredictions(tooltip, tooltip.pinData.sections[length-1]);</span>
+<span class="cstat-no" title="statement not covered" >        tooltip.addEvidences(lssEvidences, tooltip.pinData.sections[length-1]);</span>
+    }
+};
+&nbsp;
+var VariantTooltipViewer = <span class="fstat-no" title="function not covered" >function(tooltip) {</span>
+<span class="cstat-no" title="statement not covered" >    if (tooltip.data.sourceType === Evidence.variantSourceType.mixed) {</span>
+<span class="cstat-no" title="statement not covered" >        var upEvidences = [], lssEvidences = [];</span>
+<span class="cstat-no" title="statement not covered" >        _.each(tooltip.data.evidences, <span class="fstat-no" title="function not covered" >function(e) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if (_.contains(Evidence.manual, e.code)) {</span>
+<span class="cstat-no" title="statement not covered" >                upEvidences.push(e);</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                lssEvidences.push(e);</span>
+            }
+        });
+<span class="cstat-no" title="statement not covered" >        addMutation(tooltip, tooltip.pinData.sections[0]);</span>
+<span class="cstat-no" title="statement not covered" >        addXRefs(tooltip, tooltip.pinData.sections[0]);</span>
+<span class="cstat-no" title="statement not covered" >        addUPSection(tooltip, upEvidences);</span>
+<span class="cstat-no" title="statement not covered" >        addLSSSection(tooltip, lssEvidences);</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >        addMutation(tooltip, tooltip.pinData.sections[0]);</span>
+<span class="cstat-no" title="statement not covered" >        addPredictions(tooltip, tooltip.pinData.sections[0]);</span>
+<span class="cstat-no" title="statement not covered" >        tooltip.addEvidences(tooltip.data.evidences, tooltip.pinData.sections[0]);</span>
+<span class="cstat-no" title="statement not covered" >        addXRefs(tooltip, tooltip.pinData.sections[0]);</span>
+<span class="cstat-no" title="statement not covered" >        addAssociation(tooltip, tooltip.pinData.sections[0]);</span>
+    }
+};
+&nbsp;
+Tooltip.basic = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.tooltipViewer = new BasicTooltipViewer(this);</span>
+};
+Tooltip.mutagen = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.tooltipViewer = new AlternativeTooltipViewer(this, 'Mutation', 'mutation');</span>
+};
+Tooltip.conflict = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.tooltipViewer = new AlternativeTooltipViewer(this, 'Conflict', 'alternativeSequence');</span>
+};
+Tooltip.missense = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.tooltipViewer = new VariantTooltipViewer(this);</span>
+};
+Tooltip.ms_del = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.tooltipViewer = new VariantTooltipViewer(this);</span>
+};
+Tooltip.insdel = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.tooltipViewer = new VariantTooltipViewer(this);</span>
+};
+Tooltip.stop_lost = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.tooltipViewer = new VariantTooltipViewer(this);</span>
+};
+Tooltip.stop_gained = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.tooltipViewer = new VariantTooltipViewer(this);</span>
+};
+Tooltip.init_codon = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.tooltipViewer = new VariantTooltipViewer(this);</span>
+};
+Tooltip.variant = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.tooltipViewer = new VariantTooltipViewer(this);</span>
+};
+&nbsp;
+var TooltipFactory = function() {
+    return {
+        createTooltip: <span class="fstat-no" title="function not covered" >function(fv, catTitle, data, container, coordinates) {</span>
+<span class="cstat-no" title="statement not covered" >            var tooltip</span>
+                , type = data.type.name.toLowerCase();
+            // error if the constructor doesn't exist
+<span class="cstat-no" title="statement not covered" >            if (typeof Tooltip[type] !== "function") {</span>
+<span class="cstat-no" title="statement not covered" >                Tooltip.basic.prototype = new Tooltip(fv, catTitle, data, container, coordinates);</span>
+<span class="cstat-no" title="statement not covered" >                tooltip = new Tooltip.basic();</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                Tooltip[type].prototype = new Tooltip(fv, catTitle, data, container, coordinates);</span>
+<span class="cstat-no" title="statement not covered" >                tooltip = new Tooltip[type]();</span>
+            }
+<span class="cstat-no" title="statement not covered" >            return tooltip;</span>
+        }
+    };
+}();
+&nbsp;
+module.exports = TooltipFactory;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 24 2016 13:36:30 GMT+0000 (GMT)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

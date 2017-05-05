@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib/FilterDialog.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">lib/FilterDialog.js</span></h1>
+    <h2>
+        Statements: <span class="metric">28.57% <small>(6 / 21)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">20% <small>(1 / 5)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">28.57% <small>(6 / 21)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">lib/</a> &#187; FilterDialog.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span></td><td class="text"><pre class="prettyprint lang-js">/*jslint node: true */
+/*jshint laxbreak: true */
+/*jshint laxcomma: true */
+"use strict";
+&nbsp;
+var d3 = require("d3");
+var _ = require("underscore");
+&nbsp;
+var FilterDialog = function() {
+    var populateDialog = <span class="fstat-no" title="function not covered" >function(self, fv) {</span>
+<span class="cstat-no" title="statement not covered" >        var divManual = self.dialog.append('div');</span>
+<span class="cstat-no" title="statement not covered" >        divManual.append('input')</span>
+            .attr('type', 'checkbox')
+            .attr('id', 'up_pftv_dialog-checkReviewed')
+            .property('checked', true)
+            .on('click', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >                var checkReviewed = d3.select('#up_pftv_dialog-checkReviewed').property('checked');</span>
+<span class="cstat-no" title="statement not covered" >                var checkOther = d3.select('#up_pftv_dialog-checkOther').property('checked');</span>
+<span class="cstat-no" title="statement not covered" >                fv.applyFilter(checkReviewed, checkOther);</span>
+            });
+<span class="cstat-no" title="statement not covered" >        divManual.append('label')</span>
+            .text('Manually reviewed');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var divOther = self.dialog.append('div');</span>
+<span class="cstat-no" title="statement not covered" >        divOther.append('input')</span>
+            .attr('type', 'checkbox')
+            .attr('id', 'up_pftv_dialog-checkOther')
+            .property('checked', true)
+            .on('click', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >                var checkReviewed = d3.select('#up_pftv_dialog-checkReviewed').property('checked');</span>
+<span class="cstat-no" title="statement not covered" >                var checkOther = d3.select('#up_pftv_dialog-checkOther').property('checked');</span>
+<span class="cstat-no" title="statement not covered" >                fv.applyFilter(checkReviewed, checkOther);</span>
+            });
+<span class="cstat-no" title="statement not covered" >        divOther.append('label')</span>
+            .text('Large scale studies');
+    };
+&nbsp;
+    return {
+        displayDialog: <span class="fstat-no" title="function not covered" >function(container, fv) {</span>
+<span class="cstat-no" title="statement not covered" >            this.dialog = container.append('div')</span>
+                .attr('class','up_pftv_dialog-container');
+<span class="cstat-no" title="statement not covered" >            populateDialog(this, fv);</span>
+<span class="cstat-no" title="statement not covered" >            return this.dialog;</span>
+        }
+    };
+}();
+&nbsp;
+module.exports = FilterDialog;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Aug 20 2015 13:27:21 GMT+0100 (BST)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

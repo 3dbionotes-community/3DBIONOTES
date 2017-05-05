@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/BasicViewer.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">src/BasicViewer.js</span></h1>
+    <h2>
+        Statements: <span class="metric">17.14% <small>(6 / 35)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">0% <small>(0 / 9)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">17.14% <small>(6 / 35)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">src/</a> &#187; BasicViewer.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*jslint node: true */
+/*jshint laxbreak: true */
+"use strict";
+&nbsp;
+var d3 = require("d3");
+var FeatureFactory = require("./FeatureFactory");
+var NonOverlappingLayout = require("./NonOverlappingLayout");
+var ViewerHelper = require("./ViewerHelper");
+&nbsp;
+var BasicViewer = <span class="fstat-no" title="function not covered" >function(catTitle, features, container, fv) {</span>
+<span class="cstat-no" title="statement not covered" >    var height = 40;</span>
+<span class="cstat-no" title="statement not covered" >    var width = fv.width;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var layout = new NonOverlappingLayout(features, height);</span>
+<span class="cstat-no" title="statement not covered" >    layout.calculate();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var featurePlot = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        var series,</span>
+            shapes;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var featurePlot = <span class="fstat-no" title="function not covered" >function(selection) {</span></span>
+<span class="cstat-no" title="statement not covered" >            selection.each(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >                series = d3.select(this);</span>
+<span class="cstat-no" title="statement not covered" >                shapes = series.selectAll('.up_pftv_feature')</span>
+                    .data(data);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                var newShapes = shapes.enter().append('path')</span>
+                    .attr('name', <span class="fstat-no" title="function not covered" >function(d, index) {</span>
+<span class="cstat-no" title="statement not covered" >                        d.internalId = d.internalId === undefined ? catTitle + '_' + index : d.internalId;</span>
+<span class="cstat-no" title="statement not covered" >                        return d.internalId;</span>
+                    })
+                    .attr('class',<span class="fstat-no" title="function not covered" >function(d) {</span>
+<span class="cstat-no" title="statement not covered" >                        return 'up_pftv_feature up_pftv_' + d.type.toLowerCase();</span>
+                    })
+                ;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                shapes</span>
+                    .attr('d', <span class="fstat-no" title="function not covered" >function(d) {</span>
+<span class="cstat-no" title="statement not covered" >                        return FeatureFactory.getFeature(</span>
+                            d.type,
+                            fv.xScale(2) - fv.xScale(1),
+                            layout.getFeatureHeight(),
+                            (d.end) ? d.end - d.begin + 1 : 1);
+                    })
+                    .attr('transform',<span class="fstat-no" title="function not covered" >function(d) {</span>
+<span class="cstat-no" title="statement not covered" >                        return 'translate('+fv.xScale(d.begin)+ ',' + layout.getYPos(d) + ')';</span>
+                    })
+                ;
+<span class="cstat-no" title="statement not covered" >                ViewerHelper.addEventsClassAndTitle(catTitle, newShapes, fv, container);</span>
+<span class="cstat-no" title="statement not covered" >                shapes.exit().remove();</span>
+            });
+        };
+<span class="cstat-no" title="statement not covered" >        return featurePlot;</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var series = featurePlot();</span>
+<span class="cstat-no" title="statement not covered" >    var svg = ViewerHelper.createSVG(container, width, height, fv);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var drawArea = svg.append('g')</span>
+        .classed('up_pftv_category-viewer-group', true);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var dataSeries = drawArea</span>
+        .datum(features)
+        .call(series);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.update = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        dataSeries.call(series);</span>
+<span class="cstat-no" title="statement not covered" >        if (fv.selectedFeature) {</span>
+<span class="cstat-no" title="statement not covered" >            ViewerHelper.updateShadow(fv.selectedFeature, fv);</span>
+        }
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return this;</span>
+};
+&nbsp;
+module.exports = BasicViewer;
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 11 2016 10:11:23 GMT+0100 (BST)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

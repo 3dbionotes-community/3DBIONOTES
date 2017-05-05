@@ -1,0 +1,134 @@
+div#selected_residues {
+	visibility:hidden;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	/*font-weight:bold;*/
+	color:#606060;
+	position:absolute;
+	left:5px;
+	bottom:5px;
+	z-index:100000;
+}
+
+div#selected_residues span {
+	font-weight:bold;
+	color:black;
+}
+
+div.ngl_em_loading {
+	position:absolute;
+	display:none;
+	bottom:1%;
+	right:1%;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:18px;
+	/*font-weight:bold;*/
+	color:#606060;
+}
+
+
+div.ngl_loading {
+	position:absolute;
+	display:none;
+	bottom:50%;
+	right:40%;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:36px;
+	/*font-weight:bold;*/
+	color:#606060;
+}
+
+div.ngl_loading img {
+	width:10%;
+	position:relative;
+	top:2px;
+	left:10px;
+}
+
+div.label_display {
+	visibility:hidden;
+        display:none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#606060;
+	position:absolute;
+	left:140px;
+	top:40px;
+	z-index:100000;
+        border: 1px solid #000;
+        background-color: #ffffff;
+        padding: 0.5em;
+	z-index:100;
+}
+
+div.label_display label {
+  vertical-align: middle;
+}
+
+.label_class{
+  width: 13px;
+  height: 13px;
+  padding: 0;
+  margin:0;
+  vertical-align: bottom;
+  position: relative;
+  top: -1px;
+  *overflow: hidden;
+}
+
+.label_text{
+  margin-left:20px;
+}
+
+.remove_label{
+  margin-left:5px;
+  font-weight:bold;
+  font-family:monospace;
+  font-size:18px;
+}
+
+.remove_label:hover{
+  color:red;
+  cursor:pointer;
+}
+
+span.label_display_close{
+  color: #FFF;
+  background-color: #333333;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  cursor: pointer;
+  border-radius: 20px;
+  width: 20px;
+  height: 20px;
+  font-size: 14px !important;
+  text-align: center;
+  border: 1px solid #fff;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+label {
+  display: block;
+  padding-left: 15px;
+  text-indent: -15px;
+}
+
+::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+::-moz-focus-outer {
+    border: 0;
+}
+
+input:focus,input:active,input.active,input:focus:active {
+  outline: none;
+  background-image: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+

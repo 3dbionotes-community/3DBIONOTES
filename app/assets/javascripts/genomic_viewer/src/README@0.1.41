@@ -1,0 +1,325 @@
+22208                     seqShift = start;
+22209                     fillSVG.sequence(sequence.substring(start-1, end), 20, seqShift-1);
+_______________________________________________________________________________________________________________
+22052                     seqShift = start;
+22053                     fillSVG.sequence(sequence.substring(start, end), 20, seqShift);
+22054                     features.forEach(function(i){
+22055                         if(i.id=="protein_seq"){
+22056                                 fillSVG.sequence(i.data.substring(start, end), 60, seqShift,"pep");
+22057                         }
+22058                         if(i.id=="neg_seq"){
+22059                                 fillSVG.sequence(i.data.substring(start, end), 40, seqShift,"neg");
+22060                         }
+22061                         if(i.id=="uniprot_seq"){
+22062                                 fillSVG.sequence(i.data.substring(start, end), 60, seqShift,"uni");
+22063                         }
+22064                     });
+===============================================================================================================
+
+
+ 9871         var lineEnter = tickEnter.select("line"), lineUpdate = tickUpdate.select("line"), text = tick.select("text").text(tickFormat), textEnter = tickEnter.select("text"), textUpdate = tickUpdate.select("te      xt"), sign = orient === "top" || orient === "left" ? -1 : 1, x1, x2, y1, y2;
+ 9872         if (orient === "bottom" || orient === "top") {
+_______________________________________________________________________________________________________________
+ 9873         var lineEnter = tickEnter.select("line"), lineUpdate = tickUpdate.select("line"), text = tick.select("text").text(tickFormat), textEnter = tickEnter.select("text"), textUpdate = tickUpdate.se      lect("text"), sign = orient === "top" || orient === "left" ? -1 : 1, x1, x2, y1, y2;
+ 9874 
+ 9875         text[0].forEach(function(i){
+ 9876                 i.innerHTML = parseInt( i.innerHTML )+parseInt( g.attr('index_shift') );
+ 9877         });
+ 9878 
+ 9879         if (orient === "bottom" || orient === "top") {
+===============================================================================================================
+
+
+21039         var featureSelected = {};
+21040         var animation = true;
+21041 
+21042         function colorSelectedFeat(feat, object) {
+_______________________________________________________________________________________________________________
+21030         var featureSelected = {};
+21031 
+21032         this.index_shift = 0;
+21033         this.highlighted = null;
+21034         if(options['index_shift'] > 0){
+21035                 this.index_shift = options['index_shift'];
+21036         }
+21037 
+21038         function colorSelectedFeat(feat, object) {
+===============================================================================================================
+
+
+21149                         var first_line = '<p style="margin:2px;color:orangered">' + pD.x + '</p>';
+_______________________________________________________________________________________________________________
+21136                         var first_line = '<p style="margin:2px;color:orangered">' + (parseInt(pD.x)+parseInt(self['index_shift'])) + '</p>';
+===============================================================================================================
+
+
+21153                         var first_line = '<p style="margin:2px;color:orangered">' + pD.x + ' - ' + pD.y + '</p>';
+_______________________________________________________________________________________________________________
+21140                         var first_line = '<p style="margin:2px;color:orangered">' + (parseInt(pD.x)+parseInt(self['index_shift'])) + ' - ' + (parseInt(pD.y)+parseInt(self['index_shift'])) + '</p>';
+===============================================================================================================
+
+
+21257                             'background-color': 'rgba(0, 0, 0, 0.2)',
+_______________________________________________________________________________________________________________
+21237                             'background-color': 'rgba(255, 233, 153, 1)',
+===============================================================================================================
+
+
+21262                             'box-shadow': '0 1px 2px 0 #656565'
+_______________________________________________________________________________________________________________
+21242                             //'box-shadow': '0 1px 2px 0 #656565'
+===============================================================================================================
+
+
+21322                 else return scaling(d.x + 0.4) - scaling(d.x - 0.4);
+21323             }
+21324             return (scaling(d.y) - scaling(d.x));
+_______________________________________________________________________________________________________________
+21302                 else return scaling(d.x + 0.4) - scaling(d.x - 0.4);
+21303             }
+21304             if (d.x == d.y-1) {
+21305                 console.log("!!!!!!!!!!!!!!!!");
+21306                 return (scaling(d.y) - scaling(d.x));
+21307             }
+21308             return (scaling(d.y) - scaling(d.x));
+===============================================================================================================
+
+
+21448                 .attr("transform", "translate(0," + (position + 20) + ")")
+21449                 .call(xAxis);
+_______________________________________________________________________________________________________________
+21407                 .attr("transform", "translate(0," + (position + 20) + ")")
+21408                 .attr("index_shift",self['index_shift'])
+21409                 .call(xAxis);
+===============================================================================================================
+
+
+21611                 } else if (object.type === "text") {
+21612                     fillSVG.sequence(object.data, Yposition);
+21613                     yData.push({
+21614                         title: object.name,
+21615                         y: Yposition,
+21616                         filter: object.filter
+21617                     });
+21618                     scaling.range([5, width-5]);
+21619                 } else if (object.type === "unique") {
+_______________________________________________________________________________________________________________
+21561                 } else if (object.type === "text") {
+21562                     if (displaySequence(object.data.length)) {
+21563                         fillSVG.sequence(object.data, Yposition);
+21564                     }
+21565                     yData.push({
+21566                       title: object.name,
+21567                       y: Yposition-8
+21568                     });
+21569                 } else if (object.type === "unique") {
+===============================================================================================================
+
+
+21662             sequence: function (seq, position, start) {
+_______________________________________________________________________________________________________________
+21608             sequence: function (seq, position, start, className) {
+===============================================================================================================
+
+
+21664                 if (!start) var start = 0;
+21665                 svgContainer.append("g")
+_______________________________________________________________________________________________________________
+21610                 if (!start) var start = 0;
+21611                 if(!className)className="AA";
+21612                 svgContainer.append("g")
+===============================================================================================================
+
+
+21667                     .selectAll(".AA")
+_______________________________________________________________________________________________________________
+21614                     .selectAll("."+className)//.selectAll(".AA")
+===============================================================================================================
+
+
+21672                     .attr("class", "AA")
+_______________________________________________________________________________________________________________
+21619                     .attr("class",className)//.attr("class", "AA")
+===============================================================================================================
+
+
+22180         function brushend() {
+22181             d3.select(div).selectAll('div.selectedRect').remove();
+_______________________________________________________________________________________________________________
+22025         function brushend() {
+22026             //console.log( self.highlighted );
+22027             var tmp_highlighted = null;
+22028             if(self.highlighted){
+22029                 tmp_highlighted = self.highlighted
+22030             }
+22031             d3.select(div).selectAll('div.selectedRect').remove();
+===============================================================================================================
+
+
+22202                 if (SVGOptions.showSequence && !(intLength) && seq && svgContainer.selectAll(".AA").empty()) {
+22203                     current_extend = {
+22204                     length : extentLength,
+22205                     start : start,
+22206                     end : end
+22207                     }
+22208                     seqShift = start;
+22209                     fillSVG.sequence(sequence.substring(start-1, end), 20, seqShift-1);
+22210                 }
+_______________________________________________________________________________________________________________
+22051                 if (SVGOptions.showSequence && seq && svgContainer.selectAll(".AA").empty()) {
+22052                     seqShift = start;
+22053                     fillSVG.sequence(sequence.substring(start, end), 20, seqShift);
+22054                     features.forEach(function(i){
+22055                         if(i.id=="protein_seq"){
+22056                                 fillSVG.sequence(i.data.substring(start, end), 60, seqShift,"pep");
+22057                         }
+22058                         if(i.id=="neg_seq"){
+22059                                 fillSVG.sequence(i.data.substring(start, end), 40, seqShift,"neg");
+22060                         }
+22061                         if(i.id=="uniprot_seq"){
+22062                                 fillSVG.sequence(i.data.substring(start, end), 60, seqShift,"uni");
+22063                         }
+22064                     });
+22065                 }
+================================================================================================================
+
+
+22237             } else {
+22238                 d3.select(div).selectAll(".brush").call(brush.clear());
+22239                 //resetAll();
+22240             }
+22241         }
+________________________________________________________________________________________________________________
+22077             } else {
+22078                 d3.select(div).selectAll(".brush").call(brush.clear());
+22079                 //resetAll();
+22080             }
+22081             //console.log( tmp_highlighted );
+22082             if(tmp_highlighted) self.__highlight( tmp_highlighted[0] , tmp_highlighted[1] );
+22083         }
+22084 
+22085         self.__clear = function() {
+22086                 this.highlighted = null;
+22087                 resetAll();
+22088                 brushend();
+22089                 //d3.select(div).selectAll('div.selectedRect').remove();
+22090                 //d3.select(div).selectAll(".brush").call(brush.clear());
+22091         }
+================================================================================================================
+
+22401             selectedRect.style({
+22402                 left: xRect + 'px',
+22403                 top: 60 + 'px',
+22404                 'background-color': 'rgba(0, 0, 0, 0.2)',
+22405                 width: widthRect + 'px',
+22406                 height: (Yposition + 50) + 'px',
+22407                 position: 'absolute',
+22408                 'z-index': -1,
+22409                 'box-shadow': '0 1px 2px 0 #656565'
+22410             });
+22411         };
+________________________________________________________________________________________________________________
+22268             selectedRect.style({
+22269                 left: xRect + 'px',
+22270                 top: 60 + 'px',
+22271                 'background-color': 'rgba(255, 233, 153, 1)',
+22272                 width: widthRect + 'px',
+22273                 height: (Yposition + 50) + 'px',
+22274                 position: 'absolute',
+22275                 'z-index': -1,
+22276                 //'box-shadow': '0 1px 2px 0 #656565'
+22277             });
+22278         };
+22279 
+22280         this.__highlight = function (__x,__y) {
+22281             var xTemp;
+22282             var yTemp;
+22283             this.highlighted = [__x,__y];
+22284             var xRect;
+22285             var widthRect;
+22286             var svgWidth = d3.select(".background").attr("width");
+22287             d3.select('body').selectAll('div.selectedRect').remove();
+22288 
+22289             // Append tooltip
+22290             var selectedRect = d3.select(div)
+22291                 .append('div')
+22292                 .attr('class', 'selectedRect');
+22293 
+22294             if (__x === __y) {
+22295                 xTemp = __x - 0.5;
+22296                 yTemp = __y + 0.5;
+22297             } else {
+22298                 xTemp = __x-0.5;
+22299                 yTemp = __y+0.5;
+22300             }
+22301             if (scaling(xTemp) < 0) {
+22302                 xRect = margin.left;
+22303                 widthRect = (scaling(yTemp));
+22304             } else if (scaling(yTemp) > svgWidth) {
+22305                 xRect = scaling(xTemp) + margin.left;
+22306                 widthRect = svgWidth - scaling(xTemp);
+22307             } else {
+22308                 xRect = scaling(xTemp) + margin.left;
+22309                 widthRect = (scaling(yTemp) - scaling(xTemp));
+22310             }
+22311             //console.log(widthRect);
+22312             if(widthRect<1 && widthRect>=0)widthRect=1;
+22313             selectedRect.style({
+22314                 left: xRect + 'px',
+22315                 top: 60 + 'px',
+22316                 'background-color': 'rgba(255, 233, 153, 1)',
+22317                 width: widthRect + 'px',
+22318                 height: (Yposition + 50) + 'px',
+22319                 position: 'absolute',
+22320                 'z-index': -1,
+22321                 //'box-shadow': '0 1px 2px 0 #656565'
+22322             });
+22323         };
+================================================================================================================
+
+
+22450                         .style("width", "150px")
+________________________________________________________________________________________________________________
+22359                         .style("width", "200px")
+================================================================================================================
+
+22483                         .style("width", "175px")
+________________________________________________________________________________________________________________
+22392                         .style("width", "200px")
+================================================================================================================
+
+
+22506                         .attr("id", "zoomPosition")
+22507                         .text("0");
+________________________________________________________________________________________________________________
+22415                         .attr("id", "zoomPosition")
+22416                         .attr("index_shift",self['index_shift'])
+22417                         .text("0");
+================================================================================================================
+
+
+22585             svgContainer.on('mousemove', function () {
+22586                 var absoluteMousePos = SVGOptions.brushActive ? d3.mouse(d3.select(".background").node()) : d3.mouse(svgContainer.node());;
+22587                 var pos = Math.round(scalingPosition(absoluteMousePos[0]));
+22588                 pos += sequence[pos-1] || "";
+22589                 $(div + " #zoomPosition").text(pos);
+22590             });
+________________________________________________________________________________________________________________
+22495             svgContainer.on('mousemove', function () {
+22496                 var absoluteMousePos = d3.mouse(d3.select(".background").node());
+22497                 var __shift =  parseInt( $(div + " #zoomPosition").attr('index_shift') );
+22498                 $(div + " #zoomPosition").text( Math.round(scalingPosition(absoluteMousePos[0]))+__shift);
+22499             });
+================================================================================================================
+
+
+22599                     name: "Sequence",
+________________________________________________________________________________________________________________
+22508                     name: "SEQUENCE",
+================================================================================================================
+
+
+22605                     title: "Sequence",
+________________________________________________________________________________________________________________
+22514                     title: "POS STRAND",
+

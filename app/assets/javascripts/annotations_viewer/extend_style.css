@@ -1,0 +1,151 @@
+.up_pftv_shadow, .up_pftv_amino_acid_selector {
+    fill: #FFE999;
+    /*fill: #FFFF00;*/
+    fill-opacity: 1;
+}
+
+svg .up_pftv_mod_res_ace {
+    stroke: #660000;
+    fill: #660000;
+}
+
+svg .up_pftv_mod_res_cro {
+    stroke: #000066;
+    fill: #000066;
+}
+
+svg .up_pftv_mod_res_cit {
+    stroke: #444400;
+    fill: #444400;
+}
+
+svg .up_pftv_mod_res_met {
+    stroke: #006600;
+    fill: #006600;
+}
+
+svg .up_pftv_mod_res_pho {
+    stroke: #1293BE;
+    fill: #1293BE;
+}
+
+svg .up_pftv_mod_res_sum {
+    stroke: #AF0066;
+    fill: #AF0066;
+}
+
+svg .up_pftv_mod_res_ubi {
+    stroke: #FF6600;
+    fill: #FF6600;
+}
+
+svg .up_pftv_linear_motif {
+	stroke: #402060;
+	fill: #402060;
+}
+
+svg .up_pftv_linear_epitope {
+	stroke: #83BE00;
+	fill: #83BE00;
+}
+
+svg .up_pftv_pfam_domain {
+	stroke: #FFA0A0;
+	fill: #FFA0A0;
+}
+
+svg .up_pftv_smart_domain {
+	stroke: #A0FFA0;
+	fill: #A0FFA0;
+}
+
+svg .up_pftv_interpro_domain {
+	stroke: #A0A0FF;
+	fill: #A0A0FF;
+}
+
+svg .up_pftv_disprot {
+	stroke: #A8AFF0;
+	fill: #A8AFF0;
+}
+
+svg .up_pftv_pdb_nmr {
+	stroke: #A8F0AF;
+	fill: #A8F0AF;
+}
+
+svg .up_pftv_pdb_xray {
+	stroke: #F0A8AF;
+	fill: #F0A8AF;
+}
+
+svg .up_pftv_predictors {
+	stroke: #FFCC66;
+	fill: #FFCC66;
+}
+
+svg .up_pftv_interacting_residues {
+	stroke: #006699;
+	fill: #006699;
+}
+
+.up_pftv_diseases{
+  display:none;
+  position:absolute;
+  top:45px;
+  z-index:100000;
+  background-color: #d9faff;
+
+  font-weight: 400;
+  line-height: 2.1em;
+  /*display: inline-block;*/
+  width: 95%;
+  vertical-align: bottom;
+  border: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.up_pftv_diseases div{
+  overflow-x: hidden;
+  overflow-y: auto;
+  height:370px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right:15px;
+}
+
+.up_pftv_diseases div span{
+  cursor:pointer;
+}
+
+.up_pftv_diseases div span:hover{
+  color:black;
+}
+
+.up_pftv_diseases div span.active_disease{
+  font-weight:bold;
+}
+
+.up_pftv_tooltip-container {
+  border: 3px solid #595959;
+  background:#FFFFFF;
+  border-radius:5px;
+}
+
+.up_pftv_tooltip-container div {
+  max-height:422px;
+}
+
+.up_pftv_tooltip-container div {
+  overflow:auto;
+}
+
+.up_pftv_tooltip-containerv table{
+  border:0px solid #CCC;
+}
+
+.up_pftv_tooltip-container div table{
+  border:0px solid #CCC;
+}

@@ -1,0 +1,1866 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/FeaturesViewer.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">src/FeaturesViewer.js</span></h1>
+    <h2>
+        Statements: <span class="metric">10.09% <small>(33 / 327)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 116)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">0% <small>(0 / 64)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">10.09% <small>(33 / 327)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">src/</a> &#187; FeaturesViewer.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*jshint laxbreak: true */
+/*jshint laxcomma: true */
+&nbsp;
+var _ = require("underscore");
+var d3 = require("d3");
+&nbsp;
+var Constants = require("./Constants");
+var DataLoader = require("./DataLoader");
+var CategoryFactory = require("./CategoryFactory");
+var ViewerHelper = require("./ViewerHelper");
+var FeatureFactory = require("./FeatureFactory");
+var CategoryFilterDialog = require("./CategoryFilterDialog");
+var TooltipFactory = require('./TooltipFactory');
+var jQuery = require('jquery');
+&nbsp;
+var updateZoomFromChart = <span class="fstat-no" title="function not covered" >function(fv) {</span>
+<span class="cstat-no" title="statement not covered" >    fv.zoom.x(fv.xScale);</span>
+&nbsp;
+    // remove if no zoom
+<span class="cstat-no" title="statement not covered" >    var fullDomain = fv.maxPos - 1,</span>
+        currentDomain = fv.xScale.domain()[1] - fv.xScale.domain()[0];
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var minScale = currentDomain / fullDomain,</span>
+        maxScale = minScale * Math.floor(fv.sequence.length/fv.maxZoomSize);
+<span class="cstat-no" title="statement not covered" >    fv.zoom.scaleExtent([minScale, maxScale]);</span>
+    //end remove
+};
+&nbsp;
+var updateViewportFromChart = <span class="fstat-no" title="function not covered" >function (fv) {</span>
+<span class="cstat-no" title="statement not covered" >    fv.viewport.extent(fv.xScale.domain());</span>
+<span class="cstat-no" title="statement not covered" >    d3.select('.up_pftv_viewport').call(fv.viewport);</span>
+<span class="cstat-no" title="statement not covered" >    fv.viewport.updateTrapezoid();</span>
+};
+&nbsp;
+var update = <span class="fstat-no" title="function not covered" >function(fv) {</span>
+<span class="cstat-no" title="statement not covered" >    fv.aaViewer.update();</span>
+<span class="cstat-no" title="statement not covered" >    fv.aaViewer2.update();</span>
+<span class="cstat-no" title="statement not covered" >    _.each(fv.categories, <span class="fstat-no" title="function not covered" >function(category) {</span></span>
+<span class="cstat-no" title="statement not covered" >        category.update();</span>
+    });
+};
+&nbsp;
+var updateZoomButton = <span class="fstat-no" title="function not covered" >function(currentClass, newClass, newTitle) {</span>
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        var zoomBtn = d3.select('.' + currentClass);</span>
+<span class="cstat-no" title="statement not covered" >        zoomBtn.classed(currentClass, false);</span>
+<span class="cstat-no" title="statement not covered" >        zoomBtn.classed(newClass, true);</span>
+<span class="cstat-no" title="statement not covered" >        zoomBtn.attr('title', newTitle);</span>
+    } catch(er) {
+<span class="cstat-no" title="statement not covered" >        console.log('updateZoomButton error: ' + er);</span>
+    }
+};
+&nbsp;
+var zoomIn = <span class="fstat-no" title="function not covered" >function(fv) {</span>
+<span class="cstat-no" title="statement not covered" >    fv.xScale.domain([</span>
+        1,
+        fv.maxZoomSize
+    ]);
+<span class="cstat-no" title="statement not covered" >    if (fv.selectedFeature) {</span>
+<span class="cstat-no" title="statement not covered" >        var domain = fv.xScale.domain();</span>
+<span class="cstat-no" title="statement not covered" >        var max = domain[domain.length-1];</span>
+<span class="cstat-no" title="statement not covered" >        var ftMiddle = +fv.selectedFeature.begin +</span>
+            (fv.selectedFeature.end ? Math.floor((+fv.selectedFeature.end - +fv.selectedFeature.begin)/2) : 0);
+<span class="cstat-no" title="statement not covered" >        var init = (ftMiddle - max/2) &lt; 1 ? 1 : ftMiddle - max/2;</span>
+<span class="cstat-no" title="statement not covered" >        if ((init + max) &gt; fv.sequence.length) {</span>
+<span class="cstat-no" title="statement not covered" >            init = fv.sequence.length - max;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        fv.xScale.domain([</span>
+            init,
+            init + max
+        ]);
+    }
+<span class="cstat-no" title="statement not covered" >    update(fv);</span>
+<span class="cstat-no" title="statement not covered" >    updateViewportFromChart(fv);</span>
+<span class="cstat-no" title="statement not covered" >    updateZoomFromChart(fv);</span>
+<span class="cstat-no" title="statement not covered" >    updateZoomButton('fv-icon-zoom-in', 'fv-icon-zoom-out', 'Zoom out to overview');</span>
+};
+&nbsp;
+var resetZoom = <span class="fstat-no" title="function not covered" >function(fv) {</span>
+<span class="cstat-no" title="statement not covered" >    update(fv);</span>
+<span class="cstat-no" title="statement not covered" >    updateViewportFromChart(fv);</span>
+<span class="cstat-no" title="statement not covered" >    updateZoomFromChart(fv);</span>
+};
+&nbsp;
+var zoomOut = <span class="fstat-no" title="function not covered" >function(fv) {</span>
+<span class="cstat-no" title="statement not covered" >    fv.xScale.domain([</span>
+        1,
+        fv.maxPos
+    ]);
+<span class="cstat-no" title="statement not covered" >    resetZoom(fv);</span>
+<span class="cstat-no" title="statement not covered" >    updateZoomButton('fv-icon-zoom-out', 'fv-icon-zoom-in', 'Zoom in to sequence view');</span>
+};
+&nbsp;
+var resetZoomAndSelection = <span class="fstat-no" title="function not covered" >function(fv) {</span>
+<span class="cstat-no" title="statement not covered" >    fv.xScale.domain([</span>
+        1,
+        fv.maxPos
+    ]);
+<span class="cstat-no" title="statement not covered" >    if (fv.selectedFeature) {</span>
+<span class="cstat-no" title="statement not covered" >        ViewerHelper.selectFeature(fv.selectedFeature, fv.selectedFeatureElement, fv);</span>
+    }
+<span class="cstat-no" title="statement not covered" >    resetZoom(fv);</span>
+<span class="cstat-no" title="statement not covered" >    updateZoomButton('fv-icon-zoom-out', 'fv-icon-zoom-in', 'Zoom in to sequence view');</span>
+<span class="cstat-no" title="statement not covered" >    _.each(fv.categories, <span class="fstat-no" title="function not covered" >function(category) {</span></span>
+<span class="cstat-no" title="statement not covered" >        category.reset();</span>
+    });
+};
+&nbsp;
+var createZoom = <span class="fstat-no" title="function not covered" >function(fv) {</span>
+<span class="cstat-no" title="statement not covered" >    var zoom = d3.behavior.zoom()</span>
+        .x(fv.xScale)
+        // .scaleExtent([1,1])
+        .on('zoom', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >            if (fv.xScale.domain()[0] &lt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >                var tempX = zoom.translate()[0] - fv.xScale(1) + fv.xScale.range()[0];</span>
+<span class="cstat-no" title="statement not covered" >                zoom.translate([tempX, 0]);</span>
+            } else <span class="cstat-no" title="statement not covered" >if (fv.xScale.domain()[1] &gt; fv.maxPos) {</span>
+<span class="cstat-no" title="statement not covered" >                var translatedX = zoom.translate()[0] - fv.xScale(fv.maxPos) + fv.xScale.range()[1];</span>
+<span class="cstat-no" title="statement not covered" >                zoom.translate([translatedX, 0]);</span>
+            }
+<span class="cstat-no" title="statement not covered" >            update(fv);</span>
+<span class="cstat-no" title="statement not covered" >            updateViewportFromChart(fv);</span>
+        });
+<span class="cstat-no" title="statement not covered" >    return zoom;</span>
+};
+&nbsp;
+var closeTooltipAndPopup = <span class="fstat-no" title="function not covered" >function(fv) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!fv.overFeature &amp;&amp; !fv.overTooltip) {</span>
+<span class="cstat-no" title="statement not covered" >        var tooltipContainer = d3.selectAll('.up_pftv_tooltip-container')</span>
+            .transition(20)
+            .style('opacity', 0)
+            .style('display', 'none');
+<span class="cstat-no" title="statement not covered" >        tooltipContainer.remove();</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (!fv.overCatFilterDialog) {</span>
+<span class="cstat-no" title="statement not covered" >        CategoryFilterDialog.closeDialog();</span>
+    }
+};
+&nbsp;
+var createNavRuler = <span class="fstat-no" title="function not covered" >function(fv, container) {</span>
+<span class="cstat-no" title="statement not covered" >    var navHeight = 40, navWithTrapezoid = 50;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var navXScale = d3.scale.linear()</span>
+        .domain([1,fv.maxPos])
+        .range([fv.padding.left, fv.width - fv.padding.right]);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var svg = container</span>
+        .append('div')
+        .attr('class', 'up_pftv_navruler')
+        .append('svg')
+        .attr('id','up_pftv_svg-navruler')
+        .attr('width', fv.width)
+        .attr('height', (navWithTrapezoid));
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var navXAxis = d3.svg.axis()</span>
+        .scale(fv.xScale)
+        .orient('bottom');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    svg.append('g')</span>
+        .attr('class', 'x axis')
+        .call(navXAxis);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var viewport = d3.svg.brush()</span>
+        .x(navXScale)
+        .on("brush", <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >            var s = d3.event.target.extent();</span>
+<span class="cstat-no" title="statement not covered" >            if((s[1] - s[0]) &lt; fv.maxZoomSize) {</span>
+<span class="cstat-no" title="statement not covered" >                d3.event.target.extent([s[0],s[0] + fv.maxZoomSize]);</span>
+<span class="cstat-no" title="statement not covered" >                d3.event.target(d3.select(this));</span>
+            }
+<span class="cstat-no" title="statement not covered" >            fv.xScale.domain(viewport.empty() ? navXScale.domain() : viewport.extent());</span>
+<span class="cstat-no" title="statement not covered" >            update(fv);</span>
+<span class="cstat-no" title="statement not covered" >            viewport.updateTrapezoid();</span>
+        });
+<span class="cstat-no" title="statement not covered" >    viewport.on("brushstart", <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >        closeTooltipAndPopup(fv);</span>
+    });
+<span class="cstat-no" title="statement not covered" >    viewport.on("brushend", <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >        updateZoomFromChart(fv);</span>
+<span class="cstat-no" title="statement not covered" >        var navigator = d3.select('.up_pftv_navruler .extent');</span>
+<span class="cstat-no" title="statement not covered" >        if (+navigator.attr('width') &gt;= fv.width - fv.padding.left - fv.padding.right) {</span>
+<span class="cstat-no" title="statement not covered" >            updateZoomButton('fv-icon-zoom-out', 'fv-icon-zoom-in', 'Zoom in to sequence view');</span>
+        }
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var arc = d3.svg.arc()</span>
+        .outerRadius(navHeight / 4)
+        .startAngle(0)
+        .endAngle(<span class="fstat-no" title="function not covered" >function(d, i) {</span> <span class="cstat-no" title="statement not covered" >return i ? -Math.PI : Math.PI; </span>});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    svg.append("g")</span>
+        .attr("class", "up_pftv_viewport")
+        .call(viewport)
+        .selectAll("rect")
+        .attr("height", navHeight);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    viewport.trapezoid = svg.append("g")</span>
+        .selectAll("path")
+        .data([0]).enter().append("path")
+        .classed("up_pftv_trapezoid", true);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    viewport.domainStartLabel = svg.append("text")</span>
+        .attr('class', 'domain-label')
+        .attr('x',0)
+        .attr('y',navHeight);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    viewport.domainEndLabel = svg.append("text")</span>
+        .attr('class', 'domain-label')
+        .attr('x',fv.width)
+        .attr('y',navHeight)
+        .attr('text-anchor','end');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    svg.selectAll(".resize").append("path")</span>
+        .attr("transform", "translate(0," +  ((navHeight / 2) - 5) + ")")
+        .attr('class','handle')
+        .attr("d", arc);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    viewport.updateTrapezoid = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        var begin = d3.select(".up_pftv_navruler .extent").attr("x");</span>
+<span class="cstat-no" title="statement not covered" >        var tWidth = d3.select(".up_pftv_navruler .extent").attr("width");</span>
+<span class="cstat-no" title="statement not covered" >        var end = (+begin) + (+tWidth);</span>
+<span class="cstat-no" title="statement not covered" >        var path =  "M0," + (navWithTrapezoid) + "L0" + "," + (navWithTrapezoid-2)</span>
+            + "L" + begin + "," + (navHeight-12) + "L" + begin + "," + navHeight
+            + "L" + end + "," + navHeight + "L" + end + "," + (navHeight-12)
+            + "L" + fv.width + "," + (navWithTrapezoid-2) + "L" + fv.width + "," + (navWithTrapezoid) + "Z";
+<span class="cstat-no" title="statement not covered" >        this.trapezoid.attr("d", path);</span>
+<span class="cstat-no" title="statement not covered" >        this.domainStartLabel.text(Math.round(fv.xScale.domain()[0]));</span>
+<span class="cstat-no" title="statement not covered" >        this.domainEndLabel.text(Math.min(Math.round(fv.xScale.domain()[1]), fv.maxPos));</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    viewport.clearTrapezoid = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        this.trapezoid.attr("d", "M0,0");</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return viewport;</span>
+};
+&nbsp;
+var createButtons = <span class="fstat-no" title="function not covered" >function(fv, data, container) {</span>
+<span class="cstat-no" title="statement not covered" >    var buttons = container.append('div')</span>
+        .attr('class','up_pftv_buttons');
+<span class="cstat-no" title="statement not covered" >    buttons.append('span').append('a')</span>
+        .attr('class','fv-icon-info-circled')
+        .attr('title','Help page')
+        .attr('href', 'http://ebi-uniprot.github.io/ProtVista/')
+        .attr('target', '_blank');
+<span class="cstat-no" title="statement not covered" >    buttons.append('span')</span>
+        .attr('class','fv-icon-cog')
+        .attr('title','Hide/Show tracks')
+        .on('click', <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >            CategoryFilterDialog.displayDialog(fv, buttons);</span>
+        });
+<span class="cstat-no" title="statement not covered" >    buttons.append('span')</span>
+        .attr('class','fv-icon-arrows-cw')
+        .attr('title','Reset view')
+        .on('click', <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >            resetZoomAndSelection(fv);</span>
+        });
+<span class="cstat-no" title="statement not covered" >    buttons.append('span')</span>
+        .attr('class','fv-icon-zoom-in')
+        .attr('title','Zoom in to sequence view')
+        .on('click', <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >            if ( d3.select(this).classed('fv-icon-zoom-in')) {</span>
+<span class="cstat-no" title="statement not covered" >                zoomIn(fv);</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                zoomOut(fv);</span>
+            }
+        });
+};
+&nbsp;
+var createAAViewer = <span class="fstat-no" title="function not covered" >function(fv, container, sequence) {</span>
+<span class="cstat-no" title="statement not covered" >    var aaViewer = {}, aaViewWidth = fv.width, aaViewHeight = 30;</span>
+<span class="cstat-no" title="statement not covered" >    var svg = container</span>
+        .append('div')
+        .attr('class','up_pftv_aaviewer')
+        .append('svg')
+        .attr('width', aaViewWidth)
+        .attr('height',aaViewHeight);
+&nbsp;
+    //amino acids selector
+<span class="cstat-no" title="statement not covered" >    var aaSelectorPlot = <span class="fstat-no" title="function not covered" >function(){</span></span>
+<span class="cstat-no" title="statement not covered" >        var series, aminoAcids;</span>
+<span class="cstat-no" title="statement not covered" >        var aaSelectorPlot = <span class="fstat-no" title="function not covered" >function(selection) {</span></span>
+<span class="cstat-no" title="statement not covered" >            selection.each(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >                series = d3.select(this);</span>
+<span class="cstat-no" title="statement not covered" >                aminoAcids = series.selectAll('.up_pftv_amino_acid_selector').data(data);</span>
+<span class="cstat-no" title="statement not covered" >                aminoAcids.enter().append('path');</span>
+<span class="cstat-no" title="statement not covered" >                aminoAcids</span>
+                    .attr('d', <span class="fstat-no" title="function not covered" >function(d) {</span>
+<span class="cstat-no" title="statement not covered" >                        return ViewerHelper.shadowPath(d.feature, fv, aaViewHeight);</span>
+                    })
+                    .attr('transform', <span class="fstat-no" title="function not covered" >function(d) {</span>
+<span class="cstat-no" title="statement not covered" >                        return 'translate(' + fv.xScale(d.feature.begin) + ',0)';</span>
+                    })
+                    .classed('up_pftv_amino_acid_selector', true);
+<span class="cstat-no" title="statement not covered" >                aminoAcids.exit().remove();</span>
+            });
+        };
+<span class="cstat-no" title="statement not covered" >        return aaSelectorPlot;</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var selectorSeries = aaSelectorPlot();</span>
+<span class="cstat-no" title="statement not covered" >    var selectorGroup = svg.append('g')</span>
+        .attr('clip-path','url(#aaSelectorViewClip)')
+        .style('opacity',1);
+<span class="cstat-no" title="statement not covered" >    selectorGroup.datum([{"feature": {"begin": -10, "end": -10}}])</span>
+        .call(selectorSeries);
+    //scale
+<span class="cstat-no" title="statement not covered" >    var xAxis = d3.svg.axis()</span>
+        .scale(fv.xScale);
+<span class="cstat-no" title="statement not covered" >    var gAxis = svg.append("g")</span>
+                .attr("class", "x axis")
+                .attr('transform','translate(0, -7)')
+                .call(xAxis);
+    //amino acids
+<span class="cstat-no" title="statement not covered" >    var aaPlot = <span class="fstat-no" title="function not covered" >function(){</span></span>
+<span class="cstat-no" title="statement not covered" >        var series, aminoAcids;</span>
+<span class="cstat-no" title="statement not covered" >        var aaPlot = <span class="fstat-no" title="function not covered" >function(selection) {</span></span>
+<span class="cstat-no" title="statement not covered" >            selection.each(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >                series = d3.select(this);</span>
+<span class="cstat-no" title="statement not covered" >                aminoAcids = series.selectAll('.up_pftv_amino-acid').data(data);</span>
+<span class="cstat-no" title="statement not covered" >                aminoAcids.enter().append('text')</span>
+                    .style('text-anchor','middle')
+                    .attr('y', aaViewHeight / 2)
+                    .text(<span class="fstat-no" title="function not covered" >function(d) {</span>
+<span class="cstat-no" title="statement not covered" >                        return d.toUpperCase();</span>
+                    })
+                    .attr('title', <span class="fstat-no" title="function not covered" >function(d, i) {</span>
+<span class="cstat-no" title="statement not covered" >                        return (i+1);</span>
+                    })
+                    .attr('class','up_pftv_amino-acid');
+<span class="cstat-no" title="statement not covered" >                aminoAcids</span>
+                    .attr('x', <span class="fstat-no" title="function not covered" >function(d, i) {</span>
+<span class="cstat-no" title="statement not covered" >                        return fv.xScale(i+1);</span>
+                    });
+<span class="cstat-no" title="statement not covered" >                aminoAcids.exit().remove();</span>
+            });
+        };
+<span class="cstat-no" title="statement not covered" >        return aaPlot;</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var series = aaPlot();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var g = svg.append('g')</span>
+        .attr('class','up_pftv_aa-text')
+        .attr('clip-path','url(#aaViewClip)')
+        .attr('transform','translate(0,' + aaViewHeight/5 +  ')')
+        .style('opacity',0);
+<span class="cstat-no" title="statement not covered" >    g.datum(sequence.split('')).call(series);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    aaViewer.update = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        gAxis.call(xAxis);</span>
+<span class="cstat-no" title="statement not covered" >        selectorGroup.call(selectorSeries);</span>
+<span class="cstat-no" title="statement not covered" >        var count = fv.xScale.domain()[1] - fv.xScale.domain()[0];</span>
+<span class="cstat-no" title="statement not covered" >        if (count &gt; 70) {</span>
+<span class="cstat-no" title="statement not covered" >            g.transition(50).style('opacity',0);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            g.call(series);</span>
+<span class="cstat-no" title="statement not covered" >            g.transition(50).style('opacity',1);</span>
+        }
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    aaViewer.selectFeature = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (fv.selectedFeature) {</span>
+<span class="cstat-no" title="statement not covered" >            selectorGroup.datum([{"feature": fv.selectedFeature}]).call(selectorSeries);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            selectorGroup.datum([{"feature": {"begin": -10, "end": -10}}]).call(selectorSeries);</span>
+        }
+    };
+<span class="cstat-no" title="statement not covered" >    return aaViewer;</span>
+};
+&nbsp;
+var findFeature = <span class="fstat-no" title="function not covered" >function(fv, ftType, begin, end, altSequence) {</span>
+<span class="cstat-no" title="statement not covered" >    var lookup, varLookup;</span>
+<span class="cstat-no" title="statement not covered" >    _.find(fv.data, <span class="fstat-no" title="function not covered" >function(category) {</span></span>
+<span class="cstat-no" title="statement not covered" >        lookup =  _.find(category[1], <span class="fstat-no" title="function not covered" >function(feature) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var ftEnd = feature.end ? feature.end : feature.begin;</span>
+<span class="cstat-no" title="statement not covered" >            if (feature.variants &amp;&amp; (feature.type === 'VARIANT')) {</span>
+<span class="cstat-no" title="statement not covered" >                varLookup = _.find(feature.variants, <span class="fstat-no" title="function not covered" >function(variant) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    var varEnd = variant.end ? variant.end : variant.begin;</span>
+<span class="cstat-no" title="statement not covered" >                    return (+variant.begin === +begin) &amp;&amp; (+varEnd === +end)</span>
+                        &amp;&amp; (variant.alternativeSequence === altSequence);
+                });
+<span class="cstat-no" title="statement not covered" >                return varLookup;</span>
+            } else <span class="cstat-no" title="statement not covered" >if (feature.type === 'CONFLICT'){</span>
+<span class="cstat-no" title="statement not covered" >                return (+feature.begin === +begin) &amp;&amp; (+ftEnd === +end)</span>
+                    &amp;&amp; (feature.alternativeSequence === altSequence);
+            } else <span class="cstat-no" title="statement not covered" >if (feature.type === 'MUTAGEN') {</span>
+<span class="cstat-no" title="statement not covered" >                return (+feature.begin === +begin) &amp;&amp; (+ftEnd === +end)</span>
+                    &amp;&amp; (feature.alternativeSequence === altSequence);
+            } else {
+<span class="cstat-no" title="statement not covered" >                return (feature.type === ftType) &amp;&amp; (+feature.begin === +begin) &amp;&amp; (+ftEnd === +end);</span>
+            }
+        });
+<span class="cstat-no" title="statement not covered" >        return lookup;</span>
+    });
+<span class="cstat-no" title="statement not covered" >    return varLookup ? varLookup : lookup;</span>
+};
+&nbsp;
+var FeaturesViewer = <span class="fstat-no" title="function not covered" >function(opts) {</span>
+<span class="cstat-no" title="statement not covered" >    var fv = this;</span>
+<span class="cstat-no" title="statement not covered" >    fv.dispatcher = d3.dispatch("featureSelected", "featureDeselected", "ready", "noDataAvailable", "noDataRetrieved",</span>
+        "notFound");
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    fv.width = 760;</span>
+<span class="cstat-no" title="statement not covered" >    fv.maxZoomSize = 30;</span>
+<span class="cstat-no" title="statement not covered" >    fv.selectedFeature = undefined;</span>
+<span class="cstat-no" title="statement not covered" >    fv.selectedFeatureElement = undefined;</span>
+<span class="cstat-no" title="statement not covered" >    fv.sequence = "";</span>
+    // fv.filterTypes = fv.categoryOrderAndType.variants.ftTypes;
+<span class="cstat-no" title="statement not covered" >    fv.categories = [];</span>
+<span class="cstat-no" title="statement not covered" >    fv.filterCategories = [];</span>
+<span class="cstat-no" title="statement not covered" >    fv.padding = {top:2, right:10, bottom:2, left:10};</span>
+<span class="cstat-no" title="statement not covered" >    fv.data = [];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    fv.load = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        fv.initLayout(opts);</span>
+<span class="cstat-no" title="statement not covered" >        var dataSources = Constants.getDataSources();</span>
+<span class="cstat-no" title="statement not covered" >        var loaders = [], delegates = [];</span>
+<span class="cstat-no" title="statement not covered" >        _.each(dataSources, <span class="fstat-no" title="function not covered" >function (source) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var delegate = jQuery.Deferred();</span>
+<span class="cstat-no" title="statement not covered" >            delegates.push(delegate);</span>
+        });
+<span class="cstat-no" title="statement not covered" >        _.each(dataSources, <span class="fstat-no" title="function not covered" >function(source, index) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if (!_.contains(opts.exclusions, source.category)) {</span>
+<span class="cstat-no" title="statement not covered" >                var url = source.url + opts.uniprotacc;</span>
+<span class="cstat-no" title="statement not covered" >                var dataLoader = DataLoader.get(url);</span>
+<span class="cstat-no" title="statement not covered" >                loaders.push(dataLoader);</span>
+<span class="cstat-no" title="statement not covered" >                var container = fv.container.append('div');</span>
+<span class="cstat-no" title="statement not covered" >                dataLoader.done(<span class="fstat-no" title="function not covered" >function (d) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    if (d instanceof Array) //Workaround to be removed</span>
+<span class="cstat-no" title="statement not covered" >                        d = d[0];</span>
+                    // First promise to resolve will set global parameters
+<span class="cstat-no" title="statement not covered" >                    if (!fv.sequence) {</span>
+<span class="cstat-no" title="statement not covered" >                        fv.loadZoom(d);</span>
+                    }
+<span class="cstat-no" title="statement not covered" >                    var features = d.features;</span>
+                    // group by categories
+<span class="cstat-no" title="statement not covered" >                    if (features.length &gt; 0 &amp;&amp; _.has(features[0], 'category')) {</span>
+<span class="cstat-no" title="statement not covered" >                        features = DataLoader.groupFeaturesByCategory(features);</span>
+<span class="cstat-no" title="statement not covered" >                        features = _.filter(features, <span class="fstat-no" title="function not covered" >function (cat) {</span></span>
+<span class="cstat-no" title="statement not covered" >                            return !_.contains(opts.exclusions, cat[0]);</span>
+                        });
+                    } else <span class="cstat-no" title="statement not covered" >if (features.length &gt; 0 &amp;&amp; features[0].type === 'VARIANT') {</span>
+<span class="cstat-no" title="statement not covered" >                        if (_.contains(opts.exclusions, 'VARIATION')) {</span>
+<span class="cstat-no" title="statement not covered" >                            features = [];</span>
+                        } else {
+<span class="cstat-no" title="statement not covered" >                            features = DataLoader.processVariants(features, d.sequence);</span>
+                        }
+                    } else <span class="cstat-no" title="statement not covered" >if (features.length &gt; 0 &amp;&amp; features[0].type === 'PROTEOMICS') {</span>
+<span class="cstat-no" title="statement not covered" >                        if (_.contains(opts.exclusions, 'PROTEOMICS')) {</span>
+<span class="cstat-no" title="statement not covered" >                            features = [];</span>
+                        } else {
+<span class="cstat-no" title="statement not covered" >                            features = DataLoader.processProteomics(features);</span>
+                        }
+                    } else <span class="cstat-no" title="statement not covered" >if (features.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >                        features = DataLoader.processUngroupedFeatures(features);</span>
+                    }
+<span class="cstat-no" title="statement not covered" >                    if (features.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >                        fv.drawCategories(features, source.type, fv, container);</span>
+<span class="cstat-no" title="statement not covered" >                        fv.data = fv.data.concat(features);</span>
+<span class="cstat-no" title="statement not covered" >                        fv.dispatcher.ready();</span>
+                    }
+                }).fail(<span class="fstat-no" title="function not covered" >function (e) {</span>
+<span class="cstat-no" title="statement not covered" >                    console.log(e);</span>
+                }).always(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                    delegates[index].resolve();</span>
+                });
+            } else {
+<span class="cstat-no" title="statement not covered" >                delegates[index].resolve();</span>
+            }
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        jQuery.when.apply(null, delegates).done(<span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >            var rejected = _.filter(loaders, <span class="fstat-no" title="function not covered" >function (loader) {</span></span>
+<span class="cstat-no" title="statement not covered" >                return loader.state() === 'rejected';</span>
+            });
+<span class="cstat-no" title="statement not covered" >            if ((rejected.length === loaders.length) || (fv.data.length === 0)) {</span>
+<span class="cstat-no" title="statement not covered" >                d3.select(opts.el).selectAll('*').remove();</span>
+<span class="cstat-no" title="statement not covered" >                d3.select(opts.el).html('');</span>
+<span class="cstat-no" title="statement not covered" >                if (rejected.length === loaders.length) {</span>
+<span class="cstat-no" title="statement not covered" >                    d3.select(opts.el).text('Sorry, data could not be retrieved at this time, please try again later.');</span>
+<span class="cstat-no" title="statement not covered" >                    fv.dispatcher.noDataRetrieved();</span>
+                } else <span class="cstat-no" title="statement not covered" >if (fv.data.length === 0) {</span>
+<span class="cstat-no" title="statement not covered" >                    d3.select(opts.el).text('There are no features available for this protein.');</span>
+<span class="cstat-no" title="statement not covered" >                    fv.dispatcher.noDataAvailable();</span>
+                }
+            }
+        });
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    fv.load();</span>
+};
+&nbsp;
+FeaturesViewer.prototype.getCategoryTitle = <span class="fstat-no" title="function not covered" >function(type) {</span>
+<span class="cstat-no" title="statement not covered" >    var fv = this;</span>
+<span class="cstat-no" title="statement not covered" >    var category = _.find(fv.data, <span class="fstat-no" title="function not covered" >function(cat) {</span></span>
+<span class="cstat-no" title="statement not covered" >        var hasType = _.find(cat[1], <span class="fstat-no" title="function not covered" >function(ft) {</span></span>
+<span class="cstat-no" title="statement not covered" >            return ft.type === type;</span>
+        });
+<span class="cstat-no" title="statement not covered" >        return hasType;</span>
+    });
+<span class="cstat-no" title="statement not covered" >    return category ? category[0] : undefined;</span>
+};
+&nbsp;
+FeaturesViewer.prototype.updateFeatureSelector = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.aaViewer.selectFeature();</span>
+<span class="cstat-no" title="statement not covered" >    this.aaViewer2.selectFeature();</span>
+};
+&nbsp;
+FeaturesViewer.prototype.getDispatcher = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return this.dispatcher;</span>
+};
+&nbsp;
+FeaturesViewer.prototype.selectFeature = <span class="fstat-no" title="function not covered" >function(ftType, start, end, altSequence) {</span>
+<span class="cstat-no" title="statement not covered" >    var fv = this;</span>
+<span class="cstat-no" title="statement not covered" >    ftType = ftType.toUpperCase();</span>
+<span class="cstat-no" title="statement not covered" >    altSequence = altSequence ? altSequence.toUpperCase() : altSequence;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var catTitle = fv.getCategoryTitle(ftType);</span>
+<span class="cstat-no" title="statement not covered" >    var category = _.find(fv.categories, <span class="fstat-no" title="function not covered" >function(cat) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return cat.name === catTitle;</span>
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var feature = findFeature(fv, ftType, +start, +end, altSequence);</span>
+<span class="cstat-no" title="statement not covered" >    if (!feature) {</span>
+<span class="cstat-no" title="statement not covered" >        fv.dispatcher.notFound({ftType: ftType, begin: start, end: end});</span>
+<span class="cstat-no" title="statement not covered" >        return undefined;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var elem = d3.select('[name="' + feature.internalId + '"]');</span>
+<span class="cstat-no" title="statement not covered" >    if (category &amp;&amp; feature &amp;&amp; elem &amp;&amp; !elem.classed('up_pftv_variant_hidden')) {</span>
+<span class="cstat-no" title="statement not covered" >        var container = category.viewerContainer.style('display') === 'none'</span>
+            ? category.tracksContainer : category.viewerContainer;
+<span class="cstat-no" title="statement not covered" >        if (elem.classed('up_pftv_variant')) {</span>
+<span class="cstat-no" title="statement not covered" >            var varTrack = d3.select('.up_pftv_category-name[title="' + catTitle + '"]');</span>
+<span class="cstat-no" title="statement not covered" >            if (varTrack.classed('up_pftv_arrow-right')) {</span>
+<span class="cstat-no" title="statement not covered" >                category.toggle();</span>
+            }
+        }
+<span class="cstat-no" title="statement not covered" >        var elemRect = elem.node().getBoundingClientRect();</span>
+<span class="cstat-no" title="statement not covered" >        var contRect = container.node().getBoundingClientRect();</span>
+<span class="cstat-no" title="statement not covered" >        var coordinates = {x: elemRect.x - contRect.x, y: elemRect.y - contRect.y};</span>
+<span class="cstat-no" title="statement not covered" >        if (fv.selectedFeature) {</span>
+<span class="cstat-no" title="statement not covered" >            if (fv.selectedFeature.internalId !== feature.internalId) {</span>
+<span class="cstat-no" title="statement not covered" >                ViewerHelper.selectFeature(feature, elem.node(), fv);</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                fv.dispatcher.featureSelected({feature: fv.selectedFeature, color: elem.style("fill")});</span>
+            }
+        } else {
+<span class="cstat-no" title="statement not covered" >            ViewerHelper.selectFeature(feature, elem.node(), fv);</span>
+        }
+<span class="cstat-no" title="statement not covered" >        TooltipFactory.createTooltip(fv, catTitle, feature, container, coordinates);</span>
+<span class="cstat-no" title="statement not covered" >        return feature;</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >        fv.dispatcher.notFound({ftType: ftType, begin: start, end: end});</span>
+<span class="cstat-no" title="statement not covered" >        return undefined;</span>
+    }
+};
+&nbsp;
+FeaturesViewer.prototype.initLayout = <span class="fstat-no" title="function not covered" >function(opts, d) {</span>
+<span class="cstat-no" title="statement not covered" >    var fv = this;</span>
+    //remove any previous text
+<span class="cstat-no" title="statement not covered" >    var globalContainer = d3.select(opts.el).text('');</span>
+<span class="cstat-no" title="statement not covered" >    fvContainer = globalContainer</span>
+        .append('div')
+        .attr('class', 'up_pftv_container')
+        .on('mousedown', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >            closeTooltipAndPopup(fv);</span>
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    fv.header = fvContainer.append('div');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    fv.container = fvContainer</span>
+        .append('div')
+        .attr('class', 'up_pftv_category-container');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    fv.footer = fvContainer.append('div').attr('class','bottom-aa-container');</span>
+};
+&nbsp;
+FeaturesViewer.prototype.loadZoom = <span class="fstat-no" title="function not covered" >function(d) {</span>
+<span class="cstat-no" title="statement not covered" >  var fv = this;</span>
+<span class="cstat-no" title="statement not covered" >  fv.sequence = d.sequence;</span>
+<span class="cstat-no" title="statement not covered" >  fv.accession = d.accession;</span>
+<span class="cstat-no" title="statement not covered" >  fv.maxPos = d.sequence.length;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  fv.xScale = d3.scale.linear()</span>
+      .domain([1, d.sequence.length + 1])
+      .range([fv.padding.left, fv.width - fv.padding.right]);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  fv.viewport = createNavRuler(fv, fv.header);</span>
+<span class="cstat-no" title="statement not covered" >  createButtons(fv, d, fv.header);</span>
+<span class="cstat-no" title="statement not covered" >  fv.aaViewer = createAAViewer(fv, fv.header, d.sequence);</span>
+<span class="cstat-no" title="statement not covered" >  fv.zoom = createZoom(fv);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  fv.aaViewer2 = createAAViewer(fv, fv.footer, d.sequence);</span>
+<span class="cstat-no" title="statement not covered" >  updateViewportFromChart(fv);</span>
+<span class="cstat-no" title="statement not covered" >  updateZoomFromChart(fv);</span>
+};
+&nbsp;
+FeaturesViewer.prototype.drawCategories = <span class="fstat-no" title="function not covered" >function(data, type, fv, container) {</span>
+<span class="cstat-no" title="statement not covered" >  _.each(data, <span class="fstat-no" title="function not covered" >function(category) {</span></span>
+<span class="cstat-no" title="statement not covered" >    var cat = CategoryFactory.createCategory(category[0], category[1], type, fv, container);</span>
+<span class="cstat-no" title="statement not covered" >    fv.categories.push(cat);</span>
+  });
+};
+&nbsp;
+module.exports = FeaturesViewer;
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 11 2016 10:11:23 GMT+0100 (BST)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

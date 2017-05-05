@@ -1,0 +1,150 @@
+body {
+  margin:0;
+}
+
+a{
+  text-decoration: none;
+}
+
+
+.logo{
+  margin-top:5px;
+  width:100%;
+}
+
+.logo img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.who{
+  width:738px;
+  margin-left:auto;
+  margin-right:auto;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  font-size:32px;
+  font-weight:bold;
+  margin-top:25px;
+}
+
+.who a{
+  color:#074987;
+}
+
+.who a:visited{
+  color:#074987;
+}
+
+.who a:hover{
+  color:#96C8C8;
+  cursor:pointer;
+}
+
+.options {
+  width:75%;
+  margin-top:50px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.options table {
+  margin-left:auto;
+  margin-right:auto;
+  width:100%;
+  table-layout: fixed;
+}
+
+.options table tr td {
+  height:75px; 
+  text-align:center; 
+  vertical-align:middle;
+  background-color:#074987;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  font-size:24px;
+  font-weight:bold;
+  color:white;
+  border: 10px solid white;
+}
+
+.options table tr td a{
+  color:white;
+}
+
+
+.options table tr td a:visited{
+  color:white;
+}
+
+.options table tr td a:hover {
+  color:#96C8C8;
+  cursor:pointer;
+}
+
+.footer  {
+  position:fixed;
+  bottom:0px;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  padding-bottom:5px;
+  padding-top:5px;
+  background-color:rgb(212,212,212);
+  text-align: center;
+  width:100%;
+  color:606060;
+}
+
+.footer a{
+  color:#074987;
+}
+
+.footer a:hover{
+  color:#96C8C8;
+  cursor:pointer;
+}
+
+.ws_main_div {
+  width:66%;
+  margin-top:50px;
+  margin-left:auto;
+  margin-right:auto;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  font-size:18px;
+  color:606060;
+  position:relative;
+}
+
+.wait_div{
+  text-align: center;
+}
+
+.wait_text {
+  font-size:24px;
+  font-weight:bold;
+}
+
+.submit_form a{
+  color:#074987;
+}
+
+.submit_form a:visited{
+  color:#074987;
+}
+
+.submit_form a:hover{
+  color:#96C8C8;
+  cursor:pointer;
+}
+
+.database_form a{
+  color:#074987;
+}
+
+.database_form a:visited{
+  color:#074987;
+}
+
+.database_form a:hover{
+  color:#96C8C8;
+  cursor:pointer;
+}
+

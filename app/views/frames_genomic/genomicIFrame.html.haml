@@ -1,0 +1,54 @@
+-if !@alignment.nil?
+  %div#genomic_div
+    :javascript
+      var __genomic_alignment = #{ @alignment.to_json }
+    :javascript
+      var __genomic_variations = #{ @variations.to_json }
+    :javascript
+      var __genomic_annotations = #{ @annotations.to_json }
+    :javascript
+      var __selected_transcript = '#{ @ensembl_mapping['transcript'][0]['name'] }'
+    %div
+      %div.gene_title
+        %a{:class=>"nostyle menu", :target=>"_blank", :href=>"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=#{@alignment['gene']['id']}" }
+          #{ @alignment['gene']['display_name'] },
+        %span{:class => "gene_title"}
+          #{ @alignment['gene']['description'].gsub(/\s\[.*/,'') } -
+        %span{:class => "gene_title"}
+          #{ @alignment['gene']['species'].gsub(/_/,' ').capitalize }.
+        %span.key
+          Assembly 
+        %span.value
+          #{ @alignment['gene']['assembly_name'] }
+        %span.key
+          Location
+        %span.value
+          #{ @alignment['gene']['seq_region_name'] }: #{ @alignment['gene']['start'] } - #{ @alignment['gene']['end'] }, 
+        %span.key
+          -if( @alignment['gene']['strand']>0 )
+            positive strand
+          -if( @alignment['gene']['strand']<0 )
+            negative strand
+    %span.trancript_text
+      ENSEMBL TRANSCRIPTS FOR UNIPROT ACC #{ @acc }
+    = select_tag(:ensembl_transcripts, options_for_select(@ensembl_select_options,@selected),:onchange=>"update_genomic_display(\"#gfv\",this)",:title=>"ENSEMBL transcripts",:prompt=>"SELECT MENU",:style=>"width:300px;font-size:10px;font-family: 'Lucida Console', Monaco, monospace")
+    %div.up_gfv_display{:id => "gfv_display"}
+      %span
+        %input{:id=>"pct_cb", :class=>"gfv_cb", :type=>"checkbox", :checked=>"1"} CODING TRANSCRIPTS
+      %span
+        %input{:id=>"nct_cb", :class=>"gfv_cb", :type=>"checkbox", :checked=>"1"} NONCODING TRANSCRIPTS
+      %span.show_gfv_display_variants
+        %span.fv-icon-cog{:title=>"Hide/Show tracks"}
+        VARIANTS
+      %div.gfv_display_variants
+        %span.gfv_display_variants_close
+          x
+    %div.up_gfv_buttons{:id => "gfv_buttons"}
+      %span{:class=>"icon-arrows-cw", :title=>"Reset view"}
+      %span{:class=>"icon-zoom-in", :title=>"Zoom in to sequence view"}
+    %div{:id => "gfv", :style => "width:980px;"}
+    %div#transcript_loading{:style=>'display:none;width:100%;height:100%;'}
+      =image_tag("loading.gif",size:"100x100",:style=>"display:block;margin:auto;position:relative;top:40%;transform:translateY(-50%);")
+-else
+  %h2{:style=>"margin-right:8px;color:#606060;font-size:14px;margin-top:14px;text-align:center;font-family: Verdana, Arial, Helvetica, sans-serif;"}
+  #{ @message }

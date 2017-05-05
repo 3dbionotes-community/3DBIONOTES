@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib/dataLoader.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header medium">
+    <h1>Code coverage report for <span class="entity">lib/dataLoader.js</span></h1>
+    <h2>
+        Statements: <span class="metric">74.42% <small>(32 / 43)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">72.22% <small>(13 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">63.64% <small>(7 / 11)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">74.42% <small>(32 / 43)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">lib/</a> &#187; dataLoader.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">304</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">304</span>
+<span class="cline-any cline-yes">304</span>
+<span class="cline-any cline-yes">304</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">770</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">134</span>
+<span class="cline-any cline-yes">134</span>
+<span class="cline-any cline-yes">134</span>
+<span class="cline-any cline-yes">134</span>
+<span class="cline-any cline-yes">133</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span></td><td class="text"><pre class="prettyprint lang-js">/*jslint node: true */
+/*jshint laxbreak: true */
+"use strict";
+&nbsp;
+var $ = require('jquery');
+var _ = require('underscore');
+var Evidence = require('./Evidence');
+&nbsp;
+var DataLoader = function() {
+    return {
+        get: <span class="fstat-no" title="function not covered" >function(proxy, uniprotID) {</span>
+<span class="cstat-no" title="statement not covered" >            var url = 'www.ebi.ac.uk/uniprot/services/restful/features/';</span>
+<span class="cstat-no" title="statement not covered" >            if(!proxy) {</span>
+<span class="cstat-no" title="statement not covered" >                url = 'https://' + url;</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return $.ajax({</span>
+                url: proxy + url + uniprotID,
+                //We need this dataType to set the Accept header correctly
+                dataType: "json"
+            }).done(<span class="fstat-no" title="function not covered" >function(d) {</span>
+<span class="cstat-no" title="statement not covered" >                d.variants.features = DataLoader.processVariants(d);</span>
+<span class="cstat-no" title="statement not covered" >                return DataLoader.processData(d);</span>
+            }).fail(<span class="fstat-no" title="function not covered" >function(e){</span>
+<span class="cstat-no" title="statement not covered" >                return(e);</span>
+            });
+        }, processData: function(d){
+            var consecutive = 0;
+            _.each(d, function(datum) {
+                if (datum &amp;&amp; datum.features) {
+                    _.each(datum.features, function(feature) {
+                        <span class="missing-if-branch" title="if path not taken" >I</span>if (feature.variants) {
+<span class="cstat-no" title="statement not covered" >                            _.each(feature.variants, <span class="fstat-no" title="function not covered" >function(variant) {</span></span>
+<span class="cstat-no" title="statement not covered" >                                variant.internalId = "ft_" + consecutive;</span>
+<span class="cstat-no" title="statement not covered" >                                variant.type.label = variant.type.label.replace('_', ' ');</span>
+<span class="cstat-no" title="statement not covered" >                                consecutive++;</span>
+                            });
+                        } else {
+                            feature.internalId = "ft_" + consecutive;
+                            feature.type.label = feature.type.label.replace('_', ' ');
+                            consecutive++;
+                        }
+                    });
+                }
+            });
+            d.totalFeatureCount = consecutive;
+            return d;
+        }, processVariants: function(d){
+            var mutationArray = [];
+            <span class="missing-if-branch" title="else path not taken" >E</span>if(d.variants.features.length &gt; 0) {
+                mutationArray.push({
+                    'type': {
+                        'name':'VARIANT',
+                        'label':'Sequence Variant'
+                    },
+                    'normal':'-',
+                    'pos': 0,
+                    'variants':[]
+                });
+                var seq = d.sequence.split('');
+                _.each(seq, function(d,i){
+                    mutationArray.push({
+                        'type': {
+                            'name':'VARIANT',
+                            'label':'Sequence Variant'
+                        },
+                        'normal':seq[i],
+                        'pos': i+1,
+                        'variants':[]
+                    });
+                });
+                mutationArray.push({
+                    'type': {
+                        'name':'VARIANT',
+                        'label':'Sequence Variant'
+                    },
+                    'normal':'-',
+                    'pos': seq.length+1,
+                    'variants':[]
+                });
+&nbsp;
+                _.each(d.variants.features, function(d){
+                    d.begin = +d.begin;
+                    d.wildType = d.wildType ? d.wildType : mutationArray[d.begin].normal;
+                    d.sourceType = d.sourceType.toLowerCase();
+                    if ((1 &lt;= d.begin) &amp;&amp; (d.begin &lt;= seq.length)) {
+                        mutationArray[d.begin].variants.push(d);
+                    } else <span class="missing-if-branch" title="else path not taken" >E</span>if ((seq.length+1) === d.begin) {
+                        mutationArray[d.begin - 1].variants.push(d);
+                    }
+                });
+            }
+            return mutationArray;
+        }
+    };
+} ();
+&nbsp;
+module.exports = DataLoader;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 24 2016 13:36:30 GMT+0000 (GMT)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

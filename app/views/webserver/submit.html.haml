@@ -1,0 +1,42 @@
+.ws_main_div
+  .submit_form
+    = form_tag({controller: "main", action: "upload"}, :multipart => true, :method => :post,id: "query_form",:style=>"margin-top:20px;") do 
+      %h3
+        UPLOAD YOUR ATOMIC STRUCTURE 
+      %br
+      = text_field_tag(:title)
+      JOB TITLE (opt.)
+      %br
+      %br
+      
+      %div{:style=>"font-size:14px;margin-bottom:5px;"} 
+        STRUCTURE FILE in
+        %a{:href=>"http://www.wwpdb.org/documentation/file-format",  :target=>"_blank"} PDB 
+        or 
+        %a{:href=>"http://mmcif.wwpdb.org",  :target=>"_blank"} mmCIF 
+        format
+      = file_field_tag(:structure_file)
+      %br
+      = hidden_field_tag(:viewer_type,@viewerType)
+      %br
+
+      = button_tag("Submit")
+    %br
+    %a{:href=>"http://3dbionotes.cnb.csic.es/chain_mapping?recover=true&rand=EXAMPLE1"} Example (AKT1-PIN1 docking models)
+    %br
+    %a{:href=>"http://3dbionotes.cnb.csic.es/AKT1_PIN1.pdb", :style=>"margin-top:10px;"} Example file (AKT1_PIN1.pdb)
+    %br
+    %br
+    %a{:href=>"http://3dbionotes.cnb.csic.es/chain_mapping?recover=true&rand=EXAMPLE5"} Example (HRAS interactions homology models)
+    %br
+    %a{:href=>"http://3dbionotes.cnb.csic.es/AKT1_PIN1.pdb", :style=>"margin-top:10px;"} Example file (HRAS_ppi.pdb)
+
+  .wait_div{:style=>'display:none'}
+    %span.wait_text PLEASE BE PATIENT
+    %br
+    %br
+    =image_tag("loading.gif",size:"300x300")
+    %br
+    %br
+    %span.wait_text THIS PROCESS MAY TAKE A FEW MINUTES
+

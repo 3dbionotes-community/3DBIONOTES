@@ -1,0 +1,142 @@
+body{
+  overflow-y: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+div#gfv{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+span.show_gfv_display_variants:hover{
+  font-weight:bold;
+  cursor:pointer;
+} 
+
+span.gfv_display_variants_close{
+  color: #FFF;
+  background-color: #333333;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  cursor: pointer;
+  border-radius: 20px;
+  width: 20px;
+  height: 20px;
+  font-size: 14px !important;
+  text-align: center;
+  border: 1px solid #fff;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+div.gfv_display_variants{
+    border: 1px solid #000;
+    background-color: #ffffff;
+    padding: 0.5em;
+    min-width: 210px;
+    text-align: left;
+    position:absolute;
+    left:350px;
+    z-index: 2000000;
+    display:none;
+}
+
+input.gfv_cb  {
+  -ms-transform: scale(0.7); /* IE */
+  -moz-transform: scale(0.7); /* FF */
+  -webkit-transform: scale(0.7); /* Safari and Chrome */
+  -o-transform: scale(0.7); /* Opera */
+  position:relative;
+  top:4px;
+}
+
+div.up_gfv_display {
+  font-size:12px;
+  color: rgb(96,96,96);
+  position:relative;
+}
+
+div#svg_div{
+	max-height:310px;
+	overflow-y:auto;
+}
+
+span.trancript_text {
+  font-size:12px;
+  font-weight:bold;
+  color: rgb(96,96,96);
+}
+
+div.gene_title {
+  margin-top:25px;
+  margin-bottom:5px;
+  color: rgb(96,96,96);
+}
+
+div.gene_title span.key{
+  font-size:14px;
+  font-weight:bold;
+}
+
+div.gene_title span.value{
+  font-size:14px;
+}
+span.gene_title{
+  text-decoration: none;
+  font-size:14px;
+}
+
+a.nostyle{
+  text-decoration: none;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:14px;
+  color:#074987;
+  font-weight: bold;
+}
+
+a:link,
+a:visited,
+a:focus,
+a:active {
+  color: #074987;
+  text-decoration: none;
+}
+
+.hover,
+a:hover {
+  color: #666 ! important;
+  text-decoration: none;
+  /*text-decoration: underline ! important;*/
+}
+
+a.menu:hover{
+  color: #96C8C8 !important;
+}
+
+.up_gfv_buttons  {
+    position:relative;
+    top:20px;
+    z-index:1000000;
+}
+
+.up_gfv_buttons span {
+    color: #3c4043;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.5;
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.8;
+}
+
+.up_gfv_buttons span:hover {
+    opacity: 1;
+}

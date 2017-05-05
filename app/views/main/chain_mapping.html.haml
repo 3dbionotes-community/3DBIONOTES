@@ -1,0 +1,100 @@
+:javascript
+  $j(document).ready(function(){
+    $ALIGNMENTS = #{ @alignment.to_json };
+  });
+:javascript
+  var binding_residues = #{ @interface.to_json }; 
+:javascript
+  var asa_residues = #{ @asa.to_json };
+:javascript
+  var procheck = null;
+
+#menu
+  =image_tag("3dbionotes_ws_logo_no_partners.png",height:'50')
+  %ul#topnav
+    %li
+      %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/home"',:style=>"cursor:pointer;font-weight:bold;"}HOME
+    %li
+      %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/submit"',:style=>"cursor:pointer;font-weight:bold;"}SUBMIT
+    %li
+      %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/database"',:style=>"cursor:pointer;font-weight:bold;"}QUERY
+    %li
+      %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/help"',:style=>"cursor:pointer;font-weight:bold;"}HELP
+  #partners
+    =image_tag("partners.png",id:'partners_logo')
+
+#topFrame
+  #molTitle
+    #{ @title }
+  #secondForm
+    = form_tag({controller: "main", action: "home"}, :method => :get,id: "selectOptionForm") do
+      = label_tag(:labelForm, "PROTEINS IN THIS MODEL:",:style=>"font-family: Verdana, Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;color:#606060;")
+      = select_tag(:alignment, options_for_select(@optionsArray),:onchange=>"firstTime=getValueSelection(this,firstTime);",:title=>"Choose one of the alignments",:prompt=>"SELECT MENU",:style=>"width:300px;margin-left:10px;font-size:10px;font-family: 'Lucida Console', Monaco, monospace")
+      #uniprotLogo{:style=>"display:inline;position:relative;top:5px;left:3px;"}
+        =link_to(image_tag("uniprot.png",size:"18x18"),"http://www.uniprot.org/",:target=>"_blank")
+      #controls{:style=>"margin-top:3px;background-color:transparent;"}
+        %i{:class=>"demo-icon icon-ccw" ,:title=>"Reset view"}
+          &#xe803;
+        %i{:class=>"demo-icon icon-light-up" ,:title=>"Display/hide atoms of selected residues"}
+          &#xe800;
+        %i{:class=>"demo-icon icon-eye-off" ,:title=>"Display/hide heteroatoms"}
+          &#xe805;
+        -if @viewerType=="ngl" && @n_models > 1
+          %i{:class=>"demo-icon icon-left-bold" ,:title=>"Previous model"}
+            &#xe802;
+          %div#model_indicator{:style=>"font-family: Verdana, Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;color:#606060;display:inline-block;width:50px;text-align:center;position:relative;bottom:1px;"}
+            %span#current_model
+              1
+            \/#{@n_models}
+          %i{:class=>"demo-icon icon-right-bold" ,:title=>"Next model"}
+            &#xe801;
+        %i{:class=>"demo-icon icon-target" ,:title=>"Label selected annotation"}
+          &#xe804;
+        %i{:class=>"demo-icon icon-th-list" ,:title=>"Display selected annotations"}
+          &#xe806;
+        %i{:class=>"demo-icon icon-camera" ,:title=>"Save image"}
+          &#xe807;
+        -if @viewerType!="ngl"
+          = image_tag("screenshot.gif",:onclick=>"javascript:takeScreenshot();",:align=>"center",:title=>"Save image - It takes some time",:class=>"hideHetero",:style=>"cursor:pointer;vertical-align:middle;")
+        -if @emdb!=""
+          = image_tag("volume.gif",:onclick=>"javascript:toggleVolumeEvent(this);",:align=>"center",:title=>"Display/hide volume",:class=>"hideVolume",:style=>"cursor:pointer;vertical-align:middle;")
+          -if @viewerType=="ngl"
+            %input{:type=>"range",:id=>"chanceSlider",:class=>"vHorizon",:min=>0,:max=>10,:step=>0.5,:value=>5,:style=>"width:300px;margin:5px;margin-top:10px;vertical-align:middle",:title=>"Change threshold"}
+            %input{:type=>"text",:name=>"chance",:id=>"chance",:class=>"text",:value=>5,:style=>"width:55px;margin:5px;vertical-align:middle",:title=>"Change threshold"}
+          -else
+            %input{:type=>"range",:id=>"chanceSlider",:class=>"vHorizon",:min=>@stThr,:max=>@endThr,:step=>@step,:value=>@threshold,:style=>"width:300px;margin:5px;margin-top:10px;vertical-align:middle",:title=>"Change threshold"}
+            %input{:type=>"text",:name=>"chance",:id=>"chance",:class=>"text",:value=>@threshold,:style=>"width:55px;margin:5px;vertical-align:middle",:title=>"Change threshold"}
+
+:javascript
+  var firstTime = true;
+  var alignmentTranslation;
+  var uniprotLength = '#{@uniprotLength}';
+  var noAlignments = #{@noAlignments};
+  $j(document).ready(function(){
+    $j('#chance').keypress(function(event){
+      if(event.keyCode==13){
+        event.preventDefault();
+      }
+    });
+
+    $j('#leftBottomFrame').load(function(){
+      if($j('#leftBottomFrame').attr('src')=="jsmolIFrame"){
+        $j('#leftBottomFrame')[0].src = "/jsmolIFrame/?viewer_type=#{@viewerType}&origin=#{@identifierType}&pdbs="+encodeURI('#{@pdbs.to_json}'+"&emdb=#{@emdb}&n_models=#{@n_models}");
+      }
+      if(noAlignments)clear_wm();
+    });
+   });
+#wrapperBottomFrame
+  #bottomFrame
+    #leftBottom
+      %iframe#leftBottomFrame{:src=>"jsmolIFrame",:scrolling=>"yes"}
+      %iframe#downRightBottomFrame{:src=>"sequenceIFrame",:scrolling=>"yes"}
+    #rightBottom
+      %iframe#upRightBottomFrame{:src=>"annotationsIFrame",:scrolling=>"yes"}
+:javascript
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-93698320-1', 'auto');
+  ga('send', 'pageview');

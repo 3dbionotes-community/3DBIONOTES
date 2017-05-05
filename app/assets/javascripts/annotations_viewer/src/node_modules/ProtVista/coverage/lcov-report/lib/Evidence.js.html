@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib/Evidence.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">lib/Evidence.js</span></h1>
+    <h2>
+        Statements: <span class="metric">30.77% <small>(4 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">25% <small>(1 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">30.77% <small>(4 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">lib/</a> &#187; Evidence.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span></td><td class="text"><pre class="prettyprint lang-js">/*jslint node: true */
+/*jshint laxbreak: true */
+/*jshint laxcomma: true */
+"use strict";
+&nbsp;
+var _ = require("underscore");
+&nbsp;
+var Evidence = function() {
+    return {
+        manual:
+            ['ECO:0000269', 'ECO:0000303', 'ECO:0000305', 'ECO:0000250', 'ECO:0000255', 'ECO:0000244', 'ECO:0000312']
+        , automatic: ['ECO:0000256', 'ECO:0000213', 'ECO:0000313']
+        , acronym: {
+            'ECO:0000269': 'EXP', 'ECO:0000303': 'NAS', 'ECO:0000305': 'IC', 'ECO:0000250': 'ISS', 'ECO:0000255': 'ISM',
+            'ECO:0000244': 'MIXM', 'ECO:0000312': 'MI',
+            'ECO:0000256': 'AA', 'ECO:0000213': 'MIXA', 'ECO:0000313': 'AI'
+        }, text: {
+            'ECO:0000269': 'Manual assertion based on experiment',
+            'ECO:0000303': 'Manual assertion based on opinion',
+            'ECO:0000305': 'Manual assertion inferred by curator',
+            'ECO:0000250': 'Manual assertion inferred from sequence similarity',
+            'ECO:0000255': 'Manual assertion according to rules',
+            'ECO:0000244': 'Manual assertion inferred from combination of experimental and computational evidence',
+            'ECO:0000312': 'Manual assertion inferred from database entries',
+            'ECO:0000256': 'Automatic assertion according to rules',
+            'ECO:0000213': 'Automatic assertion inferred from combination of experimental and computational evidence',
+            'ECO:0000313': 'Automatic assertion inferred from database entries'
+        }, isLSS: <span class="fstat-no" title="function not covered" >function(evidences) {</span>
+<span class="cstat-no" title="statement not covered" >            return _.some(evidences, <span class="fstat-no" title="function not covered" >function(evidence) {</span></span>
+<span class="cstat-no" title="statement not covered" >                return _.contains(Evidence.automatic, evidence.code);</span>
+            });
+        }, variantSourceType: {
+            uniprot: 'uniprot',
+            lss: 'large_scale_study',
+            mixed: 'mixed'
+        }, existAssociation: <span class="fstat-no" title="function not covered" >function(association) {</span>
+<span class="cstat-no" title="statement not covered" >            if (association) {</span>
+<span class="cstat-no" title="statement not covered" >                if (association.length !== 0) {</span>
+<span class="cstat-no" title="statement not covered" >                    if ((association[0].moreInfo &amp;&amp; (association[0].moreInfo.length !== 0))</span>
+                        || association[0].name || association[0].description){
+<span class="cstat-no" title="statement not covered" >                        return true;</span>
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        return false;</span>
+                    }
+                } else {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+            } else {
+<span class="cstat-no" title="statement not covered" >                return false;</span>
+            }
+        }
+    };
+}();
+&nbsp;
+module.exports = Evidence;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 24 2016 13:36:30 GMT+0000 (GMT)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

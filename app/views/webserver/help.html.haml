@@ -1,0 +1,137 @@
+= stylesheet_link_tag('webserver/help_style.css')
+
+.ws_main_div
+  %div{:class=>"index1"}
+    %a{:href=>"#submit"} - UPLOADING YOUR STRUCTURE FILE
+
+  %div{:class=>"index1"}
+    %a{:href=>"#ident"} - PROTEIN IDENTIFICATION
+
+  %div{:class=>"index1"}
+    %a{:href=>"#gui"} - GRAPHICAL USER INTERFACE
+
+  %div{:class=>"index1"}
+    %a{:href=>"#annot"} - ANNOTATIONS PANEL 
+
+  %div{:class=>"index1"}
+    %a{:href=>"#seq"} - SEQUENCE PANEL
+
+  %div{:class=>"index1"}
+    %a{:href=>"#struct"} - STRUCTURE PANEL
+
+
+
+  %div{:class=>"section", :id=>"submit"}UPLOADING YOUR STRUCTURE
+  %div{:class=>"section_text"}
+    The first step for using the web server is to upload a structural model file. This can be easily done through a form available clicking on the 'SUBMIT'  option (figure #{x=1}A), the accepted file formats are
+    %a{:href=>"http://www.wwpdb.org/documentation/file-format", :target=>"_blank"}PDB
+    or
+    %a{:href=>"http://mmcif.wwpdb.org/", :target=>"_blank"}mmCIF
+    coordinates format. When the file is submited the system perfromes a BLAST search in order to identiffy the possible UniProt accessions of the submitted proteins. This step  can take a few minutes since UniProt - TrEMBL contains more than 40000000 of protein chains. The 'JOB TITLE' field (Figure #{x}B) is an optional text field that can be used to identiffy the macromolecular structure or project, when no data is provided the name of the structure file becomes the title of the project.
+    %div{:class=>"section_image"}
+      =image_tag("upload.png")
+      %div{:class=>"legend"}Figure #{x}
+
+
+
+  %div{:class=>"section", :id=>"ident"}PROTEIN IDENTIFICATION
+  %div{:class=>"section_text"}
+    When the structure file is submitted the web server performs a BLAST search against SwissProt and TrEMBL databases to find the potential UniProt accessions corresponding to the different chains that are contained in the structural model. When this process is finished a new form (Figure #{x=x+1}) is returned to the user with the best hits to select the proper accession codes for each of the chains. There is no  need to select a  UniProt entry for each chain;  however, those chains that  were not identified by the user will not be annotated. Once the UniProt accessions have been selected for the different chains this information is sent back to the server and a sequence alignment between  the chain and UniProt sequence is calculated.
+    %div{:class=>"section_image"}
+      =image_tag("ident.png")
+      %div{:class=>"legend"}Figure #{x}
+
+
+
+  %div{:class=>"section", :id=>"gui"}GRAPHICAL USER INTERFACE
+  %div{:class=>"section_text"}
+    The graphical interface comprises 3 different panels (Figure #{x=x+1}). The 3D panel (Figure #{x}A) is based on
+    %a{:href=>"http://proteinformatics.charite.de/ngl/doc/#User_manual/Introduction/Welcome", :target=>"_blank"}NGL
+    protein viewer and it displays the macromolecular structure submitted by the user. The viewers controls are explained in the
+    %a{:href=>"#struct"}STRUCTURE PANEL
+    section. The annotation panel (Figure #{x}B) is build on the
+    %a{:href=>"http://ebi-uniprot.github.io/ProtVista/", :target=>"_blank"}ProtVista
+    plug-in and shows the biomedical and biochemical data collected form  the different sources of information. Finally, the sequence panel (Figure #{x}C) represents the alignment between the selected UniProt entry and the chain sequence of the structural  model.
+    %div{:class=>"section_image"}
+      =image_tag("gui.png")
+      %div{:class=>"legend"}Figure #{x}
+    All this panel are interconnected and selecting an annotation or a sequence region will highlight the involved amino acids in the other panels (Figure #{x=x+1}). See  each of the  components for a more detailed explanation.
+    %div{:class=>"section_image"}
+      =image_tag("gui2.png")
+      %div{:class=>"legend"}Figure #{x}
+
+
+
+  %div{:class=>"section", :id=>"annot"}ANNOTATIONS PANEL
+  %div{:class=>"section_text"}
+    The annotation panel  comprises a set of different lanes where the biochemical and biomedical  annotations are represented using different shapes and colors (Figure #{x=x+1}). Currently the web server collects information from multiple sources: post-translational modifications (
+    %a{:href=>"http://dbptm.mbc.nctu.edu.tw/", :target=>"_blank"}dbPTM 
+    and
+    %a{:href=>"http://www.phosphosite.org/homeAction.action", :target=>"_blank"}PhosphoSitePlus
+    ), genomic variations and diseases (
+    %a{:href=>"http://dsysmap.irbbarcelona.org/", :target=>"_blank"}dSysMap
+    and 
+    %a{:href=>"https://hive.biochemistry.gwu.edu/cgi-bin/prd/biomuta/servlet.cgi", :target=>"_blank"}BioMuta
+    ), short linear motifs (
+    %a{:href=>"http://elm.eu.org/", :target=>"_blank"}ELM
+    ), disordered regions (
+    %a{:href=>"http://mobidb.bio.unipd.it/", :target=>"_blank"}MobiDB
+    ) and domain families (
+    %a{:href=>"http://pfam.xfam.org/", :target=>"_blank"}Pfam
+    ,
+    %a{:href=>"http://prosite.expasy.org/", :target=>"_blank"}ProSite 
+    and 
+    %a{:href=>"http://smart.embl-heidelberg.de/", :target=>"_blank"}SMART
+    ).
+    %div{:class=>"section_image"}
+      =image_tag("annot.png")
+      %div{:class=>"legend"}Figure #{x}
+    The different annotations can be selected clicking on their shape, then the annotation panel will display a description of the selected annotation and the link to the original source or publication (Figure #{x=x+1}).
+    %div{:class=>"section_image"}
+      =image_tag("annot2.png")
+      %div{:class=>"legend"}Figure #{x}
+    Also,  when an  annotation  is selected the application will  display  the region in the sequence panel and highlight the amino acids in the 3d viewer (Figure #{x=x+1}).
+    %div{:class=>"section_image"}
+      =image_tag("annot3.png")
+      %div{:class=>"legend"}Figure #{x}
+    Finally, the annotation panel provides a menu  with different options (Figure #{x=x+1}). From left to right the different options are: information about the ProtVista viewer, download all annotations in json  or xml format, hide/display the different lanes, reset selection and zoom.
+    %div{:class=>"section_image"}
+      =image_tag("annot4.png")
+      %div{:class=>"legend"}Figure #{x}
+
+
+
+  %div{:class=>"section", :id=>"seq"}SEQUENCE PANEL
+  %div{:class=>"section_text"}
+    The sequence panel shows the alignments between the chains in the structural model and their corresponding UniProt entries that were selected in the identification step (Figure #{x=x+1}).
+    %div{:class=>"section_image"}
+      =image_tag("seq.png")
+      %div{:class=>"legend"}Figure #{x}
+    This frame allows the user to select a segment of the sequence to highlight their corresponding residues on the structural viewer and the corresponding region in the annotation panel  (Figure #{x=x+1}).
+    %div{:class=>"section_image"}
+      =image_tag("seq2.png")
+      %div{:class=>"legend"}Figure #{x}
+
+
+  %div{:class=>"section", :id=>"struct"}STRUCTURE PANEL
+  %div{:class=>"section_text"}
+
+    The 3D viewer displays the macromolecular structural model submitted to the server  (Figure #{x=x+1}). The menu on the top of the panel (Figure #{x}A) can be use to select what subunit (protein) in the structure the annotations are visualized for. Also, it allows to change the representation of a selected annotation  and navigate through  the different model if the structure file contain ore than one.
+    %div{:class=>"section_image"}
+      =image_tag("struct.png")
+      %div{:class=>"legend"}Figure #{x}
+
+    The tool bar in the 3D viewer is comprised of two components (Figure #{x=x+1}). The select menu on the top is used to navigate through the different subunits or protein that  arr contained in  the structural model. Changing this component will also change the annotation and sequence panels to show the information related the selected protein. From left to right, the icons on the bottom of the tool bar are used for: the clockwise arrow to reset all  the panels clearing the selections, the light icon  to change the representation of the selected residues, the eye icon display/hide the heteroatoms, the arrow  icons are used to navigate through the different models, the scope icon to mark and label  a selected annotation (see next), the menu icon to display the labeled annotations (see next) and finally, the camera icon to save an  image of the 3D  viewer.
+    %div{:class=>"section_image"}
+      =image_tag("struct2.png")
+      %div{:class=>"legend"}Figure #{x}
+
+    The scope icon (Figure #{x=x+1}) is used to label a  selected annotation on the 3D view of the structure. The label will indicate a short description of the annotation and its position, the color will be the same as in the annotation panel. The labels are not deleted when  a new selection is done or when the any of  the viewers are reset. The user can  selected other subunits to annotate the 3D structure and all selected labels will be kept. To remove,  hide or display the selected labels has to be done with the menu icon  (see next). 
+    %div{:class=>"section_image"}
+      =image_tag("struct3.png")
+      %div{:class=>"legend"}Figure #{x}
+
+    The menu icon (Figure #{x=x+1}) is used to display all the current selected labels in the 3D viewer. When  clicked a list of the current labels is displayed. Each label in the list is preceded of two  checkboxes and a close icon. The first checkbox is used to display/hide  the text of the label, the second checkbox to display/hide the label representation on  the structure and the close icon  to  completely  remove the label  
+    %div{:class=>"section_image"}
+      =image_tag("struct4.png")
+      %div{:class=>"legend"}Figure #{x}

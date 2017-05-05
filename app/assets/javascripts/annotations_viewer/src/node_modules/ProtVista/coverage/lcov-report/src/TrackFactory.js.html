@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/TrackFactory.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">src/TrackFactory.js</span></h1>
+    <h2>
+        Statements: <span class="metric">37.21% <small>(16 / 43)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">11.11% <small>(1 / 9)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">37.21% <small>(16 / 43)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">src/</a> &#187; TrackFactory.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*jslint node: true */
+/*jshint laxbreak: true */
+/*jshint laxcomma: true */
+"use strict";
+&nbsp;
+var d3 = require("d3");
+var _ = require("underscore");
+var FeatureFactory = require("./FeatureFactory");
+var NonOverlappingLayout = require("./NonOverlappingLayout");
+var BasicViewer = require("./BasicViewer");
+var VariantViewer = require("./VariantViewer");
+var Constants = require("./Constants");
+&nbsp;
+var Track = <span class="fstat-no" title="function not covered" >function(typeFeatures, category) {</span>
+<span class="cstat-no" title="statement not covered" >    var track = this;</span>
+<span class="cstat-no" title="statement not covered" >    track.data = typeFeatures;</span>
+<span class="cstat-no" title="statement not covered" >    track.type = typeFeatures[0].type;</span>
+<span class="cstat-no" title="statement not covered" >    track.label = typeFeatures[0].type;</span>
+<span class="cstat-no" title="statement not covered" >    track.category = category;</span>
+<span class="cstat-no" title="statement not covered" >    track.id = track.type + '_track';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    track.titleContainer = category.tracksContainer.append('div').style('display', 'inline-block');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    track.trackContainer = category.tracksContainer.append('div')</span>
+        .attr('class', 'up_pftv_track');
+};
+&nbsp;
+Track.prototype.update = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var track = this;</span>
+<span class="cstat-no" title="statement not covered" >    track.trackViewer.update();</span>
+};
+&nbsp;
+var BasicTrackViewer = <span class="fstat-no" title="function not covered" >function(track) {</span>
+<span class="cstat-no" title="statement not covered" >    return new BasicViewer(</span>
+        track.category.name, track.data, track.trackContainer, track.category.fv
+    );
+};
+&nbsp;
+var VariantTrackViewer = <span class="fstat-no" title="function not covered" >function(track) {</span>
+<span class="cstat-no" title="statement not covered" >    return new VariantViewer(</span>
+        track.category.name, track.data, track.trackContainer, track.category.fv, track.variantHeight
+        , track.titleContainer
+    );
+};
+&nbsp;
+Track.basic = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this;</span>
+<span class="cstat-no" title="statement not covered" >    var trackInfo = Constants.getTrackInfo(self.type.toLowerCase());</span>
+<span class="cstat-no" title="statement not covered" >    this.titleContainer.attr('class', 'up_pftv_track-header')</span>
+        .attr('title', trackInfo.label.toUpperCase() + '\n' +trackInfo.tooltip)
+        .text(trackInfo.label);
+<span class="cstat-no" title="statement not covered" >    this.trackViewer = new BasicTrackViewer(this);</span>
+};
+&nbsp;
+Track.variant = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.variantHeight = 430;</span>
+<span class="cstat-no" title="statement not covered" >    this.titleContainer.attr('class', 'up_pftv_track-header')</span>
+        .attr('style','height:' + this.variantHeight + 'px');
+<span class="cstat-no" title="statement not covered" >    this.trackViewer = new VariantTrackViewer(this);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.reset = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        this.trackViewer.reset();</span>
+    };
+};
+&nbsp;
+var TrackFactory = function() {
+    return {
+        createTrack: <span class="fstat-no" title="function not covered" >function(typeFeatures, type, category) {</span>
+<span class="cstat-no" title="statement not covered" >            var track;</span>
+&nbsp;
+            // error if the constructor doesn't exist
+<span class="cstat-no" title="statement not covered" >            if (typeof Track[type] !== "function") {</span>
+<span class="cstat-no" title="statement not covered" >                console.log('WARNING: Track viewer type ' + type + " doesn't exist");</span>
+            }
+&nbsp;
+            //inherit parent constructor
+<span class="cstat-no" title="statement not covered" >            Track[type].prototype = new Track(typeFeatures, category, type);</span>
+<span class="cstat-no" title="statement not covered" >            track = new Track[type]();</span>
+<span class="cstat-no" title="statement not covered" >            return track;</span>
+        }
+    };
+}();
+&nbsp;
+module.exports = TrackFactory;
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 11 2016 10:11:23 GMT+0100 (BST)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

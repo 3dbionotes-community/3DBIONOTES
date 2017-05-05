@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib/TrackFactory.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">lib/TrackFactory.js</span></h1>
+    <h2>
+        Statements: <span class="metric">36.17% <small>(17 / 47)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">12.5% <small>(1 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">36.17% <small>(17 / 47)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">lib/</a> &#187; TrackFactory.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span></td><td class="text"><pre class="prettyprint lang-js">/*jslint node: true */
+/*jshint laxbreak: true */
+"use strict";
+&nbsp;
+var d3 = require("d3");
+var _ = require("underscore");
+var FeatureFactory = require("./FeatureFactory");
+var NonOverlappingLayout = require("./NonOverlappingLayout");
+var BasicViewer = require("./BasicViewer");
+var VariantViewer = require("./VariantViewer");
+var VariantFilterDialog = require("./VariantFilterDialog");
+var LegendDialog = require("./VariantLegendDialog");
+&nbsp;
+var Track = <span class="fstat-no" title="function not covered" >function(typeFeatures, category) {</span>
+<span class="cstat-no" title="statement not covered" >    var track = this;</span>
+<span class="cstat-no" title="statement not covered" >    track.data = typeFeatures;</span>
+<span class="cstat-no" title="statement not covered" >    track.type = typeFeatures[0].type.name;</span>
+<span class="cstat-no" title="statement not covered" >    track.label = typeFeatures[0].type.label;</span>
+<span class="cstat-no" title="statement not covered" >    track.category = category;</span>
+<span class="cstat-no" title="statement not covered" >    track.id = track.type + '_track';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    track.titleContainer = category.tracksContainer.append('div').style('display', 'inline-block');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    track.trackContainer = category.tracksContainer.append('div')</span>
+        .attr('class', 'up_pftv_track');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    track.typeLabels = {</span>
+        //molecular processing
+        chain: {label: 'Chain',
+            tooltip: '(aka mature region). This describes the extent of a polypeptide chain in the mature protein' +
+            ' following processing'
+        }, transit: {label: 'Transit peptide', tooltip: 'This describes the extent of a transit peptide'
+        }, init_met: {label: 'Initiator methionine', tooltip: 'This indicates that the initiator methionine is cleaved from the mature' +
+            ' protein'
+        }, propep: {label: 'Propeptide', tooltip: 'Part of a protein that is cleaved during maturation or activation'
+        }, peptide: {label: 'Peptide', tooltip: 'The position and length of an active peptide in the mature protein'
+        }, signal: {label: 'Signal', tooltip: 'N-terminal signal peptide'},
+        //structural
+        helix: {label: 'Helix', tooltip: 'The positions of experimentally determined helical regions'
+        }, strand: {label: 'Beta strand', tooltip: 'The positions of experimentally determined beta strands'
+        }, turn: {label: 'Turn', tooltip: 'The positions of experimentally determined hydrogen-bonded turns'
+        }, disulfid: {label: 'Disulfide bond', tooltip: 'The positions of cysteine residues participating in' +
+            ' disulphide bonds'
+        }, crosslnk: {label: 'Cross-link', tooltip: 'Covalent linkages of various types formed between two proteins' +
+            ' or between two parts of the same protein'},
+        //domains &amp; sites
+        region: {label: 'Region', tooltip: 'Regions in multifunctional enzymes or fusion proteins, or' +
+            ' characteristics of a region, e.g., protein-protein interactions mediation'
+        }, coiled:  {label: 'Coiled coil', tooltip: 'Coiled coils are built by two or more alpha-helices that wind' +
+            ' around each other to form a supercoil'
+        }, motif: {label: 'Motif', tooltip: 'Short conserved sequence motif of biological significance'
+        }, repeat: {label: 'Repeat', tooltip: 'Repeated sequence motifs or repeated domains within the protein'
+        }, ca_bind: {label: 'Calcium binding', tooltip: 'Calcium-binding regions, such as the EF-hand motif'
+        }, dna_bind: {label: 'DNA binding', tooltip: 'DNA-binding domains such as AP2/ERF domain, the ETS domain,' +
+            ' the Fork-Head domain, the HMG box and the Myb domain'
+        }, domain: {label: 'Domain', tooltip: 'Specific combination of secondary structures organized into a ' +
+            'characteristic three-dimensional structure or fold'
+        }, zn_fing: {label: 'Zing finger', tooltip: 'Small, functional, independently folded domain that coordinates' +
+            ' one or more zinc ions'
+        }, np_bind: {label: 'Nucleotide binding', tooltip: '(aka flavin-binding). Region in the protein which binds' +
+            ' nucleotide phosphates'
+        }, metal: {label: 'Metal binding', tooltip: 'Binding site for a metal ion'
+        }, site: {label: 'Site', tooltip: 'Any interesting single amino acid site on the sequence'
+        }, binding: {label: 'Binding site', tooltip: 'Binding site for any chemical group (co-enzyme, prosthetic' +
+        ' group, etc.)'
+        }, act_site: {label: 'Active site', tooltip: 'Amino acid(s) directly involved in the activity of an enzyme'},
+        //ptms
+        mod_res: {label: 'Modified residue', tooltip: 'Modified residues such as phosphorylation, acetylation,' +
+            ' acylation, methylation'
+        }, lipid: {label: 'Lipidation', tooltip: 'Covalently attached lipid group(s)'
+        }, carbohyd: {label: 'Glycosylation', tooltip: 'Covalently attached glycan group(s)'},
+        //seqInfo
+        compbias: {label: 'Compositional bias', tooltip: 'Position of regions of compositional bias within the' +
+            ' protein and the particular amino acids that are over-represented within those regions'
+        }, conflict: {label: 'Sequence conflict', tooltip: 'Sequence discrepancies of unknown origin'
+        }, non_cons: {label: 'Non-adjacent residues', tooltip: 'Indicates that two residues in a sequence are not ' +
+            'consecutive and that there is an undetermined number of unsequenced residues between them'
+        }, non_ter: {label: 'Non-terminal residue', tooltip: 'The sequence is incomplete. The residue is not the ' +
+            'terminal residue of the complete protein'
+        }, unsure: {label: 'Sequence uncertainty', tooltip: 'Regions of a sequence for which the authors are unsure ' +
+            'about the sequence assignment'
+        }, non_std: {label: 'Non-standard residue', tooltip: 'Non-standard amino acids (selenocysteine and ' +
+            'pyrrolysine)'},
+        //mutagenesis
+        mutagen: {label: 'Mutagenesis', tooltip: 'Site which has been experimentally altered by mutagenesis'},
+        //topology
+        topo_dom: {label: 'Topological domain', tooltip: 'Location of non-membrane regions of membrane-spanning ' +
+            'proteins'
+        }, transmem: {label: 'Transmembrane', tooltip: 'Extent of a membrane-spanning region'
+        }, intramem: {label: 'Intramembrane', tooltip: 'Extent of a region located in a membrane without crossing it'},
+        //variants
+        variant: {label: 'Natural variant', tooltip: 'Natural variant of the protein, including polymorphisms, ' +
+            'variations between strains, isolates or cultivars, disease-associated mutations and RNA editing events'
+        }
+    };
+};
+&nbsp;
+Track.prototype.update = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var track = this;</span>
+<span class="cstat-no" title="statement not covered" >    track.trackViewer.update();</span>
+};
+&nbsp;
+var BasicTrackViewer = <span class="fstat-no" title="function not covered" >function(track) {</span>
+<span class="cstat-no" title="statement not covered" >    return new BasicViewer(</span>
+        track.category.data.label, track.data, track.trackContainer, track.category.fv
+    );
+};
+&nbsp;
+var VariantTrackViewer = <span class="fstat-no" title="function not covered" >function(track) {</span>
+<span class="cstat-no" title="statement not covered" >    return new VariantViewer(</span>
+        track.category.data.label, track.data, track.trackContainer, track.category.fv, track.variantHeight
+    );
+};
+&nbsp;
+Track.basic = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this;</span>
+<span class="cstat-no" title="statement not covered" >    this.titleContainer.attr('class', 'up_pftv_track-header')</span>
+        .attr('title', self.typeLabels[self.type.toLowerCase()].label.toUpperCase() + '\n' + self.typeLabels[self.type.toLowerCase()].tooltip)
+        .text(self.typeLabels[self.type.toLowerCase()].label);
+<span class="cstat-no" title="statement not covered" >    this.trackViewer = new BasicTrackViewer(this);</span>
+};
+&nbsp;
+Track.variant = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this;</span>
+<span class="cstat-no" title="statement not covered" >    this.variantHeight = 430;</span>
+<span class="cstat-no" title="statement not covered" >    this.titleContainer.classed('up_pftv_track-header-container', true);</span>
+<span class="cstat-no" title="statement not covered" >    this.titleContainer.style('height', this.variantHeight);</span>
+<span class="cstat-no" title="statement not covered" >    this.titleContainer.append('div')</span>
+        .attr('class', 'up_pftv_track-header')
+        .attr('title', self.typeLabels.variant.label + '\n' + self.typeLabels.variant.tooltip)
+        .text(self.typeLabels.variant.label);
+<span class="cstat-no" title="statement not covered" >    VariantFilterDialog.displayDialog(self.titleContainer, self.category.fv);</span>
+<span class="cstat-no" title="statement not covered" >    LegendDialog.createLegendDialog(self.titleContainer);</span>
+<span class="cstat-no" title="statement not covered" >    this.trackViewer = new VariantTrackViewer(this);</span>
+};
+&nbsp;
+var TrackFactory = function() {
+    return {
+        createTrack: <span class="fstat-no" title="function not covered" >function(typeFeatures, type, category) {</span>
+<span class="cstat-no" title="statement not covered" >            var track;</span>
+&nbsp;
+            // error if the constructor doesn't exist
+<span class="cstat-no" title="statement not covered" >            if (typeof Track[type] !== "function") {</span>
+<span class="cstat-no" title="statement not covered" >                console.log('WARNING: Track viewer type ' + type + " doesn't exist");</span>
+            }
+&nbsp;
+            //inherit parent constructor
+<span class="cstat-no" title="statement not covered" >            Track[type].prototype = new Track(typeFeatures, category, type);</span>
+<span class="cstat-no" title="statement not covered" >            track = new Track[type]();</span>
+<span class="cstat-no" title="statement not covered" >            return track;</span>
+        }
+    };
+}();
+&nbsp;
+module.exports = TrackFactory;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 24 2016 13:36:30 GMT+0000 (GMT)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

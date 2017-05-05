@@ -1,0 +1,61 @@
+.index1 {
+  margin-bottom:10px;
+  font-weight:bold;
+}
+
+.index1 a{
+  color:#074987;
+}
+
+.index1 a:visited{
+  color:#074987;
+}
+
+.index1 a:hover{
+  color:#96C8C8;
+  cursor:pointer;
+}
+
+.section{
+  font-size:20px;
+  font-weight:bold;
+  margin:20 0 10 0;
+}
+
+.section_text{
+  font-size:16px;
+  padding-left:2%;
+  padding-right:40%;
+  line-height:2;
+  text-align:justify;
+  margin-bottom:50px;
+}
+
+.section_image{
+  margin-top:25px;
+  position:relative;
+  margin-bottom:30px;
+}
+
+.section_image img{
+  width:100%;
+}
+
+.section_image .legend {
+  position:absolute;
+  right:0%;
+}
+
+.section_text a{
+  color:#074987;
+}
+
+.section_text a:visited{
+  color:#074987;
+}
+
+.section_text a:hover{
+  color:#96C8C8;
+  cursor:pointer;
+}
+
