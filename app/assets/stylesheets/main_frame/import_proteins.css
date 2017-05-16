@@ -1,0 +1,80 @@
+div#similar_targets {
+
+  position:fixed;
+  right:45;
+  top:50;
+  height:90%;
+  min-width: 900;
+  width:-moz-calc(900px);
+  width:calc(900px);
+  z-index:1000;
+
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:16px;
+  font-weight:bold;
+  color:#666666;
+  text-align: center;
+  background-color:#FFFFFF;
+  border-style: dotted;
+  border-width: 1px;
+  border-color: #666666;
+  overflow:auto;
+}
+
+div#similar_targets div table{
+  width:100%;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:12px;
+  color:#666666;
+  padding:25 10 10 10;
+}
+
+div#similar_targets div table tr th{
+  text-align:left;
+}
+
+div#similar_targets div table tr td{
+  padding:5 0 5 10;
+}
+
+div#similar_targets div table tr:hover{
+  color:black; 
+  cursor:pointer;
+  background-color:#DDDDDD;
+}
+
+div#similar_targets div table tr:first-child:hover{
+  color:#666666; 
+  cursor:default;
+  background-color:#FFFFFF;
+}
+
+div.imported_targets_div {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:12px;
+  font-weight:bold;
+  color:#666666;
+  position:absolute;
+  left:5px;
+  top:10px; 
+}
+
+select.imported_targets_selector {
+  width: 400px;
+  height: 20px;
+  font-size: 10px;
+  font-family: 'Lucida Console', Monaco, monospace; 
+}
+
+.close{
+  position:absolute;
+  right:10px;
+  top:5px;
+  font-size:10px;
+  color:#074987;
+}
+
+.close:hover{
+  cursor:pointer;
+  color:#96C8C8;
+}

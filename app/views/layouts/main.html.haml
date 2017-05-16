@@ -6,12 +6,15 @@
     %title= title
     = csrf_meta_tag
     = stylesheet_link_tag('main_frame/main_style.css')
+    = stylesheet_link_tag('main_frame/import_proteins.css')
     = stylesheet_link_tag('main_frame/fontello.css')
     = stylesheet_link_tag('main_frame/sweetalert.css')
+
     = javascript_include_tag('main_frame/websocket')
     = javascript_include_tag('application')
     = javascript_include_tag('main_frame/sweetalert.min')
     = javascript_include_tag('main_frame/main_lib')
+    = javascript_include_tag('main_frame/import_proteins')
     = javascript_include_tag('main_frame/main_inter')
     = javascript_include_tag('main_frame/main_init')
   %body.parentBody{:id => "body"}
