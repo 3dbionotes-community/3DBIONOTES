@@ -1,0 +1,22 @@
+-if @alignment.nil?
+  :javascript
+    $j('#loading').css('display','none');
+  %h2{:id=>"default_text", :style=>"margin-right:8px;color:#606060;font-size:14px;margin-top:14px;text-align:center;font-family: Verdana, Arial, Helvetica, sans-serif;"}
+    USE THE SELECT MENU TO BROWSE PROTEIN ANNOTATIONS
+-else
+  %div{:id => "molTitle"} 
+    %b #{@gene_symbol}
+    \- #{@uniprotTitle} -
+    #{@organism} -
+    %a{:target=>"_blank", :href=>"http://www.uniprot.org/uniprot/"+@uniprotACC}
+      #{@uniprotACC}
+  %div{:id => "snippetDiv"}
+    :javascript
+      var allURL = #{@allURL};
+      var __external_data = {};
+      var __accession = '#{@uniprotACC}';
+      var __alignment =  #{@alignment.to_json};
+      var imported_alignment = #{@imported_alignment.to_json};
+      top.global_imported_alignment = #{@imported_alignment.to_json};
+  :javascript
+    #{@log}
