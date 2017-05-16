@@ -335,7 +335,10 @@ function toggleVolumeEvent(button){
 
 function import_similars(){
   $j('#upRightBottomFrame').css('visibility','hidden');
-  $j('body').append("<div id=\"similar_targets\"><div>IMPORTING SIMILAR PROTEINS<br/>PLEASE WAIT<br/><br/><img src=\"/images/loading_em.gif\"/></div></div>");
+  $j('body').append("<div id=\"similar_targets\"><div class=\"close\">CLOSE</div><table></table><div style=\"margin-top:25px;\">IMPORTING SIMILAR PROTEINS<br/>PLEASE WAIT<br/><br/><img src=\"/images/loading_em.gif\"/></div></div>");
+  $j('.close').click(function(){
+    clear_targets();
+  });
   if( $IMPORTED_DATA[ 'sequence_similars' ][ global_infoAlignment.uniprot ] ){
     display_targets($IMPORTED_DATA[ 'sequence_similars' ][ global_infoAlignment.uniprot ]);
   }else{
@@ -366,8 +369,11 @@ function clear_targets(){
 }
 
 function display_targets(data){
-  $j("#similar_targets div").html('');
-  $j("#similar_targets div").append("<table></table>");
+  $j("#similar_targets").html('');
+  $j("#similar_targets").append("<div class=\"close\">CLOSE</div><div><table></table></div>");
+  $j('.close').click(function(){
+    clear_targets();
+  });
   var th = "<th>SYMBOL</th>"+"<th>GENE NAME</th>"+"<th>ORGANISM NAME</th>"+"<th>UNIPROT ACC</th>"+"<th># ANNOTATIONS</th>"+"<th>SEQUENCE ID</th>";
   var tr = "<tr>"+th+"</tr>";
   $j("#similar_targets div table").append(tr);
