@@ -101,21 +101,22 @@ a.nostyle{
 }
 
 #leftBottom{
-  float:left;
   min-width: 680px;
   width:-moz-calc(100% - 990px);
   width:calc(100% - 990px);
   height:100%;
-  position:relative;
+  position:fixed;
+  left:0px;
 }
 
 #rightBottom{
-  float:right;
   height:100%;
   min-width: 990;
   width:-moz-calc(990px);
   width:calc(990px);
-  position:relative;
+  position:fixed;
+  right:0px;
+  border-left:1px solid black;
 }
 
 iframe{
@@ -147,10 +148,11 @@ iframe#upRightBottomFrame{
   height:100%;
   width:100%;
   box-sizing: border-box;
-  border-left:1px inset;
+  border-left:0px;
   border-bottom:0px;
   border-right:0px;
   border-top:0px;
+  padding-top:50px;
 }
 
 #evidence{
@@ -382,6 +384,28 @@ ul#topnav{
   content: "-";
 }
 
+ul#topnav2{
+  /*float:right;*/
+  list-style:none;
+  margin: 0;
+  padding: 0;
+  text-align:right;
+  display:inline;
+  position:absolute;
+  right:10px;
+  top:5px;
+}
+
+#topnav2 li{
+  list-style:none;
+  display: inline;
+}
+
+#topnav2 li + li:before {
+  content: "-";
+}
+
+
 a:link,
 a:visited,
 a:focus,
@@ -470,3 +494,70 @@ div#controls{
   margin-top:5px;
 }
 
+div#similar_targets {
+
+  position:fixed;
+  right:45;
+  top:50;
+  height:90%;
+  min-width: 900;
+  width:-moz-calc(900px);
+  width:calc(900px);
+  z-index:1000;
+
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:16px;
+  font-weight:bold;
+  color:#666666;
+  text-align: center;
+  background-color:#FFFFFF;
+  border-style: dotted;
+  border-width: 1px;
+  border-color: #666666;
+  overflow:auto;
+}
+
+div#similar_targets div table{
+  width:100%;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:12px;
+  color:#666666;
+  padding:10 10 10 10;
+}
+
+div#similar_targets div table tr th{
+  text-align:left;
+}
+
+div#similar_targets div table tr td{
+  padding:5 0 5 10;
+}
+
+div#similar_targets div table tr:hover{
+  color:black; 
+  cursor:pointer;
+  background-color:#DDDDDD;
+}
+
+div#similar_targets div table tr:first-child:hover{
+  color:#666666; 
+  cursor:default;
+  background-color:#FFFFFF;
+}
+
+div.imported_targets_div {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:12px;
+  font-weight:bold;
+  color:#666666;
+  position:absolute;
+  left:5px;
+  top:10px; 
+}
+
+select.imported_targets_selector {
+  width: 400px;
+  height: 20px;
+  font-size: 10px;
+  font-family: 'Lucida Console', Monaco, monospace; 
+}

@@ -1,11 +1,6 @@
-function triggerCoordinates(start,end,genomic_flag){
-  var evt = document.createEvent("CustomEvent");
-  evt.initCustomEvent("AnnotsCoordinatesInfo",true,true,[start,end,genomic_flag]);
-  body.dispatchEvent(evt);
-}
-
 var IRD = false;
 var ASA = false;
+
 
 function update_interacting_residues(n){
   n_model = n;
@@ -46,7 +41,6 @@ function update_asa_residues(n){
   });
 }
 
-
 function build_ProtVista(){
   var yourDiv = document.getElementById('snippetDiv');
   if( !yourDiv ) return;
@@ -57,24 +51,55 @@ function build_ProtVista(){
     console.log(err);
   }       
   instance.getDispatcher().on("featureSelected", function(obj) {
-    if(obj.feature.internalId=="fake_0"){
-      triggerCoordinates(obj['feature']['begin'],obj['feature']['end'],false);
-    }else{
-      triggerCoordinates(obj['feature']['begin'],obj['feature']['end'],true);
+    var begin = obj['feature']['begin'];
+    var end = obj['feature']['end'];
+    var color =  obj['color'];
+
+    if(imported_flag){
+      var X = put_imported_range(obj['feature']['begin'],obj['feature']['end']);
+      begin = X[0];
+      end = X[1];
     }
-    if(obj.feature.internalId=="fake_0")$j('.up_pftv_tooltip-container').css('visibility','hidden');
+    
+    if(obj.feature.internalId=="fake_0"){
+      $j('.up_pftv_tooltip-container').css('visibility','hidden');
+    }else{
+      var selection = {begin:begin, end:end, color:color, frame:"upRightBottomFrame"};
+      trigger_aa_selection(selection);
+    }
   });
   
   instance.getDispatcher().on("featureDeselected", function(obj) {
     if(!instance.selectedFeature){
-      $j('.up_pftv_tooltip-container').css('visibility','hidden');
-      var evt = document.createEvent("Event");
-      evt.initEvent("ResetInfo",true,true);
-      window.top.document.getElementById("downRightBottomFrame").contentWindow.dispatchEvent(evt);
-  
-      var evt = document.createEvent("Event");
-      evt.initEvent("ClearSelected",true,true);
-      window.top.document.getElementById("leftBottomFrame").contentWindow.dispatchEvent(evt);
+      trigger_aa_cleared();
     }
   });
 }
+
+function get_imported_range(x,y){
+  var s = x-1;
+  var e =  y-1;
+  while( !(imported_alignment.mapping[ s ].importedIndex && imported_alignment.mapping[ e ].importedIndex) && s<=e ){
+    if(!imported_alignment.mapping[ s ].importedIndex)s += 1;
+    if(!imported_alignment.mapping[ e ].importedIndex)e -= 1;
+  }
+  if(s<=e){
+    return [imported_alignment.mapping[ s ].importedIndex,imported_alignment.mapping[ e ].importedIndex];
+  }else{
+    return [null,null];
+  }
+}    
+
+function put_imported_range(x,y){
+  var s = parseInt(x);
+  var e =   parseInt(y);
+  while( !(imported_alignment.inverse[ s ] && imported_alignment.inverse[ e ]) && s<=e ){
+    if(!imported_alignment.inverse[ s ])s += 1;
+    if(!imported_alignment.inverse[ e ])e -= 1;
+  }
+  if(s<=e){
+    return [imported_alignment.inverse[ s ],imported_alignment.inverse[ e ]];
+  }else{
+    return [null,null];
+  }
+} 

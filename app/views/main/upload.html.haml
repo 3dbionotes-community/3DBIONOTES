@@ -42,7 +42,7 @@
                   -@choice[ch].each do |r|
                     %tr
                       %td
-                        =radio_button_tag(ch,r['acc']+'__'+r['db']+'__'+r['title']['name']['long'])
+                        =radio_button_tag(ch,r['acc']+'__'+r['db']+'__'+r['title']['name']['long']+'__'+r['title']['org']['long']+'__'+r['title']['gene'])
                       %td{:style=>"font-weight:bold;font-family:Monospace;"}
                         %a{ :target=>'_blank',:href=>"http://www.uniprot.org/uniprot/#{r['acc']}"  }
                           #{r['acc']}

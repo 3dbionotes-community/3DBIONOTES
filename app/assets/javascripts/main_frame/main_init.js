@@ -1,6 +1,13 @@
 var $ALIGNMENTS = {};
 var $EXTERNAL_DATA = {'PDBchain':{},'acc':{}};
 var n_model_main_frame = 1;
+var global_infoAlignment = null;
+
+var $IMPORTED_DATA = { 'PDBchain':{},'acc':{}, 'sequence_similars':{} };
+var global_imported_alignment = null;
+
+var global_selection =  null;
+var $j = jQuery.noConflict();
 
 $j(document).ready(function(){
   $j('#chanceSlider').on('change', function(){
@@ -56,4 +63,11 @@ $j(document).ready(function(){
   $j('.icon-box').click(function(){
     toggleVolumeEvent(this);
   });
+
+  $j('#import_similars').click(function(){
+    import_similars();
+  });
+  
+  add_frames_listener();
+
 });

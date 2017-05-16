@@ -165,12 +165,23 @@ class AnnotationsController < ApplicationController
     if data.code != "404"
       fasta = Bio::Alignment::MultiFastaFormat.new(data.body)
     end
-    fasta.entries.each do |entry|
-      entry_definition = "Unknown"
-      if !entry.definition.nil? and entry.definition.include? "|" and entry.definition.include? "OS="
-        entry_definition = entry.definition.split(/\|/)[2].split(/\sOS=/)[0].split(/\s/,2)[1].upcase
+    if !fasta.nil? && !fasta.entries.nil?
+      fasta.entries.each do |entry|
+        entry_definition = "Unknown"
+        if !entry.definition.nil? and entry.definition.include? "|" and entry.definition.include? "OS="
+          aux = entry.definition.split(/\|/)[2].split(/\sOS=/)
+          entry_definition = aux[0].split(/\s/,2)[1]
+          aux = aux[1].split(/ GN=/,2)
+          organism_name = aux[0]
+          gene_symbol = "N/A"
+          if !aux[1].nil?
+            gene_symbol = aux[1].split(/ PE=/,2)[0]
+          else
+            organism_name = organism_name.split(/ PE=/,2)[0]
+          end
+        end
+        returnValue[entry.accession] = [entry.seq.length,entry_definition,gene_symbol,organism_name]
       end
-      returnValue[entry.accession] = [entry.seq.length,entry_definition]
     end
     return render json: returnValue, status: :ok
   end

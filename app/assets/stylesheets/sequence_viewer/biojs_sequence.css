@@ -33,6 +33,10 @@ pre{
        color:grey; 
 }
 
+.sequence tr:nth-child(3){
+       color:grey; 
+}
+
 .num_left{
         width:30px;
         display:inline-table;

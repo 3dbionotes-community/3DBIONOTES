@@ -42488,6 +42488,7 @@ var initSources = function (opts) {
 var loadSources = function(opts, dataSources, loaders, delegates, fv) {
     fv.initLayout(opts);
     _.each(dataSources, function(source, index) {
+        fv.n_source += 1;
         if (!_.contains(opts.exclusions, source.category)) {
             var url = source.url + opts.uniprotacc;
             url = source.useExtension === true ? url + '.json' : url;
@@ -42558,7 +42559,7 @@ var FeaturesViewer = function(opts) {
     var fv = this;
     fv.dispatcher = d3.dispatch("featureSelected", "featureDeselected", "ready", "noDataAvailable", "noDataRetrieved",
         "notFound", "notConfigRetrieved", "regionHighlighted");
-
+    fv.n_source = 0;
     fv.width = 760;
     fv.maxZoomSize = 30;
     fv.selectedFeature = undefined;

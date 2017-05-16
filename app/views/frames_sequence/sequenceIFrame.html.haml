@@ -11,6 +11,13 @@
     -if !@alignment["uniprot"].nil?
       #seq_div
       :javascript
-        build_sequence_viewer('#{@alignmentData["uniprotSeq"]}','#{@alignmentData["pdbSeq"]}');
+        var imported_flag = #{@imported_flag};
+        if(imported_flag){
+          if( top.global_imported_alignment ){
+            build_sequence_viewer('#{@alignmentData["uniprotSeq"]}','#{@alignmentData["pdbSeq"]}',top.global_imported_alignment.importedSeq);
+          }
+        }else{
+          build_sequence_viewer('#{@alignmentData["uniprotSeq"]}','#{@alignmentData["pdbSeq"]}');
+        }
       :javascript
         #{@log}

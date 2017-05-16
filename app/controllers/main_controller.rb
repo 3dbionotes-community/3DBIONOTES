@@ -166,6 +166,8 @@ class MainController < ApplicationController
                       ali["uniprot"] = uniprot
                       ali["uniprotLength"] = uniLengths[uniprot][0]
                       ali["uniprotTitle"] = uniLengths[uniprot][1]
+                      ali["organism"] = uniLengths[uniprot][3]
+                      ali["gene_symbol"] = uniLengths[uniprot][2]
                       ali["emdb"] = identifierName
                       @optionsArray.push(["PDB:#{pdb.upcase} CH:#{chain} Uniprot:#{uniprot} #{ali["uniprotTitle"]}",ali.to_json])
                     end
@@ -218,6 +220,8 @@ class MainController < ApplicationController
                   ali["uniprot"] = uniprot
                   ali["uniprotLength"] = uniLengths[uniprot][0]
                   ali["uniprotTitle"] = uniLengths[uniprot][1]
+                  ali["organism"] = uniLengths[uniprot][3]
+                  ali["gene_symbol"] = uniLengths[uniprot][2]
                   @optionsArray.push(["CH:#{chain} Uniprot:#{uniprot} #{ali["uniprotTitle"]}",ali.to_json])
                 end
               end
@@ -226,20 +230,24 @@ class MainController < ApplicationController
         end
       elsif identifierType=="Uniprot"
         if identifierName =~ /^[OPQ][0-9][A-Z0-9]{3}[0-9]$|^[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$/
-          url = BaseUrl+"api/info/UniprotTitle/"+identifierName
-          jsonData = getUrl(url)
-          titleJson = JSON.parse(jsonData)
-          @moleculeTitle = titleJson["title"]
-          if titleJson["title"] != "Compound title not found"
-            @isAvailable = true
-          end
+          #url = BaseUrl+"api/info/UniprotTitle/"+identifierName
+          #jsonData = getUrl(url)
+          #titleJson = JSON.parse(jsonData)
+          #if titleJson["title"] != "Compound title not found"
+          #  @isAvailable = true
+          #end
           @badName = false
           options = Hash.new
           url = BaseUrl+"api/mappings/Uniprot/PDB/"+identifierName
           jsonData = getUrl(url)
           mappingData = JSON.parse(jsonData)
-          url = BaseUrl+"api/lengths/Uniprot/"+identifierName
-          uniLength = getUrl(url)
+          url = BaseUrl+"/api/lengths/UniprotMulti/"+identifierName
+          jsonData = getUrl(url)
+          uniLength = JSON.parse(jsonData)
+          @moleculeTitle = uniLength[identifierName][1]
+          if @moleculeTitle != "Compound title not found"
+            @isAvailable = true
+          end
           if mappingData.has_key?(identifierName)
             @notExists = false 
             options = mappingData[identifierName]
@@ -249,8 +257,10 @@ class MainController < ApplicationController
               ali = Hash.new
               ali["origin"] = "Uniprot"
               ali["uniprot"] = identifierName
-              ali["uniprotLength"] = uniLength
-              ali["uniprotTitle"] = @moleculeTitle
+              ali["uniprotLength"] = uniLength[identifierName][0]
+              ali["uniprotTitle"] = uniLength[identifierName][1]
+              ali["organism"] = uniLength[identifierName][3]
+              ali["gene_symbol"] = uniLength[identifierName][2]
               @optionsArray.push(["No atructural data is available, displaying Uniprot annotations",ali.to_json])
               @changeSelector = true
             else
@@ -262,8 +272,10 @@ class MainController < ApplicationController
                 ali["pdbList"] = [pdb]
                 ali["chain"] = info["chain"]
                 ali["uniprot"] = identifierName
-                ali["uniprotLength"] = uniLength
-                ali["uniprotTitle"] = @moleculeTitle
+                ali["uniprotLength"] = uniLength[identifierName][0]
+                ali["uniprotTitle"] = uniLength[identifierName][1]
+                ali["organism"] = uniLength[identifierName][3]
+                ali["gene_symbol"] = uniLength[identifierName][2]
                 @optionsArray.push(["PDB:#{pdb.upcase} CH:#{info["chain"]} Mapping:#{info["start"]}-#{info["end"]} Resolution:#{resolution}",ali.to_json])
               end
             end
@@ -272,7 +284,7 @@ class MainController < ApplicationController
       end
       #return render text: @optionsArray.to_json
     end
-  end
+  end #home
 
   def upload
     rand_path = (0...20).map { ('a'..'z').to_a[rand(26)] }.join.upcase
@@ -356,7 +368,7 @@ class MainController < ApplicationController
           next
         end
         @noAlignments = false
-        acc,db,title =  params[ch].split('__')
+        acc,db,title,organism,gene_symbol =  params[ch].split('__')
         if do_not_repeat.key?(acc)
           uniprot[ch] = do_not_repeat[acc]
         else
@@ -366,7 +378,7 @@ class MainController < ApplicationController
         end
         alignment[file][ch]={}
         alignment[file][ch][acc] = align_sequences(uniprot[ch],seq,mapping['mapping'][ch],rand)
-        @optionsArray.push(["CH:#{ch} Uniprot:#{acc} #{title}",{'pdb'=>file,'chain'=>ch,'uniprot'=>acc, 'uniprotLength'=>uniprot[ch].length, 'path'=>rand}.to_json])
+        @optionsArray.push(["CH:#{ch} Uniprot:#{acc} #{title}",{'pdb'=>file,'chain'=>ch,'uniprot'=>acc, 'uniprotLength'=>uniprot[ch].length, 'uniprotTitle'=>title, 'organism'=>organism, 'gene_symbol'=>gene_symbol,  'path'=>rand}.to_json])
       end
       File.write(LocalPath+"/"+rand+"/alignment.json", alignment.to_json)
       @alignment = alignment

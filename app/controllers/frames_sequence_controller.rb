@@ -35,6 +35,10 @@ class FramesSequenceController < ApplicationController
 
   def sequenceIFrame
     @paramAlignment = params[:alignment]
+    @imported_flag = false
+    if params[:imported_flag]
+      @imported_flag = params[:imported_flag]
+    end
     @log = ""
     if !@paramAlignment.nil?
       @alignment = JSON.parse(@paramAlignment)

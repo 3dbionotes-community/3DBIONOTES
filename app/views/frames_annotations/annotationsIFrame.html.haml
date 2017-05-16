@@ -1,9 +1,15 @@
--if @alignment.nil? and @uniprotLength.nil?
+-if @alignment.nil?
   :javascript
     $j('#loading').css('display','none');
   %h2{:id=>"default_text", :style=>"margin-right:8px;color:#606060;font-size:14px;margin-top:14px;text-align:center;font-family: Verdana, Arial, Helvetica, sans-serif;"}
     USE THE SELECT MENU TO BROWSE PROTEIN ANNOTATIONS
 -else
+  %div{:id => "molTitle"} 
+    %b #{@alignment['gene_symbol']}
+    \- #{@alignment['uniprotTitle']} -
+    #{@alignment['organism']} -
+    %a{:target=>"_blank", :href=>"http://www.uniprot.org/uniprot/"+@alignment['uniprot']}
+      #{@alignment['uniprot']}
   %div{:id => "snippetDiv"}
     :javascript
       var allURL = #{@allURL};

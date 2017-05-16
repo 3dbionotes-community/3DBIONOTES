@@ -1,20 +1,7 @@
 var $j = jQuery.noConflict();
 
-$j(window).ready(function(){
-  window.addEventListener("RangeMolInfo", function(evt){
-    pdbPosList = evt.detail;
-    miApplet.color_by_chain_simple(pdbPosList,infoGlobal.activepdb,infoGlobal.activechain);
-    if(pdbPosList.length<4){
-      miApplet.draw_sphere(pdbPosList.length);
-    }
-    if(pdbPosList.length>0){
-      $j('#res_start').html( pdbPosList[0] );
-      $j('#res_end').html( pdbPosList[ pdbPosList.length-1 ] );
-      $j('#selected_residues').css( 'visibility','visible' );
-    }else{
-      $j('#selected_residues').css( 'visibility','hidden' );
-    }
-  });
+$j(document).ready(function(){
+ 
   window.addEventListener("molInfo", function(evt){
     $j('#selected_residues').css( 'visibility','hidden' );
     infoGlobal = evt.detail;
@@ -26,6 +13,7 @@ $j(window).ready(function(){
       miApplet.highlight_chain(infoGlobal.activepdb,infoGlobal.activechain);
     }
   });
+
   window.addEventListener("nextModel", function(evt){
     nextModel();
   });
@@ -37,10 +25,6 @@ $j(window).ready(function(){
   });
   window.addEventListener("zoomOUT", function(evt){
     zoomOUT();
-  });
-  window.addEventListener("ClearSelected", function(evt){
-    $j('#selected_residues').css( 'visibility','hidden' );
-    ClearSelected();
   });
   window.addEventListener("sphere", function(evt){
     sphere();
@@ -58,11 +42,13 @@ $j(window).ready(function(){
     label_display(evt);
   });
 
-});
-
-$j(document).ready(function(){
   $j('.label_display_close').click(function(){
     $j(".label_display").css("visibility", "hidden");
     $j(".label_display").css("display", "none");
   });
+
+  add_top_window_listener();
+
 });
+
+

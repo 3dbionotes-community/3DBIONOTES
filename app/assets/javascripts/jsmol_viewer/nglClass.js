@@ -305,8 +305,10 @@ function nglClass( args ) {
                 }
 	}
 
-	self.color_by_chain_simple = function( list, __pdb, chain, non_exec ){
+	self.color_by_chain_simple = function( list, __pdb, chain, __color, non_exec ){
 		var pdb = __pdb.toLowerCase();
+                var color = "#FFE999";
+                if(__color)  color = __color;
 
 		if(list.length < 1){
 			self.reset_view();
@@ -324,6 +326,10 @@ function nglClass( args ) {
 		self.Structures[ pdb ]['representations']['selection']['cartoon'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+list.join(" or ")+")" );
 		self.Structures[ pdb ]['representations']['selection']['spacefill'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+list.join(" or ")+")" );
 		self.Structures[ pdb ]['representations']['selection']['ball+stick'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+list.join(" or ")+")" );
+
+                self.Structures[ pdb ]['representations']['selection']['cartoon'].setColor(color);
+		self.Structures[ pdb ]['representations']['selection']['spacefill'].setColor(color);
+		self.Structures[ pdb ]['representations']['selection']['ball+stick'].setColor(color);
 
 		if(list.length>3){
 			self.Structures[ pdb ]['representations']['selection']['cartoon'].setVisibility(true);

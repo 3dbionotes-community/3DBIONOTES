@@ -6,11 +6,25 @@ var features_extended = false;
 var variants_extended = false;
 var $EXTERNAL_DATA = null;
 
-if(top.$EXTERNAL_DATA){
+if(top.$EXTERNAL_DATA && !imported_flag){
   $EXTERNAL_DATA = top.$EXTERNAL_DATA;
+}else if(top.$IMPORTED_DATA && imported_flag){
+  $EXTERNAL_DATA = top.$IMPORTED_DATA;
 }else{
   $EXTERNAL_DATA = {'PDBchain':{},'acc':{}};
 }
+
+var uniprot_link = {
+  'DOMAINS_AND_SITES':'family_and_domains',
+  'MOLECULE_PROCESSING':'ptm_processing',
+  'DOMAIN':'domainsAnno_section',
+  'REGION':'Region_section',
+  'BINDING':'sitesAnno_section',
+  'CHAIN':'peptides_section',
+  'CARBOHYD':'aaMod_section',
+  'DISULFID':'aaMod_section',
+  'CONFLICT':'Sequence_conflict_section'
+};
 
 function upgrade_fv(fv){
 	max_zoom(fv);
@@ -24,6 +38,7 @@ function max_zoom(fv){
 
 function extend_features(features){
         features_extended = true;
+	add_evidences(features);
 	add_pfam(features);
 	add_smart(features);
 	add_interpro(features);
@@ -62,8 +77,9 @@ function clear_wm(){
 function get_all_external_soruces(){
   var acc = __accession;
   var key = __alignment.pdb+":"+__alignment.chain;
+  if(imported_flag)key += ":"+acc
   if( $EXTERNAL_DATA && key in $EXTERNAL_DATA['PDBchain'] ){
-    __external_data = $EXTERNAL_DATA['PDBchain'][ key ]
+    __external_data = $EXTERNAL_DATA['PDBchain'][ key ];
     clear_wm();
     build_ProtVista();
   }else{
@@ -72,7 +88,7 @@ function get_all_external_soruces(){
   }
 }
 
-function get_external_data( URL, d){
+function get_external_data( URL, d ){
   var query = URL.shift();
   var url = query[1];
   var key = query[0];
@@ -85,7 +101,9 @@ function get_external_data( URL, d){
       return;
     }else{
       clear_wm();
-      $EXTERNAL_DATA['PDBchain'][ __alignment.pdb+":"+__alignment.chain ] = d;
+      var key = __alignment.pdb+":"+__alignment.chain;
+      if(imported_flag)key += ":"+__accession;
+      $EXTERNAL_DATA['PDBchain'][ key ] = d;
       build_ProtVista();
       return;
     }
@@ -111,7 +129,9 @@ function get_external_data( URL, d){
         return;
       }else{
         clear_wm();
-        $EXTERNAL_DATA['PDBchain'][ __alignment.pdb+":"+__alignment.chain ] = d;
+        var key = __alignment.pdb+":"+__alignment.chain;
+        if(imported_flag)key += ":"+__accession;
+        $EXTERNAL_DATA['PDBchain'][ key ] = d;
         build_ProtVista();
         return;
       }
@@ -227,6 +247,25 @@ function filter_by_disease( D ){
   });
 }
 
+function add_evidences(d){
+  d.forEach(function(i){
+    i[1].forEach(function(j){
+      if( !('evidences' in j) ){
+        j['evidences'] =  {"Imported information":[{url:'http://www.uniprot.org/uniprot/'+__accession+'#'+uniprot_link[ j['type'] ],id:__accession,name:'Imported from UniProt'}]};
+      }else{
+        for(k in j['evidences']){
+          j['evidences'][k].forEach(function(l){
+             if( l == undefined ){
+               console.log(j['type']);
+               j['evidences'][k] = [{url:'http://www.uniprot.org/uniprot/'+__accession+'#'+uniprot_link[ j['type'] ],id:__accession,name:'Imported from UniProt'}];
+             }
+          });
+        }
+      }
+    });
+  });
+}
+
 function add_procheck(d){
   if( top.procheck ){
     var  procheck_scores = ["PROCHECK",[]]; 
@@ -339,7 +378,7 @@ function add_interpro(d){
 			if( __ext.length > 0 ) __description += '<br/>'+__ext;
 			var __f = {begin:i['start'],end:i['end'],description:__description,internalId:'interpro_'+n,type:'INTERPRO_DOMAIN',evidences:
 				{
-					'ECO:0000311':[{url:'https://www.ebi.ac.uk/interpro/protein/'+__accession,id:__accession,name:'InterPro'}]
+					"Imported information":[{url:'https://www.ebi.ac.uk/interpro/protein/'+__accession,id:__accession,name:'Imported from InterPro'}]
 				}
 			}
 			__interpro[1].push(__f);
@@ -370,7 +409,7 @@ function add_smart(d){
 			if( __ext.length > 0 ) __description += '<br/>'+__ext;
 			var __f = {begin:i['start'],end:i['end'],description:__description,internalId:'smart_'+n,type:'SMART_DOMAIN',evidences:
 				{
-					'ECO:0000311':[{url:'http://smart.embl.de/smart/batch.pl?INCLUDE_SIGNALP=1&IDS='+__accession,id:__accession,name:'SMART'}]
+					"Imported information":[{url:'http://smart.embl.de/smart/batch.pl?INCLUDE_SIGNALP=1&IDS='+__accession,id:__accession,name:'Imported from SMART'}]
 				}
 			}
 			__smart[1].push(__f);
@@ -398,7 +437,7 @@ function add_pfam(d){
 			if( __ext.length > 0 ) __description += '<br/>'+__ext;
 			var __f = {begin:i['start'],end:i['end'],description:__description,internalId:'pfam_'+n,type:'PFAM_DOMAIN',evidences:
 				{
-					'ECO:0000311':[{url:'http://pfam.xfam.org/protein/'+__accession,id:__accession,name:'Pfam'}]
+					"Imported information":[{url:'http://pfam.xfam.org/protein/'+__accession,id:__accession,name:'Imported from Pfam'}]
 				}
 			}
 			__pfam[1].push(__f);
@@ -436,7 +475,7 @@ function add_elmdb(d){
 			
 			var __f = {begin:i['Start'],end:i['End'],description:__description,internalId:'elm_'+n,type:'region',evidences:
 				{
-					'ECO:0000311':[{url:'http://elm.eu.org/elms/'+i['ELMIdentifier'],id:i['ELMIdentifier'],name:'ELM DB'}]
+					"Imported information":[{url:'http://elm.eu.org/elms/'+i['ELMIdentifier'],id:i['ELMIdentifier'],name:'Imported from ELM'}]
 				}
 			}
 			__f['evidences']['ECO:0000269'] = [];
@@ -610,7 +649,7 @@ function add_mobi(d){
 			__external_data['mobi'][i].forEach(function(j){
 				__disorder[1].push({type:__type,begin:j['start'],end:j['end'],description:'Disordered region',internalId:'mobi_'+n,evidences:
 					{
-						'ECO:0000311':[{url:'http://mobidb.bio.unipd.it/entries/'+__accession, id:__accession, name:'MobyDB'}]
+						"Imported information":[{url:'http://mobidb.bio.unipd.it/entries/'+__accession, id:__accession, name:'Imported from MobyDB'}]
 					}
 				});
 				n++;
@@ -628,7 +667,7 @@ function add_iedb(d){
 		__external_data['iedb'].forEach(function(i){
 			__epitopes[1].push({type:'LINEAR_EPITOPE',begin:i['start'],end:i['end'],description:'Linear epitope',internalId:'iedb_'+n,evidences:
 				{
-					'ECO:0000311':[{url:'http://www.iedb.org/epitope/'+i['evidence'],id:i['evidence'],name:'Immune Epitope DB'}]
+					"Imported information":[{url:'http://www.iedb.org/epitope/'+i['evidence'],id:i['evidence'],name:'Imported from IEDB'}]
 				}
 			});
 			n++;
@@ -669,7 +708,7 @@ function add_phosphosite(d){
 				}
 				__sites[1].push({begin:i['start'],end:i['end'],description:__description,internalId:'ppsp_'+n,type:__label,evidences:
 					{
-						'ECO:0000311':[{url:'http://www.phosphosite.org/uniprotAccAction.do?id='+__accession,id:__accession,name:'PhosphoSitePlus DB'}]
+						"Imported information":[{url:'http://www.phosphosite.org/uniprotAccAction.do?id='+__accession,id:__accession,name:'Imported from PhosphoSitePlus'}]
 					}
 				});
 				n++;
@@ -699,15 +738,15 @@ function add_phosphosite(d){
 					if(__flag){
 						var __aux = jQuery.grep(__ptm[1],function(e){ return (e.begin == i['start'] && e.end == i['end']); });
                                                 if( ! __flag['evidences']) __flag['evidences'] = {};
-						if( ! __flag['evidences']['ECO:0000311'] ) __flag['evidences']['ECO:0000311']=[];
-						__flag['evidences']['ECO:0000311'].push(
-								{url:'http://www.phosphosite.org/uniprotAccAction.do?id='+__accession,id:__accession,name:'PhosphoSitePlus DB'}
+						if( ! __flag['evidences']["Imported information"] ) __flag['evidences']["Imported information"]=[];
+						__flag['evidences']["Imported information"].push(
+								{url:'http://www.phosphosite.org/uniprotAccAction.do?id='+__accession,id:__accession,name:'Imported from PhosphoSitePlus'}
 							);
 					}else{
                                                 //if(i['subtype'] == "OGlcNAc")i['subtype']="Glycosylation";
 						__ptm[1].push({begin:i['start'],end:i['end'],description:i['subtype'],internalId:'ppsp_'+n,type:'MOD_RES',evidences:
 							{
-								'ECO:0000311':[{url:'http://www.phosphosite.org/uniprotAccAction.do?id='+__accession,id:__accession,name:'PhosphoSitePlus DB'}]
+								"Imported information":[{url:'http://www.phosphosite.org/uniprotAccAction.do?id='+__accession,id:__accession,name:'Imported from PhosphoSitePlus'}]
 							}
 						});
 						n++;
@@ -715,7 +754,7 @@ function add_phosphosite(d){
 				}else{
 					__ptm[1].push({begin:i['start'],end:i['end'],description:i['subtype'],internalId:'ppsp_'+n,type:'MOD_RES',evidences:
 						{
-							'ECO:0000311':[{url:'http://www.phosphosite.org/uniprotAccAction.do?id='+__accession,id:__accession,name:'PhosphoSitePlus DB'}]
+							"Imported information":[{url:'http://www.phosphosite.org/uniprotAccAction.do?id='+__accession,id:__accession,name:'Imported from PhosphoSitePlus'}]
 						}
 					});
 					n++;
@@ -845,15 +884,15 @@ function add_highlight(d){
 	d.push(__fake);
 }
 function setup_highlight(fv){
+        fv.ready_flag = true;
+
 	fv.__highlight = function(e){
-		if (fv.selectedFeature){
-			if(fv.selectedFeature.internalId == "fake_0"){
-				var fake_click = new MouseEvent("click");
-				if( document.getElementsByName("fake_0").lentgh>0){
-					document.getElementsByName("fake_0")[0].dispatchEvent(fake_click);
-				}else{
-					jQuery("[name=fake_0]").get(0).dispatchEvent(fake_click);
-				}
+		var fake_click = new MouseEvent("click");
+		if (fv.selectedFeature && fv.selectedFeature.internalId == "fake_0"){
+			if( document.getElementsByName("fake_0").lentgh>0){
+				document.getElementsByName("fake_0")[0].dispatchEvent(fake_click);
+			}else if( jQuery("[name=fake_0]").get(0) ){
+				jQuery("[name=fake_0]").get(0).dispatchEvent(fake_click);
 			}
 		}
 		fv.data.forEach(function(i){
@@ -862,17 +901,22 @@ function setup_highlight(fv){
 				i[1][0]['end']=e['end'];
 			}
 		});
-		var fake_click = new MouseEvent("click");
 		if( document.getElementsByName("fake_0").lentgh>0){
 			document.getElementsByName("fake_0")[0].dispatchEvent(fake_click);
-		}else{
-			jQuery("[name=fake_0]").get(0).dispatchEvent(fake_click);
+                        document.getElementsByName("fake_0")[0].style.fill = e['color'];
+		}else if( jQuery("[name=fake_0]").get(0) ){
+                        $j("[name=fake_0]").css("fill",e['color']);
+			$j("[name=fake_0]").get(0).dispatchEvent(fake_click);
 		}
 
 	}
-	fv.getDispatcher().on("ready", function() {
+
+	fv.getDispatcher().on("ready", function(o) {
 		__hide_fake();
 		__add_tooltip_yoverflow();
+                $j(".up_pftv_icon-reset").click(function(){
+                  trigger_aa_cleared();
+                });
                 fv.data.forEach(function(i){
                   if(i[0]=="INTERACTING_RESIDUES"){
                     IRD = i[1];
@@ -882,6 +926,10 @@ function setup_highlight(fv){
                 });
                 $j('#loading').css('display','none');
                 variant_menu();
+                if(fv.n_source == 4 && fv.ready_flag){
+                  fv.ready_flag = false;
+		  setTimeout(function(){ check_global_selection(); }, 300);
+                }
 	});
 }
 

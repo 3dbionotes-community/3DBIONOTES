@@ -1,11 +1,14 @@
 %html(lang="en")
   %head
+    :javascript
+      var imported_flag = #{@imported_flag};
     = stylesheet_link_tag('annotations_viewer/uniprot_viewer_main.css')
     = stylesheet_link_tag('annotations_viewer/extend_style.css')
     = stylesheet_link_tag('annotations_frame/annotations_style.css')
     = javascript_include_tag('annotations_viewer/extend_data')
     = javascript_include_tag('annotations_viewer/protvista')
     = javascript_include_tag('annotations_frame/annotations_lib')
+    = javascript_include_tag('annotations_frame/annotations_inter')
     = javascript_include_tag('annotations_frame/annotations_init')
 
   %body#body{:style=>"margin-left:8px;margin-right:0px;"}
