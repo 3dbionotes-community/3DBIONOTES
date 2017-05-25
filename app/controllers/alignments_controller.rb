@@ -355,6 +355,7 @@ class AlignmentsController < ApplicationController
         # el tamaño de la longitud de secuencia, inicializando
         # cada elemento con un hash nuevo vacio
         info[chain][uni]["mapping"] = Array.new
+        info[chain][uni]["inverse"] = Hash.new
         fastaUniprot = getUniprotSequence(uni)
         info[chain][uni]["uniprotSeq"] = fastaUniprot.seq
         (0..(fastaUniprot.length-1)).to_a.each do |ind|
@@ -369,6 +370,7 @@ class AlignmentsController < ApplicationController
             info[chain][uni]["mapping"][uniIndex.to_i-1] = Hash.new
           end
           info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbIndex"] = pdbIndex.to_i
+          info[chain][uni]["inverse"][pdbIndex.to_i]=uniIndex.to_i
           info[chain][uni]["pdbSeq"][uniIndex.to_i-1] = pdbRes
           if !tupla["heterogeneity"].nil?
             if info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"].nil?

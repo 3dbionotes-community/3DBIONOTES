@@ -66,7 +66,7 @@ select.imported_targets_selector {
   font-family: 'Lucida Console', Monaco, monospace; 
 }
 
-.close{
+div#similar_targets div.close{
   position:absolute;
   right:10px;
   top:5px;
@@ -74,7 +74,7 @@ select.imported_targets_selector {
   color:#074987;
 }
 
-.close:hover{
+div#similar_targets div.close:hover{
   cursor:pointer;
   color:#96C8C8;
 }

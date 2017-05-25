@@ -6,6 +6,9 @@ var global_infoAlignment = null;
 var $IMPORTED_DATA = { 'PDBchain':{},'acc':{}, 'sequence_similars':{} };
 var global_imported_alignment = null;
 
+var $UPLOADED_DATA = { 'PDBchain':{}, 'acc':{} };
+var upload_flag = false;
+
 var global_selection =  null;
 var $j = jQuery.noConflict();
 
@@ -67,7 +70,11 @@ $j(document).ready(function(){
   $j('#import_similars').click(function(){
     import_similars();
   });
-  
+
+  $j('#upload_annotations').click(function(){
+    display_upload_form();
+  });
+
   add_frames_listener();
 
 });

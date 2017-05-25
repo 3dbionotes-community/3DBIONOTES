@@ -446,6 +446,10 @@ function nglClass( args ) {
                 self.highlight_chain(pdb,chain);
 	};
 
+        self.center_view  = function( non_exec  ){
+                if(self.stage) self.stage.centerView();
+        }
+
 	self.zoom_in = function( non_exec ){
 
 	}

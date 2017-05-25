@@ -30,7 +30,7 @@ function build_sequence_viewer( uniprotSeq, pdbSeq, imported_seq ){
       trigger_aa_selection( selection );
       sequence_panel.setSelection(begin-1,end-1);
       var divSelected = "#0_"+(begin-1);
-      $j(body).scrollTop($j(divSelected).offset().top);
+      if($j(divSelected).length > 0)$j(body).scrollTop($j(divSelected).offset().top);
     });
 
     check_global_selection();

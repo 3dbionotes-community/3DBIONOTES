@@ -4,7 +4,7 @@ var ASA = false;
 
 function update_interacting_residues(n){
   n_model = n;
-  var chain = JSON.parse(  getParameterByName('alignment') )['chain'];
+  var chain = JSON.parse( getParameterByName('alignment') )['chain'];
   var j = 1;
   if(!top.binding_residues) return;
   for(var i = 0;i<top.binding_residues[0];i++){

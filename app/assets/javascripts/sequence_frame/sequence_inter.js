@@ -7,7 +7,7 @@ function add_top_window_listener(){
     var end = selection.end-1;
     sequence_panel.setSelection(begin,end);
     var divSelected = "#0_"+begin;
-    $j(body).scrollTop($j(divSelected).offset().top);
+    if( $j(divSelected).length > 0 ) $j(body).scrollTop( $j(divSelected).offset().top );
   });
 
   window.addEventListener("clear_aa", function(evt){
