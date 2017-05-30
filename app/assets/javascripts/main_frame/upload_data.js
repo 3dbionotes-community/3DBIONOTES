@@ -1,7 +1,28 @@
 
 function display_upload_form(){
   $j('#upRightBottomFrame').css('visibility','hidden');
-  $j('body').append("<div id=\"upload_form\"><div class=\"upload_text\">UPLOAD YOUR ANNOTAITONS IN JSON FORMAT</div><br/><input type=\"file\" id=\"upload_file\" ><br/><br/><button id =\"parse_file\" type=\"button\">UPLOAD</button><div class=\"close\">CLOSE</div></div>");
+
+  $j('body').append("<div id=\"upload_form\"></div>");
+  $j('#upload_form').append("<div class=\"upload_text\">UPLOAD YOUR ANNOTAITONS IN JSON FORMAT</div><br/>");
+  $j('#upload_form').append("<input type=\"file\" id=\"upload_file\" ><br/><br/>");
+  $j('#upload_form').append("<button id =\"parse_file\" type=\"button\">UPLOAD</button><br/><br/><br/>");
+  $j('#upload_form').append("<div class=\"upload_text\">OR</div><br/><br/>");
+  $j('#upload_form').append("<div class=\"upload_text\">ADD YOUR ANNOTATIONS MANUALLY</div><br/>");
+  $j('#upload_form').append("<table id=\"input_labels\"></table>");
+  $j('#upload_form table#input_labels').append("<tr><td>TRACK NAME</td><td><input type=\"text\" id=\"input_tarck_name\" value=\"Manually annotated\"></td></tr>");
+  $j('#upload_form table#input_labels').append("<tr><td>TYPE</td><td><input type=\"text\" id=\"input_type\" value=\"region\"></td></tr>");
+  $j('#upload_form table#input_labels').append("<tr><td>DESCRIPTION</td><td><input type=\"text\" id=\"input_description\" value=\"Manually annotated region\"></td></tr>");
+  $j('#upload_form table#input_labels').append("<tr><td>COLOR</td><td><input type=\"text\" id=\"input_color\"></td></tr>");
+  $j('#upload_form').append("<br/>");
+  $j('#upload_form').append("<table id=\"input_coordinates\"></table>");
+  $j('#upload_form table#input_coordinates').append("<tr></tr>");
+  $j('#upload_form table#input_coordinates tr').append("<td>INDEX</td>");
+  $j('#upload_form table#input_coordinates tr').append("<td><select id=\"input_index\"><option value=\"structure\">STRUCTURE</option><option value=\"sequence\">SEQUENCE</option></select></td>");
+  $j('#upload_form table#input_coordinates tr').append("<td>BEGIN</td><td><input class=\"short\" type=\"text\" id=\"input_begin\"></td>");
+  $j('#upload_form table#input_coordinates tr').append("<td>END</td><td><input class=\"short\" type=\"text\" id=\"input_end\"></td>");
+  $j('#upload_form').append("<br/>");
+  $j('#upload_form').append("<button id=\"add_annotation\" type=\"button\">ADD</button>");
+  $j('#upload_form').append("<div class=\"close\">CLOSE</div>");
 
   $j('div#upload_form div.close').click(function(){
     clear_upload_form();
@@ -10,11 +31,50 @@ function display_upload_form(){
   $j('div#upload_form button#parse_file').click(function(){
     parse_data_file();
   });
+
+  $j('div#upload_form button#add_annotation').click(function(){
+    add_annotation();
+  });
 } 
 
 function clear_upload_form(){
   $j('#upRightBottomFrame').css('visibility','visible');
   $j("#upload_form").remove();
+}
+
+function add_annotation(){
+  var track_name = $j("#input_tarck_name").val();
+  if(!track_name) track_name = "Unknown";
+  track_name = track_name.replace(" ","_").toUpperCase();
+
+  var type = $j("#input_type").val();
+  if(!type) type = "region";
+
+  var description = $j("#input_description").val();
+  var color = $j("#input_color").val();
+
+  var index = $j("#input_index").val();
+  var begin = $j("#input_begin").val();
+  var end = $j("#input_end").val();
+
+  var id = global_infoAlignment.pdb+":"+global_infoAlignment.chain; 
+  var key = "PDBchain";
+
+  var y = {begin:begin, end:end};
+  if( index == "structure") y = translate_to_uniprot(y,id);
+  y.type = type;
+  if(color)y.color = color;
+  if(description)y.description = description;
+
+  if( !$UPLOADED_DATA[key][id] ){
+    $UPLOADED_DATA[key][id] = {};
+  }
+  if( !$UPLOADED_DATA[key][id][track_name] ){
+    $UPLOADED_DATA[key][id][track_name] = { data:[] };
+  }
+  $UPLOADED_DATA[key][id][track_name]['data'].push(y);
+  upload_flag = true;
+  reload_annotations_frame();
 }
 
 function parse_data_file(){

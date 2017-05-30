@@ -1,6 +1,6 @@
 div#upload_form {
 
-  padding:50 0 0 25;
+  padding:50 0 50 25;
 
   position:fixed;
   right:45;
@@ -22,11 +22,19 @@ div#upload_form {
   overflow:auto;
 }
 
+div#upload_form input{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:10px;
+}
+
+div#upload_form button{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:10px;
+}
+
 div#upload_form div.upload_text{
   font-size:14px;
 }
-
-
 
 div#upload_form div.close{
   position:absolute;
@@ -39,4 +47,30 @@ div#upload_form div.close{
 div#upload_form div.close:hover{
   cursor:pointer;
   color:#96C8C8;
+}
+
+div#upload_form table{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:12px;
+  color:#666666;
+}
+
+div#upload_form table tr td{
+  padding-right:10px;
+}
+
+div#upload_form table tr td select{
+  height:25px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:10px;
+}
+
+div#upload_form table tr td input{
+  height:25px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:10px;
+}
+
+div#upload_form table tr td input.short{
+  width:40px;
 }

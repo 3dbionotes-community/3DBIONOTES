@@ -90,11 +90,14 @@ function import_feature(){
     var PDBchain = __alignment.pdb+":"+__alignment.chain;
     if( !top.$UPLOADED_DATA["PDBchain"][ PDBchain ] ){
       top.$UPLOADED_DATA["PDBchain"][ PDBchain ] = {};
-      if( !top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_FEATURES"] ){
-        top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_FEATURES"] = { data:[] };
-      }
+    }
+    if( !top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_FEATURES"] ){
+      top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_FEATURES"] = { data:[] };
     }
     var X = $j.extend({}, instance.selectedFeature);
+    var Y = put_imported_range(X.begin,X.end);
+    X.begin = Y[0];
+    X.end = Y[1];
     X.description = "<b style=\"color:red;\">WARNING IMPORTED FEATURE</b><br/><b>Organism</b>: "+__alignment.organism+"<br/><b>Protein</b>: "+__alignment.gene_symbol+", "+__alignment.uniprotTitle+" - <a target=\"_blank\" href=\"http://www.uniprot.org/uniprot/"+__alignment.uniprot+"\">"+__alignment.uniprot+"</a><hr/><br/>"+X.description;
     top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_FEATURES"]["data"].push(X);
     top.upload_flag = true;
@@ -122,7 +125,7 @@ function get_imported_range(x,y){
 
 function put_imported_range(x,y){
   var s = parseInt(x);
-  var e =   parseInt(y);
+  var e = parseInt(y);
   while( !(imported_alignment.inverse[ s ] && imported_alignment.inverse[ e ]) && s<=e ){
     if(!imported_alignment.inverse[ s ])s += 1;
     if(!imported_alignment.inverse[ e ])e -= 1;
