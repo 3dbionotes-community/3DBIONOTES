@@ -54,3 +54,9 @@ div#molTitle a:hover{
   cursor:pointer;
 }
 
+button#add_feature_button{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:10px;
+  position:absolute;
+  top:35px;
+}

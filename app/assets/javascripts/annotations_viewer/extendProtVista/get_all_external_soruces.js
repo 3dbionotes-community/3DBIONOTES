@@ -1,5 +1,6 @@
 "use strict";
 
+var listURL;
 var $EXTERNAL_DATA = null;
 
 if(top.$EXTERNAL_DATA && !imported_flag){
@@ -28,7 +29,7 @@ function get_external_data( URL, d ){
   var url = query[1];
   var key = query[0];
   var save_flag = query[2];
-  wait_message( "COLLECTING <span style=\"color:black\">"+key.toUpperCase()+"</span> "+(allURL.length-URL.length)+" / "+allURL.length );
+  wait_message( "COLLECTING <span style=\"color:black\">"+key.toUpperCase()+"</span> "+(listURL.length-URL.length)+" / "+listURL.length );
   if( $EXTERNAL_DATA && key in $EXTERNAL_DATA['acc'] && __alignment.uniprot in $EXTERNAL_DATA['acc'][key] ){
     d[key] = $EXTERNAL_DATA['acc'][key][__alignment.uniprot];
     if(URL.length > 0){
@@ -74,16 +75,17 @@ function get_external_data( URL, d ){
   }
 }
 
-var get_all_external_soruces = function(){
+var get_all_external_soruces = function( ){
   var acc = __accession;
   var key = __alignment.pdb+":"+__alignment.chain;
+  listURL = allURL;
   if(imported_flag)key += ":"+acc
   if( $EXTERNAL_DATA && key in $EXTERNAL_DATA['PDBchain'] ){
     __external_data = $EXTERNAL_DATA['PDBchain'][ key ];
     clear_wm();
     build_ProtVista();
   }else{
-    var __allURL = allURL.slice(0);
+    var __allURL = listURL.slice(0);
     get_external_data(__allURL, __external_data);
   }
 };

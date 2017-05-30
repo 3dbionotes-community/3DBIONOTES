@@ -2,8 +2,8 @@
 
 var add_asa_residues = function (d){
   if( top.asa_residues ){
-    n_model = top.n_model_main_frame-1;
-    var  asa_res = ["RESIDUE_ASA",[]]; 
+    var n_model = top.n_model_main_frame-1;
+    var asa_res = ["RESIDUE_ASA",[]]; 
     var n = 1;
     for(var i = 0;i<__alignment.uniprotLength+1;i++){
       var __f = { type: "VARIANT", pos: i, variants: [] };

@@ -191,7 +191,7 @@ function getValueSelection(elem,myFirstTime){
 
             change_iframe_src( seq_iframe_url, annot_iframe_url );
 
-          }else if(data[chain][uniprot]==undefined){
+          }else if(data[chain]!=undefined && data[chain][uniprot]==undefined){
             var seq_iframe_url = "/sequenceIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
             var annot_iframe_url = "/annotationsIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
             change_iframe_src( seq_iframe_url, annot_iframe_url );

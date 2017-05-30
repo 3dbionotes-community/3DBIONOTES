@@ -1,7 +1,7 @@
 
 function display_upload_form(){
   $j('#upRightBottomFrame').css('visibility','hidden');
-  $j('body').append("<div id=\"upload_form\"><input type=\"file\" id=\"upload_file\" ><br/><br/><button id =\"parse_file\" type=\"button\">UPLOAD</button><div class=\"close\">CLOSE</div></div>");
+  $j('body').append("<div id=\"upload_form\"><div class=\"upload_text\">UPLOAD YOUR ANNOTAITONS IN JSON FORMAT</div><br/><input type=\"file\" id=\"upload_file\" ><br/><br/><button id =\"parse_file\" type=\"button\">UPLOAD</button><div class=\"close\">CLOSE</div></div>");
 
   $j('div#upload_form div.close').click(function(){
     clear_upload_form();

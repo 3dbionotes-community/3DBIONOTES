@@ -1,1 +1,1 @@
-my_protvista.js
+myProtVista/build/protvista.js

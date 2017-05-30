@@ -3,7 +3,7 @@ var ASA = false;
 
 
 function update_interacting_residues(n){
-  n_model = n;
+  var n_model = n;
   var chain = JSON.parse( getParameterByName('alignment') )['chain'];
   var j = 1;
   if(!top.binding_residues) return;
@@ -21,7 +21,7 @@ function update_interacting_residues(n){
 }
 
 function update_asa_residues(n){
-  n_model = n;
+  var n_model = n;
   var chain = JSON.parse(  getParameterByName('alignment') )['chain'];
   var j = 1;
   if(!top.asa_residues) return;
@@ -59,6 +59,7 @@ function build_ProtVista(){
       var X = put_imported_range(obj['feature']['begin'],obj['feature']['end']);
       begin = X[0];
       end = X[1];
+      if( obj.feature.internalId !="fake_0" )add_feature_button();
     }
     
     if(obj.feature.internalId=="fake_0"){
@@ -73,8 +74,37 @@ function build_ProtVista(){
     if(!instance.selectedFeature){
       trigger_aa_cleared();
     }
+    clear_feature_button();
   });
 }
+
+function add_feature_button(){
+  $j(body).append( "<button id=\"add_feature_button\" type=\"button\">IMPORT FEATURE</button>" );
+  $j("#add_feature_button").click(function(){
+    import_feature();
+  });
+}
+
+function import_feature(){
+  if(top.$UPLOADED_DATA){
+    var PDBchain = __alignment.pdb+":"+__alignment.chain;
+    if( !top.$UPLOADED_DATA["PDBchain"][ PDBchain ] ){
+      top.$UPLOADED_DATA["PDBchain"][ PDBchain ] = {};
+      if( !top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_FEATURES"] ){
+        top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_FEATURES"] = { data:[] };
+      }
+    }
+    var X = $j.extend({}, instance.selectedFeature);
+    X.description = "<b style=\"color:red;\">WARNING IMPORTED FEATURE</b><br/><b>Organism</b>: "+__alignment.organism+"<br/><b>Protein</b>: "+__alignment.gene_symbol+", "+__alignment.uniprotTitle+" - <a target=\"_blank\" href=\"http://www.uniprot.org/uniprot/"+__alignment.uniprot+"\">"+__alignment.uniprot+"</a><hr/><br/>"+X.description;
+    top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_FEATURES"]["data"].push(X);
+    top.upload_flag = true;
+  }
+}
+
+function clear_feature_button(){
+  $j("#add_feature_button").remove();
+}
+
 
 function get_imported_range(x,y){
   var s = x-1;
@@ -103,3 +133,16 @@ function put_imported_range(x,y){
     return [null,null];
   }
 } 
+
+function getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+

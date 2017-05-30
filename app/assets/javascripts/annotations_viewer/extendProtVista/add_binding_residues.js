@@ -1,10 +1,8 @@
 "use strict";
 
-var n_model = 1;
-
 var add_binding_residues = function(d){
   if( top.binding_residues && top.binding_residues[0] > 0 ){
-    n_model = top.n_model_main_frame;
+    var n_model = top.n_model_main_frame;
     var  b_res = ["INTERACTING_RESIDUES",[]]; 
     var n = 1;
     for(var i = 0;i<top.binding_residues[0];i++){
