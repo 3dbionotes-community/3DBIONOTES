@@ -97,6 +97,7 @@ class FramesAnnotationsController < ApplicationController
         @gene_symbol = sequences[import_acc]['gene_symbol']
 
         @alignment['organism'] = @organism
+        @alignment['original_uniprot'] = @alignment['uniprot']
         @alignment['uniprot'] = import_acc
         @alignment['uniprotTitle'] = @uniprotTitle
         @alignment['uniprotLength'] = sequences[ import_acc ]['sequence'].length
@@ -228,7 +229,8 @@ class FramesAnnotationsController < ApplicationController
     for i in (stop2+1)..len2
       trans2can[i] = -1
     end
-    out = { 'mapping'=>[], 'inverse'=>{}, 'uniprotSeq'=>uniprot_seq, 'importedSeq'=>pdb_seq }
+    out = { 'mapping'=>[], 'inverse'=>{}, 'uniprotSeq'=>uniprot_seq, 'importedSeq'=>pdb_seq, 'coverage'=>[] }
+
     (0..(uniprot_seq.length-1)).each do |i|
       if can2trans[i+1]>0
         out['mapping'].push({'importedIndex': can2trans[i+1] })
@@ -237,6 +239,20 @@ class FramesAnnotationsController < ApplicationController
         out['mapping'].push({})
       end
     end
+
+    cover_start = 0
+    cover_end = 0
+    (0..(pdb_seq.length-1)).each do |i|
+      if trans2can[i+1]>0 && cover_start == 0
+        cover_start = i+1
+      elsif trans2can[i+1] < 0 && cover_start > 0
+        out['coverage'].push({'begin'=>cover_start, 'end'=>i })
+        cover_start = 0
+      elsif i == pdb_seq.length-1 && cover_start > 0
+        out['coverage'].push({'begin'=>cover_start, 'end'=>i })
+      end
+    end
+
     system("rm "+LocalPath+"/"+rand+"_can_seq")
     system("rm "+LocalPath+"/"+rand+"_trans_seq")
     return out
