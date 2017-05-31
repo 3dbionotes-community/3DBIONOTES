@@ -1,5 +1,7 @@
 
 function import_similars(){
+  $j("#upload_form").remove();
+  $j("#similar_targets").remove();
   $j('#upRightBottomFrame').css('visibility','hidden');
   $j('body').append("<div id=\"similar_targets\"><div class=\"close\">CLOSE</div><table></table><div style=\"margin-top:25px;\">IMPORTING SIMILAR PROTEINS<br/>PLEASE WAIT<br/><br/><img src=\"/images/loading_em.gif\"/></div></div>");
   $j('div#similar_targets div.close').click(function(){
@@ -31,6 +33,7 @@ function import_similars(){
 
 function clear_targets(){
   $j('#upRightBottomFrame').css('visibility','visible');
+  $j("#upload_form").remove();
   $j("#similar_targets").remove();
 }
 

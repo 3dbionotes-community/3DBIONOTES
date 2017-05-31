@@ -1,5 +1,7 @@
 div#similar_targets {
 
+  padding-left:25px;
+
   position:fixed;
   right:45;
   top:50;

@@ -1,5 +1,7 @@
 
 function display_upload_form(){
+  $j("#upload_form").remove();
+  $j("#similar_targets").remove();
   $j('#upRightBottomFrame').css('visibility','hidden');
 
   $j('body').append("<div id=\"upload_form\"></div>");
@@ -40,6 +42,7 @@ function display_upload_form(){
 function clear_upload_form(){
   $j('#upRightBottomFrame').css('visibility','visible');
   $j("#upload_form").remove();
+  $j("#similar_targets").remove();
 }
 
 function add_annotation(){
@@ -55,7 +58,12 @@ function add_annotation(){
 
   var index = $j("#input_index").val();
   var begin = $j("#input_begin").val();
+  if(!begin){
+    alert("MISSING BEGIN INFORMATION, PLEASE FILL BEGIN  FIELD");
+    return;
+  }
   var end = $j("#input_end").val();
+  if(!end) end = begin;
 
   var id = global_infoAlignment.pdb+":"+global_infoAlignment.chain; 
   var key = "PDBchain";
@@ -137,7 +145,7 @@ function parse_track(track){
   if(track.track_name){
     track_name = track.track_name;
   }else{
-    track_name = "User data";
+    track_name = "Uploaded data";
   }
   if(track.visualization_type){
     visualization_type = track.visualization_type;
@@ -147,8 +155,10 @@ function parse_track(track){
   if( !$UPLOADED_DATA[key][id] ){
     $UPLOADED_DATA[key][id] = {};
   }
-  if( !$UPLOADED_DATA[key][id][track_name] ){
+  if( !$UPLOADED_DATA[key][id][track_name] || track_name == "continuous"){
     $UPLOADED_DATA[key][id][track_name] = {  visualization_type:visualization_type,  data:[] };
+  }else if( $UPLOADED_DATA[key][id][track_name] && $UPLOADED_DATA[key][id][track_name]['visualization_type'] == "continuous" ){
+    $UPLOADED_DATA[key][id][track_name] = { visualization_type:visualization_type,  data:[] };
   }
   if(track.data.forEach){
     track.data.forEach(function(x){
