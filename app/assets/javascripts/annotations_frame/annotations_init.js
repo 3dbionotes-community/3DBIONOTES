@@ -8,6 +8,7 @@ var instance;
 $j(document).ready(function(){
 
   window.addEventListener("HideInfo", function(evt){
+    $j("#add_feature_button").remove();
     document.getElementById('loading').style.display = "block";
     if( document.getElementById('snippetDiv') ) document.getElementById('snippetDiv').style.display = "none";
   });

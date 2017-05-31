@@ -38,7 +38,7 @@ function sphere(){
 
 function ClearSelected(){
   miApplet.clear_selected();
-  miApplet.center_view();
+  //miApplet.center_view();
 }
 
 function loadPDB(pdbList){

@@ -1,6 +1,6 @@
 div#similar_targets {
 
-  padding-left:25px;
+  padding:20 0 0 25;
 
   position:fixed;
   right:45;
@@ -20,32 +20,49 @@ div#similar_targets {
   border-style: dotted;
   border-width: 1px;
   border-color: #666666;
+}
+
+div#similar_targets div.similar_text{
+  font-size:14px;
+}
+
+div#similar_targets div.similar_explanation_text{
+  font-size:14px;
+  margin:15 30 35 15;
+  text-align:justify;
+  font-weight:normal;
+  line-height: 150%;
+}
+
+div#similar_protein_div {
+  position: relative;
+  height:85%;
   overflow:auto;
 }
 
-div#similar_targets div table{
+div#similar_protein_div table{
   width:100%;
   font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size:12px;
+  font-size:10px;
   color:#666666;
-  padding:25 10 10 10;
+  padding:0 10 10 10;
 }
 
-div#similar_targets div table tr th{
+div#similar_protein_div table tr th{
   text-align:left;
 }
 
-div#similar_targets div table tr td{
+div#similar_protein_div table tr td{
   padding:5 0 5 10;
 }
 
-div#similar_targets div table tr:hover{
+div#similar_protein_div table tr:hover{
   color:black; 
   cursor:pointer;
   background-color:#DDDDDD;
 }
 
-div#similar_targets div table tr:first-child:hover{
+div#similar_protein_div table tr:first-child:hover{
   color:#666666; 
   cursor:default;
   background-color:#FFFFFF;

@@ -384,27 +384,62 @@ ul#topnav{
   content: "-";
 }
 
-ul#topnav2{
-  /*float:right;*/
-  list-style:none;
-  margin: 0;
-  padding: 0;
+div#topnav2{
   text-align:right;
   display:inline;
   position:absolute;
-  right:10px;
+  right:30px;
   top:5px;
+  background:white;
+  padding:15 15 20 20;
 }
 
-#topnav2 li{
-  list-style:none;
-  display: inline;
+div#topnav2:hover a ~ #topnav2{
+ border:1px solid black;
 }
 
-#topnav2 li + li:before {
-  content: "-";
+#topnav2:hover {
+ border:1px solid black;
 }
 
+table#menu_options_table{
+  display:none;
+  text-align:right;
+  margin:0 40 0 0;
+  width:320;
+  letter-spacing:150%;
+}
+
+table#menu_options_table tr td{
+  padding-top:10px;
+}
+
+table#menu_options_table tr td a{
+  font-size:12px;
+  font-weight:normal;
+  color:#666666; 
+}
+
+table#menu_options_table tr td a::after{
+  content:" \25CB";
+}
+
+table#menu_options_table tr td a:hover::after{
+  content:" \25CF";
+}
+
+
+table#menu_options_table tr td a:hover{
+  font-weight:bold;
+}
+
+div#topnav2:hover a ~ #menu_options_table{
+    display:table;
+}
+
+#menu_options_table:hover{
+    display:table;
+}
 
 a:link,
 a:visited,
