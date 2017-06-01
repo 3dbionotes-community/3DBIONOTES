@@ -1,7 +1,6 @@
 var IRD = false;
 var ASA = false;
 
-
 function update_interacting_residues(n){
   var n_model = n;
   var chain = JSON.parse( getParameterByName('alignment') )['chain'];
@@ -79,7 +78,7 @@ function build_ProtVista(){
 }
 
 function add_feature_button(){
-  $j(body).append( "<button id=\"add_feature_button\" type=\"button\">IMPORT FEATURE</button>" );
+  $j(".up_pftv_tooltip-container table tr th").append( "<button id=\"add_feature_button\" type=\"button\">IMPORT</button>" );
   $j("#add_feature_button").click(function(){
     import_feature();
   });
@@ -91,17 +90,30 @@ function import_feature(){
     if( !top.$UPLOADED_DATA["PDBchain"][ PDBchain ] ){
       top.$UPLOADED_DATA["PDBchain"][ PDBchain ] = {};
     }
-    if( !top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_FEATURES"] ){
-      top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_FEATURES"] = { data:[] };
+    if( !top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_ANNOTATIONS"] ){
+      top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_ANNOTATIONS"] = { data:[] };
     }
     var X = $j.extend({}, instance.selectedFeature);
     var Y = put_imported_range(X.begin,X.end);
     X.begin = Y[0];
     X.end = Y[1];
-    X.description = "<b style=\"color:red;\">WARNING IMPORTED FEATURE</b><br/><b>Organism</b>: "+__alignment.organism+"<br/><b>Protein</b>: "+__alignment.gene_symbol+", "+__alignment.uniprotTitle+" - <a target=\"_blank\" href=\"http://www.uniprot.org/uniprot/"+__alignment.uniprot+"\">"+__alignment.uniprot+"</a><hr/><br/>"+X.description;
-    top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_FEATURES"]["data"].push(X);
+    if(X.type == "VARIANT"){
+      X.type = "Single_aa";
+      X = { begin:X.begin, end:X.end, type:X.type, color:X.color, description:X.description }
+    }
+    X.description = "<b style=\"color:red;\">WARNING IMPORTED FEATURE</b><br/><b>Organism</b>: "+__alignment.organism+"<br/><b>Protein</b>: "+__alignment.gene_symbol+", "+__alignment.uniprotTitle+" - <a target=\"_blank\" href=\"http://www.uniprot.org/uniprot/"+__alignment.uniprot+"\">"+__alignment.uniprot+"</a><hr/><br/>Gene Variant<br/>"+X.description;
+    top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_ANNOTATIONS"]["data"].push(X);
     top.upload_flag = true;
+    if(!top.$CUSTOM_TRACKS["IMPORTED_ANNOTATIONS"])top.$CUSTOM_TRACKS["IMPORTED_ANNOTATIONS"]={};
+    top.$CUSTOM_TRACKS["IMPORTED_ANNOTATIONS"][X.type] = true;
   }
+  clear_feature_button();
+  swal({
+    title: "IMPORT SUCCESS",
+    timer: 400,
+    type: "success",
+    showConfirmButton: false
+  });
 }
 
 function clear_feature_button(){

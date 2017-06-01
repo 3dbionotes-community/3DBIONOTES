@@ -1,0 +1,99 @@
+div#remove_annotations {
+
+  padding:50 0 50 25;
+
+  position:fixed;
+  right:45;
+  top:50;
+  min-height:200px;
+  min-width: 900;
+  width:-moz-calc(900px);
+  width:calc(900px);
+  z-index:1000;
+
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:16px;
+  color:#666666;
+  background-color:#FFFFFF;
+  border-style: dotted;
+  border-width: 1px;
+  border-color: #666666;
+  overflow:auto;
+}
+
+div.remove_annotations_text {
+  font-size:12px;
+  font-weight:bold;
+}
+
+div.remove_annotations_explanation_text {
+  font-size:14px;
+  margin:15 30 35 15;
+  text-align:justify;
+  font-weight:normal;
+  line-height: 150%;
+}
+
+div#remove_annotations button{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size:10px;
+}
+
+
+div#remove_annotations div.close{
+  position:absolute;
+  left:10px;
+  top:5px;
+  font-size:10px;
+  color:#074987;
+}
+
+div#remove_annotations div.close:hover{
+  cursor:pointer;
+  color:#96C8C8;
+}
+
+div.tree_track{
+  font-size:12px;
+  font-weight:bold;
+  color:#074987;
+  margin-top:15px;
+}
+
+div.tree_track span:hover{
+  color:red;
+  cursor:pointer;
+}
+
+div.tree_track span::before{
+  content:"\25CF ";
+  padding-right:10px;
+}
+
+div.tree_track span:hover::before{
+  color:red;
+}
+
+div.tree_type{
+  margin-top:10px;
+}
+
+div.tree_type span{
+  margin-left:30px;
+  font-weight:normal;
+}
+
+div.tree_type span:hover{
+  color:red;
+  cursor:pointer;
+}
+
+div.tree_type  span::before{
+  content:"\25CB ";
+  padding-right:10px;
+}
+
+div.tree_type span:hover::before{
+  color:red;
+}
+

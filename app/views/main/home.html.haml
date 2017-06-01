@@ -141,6 +141,9 @@
             %tr
               %td
                 %a.nostyle{:id=>"import_similars", :style=>"cursor:pointer;"}IMPORT ANNOTATIONS FROM SIMILAR PROTEINS
+            %tr
+              %td
+                %a.nostyle{:id=>"delete_features", :style=>"cursor:pointer;"}DELETE CUSTOM ANNOTATION
         %iframe#upRightBottomFrame{:src=>"annotationsIFrame",:scrolling=>"yes"}
   :javascript
     #{@log}

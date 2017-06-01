@@ -1,8 +1,8 @@
 
 function import_similars(){
-  $j("#upload_form").remove();
-  $j("#similar_targets").remove();
+  remove_all_panel_menu();
   $j('#upRightBottomFrame').css('visibility','hidden');
+
   $j('body').append("<div id=\"similar_targets\"></div>");
   $j("#similar_targets").append("<div class=\"close\">CLOSE</div>");
   $j("#similar_targets").append("<div>IMPORT ANNOTATIONS FROM SIMILAR PROTEINS<br/><br/>IMPORTING SIMILAR PROTEINS<br/>PLEASE WAIT<br/><br/><img src=\"/images/loading_em.gif\"/></div>");
@@ -35,8 +35,7 @@ function import_similars(){
 
 function clear_targets(){
   $j('#upRightBottomFrame').css('visibility','visible');
-  $j("#upload_form").remove();
-  $j("#similar_targets").remove();
+  remove_all_panel_menu(); 
 }
 
 function display_targets(data){
@@ -49,7 +48,7 @@ function display_targets(data){
 
   $j("#similar_targets").append("<div class=\"similar_text\">IMPORT ANNOTATIONS FROM SIMILAR PROTEINS</div>");
 
-  $j("#similar_targets").append("<div class=\"similar_explanation_text\">Next table contains a list of proteins that share 80% of sequence identity with the target protein. You can select a protein from this list to display its annotations and then import/transfer any annotation to the original annotation viewer. When an annotation is selected a button displaying 'IMPORT FEATURE' will apear, clicking the button imports the annotation to the original annottaion  viewer.</div>");
+  $j("#similar_targets").append("<div class=\"similar_explanation_text\">Bottom table contains a list of proteins that share 80% of sequence identity with the target protein. You can select a protein from this list to display its annotations and then import/transfer any annotation to the original annotation viewer. When an annotation is selected a button displaying 'IMPORT' will apear on the left site of the tooltip tile, clicking the button imports the annotation to the original annottaion  viewer.</div>");
 
   $j("#similar_targets").append("<div id=\"similar_protein_div\" ><table></table></div>");
 

@@ -5,12 +5,15 @@
     = stylesheet_link_tag('annotations_viewer/uniprot_viewer_main.css')
     = stylesheet_link_tag('annotations_viewer/extend_style.css')
     = stylesheet_link_tag('annotations_frame/annotations_style.css')
+    = stylesheet_link_tag('global_tools/sweetalert.css')
+
     = javascript_include_tag('annotations_viewer/extendProtVista.bundle')
     = javascript_include_tag('annotations_viewer/extend_data')
     = javascript_include_tag('annotations_viewer/protvista')
     = javascript_include_tag('annotations_frame/annotations_lib')
     = javascript_include_tag('annotations_frame/annotations_inter')
     = javascript_include_tag('annotations_frame/annotations_init')
+    = javascript_include_tag('global_tools/sweetalert.min')
 
   %body#body{:style=>"margin-left:8px;margin-right:0px;"}
     #loading{:style=>'width:100%;height:100%;display:none;'}

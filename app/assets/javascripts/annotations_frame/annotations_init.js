@@ -11,11 +11,14 @@ $j(document).ready(function(){
     $j("#add_feature_button").remove();
     document.getElementById('loading').style.display = "block";
     if( document.getElementById('snippetDiv') ) document.getElementById('snippetDiv').style.display = "none";
+    if( document.getElementById('molTitle') ) document.getElementById('molTitle').style.display = "none";
+
   });
 
   window.addEventListener("ShowInfo", function(evt){
     document.getElementById('loading').style.display = "none";
     if(document.getElementById('snippetDiv') ) document.getElementById('snippetDiv').style.display = "block";
+    if(document.getElementById('molTitle') ) document.getElementById('molTitle').style.display = "block";
   });
 
 

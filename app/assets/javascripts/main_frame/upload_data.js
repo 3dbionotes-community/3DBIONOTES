@@ -1,7 +1,6 @@
 
 function display_upload_form(){
-  $j("#upload_form").remove();
-  $j("#similar_targets").remove();
+  remove_all_panel_menu(); 
   $j('#upRightBottomFrame').css('visibility','hidden');
 
   $j('body').append("<div id=\"upload_form\"></div>");
@@ -41,13 +40,12 @@ function display_upload_form(){
 
 function clear_upload_form(){
   $j('#upRightBottomFrame').css('visibility','visible');
-  $j("#upload_form").remove();
-  $j("#similar_targets").remove();
+  remove_all_panel_menu();
 }
 
 function add_annotation(){
   var track_name = $j("#input_tarck_name").val();
-  if(!track_name) track_name = "Unknown";
+  if(!track_name) track_name = "Custom annotations";
   track_name = track_name.replace(" ","_").toUpperCase();
 
   var type = $j("#input_type").val();
@@ -81,6 +79,8 @@ function add_annotation(){
     $UPLOADED_DATA[key][id][track_name] = { data:[] };
   }
   $UPLOADED_DATA[key][id][track_name]['data'].push(y);
+  if(!$CUSTOM_TRACKS[ track_name ])$CUSTOM_TRACKS[ track_name ]={};
+  $CUSTOM_TRACKS[ track_name ][ y.type ] = true;
   upload_flag = true;
   reload_annotations_frame();
 }
@@ -157,6 +157,7 @@ function parse_track(track){
   }
   if( !$UPLOADED_DATA[key][id][track_name] || track_name == "continuous"){
     $UPLOADED_DATA[key][id][track_name] = {  visualization_type:visualization_type,  data:[] };
+    $CUSTOM_TRACKS[ track_name ] = {};
   }else if( $UPLOADED_DATA[key][id][track_name] && $UPLOADED_DATA[key][id][track_name]['visualization_type'] == "continuous" ){
     $UPLOADED_DATA[key][id][track_name] = { visualization_type:visualization_type,  data:[] };
   }
@@ -165,6 +166,9 @@ function parse_track(track){
       var y = x;
       if(translate_flag) y = translate_to_uniprot(x,id);
       $UPLOADED_DATA[key][id][track_name]['data'].push(x);
+
+      if(!$CUSTOM_TRACKS[ track_name ])$CUSTOM_TRACKS[ track_name ]={};
+      $CUSTOM_TRACKS[ track_name ][ x.type ] = true;
     });
   }
 }
@@ -179,16 +183,5 @@ function translate_to_uniprot(ann,PDBchain){
   out.begin = $ALIGNMENTS[pdb][chain][acc]["inverse"][ ann.begin ];
   out.end = $ALIGNMENTS[pdb][chain][acc]["inverse"][ ann.end ];
   return out;
-}
-
-function reload_annotations_frame(){
-  var evtHide = document.createEvent("Event");
-  evtHide.initEvent("HideInfo",true,true);
-  document.getElementById("upRightBottomFrame").contentWindow.dispatchEvent(evtHide);
-
-  var annot_iframe = 'iframe#upRightBottomFrame';
-
-  clear_upload_form();
-  document.getElementById("upRightBottomFrame").contentWindow.location.reload();
 }
 

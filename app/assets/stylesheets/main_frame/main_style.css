@@ -392,10 +392,7 @@ div#topnav2{
   top:5px;
   background:white;
   padding:15 15 20 20;
-}
-
-div#topnav2:hover a ~ #topnav2{
- border:1px solid black;
+  z-index:1000000;
 }
 
 #topnav2:hover {
@@ -406,8 +403,7 @@ table#menu_options_table{
   display:none;
   text-align:right;
   margin:0 40 0 0;
-  width:320;
-  letter-spacing:150%;
+  width:350;
 }
 
 table#menu_options_table tr td{
@@ -416,8 +412,8 @@ table#menu_options_table tr td{
 
 table#menu_options_table tr td a{
   font-size:12px;
-  font-weight:normal;
-  color:#666666; 
+  font-weight:bold;
+  letter-spacing:1px;
 }
 
 table#menu_options_table tr td a::after{
@@ -430,7 +426,7 @@ table#menu_options_table tr td a:hover::after{
 
 
 table#menu_options_table tr td a:hover{
-  font-weight:bold;
+  color:#96C8C8;
 }
 
 div#topnav2:hover a ~ #menu_options_table{
@@ -451,7 +447,7 @@ a:active {
 
 .hover,
 a:hover {
-  color: #666 ! important;
+  color: #666;
   text-decoration: none;
   /*text-decoration: underline ! important;*/
 }

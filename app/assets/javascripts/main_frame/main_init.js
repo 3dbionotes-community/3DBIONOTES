@@ -9,6 +9,8 @@ var global_imported_alignment = null;
 var $UPLOADED_DATA = { 'PDBchain':{}, 'acc':{} };
 var upload_flag = false;
 
+var $CUSTOM_TRACKS = {};
+
 var global_selection =  null;
 var $j = jQuery.noConflict();
 
@@ -73,6 +75,15 @@ $j(document).ready(function(){
 
   $j('#upload_annotations').click(function(){
     display_upload_form();
+  });
+
+  $j('#delete_features').click(function(){
+    display_remove_tree();
+  });
+
+  $j('#topnav2').mouseover(function(){
+    remove_all_panel_menu();
+    $j('#upRightBottomFrame').css('visibility','visible');
   });
 
   add_frames_listener();

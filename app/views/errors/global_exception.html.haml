@@ -3,5 +3,7 @@
   .home_text
     %h2 3DBIONOTES-WS IS NOT AVAILABLE
     %h2 PLEASE TRY AGAIN LATER
+    %div{:style=>"display:none;"}
+      #{@error_message}
   .home_image
     =image_tag("home_image.png")

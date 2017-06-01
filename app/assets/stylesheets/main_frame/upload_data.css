@@ -38,7 +38,7 @@ div#upload_form div.upload_text{
 
 div#upload_form div.close{
   position:absolute;
-  right:10px;
+  left:10px;
   top:5px;
   font-size:10px;
   color:#074987;

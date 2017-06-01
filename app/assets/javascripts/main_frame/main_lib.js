@@ -333,4 +333,20 @@ function toggleVolumeEvent(button){
   document.getElementById("leftBottomFrame").contentWindow.dispatchEvent(evt);
 }
 
+function remove_all_panel_menu(){
+  $j("#upload_form").remove();
+  $j("#similar_targets").remove();
+  $j("#remove_annotations").remove();
+}
+
+function reload_annotations_frame(){
+  var evtHide = document.createEvent("Event");
+  evtHide.initEvent("HideInfo",true,true);
+  document.getElementById("upRightBottomFrame").contentWindow.dispatchEvent(evtHide);
+
+  var annot_iframe = 'iframe#upRightBottomFrame';
+
+  clear_upload_form();
+  document.getElementById("upRightBottomFrame").contentWindow.location.reload();
+}
 

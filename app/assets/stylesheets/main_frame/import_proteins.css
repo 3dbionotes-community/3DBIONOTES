@@ -87,7 +87,7 @@ select.imported_targets_selector {
 
 div#similar_targets div.close{
   position:absolute;
-  right:10px;
+  left:10px;
   top:5px;
   font-size:10px;
   color:#074987;

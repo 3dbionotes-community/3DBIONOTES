@@ -157,7 +157,6 @@ class FramesAnnotationsController < ApplicationController
     cmd = "echo \"\n\" | water -asequence "+LocalPath+"/"+rand+"_can_seq -bsequence "+LocalPath+"/"+rand+"_trans_seq -gapopen 50 -gapextend 0 -datafile /home/joan/tools/ENSEMBL/IDENTITY -aformat3 markx10 -stdout -aglobal3 Y -awidth3 1000000 2> /dev/null" 
 
     ws  = `#{cmd}`
-    puts(ws) 
     align = ws.split(/\>\s\.\.\s/)
   
     scores = align[0].split(/\n/)
@@ -243,9 +242,9 @@ class FramesAnnotationsController < ApplicationController
     cover_start = 0
     cover_end = 0
     (0..(pdb_seq.length-1)).each do |i|
-      if trans2can[i+1]>0 && cover_start == 0
+      if !trans2can[i+1].nil? && trans2can[i+1]>0 && cover_start == 0
         cover_start = i+1
-      elsif trans2can[i+1] < 0 && cover_start > 0
+      elsif !trans2can[i+1].nil? && trans2can[i+1] < 0 && cover_start > 0
         out['coverage'].push({'begin'=>cover_start, 'end'=>i })
         cover_start = 0
       elsif i == pdb_seq.length-1 && cover_start > 0
