@@ -155,7 +155,7 @@ function parse_track(track){
   if( !$UPLOADED_DATA[key][id] ){
     $UPLOADED_DATA[key][id] = {};
   }
-  if( !$UPLOADED_DATA[key][id][track_name] || track_name == "continuous"){
+  if( !$UPLOADED_DATA[key][id][track_name] || visualization_type == "continuous" ){
     $UPLOADED_DATA[key][id][track_name] = {  visualization_type:visualization_type,  data:[] };
     $CUSTOM_TRACKS[ track_name ] = {};
   }else if( $UPLOADED_DATA[key][id][track_name] && $UPLOADED_DATA[key][id][track_name]['visualization_type'] == "continuous" ){
