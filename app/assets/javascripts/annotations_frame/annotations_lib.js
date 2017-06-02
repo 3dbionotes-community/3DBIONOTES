@@ -99,9 +99,9 @@ function import_feature(){
     X.end = Y[1];
     if(X.type == "VARIANT"){
       X.type = "Single_aa";
-      X = { begin:X.begin, end:X.end, type:X.type, color:X.color, description:X.description }
+      X = { begin:X.begin, end:X.end, type:X.type, color:X.color, description:"Gene Variant<br/>"+X.description }
     }
-    X.description = "<b style=\"color:red;\">WARNING IMPORTED FEATURE</b><br/><b>Organism</b>: "+__alignment.organism+"<br/><b>Protein</b>: "+__alignment.gene_symbol+", "+__alignment.uniprotTitle+" - <a target=\"_blank\" href=\"http://www.uniprot.org/uniprot/"+__alignment.uniprot+"\">"+__alignment.uniprot+"</a><hr/><br/>Gene Variant<br/>"+X.description;
+    X.description = "<b style=\"color:red;\">WARNING IMPORTED FEATURE</b><br/><b>Organism</b>: "+__alignment.organism+"<br/><b>Protein</b>: "+__alignment.gene_symbol+", "+__alignment.uniprotTitle+" - <a target=\"_blank\" href=\"http://www.uniprot.org/uniprot/"+__alignment.uniprot+"\">"+__alignment.uniprot+"</a><hr/><br/>"+X.description;
     top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_ANNOTATIONS"]["data"].push(X);
     top.upload_flag = true;
     if(!top.$CUSTOM_TRACKS["IMPORTED_ANNOTATIONS"])top.$CUSTOM_TRACKS["IMPORTED_ANNOTATIONS"]={};

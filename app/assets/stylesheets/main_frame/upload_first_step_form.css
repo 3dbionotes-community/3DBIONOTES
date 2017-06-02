@@ -64,30 +64,65 @@ div.wait_div h1{
 	font-family: tahoma,Arial,Verdana,sans-serif,Helvetica;
 }
 
-#topnav_div{
+/*#topnav_div{
   width:750;
   margin:auto;
-}
+}*/
 
 .first_step_form{
   color:#666666;
   font-size:12px;
   font-weight:bold;
   border: 1px solid #A6A6A6;
-  padding:100 100 100 100;
+  padding:20 100 20 100;
+}
+
+div.uniprot_selection_container_div{
+  padding-bottom:10px;
+  margin-bottom:20px;
+  border-bottom:1px solid #E9E9E9;
+
+  padding-top:10px;
+  margin-top:10px;
+  border-top:1px solid #E9E9E9;
 }
 
 div.uniprot_selection_div {
-  max-height:150px;
+  max-height:200px;
   overflow:auto;
+  direction:rtl; 
+  padding-left:50px;
+
 }
 
+div.uniprot_selection_div > div {
+  direction:ltr; 
+}
 
 table.uniprot_selection_table{
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size:12px;
   color:#074987;
   width:100%;
+}
+
+table.uniprot_selection_table thead{
+  text-align:left;
+}
+
+table.uniprot_selection_table tr th{
+  padding-bottom:15px;
+  color:#666666;
+}
+
+table.uniprot_selection_table tr:hover{
+  background-color:#F6F6F6;
+}
+
+table.uniprot_selection_table tr td {
+  white-space: nowrap; text-overflow:ellipsis; overflow: hidden;
+  max-width:1px;
+  padding-right:20px;
 }
 
 table.uniprot_selection_table tr td a:hover{
@@ -164,9 +199,7 @@ table.uniprot_selection_table tr td a:hover{
 }
 
 .footer_div {
-	border-top:1px solid #A6A6A6;
 	padding-top:5px;
-	margin-top:50px;
 	height:50px;
 } 
 

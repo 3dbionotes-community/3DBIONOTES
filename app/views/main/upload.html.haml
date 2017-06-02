@@ -1,4 +1,4 @@
-= stylesheet_link_tag('main_frame/start.css') 
+= stylesheet_link_tag('main_frame/upload_first_step_form.css') 
 :javascript
   $j("body").css({"min-width":"750px"});
 :javascript
@@ -13,21 +13,22 @@
 .title_container{:style=>"width:738px;margin-left:auto;margin-right:auto;"}
   =image_tag("3dbionotes_ws_logo.png")
 .start_panel{:style=>"border-style:none;"}
-  .start_inner_panel{:style=>"padding:0 10 0 10;"}
-    %ul#topnav{:style=>"position:initial;"}
-      %li
-        %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/home"',:style=>"cursor:pointer;font-weight:bold;"}HOME
-      %li
-        %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/submit"',:style=>"cursor:pointer;font-weight:bold;"}SUBMIT
-      %li
-        %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/database"',:style=>"cursor:pointer;font-weight:bold;"}QUERY
-      %li
-        %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/help"',:style=>"cursor:pointer;font-weight:bold;"}HELP
+  .start_inner_panel
+    %div#topnav_div
+      %ul#topnav{:style=>"position:initial;"}
+        %li
+          %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/home"',:style=>"cursor:pointer;font-weight:bold;"}HOME
+        %li
+          %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/submit"',:style=>"cursor:pointer;font-weight:bold;"}SUBMIT
+        %li
+          %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/database"',:style=>"cursor:pointer;font-weight:bold;"}QUERY
+        %li
+          %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/help"',:style=>"cursor:pointer;font-weight:bold;"}HELP
 
     .main_div
       .seq_div{:style=>"margin-top:25px;"}
-        .first_step_form{:style=>"color:#666666;font-size:12px;font-weight:bold;border: 1px solid #A6A6A6;padding:10 20 10 20;"}
-          WE NEED TO IDENTIFY THE DIFFERENT PROTEINS INCLUDED IN YOUR STRUCTURE. PLEASE, USE THE ABOVE MENU TO SELECT THE CORRESPONDING UNIPROT ENTRY FOR EACH CHAIN.
+        .first_step_form
+          WE NEED TO IDENTIFY THE DIFFERENT PROTEINS INCLUDED IN YOUR STRUCTURE. PLEASE, USE THE ABOVE MENU TO SELECT THE CORRESPONDING PROTEIN FOR EACH CHAIN INCLUDED IN YOUR STRUCTURE.
           = form_tag({controller: "main", action: "chain_mapping"}, :multipart => true, :method => :post,id: "query_form",:style=>"margin-top:20px;") do 
             = hidden_field_tag(:viewer_type,@viewerType)
             = hidden_field_tag(:rand,@rand)
@@ -37,31 +38,63 @@
             -@choice.sort.to_h.each do |ch,seq|
               %span{:style=>"font-weight:bold;"}
                 CHAIN #{ch} 
-              %div{:class=>'uniprot_selection_div'}
-                %table{:class=>'uniprot_selection_table'}
-                  -@choice[ch].each do |r|
-                    %tr
-                      %td
-                        =radio_button_tag(ch,r['acc']+'__'+r['db']+'__'+r['title']['name']['long']+'__'+r['title']['org']['long']+'__'+r['title']['gene'])
-                      %td{:style=>"font-weight:bold;font-family:Monospace;"}
-                        %a{ :target=>'_blank',:href=>"http://www.uniprot.org/uniprot/#{r['acc']}"  }
-                          #{r['acc']}
-                      %td
-                        #{r['title']['gene']}
-                      %td{:title=>"#{r['title']['name']['long']}", :style=>"cursor:help;"}
-                        #{r['title']['name']['short']}
-                      %td{:title=>"#{r['title']['org']['long']}", :style=>"cursor:help;"}
-                        #{r['title']['org']['short']}
-                      %td
-                        #{r['cov']}
-                      %td
-                        #{r['evalue']}
-                      %td
-                        #{r['start']}
-                      %td
-                        #{r['end']}
-              %br
-            %br
+              %div{:class=>'uniprot_selection_container_div'}
+                %div{:class=>'uniprot_selection_div'}
+                  %div
+                    %table{:class=>'uniprot_selection_table'}
+                      %colgroup
+                        %col{:width=>"50px;"}
+                        %col{:width=>"50px;"}
+                        %col{:width=>"250px;"}
+                        %col{:width=>"250px;"}
+                        %col{:width=>"50px;"}
+                        %col{:width=>"50px;"}
+                        %col{:width=>"50px;"}
+                        %col{:width=>"50px;"}
+                        %col{:width=>"50px;"}
+
+                      %thead 
+                        %tr{:style=>"background-color:#FFFFFF;"}
+                          %th
+                            &nbsp;
+                          %th{:style=>"cursor:help;", :title=>"Gene symbol"}
+                            GENE
+                          %th{:style=>"cursor:help;", :title=>"Protein recommended name"}
+                            PROTEIN NAME
+                          %th{:style=>"cursor:help;", :title=>"Organism"}
+                            ORGANISM
+                          %th{:style=>"cursor:help;", :title=>"UniProt database accession"}
+                            ACC
+                          %th{:style=>"cursor:help;", :title=>"Sequence identity"}
+                            SEQ ID
+                          %th{:style=>"cursor:help;", :title=>"BLAST alignment e-value"}
+                            E-VALUE 
+                          %th{:style=>"cursor:help;", :title=>"Sequence alignment start"}
+                            START 
+                          %th{:style=>"cursor:help;", :title=>"Sequence alignment stop"}
+                            END 
+                      -@choice[ch].each do |r|
+                        %tr
+                          %td
+                            =radio_button_tag(ch,r['acc']+'__'+r['db']+'__'+r['title']['name']['long']+'__'+r['title']['org']['long']+'__'+r['title']['gene'])
+                          %td
+                            %b
+                              #{r['title']['gene']}
+                          %td{:title=>"#{r['title']['name']['long']}", :style=>"cursor:help;"}
+                            #{r['title']['name']['long']}
+                          %td{:title=>"#{r['title']['org']['long']}", :style=>"cursor:help;"}
+                            #{r['title']['org']['long']}
+                          %td{:style=>"font-weight:bold;font-family:Monospace;"}
+                            %a{ :target=>'_blank',:href=>"http://www.uniprot.org/uniprot/#{r['acc']}"  }
+                              #{r['acc']}
+                          %td
+                            #{r['cov']}
+                          %td
+                            #{r['evalue']}
+                          %td
+                            #{r['start']}
+                          %td
+                            #{r['end']}
             = button_tag("Submit")
         .wait_div{:style=>'display:none;font-size:24px;font-weight:bold;margin:100 0 100 0;color:#666666;'}
           %span.wait_text PLEASE BE PATIENT

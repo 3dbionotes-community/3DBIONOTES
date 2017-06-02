@@ -470,23 +470,6 @@ div#partners{
   display:inline-block;
 }
 
-div.uniprot_selection_div {
-  max-height:150px;
-  overflow:auto;
-}
-
-
-table.uniprot_selection_table{
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size:12px;
-  color:#074987;
-  width:100%;
-}
-
-table.uniprot_selection_table tr td a:hover{
-  color:red;
-}
-
 div.jsonp_info{
   position:fixed;
   width:400px;
