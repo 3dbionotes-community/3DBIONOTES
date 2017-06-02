@@ -28,15 +28,16 @@ div#similar_targets div.similar_text{
 
 div#similar_targets div.similar_explanation_text{
   font-size:14px;
-  margin:15 30 35 15;
+  margin:15 30 0 15;
   text-align:justify;
   font-weight:normal;
   line-height: 150%;
+  height:13%;
 }
 
 div#similar_protein_div {
   position: relative;
-  height:85%;
+  height:83%;
   overflow:auto;
 }
 
@@ -45,7 +46,7 @@ div#similar_protein_div table{
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size:10px;
   color:#666666;
-  padding:0 10 10 10;
+  padding:0 10 0 10;
 }
 
 div#similar_protein_div table tr th{
