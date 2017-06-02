@@ -23,7 +23,7 @@ function add_top_window_listener(){
         $j(".up_pftv_tooltip-close").get(0).dispatchEvent(fake_click);
       }else if($j("[name="+instance.selectedFeature.internalId+"]").length > 0){
         $j("[name="+instance.selectedFeature.internalId+"]").get(0).dispatchEvent(fake_click);
-        $j(".up_pftv_tooltip-close").get(0).dispatchEvent(fake_click);
+        if( $j(".up_pftv_tooltip-close").get(0) )$j(".up_pftv_tooltip-close").get(0).dispatchEvent(fake_click);
       }
     }
   });

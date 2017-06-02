@@ -97,11 +97,22 @@ function import_feature(){
     var Y = put_imported_range(X.begin,X.end);
     X.begin = Y[0];
     X.end = Y[1];
+    if(  !X.begin || !X.end ){
+      clear_feature_button();
+      swal({
+        title: "IMPORT FAILED",
+        text: "SEQUENCE ALIGNMENT OUT OF RANGE",
+        timer: 5000,
+        type: "error",
+        showConfirmButton: true
+      });     
+      return;
+    }
     if(X.type == "VARIANT"){
       X.type = "Single_aa";
       X = { begin:X.begin, end:X.end, type:X.type, color:X.color, description:"Gene Variant<br/>"+X.description }
     }
-    X.description = "<b style=\"color:red;\">WARNING IMPORTED FEATURE</b><br/><b>Organism</b>: "+__alignment.organism+"<br/><b>Protein</b>: "+__alignment.gene_symbol+", "+__alignment.uniprotTitle+" - <a target=\"_blank\" href=\"http://www.uniprot.org/uniprot/"+__alignment.uniprot+"\">"+__alignment.uniprot+"</a><hr/><br/>"+X.description;
+    X.description = "<b style=\"color:red;\">WARNING IMPORTED FEATURE FROM</b><br/><b>Organism</b>: "+__alignment.organism+"<br/><b>Protein</b>: "+__alignment.gene_symbol+", "+__alignment.uniprotTitle+" - <a target=\"_blank\" href=\"http://www.uniprot.org/uniprot/"+__alignment.uniprot+"\">"+__alignment.uniprot+"</a><hr/><br/>"+X.description;
     top.$UPLOADED_DATA["PDBchain"][ PDBchain ]["IMPORTED_ANNOTATIONS"]["data"].push(X);
     top.upload_flag = true;
     if(!top.$CUSTOM_TRACKS["IMPORTED_ANNOTATIONS"])top.$CUSTOM_TRACKS["IMPORTED_ANNOTATIONS"]={};
@@ -110,9 +121,10 @@ function import_feature(){
   clear_feature_button();
   swal({
     title: "IMPORT SUCCESS",
-    timer: 400,
+    text: "ANNOTATION IMPORTED INTO THE TARGET PROTEIN",
+    timer: 2000,
     type: "success",
-    showConfirmButton: false
+    showConfirmButton: true
   });
 }
 

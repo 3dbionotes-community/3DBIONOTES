@@ -18,7 +18,7 @@ function display_upload_form(){
   $j('#upload_form').append("<table id=\"input_coordinates\"></table>");
   $j('#upload_form table#input_coordinates').append("<tr></tr>");
   $j('#upload_form table#input_coordinates tr').append("<td>INDEX</td>");
-  $j('#upload_form table#input_coordinates tr').append("<td><select id=\"input_index\"><option value=\"structure\">STRUCTURE</option><option value=\"sequence\">SEQUENCE</option></select></td>");
+  $j('#upload_form table#input_coordinates tr').append("<td><select id=\"input_index\"><option value=\"sequence\">SEQUENCE</option><option value=\"structure\">STRUCTURE</option></select></td>");
   $j('#upload_form table#input_coordinates tr').append("<td>BEGIN</td><td><input class=\"short\" type=\"text\" id=\"input_begin\"></td>");
   $j('#upload_form table#input_coordinates tr').append("<td>END</td><td><input class=\"short\" type=\"text\" id=\"input_end\"></td>");
   $j('#upload_form').append("<br/>");
@@ -57,7 +57,13 @@ function add_annotation(){
   var index = $j("#input_index").val();
   var begin = $j("#input_begin").val();
   if(!begin){
-    alert("MISSING BEGIN INFORMATION, PLEASE FILL BEGIN  FIELD");
+    swal({
+      title: "MISSING BEGIN INPUT",
+      text: "PLEASE FILL BEGIN FIELD IN THE FORM",
+      timer: 5000,
+      type: "error",
+      showConfirmButton: true
+    });
     return;
   }
   var end = $j("#input_end").val();
@@ -88,16 +94,40 @@ function add_annotation(){
 function parse_data_file(){
   upload_flag = true;
   if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
-    alert('The File APIs are not fully supported in this browser.');
+    swal({
+      title: "FILE APIs NOT SUPPORTED",
+      text: "THIS TOOL IS NOT SUPPORTED IN YOUR BROWSER",
+      timer: 5000,
+      type: "error",
+      showConfirmButton: true
+    });
     return;
   }   
   var input = document.getElementById('upload_file');
   if (!input) {
-    alert("Um, couldn't find the fileinput element.");
+    swal({
+      title: "FILE INPUT NOT FOUND",
+      text: "PLEASE, SELECT A FILE BEFORE CLICKING UPLOAD",
+      timer: 5000,
+      type: "error",
+      showConfirmButton: true
+    });
   }else if (!input.files) {
-    alert("This browser doesn't seem to support the `files` property of file inputs.");
+    swal({
+      title: "FILE APIs NOT SUPPORTED",
+      text: "THIS TOOL IS NOT SUPPORTED IN YOUR BROWSER",
+      timer: 5000,
+      type: "error",
+      showConfirmButton: true
+    });
   }else if (!input.files[0]) {
-    alert("Please select a file before clicking 'UPLOAD'");               
+    swal({
+      title: "FILE NOT FOUND",
+      text: "PLEASE, SELECT A FILE BEFORE CLICKING UPLOAD",
+      timer: 5000,
+      type: "error",
+      showConfirmButton: true
+    });
   }else {
     var file = input.files[0];
     var fr = new FileReader();
@@ -109,7 +139,19 @@ function parse_data_file(){
 }
 
 function file_read(fr){
-  var custom_annotations = eval( '('+fr.result+')' );
+  var custom_annotations;
+  try{
+    custom_annotations = eval( '('+fr.result+')' );
+  }catch(err){
+    swal({
+      title: "FAILED PARSING JSON FORMAT",
+      text: "PLEASE, CHECK YOUR FILE FORMAT",
+      timer: 5000,
+      type: "error",
+      showConfirmButton: true
+    });   
+    return;
+  }
   if( custom_annotations.forEach ){
     custom_annotations.forEach(function(track){
       parse_track(track);

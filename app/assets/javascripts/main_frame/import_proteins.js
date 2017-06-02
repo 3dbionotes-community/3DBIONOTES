@@ -83,7 +83,7 @@ function display_targets_selector( t ){
   div_id = div_id.replace(".","_");
   if( $j( "#rightBottom div#"+div_id ).length == 0 ){
     $j("#rightBottom").append("<div id=\""+div_id+"\" class=\"imported_targets_div\">IMPORTED PROTEINS: <select id=\""+selector_id+"\"class=\"imported_targets_selector\"></select></div>");
-    var text = global_infoAlignment['uniprot']+" - "+global_infoAlignment['gene_symbol']+" - "+global_infoAlignment['uniprotTitle']+" - "+global_infoAlignment['organism'];
+    var text = global_infoAlignment['uniprot']+" - "+global_infoAlignment['gene_symbol']+" - "+global_infoAlignment['uniprotTitle']+" - "+global_infoAlignment['organism']+" < TARGET PROTEIN";
     $j("#"+selector_id).append( "<option acc=\""+global_infoAlignment['uniprot']+"\" annot_iframe_url=\""+global_infoAlignment['annot_iframe_url']+"\" seq_iframe_url=\""+global_infoAlignment['seq_iframe_url']+"\" >"+text+"</option>" );
     $j("#"+selector_id).change(function(){
       imported_protein_change( $j("#"+selector_id+" option:selected") );

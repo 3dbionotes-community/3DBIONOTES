@@ -390,13 +390,13 @@ div#topnav2{
   position:absolute;
   right:30px;
   top:5px;
-  background:white;
   padding:15 15 20 20;
   z-index:1000000;
 }
 
 #topnav2:hover {
- border:1px solid black;
+  border:1px solid black;
+  background:white;
 }
 
 table#menu_options_table{
