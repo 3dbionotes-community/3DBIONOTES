@@ -8,8 +8,12 @@ body{
   overflow:hidden;
 }
 
-body:hover{
-  overflow:auto;
+div.body_div{
+  overflow:hidden;
+}
+
+div.body_div:hover{
+  overflow-y:auto;
 }
 
 div.jsonp_info{

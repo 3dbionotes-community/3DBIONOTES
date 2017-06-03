@@ -9,7 +9,11 @@ body{
   overflow:hidden;
 }
 
-body:hover{
+div.body_div{
+  overflow:hidden;
+}
+
+div.body_div:hover{
   overflow:auto;
 }
 

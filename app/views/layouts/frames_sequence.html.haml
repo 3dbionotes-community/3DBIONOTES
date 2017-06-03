@@ -17,5 +17,6 @@
 
 
   %body{:id => "body"}
-    %div{:id => "main"}
-      = yield
+    %div.body_div{:style=>"position:absolute;left:8px;right:0px;top:0px;bottom:0px;"}
+      %div{:id => "main"}
+        = yield
