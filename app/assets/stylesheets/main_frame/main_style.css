@@ -390,7 +390,7 @@ div#topnav2{
   position:absolute;
   right:30px;
   top:5px;
-  padding:15 15 20 20;
+  padding:15 15 30 40;
   z-index:1000000;
 }
 
@@ -403,7 +403,6 @@ table#menu_options_table{
   display:none;
   text-align:right;
   margin:0 40 0 0;
-  width:350;
 }
 
 table#menu_options_table tr td{
