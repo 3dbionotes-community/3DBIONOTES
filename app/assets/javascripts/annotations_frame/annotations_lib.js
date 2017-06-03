@@ -30,7 +30,7 @@ function update_asa_residues(n){
   var chain = JSON.parse(  getParameterByName('alignment') )['chain'];
   var n = 1;
   top.asa_residues[ n_model-1 ][ chain ].forEach(function(i){
-    var r = 255/120*i[1];
+    var r = parseInt(255/120*i[1]);
     if(r>255)r=255;
     var b = 255-r;
     if(b<0)b = 0;

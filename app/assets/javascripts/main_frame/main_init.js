@@ -81,7 +81,7 @@ $j(document).ready(function(){
     display_remove_tree();
   });
 
-  $j('#topnav2').mouseover(function(){
+  $j('#topnav2 span').mouseover(function(){
     remove_all_panel_menu();
     $j('#upRightBottomFrame').css('visibility','visible');
   });

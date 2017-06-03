@@ -5,8 +5,11 @@
     %meta{:name => "keywords", :content => "bioinformatics, proteins, PDB, emdb, Uniprot"}
     %title= title
     =csrf_meta_tag
+    = stylesheet_link_tag('global_tools/sweetalert.css')
     = stylesheet_link_tag('jsmol_frame/jsmol_style.css')
+
     = javascript_include_tag('jsmol/jquery/jquery')
+    = javascript_include_tag('global_tools/sweetalert.min')
     -if @viewerType == "jsmol"
       = javascript_include_tag('jsmol/JSmol.min')
       = javascript_include_tag('jsmol/JSmol.GLmol.min')

@@ -16,7 +16,7 @@ function __init_local(i,v_c,v_t,local_flag){
 	//self.Structures[ __name ]['representations']['keep_selection']['spacefill'] = i.addRepresentation("spacefill",{visible:false,sele:"/0 and protein",color:"#E9FF99"});
         self.Structures[ __name ]['representations']['keep_selection'] = [];
 
-        self.stage.centerView();
+        self.stage.autoView();
 }
 
 function __init(i,v_c,v_t,local_flag){
@@ -34,7 +34,7 @@ function __init(i,v_c,v_t,local_flag){
 	//self.Structures[ __name ]['representations']['keep_selection']['spacefill'] = i.addRepresentation("spacefill",{visible:false,sele:"/0 and protein",color:"#E9FF99"});
         self.Structures[ __name ]['representations']['keep_selection'] = [];
 
-        self.stage.centerView();
+        self.stage.autoView();
 }
 
 function initLocalStructure(i){
@@ -66,7 +66,7 @@ function initMap(i){
                 opaqueBack:false,
 		isolevel:5
         });
-        self.stage.centerView();
+        self.stage.autoView();
         __clear_em_message();
 }
 
@@ -143,6 +143,41 @@ function nglClass( args ) {
                     		self.stage.toggleFullscreen();
                 	});
 			if(self.args.pdb_list.length == 0)__trigger_alignment();
+
+                        self.stage.signals.clicked.add( function( pickingProxy ){
+                          if( pickingProxy && pickingProxy.atom && pickingProxy.shiftKey ){
+                              var atom = pickingProxy.atom;
+                              var cp = pickingProxy.canvasPosition;
+                              var pdb = top.global_infoAlignment.pdb;
+                              var chain = top.global_infoAlignment.chain;
+                              var uniprot = top.global_infoAlignment.uniprot;
+                              var seq_index = top.$ALIGNMENTS[pdb][chain][uniprot]["inverse"][atom.resno]
+                              if(atom.chainid != chain){
+                                swal({
+                                  title: "UNKNOWN RESIDUE",
+                                  text: "THE RESIDUE IS NOT LOCATED IN THE CURRENT CHAIN",
+                                  timer: 5000,
+                                  type: "error",
+                                  showConfirmButton: true
+                                });
+                                return;
+                              }
+                              if(seq_index){
+                                var selection = {begin:seq_index, end:seq_index, frame:"null"};
+                                trigger_aa_selection(selection);
+                              }else{
+                                swal({
+                                  title: "SELECTION ERROR",
+                                  text: "SEQUENCE ALIGNMENT OUT OF RANGE",
+                                  timer: 5000,
+                                  type: "error",
+                                  showConfirmButton: true
+                                });
+                              }
+                          }else{
+                              console.log("No residue selected");
+                          }
+                        });
             	});
 	};
 
@@ -161,7 +196,16 @@ function nglClass( args ) {
 		var list = self.selected.residues;
 
 		if(!pdb in self.Structures) return;
-                if(!list || list.length == 0) return;
+                if(!list || list.length == 0){ 
+                  swal({
+                    title: "UNKNOWN RESIDUES",
+                    text: "STRUTURE RESIDUES OUT OF RANGE",
+                    timer: 5000,
+                    type: "error",
+                    showConfirmButton: true
+                  });
+                  return;
+                }
 
                 var frame = top.document.getElementById("upRightBottomFrame").contentWindow.document;
                 var instance = top.document.getElementById("upRightBottomFrame").contentWindow.instance;
@@ -248,6 +292,7 @@ function nglClass( args ) {
                                                                                         labelText:labelText,
                                                                                         fontFamily:"monospace",
                                                                                         fontWeight:"bold",
+                                                                                        scale:2,
                                                                                         sdf:true,
                                                                                         showBackground:true,
                                                                                         backgroundColor:"#FFFFFF",
@@ -447,7 +492,7 @@ function nglClass( args ) {
 	};
 
         self.center_view  = function( non_exec  ){
-                if(self.stage) self.stage.centerView();
+                if(self.stage) self.stage.autoView();
         }
 
 	self.zoom_in = function( non_exec ){

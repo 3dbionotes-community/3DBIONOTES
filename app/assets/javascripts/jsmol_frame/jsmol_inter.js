@@ -25,3 +25,10 @@ function add_top_window_listener(){
 
 }
 
+function trigger_aa_selection(selection){
+  var selection = selection;
+  var evt = document.createEvent("CustomEvent");
+  evt.initCustomEvent("aa_selected",true,true,selection);
+  top.window.dispatchEvent(evt);
+}
+
