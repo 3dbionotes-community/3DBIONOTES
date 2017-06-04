@@ -5,7 +5,7 @@ function import_similars(){
 
   $j('body').append("<div id=\"similar_targets\"></div>");
   $j("#similar_targets").append("<div class=\"close\">CLOSE</div>");
-  $j("#similar_targets").append("<div>IMPORT ANNOTATIONS FROM SIMILAR PROTEINS<br/><br/>IMPORTING SIMILAR PROTEINS<br/>PLEASE WAIT<br/><br/><img src=\"/images/loading_em.gif\"/></div>");
+  $j("#similar_targets").append("<div>TRANSFER ANNOTATIONS FROM SIMILAR PROTEINS<br/><br/>IMPORTING SIMILAR PROTEINS<br/>PLEASE WAIT<br/><br/><img src=\"/images/loading_em.gif\"/></div>");
   $j('div#similar_targets div.close').click(function(){
     clear_targets();
   });
@@ -46,9 +46,9 @@ function display_targets(data){
     clear_targets();
   });
 
-  $j("#similar_targets").append("<div class=\"similar_text\">IMPORT ANNOTATIONS FROM SIMILAR PROTEINS</div>");
+  $j("#similar_targets").append("<div class=\"similar_text\">TRANSFER ANNOTATIONS FROM SIMILAR PROTEINS</div>");
 
-  $j("#similar_targets").append("<div class=\"similar_explanation_text\">Bottom table contains a list of proteins that share 80% of sequence identity with the target protein. You can select a protein from this list to display its annotations and then import/transfer any annotation to the original annotation viewer. When an annotation is selected a button displaying 'IMPORT' will apear on the left site of the tooltip tile, clicking the button imports the annotation to the original annottaion  viewer.</div>");
+  $j("#similar_targets").append("<div class=\"similar_explanation_text\">Bottom table contains a list of proteins that share 80% of sequence identity with the target protein. You can select a protein from this list to display its annotations and then transfer any annotation to the original protein annotation viewer. When an annotation is selected a button displaying 'TRANSFER' will apear on the left site of the tooltip tile, clicking the button will transfer the annotation to the original protein annottaion viewer.</div>");
 
   $j("#similar_targets").append("<div id=\"similar_protein_div\" ><table></table></div>");
 

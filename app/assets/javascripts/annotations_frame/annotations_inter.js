@@ -11,7 +11,11 @@ function add_top_window_listener(){
       begin = X[0];
       end = X[1];
     }
-    instance.__highlight({begin:begin, end:end, color:color});
+    if(instance){
+      instance.__highlight({begin:begin, end:end, color:color});
+    }else{
+      console.log("ProtVista not found");
+    }
   });
 
   window.addEventListener("clear_aa", function(evt){

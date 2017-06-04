@@ -78,7 +78,7 @@ function build_ProtVista(){
 }
 
 function add_feature_button(){
-  $j(".up_pftv_tooltip-container table tr th").append( "<button id=\"add_feature_button\" type=\"button\">IMPORT</button>" );
+  $j(".up_pftv_tooltip-container table tr th").append( "<button id=\"add_feature_button\" type=\"button\">TRANSFER</button>" );
   $j("#add_feature_button").click(function(){
     import_feature();
   });
@@ -100,7 +100,7 @@ function import_feature(){
     if(  !X.begin || !X.end ){
       clear_feature_button();
       swal({
-        title: "IMPORT FAILED",
+        title: "TRANSFER FAILED",
         text: "SEQUENCE ALIGNMENT OUT OF RANGE",
         timer: 5000,
         type: "error",
@@ -120,8 +120,8 @@ function import_feature(){
   }
   clear_feature_button();
   swal({
-    title: "IMPORT SUCCESS",
-    text: "ANNOTATION IMPORTED INTO THE TARGET PROTEIN",
+    title: "TRANSFER SUCCESS",
+    text: "ANNOTATION TRANSFERRED TO THE TARGET PROTEIN",
     timer: 2000,
     type: "success",
     showConfirmButton: true

@@ -174,7 +174,7 @@ function nglClass( args ) {
                                   showConfirmButton: true
                                 });
                               }
-                          }else{
+                          }else if( pickingProxy.shiftKey ){
                               console.log("No residue selected");
                           }
                         });
