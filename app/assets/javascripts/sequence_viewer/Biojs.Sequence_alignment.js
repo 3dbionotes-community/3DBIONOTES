@@ -1378,8 +1378,8 @@ Biojs.Sequence_alignment = Biojs.extend(
 		        	.css({
 		        		'background-color': "#000",
 		        		'padding': "3px 10px 3px 10px",
-		        		'top': offset.top + jQuery(e.target).height() + "px",
-		        		'left': offset.left + jQuery(e.target).width() + "px"
+		        		'top': 5 + offset.top + jQuery(e.target).height() + "px",
+		        		'left': 10 + offset.left + jQuery(e.target).width() + "px"
 		        	})
 			        .animate( {opacity: '0.85'}, 10)
 			        .html( cbGetMessageFunction.call( target ) )
@@ -2700,8 +2700,8 @@ Biojs.Sequence_multiple_alignment = Biojs.extend(
 		        	.css({
 		        		'background-color': "#000",
 		        		'padding': "3px 10px 3px 10px",
-		        		'top': offset.top + jQuery(e.target).height() + "px",
-		        		'left': offset.left + jQuery(e.target).width() + "px"
+		        		'top': 5 + offset.top + jQuery(e.target).height() + "px",
+		        		'left': 10 + offset.left + jQuery(e.target).width() + "px"
 		        	})
 			        .animate( {opacity: '0.85'}, 10)
 			        .html( cbGetMessageFunction.call( target ) )

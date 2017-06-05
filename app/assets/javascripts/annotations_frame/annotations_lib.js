@@ -5,7 +5,7 @@ function update_interacting_residues(n){
   var n_model = n;
   var chain = JSON.parse( getParameterByName('alignment') )['chain'];
   var j = 1;
-  if(!top.binding_residues) return;
+  if(imported_flag || !top.binding_residues) return;
   for(var i = 0;i<top.binding_residues[0];i++){
     IRD[i].begin=-100-1*i;
     IRD[i].end=-100-1*i;
@@ -23,7 +23,7 @@ function update_asa_residues(n){
   var n_model = n;
   var chain = JSON.parse(  getParameterByName('alignment') )['chain'];
   var j = 1;
-  if(!top.asa_residues) return;
+  if(imported_flag || !top.asa_residues) return;
   for(var i = 0;i<__alignment.uniprotLength+1;i++){
     ASA[i].variants = [];
   }

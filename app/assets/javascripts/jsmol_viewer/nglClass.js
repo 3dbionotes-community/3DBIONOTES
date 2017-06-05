@@ -152,7 +152,7 @@ function nglClass( args ) {
                               var chain = top.global_infoAlignment.chain;
                               var uniprot = top.global_infoAlignment.uniprot;
                               var seq_index = top.$ALIGNMENTS[pdb][chain][uniprot]["inverse"][atom.resno]
-                              if(atom.chainid != chain){
+                              if(atom.chainname != chain){
                                 swal({
                                   title: "UNKNOWN RESIDUE",
                                   text: "THE RESIDUE IS NOT LOCATED IN THE CURRENT CHAIN",
@@ -160,6 +160,9 @@ function nglClass( args ) {
                                   type: "error",
                                   showConfirmButton: true
                                 });
+                                console.log( atom );
+                                console.log( "atom.chainid = "+atom.chainid );
+                                console.log( "top.global_infoAlignment.chain = "+top.global_infoAlignment.chain );
                                 return;
                               }
                               if(seq_index){
@@ -174,7 +177,7 @@ function nglClass( args ) {
                                   showConfirmButton: true
                                 });
                               }
-                          }else if( pickingProxy.shiftKey ){
+                          }else if( pickingProxy && pickingProxy.shiftKey ){
                               console.log("No residue selected");
                           }
                         });

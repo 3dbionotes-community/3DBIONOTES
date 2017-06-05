@@ -1,29 +1,77 @@
 = stylesheet_link_tag('webserver/help_style.css')
 
-.ws_main_div
+.ws_main_div{:style=>"margin-top:20px;"}
+
   %div{:class=>"index1"}
+    %a{:href=>"#accessing"} - ACCESING 3DBIONOTES
+
+  %div{:class=>"index2"}
+    %a{:href=>"#databases"} - EMDB, PDB OR UNIPROT ENTRY 
+
+  %div{:class=>"index2"}
     %a{:href=>"#submit"} - UPLOADING YOUR STRUCTURE FILE
 
-  %div{:class=>"index1"}
+  %div{:class=>"index2"}
     %a{:href=>"#ident"} - PROTEIN IDENTIFICATION
 
+  %br
   %div{:class=>"index1"}
     %a{:href=>"#gui"} - GRAPHICAL USER INTERFACE
 
+  %br
   %div{:class=>"index1"}
     %a{:href=>"#annot"} - ANNOTATIONS PANEL 
 
+  %div{:class=>"index2"}
+    %a{:href=>"#variant"} - VARIANT VIEWER 
+
+  %br
   %div{:class=>"index1"}
     %a{:href=>"#seq"} - SEQUENCE PANEL
 
+  %br
   %div{:class=>"index1"}
     %a{:href=>"#struct"} - STRUCTURE PANEL
 
+  %br
+  %div{:class=>"index1"}
+    %a{:href=>"#adding"} - ADDING ANNOTATIONS
+
+  %div{:class=>"index2"}
+    %a{:href=>"#uploading"} - UPLOADING CUSTOM ANNOTATIONS
+
+  %div{:class=>"index2"}
+    %a{:href=>"#transferring"} - TRANFERRING ANNOTATIONS
+
+  %br
+  %div{:class=>"index1"}
+    %a{:href=>"#adding"} - HOW TO ...
+
+  %div{:class=>"index2"}
+    %a{:href=>"/tutorials/annotate_structure_tutorial1.pdf"} - ANNOTATE A PROTEIN STRUCTUE (.pdf)
+
+  %div{:class=>"index2"}
+    %a{:href=>""} - TRASNFER PROTEIN ANNOTATIONS (.pdf)
+  %br
+  %br
+  %br
+
+  %div{:class=>"section", :id=>"accessing"}ACCESING 3DBIONOTES
+  %div{:class=>"section_text"}
+    %div{:class=>"section_image"}
+      =image_tag("accessing.png")
+      %div{:class=>"legend"}Figure #{x=1}
+
+  %div{:class=>"section", :id=>"databases"}EMDB, PDB OR UNIPROT ENTRY
+  %div{:class=>"section_text"}
+    %div{:class=>"section_image"}
+      =image_tag("databases.png")
+      %div{:class=>"legend"}Figure #{x=x+1}
 
 
   %div{:class=>"section", :id=>"submit"}UPLOADING YOUR STRUCTURE
   %div{:class=>"section_text"}
-    The first step for using the web server is to upload a structural model file. This can be easily done through a form available clicking on the 'SUBMIT'  option (figure #{x=1}A), the accepted file formats are
+    The first step for using the web server is to upload a structural model file. This can be easily done through a form available clicking on the 'SUBMIT'  option (figure #{x=x+1}A), the accepted file formats are
     %a{:href=>"http://www.wwpdb.org/documentation/file-format", :target=>"_blank"}PDB
     or
     %a{:href=>"http://mmcif.wwpdb.org/", :target=>"_blank"}mmCIF
@@ -99,6 +147,16 @@
       =image_tag("annot4.png")
       %div{:class=>"legend"}Figure #{x}
 
+  %div{:class=>"section", :id=>"variant"}VARIANT VIEWER
+  %div{:class=>"section_text"}
+
+    %div{:class=>"section_image"}
+      =image_tag("variant.png")
+      %div{:class=>"legend"}Figure #{x}
+
+    %div{:class=>"section_image"}
+      =image_tag("variant2.png")
+      %div{:class=>"legend"}Figure #{x}
 
 
   %div{:class=>"section", :id=>"seq"}SEQUENCE PANEL
@@ -121,7 +179,7 @@
       =image_tag("struct.png")
       %div{:class=>"legend"}Figure #{x}
 
-    The tool bar in the 3D viewer is comprised of two components (Figure #{x=x+1}). The select menu on the top is used to navigate through the different subunits or protein that  arr contained in  the structural model. Changing this component will also change the annotation and sequence panels to show the information related the selected protein. From left to right, the icons on the bottom of the tool bar are used for: the clockwise arrow to reset all  the panels clearing the selections, the light icon  to change the representation of the selected residues, the eye icon display/hide the heteroatoms, the arrow  icons are used to navigate through the different models, the scope icon to mark and label  a selected annotation (see next), the menu icon to display the labeled annotations (see next) and finally, the camera icon to save an  image of the 3D  viewer.
+    The tool bar in the 3D viewer is comprised of two components (Figure #{x=x+1}). The select menu on the top is used to navigate through the different subunits or protein that  are contained in  the structural model. Changing this component will also change the annotation and sequence panels to show the information related the selected protein. From left to right, the icons on the bottom of the tool bar are used for: the clockwise arrow to reset all  the panels clearing the selections, the light icon  to change the representation of the selected residues, the eye icon display/hide the heteroatoms, the arrow  icons are used to navigate through the different models, the scope icon to mark and label  a selected annotation (see next), the menu icon to display the labeled annotations (see next) and finally, the camera icon to save an  image of the 3D  viewer.
     %div{:class=>"section_image"}
       =image_tag("struct2.png")
       %div{:class=>"legend"}Figure #{x}
@@ -135,3 +193,42 @@
     %div{:class=>"section_image"}
       =image_tag("struct4.png")
       %div{:class=>"legend"}Figure #{x}
+
+  %div{:class=>"section", :id=>"adding" }ADDING ANNOTATIONS
+  %div{:class=>"section_text"}
+    %div{:class=>"section_image"}
+      =image_tag("import_upload_menu.png")
+      %div{:class=>"legend"}Figure #{x}
+
+  %div{:class=>"section", :id=>"uploading" }UPLOADING CUSTOM ANNOTATIONS
+  %div{:class=>"section_text"}
+    %div{:class=>"section_image"}
+      =image_tag("upload_menu.png")
+      %div{:class=>"legend"}Figure #{x}
+
+    %div{:class=>"section_image"}
+      =image_tag("manually_annotated.png")
+      %div{:class=>"legend"}Figure #{x}
+
+  %div{:class=>"section", :id=>"transferring" }TRANFERRING ANNOTATIONS
+  %div{:class=>"section_text"}
+    %div{:class=>"section_image"}
+      =image_tag("import_menu.png")
+      %div{:class=>"legend"}Figure #{x}
+
+    %div{:class=>"section_image"}
+      =image_tag("transferring1.png")
+      %div{:class=>"legend"}Figure #{x}
+
+    %div{:class=>"section_image"}
+      =image_tag("transferring2.png")
+      %div{:class=>"legend"}Figure #{x}
+
+    %div{:class=>"section_image"}
+      =image_tag("transferring3.png")
+      %div{:class=>"legend"}Figure #{x}
+
+
+  %br
+  %br
+  %br
