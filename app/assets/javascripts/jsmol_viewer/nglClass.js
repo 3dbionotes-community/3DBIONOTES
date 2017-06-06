@@ -95,7 +95,7 @@ function __trigger_alignment(){
 	setTimeout(function(){
 		var __d = JSON.parse( window.top.$j('#alignment > option:nth-child(2)').val() );
 		if( 'uniprot' in __d ){
-			window.top.$j('#alignment > option:nth-child(2)').attr('selected', 'selected');
+			window.top.$j('#alignment > option:nth-child(2)').prop('selected', true);
 			window.top.$j('#alignment').trigger('change');
 		}
 	},1000);

@@ -48,7 +48,7 @@ function display_targets(data){
 
   $j("#similar_targets").append("<div class=\"similar_text\">TRANSFER ANNOTATIONS FROM SIMILAR PROTEINS</div>");
 
-  $j("#similar_targets").append("<div class=\"similar_explanation_text\">Bottom table contains a list of proteins that share 80% of sequence identity with the target protein. You can select a protein from this list to display its annotations and then transfer any annotation to the original protein annotation viewer. When an annotation is selected a button displaying 'TRANSFER' will apear on the left site of the tooltip tile, clicking the button will transfer the annotation to the original protein annottaion viewer.</div>");
+  $j("#similar_targets").append("<div class=\"similar_explanation_text\">Bottom table contains a list of proteins that share at least 80% of sequence identity with the target protein. You can select a protein from this list to display its annotations and then transfer any annotation to the original protein annotation viewer. When an annotation is selected a button displaying 'TRANSFER' will apear on the left site of the tooltip tile, clicking the button will transfer the annotation to the original protein annottaion viewer.</div>");
 
   $j("#similar_targets").append("<div id=\"similar_protein_div\" ><table></table></div>");
 

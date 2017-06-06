@@ -4,7 +4,7 @@ function display_upload_form(){
   $j('#upRightBottomFrame').css('visibility','hidden');
 
   $j('body').append("<div id=\"upload_form\"></div>");
-  $j('#upload_form').append("<div class=\"upload_text\">UPLOAD YOUR ANNOTAITONS IN JSON FORMAT</div><br/>");
+  $j('#upload_form').append("<div class=\"upload_text\">UPLOAD YOUR ANNOTAITONS IN <a style=\"cursor:help;\" target=\"_blank\" href=\"/upload_annotations.txt\">JSON FORMAT</a></div><br/>");
   $j('#upload_form').append("<input type=\"file\" id=\"upload_file\" ><br/><br/>");
   $j('#upload_form').append("<button id =\"parse_file\" type=\"button\">UPLOAD</button><br/><br/><br/>");
   $j('#upload_form').append("<div class=\"upload_text\">OR</div><br/><br/>");

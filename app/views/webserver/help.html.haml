@@ -48,34 +48,36 @@
     %a{:href=>"#adding"} - HOW TO ...
 
   %div{:class=>"index2"}
-    %a{:href=>"/tutorials/annotate_structure_tutorial1.pdf"} - ANNOTATE A PROTEIN STRUCTUE (.pdf)
+    %a{:target=>"_blank", :href=>"/tutorials/annotate_structure_tutorial1.pdf"} - ANNOTATE A PROTEIN STRUCTUE (.pdf)
 
   %div{:class=>"index2"}
-    %a{:href=>""} - TRASNFER PROTEIN ANNOTATIONS (.pdf)
+    %a{:target=>"_blank", :href=>"/tutorials/annottaion_transfer_tutorial2.pdf"} - TRASNFER PROTEIN ANNOTATIONS (.pdf)
   %br
   %br
   %br
 
   %div{:class=>"section", :id=>"accessing"}ACCESING 3DBIONOTES
   %div{:class=>"section_text"}
+    Accessing 3DBIONOTES-WS can be done in two different ways: submitting a structure file or  querying the application by a PDB code, EMDB id or a UniProt accession. Both ways are available through two different web forms accessible from the web server main menu (Figure #{x=1}). The 'SUBMIT' option (Figure #{x}A) links with the structure model submission form and the 'QUERY' option (Figure #{x}B) is used to query  the application using a EMDB, PDB or UniProt entry. 
     %div{:class=>"section_image"}
       =image_tag("accessing.png")
-      %div{:class=>"legend"}Figure #{x=1}
+      %div{:class=>"legend"}Figure #{x}
 
   %div{:class=>"section", :id=>"databases"}EMDB, PDB OR UNIPROT ENTRY
   %div{:class=>"section_text"}
+    To query 3DBIONOTES-WS using a database ID type the PDB  code, EMDB id or UniProt accession in the text field (Figure #{x=x+1}A) and then click on the 'Submit' button.
     %div{:class=>"section_image"}
       =image_tag("databases.png")
-      %div{:class=>"legend"}Figure #{x=x+1}
+      %div{:class=>"legend"}Figure #{x=x}
 
 
   %div{:class=>"section", :id=>"submit"}UPLOADING YOUR STRUCTURE
   %div{:class=>"section_text"}
-    The first step for using the web server is to upload a structural model file. This can be easily done through a form available clicking on the 'SUBMIT'  option (figure #{x=x+1}A), the accepted file formats are
+    The first step for using the web server is to upload a structural model file. This can be easily done through a web form available clicking on the 'SUBMIT' option and using the file input fiedl to upload the corrdinates (figure #{x=x+1}A). The accepted file formats are
     %a{:href=>"http://www.wwpdb.org/documentation/file-format", :target=>"_blank"}PDB
     or
     %a{:href=>"http://mmcif.wwpdb.org/", :target=>"_blank"}mmCIF
-    coordinates format. When the file is submited the system perfromes a BLAST search in order to identiffy the possible UniProt accessions of the submitted proteins. This step  can take a few minutes since UniProt - TrEMBL contains more than 40000000 of protein chains. The 'JOB TITLE' field (Figure #{x}B) is an optional text field that can be used to identiffy the macromolecular structure or project, when no data is provided the name of the structure file becomes the title of the project.
+    format. When the file is submited the system perfromes a BLAST search in order to identiffy the possible UniProt accessions of the submitted proteins. This step  can take a few minutes since UniProt - TrEMBL contains more than 40000000 of protein chains. The 'JOB TITLE' field (Figure #{x}B) is an optional text field that can be used to identiffy the macromolecular structure or project, when no data is provided the name of the structure file becomes the title of the project.
     %div{:class=>"section_image"}
       =image_tag("upload.png")
       %div{:class=>"legend"}Figure #{x}
@@ -84,7 +86,7 @@
 
   %div{:class=>"section", :id=>"ident"}PROTEIN IDENTIFICATION
   %div{:class=>"section_text"}
-    When the structure file is submitted the web server performs a BLAST search against SwissProt and TrEMBL databases to find the potential UniProt accessions corresponding to the different chains that are contained in the structural model. When this process is finished a new form (Figure #{x=x+1}) is returned to the user with the best hits to select the proper accession codes for each of the chains. There is no  need to select a  UniProt entry for each chain;  however, those chains that  were not identified by the user will not be annotated. Once the UniProt accessions have been selected for the different chains this information is sent back to the server and a sequence alignment between  the chain and UniProt sequence is calculated.
+    When the structure file is submitted the web server performs a BLAST search against SwissProt and TrEMBL databases to find the potential proteins corresponding to the different chains that are contained in the structure. When this process is finished a new form (Figure #{x=x+1}) is returned to the user with the best hits to select the proper protein for each chain. This new form conatins a table for each  and the user will be asked to chose a protein (table row) for each chain. The table conatins next fields: (A) check button for the protein selection, (B) gene symbol, (C) protein name, (D) organism name, (F) UniProt accession, (G) sequence identity, (H) BLAST e-value, (I) seqeunce alignment start position and (L) sequence alignment end position. There is no need to select a protein for each chain; however, those chains that were not identified by the user will not be annotated. Once the desired proteins have been selected for the different chains clicking the 'Submit' button this information is sent back to the server and a sequence alignment between the chains and UniProt sequences are calculated.
     %div{:class=>"section_image"}
       =image_tag("ident.png")
       %div{:class=>"legend"}Figure #{x}
@@ -99,7 +101,7 @@
     %a{:href=>"#struct"}STRUCTURE PANEL
     section. The annotation panel (Figure #{x}B) is build on the
     %a{:href=>"http://ebi-uniprot.github.io/ProtVista/", :target=>"_blank"}ProtVista
-    plug-in and shows the biomedical and biochemical data collected form  the different sources of information. Finally, the sequence panel (Figure #{x}C) represents the alignment between the selected UniProt entry and the chain sequence of the structural  model.
+    plug-in and shows the biomedical and biochemical data collected form  the different sources of information. Finally, the sequence panel (Figure #{x}C) represents the alignment between the selected UniProt sequence and the active chain of the structural model.
     %div{:class=>"section_image"}
       =image_tag("gui.png")
       %div{:class=>"legend"}Figure #{x}
@@ -142,7 +144,7 @@
     %div{:class=>"section_image"}
       =image_tag("annot3.png")
       %div{:class=>"legend"}Figure #{x}
-    Finally, the annotation panel provides a menu  with different options (Figure #{x=x+1}). From left to right the different options are: information about the ProtVista viewer, download all annotations in json  or xml format, hide/display the different lanes, reset selection and zoom.
+    The annotation panel provides different options to download the displayed information, reset the annotation panel and zoom to the selected region  (Figure #{x=x+1}A, left to right).
     %div{:class=>"section_image"}
       =image_tag("annot4.png")
       %div{:class=>"legend"}Figure #{x}
@@ -150,10 +152,12 @@
   %div{:class=>"section", :id=>"variant"}VARIANT VIEWER
   %div{:class=>"section_text"}
 
+    The variant viewer lane contains the genomic variants associated to the protein (Figure #{x=x+1}). The variants can  be filtered depending their consequences (disease, non-disease, predicted deleterious, ...) using the legend menu (Figure #{x}B). This viewer has a panel with two different options: filter by disease and reset  (Figure #{x}A, left to right).
     %div{:class=>"section_image"}
       =image_tag("variant.png")
       %div{:class=>"legend"}Figure #{x}
 
+    Clicking the disease filter (Figure #{x=x+1}A) will display a list of diseases associated to the variants (Figure #{x=x+1}B) and clicking on one of the disease names will display the variants that are associated wit the disease.
     %div{:class=>"section_image"}
       =image_tag("variant2.png")
       %div{:class=>"legend"}Figure #{x}
@@ -161,7 +165,7 @@
 
   %div{:class=>"section", :id=>"seq"}SEQUENCE PANEL
   %div{:class=>"section_text"}
-    The sequence panel shows the alignments between the chains in the structural model and their corresponding UniProt entries that were selected in the identification step (Figure #{x=x+1}).
+    The sequence panel shows the alignments between the chains in the structural model and their corresponding UniProt sequence that were selected in the identification step (Figure #{x=x+1}).
     %div{:class=>"section_image"}
       =image_tag("seq.png")
       %div{:class=>"legend"}Figure #{x}
@@ -196,34 +200,38 @@
 
   %div{:class=>"section", :id=>"adding" }ADDING ANNOTATIONS
   %div{:class=>"section_text"}
+    The annotation panel provide different tools to add custom annotations or to transfer them from similar proteins. This tools are available on the annotation  pane 'MENU' (Figure  #{x=x+1}).
     %div{:class=>"section_image"}
       =image_tag("import_upload_menu.png")
       %div{:class=>"legend"}Figure #{x}
 
   %div{:class=>"section", :id=>"uploading" }UPLOADING CUSTOM ANNOTATIONS
   %div{:class=>"section_text"}
+    Adding your annotations can be done in two different ways: uploading a file (Figure #{x=x+1}A)  or manually (Figure #{x}B). Uploaded files must  be in JSON  format, <a href="http://3dbionotes.cnb.csic.es/upload_annotations.txt" target="_blank" >here</a>  you can find an example and description of the format. Adding an annotation manually only requires to fill the form displayed in the Figure #{x}B. The 'COLOR' field describes the annotation color using a string  (e.g. red, orange, pink) or hexadecimal number (e.g. #FF0000, #C345D8). The 'INDEX' selector is used to select the desired coordinates, thus if 'INDEX'  value is 'SEQUENCE' 'BEGIN' and  'END' values will be related to the sequence positions  while in  'INDEX' value is structure will  be related to the residues id of the PDB  file.
     %div{:class=>"section_image"}
       =image_tag("upload_menu.png")
       %div{:class=>"legend"}Figure #{x}
-
+    When new annotations are added new tracks  containing them  will be displayed and the new annotations will behave as the native ones (Figure #{x=x+1}).
     %div{:class=>"section_image"}
       =image_tag("manually_annotated.png")
       %div{:class=>"legend"}Figure #{x}
 
   %div{:class=>"section", :id=>"transferring" }TRANFERRING ANNOTATIONS
   %div{:class=>"section_text"}
+    Annotations can  be transferred from  other proteins that share at least 80% of sequence similarity with th   target proteins. Transferring annotation from similar proteins can  be done through the annotation menu.  Then,  the application will display a list of proteins that  share at least 80% of sequence similarity (Figure #{x=x+1}). Each row of the displayed table contains the information of the similar proteins: (A) gene symbol,  (B) gene/protein name, (C) organism name, (D) UniProt accession, (E) number of UniProt annotations  and (F) sequence identity.
     %div{:class=>"section_image"}
       =image_tag("import_menu.png")
       %div{:class=>"legend"}Figure #{x}
-
+    When a protein is selected the application will  update the annotation  and sequence panel (Figure #{x=x+1}). The sequence panel will now contain an alignment of 3 sequences (Figure #{x}A): the first sequence our original  sequence (target protein), the second sequence is the structure chain  and the third sequence is the selected protein  to transfer annotations. The annotation panel  will  display the annotation  for the selected protein, and now when an  annotation is selected its tooltip will  display  a button on the right site of its title  displaying 'TRANSFER'. Clicking this button will transfer the annotation to  the target protein. Also,  the annotation panel will  include a selector (Figure #{x}C) to navigate through the different imported  proteins.
     %div{:class=>"section_image"}
       =image_tag("transferring1.png")
       %div{:class=>"legend"}Figure #{x}
 
+    Annotations can  be transferred from multiple proteins. The  selector on the top of the annotation menu (Figure #{x=x+1}A) shows all imported proteins. To display the target  protein  were the selected annotations have been  transferred we have to  select  the original protein  of the selector, the first item (Figure #{x=x+1}A).
     %div{:class=>"section_image"}
       =image_tag("transferring2.png")
       %div{:class=>"legend"}Figure #{x}
-
+    The transferred annotations are displayed in a track named 'Imported annotations' and grouped by their type (Figure #{x}B). When  a transferred annotation is selected a warning message displaying the protein source of the annotation  will appear in its tooltip (Figure #{x}C).
     %div{:class=>"section_image"}
       =image_tag("transferring3.png")
       %div{:class=>"legend"}Figure #{x}
