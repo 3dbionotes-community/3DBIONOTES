@@ -18,7 +18,7 @@ function display_remove_tree(){
   $j.each($CUSTOM_TRACKS , function(track_name, types){
     $j('#remove_annotations').append("<div class=\"tree_track\" id=\""+track_name+"\"><span class=\"tree_track_span\">"+track_name.replace(/_/g," ").toUpperCase()+"</span></div>");
     $j.each(types , function(type_name, none){
-      $j('#'+track_name).append("<div class=\"tree_type\" id=\""+type_name+"\"><span class=\"tree_type_span\">"+type_name.replace(/_/g," ").toUpperCase()+"</span></div>");
+      if(type_name!="undefined") $j('#'+track_name).append("<div class=\"tree_type\" id=\""+type_name+"\"><span class=\"tree_type_span\">"+type_name.replace(/_/g," ").toUpperCase()+"</span></div>");
     });
   });
   $j(".tree_track_span").click(function(){
