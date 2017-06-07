@@ -224,6 +224,11 @@ function translate_to_uniprot(ann,PDBchain){
   var acc = keys[0];
   out.begin = $ALIGNMENTS[pdb][chain][acc]["inverse"][ ann.begin ];
   out.end = $ALIGNMENTS[pdb][chain][acc]["inverse"][ ann.end ];
+  if(!out.begin || !out.end){
+    out.begin=-1;
+    out.end=-1
+  }
+  
   return out;
 }
 
