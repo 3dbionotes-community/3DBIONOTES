@@ -52,7 +52,7 @@ function display_targets(data){
 
   $j("#similar_targets").append("<div id=\"similar_protein_div\" ><table></table></div>");
 
-  var th = "<th>SYMBOL</th>"+"<th>PROTEIN NAME</th>"+"<th>ORGANISM NAME</th>"+"<th>UNIPROT ACC</th>"+"<th># ANNOTATIONS</th>"+"<th>SEQUENCE ID</th>";
+  var th = "<th>SYMBOL</th>"+"<th>PROTEIN NAME</th>"+"<th>ORGANISM NAME</th>"+"<th>UNIPROT ACC</th>"+"<th># ANN</th>"+"<th>SEQUENCE ID</th>";
   var tr = "<tr>"+th+"</tr>";
   $j("div#similar_protein_div table").append(tr);
   var acc_data  = {};

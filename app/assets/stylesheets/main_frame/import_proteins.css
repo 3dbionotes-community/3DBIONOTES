@@ -55,6 +55,8 @@ div#similar_protein_div table tr th{
 
 div#similar_protein_div table tr td{
   padding:5 0 5 10;
+  white-space: nowrap; text-overflow:ellipsis; overflow: hidden;
+  max-width:1px;
 }
 
 div#similar_protein_div table tr:hover{
