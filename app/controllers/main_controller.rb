@@ -303,37 +303,42 @@ class MainController < ApplicationController
     @structure_file = '/home/joan/apps/bionotes/public/upload/'+rand_path+'/'+file_name
     @http_structure_file = 'http://3dbionotes.cnb.csic.es/upload/'+rand_path+'/'+file_name
     @mapping  =  JSON.parse(`structure_to_fasta_json #{@structure_file}`)
-    @sequences = @mapping['sequences']
-    @choice = {}
-    do_not_repeat = {}
-    @sequences.each do |ch,seq|
-      if  do_not_repeat.key?(seq)
-        @choice[ch] = do_not_repeat[seq]
-      else
-        #sprot
-        blast = `ssh jsegura@campins 'echo #{seq} | sudo nice -n -10 ~/app/BLAST/ncbi-blast-2.5.0+/bin/blastp -num_threads 32 -task blastp-fast -query - -db ~/databases/UNIPROT/blast/sprot/sprot -outfmt "7 sacc stitle evalue pident qstart qend" -max_target_seqs 20 -qcov_hsp_perc 80 | grep -v "#"'`
-        sprot, flag = parse_blast(blast,'sprot')
-        if sprot.length > 0
-          @choice[ch] = ( sprot.sort_by{ |k| -k['cov'].to_f } )
-        end
-        #trembl
-        if !flag
-          blast = `ssh jsegura@campins 'echo #{seq} | sudo nice -n -10 ~/app/BLAST/ncbi-blast-2.5.0+/bin/blastp -num_threads 32 -task blastp-fast -query - -db ~/databases/UNIPROT/blast/trembl/trembl -outfmt "7 sacc stitle evalue pident sstart send" -max_target_seqs 20 -qcov_hsp_perc 80 | grep -v "#"'`
-          trembl, null = parse_blast(blast,'trembl')
-          if trembl.length > 0
-            if @choice[ch].nil?
-              @choice[ch] = []
+    @error = nil
+    if @mapping.has_key? "error"
+      @error = @mapping["error"]
+    else 
+      @sequences = @mapping['sequences']
+      @choice = {}
+      do_not_repeat = {}
+      @sequences.each do |ch,seq|
+        if  do_not_repeat.key?(seq)
+          @choice[ch] = do_not_repeat[seq]
+        else
+          #sprot
+          blast = `ssh jsegura@campins 'echo #{seq} | sudo nice -n -10 ~/app/BLAST/ncbi-blast-2.5.0+/bin/blastp -num_threads 32 -task blastp-fast -query - -db ~/databases/UNIPROT/blast/sprot/sprot -outfmt "7 sacc stitle evalue pident qstart qend" -max_target_seqs 20 -qcov_hsp_perc 80 | grep -v "#"'`
+          sprot, flag = parse_blast(blast,'sprot')
+          if sprot.length > 0
+            @choice[ch] = ( sprot.sort_by{ |k| -k['cov'].to_f } )
+          end
+          #trembl
+          if !flag
+            blast = `ssh jsegura@campins 'echo #{seq} | sudo nice -n -10 ~/app/BLAST/ncbi-blast-2.5.0+/bin/blastp -num_threads 32 -task blastp-fast -query - -db ~/databases/UNIPROT/blast/trembl/trembl -outfmt "7 sacc stitle evalue pident sstart send" -max_target_seqs 20 -qcov_hsp_perc 80 | grep -v "#"'`
+            trembl, null = parse_blast(blast,'trembl')
+            if trembl.length > 0
+              if @choice[ch].nil?
+                @choice[ch] = []
+              end
+              @choice[ch] = ( (@choice[ch]+trembl).sort_by{ |k| -k['cov'].to_f } ).first(20)
             end
-            @choice[ch] = ( (@choice[ch]+trembl).sort_by{ |k| -k['cov'].to_f } ).first(20)
+          end
+          #store_result
+          if @choice[ch]!=nil && @choice[ch].length>0
+            do_not_repeat[seq] = @choice[ch]
           end
         end
-        #store_result
-        if @choice[ch]!=nil && @choice[ch].length>0
-          do_not_repeat[seq] = @choice[ch]
-        end
       end
+      @viewerType = params[:viewer_type]
     end
-    @viewerType = params[:viewer_type]
   end
 
   def chain_mapping
