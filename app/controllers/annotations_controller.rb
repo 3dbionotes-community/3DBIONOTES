@@ -500,7 +500,7 @@ class AnnotationsController < ApplicationController
     data = JSON.parse(data)
     out = {}
     if data.key?("consensus") 
-        for j in ['disprot','pdb_nmr','pdb_xray','predictors']
+        for j in ['disprot','pdb_nmr','pdb_xray','predictors','long']
           if data['consensus'].key?(j)
             out[j] = []
     	    data['consensus'][j].each do |i|
