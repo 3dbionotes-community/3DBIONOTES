@@ -27,6 +27,33 @@ class PostRequestController < ApplicationController
     end
   end
 
+  def fetch
+    if !params[:url].nil?
+      url = params[:url]
+      file_content = getUrl(url)
+      rand_path = (0...20).map { ('a'..'z').to_a[rand(26)] }.join.upcase
+
+      original_filename = url
+      if original_filename.include? "cif"
+        file_name = "structure_file.cif"
+      else
+        file_name = "structure_file.pdb"
+      end
+
+      title = "File "+url
+      if params[:title] && params[:title].length>0
+        title = params[:title]
+      end
+
+      DataFile.save_string(file_content, file_name, rand_path, post_info={ "title"=>title, "file_name"=>file_name })
+
+      toReturn = { "id"=>rand_path, "file_name"=>original_filename, "title"=>title}
+      return render json: toReturn.to_json, status: :ok
+    else
+      return render json: {"error"=>"Structure file not found in POST request"}, status: :ok
+    end
+  end
+
   def browse
     rand_path = params[:id]
     recover_data = recover(rand_path)
@@ -76,6 +103,15 @@ class PostRequestController < ApplicationController
       @viewerType = "ngl"
     end
     render :layout => 'main', :template => 'main/upload'
+  end
+
+  def getUrl(url)
+    begin
+      data = Net::HTTP.get_response(URI.parse(url)).body
+    rescue
+      puts "Error downloading data:\n#{$!}"
+    end
+    return data
   end
 
   def parse_blast(blast,db)
