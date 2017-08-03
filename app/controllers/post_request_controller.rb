@@ -30,27 +30,31 @@ class PostRequestController < ApplicationController
   def fetch
     if !params[:url].nil?
       url = params[:url]
-      file_content = getUrl(url)
-      rand_path = (0...20).map { ('a'..'z').to_a[rand(26)] }.join.upcase
-
-      original_filename = url
-      if original_filename.include? "cif"
-        file_name = "structure_file.cif"
+      file_content, http_code, http_code_name = getUrl(url)
+      if http_code.to_i > 399
+        return render json: {"error"=>"URL "+url+" was not reachable", "http_error"=>http_code_name}, status: :ok
       else
-        file_name = "structure_file.pdb"
+        rand_path = (0...20).map { ('a'..'z').to_a[rand(26)] }.join.upcase
+
+        original_filename = url
+        if original_filename.include? "cif"
+          file_name = "structure_file.cif"
+        else
+          file_name = "structure_file.pdb"
+        end
+
+        title = "File "+url
+        if params[:title] && params[:title].length>0
+          title = params[:title]
+        end
+
+        DataFile.save_string(file_content, file_name, rand_path, post_info={ "title"=>title, "file_name"=>file_name })
+
+        toReturn = { "id"=>rand_path, "file_name"=>original_filename, "title"=>title}
+        return render json: toReturn.to_json, status: :ok
       end
-
-      title = "File "+url
-      if params[:title] && params[:title].length>0
-        title = params[:title]
-      end
-
-      DataFile.save_string(file_content, file_name, rand_path, post_info={ "title"=>title, "file_name"=>file_name })
-
-      toReturn = { "id"=>rand_path, "file_name"=>original_filename, "title"=>title}
-      return render json: toReturn.to_json, status: :ok
     else
-      return render json: {"error"=>"Structure file not found in POST request"}, status: :ok
+      return render json: {"error"=>"URL structure file not found in your request"}, status: :ok
     end
   end
 
@@ -106,12 +110,16 @@ class PostRequestController < ApplicationController
   end
 
   def getUrl(url)
+    data = "error"
     begin
-      data = Net::HTTP.get_response(URI.parse(url)).body
+      res = Net::HTTP.get_response( URI.parse(url) )
+      data = res.body
+      code = res.code
+      code_name = res.class.name
     rescue
       puts "Error downloading data:\n#{$!}"
     end
-    return data
+    return data, code, code_name
   end
 
   def parse_blast(blast,db)
