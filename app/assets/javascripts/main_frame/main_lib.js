@@ -118,7 +118,7 @@ function getValueSelection(elem,myFirstTime){
 
     var infoAlignmentEval = eval("("+infoAlignment+")");
     global_infoAlignment = infoAlignmentEval;
-    var baseUrl = "http://3dbionotes.cnb.csic.es/";
+    var baseUrl = "/";
 
     var info = {};
     info.firstTime = myFirstTime;

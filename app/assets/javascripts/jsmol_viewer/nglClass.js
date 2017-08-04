@@ -136,7 +136,7 @@ function nglClass( args ) {
 			if( self.args.emdb ){
 				var __emdb = self.args.emdb.replace("EMD-", "emd_");
                                 __show_em_message( self.args.emdb );
-                                var __map = "http://www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
+                                var __map = location.protocol+"//www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
 				self.stage.loadFile( __map, {useWorker: true} ).then( initMap );
 			}
                 	self.stage.viewer.container.addEventListener( "dblclick", function(){
@@ -519,7 +519,8 @@ function nglClass( args ) {
 		self.p_chain = chain;
                 var pdb_code = pdb;
                 __show_message( pdb_code.toUpperCase() );
-                var url_file = "http://mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
+                //var url_file = "http://mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
+                var url_file = "rcsb://"+pdb_code.toUpperCase()+".mmtf";
                 self.stage.loadFile(  url_file, {ext:"mmtf", firstModelOnly:true, sele:":"+chain} ).then( initChain );
 		//self.stage.loadFile( "rcsb://"+pdb , {firstModelOnly:true,sele:":"+chain} ).then( initChain );
 	};

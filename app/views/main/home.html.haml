@@ -3,27 +3,27 @@
     :javascript
       $j(document).ready(function(){
         swal({title:'Error',text:'Unknown #{@identifierType} identifier',type:'warning'},function(){
-          window.location.replace("http://3dbionotes.cnb.csic.es/ws/database");
+          window.location.replace("/ws/database");
         });
       });
   -elsif @notExists
     :javascript
       $j(document).ready(function(){
         swal({title:'Error',text:'#{@identifierType} entry is not available',type:'warning'},function(){
-          window.location.replace("http://3dbionotes.cnb.csic.es/ws/database");
+          window.location.replace("/ws/database");
         });
       });
   -else
     :javascript
       $j(document).ready(function(){
-        window.location.replace("http://3dbionotes.cnb.csic.es/ws");
+        window.location.replace("/ws");
       });
 
 -elsif not @isAvailable 
   :javascript
     $j(document).ready(function(){
         swal({title:'Error',text:'#{@identifierType} entry is not available',type:'warning'},function(){
-          window.location.replace("http://3dbionotes.cnb.csic.es/ws/database");
+          window.location.replace("/ws/database");
         });
     });
 
@@ -32,13 +32,13 @@
     =image_tag("3dbionotes_ws_logo_no_partners.png",height:'50')
     %ul#topnav
       %li
-        %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/home"',:style=>"cursor:pointer;font-weight:bold;"}HOME
+        %a.nostyle.menu{:onclick=>'window.location.href="/ws/home"',:style=>"cursor:pointer;font-weight:bold;"}HOME
       %li
-        %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/submit"',:style=>"cursor:pointer;font-weight:bold;"}SUBMIT
+        %a.nostyle.menu{:onclick=>'window.location.href="/ws/submit"',:style=>"cursor:pointer;font-weight:bold;"}SUBMIT
       %li
-        %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/database"',:style=>"cursor:pointer;font-weight:bold;"}QUERY
+        %a.nostyle.menu{:onclick=>'window.location.href="/ws/database"',:style=>"cursor:pointer;font-weight:bold;"}QUERY
       %li
-        %a.nostyle.menu{:onclick=>'window.location.href="http://3dbionotes.cnb.csic.es/ws/help"',:style=>"cursor:pointer;font-weight:bold;"}HELP
+        %a.nostyle.menu{:onclick=>'window.location.href="/ws/help"',:style=>"cursor:pointer;font-weight:bold;"}HELP
     #partners
       =image_tag("partners.png",id:'partners_logo')
   #topFrame
