@@ -3,7 +3,7 @@ require 'json'
 namespace :biomutaentries do
   desc "Seeds BioMuta"
   task seed_biomuta: :environment do
-    data = `awk -F"\t"  '{if($10!=$11 && $12!="-" && $12~/damaging/ && $13!="-" && $14!="-")print $0}' /home/joan/databases/BIOMUTA/BioMuta.csv | sort -k2`
+    data = `awk -F","  '{if($10!=$11 && $12!="-" && $12~/damaging/ && $13!="-" && $14!="-")print $0}' /home/joan/databases/BIOMUTA/BioMuta.csv | sort -k2`
     data = data.split(/\n/)
     mutations = { 'XXX' => {} }
     puts "Biomuta processing data"
@@ -13,7 +13,7 @@ namespace :biomutaentries do
     file = File.open("/home/joan/apps/bionotes/db/mysql/biomuta.tsv",'w')
     data.each do |l|
       tmp = {}
-      linea = l.chomp.split("\t")
+      linea = l.chomp.split(",")
       uniprotAc = linea[1].strip
       position = linea[8].strip
       original = linea[9].strip
