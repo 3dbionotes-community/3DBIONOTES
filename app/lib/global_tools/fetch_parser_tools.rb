@@ -24,5 +24,39 @@ module GlobalTools
       return hash
     end
 
+    def getUrl(url)
+      begin
+        data = Net::HTTP.get_response(URI.parse(url)).body
+      rescue
+        puts "Error downloading data:\n#{$!}"
+      end
+      return data
+    end  
+
+    def makeRequest(url,input)
+      #GET
+      if input.class == String
+        begin
+          rawData = Net::HTTP.get_response(URI.parse(url+input))
+          if rawData.code == "404"
+            data = nil
+          else
+            data = rawData.body
+          end
+        rescue
+          puts "Error: #{$!}"
+        end
+      #POST
+      else
+        uri = URI.parse(url+"/")
+        begin
+          data = Net::HTTP.new(uri.host).post(uri.path,input.join(",")).body
+        rescue
+          puts "Error: #{$!}"
+        end
+      end
+      return data
+    end
+
   end
 end
