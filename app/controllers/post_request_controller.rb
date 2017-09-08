@@ -33,6 +33,8 @@ class PostRequestController < ApplicationController
       file_content, http_code, http_code_name = getUrl(url)
       if http_code.to_i > 399
         return render json: {"error"=>"URL "+url+" was not reachable", "http_error"=>http_code_name}, status: :ok
+      elsif http_code.to_i == 0
+        return render json: {"error"=>"ruby exception", "url"=> params[:url], "exception"=>file_content}, status: :ok
       else
         rand_path = (0...20).map { ('a'..'z').to_a[rand(26)] }.join.upcase
 
@@ -50,7 +52,7 @@ class PostRequestController < ApplicationController
 
         DataFile.save_string(file_content, file_name, rand_path, post_info={ "title"=>title, "file_name"=>file_name })
 
-        toReturn = { "id"=>rand_path, "file_name"=>original_filename, "title"=>title}
+        toReturn = { "id"=>rand_path, "file_name"=>original_filename, "title"=>title }
         return render json: toReturn.to_json, status: :ok
       end
     else
@@ -118,6 +120,7 @@ class PostRequestController < ApplicationController
       code_name = res.class.name
     rescue
       puts "Error downloading data:\n#{$!}"
+      data = "#{$!}"
     end
     return data, code, code_name
   end
