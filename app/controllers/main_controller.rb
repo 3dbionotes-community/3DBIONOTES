@@ -40,6 +40,9 @@ class MainController < ApplicationController
   end
 
   def home
+    if request.referer
+      logger.info("  HTTP Referer: #{request.referer}") 
+    end
     @log = ""
     @title = "Home"
     @noAlignments = false

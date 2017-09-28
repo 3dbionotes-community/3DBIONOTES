@@ -1,5 +1,18 @@
 function build_sequence_viewer( uniprotSeq, pdbSeq, imported_seq ){
   $j(document).ready(function(){
+    _build_sequence_viewer( uniprotSeq, pdbSeq, imported_seq );
+    window.addEventListener( "resize", function( event ){
+      $j("#seq_div").empty();
+      _build_sequence_viewer( uniprotSeq, pdbSeq, imported_seq );
+    });
+  });
+
+}
+
+
+
+
+function _build_sequence_viewer( uniprotSeq, pdbSeq, imported_seq ){
     var columns_format = { size: 70, spacedEach: 5 };
     var body_width = $j(body).width();
     if(body_width<900) columns_format.size = 60;
@@ -37,6 +50,5 @@ function build_sequence_viewer( uniprotSeq, pdbSeq, imported_seq ){
     });
 
     check_global_selection();
-  });
 }
 

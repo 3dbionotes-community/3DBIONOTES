@@ -8,7 +8,7 @@ function __init_local(i,v_c,v_t,local_flag){
 	self.Structures[ __name ]['representations']['hetero'] = i.addRepresentation("ball+stick",{sele:"/0 and hetero and not water",visible:true});
 	self.Structures[ __name ]['representations']['nucleic'] = i.addRepresentation("trace",{sele:"/0 and dna or rna",visible:true,color:"orange"});
         self.Structures[ __name ]['representations']['cartoon']  = i.addRepresentation("cartoon",{visible:v_c,color:"#B9B9B9",sele:"/0 and protein"});
-        self.Structures[ __name ]['representations']['trace'] = i.addRepresentation("trace",{visible:v_t,color:"#B9B9B9",sele:"/0 and protein"});
+        self.Structures[ __name ]['representations']['trace'] = i.addRepresentation("cartoon",{visible:v_t,color:"#F3F3F3",sele:"/0 and protein", opacity:0.2});
         self.Structures[ __name ]['representations']['selection']['cartoon'] = i.addRepresentation("cartoon",{visible:false,sele:"/0 and protein",color:"#FFE999"});
 	self.Structures[ __name ]['representations']['selection']['spacefill'] = i.addRepresentation("spacefill",{visible:false,sele:"/0 and protein",color:"#FFE999"});
 	self.Structures[ __name ]['representations']['selection']['ball+stick'] = i.addRepresentation("ball+stick",{visible:false,sele:"/0 and protein",color:"#FFE999"});
@@ -26,7 +26,8 @@ function __init(i,v_c,v_t,local_flag){
 	self.Structures[ __name ]['representations']['hetero'] = i.addRepresentation("ball+stick",{sele:"hetero and not water",visible:true});
 	self.Structures[ __name ]['representations']['nucleic'] = i.addRepresentation("trace",{sele:"dna or rna",visible:true,color:"orange"});
         self.Structures[ __name ]['representations']['cartoon']  = i.addRepresentation("cartoon",{visible:v_c,color:"#B9B9B9",sele:"protein"});
-        self.Structures[ __name ]['representations']['trace'] = i.addRepresentation("trace",{visible:v_t,color:"#B9B9B9",sele:"protein"});
+        //self.Structures[ __name ]['representations']['assembly'] = i.addRepresentation("trace",{visible:v_t,color:"#B9B9B9",sele:"protein", opacity:0.3 ,assembly:'BU1'});
+        self.Structures[ __name ]['representations']['trace'] = i.addRepresentation("cartoon",{visible:v_t,color:"#F3F3F3",sele:"protein", opacity:0.2});/*assembly:'BU1'*/
         self.Structures[ __name ]['representations']['selection']['cartoon'] = i.addRepresentation("cartoon",{visible:false,sele:"protein",color:"#FFE999"});
 	self.Structures[ __name ]['representations']['selection']['spacefill'] = i.addRepresentation("spacefill",{visible:false,sele:"protein",color:"#FFE999"});
 	self.Structures[ __name ]['representations']['selection']['ball+stick'] = i.addRepresentation("ball+stick",{visible:false,sele:"protein",color:"#FFE999"});
@@ -60,10 +61,12 @@ function initStructure(i){
 function initMap(i){
         self.Structures[ 'density' ] = { obj:i, surface:{} };
         self.Structures[ 'density' ]['surface'] = i.addRepresentation( "surface", {
-                opacity: 0.2,
+                opacity: 0.1,
+                color:"#33ABF9",
                 flatShaded:false,
                 background:false,
                 opaqueBack:false,
+                depthWrite:true,
 		isolevel:5
         });
         self.stage.autoView();
@@ -111,10 +114,12 @@ function nglClass( args ) {
 	self.__load_ready = false;
         self.keep_selected = [];
 	self.start = function(){
-                NGL.mainScriptFilePath = "/ngl/ngl.embedded.min.js";
            	document.addEventListener( "DOMContentLoaded", function(){
                 	self.stage = new NGL.Stage( "viewport" );
-                	self.stage.setParameters( {backgroundColor: "white"} );
+                        window.addEventListener( "resize", function( event ){
+                          self.stage.handleResize();
+                        }, false );
+                	self.stage.setParameters( {backgroundColor: "white",quality: "low"} );
 			var __n = 1;
 			if(self.args.origin == "local"){
                                 __show_message( "FILE" );
@@ -124,10 +129,13 @@ function nglClass( args ) {
 					if( __n == self.args.pdb_list.length ) self.__load_ready = true;
                                         __show_message( pdb_code.toUpperCase() );
                                         //var url_file = "http://mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
-                                        var url_file = "rcsb://"+pdb_code.toUpperCase()+".mmtf";
+                                        //var url_file = "rcsb://"+pdb_code.toUpperCase()+".mmtf";
+                                        var url_file = location.protocol+"//mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
+                                        console.log( "LOADING "+url_file );
                                         self.stage.loadFile(  url_file, {ext:"mmtf", firstModelOnly:true} ).then( initStructure ).catch( function(e){
                                           console.error(e);
                                           var url_file = "rcsb://"+pdb_code.toUpperCase()+".cif";
+                                          console.log( "LOADING "+url_file );
                                           self.stage.loadFile(  url_file, {ext:"cif", firstModelOnly:true} ).then( initStructure );
                                         });
 					__n++;
@@ -371,6 +379,13 @@ function nglClass( args ) {
                 var model_flag = '';
                 if(self.model>=0) model_flag = 'and /'+self.model.toString()+' '; 
 
+                var shft = 1;
+                var L = list.slice(shft,list.length-shft);
+		if(L.length >0){ 
+                  self.Structures[ pdb ]['representations']['cartoon'].setSelection( "protein "+model_flag+"and :"+chain+" and not ("+L.join(" or ")+")" );
+                }else{
+                  self.Structures[ pdb ]['representations']['cartoon'].setSelection( "protein "+model_flag+"and :"+chain );
+                }
 		self.Structures[ pdb ]['representations']['selection']['cartoon'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+list.join(" or ")+")" );
 		self.Structures[ pdb ]['representations']['selection']['spacefill'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+list.join(" or ")+")" );
 		self.Structures[ pdb ]['representations']['selection']['ball+stick'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+list.join(" or ")+")" );

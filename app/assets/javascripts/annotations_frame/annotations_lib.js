@@ -70,9 +70,11 @@ function build_ProtVista(){
   });
   
   instance.getDispatcher().on("featureDeselected", function(obj) {
-    if(!instance.selectedFeature){
-      trigger_aa_cleared();
-    }
+    setTimeout(function(){
+      if(!instance.selectedFeature){
+        trigger_aa_cleared();
+      }
+    },10);
     clear_feature_button();
   });
 }
