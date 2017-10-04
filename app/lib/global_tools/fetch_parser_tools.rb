@@ -16,19 +16,21 @@ module GlobalTools
     end
 
     def getXml(data)
+      hash = {}
       begin
         hash = Nori.new(:parser=> :nokogiri, :advanced_typecasting => false).parse(data)
       rescue
-        puts "Error downloading and reading xml:\n#{$!}"
+        puts "Error downloading and reading xml:\n#{$!} <<<"
       end
       return hash
     end
 
     def getUrl(url)
+      data = ""
       begin
         data = Net::HTTP.get_response(URI.parse(url)).body
       rescue
-        puts "Error downloading data:\n#{$!}"
+        puts "Error downloading data:\n#{$!} <<<"
       end
       return data
     end  

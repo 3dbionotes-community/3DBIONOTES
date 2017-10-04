@@ -1,10 +1,11 @@
+var global_frames = ["upRightBottomFrame","leftBottomFrame","downRightBottomFrame","genomicFrame"];
 
 function add_frames_listener(){
 
   window.addEventListener("aa_selected",function(evt){
     var selection = evt.detail;
     global_selection = selection;
-    var frames = ["upRightBottomFrame","leftBottomFrame","downRightBottomFrame"];
+    var frames = global_frames;
     var evtOut = document.createEvent("CustomEvent");
     evtOut.initCustomEvent("select_aa",true,true,selection);
     if(selection.to){
@@ -36,7 +37,7 @@ function add_frames_listener(){
 
   window.addEventListener("aa_cleared",function(evt){
     global_selection =  null;
-    var frames = ["upRightBottomFrame","leftBottomFrame","downRightBottomFrame"];
+    var frames = global_frames;
     var from = evt.detail;
     var evtOut = document.createEvent("Event");
     evtOut.initEvent("clear_aa",true,true);
@@ -45,6 +46,25 @@ function add_frames_listener(){
         top.document.getElementById(frame_id).contentWindow.dispatchEvent(evtOut);
       }
     });
+  });
+
+  window.addEventListener("highlight_all",function(evt){
+    global_selection =  null;
+    var frames = global_frames;
+    var evtOut = document.createEvent("Event");
+    evtOut.initEvent("clear_aa",true,true);
+    frames.forEach(function(frame_id){
+      if( frame_id != "leftBottomFrame"){
+        top.document.getElementById(frame_id).contentWindow.dispatchEvent(evtOut);
+      }
+    });
+    
+    setTimeout(function(){
+      var selection = evt.detail;
+      var evtOut = document.createEvent("CustomEvent");
+      evtOut.initCustomEvent("highlight_all", true, true, selection);
+      top.document.getElementById("leftBottomFrame").contentWindow.dispatchEvent(evtOut);
+    },  100);
   });
 
 }

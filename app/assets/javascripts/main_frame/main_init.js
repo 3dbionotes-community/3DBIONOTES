@@ -1,5 +1,6 @@
 var $ALIGNMENTS = {};
 var $EXTERNAL_DATA = {'PDBchain':{},'acc':{}};
+var $GENOMIC_DATA = {'acc':{}};
 var n_model_main_frame = 1;
 var global_infoAlignment = null;
 
@@ -71,19 +72,35 @@ $j(document).ready(function(){
 
   $j('#import_similars').click(function(){
     import_similars();
+    hide_tools();
   });
 
   $j('#upload_annotations').click(function(){
     display_upload_form();
+    hide_tools();
   });
 
   $j('#delete_features').click(function(){
     display_remove_tree();
+    hide_tools();
   });
 
-  $j('#topnav2 span').mouseover(function(){
+  $j('#topnav2').mouseover(function(){
     remove_all_panel_menu();
     $j('#upRightBottomFrame').css('visibility','visible');
+  });
+
+  $j('#topnav3').mouseover(function(){
+    remove_all_panel_menu();
+    $j('#upRightBottomFrame').css('visibility','visible');
+  });
+
+  $j('#proteomic_view').click(function(){
+    change_view("#proteomic_panel");    
+  });
+
+  $j('#genomic_view').click(function(){
+     change_view("#genomic_panel");   
   });
 
   add_frames_listener();

@@ -9,16 +9,17 @@ module InfoManager
         emdbInfo = {}
         if emdbId =~ /^EMD-\d{4}$/
           emdb_code  = emdbId[4..emdbId.length]
-          emdb_url = "http://www.ebi.ac.uk/pdbe/static/files/em/maps/emd_"+emdb_code+".map.gz"
+          emdb_url = "https://www.ebi.ac.uk/pdbe/static/files/em/maps/emd_"+emdb_code+".map.gz"
           url = URI.parse( emdb_url )
           begin 
             req = Net::HTTP.new(url.host, url.port)
+            req.use_ssl = true
             res = req.request_head(url.path)
           rescue
             emdbInfo = {"id"=>emdbId,"available"=>false, "error"=>"HTTP ERROR"}
             myStatus = :not_found
-            return render json: emdbInfo, status: myStatus
           end
+          puts(res.code)
           if res.code == "200" 
             emdbInfo = {"id"=>emdbId,"available"=>true}
           else

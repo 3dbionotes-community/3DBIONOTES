@@ -131,20 +131,35 @@
         %iframe#leftBottomFrame{:src=>"jsmolIFrame",:scrolling=>"yes"}
         %iframe#downRightBottomFrame{:src=>"sequenceIFrame",:scrolling=>"yes"}
       #rightBottom
-        %div#topnav2
-          %a.nostyle.menu{:id=>"menu_options_link", :style=>"cursor:pointer;font-weight:bold;"}
-            %span MENU
-          %table#menu_options_table
+        %div#topnav3
+          %a.nostyle.menu{:id=>"menu_views_link", :style=>"cursor:pointer;font-weight:bold;"}
+            %span VIEW
+          %table#menu_views_table
             %tr
               %td 
-                %a.nostyle{:id=>"upload_annotations", :style=>"cursor:pointer;"}UPLOAD CUSTOM ANNOTATIONS
+                %a.nostyle{:id=>"proteomic_view", :style=>"cursor:pointer;"}PROTEIN VIEW
             %tr
               %td
-                %a.nostyle{:id=>"import_similars", :style=>"cursor:pointer;"}TRANSFER ANNOTATIONS FROM SIMILAR PROTEINS
-            %tr
-              %td
-                %a.nostyle{:id=>"delete_features", :style=>"cursor:pointer;"}DELETE CUSTOM ANNOTATION
-        %iframe#upRightBottomFrame{:src=>"annotationsIFrame",:scrolling=>"yes"}
+                %a.nostyle{:id=>"genomic_view", :style=>"cursor:pointer;"}GENE VIEW
+
+        #proteomic_panel
+          %div#topnav2
+            %a.nostyle.menu{:id=>"menu_options_link", :style=>"cursor:pointer;font-weight:bold;"}
+              %span TOOLS 
+            %table#menu_options_table
+              %tr
+                %td 
+                  %a.nostyle{:id=>"upload_annotations", :style=>"cursor:pointer;"}UPLOAD CUSTOM ANNOTATIONS
+              %tr
+                %td
+                  %a.nostyle{:id=>"import_similars", :style=>"cursor:pointer;"}TRANSFER ANNOTATIONS FROM SIMILAR PROTEINS
+              %tr
+                %td
+                  %a.nostyle{:id=>"delete_features", :style=>"cursor:pointer;"}DELETE CUSTOM ANNOTATION
+          %iframe#upRightBottomFrame{:src=>"annotationsIFrame",:scrolling=>"yes"}
+        #genomic_panel
+          %iframe#genomicFrame{:src=>"genomicIFrame",:scrolling=>"yes"}
+
   :javascript
     #{@log}
   :javascript

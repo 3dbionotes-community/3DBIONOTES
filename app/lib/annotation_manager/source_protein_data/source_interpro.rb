@@ -2,7 +2,7 @@ module AnnotationManager
   module SourceProteinData
     module SourceInterpro 
 
-      InterproURL = "https://www.ebi.ac.uk/interpro/protein/"
+      InterproURL = "http://www.ebi.ac.uk/interpro/protein/"
 
       def sourceInterproFromUniprot(uniprotAc)
         url = InterproURL+uniprotAc

@@ -60,17 +60,26 @@ function initStructure(i){
 
 function initMap(i){
         self.Structures[ 'density' ] = { obj:i, surface:{} };
-        self.Structures[ 'density' ]['surface'] = i.addRepresentation( "surface", {
+        //self.Structures[ 'density' ]['obj'].signals.representationAdded.add( function( representation ){ console.log(representation); } );
+        if(self.pdb_flag){
+          self.Structures[ 'density' ]['surface'] = i.addRepresentation( "surface", {
                 opacity: 0.1,
                 color:"#33ABF9",
                 flatShaded:false,
                 background:false,
                 opaqueBack:false,
                 depthWrite:true,
-		isolevel:5
-        });
-        self.stage.autoView();
-        __clear_em_message();
+	  	isolevel:5
+          });
+        }else{
+          self.Structures[ 'density' ]['surface'] = i.addRepresentation( "surface", {
+                color:"#33ABF9",
+                depthWrite:true,
+	  	isolevel:5
+          });
+          i.autoView();
+        }
+        __clear_em_message();       
 }
 
 function __show_message(id){
@@ -113,9 +122,11 @@ function nglClass( args ) {
         self.model = -1;
 	self.__load_ready = false;
         self.keep_selected = [];
+        self.pdb_flag = false
 	self.start = function(){
            	document.addEventListener( "DOMContentLoaded", function(){
                 	self.stage = new NGL.Stage( "viewport" );
+                        //self.stage.signals.componentAdded.add( function( component ){ console.log(component); } );
                         window.addEventListener( "resize", function( event ){
                           self.stage.handleResize();
                         }, false );
@@ -126,6 +137,7 @@ function nglClass( args ) {
 				self.stage.loadFile( "/upload/"+self.args.pdb_list[0]+"/"+self.args.pdb_list[1] ).then( initLocalStructure );
 			}else{
 				self.args.pdb_list.forEach(function(pdb_code){
+                                        self.pdb_flag = true;
 					if( __n == self.args.pdb_list.length ) self.__load_ready = true;
                                         __show_message( pdb_code.toUpperCase() );
                                         //var url_file = "http://mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
@@ -191,6 +203,37 @@ function nglClass( args ) {
                         });
             	});
 	};
+
+        self.multiple_highlight = function(pdb,  chain, list){
+          var selection = {};
+          var color;
+          list.forEach(function(i){
+              color = i.color;
+              var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, top.alignmentTranslation);
+              pdbPosList.forEach(function(j){
+                selection[j]=true;
+              });
+          });
+          selection = Object.keys(selection);
+          self.selected.residues = selection;
+          if(selection.length == 0) return;
+
+          var model_flag = '';
+          if(self.model>=0) model_flag = 'and /'+self.model.toString()+' ';
+
+          self.Structures[ pdb ]['representations']['cartoon'].setSelection( "protein "+model_flag+"and :"+chain );
+
+	  self.Structures[ pdb ]['representations']['selection']['cartoon'].setSelection( "" );
+	  self.Structures[ pdb ]['representations']['selection']['spacefill'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+selection.join(" or ")+")" );
+	  self.Structures[ pdb ]['representations']['selection']['ball+stick'].setSelection( "" );
+
+          self.Structures[ pdb ]['representations']['selection']['spacefill'].setColor(color);
+
+	  self.Structures[ pdb ]['representations']['selection']['cartoon'].setVisibility(false);
+	  self.Structures[ pdb ]['representations']['selection']['ball+stick'].setVisibility(false);
+	  self.Structures[ pdb ]['representations']['selection']['spacefill'].setVisibility(true);
+
+        };
 
 	self.resize = function( new_size ){
 	};

@@ -9,9 +9,6 @@ function build_sequence_viewer( uniprotSeq, pdbSeq, imported_seq ){
 
 }
 
-
-
-
 function _build_sequence_viewer( uniprotSeq, pdbSeq, imported_seq ){
     var columns_format = { size: 70, spacedEach: 5 };
     var body_width = $j(body).width();
@@ -44,7 +41,6 @@ function _build_sequence_viewer( uniprotSeq, pdbSeq, imported_seq ){
       sequence_panel.setSelection(begin-1,end-1);
       var divSelected = "#0_"+(begin-1);
       if($j(divSelected).length > 0){
-        
         $j(".body_div").scrollTop( $j(divSelected).offset().top - $j(divSelected).parent().offset().top );
       }
     });

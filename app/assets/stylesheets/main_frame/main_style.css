@@ -119,6 +119,19 @@ a.nostyle{
   border-left:1px solid black;
 }
 
+#proteomic_panel{
+  height:100%;
+  width:100%;
+  position:absolute;
+}
+
+#genomic_panel{
+  height:100%;
+  width:100%;
+  position:absolute;
+  display:none;
+}
+
 iframe{
   border:0px;
 }
@@ -144,7 +157,7 @@ iframe#downRightBottomFrame{
   left:0px;
 }
 
-iframe#upRightBottomFrame{
+iframe#upRightBottomFrame{/*proteomic_frame*/
   height:100%;
   width:100%;
   box-sizing: border-box;
@@ -152,6 +165,17 @@ iframe#upRightBottomFrame{
   border-bottom:0px;
   border-right:0px;
   border-top:0px;
+  padding-top:50px;
+}
+
+iframe#genomicFrame{
+  height:100%;
+  width:100%;
+  box-sizing: border-box;
+  border-left:0px;
+  border-top:0px;
+  border-right:0px;
+  border-bottom:0px;
   padding-top:50px;
 }
 
@@ -388,21 +412,21 @@ div#topnav2{
   text-align:right;
   display:inline;
   position:absolute;
-  right:30px;
+  right:90px;
   top:5px;
-  padding:15 15 30 40;
+  padding:15 10 10 5;
   z-index:999;
 }
 
 #topnav2:hover {
-  border:1px solid black;
+  border:1px solid #C3C3C3;
   background:white;
 }
 
 table#menu_options_table{
   display:none;
   text-align:right;
-  margin:0 40 0 0;
+  margin:0 20 0 20;
 }
 
 table#menu_options_table tr td{
@@ -416,11 +440,11 @@ table#menu_options_table tr td a{
 }
 
 table#menu_options_table tr td a::after{
-  content:" \25CB";
+  content:"  \25CB";
 }
 
 table#menu_options_table tr td a:hover::after{
-  content:" \25CF";
+  content:"  \25CF";
 }
 
 
@@ -436,6 +460,57 @@ div#topnav2:hover a ~ #menu_options_table{
     display:table;
 }
 
+div#topnav3{
+  text-align:right;
+  display:inline;
+  position:absolute;
+  right:30px;
+  top:5px;
+  padding:15 10 10 5;
+  z-index:9999;
+}
+
+#topnav3:hover {
+  border:1px solid #C3C3C3;
+  background:white;
+}
+
+table#menu_views_table{
+  display:none;
+  text-align:right;
+  margin:0 20 0 20;
+}
+
+table#menu_views_table tr td{
+  padding-top:10px;
+}
+
+table#menu_views_table tr td a{
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:1px;
+}
+
+table#menu_views_table tr td a::after{
+  content:"  \25CB";
+}
+
+table#menu_views_table tr td a:hover::after{
+  content:"  \25CF";
+}
+
+
+table#menu_views_table tr td a:hover{
+  color:#96C8C8;
+}
+
+div#topnav3:hover a ~ #menu_views_table{
+    display:table;
+}
+
+#menu_views_table:hover{
+    display:table;
+}
 a:link,
 a:visited,
 a:focus,
@@ -476,7 +551,7 @@ div.jsonp_info{
   top:40%;
   left:-moz-calc(50% - 200px);
   left:calc(50% - 200px);
-  z-index:1000;
+  z-index:9999999;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size:16px;
   font-weight:bold;
@@ -499,7 +574,7 @@ div.filter_screen{
   bottom:0px;
   left:0px;
   right:0px;
-  z-index:900;
+  z-index:999999;
   background:rgba(100,100,100,0.5);
 }
 

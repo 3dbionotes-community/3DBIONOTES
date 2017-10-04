@@ -117,14 +117,14 @@ function hide_imported_select(){
   $j("div.imported_targets_div").css("display","none");
 }
 
-function check_imported_select(){
+function check_imported_select( flag ){
   var div_id = global_infoAlignment['pdb']+"_"+global_infoAlignment['chain']+"_div";
   div_id = div_id.replace(".","_");
   var selector_id = global_infoAlignment['pdb']+"_"+global_infoAlignment['chain']+"_select";
   selector_id = selector_id.replace(".","_");
 
   $j("#"+div_id).css("display","block");
-  $j("#"+selector_id+" option[acc=\""+global_infoAlignment['uniprot']+"\"]").prop('selected', 'selected');
+  if(!flag)$j("#"+selector_id+" option[acc=\""+global_infoAlignment['uniprot']+"\"]").prop('selected', 'selected');
 }
 
 function change_imported_src(annot_iframe_url,seq_iframe_url){

@@ -3,7 +3,7 @@ module AnnotationManager
     module SourceDsysmap 
 
       include GlobalTools::FetchParserTools
-      DsysmapURL = "http://dsysmap.irbbarcelona.org/api/getMutationsForProteins?protein_ids="
+      DsysmapURL = "https://dsysmap.irbbarcelona.org/api/getMutationsForProteins?protein_ids="
 
       def fetchDsysmapAnnots(hashData)
         output = []
@@ -64,7 +64,9 @@ module AnnotationManager
         if !dbData.nil? and (dbData.digest == digest)
           info = JSON.parse(dbData.data)
         else
+          puts( rawData["data"] )
           hashData = getXml(rawData["data"])
+          puts(hashData)
           info = fetchDsysmapAnnots(hashData)
           if !dbData.nil?
             dbData.destroy

@@ -57,6 +57,7 @@ function change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url
 
   global_infoAlignment["annot_iframe_url"] = annot_iframe_url;
   global_infoAlignment["seq_iframe_url"] = seq_iframe_url;
+  global_infoAlignment["igenomic_iframe_url"] = genomic_iframe_url;
 
   var seq_iframe = 'iframe#downRightBottomFrame';
   var annot_iframe = 'iframe#upRightBottomFrame';
@@ -115,6 +116,7 @@ function getValueSelection(elem,myFirstTime){
     evtHide.initEvent("HideInfo",true,true);
     document.getElementById("upRightBottomFrame").contentWindow.dispatchEvent(evtHide);
     document.getElementById("downRightBottomFrame").contentWindow.dispatchEvent(evtHide);
+    document.getElementById("genomicFrame").contentWindow.dispatchEvent(evtHide);
 
     var infoAlignmentEval = eval("("+infoAlignment+")");
     global_infoAlignment = infoAlignmentEval;
@@ -152,20 +154,23 @@ function getValueSelection(elem,myFirstTime){
 
         var seq_iframe_url = "/sequenceIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
         var annot_iframe_url = "/annotationsIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
+        var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
 
-        change_iframe_src( seq_iframe_url, annot_iframe_url );
+        change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url );
 
       }else if(uniprot==undefined){
 
         var seq_iframe_url = "/sequenceIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
         var annot_iframe_url = "/annotationsIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
+        var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
 
-        change_iframe_src( seq_iframe_url, annot_iframe_url );
+        change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url );
 
       }else if(data[chain][uniprot]==undefined){
         var seq_iframe_url = "/sequenceIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
         var annot_iframe_url = "/annotationsIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
-        change_iframe_src( seq_iframe_url, annot_iframe_url );
+        var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
+        change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url );
       }
     }else{
       wait_message("BUILDING SEQUENCE ALIGNMENT");
@@ -181,20 +186,24 @@ function getValueSelection(elem,myFirstTime){
 
             var seq_iframe_url = "/sequenceIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
             var annot_iframe_url = "/annotationsIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
+            var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
 
-            change_iframe_src( seq_iframe_url, annot_iframe_url );
+            change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url );
 
           }else if(uniprot==undefined){
 
             var seq_iframe_url = "/sequenceIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
             var annot_iframe_url = "/annotationsIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
+            var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
 
-            change_iframe_src( seq_iframe_url, annot_iframe_url );
+            change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url );
 
           }else if(data[chain]!=undefined && data[chain][uniprot]==undefined){
             var seq_iframe_url = "/sequenceIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
             var annot_iframe_url = "/annotationsIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
-            change_iframe_src( seq_iframe_url, annot_iframe_url );
+            var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
+
+            change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url );
           }
         },
         error: function(data){
@@ -204,14 +213,17 @@ function getValueSelection(elem,myFirstTime){
 
             var seq_iframe_url = "/sequenceIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
             var annot_iframe_url = "/annotationsIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
+            var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
 
-            change_iframe_src( seq_iframe_url, annot_iframe_url );
+            change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url );
 
           }else{
             var seq_iframe_url = "/sequenceIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
             var annot_iframe_url = "/annotationsIFrame/?"+debug_mode+"alignment="+encodeURI(infoAlignment);
+            var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
 
-            change_iframe_src( seq_iframe_url, annot_iframe_url );          }
+            change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url );          
+          }
         },
         jsonpCallback: 'processAlignment'
       }).done(function(){
@@ -337,6 +349,11 @@ function remove_all_panel_menu(){
   $j("#upload_form").remove();
   $j("#similar_targets").remove();
   $j("#remove_annotations").remove();
+
+  if($j('#proteomic_panel').css('display')  ==  'block'){
+    $j('#topnav2').css('display','block');
+    check_imported_select(true);
+  }
 }
 
 function reload_annotations_frame(){
@@ -350,3 +367,27 @@ function reload_annotations_frame(){
   document.getElementById("upRightBottomFrame").contentWindow.location.reload();
 }
 
+function change_view(e){
+  var views = ['#proteomic_panel','#genomic_panel'];
+
+  if( $j(e).css('display')=='block' ) return;
+  $j('.imported_targets_div').css('display','none');
+
+  views.forEach(function(i){
+    if(i!=e){
+      $j(i).css('display','none');
+    }
+  });
+  $j(e).css('display','block');
+
+  if(e == '#proteomic_panel'){
+    $j('#topnav2').css('display','block');
+    check_imported_select();
+  }else{
+    $j('#topnav2').css('display','none');
+  }
+}
+
+function hide_tools(){
+  $j('.imported_targets_div').css('display','none');
+}

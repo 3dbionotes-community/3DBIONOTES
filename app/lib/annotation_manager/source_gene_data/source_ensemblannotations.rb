@@ -6,54 +6,54 @@ module AnnotationManager
 
       def sourceENSEMBLannotations(ensembl_id)
         out = {'repeat'=>[],'simple'=>[],'constrained'=>[],'motif'=>[]}
-        returnValue = {}
-        begin
-          data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=repeat;content-type=application/json"))
-        rescue
-          puts "Error: #{$!}"
-        end
-        if data.code != "404"
-          returnValue = JSON.parse(data.body)
-        end
-        returnValue.each do |i|
-          out['repeat'].push({'x'=>i['start'],'y'=>i['end'],'description'=>i['description'],'strand'=>i['strand']})
-        end
+        #returnValue = {}
+        #begin
+        #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=repeat;content-type=application/json"))
+        #rescue
+        #  puts "Error: #{$!}"
+        #end
+        #if data.code != "404"
+        #  returnValue = JSON.parse(data.body)
+        #end
+        #returnValue.each do |i|
+        #  out['repeat'].push({'x'=>i['start'],'y'=>i['end'],'description'=>i['description'],'strand'=>i['strand']})
+        #end
      
-        begin
-          data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=simple;content-type=application/json"))
-        rescue
-          puts "Error: #{$!}"
-        end
-        if data.code != "404"
-          returnValue = JSON.parse(data.body)
-        end
-        returnValue.each do |i|
-          out['simple'].push({'x'=>i['start'],'y'=>i['end'],'description'=>i['logic_name'],'strand'=>i['strand']})
-        end
+        #begin
+        #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=simple;content-type=application/json"))
+        #rescue
+        #  puts "Error: #{$!}"
+        #end
+        #if data.code != "404"
+        #  returnValue = JSON.parse(data.body)
+        #end
+        #returnValue.each do |i|
+        #  out['simple'].push({'x'=>i['start'],'y'=>i['end'],'description'=>i['logic_name'],'strand'=>i['strand']})
+        #end
 
-        begin
-          data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=constrained;content-type=application/json"))
-        rescue
-          puts "Error: #{$!}"
-        end
-        if data.code != "404"
-          returnValue = JSON.parse(data.body)
-        end
-        returnValue.each do |i|
-          out['constrained'].push({'x'=>i['start'],'y'=>i['end'],'description'=>i['logic_name'],'strand'=>i['strand']})
-        end
+        #begin
+        #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=constrained;content-type=application/json"))
+        #rescue
+        #  puts "Error: #{$!}"
+        #end
+        #if data.code != "404"
+        #  returnValue = JSON.parse(data.body)
+        #end
+        #returnValue.each do |i|
+        #  out['constrained'].push({'x'=>i['start'],'y'=>i['end'],'description'=>i['logic_name'],'strand'=>i['strand']})
+        #end
 
-        begin
-          data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=motif;content-type=application/json"))
-        rescue
-          puts "Error: #{$!}"
-        end
-        if data.code != "404"
-          returnValue = JSON.parse(data.body)
-        end
-        returnValue.each do |i|
-          out['motif'].push({'x'=>i['start'],'y'=>i['end'],'description'=>i['motif_feature_type'],'strand'=>i['strand']})
-        end
+        #begin
+        #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=motif;content-type=application/json"))
+        #rescue
+        #  puts "Error: #{$!}"
+        #end
+        #if data.code != "404"
+        #  returnValue = JSON.parse(data.body)
+        #end
+        #returnValue.each do |i|
+        #  out['motif'].push({'x'=>i['start'],'y'=>i['end'],'description'=>i['motif_feature_type'],'strand'=>i['strand']})
+        #end
 
         begin
           data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=transcript;feature=exon;content-type=application/json"))

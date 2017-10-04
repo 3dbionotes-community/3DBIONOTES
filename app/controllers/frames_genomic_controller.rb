@@ -27,7 +27,7 @@ class FramesGenomicController < ApplicationController
 
   def genomicIFrame
     uniprot_acc = params[:uniprot_acc]
-    @acc = params[:uniprot_acc]
+    @acc = uniprot_acc
     @message = "USE THE SELECT MENU TO BROWSE PROTEIN ANNOTATIONS"
     if uniprot_acc.nil?
       @alignment = nil
@@ -36,7 +36,7 @@ class FramesGenomicController < ApplicationController
       jsonData = JSON.parse(getUrl(url))
       if !jsonData['gene'].nil?
         @ensembl_mapping = jsonData
-        url = BaseUrl+"api/alignments/ENSEMBL/"+@ensembl_mapping['gene']['id']+"/"+@ensembl_mapping['transcript'][0]['id']+"/"+uniprot_acc
+        url = BaseUrl+"/api/alignments/ENSEMBL/"+@ensembl_mapping['gene']['id']+"/"+@ensembl_mapping['transcript'][0]['id']+"/"+uniprot_acc
         jsonData = getUrl(url)
         @alignment = JSON.parse(jsonData)
         @ensembl_select_options = {}

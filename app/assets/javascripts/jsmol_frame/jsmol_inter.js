@@ -23,6 +23,12 @@ function add_top_window_listener(){
     ClearSelected();
   });
 
+  window.addEventListener("highlight_all", function(evt){
+    ClearSelected();
+    var selection = evt.detail;
+    miApplet.multiple_highlight( infoGlobal.activepdb, infoGlobal.activechain, selection );
+  });
+
 }
 
 function trigger_aa_selection(selection){

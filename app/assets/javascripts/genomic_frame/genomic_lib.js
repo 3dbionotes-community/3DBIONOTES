@@ -5,7 +5,7 @@ var start_flag=true;
 
 function update_genomic_display(e_name,e){
 	__selected_transcript = $j("#ensembl_transcripts").children(":selected").text();
-        var __url_query = "http://3dbionotes.cnb.csic.es/api/alignments/ENSEMBL/"+$(e).val();
+        var __url_query = "/api/alignments/ENSEMBL/"+$(e).val();
 	document.getElementById('transcript_loading').style.display = "block";
 	document.getElementById('gfv').style.display = "none";
 	document.getElementById('gfv_buttons').style.display = "none";
@@ -24,6 +24,7 @@ function update_genomic_display(e_name,e){
 }
 
 function build_genomic_display(e_name){
+        if(!__genomic_alignment)return;
         var FeatureViewer = require("feature-viewer");
         ft = new FeatureViewer(__genomic_alignment['gene']['pos_seq'],e_name,{
                 showAxis: true,
@@ -187,30 +188,26 @@ function add_annotations(ft){
 function add_variations (ft,start_flag){
 	var __variations = {};
 	var __strand = {'1':'Positive','-1':'Negative','0':'Unknown'};
-	var __ensembl_colors = {"transcript_ablation":"#ff0000","splice_acceptor":"#FF581A","splice_donor":"#FF581A","stop_gained":"#ff0000","frameshift":"#9400D3","stop_lost":"#ff0000","start_lost":"#ffd700","transcript_amplification":"#ff69b4","inframe_insertion":"#ff69b4","inframe_deletion":"#ff69b4","missense":"#ffd700","protein_altering":"#FF0080","splice_region":"#ff7f50","incomplete_terminal_codon":"#ff00ff","stop_retained":"#76ee00","synonymous":"#76ee00","coding_sequence":"#458b00","mature_miRNA":"#458b00","5_prime_UTR":"#7ac5cd","3_prime_UTR":"#7ac5cd","non_coding_transcript_exon":"#32cd32","intron":"#02599c","NMD_transcript":"#ff4500","non_coding_transcript":"#32cd32","upstream_gene":"#a2b5cd","downstream_gene":"#a2b5cd","TFBS_ablation":"#a52a2a","TFBS_amplification":"#a52a2a","TF_binding_site":"#a52a2a","regulatory_region_ablation":"#a52a2a","regulatory_region_amplification":"#a52a2a","feature_elongation":"#7f7f7f","regulatory_region":"#a52a2a","feature_truncation":"#7f7f7f","intergenic":"#636363"};
+	var __ensembl_colors = {"Pathogenic":"#FF0000","Benign":"#00FF00","Unknown":"#FF00FF","transcript_ablation":"#ff0000","splice_acceptor":"#FF581A","splice_donor":"#FF581A","stop_gained":"#ff0000","frameshift":"#9400D3","stop_lost":"#ff0000","start_lost":"#ffd700","transcript_amplification":"#ff69b4","inframe_insertion":"#ff69b4","inframe_deletion":"#ff69b4","missense":"#ffd700","protein_altering":"#FF0080","splice_region":"#ff7f50","incomplete_terminal_codon":"#ff00ff","stop_retained":"#76ee00","synonymous":"#76ee00","coding_sequence":"#458b00","mature_miRNA":"#458b00","5_prime_UTR":"#7ac5cd","3_prime_UTR":"#7ac5cd","non_coding_transcript_exon":"#32cd32","intron":"#02599c","NMD_transcript":"#ff4500","non_coding_transcript":"#32cd32","upstream_gene":"#a2b5cd","downstream_gene":"#a2b5cd","TFBS_ablation":"#a52a2a","TFBS_amplification":"#a52a2a","TF_binding_site":"#a52a2a","regulatory_region_ablation":"#a52a2a","regulatory_region_amplification":"#a52a2a","feature_elongation":"#7f7f7f","regulatory_region":"#a52a2a","feature_truncation":"#7f7f7f","intergenic":"#636363"};
 
 	__genomic_variations['variation'].forEach(function(i){
 
-		if(!i['clinical_significance'])i['clinical_significance'] = "Unknown";
+		if(!i['clinical_significance'])i['clinical_significance'] = ["Unknown"];
+                if(!i['alleles'])i['alleles']=["Unknown"];
+                if(!i['consequence_type'])return;
 
-		var __description = __strand[i['strand']]+' strand<br/>Allelles: '+i['alleles'].join("/").replace(/_/g," ")+"<br/>Clinical Significnace: "+i['clinical_significance']+"<br/>Consequence type: "+i['consequence_type'].replace(/_/g," ");
+		var __description = '<b>Source:</b> '+i['source']+'/'+i['id']+'<br/><b>Strand:</b> '+__strand[i['strand']]+'<br/><b>Allelles:</b> '+i['alleles'].join(" / ").replace(/_/g," ")+"<br/><b>Clinical Significnace:</b> "+i['clinical_significance'].join(" / ")+"<br/><b>Consequence type:</b> "+i['consequence_type'].replace(/_/g," ");
 
-		var __consequence = i['consequence_type'].replace("3_prime_","").replace("5_prime_","").replace("_variant","");
-
-		if( !(__consequence in __variations) ){
-			__variations[ __consequence ] = [];
-		}
-
-		__variations[ __consequence ].push({'x':i['x']-ft.index_shift,'y':i['y']-ft.index_shift,'description':__description})
-	});
-
-	__genomic_variations['somatic_variation'].forEach(function(i){
-
-		if(!i['clinical_significance'])i['clinical_significance'] = "Unknown";
-
-		var __description = __strand[i['strand']]+' strand<br/>Allelles: '+i['alleles'].join("/").replace(/_/g," ")+"<br/>Clinical Significnace: "+i['clinical_significance']+"<br/>Consequence type: "+i['consequence_type'].replace(/_/g," ");
-
-		var __consequence = i['consequence_type'].replace("3_prime_","").replace("5_prime_","").replace("_variant","");
+		//var __consequence = i['consequence_type'].replace("3_prime_","").replace("5_prime_","").replace("_variant","");
+                var __consequence;
+                if( i['clinical_significance'].join(";").toLowerCase().includes("pathogenic")){
+                  __consequence = "Pathogenic";
+                }else if( i['clinical_significance'].join(";").toLowerCase().includes("benign") ){
+                  __consequence = "Benign";
+                }else{
+                  __consequence = "Unknown";
+                  return;
+                }
 
 		if( !(__consequence in __variations) ){
 			__variations[ __consequence ] = [];
@@ -218,10 +215,34 @@ function add_variations (ft,start_flag){
 
 		__variations[ __consequence ].push({'x':i['x']-ft.index_shift,'y':i['y']-ft.index_shift,'description':__description})
 	});
+
+	/*__genomic_variations['somatic_variation'].forEach(function(i){
+
+		if(!i['clinical_significance'])i['clinical_significance'] = "Unknown";
+
+		var __description = '<b>Strand:</b> '+__strand[i['strand']]+'<br/><b>Allelles:</b> '+i['alleles'].join(" / ").replace(/_/g," ")+"<br/><b>Clinical Significnace:</b> "+i['clinical_significance'].join(" / ")+"<br/><b>Consequence type:</b> "+i['consequence_type'].replace(/_/g," ");
+
+		//var __consequence = i['consequence_type'].replace("3_prime_","").replace("5_prime_","").replace("_variant","");
+                var __consequence;
+                if( i['clinical_significance'].join(";").toLowerCase().includes("pathogenic")){
+                  __consequence = "Pathogenic";
+                }else if( i['clinical_significance'].join(";").toLowerCase().includes("benign") ){
+                  __consequence = "Benign";
+                }else{
+                  __consequence = "Uncertain";
+                  return;
+                }
+
+		if( !(__consequence in __variations) ){
+			__variations[ __consequence ] = [];
+		}
+
+		__variations[ __consequence ].push({'x':i['x']-ft.index_shift,'y':i['y']-ft.index_shift,'description':__description})
+	});*/
 
 	if(start_flag)__build_gfv_display_variants( __variations );
 
-	for(var i in __variations){
+	["Pathogenic", "Benign", "Unknown"].forEach(function(i){
 		var __name = i.replace(/_/g," ").toUpperCase();
 		var __color = "#FF8C00";
 		if(i in __ensembl_colors)__color = __ensembl_colors[i];
@@ -233,7 +254,7 @@ function add_variations (ft,start_flag){
                 	color: __color,
                 	type: "rect",
         	});
-	}
+	});
 }
 
 function __build_gfv_display_variants( __variations ){
@@ -258,7 +279,6 @@ function triggerGeneCoordinates(start,end){
   var p_end;
   var strand = __genomic_alignment.gene.strand;
 
-
   while(i<=j && (!p_start || !p_end)){
     __p_start = __genomic_alignment.transcript.alignment.g2p[i];
     __p_end = __genomic_alignment.transcript.alignment.g2p[j];
@@ -274,29 +294,24 @@ function triggerGeneCoordinates(start,end){
     p_end = aux;
   }
 
-  var evt = document.createEvent("CustomEvent");
-  evt.initCustomEvent("GeneCoordinates",true,true,[p_start,p_end]);
-  body.dispatchEvent(evt);
+  var selection = {begin:p_start, end:p_end, frame:"genomicFrame"}
+  trigger_aa_selection(selection);
 
 }
 
-function __triggerGeneCoordinates(start,end){
-  var __p_start;
-  var __p_end;
-  var strand = __genomic_alignment.gene.strand;
-
-  if(strand>0) {
-    __p_start = __genomic_alignment.transcript.alignment.g2p[start];
-    __p_end = __genomic_alignment.transcript.alignment.g2p[end];
-  }else{
-    __p_start = __genomic_alignment.transcript.alignment.g2p[end];
-    __p_end = __genomic_alignment.transcript.alignment.g2p[start];
-  }
-
-  var p_start = __genomic_alignment.transcript.alignment.p2u[__p_start];
-  var p_end = __genomic_alignment.transcript.alignment.p2u[__p_end];
-
-  var evt = document.createEvent("CustomEvent");
-  evt.initCustomEvent("GeneCoordinates",true,true,[p_start,p_end]);
-  body.dispatchEvent(evt);
+function clear_selection(){
+  ft.__clear();
 }
+
+/*function build_table(head,array){
+  var out = "<table>";
+  var first = true;
+  array.forEach(function(r){
+    var h = "";
+    if(first) h = head;
+    out += "<tr><td>"+h+"</td><td>"+r+"</td></tr>";
+    first = false;
+  });
+  out += "</table>";
+  return out;
+}*/

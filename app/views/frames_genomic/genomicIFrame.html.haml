@@ -35,10 +35,10 @@
     %div.up_gfv_display{:id => "gfv_display"}
       %span
         %input{:id=>"pct_cb", :class=>"gfv_cb", :type=>"checkbox", :checked=>"1"} CODING TRANSCRIPTS
-      %span
-        %input{:id=>"nct_cb", :class=>"gfv_cb", :type=>"checkbox", :checked=>"1"} NONCODING TRANSCRIPTS
-      %span.show_gfv_display_variants
-        %span.fv-icon-cog{:title=>"Hide/Show tracks"}
+      %span{:style=>"padding-left:15px;"}
+        %input{:id=>"nct_cb", :class=>"gfv_cb", :type=>"checkbox" } NONCODING TRANSCRIPTS
+      %span.show_gfv_display_variants{:style=>"padding-left:15px;"}
+        %span{:class=>"fa fa-cog fa-lg"}
         VARIANTS
       %div.gfv_display_variants
         %span.gfv_display_variants_close
@@ -50,5 +50,7 @@
     %div#transcript_loading{:style=>'display:none;width:100%;height:100%;'}
       =image_tag("loading.gif",size:"100x100",:style=>"display:block;margin:auto;position:relative;top:40%;transform:translateY(-50%);")
 -else
+  :javascript
+    var __genomic_alignment = false
   %h2{:style=>"margin-right:8px;color:#606060;font-size:14px;margin-top:14px;text-align:center;font-family: Verdana, Arial, Helvetica, sans-serif;"}
   #{ @message }

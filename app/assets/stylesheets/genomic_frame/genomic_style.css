@@ -64,7 +64,8 @@ div.up_gfv_display {
 }
 
 div#svg_div{
-	max-height:310px;
+	max-height:90%;
+        height:100%;
 	overflow-y:auto;
 }
 
@@ -75,7 +76,7 @@ span.trancript_text {
 }
 
 div.gene_title {
-  margin-top:25px;
+  /*margin-top:25px;*/
   margin-bottom:5px;
   color: rgb(96,96,96);
 }

@@ -1,9 +1,12 @@
 = stylesheet_link_tag('webserver/home_style.css')
 .ws_main_div
-  .home_text
-    %h2 3DBIONOTES-WS IS NOT AVAILABLE
-    %h2 PLEASE TRY AGAIN LATER
-    %div{:style=>"display:none;"}
-      #{@error_message}
-  .home_image
-    =image_tag("home_image.png")
+  %h2 3DBIONOTES-WS IS NOT AVAILABLE
+  %h2 PLEASE TRY AGAIN LATER
+  %div{:style=>"display:none;"}
+    #{@error_message}
+:javascript
+  $j(document).ready(function(){
+    $j('.options').css('visibility','hidden');
+    $j('.who').css('visibility','hidden');
+    $j('.footer').css('visibility','hidden');
+  });
