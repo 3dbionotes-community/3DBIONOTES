@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_403(exception)
-    @error_message = exception.message+"\n"+exception.backtrace[0]
+    @error_message = exception.message+"\n"+exception.backtrace.join("\n")
     logger.warn( @error_message )
     respond_to do |format|
       format.html { render template: 'errors/global_exception', layout: "layouts/webserver", status: 500 }

@@ -4,6 +4,9 @@ class PostRequestController < ApplicationController
   BaseUrl = "http://3dbionotes.cnb.csic.es/"
   LocalPath =  "/home/joan/apps/bionotes/public/upload/"
 
+  include GlobalTools::FetchParserTools
+  include ProteinManager::BlastSearch
+
   def upload
     if !params[:structure_file].nil?
       rand_path = (0...20).map { ('a'..'z').to_a[rand(26)] }.join.upcase
@@ -28,9 +31,12 @@ class PostRequestController < ApplicationController
   end
 
   def fetch
+    if request.referer
+      logger.info("  HTTP Referer: #{request.referer}") 
+    end
     if !params[:url].nil?
       url = params[:url]
-      file_content, http_code, http_code_name = getUrl(url)
+      file_content, http_code, http_code_name = getUrl(url,verbose=true)
       if http_code.to_i > 399
         return render json: {"error"=>"URL "+url+" was not reachable", "http_error"=>http_code_name}, status: :ok
       elsif http_code.to_i == 0
@@ -61,6 +67,9 @@ class PostRequestController < ApplicationController
   end
 
   def browse
+    if request.referer
+      logger.info("  HTTP Referer: #{request.referer}") 
+    end
     rand_path = params[:id]
     recover_data = recover(rand_path)
     file_name =  recover_data['file_name']
@@ -70,7 +79,7 @@ class PostRequestController < ApplicationController
     @rand  = rand_path
     @file = file_name 
     @structure_file = '/home/joan/apps/bionotes/public/upload/'+rand_path+'/'+file_name
-    @http_structure_file = 'http://3dbionotes.cnb.csic.es/upload/'+rand_path+'/'+file_name
+    @http_structure_file = BaseUrl+'/upload/'+rand_path+'/'+file_name
     @mapping  =  JSON.parse(`structure_to_fasta_json #{@structure_file}`)
     @error = nil
     if @mapping.has_key? "error"
@@ -83,24 +92,8 @@ class PostRequestController < ApplicationController
         if  do_not_repeat.key?(seq)
           @choice[ch] = do_not_repeat[seq]
         else
-          #sprot
-          blast = `ssh jsegura@campins 'echo #{seq} | sudo nice -n -10 ~/app/BLAST/ncbi-blast-2.5.0+/bin/blastp -num_threads 32 -task blastp-fast -query - -db ~/databases/UNIPROT/blast/sprot/sprot -outfmt "7 sacc stitle evalue pident qstart qend" -max_target_seqs 20 -qcov_hsp_perc 80 | grep -v "#"'`
-          sprot, flag = parse_blast(blast,'sprot')
-          if sprot.length > 0
-            @choice[ch] = ( sprot.sort_by{ |k| -k['cov'].to_f } )
-          end
-          #trembl
-          if !flag
-            blast = `ssh jsegura@campins 'echo #{seq} | sudo nice -n -10 ~/app/BLAST/ncbi-blast-2.5.0+/bin/blastp -num_threads 32 -task blastp-fast -query - -db ~/databases/UNIPROT/blast/trembl/trembl -outfmt "7 sacc stitle evalue pident sstart send" -max_target_seqs 20 -qcov_hsp_perc 80 | grep -v "#"'`
-            trembl, null = parse_blast(blast,'trembl')
-            if trembl.length > 0
-              if @choice[ch].nil?
-                @choice[ch] = []
-              end
-              @choice[ch] = ( (@choice[ch]+trembl).sort_by{ |k| -k['cov'].to_f } ).first(20)
-            end
-          end
-          #store_result
+          blast_results = runBlast(seq, name=nil, thr=0)
+          @choice[ch] = ( blast_results.sort_by{ |k| -k['cov'].to_f } )
           if @choice[ch]!=nil && @choice[ch].length>0
             do_not_repeat[seq] = @choice[ch]
           end
@@ -109,62 +102,6 @@ class PostRequestController < ApplicationController
       @viewerType = "ngl"
     end
     render :layout => 'main', :template => 'main/upload'
-  end
-
-  def getUrl(url)
-    data = "error"
-    begin
-      res = Net::HTTP.get_response( URI.parse(url) )
-      data = res.body
-      code = res.code
-      code_name = res.class.name
-    rescue
-      puts "Error downloading data:\n#{$!}"
-      data = "#{$!}"
-    end
-    return data, code, code_name
-  end
-
-  def parse_blast(blast,db)
-    out = []
-    rows = blast.split("\n")
-    flag = false
-    rows.each do |r|
-      c = r.split("\t")
-      title = parse_title(c[1])
-      out.push({ 'acc'=>c[0], 'title'=>title, 'evalue'=>c[2], 'cov'=>c[3], 'start'=>c[4], 'end'=>c[5], 'db'=>db })
-      if c[3].to_f  > 80 && !flag
-        flag  = true
-      end
-    end
-    return out, flag
-  end
-
-  def parse_title(title)
-    tmp = title.split("=")
-    out = {}
-    long_name = tmp[0].chop.chop.chop
-    short_name = long_name
-    if long_name.length > 15
-      short_name = long_name[0..11]+" ..."
-    end
-    out['name'] = {'short'=>short_name,'long'=>long_name}
-    if tmp[0].include? " OS"
-      long_org = tmp[1].chop.chop.chop
-      short_org = long_org
-      if short_org.length > 15
-        short_org = long_org[0..11]+" ..."
-      end
-      out['org'] = {'short'=>short_org, 'long'=>long_org} 
-    else
-      out['org'] = "UNK"
-    end
-    if tmp[1].include? " GN"
-      out['gene'] = tmp[2].chop.chop.chop
-    else
-      out['gene'] = "UNK"
-    end
-    return out
   end
 
   def recover(rand)

@@ -1,30 +1,7 @@
 class FramesGenomicController < ApplicationController
 
   BaseUrl = "http://3dbionotes.cnb.csic.es/"
-
-  helper_method :getUrl
-  helper FramesHelper
-  $verbose = 0 
-  def getUrl(url)
-    begin
-      if $verbose ==1 || request.port==3000
-        puts "\n======================================\n"
-        puts url
-        puts "\n======================================\n"
-      end
-      data = Net::HTTP.get_response(URI.parse(url)).body
-      if $verbose == 1 || request.port==3000
-        puts "\nDONE!!!!\n"
-      end
-    rescue
-      puts "Error downloading data:\n#{$!}"
-    end
-    if $verbose == 1
-        puts data+"\n"
-    end
-    return data
-  end
-
+  include GlobalTools::FetchParserTools
   def genomicIFrame
     uniprot_acc = params[:uniprot_acc]
     @acc = uniprot_acc
@@ -58,5 +35,6 @@ class FramesGenomicController < ApplicationController
         @message = "ALIGNMENT BETWEEN UNIPROT AND ENSEMBL NOT FOUND"
       end
     end
+
   end
 end

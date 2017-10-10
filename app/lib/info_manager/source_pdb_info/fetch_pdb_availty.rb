@@ -8,14 +8,14 @@ module InfoManager
       def queryPDBavailty(pdb)
         pdbInfo = {}
         if pdb =~ /^\d{1}\w{3}$/ and pdb !~ /^\d{4}$/
-          url = URI.parse("http://www.ebi.ac.uk/pdbe/entry-files/download/"+params[:name].downcase+".cif")
+          url = URI.parse("https://www.ebi.ac.uk/pdbe/entry-files/download/"+params[:name].downcase+".cif")
           begin
             req = Net::HTTP.new(url.host, url.port)
+            req.use_ssl = true
             res = req.request_head(url.path)
           rescue
             pdbInfo = {"id"=>pdb,"available"=>false, "error"=>"HTTP ERROR"}
-            myStatus = :not_found
-            return render json: pdbInfo, status: myStatus
+            return pdbInfo
           end
           if res.code == "200"
             pdbInfo = {"id"=>pdb,"available"=>true}

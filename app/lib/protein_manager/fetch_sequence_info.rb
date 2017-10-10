@@ -1,7 +1,7 @@
 module ProteinManager
   module FetchSequenceInfo
 
-    UniprotURL = "http://www.uniprot.org/uniprot/"
+    include InfoManager::SourceUniprotInfo::UniprotSites
 
     def fetchUniprotSequence(uniprotAc)
       begin
@@ -60,7 +60,7 @@ module ProteinManager
       return render json: returnValue, status: :ok
     end
 
-    def fetchUniprotMultipleSequences(uniprotAc)
+    def fetchUniprotMultipleSequences(uniprotAc,fasta_obj_flag=nil,dict_flag=nil)
       returnValue = {}
       begin
         if uniprotAc.split(",").length > 1
@@ -74,6 +74,9 @@ module ProteinManager
       fasta = nil
       if data.code != "404"
         fasta = Bio::Alignment::MultiFastaFormat.new(data.body)
+        if !fasta_obj_flag.nil?
+          return fasta
+        end
       end
       if !fasta.nil? && !fasta.entries.nil?
         fasta.entries.each do |entry|
@@ -90,7 +93,11 @@ module ProteinManager
               organism_name = organism_name.split(/ PE=/,2)[0]
             end
           end
-          returnValue[entry.accession] = [entry.seq.length,entry_definition,gene_symbol,organism_name]
+          if dict_flag.nil?
+            returnValue[entry.accession] = [entry.seq.length,entry_definition,gene_symbol,organism_name]
+          else
+            returnValue[ entry.accession ] = {'sequence'=>entry.seq,'definition'=>entry_definition,'organism'=>organism_name, 'gene_symbol'=>gene_symbol}
+          end
         end
       end
       return returnValue

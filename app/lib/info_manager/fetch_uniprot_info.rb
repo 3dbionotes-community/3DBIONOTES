@@ -13,5 +13,11 @@ module InfoManager
       return toReturn
     end
 
+    include SourceUniprotInfo::FetchUniprotAvailty
+    def fetchUNIPROTavailty(acc)
+      toReturn = queryUNIPROTavailty(acc)
+      return toReturn
+    end
+
   end
 end

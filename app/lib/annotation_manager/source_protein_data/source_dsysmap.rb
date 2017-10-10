@@ -56,22 +56,18 @@ module AnnotationManager
       end
 
       def sourceDsysmapFromUniprot(uniprotAc)
-        source = "dsysmap"
-        url = DsysmapURL + uniprotAc
-        rawData = getUrlWithDigest(url)
-        digest = rawData["checksum"]
-        dbData = Annotation.find_by(proteinId: uniprotAc,source: source)
-        if !dbData.nil? and (dbData.digest == digest)
-          info = JSON.parse(dbData.data)
-        else
-          puts( rawData["data"] )
-          hashData = getXml(rawData["data"])
-          puts(hashData)
+        dbData = Dsysmapentry.find_by(proteinId: uniprotAc)
+        info = []
+        if dbData.nil?
+          url = DsysmapURL + uniprotAc
+          rawData = getUrl(url)
+          hashData = getXml(rawData)
           info = fetchDsysmapAnnots(hashData)
-          if !dbData.nil?
-            dbData.destroy
+          if info.length  > 0
+            Dsysmapentry.create(proteinId: uniprotAc, data: info.to_json)
           end
-          Annotation.create(proteinId: uniprotAc, source: source, digest: digest, data: info.to_json)
+        else
+          info = JSON.parse(dbData.data)
         end
         return info
       end

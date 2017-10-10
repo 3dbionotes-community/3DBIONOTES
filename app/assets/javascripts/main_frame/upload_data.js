@@ -189,6 +189,7 @@ function parse_track(track){
   }else{
     track_name = "Uploaded data";
   }
+  track_name = track_name.replace(" ","_").toUpperCase();
   if(track.visualization_type){
     visualization_type = track.visualization_type;
   }else{

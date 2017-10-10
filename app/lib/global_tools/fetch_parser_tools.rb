@@ -15,6 +15,21 @@ module GlobalTools
       return {"data"=>data,"checksum"=>digest}
     end
 
+    def getFileWithDigest(file)
+      data = nil
+      digest = nil
+      if !File.exist? File.expand_path file
+        return {"data"=>data,"checksum"=>digest}
+      end
+      begin
+        data = File.read(file) 
+        digest = generateDigest(data)
+      rescue
+        puts "Error in cat #{file} data:\n#{$!}"
+      end
+      return {"data"=>data,"checksum"=>digest}
+    end
+
     def getXml(data)
       hash = {}
       begin
@@ -25,28 +40,68 @@ module GlobalTools
       return hash
     end
 
-    def getUrl(url)
-      data = ""
-      begin
-        data = Net::HTTP.get_response(URI.parse(url)).body
-      rescue
-        puts "Error downloading data:\n#{$!} <<<"
+    def getUrl(url,verbose=nil)
+      if verbose.nil?
+        data = ""
+        begin
+          data = Net::HTTP.get_response(URI.parse(url)).body
+        rescue
+          puts "Error downloading data:\n#{$!} <<<"
+        end
+        return data
+      else
+        data = "error"
+        begin
+          res = Net::HTTP.get_response( URI.parse(url) )
+          data = res.body
+          code = res.code
+          code_name = res.class.name
+        rescue
+          puts "Error downloading data:\n#{$!}"
+          data = "#{$!}"
+        end
+        return data, code, code_name
       end
-      return data
     end  
 
-    def makeRequest(url,input)
+    def unzipData(data)
+      begin
+        gz = Zlib::GzipReader.new(StringIO.new(data))
+        unzipped = gz.read
+      rescue
+        puts "Error downloading data:\n#{$!}"
+      end
+      return unzipped
+    end
+
+    def makeRequest(url,input,json_flag=nil)
       #GET
       if input.class == String
-        begin
-          rawData = Net::HTTP.get_response(URI.parse(url+input))
-          if rawData.code == "404"
-            data = nil
-          else
-            data = rawData.body
+        if json_flag.nil?
+          begin
+            rawData = Net::HTTP.get_response(URI.parse(url+input))
+            if rawData.code == "404"
+              data = nil
+            else
+              data = rawData.body
+            end
+          rescue
+            puts "Error: #{$!}"
           end
-        rescue
-          puts "Error: #{$!}"
+        else
+          begin
+            _url = URI.parse(url)
+            http = Net::HTTP.new(_url.host, _url.port)
+            request = Net::HTTP::Get.new(input, {'Content-Type' => 'application/json'})         
+            response = http.request(request)
+          rescue
+            puts "Error: #{$!}"
+          end
+          if response.code != "200"
+            data= nil
+          else
+            data = JSON.parse(response.body)
+          end
         end
       #POST
       else

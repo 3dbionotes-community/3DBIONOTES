@@ -83,4 +83,11 @@ class InfoController < ApplicationController
     return render json: toReturn, status: myStatus
   end
 
+  def isUniProtavailable
+    uniprotAc = params[:name]
+    toReturn = fetchUNIPROTavailty( uniprotAc )
+    myStatus = :ok
+    return render json: toReturn, status: myStatus
+  end
+
 end

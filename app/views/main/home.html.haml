@@ -2,6 +2,7 @@
   -if @badName
     :javascript
       $j(document).ready(function(){
+        clear_wm();
         swal({title:'Error',text:'Unknown #{@identifierType} identifier',type:'warning'},function(){
           window.location.replace("/ws/database");
         });
@@ -9,6 +10,7 @@
   -elsif @notExists
     :javascript
       $j(document).ready(function(){
+        clear_wm();
         swal({title:'Error',text:'#{@identifierType} entry is not available',type:'warning'},function(){
           window.location.replace("/ws/database");
         });
@@ -22,6 +24,7 @@
 -elsif not @isAvailable 
   :javascript
     $j(document).ready(function(){
+        clear_wm();
         swal({title:'Error',text:'#{@identifierType} entry is not available',type:'warning'},function(){
           window.location.replace("/ws/database");
         });

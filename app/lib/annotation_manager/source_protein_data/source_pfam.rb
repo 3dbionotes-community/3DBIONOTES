@@ -39,23 +39,31 @@ module AnnotationManager
       end
 
       def sourcePfamFromUniprot(uniprotAc)
-        url = PfamURL+"protein/"+uniprotAc+"?output=xml"
-        begin
-          data = Net::HTTP.get_response(URI.parse(url)).body
-        rescue
-          puts "Error downloading data:\n#{$!}"
-        end   
-        hash = Nori.new(:parser=> :nokogiri, :advanced_typecasting => false).parse(data)
-        data = []
-        if  !hash.nil? && !hash["pfam"].nil? && !hash["pfam"]["entry"].nil? && hash["pfam"]["entry"].key?("matches") && hash["pfam"]["entry"]["matches"]["match"].class == Hash
-          data = [ hash["pfam"]["entry"]["matches"]["match"] ]
-        elsif !hash.nil? && !hash["pfam"].nil? && !hash["pfam"]["entry"].nil? && hash["pfam"]["entry"].key?("matches")
-          data  = hash["pfam"]["entry"]["matches"]["match"]
-        end
-        out = []
-        data.each do |i|
-          info = getPfamInfo( i['@accession'] )
-          out.push( {'start'=>i['location']['@start'],'end'=>i['location']['@end'],'acc'=>i['@accession'],'id'=>i['@id'], 'info'=>info} )
+        out = Pfamentry.find_by(proteinId: uniprotAc)
+        if out.nil?
+          url = PfamURL+"protein/"+uniprotAc+"?output=xml"
+          begin
+            data = Net::HTTP.get_response(URI.parse(url)).body
+          rescue
+            puts "Error downloading data:\n#{$!}"
+          end   
+          hash = Nori.new(:parser=> :nokogiri, :advanced_typecasting => false).parse(data)
+          data = []
+          if  !hash.nil? && !hash["pfam"].nil? && !hash["pfam"]["entry"].nil? && hash["pfam"]["entry"].key?("matches") && hash["pfam"]["entry"]["matches"]["match"].class == Hash
+            data = [ hash["pfam"]["entry"]["matches"]["match"] ]
+          elsif !hash.nil? && !hash["pfam"].nil? && !hash["pfam"]["entry"].nil? && hash["pfam"]["entry"].key?("matches")
+            data  = hash["pfam"]["entry"]["matches"]["match"]
+          end
+          out = []
+          data.each do |i|
+            info = getPfamInfo( i['@accession'] )
+            out.push( {'start'=>i['location']['@start'],'end'=>i['location']['@end'],'acc'=>i['@accession'],'id'=>i['@id'], 'info'=>info} )
+          end
+          if out.length > 0
+            Pfamentry.create(proteinId: uniprotAc, data: out.to_json)
+          end
+        else
+          out = out.data
         end
         return out 
       end

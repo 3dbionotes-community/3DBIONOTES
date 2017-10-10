@@ -1,17 +1,7 @@
 class FramesJsmolController < ApplicationController
 
   BaseUrl = "http://3dbionotes.cnb.csic.es/"
-
-  helper_method :getUrl
-
-  def getUrl(url)
-    begin
-      data = Net::HTTP.get_response(URI.parse(url)).body
-    rescue
-      puts "Error downloading data:\n#{$!}"
-    end
-    return data
-  end
+  include GlobalTools::FetchParserTools
 
   def jsmolIFrame
     pdbListRaw = params[:pdbs]

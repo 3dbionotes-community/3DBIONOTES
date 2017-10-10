@@ -112,6 +112,7 @@ def processPTMFile(stringData,eltipo)
 			tmpHash["type"]="Ptm/processing"
 			tmpHash["subtype"]=eltipo
 			tmpHash["description"] = ";;Domains: #{v2["domain"].join(", ")}"
+                        tmpHash["description"].gsub! "\"",""
 			tmpHash["link"] = v2["siteGroupId"]
 		  dataReturn[k].push(tmpHash)
 		end
@@ -184,6 +185,7 @@ def processDiseaseFile( stringData )
 				tmpHash["type"]="Ptm/processing"
 				tmpHash["subtype"]="Diseases-associated site"
 				tmpHash["description"] = ";;Disease: #{v2["disease"].join(". ")};;Alteration: #{v2["alteration"].join(", ")};;Notes: #{v2["notes"].join(", ")}"
+                                tmpHash["description"].gsub! "\"",""
 				tmpHash["link"] = v2["siteGroupId"]
 				dataReturn[k].push(tmpHash)
 			end
@@ -268,6 +270,7 @@ def processRegulatoryFile(stringData)
 			tmpHash["type"]="Ptm/processing"
 			tmpHash["subtype"]="Regulatory site"
 			tmpHash["description"] = ";;Functions: #{v2["functions"].join(". ")};;Processes: #{v2["processes"].join(", ")};;Protein Interactions: #{v2["protInteractions"].join(", ")};;Other Interactions: #{v2["otherInteractions"].join(", ")}"
+                        tmpHash["description"].gsub! "\"",""
 			tmpHash["link"] = v2["siteGroupId"]
 			tmpHash["evidence"]=v2["evidences"]
 			dataReturn[k].push(tmpHash)
@@ -336,6 +339,7 @@ def processKinasesFile(stringData)
 			tmpHash["type"]="Ptm/processing"
 			tmpHash["subtype"]="Sustrate-Kinase interaction"
 			tmpHash["description"] = ";;Kinases: #{v2["kinase"].join(", ")};;Domain: #{v2["domain"].join(", ")}"
+                        tmpHash["description"].gsub! "\"",""
 			tmpHash["link"] = v2["siteGroupId"]
 			dataReturn[k].push(tmpHash)
 		end
