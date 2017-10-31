@@ -30,8 +30,10 @@ class FramesJsmolController < ApplicationController
       @maxSizeVol = data2
     end
     if !pdbListRaw.nil?
-      if pdbListRaw!="null"
+      if pdbListRaw!="null" and  pdbListRaw.length > 0
         @pdbList = JSON.parse(pdbListRaw)
+      else
+        @pdbList = []
       end
     end
   end

@@ -20,7 +20,7 @@ module ProteinManager
       return proteins
     end
 
-    def parse_blast(blast, db, name=nil, thr=thr)
+    def parse_blast(blast, db, name=nil, thr=80)
       out = []
       rows = blast.split("\n")
       flag = false

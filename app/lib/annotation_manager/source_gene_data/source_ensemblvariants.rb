@@ -2,7 +2,8 @@ module AnnotationManager
   module SourceGeneData
     module SourceEnsemblvariants 
 
-      EnsemblURL = "http://rest.ensembl.org/"
+      include GlobalTools::GlobalSites 
+      EnsemblURL = GS_EnsemblServer#"http://rest.ensembl.org/"
 
       def sourceENSEMBLvariants(ensembl_id)
         out = Ensemblvariantentry.find_by(geneId: ensembl_id)

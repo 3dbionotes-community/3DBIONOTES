@@ -2,7 +2,8 @@ module AnnotationManager
   module SourceProteinData
     module SourceInterpro 
 
-      InterproURL = "http://www.ebi.ac.uk/interpro/protein/"
+      include GlobalTools::GlobalSites
+      InterproURL = GS_InterproURL#"http://www.ebi.ac.uk/interpro/protein/"
 
       def sourceInterproFromUniprot(uniprotAc)
         out = InterproDatum.find_by(proteinId: uniprotAc)

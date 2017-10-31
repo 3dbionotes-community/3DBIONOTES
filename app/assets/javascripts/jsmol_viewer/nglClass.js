@@ -5,7 +5,12 @@ function __init_local(i,v_c,v_t,local_flag){
 	if(local_flag)__name=i.name;
         self.model = 0;
 	self.Structures[ __name ] = { obj:i, representations:{'selection':{},'keep_selection':{}} };
-	self.Structures[ __name ]['representations']['hetero'] = i.addRepresentation("ball+stick",{sele:"/0 and hetero and not water",visible:true});
+        if(Object.keys(top.no_aa_ch).length > 0){
+          var no_aa = ":"+Object.keys(top.no_aa_ch).join(" or :")
+          self.Structures[ __name ]['representations']['hetero'] = i.addRepresentation("ball+stick",{sele:"/0 and ( hetero or ("+no_aa+")  ) and not water and not (dna or rna) and ",visible:true});
+        }else{
+	  self.Structures[ __name ]['representations']['hetero'] = i.addRepresentation("ball+stick",{sele:"/0 and hetero and not water",visible:true});
+        }
 	self.Structures[ __name ]['representations']['nucleic'] = i.addRepresentation("trace",{sele:"/0 and dna or rna",visible:true,color:"orange"});
         self.Structures[ __name ]['representations']['cartoon']  = i.addRepresentation("cartoon",{visible:v_c,color:"#B9B9B9",sele:"/0 and protein"});
         self.Structures[ __name ]['representations']['trace'] = i.addRepresentation("cartoon",{visible:v_t,color:"#F3F3F3",sele:"/0 and protein", opacity:0.2});

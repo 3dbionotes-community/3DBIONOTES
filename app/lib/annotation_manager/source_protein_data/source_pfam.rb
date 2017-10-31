@@ -2,7 +2,8 @@ module AnnotationManager
   module SourceProteinData
     module SourcePfam 
 
-      PfamURL = "http://pfam.xfam.org/"
+      include GlobalTools::GlobalSites
+      PfamURL = GS_PfamURL#"http://pfam.xfam.org/"
 
       def getPfamInfo(pfam_acc)
         url = PfamURL+"family/"+pfam_acc+"?output=xml"

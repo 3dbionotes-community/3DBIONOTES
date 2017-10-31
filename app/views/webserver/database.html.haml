@@ -13,15 +13,6 @@
       = hidden_field_tag(:viewer_type,@viewerType)
       %br
       %br
-      %div{:style=>"color:#666666;vertical-align:middle;font-size:14px;"}
-        = check_box_tag(:devel_check,1,false,{:style=>"position:relative;top:4px;"})
-        Include genomic annotations (under development)
-        :javascript
-          $j("#devel_check").attr('checked',false);
-          $j("#devel_check").change(function(){
-            document.location.href="/devel#query";
-          });
-      %br
       = button_tag("Submit")
       %br
       %br

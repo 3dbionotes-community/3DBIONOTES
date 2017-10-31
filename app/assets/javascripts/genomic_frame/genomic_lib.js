@@ -32,7 +32,7 @@ function build_genomic_display(e_name){
                 brushActive: true, //zoom
                 toolbar:true, //current zoom & mouse position
                 bubbleHelp:true, 
-                zoomMax:1, //define the maximum range of the zoom
+                zoomMax:10, //define the maximum range of the zoom
                 index_shift:(parseInt(__genomic_alignment['gene']['start'])-1)
         });
 
@@ -78,6 +78,7 @@ function build_genomic_display(e_name){
 		triggerGeneCoordinates( d.detail['start'],d.detail['end'] );
 	});
 	svg_div();
+        check_global_selection();
 }
 
 function add_transcripts(ft){
@@ -196,18 +197,23 @@ function add_variations (ft,start_flag){
                 if(!i['alleles'])i['alleles']=["Unknown"];
                 if(!i['consequence_type'])return;
 
-		var __description = '<b>Source:</b> '+i['source']+'/'+i['id']+'<br/><b>Strand:</b> '+__strand[i['strand']]+'<br/><b>Allelles:</b> '+i['alleles'].join(" / ").replace(/_/g," ")+"<br/><b>Clinical Significnace:</b> "+i['clinical_significance'].join(" / ")+"<br/><b>Consequence type:</b> "+i['consequence_type'].replace(/_/g," ");
 
 		//var __consequence = i['consequence_type'].replace("3_prime_","").replace("5_prime_","").replace("_variant","");
                 var __consequence;
+                var __clinical_significance;
                 if( i['clinical_significance'].join(";").toLowerCase().includes("pathogenic")){
                   __consequence = "Pathogenic";
+                  __clinical_significance = "Likely Pathogenic";
                 }else if( i['clinical_significance'].join(";").toLowerCase().includes("benign") ){
                   __consequence = "Benign";
+                  __clinical_significance = "Likely Benign";
                 }else{
                   __consequence = "Unknown";
                   return;
                 }
+
+
+		var __description = '<b>Source:</b> <a style="color:yellow;" href="http://www.ensembl.org/Homo_sapiens/Variation/Explore?v='+i['id']+';vdb=variation;" target="_blank">'+i['source']+'/'+i['id']+'</a><br/><b>Strand:</b> '+__strand[i['strand']]+'<br/><b>Allelles:</b> '+i['alleles'].join(" / ").replace(/_/g," ")+"<br/><b>Clinical Significnace:</b> "+__clinical_significance+"<br/><b>Consequence type:</b> "+i['consequence_type'].replace(/_/g," ");
 
 		if( !(__consequence in __variations) ){
 			__variations[ __consequence ] = [];

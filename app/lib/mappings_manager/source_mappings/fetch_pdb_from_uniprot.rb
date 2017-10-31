@@ -25,6 +25,7 @@ module MappingsManager
         end
         if pdbFromUniprot == {}
           is_available = fetchUNIPROTavailty(uniprotAc)
+          puts(is_available)
           if is_available.key?('available') && is_available['available'] == true
             pdbFromUniprot={ uniprotAc=>{} }
           end

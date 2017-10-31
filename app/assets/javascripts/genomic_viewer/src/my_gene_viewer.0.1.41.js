@@ -9972,9 +9972,11 @@ module.exports = events;
     });
   }
   d3.svg.brush = function() {
+    var __button = null;
     var event = d3_eventDispatch(brush, "brushstart", "brush", "brushend"), x = null, y = null, xExtent = [ 0, 0 ], yExtent = [ 0, 0 ], xExtentDomain, yExtentDomain, xClamp = true, yClamp = true, resizes = d3_svg_brushResizes[0];
     function brush(g) {
       g.each(function() {
+
         var g = d3.select(this).style("pointer-events", "all").style("-webkit-tap-highlight-color", "rgba(0,0,0,0)").on("mousedown.brush", brushstart).on("touchstart.brush", brushstart);
         var background = g.selectAll(".background").data([ 0 ]);
         background.enter().append("rect").attr("class", "background").style("visibility", "hidden").style("cursor", "crosshair");
@@ -10116,6 +10118,9 @@ module.exports = events;
         }
       }
       function brushmove() {
+        __button = d3.event.buttons;
+        if(d3.event.buttons == 2) return;
+        
         var point = d3.mouse(target), moved = false;
         if (offset) {
           point[0] += offset[0];
@@ -10170,7 +10175,7 @@ module.exports = events;
         }
       }
       function brushend() {
-        brushmove();
+        if(__button == 1)brushmove();
         g.style("pointer-events", "all").selectAll(".resize").style("display", brush.empty() ? "none" : null);
         d3.select("body").style("cursor", null);
         w.on("mousemove.brush", null).on("mouseup.brush", null).on("touchmove.brush", null).on("touchend.brush", null).on("keydown.brush", null).on("keyup.brush", null);
@@ -21106,6 +21111,7 @@ var FeatureViewer = (function () {
 
         d3.helper.tooltip = function (object) {
             var tooltipDiv;
+            var cp_tooltipDiv;
             var selectedRect;
             var bodyNode = d3.select(div).node();
 
@@ -21113,6 +21119,7 @@ var FeatureViewer = (function () {
 
                 selection.on('mouseover.tooltip', function (pD, pI) {
                     // Clean up lost tooltips
+                    d3.select('body').selectAll('div.perma_tooltipDiv').remove();
                     d3.select('body').selectAll('div.tooltip').remove();
                     // Append tooltip
                     var absoluteMousePos = d3.mouse(bodyNode);
@@ -21133,7 +21140,7 @@ var FeatureViewer = (function () {
                         top: (absoluteMousePos[1] - 55) + 'px',
                         'background-color': 'rgba(0, 0, 0, 0.8)',
                         width: 'auto',
-                        'max-width': '300px',//'max-width': '170px',
+                        'max-width': '400px',//'max-width': '170px',
                         height: 'auto',
                         'max-height': '200px',//'max-height': '43px',
                         padding: '5px',
@@ -21169,6 +21176,7 @@ var FeatureViewer = (function () {
                     }
 
                     tooltipDiv.html(first_line + second_line);
+                    cp_tooltipDiv = {content:first_line + second_line, top:absoluteMousePos[1], left:absoluteMousePos[0]};
                     if (rightside) {
                         tooltipDiv.style({
                             left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px'
@@ -21176,7 +21184,6 @@ var FeatureViewer = (function () {
                     }
                 })
                     .on('mousemove.tooltip', function (pD, pI) {
-                    
                         if (object.type === "line") {
                             var absoluteMousePos = d3.mouse(bodyNode);
                             var elemHover = updateLineTooltip(absoluteMousePos[0],pD);
@@ -21216,6 +21223,12 @@ var FeatureViewer = (function () {
                         tooltipDiv.remove();
                     })
                     .on('click', function (pD, pI) {
+                        d3.selectAll('div.perma_tooltipDiv').remove();
+                        d3.select(div).append('div')
+                          .attr('class','perma_tooltipDiv')
+                          .style({top:(cp_tooltipDiv.top-15)+'px',left:(cp_tooltipDiv.left-15)+'px'})
+                          .html( cp_tooltipDiv.content );
+
                         var xTemp;
                         var yTemp;
                         var xRect;
@@ -21225,8 +21238,9 @@ var FeatureViewer = (function () {
                         if(this.nodeName === "text") {
                             var rect = "#"+this.previousSibling.id;
                             if(rect.nodeName !== "#") colorSelectedFeat(rect, object);
+                        }else{ 
+                          //colorSelectedFeat(this, object);
                         }
-                        else colorSelectedFeat(this, object);
 
                         var svgWidth = SVGOptions.brushActive ? d3.select(".background").attr("width") : svgContainer.node().getBBox().width;
                         d3.select('body').selectAll('div.selectedRect').remove();
@@ -22210,7 +22224,6 @@ var FeatureViewer = (function () {
         }
 
         function brushend() {
-            //console.log( self.highlighted );
             var tmp_highlighted = null;
             if(self.highlighted){
                 tmp_highlighted = self.highlighted
@@ -22287,7 +22300,7 @@ var FeatureViewer = (function () {
                 d3.select(div).selectAll(".brush").call(brush.clear());
                 //resetAll();
             }
-	    if(tmp_highlighted) self.__highlight( tmp_highlighted[0] , tmp_highlighted[1] );
+            self.__highlight( tmp_highlighted[0] , tmp_highlighted[1] );
         }
 
         self.__clear = function() {
@@ -22643,6 +22656,12 @@ var FeatureViewer = (function () {
                 .on("contextmenu", function (d, i) {
                     d3.event.preventDefault();
                     resetAll();
+                    if(self.highlighted){
+                        tmp_highlighted = self.highlighted
+                        setTimeout(function(){  
+                          self.__highlight( tmp_highlighted[0] , tmp_highlighted[1] );
+                        }, 300);
+                    }
                     // react on right-clicking
                 });
             svgElement = el.getElementsByTagName("svg")[0];

@@ -8,7 +8,7 @@ module InfoManager
       def queryUNIPROTavailty(acc)
         accInfo = {"id"=>acc,"available"=>false}
         begin
-          url = URI.parse(UniprotURL+uniprotAc+".fasta")
+          url = URI.parse(UniprotURL+acc+".fasta")
           req = Net::HTTP.new(url.host, url.port)
           res = req.request_head(url.path)
           if res.code == "200"

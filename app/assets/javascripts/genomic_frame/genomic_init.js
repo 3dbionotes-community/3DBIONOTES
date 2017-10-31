@@ -10,6 +10,8 @@ $j(window).load(function(){
     if(document.getElementById('genomic_div') ) document.getElementById('genomic_div').style.display = "block";
   });
 
+
+  add_top_window_listener();
   build_genomic_display('#gfv');
 
   $j('.gfv_cb').change(function(){
@@ -25,5 +27,4 @@ $j(window).load(function(){
     $j('.gfv_display_variants').css('display','none');
   });
 
-  add_top_window_listener();
 });

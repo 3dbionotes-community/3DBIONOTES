@@ -2,8 +2,9 @@ module AlignmentsEnsemblManager
   module SourceEnsembl
     module  EnsemblSites
 
-      EnsemblServer='http://rest.ensembl.org'
-      UniServer = 'http://www.uniprot.org'
+      include GlobalTools::GlobalSites
+      EnsemblServer = GS_EnsemblServer#'http://rest.ensembl.org'
+      UniServer = GS_UniServer#'http://www.uniprot.org'
 
     end 
   end

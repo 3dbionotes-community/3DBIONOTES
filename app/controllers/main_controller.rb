@@ -99,6 +99,7 @@ class MainController < ApplicationController
       @interface=recover_data['interface']
       @asa=recover_data['asa']
       @n_models=recover_data['n_models']
+      @no_aa_ch=recover_data['no_aa_ch']
       @noAlignments = false
     else
       rand = params[:rand]
@@ -112,6 +113,7 @@ class MainController < ApplicationController
       alignment[file] = {}
       @optionsArray = []
       @noAlignments = true
+      @no_aa_ch = mapping['no_aa_ch']
       mapping['sequences'].each do |ch,seq|
         if ch==nil or seq==nil or params[ch] == nil
           next
@@ -151,7 +153,8 @@ class MainController < ApplicationController
                   'pdbs'=>@pdbs, 
                   'interface'=>@interface,
                   'asa'=>@asa,
-                  'n_models'=>@n_models
+                  'n_models'=>@n_models,
+                  'no_aa_ch'=>@no_aa_ch
                  }, rand)
     end
   end

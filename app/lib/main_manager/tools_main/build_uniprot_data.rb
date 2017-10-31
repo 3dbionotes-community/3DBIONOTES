@@ -8,7 +8,7 @@ module MainManager
       def _fetch_uniprot_data(identifierName)
         @badName = false
         options = Hash.new
-        url = BaseUrl+"api/mappings/Uniprot/PDB/"+identifierName
+        url = BaseUrl+"/api/mappings/Uniprot/PDB/"+identifierName
         jsonData = getUrl(url)
         mappingData = JSON.parse(jsonData)
         url = BaseUrl+"/api/lengths/UniprotMulti/"+identifierName
@@ -35,7 +35,7 @@ module MainManager
               ali["uniprotTitle"] = uniLength[identifierName][1]
               ali["organism"] = uniLength[identifierName][3]
               ali["gene_symbol"] = uniLength[identifierName][2]
-              @optionsArray.push(["No atructural data is available, displaying Uniprot annotations",ali.to_json])
+              @optionsArray.push(["No structural data is available, displaying Uniprot annotations",ali.to_json])
               @changeSelector = true
             else
               options.each do |pdb,info|

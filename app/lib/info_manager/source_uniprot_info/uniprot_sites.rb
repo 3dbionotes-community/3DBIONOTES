@@ -1,7 +1,11 @@
 module InfoManager
   module SourceUniprotInfo
     module UniprotSites
-      UniprotURL = "http://www.uniprot.org/uniprot/"
+
+      include GlobalTools::GlobalSites
+
+      UniprotURL = GS_UniServer+"uniprot/"#"http://www.uniprot.org/uniprot/"
+
     end
   end
 end

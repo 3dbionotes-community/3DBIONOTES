@@ -2,7 +2,8 @@ module AnnotationManager
   module SourceProteinData
     module SourceSmart 
 
-      SmartURL = "http://smart.embl.de/smart/batch.pl?TEXTONLY=1&INCLUDE_SIGNALP=1&IDS="
+      include GlobalTools::GlobalSites
+      SmartURL = GS_SmartURL#"http://smart.embl.de/smart/batch.pl?TEXTONLY=1&INCLUDE_SIGNALP=1&IDS="
 
       def sourceSmartFromUniprot(uniprotAc)
         out = Smartentry.find_by(proteinId: uniprotAc)

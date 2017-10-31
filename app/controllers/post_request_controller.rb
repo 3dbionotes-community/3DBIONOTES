@@ -80,7 +80,7 @@ class PostRequestController < ApplicationController
     @file = file_name 
     @structure_file = '/home/joan/apps/bionotes/public/upload/'+rand_path+'/'+file_name
     @http_structure_file = BaseUrl+'/upload/'+rand_path+'/'+file_name
-    @mapping  =  JSON.parse(`structure_to_fasta_json #{@structure_file}`)
+    @mapping = JSON.parse(`structure_to_fasta_json #{@structure_file}`)
     @error = nil
     if @mapping.has_key? "error"
       @error = @mapping["error"]
