@@ -1,45 +1,21 @@
-var IRD = false;
-var ASA = false;
-
 function update_interacting_residues(n){
-  var n_model = n;
-  var chain = JSON.parse( getParameterByName('alignment') )['chain'];
-  var j = 1;
   if(imported_flag || !top.binding_residues) return;
-  for(var i = 0;i<top.binding_residues[0];i++){
-    IRD[i].begin=-100-1*i;
-    IRD[i].end=-100-1*i;
-  }
-  var chain = JSON.parse(  getParameterByName('alignment') )['chain'];
-  var n  =  0;
-  top.binding_residues[ n_model ][ chain ].forEach(function(i){
-    IRD[n].begin=i.begin;
-    IRD[n].end=i.end;
-    n++;
+  var bs = add_binding_residues(n);
+  $j.map(feature_viewer.data, function(n,i){
+    if(n[0]==bs[0])feature_viewer.data[i]=bs;
   });
+  var category = $j.grep(feature_viewer.categories, function(n,i){if(n.name=="INTERACTING_RESIDUES")return n})[0];
+  category.categoryViewer.updateData( bs[1] );
 }
 
 function update_asa_residues(n){
-  var n_model = n;
-  var chain = JSON.parse(  getParameterByName('alignment') )['chain'];
-  var j = 1;
   if(imported_flag || !top.asa_residues) return;
-  for(var i = 0;i<__alignment.uniprotLength+1;i++){
-    ASA[i].variants = [];
-  }
-  var chain = JSON.parse(  getParameterByName('alignment') )['chain'];
-  var n = 1;
-  top.asa_residues[ n_model-1 ][ chain ].forEach(function(i){
-    var r = parseInt(i[1]*255);
-    if(r>255)r=255;
-    var b = 255-r;
-    if(b<0)b = 0;
-    var color = 'rgb('+r+',0,'+b+')';
-    console.log( i[1]+" "+r+" "+rasa);
-    var rasa = parseFloat(i[1]*100).toFixed(2);
-    ASA[ parseInt(i[0]) ].variants = [{ color:color, alternativeSequence:'', type:'measure', begin: i[0], end: i[0], score:i[1], internalId:'asa_'+n, description:'<b style=\"color:grey;\">Relative accessible surface area</b><br/>Residue accesibility '+rasa+'%' }];
-    n++;
+  var asa = add_asa_residues(n);
+  $j.map(feature_viewer.data, function(n,i){
+    if(n[0]==asa[0])feature_viewer.data[i]=asa;
   });
+  var category = $j.grep(feature_viewer.categories, function(n,i){if(n.name=="RESIDUE_ASA")return n})[0];
+  category.repaint(asa[1]);
 }
 
 function build_ProtVista(){

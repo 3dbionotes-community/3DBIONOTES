@@ -13,6 +13,7 @@
   %div{:id => "snippetDiv"}
     :javascript
       var allURL = #{@allURL};
+      var asyncURL  = #{@asyncURL};
       var __external_data = {};
       var __accession = '#{@uniprotACC}';
       var __alignment =  #{@alignment.to_json};

@@ -18,17 +18,20 @@ class FramesAnnotationsController < ApplicationController
         @allURL.push(["phosphosite", "/api/annotations/Phosphosite/Uniprot/"+@alignment["uniprot"],true])
         @allURL.push(["dbptm", "/api/annotations/dbptm/Uniprot/"+@alignment["uniprot"],true])
         @allURL.push(["biomuta", "/api/annotations/biomuta/Uniprot/"+@alignment["uniprot"],true])
-        @allURL.push(["dsysmap", "/api/annotations/dsysmap/Uniprot/"+@alignment["uniprot"],true])
         if @alignment["pdb"] and not @alignment["path"]
 	  @allURL.push(["coverage", "/api/alignments/Coverage/"+@alignment["pdb"].downcase+@alignment["chain"],false])
         elsif @alignment["pdb"] and @alignment["path"]
           @allURL.push(["coverage", "/api/alignments/Coverage/"+@alignment["path"]+"::"+@alignment["pdb"].gsub!('.', '_dot_')+"::"+@alignment["chain"],false])
         end
-        @allURL.push(["elmdb", "/api/annotations/elmdb/Uniprot/"+@alignment["uniprot"],true])
-        @allURL.push(["Pfam", "/api/annotations/Pfam/Uniprot/"+@alignment["uniprot"],true])
-        @allURL.push(["mobi", "/api/annotations/mobi/Uniprot/"+@alignment["uniprot"],true])
-        @allURL.push(["smart", "/api/annotations/SMART/Uniprot/"+@alignment["uniprot"],true])
-        @allURL.push(["interpro", "/api/annotations/interpro/Uniprot/"+@alignment["uniprot"],true])
+
+        @asyncURL = []
+        @asyncURL.push(["dsysmap", "/api/annotations/dsysmap/Uniprot/"+@alignment["uniprot"],true])
+        @asyncURL.push(["elmdb", "/api/annotations/elmdb/Uniprot/"+@alignment["uniprot"],true])
+        @asyncURL.push(["Pfam", "/api/annotations/Pfam/Uniprot/"+@alignment["uniprot"],true])
+        @asyncURL.push(["smart", "/api/annotations/SMART/Uniprot/"+@alignment["uniprot"],true])
+        @asyncURL.push(["interpro", "/api/annotations/interpro/Uniprot/"+@alignment["uniprot"],true])
+        @asyncURL.push(["mobi", "/api/annotations/mobi/Uniprot/"+@alignment["uniprot"],true])
+
       end
     end
     @allURL = @allURL.to_json
@@ -65,15 +68,18 @@ class FramesAnnotationsController < ApplicationController
         @allURL.push(["phosphosite", "/api/annotations/Phosphosite/Uniprot/"+import_acc,true])
         @allURL.push(["dbptm", "/api/annotations/dbptm/Uniprot/"+import_acc,true])
         @allURL.push(["biomuta", "/api/annotations/biomuta/Uniprot/"+import_acc,true])
-        @allURL.push(["dsysmap", "/api/annotations/dsysmap/Uniprot/"+import_acc,true])
-        @allURL.push(["elmdb", "/api/annotations/elmdb/Uniprot/"+import_acc,true])
-        @allURL.push(["Pfam", "/api/annotations/Pfam/Uniprot/"+import_acc,true])
-        @allURL.push(["mobi", "/api/annotations/mobi/Uniprot/"+import_acc,true])
-        @allURL.push(["smart", "/api/annotations/SMART/Uniprot/"+import_acc,true])
-        @allURL.push(["interpro", "/api/annotations/interpro/Uniprot/"+import_acc,true])
+
+        @asyncURL = []
+        @asyncURL.push(["dsysmap", "/api/annotations/dsysmap/Uniprot/"+@alignment["uniprot"],true])
+        @asyncURL.push(["elmdb", "/api/annotations/elmdb/Uniprot/"+@alignment["uniprot"],true])
+        @asyncURL.push(["Pfam", "/api/annotations/Pfam/Uniprot/"+@alignment["uniprot"],true])
+        @asyncURL.push(["smart", "/api/annotations/SMART/Uniprot/"+@alignment["uniprot"],true])
+        @asyncURL.push(["interpro", "/api/annotations/interpro/Uniprot/"+@alignment["uniprot"],true])
+        @asyncURL.push(["mobi", "/api/annotations/mobi/Uniprot/"+@alignment["uniprot"],true])
       end
     end
     @allURL = @allURL.to_json
+    @asyncURL = @asyncURL.to_json
   end
 
 end

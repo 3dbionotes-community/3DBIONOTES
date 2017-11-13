@@ -12,6 +12,10 @@ var upload_flag = false;
 
 var $CUSTOM_TRACKS = {};
 
+var $COMPUTED_FEATURES = {};
+
+var $LOG = { 'protein':{}, 'gene':{}, 'interaction:':{} };
+
 var global_selection =  null;
 var $j = jQuery.noConflict();
 

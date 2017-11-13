@@ -1,6 +1,7 @@
 class MainController < ApplicationController
 
   LocalPath =  "/home/joan/apps/bionotes/public/upload/"
+  LocalScripts = "/home/joan/apps/bionotes/scripts/"
   
   include GlobalTools::FetchParserTools
   include MainManager::MainTools
@@ -62,7 +63,7 @@ class MainController < ApplicationController
     @file = file_name 
     @structure_file = '/home/joan/apps/bionotes/public/upload/'+rand_path+'/'+file_name
     @http_structure_file = 'http://3dbionotes.cnb.csic.es/upload/'+rand_path+'/'+file_name
-    @mapping  =  JSON.parse(`structure_to_fasta_json #{@structure_file}`)
+    @mapping  =  JSON.parse(`#{LocalScripts}/structure_to_fasta_json #{@structure_file}`)
     @error = nil
     if @mapping.has_key? "error"
       @error = @mapping["error"]
@@ -96,14 +97,14 @@ class MainController < ApplicationController
       @identifierType=recover_data['identifierType']
       @emdb=recover_data['emdb']
       @pdbs=recover_data['pdbs']
-      @interface=recover_data['interface']
-      @asa=recover_data['asa']
       @n_models=recover_data['n_models']
       @no_aa_ch=recover_data['no_aa_ch']
+      @file=recover_data['file']
       @noAlignments = false
     else
       rand = params[:rand]
       file = params[:file]
+      @file = file
       @title = params[:title]
       mapping = JSON.parse( params[:mapping] )
       @viewerType = params[:viewer_type]
@@ -138,9 +139,6 @@ class MainController < ApplicationController
       @identifierType = 'local'
       @emdb = ""
       @pdbs = [rand,file]
-      computed_data  = JSON.parse( `structure_interface_json #{file} #{rand}` )
-      @interface = computed_data['interface']
-      @asa = computed_data['asa']
       @n_models = mapping['n_models']
 
       save_data( {'title'=>@title,
@@ -151,10 +149,9 @@ class MainController < ApplicationController
                   'identifierType'=>@identifierType,  
                   'emdb'=>@emdb, 
                   'pdbs'=>@pdbs, 
-                  'interface'=>@interface,
-                  'asa'=>@asa,
                   'n_models'=>@n_models,
-                  'no_aa_ch'=>@no_aa_ch
+                  'no_aa_ch'=>@no_aa_ch,
+                  'file'=>@file
                  }, rand)
     end
   end

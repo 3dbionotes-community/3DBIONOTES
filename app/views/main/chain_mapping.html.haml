@@ -3,10 +3,6 @@
     $ALIGNMENTS = #{ @alignment.to_json };
   });
 :javascript
-  var binding_residues = #{ @interface.to_json }; 
-:javascript
-  var asa_residues = #{ @asa.to_json };
-:javascript
   var procheck = null;
 :javascript
   var no_aa_ch = #{ @no_aa_ch.to_json };
@@ -107,7 +103,7 @@
         #proteomic_panel
           %div#topnav2
             %a.nostyle.menu{:id=>"menu_options_link", :style=>"cursor:pointer;font-weight:bold;"}
-              %span MENU
+              %span TOOLS
             %table#menu_options_table
               %tr
                 %td 
