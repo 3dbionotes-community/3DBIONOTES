@@ -1,1 +1,1 @@
-zcat /home/joan/databases/UNIPROT_MAPPING/idmapping_selected.tab.gz | cut -f1,19,20  | awk '{gsub("; ","\",\"");if($3)print "NULL\t"$1"\t[\""$2"\"]\t[\""$3"\"]"}' > /home/joan/apps/bionotes/db/mysql/uniprot_ensembl.tsv
+zcat $1 | cut -f1,19,20  | awk '{gsub("; ","\",\"");if($3)print "NULL\t"$1"\t[\""$2"\"]\t[\""$3"\"]"}' > $2

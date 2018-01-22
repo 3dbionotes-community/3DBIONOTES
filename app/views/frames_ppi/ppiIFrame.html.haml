@@ -1,0 +1,6 @@
+%div#graph_div{:style => "width:100%;height:100%;"}
+  :javascript
+    var elements = #{@elements};
+    var cytoscape_graph = new graph_class({'elements':#{@elements},'element_id':'graph_div'});
+    cytoscape_graph.drawGraph();
+    

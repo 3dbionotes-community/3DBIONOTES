@@ -2,15 +2,19 @@ require 'json'
 
 namespace :biomutaentries do
   desc "Seeds BioMuta"
+
+  localDB = Settings.GS_LocalDB
+  localAppDB = Settings.GS_LocalAppDB
+
   task seed_biomuta: :environment do
-    data = `awk -F","  '{if($10!=$11 && $12!="-" && $12~/damaging/ && $13!="-" && $14!="-")print $0}' /home/joan/databases/BIOMUTA/BioMuta.csv | sort -k2`
+    data = `awk -F","  '{if($10!=$11 && $12!="-" && $12~/damaging/ && $13!="-" && $14!="-")print $0}' #{localDB}/BIOMUTA/BioMuta.csv | sort -k2`
     data = data.split(/\n/)
     mutations = { 'XXX' => {} }
     puts "Biomuta processing data"
     __uniprotAc = 'XXX'
     n = data.length.to_i
     nn = data.length.to_i
-    file = File.open("/home/joan/apps/bionotes/db/mysql/biomuta.tsv",'w')
+    file = File.open(localAppDB+"/mysql/biomuta.tsv",'w')
     data.each do |l|
       tmp = {}
       linea = l.chomp.split(",")

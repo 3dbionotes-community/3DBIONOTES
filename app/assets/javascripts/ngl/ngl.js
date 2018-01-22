@@ -1,1 +1,1 @@
-/home/joan/apps/NGL/ngl.js
+/services/bionotes/apps/NGL/ngl.js

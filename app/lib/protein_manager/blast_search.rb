@@ -4,14 +4,14 @@ module ProteinManager
     def runBlast( seq, name=nil, thr=80 )
       proteins = []
       #sprot
-      blast = `ssh jsegura@campins 'echo #{seq} | sudo nice -n -10 ~/app/BLAST/ncbi-blast-2.5.0+/bin/blastp -num_threads 32 -task blastp-fast -query - -db ~/databases/UNIPROT/blast/sprot/sprot -outfmt "7 sacc stitle evalue pident qstart qend" | grep -v "#"'`
+      blast = `echo #{seq} | /external/ncbi-blast/bin/blastp -num_threads 32 -task blastp-fast -query - -db /external/db-blast/sprot/sprot -outfmt "7 sacc stitle evalue pident qstart qend" | grep -v "#"`
       sprot, flag = parse_blast(blast,'sprot', name=name, thr=thr)
       if sprot.length > 0
         proteins = ( sprot.sort_by{ |k| -k['cov'].to_f } )
       end
       #trembl
       if !flag
-        blast = `ssh jsegura@campins 'echo #{seq} | sudo nice -n -10 ~/app/BLAST/ncbi-blast-2.5.0+/bin/blastp -num_threads 32 -task blastp-fast -query - -db ~/databases/UNIPROT/blast/trembl/trembl -outfmt "7 sacc stitle evalue pident sstart send" | grep -v "#"'`
+        blast = `echo #{seq} | /external/ncbi-blast/bin/blastp -num_threads 32 -task blastp-fast -query - -db /external/db-blast/trembl/trembl -outfmt "7 sacc stitle evalue pident sstart send" | grep -v "#"`
         trembl, null = parse_blast(blast,'trembl', name=name, thr=thr)
         if trembl.length > 0
           proteins = (proteins+trembl).sort_by{ |k| -k['cov'].to_f }

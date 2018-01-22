@@ -9,6 +9,7 @@ module MainManager
         @badName = false
         options = Hash.new
         url = BaseUrl+"/api/mappings/Uniprot/PDB/"+identifierName
+        puts(url)
         jsonData = getUrl(url)
         mappingData = JSON.parse(jsonData)
         url = BaseUrl+"/api/lengths/UniprotMulti/"+identifierName

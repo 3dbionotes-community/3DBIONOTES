@@ -1,10 +1,13 @@
 module AnnotationManager
   module SourceProteinData
     module SourceElmdb 
+
+      ElmScript = Settings.GS_ElmScript
+
       def sourceElmdbFromUniprot(uniprotAc)
         out = Elmdbentry.find_by(proteinId: uniprotAc)
         if out.nil?
-          cmd = "/home/joan/tools/ELMDB_tool/get_elm_data "+uniprotAc
+          cmd = ElmScript+" "+uniprotAc
           out = `#{cmd}`
           out.gsub! /\\r/,"" 
           if out.length > 0

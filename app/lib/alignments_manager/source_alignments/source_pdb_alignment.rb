@@ -9,7 +9,7 @@ module AlignmentsManager
 
       def sourcePDBalignment(pdbId)
         info = nil
-        if pdbId =~ /[A-Z]{20}/
+        if pdbId =~ /[A-Z]{20}/ or pdbId =~ /EXAMPLE\d/
           info = File.read(LocalPath+"/"+pdbId+"/alignment.json")
         else
           dbData = PdbDatum.find_by(pdbId: pdbId)

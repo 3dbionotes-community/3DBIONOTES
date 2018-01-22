@@ -1,7 +1,7 @@
 class FramesSequenceController < ApplicationController
 
-  BaseUrl = "http://3dbionotes.cnb.csic.es/"
   include GlobalTools::FetchParserTools
+  BaseUrl = Settings.GS_BaseUrl
 
   def sequenceIFrame
     @paramAlignment = params[:alignment]

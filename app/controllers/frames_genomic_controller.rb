@@ -1,7 +1,9 @@
 class FramesGenomicController < ApplicationController
 
-  BaseUrl = "http://3dbionotes.cnb.csic.es/"
   include GlobalTools::FetchParserTools
+
+  BaseUrl = Settings.GS_BaseUrl
+
   def genomicIFrame
     uniprot_acc = params[:uniprot_acc]
     @acc = uniprot_acc

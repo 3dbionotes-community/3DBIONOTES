@@ -1,7 +1,8 @@
 module ProteinManager
   module AlignSequences
 
-    LocalPath =  "/home/joan/apps/bionotes/data/tmp_seq/"
+    LocalPath = Settings.GS_LocalSeq
+    IdentityMatrix = Settings.GS_IdentityMatrixFile
 
     def align_sequences(uniprot_seq,transcript_seq,_rand=nil)
       rand = _rand
@@ -12,7 +13,7 @@ module ProteinManager
       File.write(LocalPath+"/"+rand+"_can_seq", uniprot_seq)
       File.write(LocalPath+"/"+rand+"_trans_seq", transcript_seq)
     
-      cmd = "echo \"\n\" | water -asequence "+LocalPath+"/"+rand+"_can_seq -bsequence "+LocalPath+"/"+rand+"_trans_seq -gapopen 50 -gapextend 0 -datafile /home/joan/tools/ENSEMBL/IDENTITY -aformat3 markx10 -stdout -aglobal3 Y -awidth3 1000000 2> /dev/null"
+      cmd = "echo \"\n\" | water -asequence "+LocalPath+"/"+rand+"_can_seq -bsequence "+LocalPath+"/"+rand+"_trans_seq -gapopen 50 -gapextend 0 -datafile "+IdentityMatrix+" -aformat3 markx10 -stdout -aglobal3 Y -awidth3 1000000 2> /dev/null"
     
       ws  = `#{cmd}`
       align = ws.split(/\>\s\.\.\s/)

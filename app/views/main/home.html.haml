@@ -111,6 +111,7 @@
               %input{:type=>"text",:name=>"chance",:id=>"chance",:class=>"text",:value=>@threshold,:style=>"width:55px;margin:5px;vertical-align:middle",:title=>"Change threshold"}
 
   :javascript
+    var pdb_redo = #{@pdb_redo};
     var firstTime = true;
     var alignmentTranslation;
     var uniprotLength = '#{@uniprotLength}';

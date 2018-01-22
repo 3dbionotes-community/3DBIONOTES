@@ -1,7 +1,9 @@
 class FramesJsmolController < ApplicationController
 
-  BaseUrl = "http://3dbionotes.cnb.csic.es/"
+
   include GlobalTools::FetchParserTools
+
+  BaseUrl = Settings.GS_BaseUrl
 
   def jsmolIFrame
     pdbListRaw = params[:pdbs]

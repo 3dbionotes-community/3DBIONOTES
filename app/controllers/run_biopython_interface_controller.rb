@@ -1,7 +1,7 @@
 class RunBiopythonInterfaceController < ApplicationController
 
-  LocalScripts = "/home/joan/apps/bionotes/scripts/"
-  LocalPath =  "/home/joan/apps/bionotes/public/upload/"
+  LocalPath = Settings.GS_LocalUpload
+  LocalScripts = Settings.GS_LocalScripts
 
   def run
     pdbId = params[:name]
@@ -41,7 +41,6 @@ class RunBiopythonInterfaceController < ApplicationController
   def recover(rand)
     recover_data = JSON.parse( File.read(LocalPath+"/"+rand+"/biopython_interface_recover_data.json") )
     return recover_data
-
   end
 
   def save_data(json_data,rand)

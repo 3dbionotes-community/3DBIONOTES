@@ -1,13 +1,16 @@
 class MainController < ApplicationController
 
-  LocalPath =  "/home/joan/apps/bionotes/public/upload/"
-  LocalScripts = "/home/joan/apps/bionotes/scripts/"
+
   
   include GlobalTools::FetchParserTools
   include MainManager::MainTools
   include MainManager::ToolsMain::BuildAlignment
   include ProteinManager::BlastSearch
   include ProteinManager::FetchSequenceInfo
+
+  LocalPath = Settings.GS_LocalUpload 
+  LocalScripts = Settings.GS_LocalScripts
+  BaseUrl = Settings.GS_BaseUrl
 
   def home
     if request.referer
@@ -18,6 +21,10 @@ class MainController < ApplicationController
     @noAlignments = false
     @isAvailable = true
     @viewerType = viewer_type( params[:viewer_type] )
+    @pdb_redo = false
+    if params.key? 'pdb_redo' then
+      @pdb_redo = true
+    end
 
     identifierName = params[:queryId]
     if !identifierName.nil?
@@ -61,8 +68,8 @@ class MainController < ApplicationController
     DataFile.save(params[:structure_file],file_name,rand_path)
     @rand  = rand_path
     @file = file_name 
-    @structure_file = '/home/joan/apps/bionotes/public/upload/'+rand_path+'/'+file_name
-    @http_structure_file = 'http://3dbionotes.cnb.csic.es/upload/'+rand_path+'/'+file_name
+    @structure_file = LocalPath+'/'+rand_path+'/'+file_name
+    @http_structure_file = BaseUrl+'/upload/'+rand_path+'/'+file_name
     @mapping  =  JSON.parse(`#{LocalScripts}/structure_to_fasta_json #{@structure_file}`)
     @error = nil
     if @mapping.has_key? "error"

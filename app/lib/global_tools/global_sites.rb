@@ -1,7 +1,7 @@
 module GlobalTools
   module GlobalSites
 
-    GS_BaseUrl = "http://3dbionotes.cnb.csic.es/"
+    GS_BaseUrl = "http://bionotes-service.cnb.csic.es/"
     GS_EnsemblServer = "http://rest.ensembl.org/"
     GS_UniServer = "http://www.uniprot.org/"
     GS_SIFTSUrl = "http://ftp.ebi.ac.uk/pub/databases/msd/sifts/xml/"
@@ -12,9 +12,18 @@ module GlobalTools
     GS_PfamURL = "http://pfam.xfam.org/"
     GS_SmartURL = "http://smart.embl.de/smart/batch.pl?TEXTONLY=1&INCLUDE_SIGNALP=1&IDS="
 
-    GS_LocalUpload = "/home/joan/apps/bionotes/public/upload/"
-    GS_LocalSeq = "/home/joan/apps/bionotes/data/tmp_seq/"
-    GS_LocalSIFTS =  "/home/joan/databases/SIFTS/XML/"
+    GS_LocalApp = "/services/bionotes/apps/bionotes/"
+    GS_LocalAppDB = GS_LocalApp+"/db/"
+    GS_LocalUpload = "/services/bionotes/apps/bionotes/public/upload/"
+    GS_LocalSeq = "/services/bionotes/apps/bionotes/data/tmp_seq/"
+    GS_LocalSIFTS =  "/services/bionotes/databases/SIFTS/XML/"
+    GS_LocalScripts = "/services/bionotes/apps/bionotes/scripts/"
+    GS_LocalMolProobity_tmp = "/services/bionotes/apps/bionotes/data/tmp_mp/"
+    GS_LocalDB = "/services/bionotes/databases/"
+
+    GS_IdentityMatrixFile = "/services/bionotes/apps/ENSEMBL/IDENTITY"  
+    GS_ElmScript = "/services/bionotes/apps/ELMDB/get_elm_data"
+    
 
   end
 end

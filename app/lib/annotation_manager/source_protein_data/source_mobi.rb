@@ -2,8 +2,7 @@ module AnnotationManager
   module SourceProteinData
     module SourceMobi 
 
-      include GlobalTools::GlobalSites
-      MobiURL = GS_MobiURL#"http://mobidb.bio.unipd.it/ws/entries/"
+      MobiURL = Settings.GS_MobiURL#"http://mobidb.bio.unipd.it/ws/entries/"
 
       def sourceMobiFromUniprot(uniprotAc)
         out = Mobientry.find_by(proteinId: uniprotAc)

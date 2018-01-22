@@ -2,8 +2,7 @@ module AnnotationManager
   module SourceGeneData
     module SourceEnsemblannotations 
 
-      include GlobalTools::GlobalSites 
-      EnsemblURL = GS_EnsemblServer#"http://rest.ensembl.org/"
+      EnsemblURL = Settings.GS_EnsemblServer#"http://rest.ensembl.org/"
 
       def sourceENSEMBLannotations(ensembl_id)
         out = Ensemblannotationentry.find_by(geneId: ensembl_id)

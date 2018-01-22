@@ -1,11 +1,11 @@
 class PostRequestController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:upload]
 
-  BaseUrl = "http://3dbionotes.cnb.csic.es/"
-  LocalPath =  "/home/joan/apps/bionotes/public/upload/"
-
   include GlobalTools::FetchParserTools
   include ProteinManager::BlastSearch
+
+  BaseUrl = Settings.GS_BaseUrl
+  LocalPath = Settings.GS_LocalUpload
 
   def upload
     if !params[:structure_file].nil?
@@ -78,7 +78,7 @@ class PostRequestController < ApplicationController
     @title = title
     @rand  = rand_path
     @file = file_name 
-    @structure_file = '/home/joan/apps/bionotes/public/upload/'+rand_path+'/'+file_name
+    @structure_file = LocalPath+'/'+rand_path+'/'+file_name
     @http_structure_file = BaseUrl+'/upload/'+rand_path+'/'+file_name
     @mapping = JSON.parse(`structure_to_fasta_json #{@structure_file}`)
     @error = nil

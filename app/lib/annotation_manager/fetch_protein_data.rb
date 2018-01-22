@@ -61,5 +61,11 @@ module AnnotationManager
       return toReturn
     end
 
+    include SourceProteinData::SourcePdbRedo
+    def fetchPDB_REDO(pdbId)
+      toReturn = sourcePDB_REDO(pdbId)
+      return toReturn
+    end
+
   end
 end

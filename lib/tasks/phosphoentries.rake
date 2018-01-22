@@ -1,18 +1,21 @@
 require 'net/http'
 require 'json'
 
-PTMURLs = {}
-PTMURLs["Acetylation"] = "/home/joan/databases/PHOSPHOSITE/acetylation_site_dataset.gz"
-PTMURLs["Methylation"] = "/home/joan/databases/PHOSPHOSITE/methylation_site_dataset.gz"
-PTMURLs["Phosphorylation"] = "/home/joan/databases/PHOSPHOSITE/phosphorylation_site_dataset.gz"
-PTMURLs["Sumoylation"] = "/home/joan/databases/PHOSPHOSITE/sumoylation_site_dataset.gz"
-PTMURLs["Ubiquitination"] = "/home/joan/databases/PHOSPHOSITE/ubiquitination_site_dataset.gz"
-PTMURLs["OGalNAc"] = "/home/joan/databases/PHOSPHOSITE/O-GalNAc_site_dataset.gz"
-PTMURLs["OGlcNAc"] = "/home/joan/databases/PHOSPHOSITE/O-GlcNAc_site_dataset.gz"
+localDB = Settings.GS_LocalDB
+localAppDB = Settings.GS_LocalAppDB
 
-Disease = "/home/joan/databases/PHOSPHOSITE/disease-associated_sites.gz"
-Regulatory = "/home/joan/databases/PHOSPHOSITE/regulatory_sites.gz"
-KinasesURL = "/home/joan/databases/PHOSPHOSITE/kinase_Substrate_Dataset.gz"
+PTMURLs = {}
+PTMURLs["Acetylation"] = "#{localDB}/PHOSPHOSITE/acetylation_site_dataset.gz"
+PTMURLs["Methylation"] = "#{localDB}/PHOSPHOSITE/methylation_site_dataset.gz"
+PTMURLs["Phosphorylation"] = "#{localDB}/PHOSPHOSITE/phosphorylation_site_dataset.gz"
+PTMURLs["Sumoylation"] = "#{localDB}/PHOSPHOSITE/sumoylation_site_dataset.gz"
+PTMURLs["Ubiquitination"] = "#{localDB}/PHOSPHOSITE/ubiquitination_site_dataset.gz"
+PTMURLs["OGalNAc"] = "#{localDB}/PHOSPHOSITE/O-GalNAc_site_dataset.gz"
+PTMURLs["OGlcNAc"] = "#{localDB}/PHOSPHOSITE/O-GlcNAc_site_dataset.gz"
+
+Disease = "#{localDB}/PHOSPHOSITE/disease-associated_sites.gz"
+Regulatory = "#{localDB}/PHOSPHOSITE/regulatory_sites.gz"
+KinasesURL = "#{localDB}/PHOSPHOSITE/kinase_Substrate_Dataset.gz"
 
 def __downloadURL(url)
 	begin
@@ -387,7 +390,7 @@ namespace :phosphoentries do
 
     puts("wirting tsv file")
 
-    file = File.open("/home/joan/apps/bionotes/db/mysql/phospho.tsv",'w')
+    file = File.open("#{localAppDB}/mysql/phospho.tsv",'w')
     data.each do |k,v|
     	file.write("NULL\t"+k+"\t"+v.to_json+"\n")
     end

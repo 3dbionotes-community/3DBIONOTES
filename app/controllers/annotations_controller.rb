@@ -86,4 +86,10 @@ class AnnotationsController < ApplicationController
     return render json: toReturn, status: :ok
   end
 
+  def getPDB_REDO
+    pdbId = params[:name]
+    toReturn = fetchPDB_REDO(pdbId)
+    return render json: toReturn, status: :ok
+  end
+
 end

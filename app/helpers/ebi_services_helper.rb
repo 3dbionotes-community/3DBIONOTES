@@ -1,0 +1,2 @@
+module EbiServicesHelper
+end

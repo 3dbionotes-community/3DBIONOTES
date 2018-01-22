@@ -145,16 +145,27 @@ function nglClass( args ) {
                                         self.pdb_flag = true;
 					if( __n == self.args.pdb_list.length ) self.__load_ready = true;
                                         __show_message( pdb_code.toUpperCase() );
-                                        //var url_file = "http://mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
-                                        //var url_file = "rcsb://"+pdb_code.toUpperCase()+".mmtf";
-                                        var url_file = location.protocol+"//mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
-                                        console.log( "LOADING "+url_file );
-                                        self.stage.loadFile(  url_file, {ext:"mmtf", firstModelOnly:true} ).then( initStructure ).catch( function(e){
-                                          console.error(e);
-                                          var url_file = "rcsb://"+pdb_code.toUpperCase()+".cif";
+                                        if(top.pdb_redo){
+                                          var url_file = location.protocol+"//pdb-redo.eu/db/"+pdb_code.toLowerCase()+"/"+pdb_code.toLowerCase()+"_final.pdb";
                                           console.log( "LOADING "+url_file );
-                                          self.stage.loadFile(  url_file, {ext:"cif", firstModelOnly:true} ).then( initStructure );
-                                        });
+                                          self.stage.loadFile(  url_file, {ext:"pdb", firstModelOnly:true} ).then( initStructure ).catch( function(e){
+                                            console.error(e);
+                                            var url_file = "rcsb://"+pdb_code.toUpperCase()+".cif";
+                                            console.log( "LOADING "+url_file );
+                                            self.stage.loadFile(  url_file, {ext:"cif", firstModelOnly:true} ).then( initStructure );
+                                          });
+                                        }else{
+                                          //var url_file = "http://mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
+                                          //var url_file = "rcsb://"+pdb_code.toUpperCase()+".mmtf";
+                                          var url_file = location.protocol+"//mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
+                                          console.log( "LOADING "+url_file );
+                                          self.stage.loadFile(  url_file, {ext:"mmtf", firstModelOnly:true} ).then( initStructure ).catch( function(e){
+                                            console.error(e);
+                                            var url_file = "rcsb://"+pdb_code.toUpperCase()+".cif";
+                                            console.log( "LOADING "+url_file );
+                                            self.stage.loadFile(  url_file, {ext:"cif", firstModelOnly:true} ).then( initStructure );
+                                          });
+                                        }
 					__n++;
 				});
 			}
@@ -336,6 +347,7 @@ function nglClass( args ) {
                   var labelText = {};
                   var pdb_component = self.stage.getComponentsByName(pdb);
                   if( pdb_component.list.length == 0 ) pdb_component = self.stage.getComponentsByName( pdb.toUpperCase() );
+                  if( pdb_component.list.length == 0 ) pdb_component = self.stage.getComponentsByName( pdb.toLowerCase()+"_final.pdb" );
                   if( pdb_component.list.length == 0 ) {
                     console.log("getComponentsByName failed -  args => "+pdb);
                     return;
