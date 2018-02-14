@@ -7,6 +7,11 @@
 :javascript
   var no_aa_ch = #{ @no_aa_ch.to_json };
 
+-if @external_annotations
+  :javascript
+    top.uploaded_annotations = {result:'#{@external_annotations}'};
+    top.upload_flag = true;
+
 #menu
   =image_tag("3dbionotes_ws_logo_no_partners.png",height:'50')
   %ul#topnav
@@ -99,6 +104,9 @@
             %tr
               %td
                 %a.nostyle{:id=>"genomic_view", :style=>"cursor:pointer;"}GENE VIEW
+            %tr
+              %td
+                %a.nostyle{:id=>"ppi_view", :style=>"cursor:pointer;", :title=>"Protein-Protein Interaction View"}PPI VIEW
 
         #proteomic_panel
           %div#topnav2
@@ -118,6 +126,8 @@
           %iframe#upRightBottomFrame{:src=>"annotationsIFrame",:scrolling=>"yes"}
         #genomic_panel
           %iframe#genomicFrame{:src=>"genomicIFrame",:scrolling=>"yes"}
+        #ppi_panel
+          %iframe#ppiFrame{:src=>"ppiIFrame",:scrolling=>"yes"}
 
 :javascript
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

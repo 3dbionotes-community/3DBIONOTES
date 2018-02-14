@@ -33,6 +33,7 @@ module MainManager
             ali["pdbList"] = [identifierName]
             @optionsArray.push(["No alignments available - Display PDB information",ali.to_json])
             @changeSelector = true
+            @noAlignments = true
           else
             url = BaseUrl+"api/lengths/UniprotMulti/"+options.keys.uniq.join(",")
             jsonData = getUrl(url)

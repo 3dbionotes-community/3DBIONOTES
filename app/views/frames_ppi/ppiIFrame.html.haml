@@ -1,6 +1,10 @@
-%div#graph_div{:style => "width:100%;height:100%;"}
+-if @reload
   :javascript
-    var elements = #{@elements};
-    var cytoscape_graph = new graph_class({'elements':#{@elements},'element_id':'graph_div'});
-    cytoscape_graph.drawGraph();
+    setTimeout(function(){ location.reload(); }, 3000);
+  %div#graph_div{:style => "width:100%;height:100%;"}
+    WAIT PLEASE
+-else
+  %div#graph_div{:style => "width:100%;height:100%;"}
+    :javascript
+      var elements = #{@elements};
     

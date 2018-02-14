@@ -114,7 +114,9 @@ function __trigger_alignment(){
 		if( 'uniprot' in __d ){
 			window.top.$j('#alignment > option:nth-child(2)').prop('selected', true);
 			window.top.$j('#alignment').trigger('change');
-		}
+		}else{
+                  console.log("No SIFT alignment available");
+                }
 	},1000);
 }
 
@@ -139,33 +141,38 @@ function nglClass( args ) {
 			var __n = 1;
 			if(self.args.origin == "local"){
                                 __show_message( "FILE" );
-				self.stage.loadFile( "/upload/"+self.args.pdb_list[0]+"/"+self.args.pdb_list[1] ).then( initLocalStructure );
+                                var ext = "pdb";
+                                if( self.args.pdb_list[1].includes("cif") ){
+                                  ext = "cif";
+                                }
+				self.stage.loadFile( "/upload/"+self.args.pdb_list[0]+"/"+self.args.pdb_list[1], {ext:ext} ).then( initLocalStructure ).catch( function(e){
+                                  console.error(e);
+                                  swal({
+                                    title: "ERROR LOADING "+self.args.pdb_list[1]+" FILE",
+                                    text: "FILE FORMAT ERROR",
+                                    timer: 5000,
+                                    type: "error",
+                                    showConfirmButton: true
+                                  });
+                                });
 			}else{
 				self.args.pdb_list.forEach(function(pdb_code){
                                         self.pdb_flag = true;
 					if( __n == self.args.pdb_list.length ) self.__load_ready = true;
                                         __show_message( pdb_code.toUpperCase() );
-                                        if(top.pdb_redo){
-                                          var url_file = location.protocol+"//pdb-redo.eu/db/"+pdb_code.toLowerCase()+"/"+pdb_code.toLowerCase()+"_final.pdb";
+                                        
+                                        //var url_file = "http://mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
+                                        //var url_file = "rcsb://"+pdb_code.toUpperCase()+".mmtf";
+                                        var url_file = location.protocol+"//mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
+                                        console.log( "LOADING "+url_file );
+
+                                        self.stage.loadFile(  url_file, {ext:"mmtf", firstModelOnly:true} ).then( initStructure ).catch( function(e){
+                                          console.error(e);
+                                          var url_file = "rcsb://"+pdb_code.toUpperCase()+".cif";
                                           console.log( "LOADING "+url_file );
-                                          self.stage.loadFile(  url_file, {ext:"pdb", firstModelOnly:true} ).then( initStructure ).catch( function(e){
-                                            console.error(e);
-                                            var url_file = "rcsb://"+pdb_code.toUpperCase()+".cif";
-                                            console.log( "LOADING "+url_file );
-                                            self.stage.loadFile(  url_file, {ext:"cif", firstModelOnly:true} ).then( initStructure );
-                                          });
-                                        }else{
-                                          //var url_file = "http://mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
-                                          //var url_file = "rcsb://"+pdb_code.toUpperCase()+".mmtf";
-                                          var url_file = location.protocol+"//mmtf.rcsb.org/v1.0/full/"+pdb_code.toUpperCase();
-                                          console.log( "LOADING "+url_file );
-                                          self.stage.loadFile(  url_file, {ext:"mmtf", firstModelOnly:true} ).then( initStructure ).catch( function(e){
-                                            console.error(e);
-                                            var url_file = "rcsb://"+pdb_code.toUpperCase()+".cif";
-                                            console.log( "LOADING "+url_file );
-                                            self.stage.loadFile(  url_file, {ext:"cif", firstModelOnly:true} ).then( initStructure );
-                                          });
-                                        }
+                                          self.stage.loadFile(  url_file, {ext:"cif", firstModelOnly:true} ).then( initStructure );
+                                        });
+                                        
 					__n++;
 				});
 			}

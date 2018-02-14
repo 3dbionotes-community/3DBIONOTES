@@ -107,6 +107,16 @@ $j(document).ready(function(){
      change_view("#genomic_panel");   
   });
 
+  $j('#ppi_view').click(function(){
+     change_view("#ppi_panel");   
+     if(!top.ppiFrame_vissible){
+       var evtOut = document.createEvent("CustomEvent");
+       evtOut.initCustomEvent("ppiFrame_vissible",true,true,"ppi_panel:click");
+       top.document.getElementById("ppiFrame").contentWindow.dispatchEvent(evtOut);
+       top.ppiFrame_vissible = true;
+     }
+  });
+
   add_frames_listener();
 
 });

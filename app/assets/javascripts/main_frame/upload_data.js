@@ -138,7 +138,7 @@ function parse_data_file(){
   }
 }
 
-function file_read(fr){
+function file_read(fr,reload_flag){
   var custom_annotations;
   try{
     custom_annotations = eval( '('+fr.result+')' );
@@ -159,7 +159,7 @@ function file_read(fr){
   }else{
     parse_track(custom_annotations);
   }
-  reload_annotations_frame();
+  if(!reload_flag)reload_annotations_frame();
 }
 
 function parse_track(track){
@@ -176,7 +176,7 @@ function parse_track(track){
     }else{
       id = global_infoAlignment.pdb+":"+track.chain;
     }
-  }else {
+  } else {
     key = 'acc';
     if( track.uniprot ){
       id = track.uniprot;
@@ -184,12 +184,13 @@ function parse_track(track){
       id = global_infoAlignment.uniprot;
     }
   }
+
   if(track.track_name){
     track_name = track.track_name;
   }else{
     track_name = "Uploaded data";
   }
-  track_name = track_name.replace(" ","_").toUpperCase();
+  track_name = track_name.replace(/ /g,"_").toUpperCase();
   if(track.visualization_type){
     visualization_type = track.visualization_type;
   }else{
@@ -208,7 +209,7 @@ function parse_track(track){
     track.data.forEach(function(x){
       var y = x;
       if(translate_flag) y = translate_to_uniprot(x,id);
-      $UPLOADED_DATA[key][id][track_name]['data'].push(x);
+      if(y.begin != -10) $UPLOADED_DATA[key][id][track_name]['data'].push(y);
 
       if(!$CUSTOM_TRACKS[ track_name ])$CUSTOM_TRACKS[ track_name ]={};
       $CUSTOM_TRACKS[ track_name ][ x.type ] = true;
@@ -221,10 +222,15 @@ function translate_to_uniprot(ann,PDBchain){
   var X = PDBchain.split(":");
   var pdb = X[0];
   var chain = X[1];
-  var keys = Object.keys( $ALIGNMENTS[pdb][chain] );
-  var acc = keys[0];
-  out.begin = $ALIGNMENTS[pdb][chain][acc]["inverse"][ ann.begin ];
-  out.end = $ALIGNMENTS[pdb][chain][acc]["inverse"][ ann.end ];
+  if( pdb in $ALIGNMENTS && chain in $ALIGNMENTS[pdb]){
+    var keys = Object.keys( $ALIGNMENTS[pdb][chain] );
+    var acc = keys[0];
+    out.begin = $ALIGNMENTS[pdb][chain][acc]["inverse"][ ann.begin ];
+    out.end = $ALIGNMENTS[pdb][chain][acc]["inverse"][ ann.end ];
+  }else{
+    out.begin = false;
+    out.end = false;
+  }
   if(!out.begin || !out.end){
     out.begin=-10;
     out.end=-10;

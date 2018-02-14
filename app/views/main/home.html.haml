@@ -111,7 +111,6 @@
               %input{:type=>"text",:name=>"chance",:id=>"chance",:class=>"text",:value=>@threshold,:style=>"width:55px;margin:5px;vertical-align:middle",:title=>"Change threshold"}
 
   :javascript
-    var pdb_redo = #{@pdb_redo};
     var firstTime = true;
     var alignmentTranslation;
     var uniprotLength = '#{@uniprotLength}';
@@ -126,7 +125,10 @@
         if($j('#leftBottomFrame').attr('src')=="jsmolIFrame"){
           $j('#leftBottomFrame')[0].src = "/jsmolIFrame/?viewer_type=#{@viewerType}&origin=#{@identifierType}&pdbs="+encodeURI('#{@pdbs.to_json}'+"&emdb=#{@emdb}");
         }
-        if(noAlignments)clear_wm();
+        if(noAlignments){
+          clear_wm();
+          display_noAlignments( #{@pdbs.to_json} );
+        }
       });
      });
   #wrapperBottomFrame
@@ -145,6 +147,9 @@
             %tr
               %td
                 %a.nostyle{:id=>"genomic_view", :style=>"cursor:pointer;"}GENE VIEW
+            %tr
+              %td
+                %a.nostyle{:id=>"ppi_view", :style=>"cursor:pointer;", :title=>"Protein-Protein Interaction View"}PPI VIEW
 
         #proteomic_panel
           %div#topnav2
@@ -163,6 +168,8 @@
           %iframe#upRightBottomFrame{:src=>"annotationsIFrame",:scrolling=>"yes"}
         #genomic_panel
           %iframe#genomicFrame{:src=>"genomicIFrame",:scrolling=>"yes"}
+        #ppi_panel
+          %iframe#ppiFrame{:src=>"ppiIFrame",:scrolling=>"yes"}
 
   :javascript
     #{@log}

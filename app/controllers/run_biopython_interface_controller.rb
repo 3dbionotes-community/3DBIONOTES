@@ -14,7 +14,7 @@ class RunBiopythonInterfaceController < ApplicationController
         if out.key?('error')
           raise "#{LocalScripts}/structure_interface_json ERROR: #{out['error']}"
         else
-          BiopythonInterface.create( pdbId: pdbId, asa: out['asa'].to_json, interface:out['interface'].to_json, rri:out['rri'].to_json )
+          BiopythonInterface.create( pdbId: pdbId, asa: out['asa'].to_json, interface:out['interface'].to_json, rri:out['rri'].to_json, rri_raw:out['rri_raw'].to_json )
         end
       else
         out = {asa:JSON.parse(out['asa']), interface:JSON.parse(out['interface']), rri:JSON.parse(out['rri'])}

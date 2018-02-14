@@ -6,6 +6,7 @@ class PostRequestController < ApplicationController
 
   BaseUrl = Settings.GS_BaseUrl
   LocalPath = Settings.GS_LocalUpload
+  LocalScripts = Settings.GS_LocalScripts
 
   def upload
     if !params[:structure_file].nil?
@@ -34,10 +35,10 @@ class PostRequestController < ApplicationController
     if request.referer
       logger.info("  HTTP Referer: #{request.referer}") 
     end
-    if !params[:url].nil?
+    if not params[:url].nil? then
       url = params[:url]
       file_content, http_code, http_code_name = getUrl(url,verbose=true)
-      if http_code.to_i > 399
+      if http_code.to_i > 399 then 
         return render json: {"error"=>"URL "+url+" was not reachable", "http_error"=>http_code_name}, status: :ok
       elsif http_code.to_i == 0
         return render json: {"error"=>"ruby exception", "url"=> params[:url], "exception"=>file_content}, status: :ok
@@ -58,8 +59,21 @@ class PostRequestController < ApplicationController
 
         DataFile.save_string(file_content, file_name, rand_path, post_info={ "title"=>title, "file_name"=>file_name })
 
-        toReturn = { "id"=>rand_path, "file_name"=>original_filename, "title"=>title }
-        return render json: toReturn.to_json, status: :ok
+        if not params[:url_annotations].nil? then
+          url_annotations=params[:url_annotations]
+          annotations_content, http_code, http_code_name = getUrl(url_annotations,verbose=true)
+          if http_code.to_i < 399 and http_code.to_i > 0 then 
+            ann_file_name="external_annotations.json"
+            DataFile.save_string(annotations_content, ann_file_name, rand_path)
+          end
+        end
+
+        if request.url =~ /autofetch/ then
+          return redirect_to '/programmatic/get/'+rand_path
+        else
+          toReturn = { "id"=>rand_path, "file_name"=>original_filename, "title"=>title }
+          return render json: toReturn.to_json, status: :ok
+        end
       end
     else
       return render json: {"error"=>"URL structure file not found in your request"}, status: :ok
@@ -80,7 +94,7 @@ class PostRequestController < ApplicationController
     @file = file_name 
     @structure_file = LocalPath+'/'+rand_path+'/'+file_name
     @http_structure_file = BaseUrl+'/upload/'+rand_path+'/'+file_name
-    @mapping = JSON.parse(`structure_to_fasta_json #{@structure_file}`)
+    @mapping = JSON.parse(`#{LocalScripts}/structure_to_fasta_json #{@structure_file}`)
     @error = nil
     if @mapping.has_key? "error"
       @error = @mapping["error"]

@@ -53,15 +53,23 @@ function processAlignment(data){
   return data;
 }
 
-function change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url ){
+function change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url, ppi_iframe_url ){
 
   global_infoAlignment["annot_iframe_url"] = annot_iframe_url;
   global_infoAlignment["seq_iframe_url"] = seq_iframe_url;
-  global_infoAlignment["igenomic_iframe_url"] = genomic_iframe_url;
+  global_infoAlignment["genomic_iframe_url"] = genomic_iframe_url;
+  global_infoAlignment["ppi_iframe_url"] = ppi_iframe_url;
 
   var seq_iframe = 'iframe#downRightBottomFrame';
   var annot_iframe = 'iframe#upRightBottomFrame';
   var genomic_iframe = 'iframe#genomicFrame';
+  var ppi_iframe = 'iframe#ppiFrame';
+
+  if(top.ppiFrame_load){
+    var evtOut = document.createEvent("CustomEvent");
+    evtOut.initCustomEvent("ppiFrame_selectChain",true,true,top.global_infoAlignment.chain);
+    if( top.document.getElementById("ppiFrame") )top.document.getElementById("ppiFrame").contentWindow.dispatchEvent(evtOut);
+  }
 
   wait_message("FETCHING SEQUENCE ALIGNMENT");
   $j(seq_iframe).attr('src', seq_iframe_url);
@@ -74,18 +82,13 @@ function change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url
   $j( annot_iframe ).load(function(){
     clear_wm();
     check_imported_select();
-    if(!genomic_iframe_url){
-      $j( annot_iframe ).unbind("load");
+    $j( genomic_iframe ).attr('src', genomic_iframe_url);
+    if(!top.ppiFrame_load){
+      $j( ppi_iframe ).attr('src', ppi_iframe_url);
+      top.ppiFrame_load = true;
     }
+    $j( annot_iframe ).unbind("load");
   }); 
-
-  if(genomic_iframe_url){
-    $j( annot_iframe ).load(function(){
-      $j( genomic_iframe ).attr('src', genomic_iframe_url);
-      $j( annot_iframe ).unbind("load");
-    });
-  }
-
 }
 
 var stop_wait_message  =  false;
@@ -124,6 +127,10 @@ function getValueSelection(elem,myFirstTime){
 
     var infoAlignmentEval = eval("("+infoAlignment+")");
     global_infoAlignment = infoAlignmentEval;
+    if(top.uploaded_annotations && !top.uploaded_annotations_ready){
+      file_read(uploaded_annotations,true);
+      top.uploaded_annotations_ready = true;
+    }
     var baseUrl = "/";
 
     var info = {};
@@ -141,6 +148,7 @@ function getValueSelection(elem,myFirstTime){
     document.getElementById("leftBottomFrame").contentWindow.dispatchEvent(evtOut);
 
     var pdb = infoAlignmentEval.pdb;
+    var path = infoAlignmentEval.path;
     var chain = infoAlignmentEval.chain;
     var uniprot = infoAlignmentEval.uniprot;
     var myUrl =  baseUrl+"api/alignments/PDBjsonp/"+pdb;
@@ -151,25 +159,18 @@ function getValueSelection(elem,myFirstTime){
       document.getElementById("uniprotLogo").innerHTML = "<a target=\"_blank\" href=\"http://www.uniprot.org/\"><img src=\"assets/uniprot.png\" alt=\"Uniprot\" width=\"18\" height=\"18\"></a>";
     }
 
-    if( pdb in $ALIGNMENTS ){
+    var seq_iframe_url = "/sequenceIFrame?alignment="+encodeURI(infoAlignment);
+    var annot_iframe_url = "/annotationsIFrame?alignment="+encodeURI(infoAlignment);
+    var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
+    var ppi_iframe_url = "/ppiIFrame?pdb="+pdb;
+    if(path)ppi_iframe_url += "&path="+path;
 
-      //interface
+    if( pdb in $ALIGNMENTS ){
       data = $ALIGNMENTS[  pdb ];
       if(data[chain]!=undefined && data[chain][uniprot]!=undefined){
         alignmentTranslation = data[chain][uniprot].mapping;
-        var seq_iframe_url = "/sequenceIFrame?alignment="+encodeURI(infoAlignment);
-        var annot_iframe_url = "/annotationsIFrame?alignment="+encodeURI(infoAlignment);
-        var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
-      }else if(uniprot==undefined){
-        var seq_iframe_url = "/sequenceIFrame?alignment="+encodeURI(infoAlignment);
-        var annot_iframe_url = "/annotationsIFrame?alignment="+encodeURI(infoAlignment);
-        var genomic_iframe_url = "/genomicIFrame?uniprot_acc="+uniprot;
-      }else if(data[chain][uniprot]==undefined){
-        var seq_iframe_url = "/sequenceIFrame?alignment="+encodeURI(infoAlignment);
-        var annot_iframe_url = "/annotationsIFrame?alignment="+encodeURI(infoAlignment);
-        var genomic_iframe_url = "/genomicIFrame?uniprot_acc="+uniprot;
       }
-      change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url );
+      change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url, ppi_iframe_url );
     }else{
       wait_message("BUILDING SEQUENCE ALIGNMENT");
       var starts = new Date().getTime();
@@ -178,38 +179,17 @@ function getValueSelection(elem,myFirstTime){
         dataType: 'jsonp',
         data: {},
         success: function(data){
-
-          //interface
           $ALIGNMENTS[  pdb ] = data;
           if(data[chain]!=undefined && data[chain][uniprot]!=undefined){
             alignmentTranslation = data[chain][uniprot].mapping;
-            var seq_iframe_url = "/sequenceIFrame?alignment="+encodeURI(infoAlignment);
-            var annot_iframe_url = "/annotationsIFrame?alignment="+encodeURI(infoAlignment);
-            var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
-          }else if(uniprot==undefined){
-            var seq_iframe_url = "/sequenceIFrame?alignment="+encodeURI(infoAlignment);
-            var annot_iframe_url = "/annotationsIFrame?alignment="+encodeURI(infoAlignment);
-            var genomic_iframe_url = "/genomicIFrame?uniprot_acc="+uniprot;
-          }else if(data[chain]!=undefined && data[chain][uniprot]==undefined){
-            var seq_iframe_url = "/sequenceIFrame?alignment="+encodeURI(infoAlignment);
-            var annot_iframe_url = "/annotationsIFrame?alignment="+encodeURI(infoAlignment);
-            var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
           }
-          change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url );
         },
         error: function(data){
           console.log("JQuery ajax error");
           alignmentTranslation = null;
-          if (uniprot!=undefined){
-            var seq_iframe_url = "/sequenceIFrame?alignment="+encodeURI(infoAlignment);
-            var annot_iframe_url = "/annotationsIFrame?alignment="+encodeURI(infoAlignment);
-            var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
-          }else{
-            var seq_iframe_url = "/sequenceIFrame?alignment="+encodeURI(infoAlignment);
-            var annot_iframe_url = "/annotationsIFrame?alignment="+encodeURI(infoAlignment);
-            var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
-          }
-          change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url );
+        },
+        complete: function(){
+          change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url, ppi_iframe_url );
         },
         jsonpCallback: 'processAlignment'
       }).done(function(){
@@ -354,7 +334,7 @@ function reload_annotations_frame(){
 }
 
 function change_view(e){
-  var views = ['#proteomic_panel','#genomic_panel'];
+  var views = ['#proteomic_panel','#genomic_panel','#ppi_panel'];
 
   if( $j(e).css('display')=='block' ) return;
   $j('.imported_targets_div').css('display','none');
@@ -372,6 +352,42 @@ function change_view(e){
   }else{
     $j('#topnav2').css('display','none');
   }
+}
+
+function display_noAlignments(PDB){
+  $j( "#alignment" ).css( "display", "none" );
+  $j( "#uniprotLogo").css( "display", "none" );
+  $j( "#controls").css( "display", "none" );
+  var label = " - <span style=\"color:red;font-size:18px;\">WARNING: </span>PROTEINS OF THIS COMPLEX COULD NOT BE IDENTIFIED";
+  if(PDB[0]){
+    console.log(PDB[0]);
+    label += " - <a id=\"manual_annotation\" href=\"#\" style=\"cursor:pointer\" >MANUAL IDENTIFICATION</a>";
+  }
+  $j( "label" ).html(label);
+  $j("#manual_annotation").hover(function(){
+    $j(this).css('color','#96C8C8');
+  });
+  $j("#manual_annotation").click(function(){
+    var pdb_url = "http://www.ebi.ac.uk/pdbe/entry-files/download/"+PDB[0]+".cif";
+    top.stop_wait_message  =  false;
+    wait_message("PROTEIN CONTENT ANALYSIS");
+    $j.ajax({
+      url:"/programmatic/fetch?url="+pdb_url+"&title="+$j("#molTitle").html(),
+      success:function(data){
+        if('error' in data){
+          swal({
+            title: "AJAX ERROR",
+            text: data['error'],
+            timer: 3000,
+            type: "error",
+            showConfirmButton: true
+          })
+        }else{
+          location.href="/programmatic/get/"+data['id'];
+        }
+      }
+    });
+  });
 }
 
 function hide_tools(){

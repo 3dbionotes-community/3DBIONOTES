@@ -1,6 +1,4 @@
 class MainController < ApplicationController
-
-
   
   include GlobalTools::FetchParserTools
   include MainManager::MainTools
@@ -11,6 +9,7 @@ class MainController < ApplicationController
   LocalPath = Settings.GS_LocalUpload 
   LocalScripts = Settings.GS_LocalScripts
   BaseUrl = Settings.GS_BaseUrl
+  PDB_REDO = Settings.GS_PDB_REDO
 
   def home
     if request.referer
@@ -21,10 +20,6 @@ class MainController < ApplicationController
     @noAlignments = false
     @isAvailable = true
     @viewerType = viewer_type( params[:viewer_type] )
-    @pdb_redo = false
-    if params.key? 'pdb_redo' then
-      @pdb_redo = true
-    end
 
     identifierName = params[:queryId]
     if !identifierName.nil?
@@ -53,6 +48,51 @@ class MainController < ApplicationController
       end
     end
   end 
+
+  def pdb_redo
+    pdb = params[:name]
+    rand_path = "pdb_redo_"+pdb
+    file_name = pdb+"_final.pdb"
+    url = PDB_REDO+"/"+pdb+"/"+file_name
+    file_content, http_code, http_code_name = getUrl(url,verbose=true)
+    if http_code.to_i > 399
+      return render json: {"error"=>"URL "+url+" was not reachable", "http_error"=>http_code_name}, status: :ok
+    elsif http_code.to_i == 0
+      return render json: {"error"=>"ruby exception", "url"=> url, "exception"=>file_content}, status: :ok
+    else
+      DataFile.save_string(file_content, file_name, rand_path)
+    end
+
+    @title = "PDB_REDO entry "+pdb.upcase
+    @rand  = rand_path
+    @file = file_name 
+    @structure_file = LocalPath+'/'+rand_path+'/'+file_name
+    @http_structure_file = BaseUrl+'/upload/'+rand_path+'/'+file_name
+
+    @mapping  =  JSON.parse(`#{LocalScripts}/structure_to_fasta_json #{@structure_file}`)
+
+    @error = nil
+    if @mapping.has_key? "error"
+      @error = @mapping["error"]
+    else 
+      @sequences = @mapping['sequences']
+      @choice = {}
+      do_not_repeat = {}
+      aCC = {}
+      pdbData = JSON.parse( PdbDatum.find_by(pdbId: pdb).data )
+      @sequences.each do |ch,seq|
+        acc = pdbData[ch].keys[0]
+        aCC[acc] = true
+      end
+      aCC = fetchUniprotMultipleSequences(aCC.keys.join(","),fasta_obj_flag=nil,dict_flag=true)
+      puts(aCC)
+      @sequences.each do |ch,seq|
+        acc = pdbData[ch].keys[0]
+        @choice[ch] = acc+"__sprot__"+aCC[acc]["definition"]+"__"+aCC[acc]["organism"]+"__"+aCC[acc]["gene_symbol"]
+      end
+      @viewerType = "ngl"
+    end
+  end
 
   def upload
     rand_path = (0...20).map { ('a'..'z').to_a[rand(26)] }.join.upcase
@@ -95,7 +135,8 @@ class MainController < ApplicationController
 
   def chain_mapping
     if params[:recover]
-      recover_data = recover(params[:rand])
+      rand = params[:rand]
+      recover_data = recover(rand)
       @title=recover_data['title']
       @viewerType=recover_data['viewerType']
       @optionsArray=recover_data['optionsArray']
@@ -160,6 +201,11 @@ class MainController < ApplicationController
                   'no_aa_ch'=>@no_aa_ch,
                   'file'=>@file
                  }, rand)
+    end
+    if File.exists?( LocalPath+'/'+rand+'/external_annotations.json' ) then
+      @external_annotations = JSON.parse( File.read(LocalPath+"/"+rand+"/external_annotations.json").sub(/\n/,"") ).to_json
+    else
+      @external_annotations = nil
     end
   end
 

@@ -132,6 +132,14 @@ a.nostyle{
   display:none;
 }
 
+#ppi_panel{
+  height:100%;
+  width:100%;
+  position:absolute;
+  display:none;
+}
+
+
 iframe{
   border:0px;
 }
@@ -178,6 +186,18 @@ iframe#genomicFrame{
   border-bottom:0px;
   padding-top:50px;
 }
+
+iframe#ppiFrame{
+  height:100%;
+  width:100%;
+  box-sizing: border-box;
+  border-left:0px;
+  border-top:0px;
+  border-right:0px;
+  border-bottom:0px;
+  padding-top:50px;
+}
+
 
 #evidence{
   display: inline-block;
