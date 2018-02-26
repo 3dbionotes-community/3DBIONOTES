@@ -58,6 +58,7 @@ module AnnotationManager
           #end
 
           begin
+            puts(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=transcript;feature=exon;content-type=application/json")
             data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=transcript;feature=exon;content-type=application/json"))
           rescue
             puts "Error: #{$!}"

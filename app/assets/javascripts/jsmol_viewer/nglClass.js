@@ -258,6 +258,52 @@ function nglClass( args ) {
 
         };
 
+        self.global_highlight = function(pdb, list){
+          var global_selection = [];
+          var global_cartoon = [];
+          var color;
+          for(var ch in list){
+            global_cartoon.push( ":"+ch );
+            var selection = {};
+            list[ch].forEach(function(i){
+                color = i.color;
+                var uniprot = Object.keys( top.$ALIGNMENTS[  pdb ][ch] )[0];
+                var ch_alignmentTranslation = top.$ALIGNMENTS[  pdb ][ch][uniprot].mapping;
+                var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, ch_alignmentTranslation);
+                pdbPosList.forEach(function(j){
+                  selection[j]=true;
+                });
+            });
+            selection = Object.keys(selection);
+            if(selection.length > 0){
+              global_selection.push( ":"+ch+" and ("+selection.join(" or ")+")" ); 
+            }
+          }
+
+          var model_flag = '';
+          if(self.model>=0) model_flag = 'and /'+self.model.toString()+' ';
+
+          self.Structures[ pdb ]['representations']['cartoon'].setSelection( "protein "+model_flag+"and ("+global_cartoon.join(" or ")+")" );
+          self.Structures[ pdb ]['representations']['trace'].setSelection("protein "+model_flag+"and not ("+global_cartoon.join(" or ")+")");
+
+          var selection_string = "protein "+model_flag+"and ("+global_selection.join(" or ")+")";
+          var selection_flag = true;
+          if(global_selection.length == 0){
+            selection_string = "";
+            selection_flag = false;
+          }
+
+	  self.Structures[ pdb ]['representations']['selection']['cartoon'].setSelection( "" );
+	  self.Structures[ pdb ]['representations']['selection']['spacefill'].setSelection( selection_string );
+	  self.Structures[ pdb ]['representations']['selection']['ball+stick'].setSelection( "" );
+
+          self.Structures[ pdb ]['representations']['selection']['spacefill'].setColor(color);
+
+	  self.Structures[ pdb ]['representations']['selection']['cartoon'].setVisibility(false);
+	  self.Structures[ pdb ]['representations']['selection']['ball+stick'].setVisibility(false);
+	  self.Structures[ pdb ]['representations']['selection']['spacefill'].setVisibility(selection_flag);
+        };
+
 	self.resize = function( new_size ){
 	};
 
@@ -453,6 +499,8 @@ function nglClass( args ) {
                 }else{
                   self.Structures[ pdb ]['representations']['cartoon'].setSelection( "protein "+model_flag+"and :"+chain );
                 }
+                self.Structures[ pdb ]['representations']['trace'].setSelection("protein "+model_flag+"and not :"+chain);
+
 		self.Structures[ pdb ]['representations']['selection']['cartoon'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+list.join(" or ")+")" );
 		self.Structures[ pdb ]['representations']['selection']['spacefill'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+list.join(" or ")+")" );
 		self.Structures[ pdb ]['representations']['selection']['ball+stick'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+list.join(" or ")+")" );

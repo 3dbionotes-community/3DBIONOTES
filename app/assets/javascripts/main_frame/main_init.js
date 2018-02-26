@@ -89,7 +89,7 @@ $j(document).ready(function(){
     hide_tools();
   });
 
-  $j('#topnav2').mouseover(function(){
+  $j('.topnav2').mouseover(function(){
     remove_all_panel_menu();
     $j('#upRightBottomFrame').css('visibility','visible');
   });
@@ -115,6 +115,10 @@ $j(document).ready(function(){
        top.document.getElementById("ppiFrame").contentWindow.dispatchEvent(evtOut);
        top.ppiFrame_vissible = true;
      }
+  });
+
+  $j('#variant_analysis').click(function(){
+    display_variants();
   });
 
   add_frames_listener();

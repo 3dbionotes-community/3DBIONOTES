@@ -48,22 +48,22 @@ class FramesPpiController < ApplicationController
           if not track.key? ki
             track[ki] = true
             if alignment.key? ki then
-              gene_name = uniprot[ alignment[ki].keys[0] ][2]
+              gene_name = ki+" - "+uniprot[ alignment[ki].keys[0] ][2]
             else
               gene_name = "Chain "+ki
             end
-            nodes.push( {data: { id: ki, name: gene_name}} )
+            nodes.push( {data: {id: ki, name: gene_name, nodeAnnotations:[]}} )
           end
           if not vi.nil?
             vi.each do |kj,vj|
               if not ( track.key? ki+kj or track.key? kj+ki)
                 track[ki+kj] = true
-                edges.push({data:{id: ki+kj, source: ki, target: kj}})
+                edges.push({data:{id: ki+kj, source: ki, target: kj, type: 'protein',sourceAnnotations: [  ], targetAnnotations: [  ]}})
               end
             end
           end
         end 
-        elements = nodes + edges
+        elements = {nodes:nodes,edges:edges}
         @elements = elements.to_json
       else
         @elements = "null"

@@ -96,7 +96,7 @@ module MainManager
                     ali["organism"] = uniLengths[uniprot][3]
                     ali["gene_symbol"] = uniLengths[uniprot][2]
                     ali["emdb"] = identifierName
-                    @optionsArray.push(["PDB:#{pdb.upcase} CH:#{chain} Uniprot:#{uniprot} #{ali["uniprotTitle"]}",ali.to_json])
+                    @optionsArray.push(["#{chain} - #{ali["gene_symbol"]}, #{ali["uniprotTitle"]}",ali.to_json])
                   end
                 end
               end

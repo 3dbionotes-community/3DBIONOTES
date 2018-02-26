@@ -109,10 +109,10 @@
                 %a.nostyle{:id=>"ppi_view", :style=>"cursor:pointer;", :title=>"Protein-Protein Interaction View"}PPI VIEW
 
         #proteomic_panel
-          %div#topnav2
+          %div#topnav_proteomic.topnav2
             %a.nostyle.menu{:id=>"menu_options_link", :style=>"cursor:pointer;font-weight:bold;"}
               %span TOOLS
-            %table#menu_options_table
+            %table.menu_options_table
               %tr
                 %td 
                   %a.nostyle{:id=>"upload_annotations", :style=>"cursor:pointer;"}UPLOAD CUSTOM ANNOTATIONS
@@ -122,11 +122,17 @@
               %tr
                 %td
                   %a.nostyle{:id=>"delete_features", :style=>"cursor:pointer;"}DELETE CUSTOM ANNOTATION
-
           %iframe#upRightBottomFrame{:src=>"annotationsIFrame",:scrolling=>"yes"}
         #genomic_panel
           %iframe#genomicFrame{:src=>"genomicIFrame",:scrolling=>"yes"}
         #ppi_panel
+          %div#topnav_ppi.topnav2
+            %a.nostyle.menu{:id=>"menu_options_link", :style=>"cursor:pointer;font-weight:bold;"}
+              %span TOOLS 
+            %table.menu_options_table
+              %tr
+                %td 
+                  %a.nostyle{:id=>"variant_analysis", :style=>"cursor:pointer;"}DISPLAY VARIANTS
           %iframe#ppiFrame{:src=>"ppiIFrame",:scrolling=>"yes"}
 
 :javascript

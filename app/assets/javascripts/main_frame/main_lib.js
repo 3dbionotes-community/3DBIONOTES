@@ -317,7 +317,7 @@ function remove_all_panel_menu(){
   $j("#remove_annotations").remove();
 
   if($j('#proteomic_panel').css('display')  ==  'block'){
-    $j('#topnav2').css('display','block');
+    $j('#topnav_proteomic').css('display','block');
     check_imported_select(true);
   }
 }
@@ -345,12 +345,10 @@ function change_view(e){
     }
   });
   $j(e).css('display','block');
+  $j(e).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 500);
 
   if(e == '#proteomic_panel'){
-    $j('#topnav2').css('display','block');
     check_imported_select();
-  }else{
-    $j('#topnav2').css('display','none');
   }
 }
 

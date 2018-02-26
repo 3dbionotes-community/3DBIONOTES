@@ -67,4 +67,23 @@ function add_frames_listener(){
     },  100);
   });
 
+  window.addEventListener("global_highlight",function(evt){
+    global_selection =  null;
+    var frames = global_frames;
+    var evtOut = document.createEvent("Event");
+    evtOut.initEvent("clear_aa",true,true);
+    frames.forEach(function(frame_id){
+      if( frame_id != "leftBottomFrame"){
+        top.document.getElementById(frame_id).contentWindow.dispatchEvent(evtOut);
+      }
+    });
+    
+    setTimeout(function(){
+      var selection = evt.detail;
+      var evtOut = document.createEvent("CustomEvent");
+      evtOut.initCustomEvent("global_highlight", true, true, selection);
+      top.document.getElementById("leftBottomFrame").contentWindow.dispatchEvent(evtOut);
+    },  100);
+  });
+
 }

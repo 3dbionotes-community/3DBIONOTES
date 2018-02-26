@@ -428,7 +428,7 @@ ul#topnav{
   content: "-";
 }
 
-div#topnav2{
+div.topnav2{
   text-align:right;
   display:inline;
   position:absolute;
@@ -438,45 +438,46 @@ div#topnav2{
   z-index:999;
 }
 
-#topnav2:hover {
+.topnav2:hover {
   border:1px solid #C3C3C3;
   background:white;
 }
 
-table#menu_options_table{
+div.topnav2:hover a ~ .menu_options_table{
+    display:table;
+}
+
+table.menu_options_table{
   display:none;
   text-align:right;
   margin:0 20 0 20;
 }
 
-table#menu_options_table tr td{
+table.menu_options_table tr td{
   padding-top:10px;
 }
 
-table#menu_options_table tr td a{
+table.menu_options_table tr td a{
   font-size:12px;
   font-weight:bold;
   letter-spacing:1px;
 }
 
-table#menu_options_table tr td a::after{
+table.menu_options_table tr td a::after{
   content:"  \25CB";
 }
 
-table#menu_options_table tr td a:hover::after{
+table.menu_options_table tr td a:hover::after{
   content:"  \25CF";
 }
 
 
-table#menu_options_table tr td a:hover{
+table.menu_options_table tr td a:hover{
   color:#96C8C8;
 }
 
-div#topnav2:hover a ~ #menu_options_table{
-    display:table;
-}
 
-#menu_options_table:hover{
+.menu_options_table:hover{
     display:table;
 }
 

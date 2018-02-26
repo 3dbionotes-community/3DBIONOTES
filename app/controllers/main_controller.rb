@@ -179,7 +179,7 @@ class MainController < ApplicationController
         end
         alignment[file][ch]={}
         alignment[file][ch][acc] = align_sequences_mc(uniprot[ch],seq,mapping['mapping'][ch],rand)
-        @optionsArray.push(["CH:#{ch} Uniprot:#{acc} #{title}",{'pdb'=>file,'chain'=>ch,'uniprot'=>acc, 'uniprotLength'=>uniprot[ch].length, 'uniprotTitle'=>title, 'organism'=>organism, 'gene_symbol'=>gene_symbol,  'path'=>rand}.to_json])
+        @optionsArray.push(["#{ch} - #{gene_symbol}, #{title}",{'pdb'=>file,'chain'=>ch,'uniprot'=>acc, 'uniprotLength'=>uniprot[ch].length, 'uniprotTitle'=>title, 'organism'=>organism, 'gene_symbol'=>gene_symbol,  'path'=>rand}.to_json])
       end
       File.write(LocalPath+"/"+rand+"/alignment.json", alignment.to_json)
       @alignment = alignment

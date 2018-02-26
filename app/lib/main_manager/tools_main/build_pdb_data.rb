@@ -50,7 +50,7 @@ module MainManager
                 ali["uniprotTitle"] = uniLengths[uniprot][1]
                 ali["organism"] = uniLengths[uniprot][3]
                 ali["gene_symbol"] = uniLengths[uniprot][2]
-                @optionsArray.push(["CH:#{chain} Uniprot:#{uniprot} #{ali["uniprotTitle"]}",ali.to_json])
+                @optionsArray.push(["#{chain} - #{ali["gene_symbol"]}, #{ali["uniprotTitle"]}",ali.to_json])
               end
             end
           end
