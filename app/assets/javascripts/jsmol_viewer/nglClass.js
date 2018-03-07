@@ -286,7 +286,7 @@ function nglClass( args ) {
           self.Structures[ pdb ]['representations']['cartoon'].setSelection( "protein "+model_flag+"and ("+global_cartoon.join(" or ")+")" );
           self.Structures[ pdb ]['representations']['trace'].setSelection("protein "+model_flag+"and not ("+global_cartoon.join(" or ")+")");
 
-          var selection_string = "protein "+model_flag+"and ("+global_selection.join(" or ")+")";
+          var selection_string = "protein "+model_flag+"and (("+global_selection.join(") or (")+"))";
           var selection_flag = true;
           if(global_selection.length == 0){
             selection_string = "";
@@ -584,10 +584,12 @@ function nglClass( args ) {
 
 	self.highlight_chain = function( pdb, chain, non_exec){
                 if(!self.Structures[pdb]) return;
-                if(self.selected.residues.length > 0){
-		  for (type in self.Structures[ self.selected.pdb ]['representations']['selection']){
-		    self.Structures[ self.selected.pdb ]['representations']['selection'][type].setVisibility(false);
-		  }
+                for(var _p in self.Structures){
+                  if( _p != "density" ){
+		    for (type in self.Structures[ _p ]['representations']['selection']){
+		      self.Structures[ _p ]['representations']['selection'][type].setVisibility(false);
+		    }
+                  }
                 }
                 var model_flag = '';
                 if(self.model>=0) model_flag = 'and /'+self.model.toString()+' '; 

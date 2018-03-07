@@ -63,7 +63,9 @@ function add_frames_listener(){
       var selection = evt.detail;
       var evtOut = document.createEvent("CustomEvent");
       evtOut.initCustomEvent("highlight_all", true, true, selection);
-      top.document.getElementById("leftBottomFrame").contentWindow.dispatchEvent(evtOut);
+      frames.forEach(function(frame_id){
+        top.document.getElementById(frame_id).contentWindow.dispatchEvent(evtOut);
+      });
     },  100);
   });
 

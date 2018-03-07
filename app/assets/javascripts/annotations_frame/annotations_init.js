@@ -50,7 +50,6 @@ $j(document).ready(function(){
       update_asa_residues( evt.detail[0] );
       $j(".up_pftv_icon-reset").get(0).dispatchEvent(fake_click);
     }
-    
   });
 
   add_top_window_listener();

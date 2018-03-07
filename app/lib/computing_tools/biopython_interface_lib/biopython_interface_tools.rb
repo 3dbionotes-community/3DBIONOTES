@@ -23,6 +23,7 @@ module ComputingTools
           end
         else
           filename = LocalPath+"/"+path+"/biopython_interface_recover_data.json"
+          puts(filename);
           if File.exist?(filename)
             out = recover(path)
           else
@@ -38,7 +39,6 @@ module ComputingTools
           
         end
         return out
-        return render json: out, status: :ok
       end
 
       def recover(rand)

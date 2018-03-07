@@ -55,6 +55,15 @@ function build_ProtVista(){
     },10);
     clear_feature_button();
   });
+
+  instance.getDispatcher().on("multipleFeatureDeselected", function(obj) {
+    setTimeout(function(){
+      if(!instance.selectedFeature){
+        trigger_aa_cleared();
+      }
+    },10);
+    clear_feature_button();
+  });
 }
 
 function add_feature_button(){

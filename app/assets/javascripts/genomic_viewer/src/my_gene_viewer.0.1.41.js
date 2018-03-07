@@ -21050,7 +21050,7 @@ var FeatureViewer = (function () {
         var animation = true;
 
          this.index_shift = 0;
-         this.highlighted = null;
+         this.highlighted = [];
          if(options['index_shift'] > 0){
                  this.index_shift = options['index_shift'];
          }
@@ -21228,6 +21228,9 @@ var FeatureViewer = (function () {
                           .attr('class','perma_tooltipDiv')
                           .style({top:(cp_tooltipDiv.top-15)+'px',left:(cp_tooltipDiv.left-15)+'px'})
                           .html( cp_tooltipDiv.content );
+                        d3.selectAll('div.perma_tooltipDiv').on('mouseleave',function(){
+                          d3.selectAll('div.perma_tooltipDiv').remove();
+                        })
 
                         var xTemp;
                         var yTemp;
@@ -22225,7 +22228,7 @@ var FeatureViewer = (function () {
 
         function brushend() {
             var tmp_highlighted = null;
-            if(self.highlighted){
+            if( self.highlighted.length>0 ){
                 tmp_highlighted = self.highlighted
             }
             d3.select(div).selectAll('div.selectedRect').remove();
@@ -22300,11 +22303,21 @@ var FeatureViewer = (function () {
                 d3.select(div).selectAll(".brush").call(brush.clear());
                 //resetAll();
             }
-            self.__highlight( tmp_highlighted[0] , tmp_highlighted[1] );
+            if(tmp_highlighted && tmp_highlighted.length>0){
+              self.highlighted = [];
+              tmp_highlighted.forEach(function(f){
+                self.__highlight( f[0] , f[1], true );
+              });
+            }
+        }
+
+        self.__clear_highlighted = function() {
+                this.highlighted = [];
+                d3.select(div).selectAll('div.selectedRect').remove();
         }
 
         self.__clear = function() {
-                this.highlighted = null;
+                this.highlighted = [];
                 resetAll();
                 brushend();
         }
@@ -22431,6 +22444,7 @@ var FeatureViewer = (function () {
         }
 
         this.addRectSelection = function (svgId) {
+            console.log('addRectSelection');
             var featSelection = d3.select(svgId);
             var elemSelected = featSelection.data();
             var xTemp;
@@ -22480,14 +22494,18 @@ var FeatureViewer = (function () {
             });
         };
 
-        this.__highlight = function (__x,__y) {
+        this.__highlight = function (__x,__y,remove_flag) {
             var xTemp;
             var yTemp;
-            this.highlighted = [__x,__y];
+            if(remove_flag){
+              this.highlighted.push([__x,__y]);
+            }else{
+              this.highlighted = [[__x,__y]];
+            }
             var xRect;
             var widthRect;
             var svgWidth = d3.select(".background").attr("width");
-            d3.select('body').selectAll('div.selectedRect').remove();
+            if(!remove_flag) d3.select('body').selectAll('div.selectedRect').remove();
 
             var selectedRect = d3.select(div)
                 .append('div')
@@ -22656,10 +22674,14 @@ var FeatureViewer = (function () {
                 .on("contextmenu", function (d, i) {
                     d3.event.preventDefault();
                     resetAll();
-                    if(self.highlighted){
+                    if(self.highlighted.length > 0){
                         tmp_highlighted = self.highlighted
-                        setTimeout(function(){  
-                          self.__highlight( tmp_highlighted[0] , tmp_highlighted[1] );
+                        setTimeout(function(){
+                          self.highlighted = [];
+                          d3.select(div).selectAll('div.selectedRect').remove();
+                          tmp_highlighted.forEach(function(f){  
+                            self.__highlight( f[0] , f[1], true );
+                          });
                         }, 300);
                     }
                     // react on right-clicking

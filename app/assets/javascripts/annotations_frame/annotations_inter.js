@@ -20,6 +20,7 @@ function add_top_window_listener(){
 
   window.addEventListener("clear_aa", function(evt){
     $j('.up_pftv_tooltip-container').css('visibility','hidden');
+    instance.clear_multipleHighlight();
     if (instance.selectedFeature){
       var fake_click = new MouseEvent("click");
       if( document.getElementsByName( instance.selectedFeature.internalId ).lentgh > 0){
@@ -29,6 +30,15 @@ function add_top_window_listener(){
         $j("[name="+instance.selectedFeature.internalId+"]").get(0).dispatchEvent(fake_click);
         if( $j(".up_pftv_tooltip-close").get(0) )$j(".up_pftv_tooltip-close").get(0).dispatchEvent(fake_click);
       }
+    }
+  });
+
+  window.addEventListener("highlight_all", function(evt){
+    var selection = evt.detail;
+    if(instance){
+      instance.multipleHighlight(selection);
+    }else{
+      console.log("ProtVista not found");
     }
   });
 

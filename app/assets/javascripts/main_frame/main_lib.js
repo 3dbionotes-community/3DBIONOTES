@@ -391,3 +391,4 @@ function display_noAlignments(PDB){
 function hide_tools(){
   $j('.imported_targets_div').css('display','none');
 }
+

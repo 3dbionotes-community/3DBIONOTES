@@ -62,6 +62,10 @@ function graph_class(args){
         self.cy.nodes().on("click", function(n){
           display_active_data(n);
         });
+
+        self.cy.edges().on("click", function(n){
+          display_active_data_edge(n);
+        });
       }
     }else{
       console.log("elements NOT FOUND");
@@ -78,13 +82,20 @@ function graph_class(args){
 
   self.load_variants = function(){
     var pdb;
+    var url;
     if(top.global_infoAlignment.pdb){
       pdb = top.global_infoAlignment.pdb;
+      if(top.global_infoAlignment.path){
+        url = "/api/annotations/ppi/variants/"+pdb.replace(".","__")+"?path="+top.global_infoAlignment.path
+      }else{
+        url = "/api/annotations/ppi/variants/"+pdb
+      }
     }else{
       return;
     }
+   
     $j.ajax({
-      url:"/api/annotations/ppi/variants/"+pdb,
+      url:url,
       success:function(data){
         self.annotations['variants']={'data':data,'active':true};
         self.display_variants(data);
@@ -101,6 +112,18 @@ function graph_class(args){
         node.data('nodeAnnotations',_data.graph.nodes[node.id()]);
       }
     });
+
+    self.cy.edges(function(i,edge){
+      var source = edge.source().id();
+      var target = edge.target().id();
+      if(_data.graph.edges[source+target]){
+        edge.data('sourceAnnotations',_data.graph.edges[source+target]);
+      }
+      if(_data.graph.edges[target+source]){
+        edge.data('targetAnnotations',_data.graph.edges[target+source]);
+      }
+    });
+
   }
 
 }

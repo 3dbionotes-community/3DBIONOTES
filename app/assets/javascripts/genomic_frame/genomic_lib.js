@@ -74,8 +74,8 @@ function build_genomic_display(e_name){
 	//add_annotations(ft);
 
 	ft.onFeatureSelected(function (d) {
-		ft.highlighted = [d.detail['start'],d.detail['end']];
-		triggerGeneCoordinates( d.detail['start'],d.detail['end'] );
+		ft.highlighted = [ [d.detail['start'],d.detail['end']] ];
+		triggerGeneCoordinates( d.detail['start'], d.detail['end'] );
 	});
 	svg_div();
         check_global_selection();
@@ -305,7 +305,30 @@ function triggerGeneCoordinates(start,end){
 
 }
 
+function multipleHighlight(features){
+    if(!ft)return;
+    ft.__clear_highlighted();
+    features.forEach(function(f){
+      var start = f.start;
+      var end = f.end;
+      var p_start = __genomic_alignment.transcript.alignment.u2p[start];
+      var p_end = __genomic_alignment.transcript.alignment.u2p[end];
+      var strand = __genomic_alignment.gene.strand;
+      var g_start;
+      var g_end;
+      if(strand > 0){
+        g_start = Math.min.apply( null, __genomic_alignment.transcript.alignment.p2g[p_start] );
+        g_end = Math.max.apply( null, __genomic_alignment.transcript.alignment.p2g[p_end] );
+      }else{
+        g_start = Math.min.apply( null, __genomic_alignment.transcript.alignment.p2g[p_end] );
+        g_end = Math.max.apply( null, __genomic_alignment.transcript.alignment.p2g[p_start] );
+      }
+      ft.__highlight(g_start,g_end,true);
+   });
+}
+
 function clear_selection(){
+  if(!ft)return;
   ft.__clear();
 }
 

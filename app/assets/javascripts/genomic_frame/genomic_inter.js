@@ -2,6 +2,7 @@
 function add_top_window_listener(){
 
   window.addEventListener("select_aa", function(evt){
+   if(!__genomic_alignment)return;
     var selection = evt.detail;
 
     var start = selection.begin;
@@ -23,6 +24,15 @@ function add_top_window_listener(){
 
   window.addEventListener("clear_aa", function(evt){
     clear_selection();
+  });
+
+  window.addEventListener("highlight_all", function(evt){
+    var selection = evt.detail;
+    var features = [];
+    selection.forEach(function(f){
+      features.push({start:f.begin,end:f.end});
+    });
+    multipleHighlight(features);
   });
 
 }

@@ -32,13 +32,16 @@ function _build_sequence_viewer( uniprotSeq, pdbSeq, imported_seq ){
       });
     }
 
+    /*sequence_panel.onSelectionChange(function(elem){
+    });*/
+
     sequence_panel.onSelectionChanged(function(elem){
       var begin = elem.start+1;
       var end = elem.end+1;
       var color = "rgb(255, 233, 153)";
       var selection = {begin:begin, end:end, color:color, frame:"downRightBottomFrame"};
       trigger_aa_selection( selection );
-      sequence_panel.setSelection(begin-1,end-1);
+      //sequence_panel.setSelection(begin-1,end-1);
       var divSelected = "#0_"+(begin-1);
       if($j(divSelected).length > 0){
         $j(".body_div").scrollTop( $j(divSelected).offset().top - $j(divSelected).parent().offset().top );
@@ -47,4 +50,12 @@ function _build_sequence_viewer( uniprotSeq, pdbSeq, imported_seq ){
 
     check_global_selection();
 }
+
+function multipleHighlight(features){
+  sequence_panel.removeAllHighlights()
+  features.forEach(function(f){
+    sequence_panel.addHighlight({ "start": f.start-1, "end": f.end-1, "color": "black", "background": "#FFE999", "id": "aaa" })
+  });
+}
+
 

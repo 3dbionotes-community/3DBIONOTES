@@ -165,7 +165,7 @@ Biojs.Sequence_alignment = Biojs.extend(
 		// Styles 
 		selectionColor : '#FFE999',
 		selectionFontColor : 'black',
-		highlightFontColor : 'red',
+		highlightFontColor : 'black',
 		highlightBackgroundColor : 'white',
 		fontFamily: '"Andale mono", courier, monospace',
 		fontSize: '12px',
@@ -455,7 +455,6 @@ Biojs.Sequence_alignment = Biojs.extend(
 			start = aux;
 
 		}
-
 		if(start != this.opt.selection.start || end != this.opt.selection.end) {
 			this._setSelection(start, end);
 			/*this.raiseEvent(
@@ -688,8 +687,8 @@ Biojs.Sequence_alignment = Biojs.extend(
     */
 	removeAllHighlights : function () {
 		this._highlights = [];
-		this._restoreHighlights(1,this.opt.sequence.length);
-		this._restoreSelection(1,this.opt.sequence.length);
+		this._restoreHighlights(0,this.opt.sequence.length);
+		//this._restoreSelection(1,this.opt.sequence.length);
 	},
 	
 	/**
@@ -1305,17 +1304,18 @@ Biojs.Sequence_alignment = Biojs.extend(
 				var id = jQuery(this).attr('id');
 				currentPos = parseInt(id.substr(id.indexOf("_") + 1));
 				clickPos = currentPos;
+                                self.removeAllHighlights();
 				self._setSelection(clickPos,currentPos);
 				isMouseDown = true;
 				
 				// Selection is happening, raise an event
-				/*self.raiseEvent(
-					Biojs.Sequence.EVT_ON_SELECTION_CHANGE, 
+				self.raiseEvent(
+					Biojs.Sequence_alignment.EVT_ON_SELECTION_CHANGE, 
 					{ 
 						"start" : self.opt.selection.start, 
 						"end" : self.opt.selection.end 
 					}
-				);*/
+				);
 			
 			}).mouseover(function() {
 				// Update selection
@@ -1509,7 +1509,7 @@ Biojs.Sequence_multiple_alignment = Biojs.extend(
 		// Styles 
 		selectionColor : '#FFE999',
 		selectionFontColor : 'black',
-		highlightFontColor : 'red',
+		highlightFontColor : 'black',
 		highlightBackgroundColor : 'white',
 		fontFamily: '"Andale mono", courier, monospace',
 		fontSize: '12px',
@@ -2032,8 +2032,8 @@ Biojs.Sequence_multiple_alignment = Biojs.extend(
     */
 	removeAllHighlights : function () {
 		this._highlights = [];
-		this._restoreHighlights(1,this.opt.sequence.length);
-		this._restoreSelection(1,this.opt.sequence.length);
+		this._restoreHighlights(0,this.opt.sequence.length);
+		//this._restoreSelection(1,this.opt.sequence.length);
 	},
 	
 	/**
@@ -2631,13 +2631,13 @@ Biojs.Sequence_multiple_alignment = Biojs.extend(
 				isMouseDown = true;
 				
 				// Selection is happening, raise an event
-				/*self.raiseEvent(
-					Biojs.Sequence.EVT_ON_SELECTION_CHANGE, 
+				self.raiseEvent(
+					Biojs.Sequence_alignment.EVT_ON_SELECTION_CHANGE, 
 					{ 
 						"start" : self.opt.selection.start, 
 						"end" : self.opt.selection.end 
 					}
-				);*/
+				);
 			
 			}).mouseover(function() {
 				// Update selection
