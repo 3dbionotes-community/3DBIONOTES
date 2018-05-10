@@ -12,3 +12,12 @@
   z-index: 45;
   box-shadow: 0 1px 2px 0 #656565;
 }
+
+.view_region{
+  font: 12px sans-serif;
+  color: #666;
+}
+
+.title_region{
+  font-weight:bold;
+}

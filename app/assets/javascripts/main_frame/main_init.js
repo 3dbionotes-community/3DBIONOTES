@@ -121,6 +121,30 @@ $j(document).ready(function(){
     display_variants();
   });
 
+  $j('#ptm_analysis').click(function(){
+    display_ptms();
+  });
+
+  $j('#pfam_analysis').click(function(){
+    display_pfam();
+  });
+
+  $j('#interpro_analysis').click(function(){
+    display_interpro();
+  });
+
+  $j('#smart_analysis').click(function(){
+    display_smart();
+  });
+
+  $j('#epitopes_analysis').click(function(){
+    display_epitopes();
+  });
+
+  $j('#elms_analysis').click(function(){
+    display_elms();
+  });
+
   add_frames_listener();
 
 });

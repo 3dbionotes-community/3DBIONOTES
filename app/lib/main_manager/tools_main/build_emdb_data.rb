@@ -83,6 +83,7 @@ module MainManager
                 @optionsArray.push(["PDB:#{pdb.upcase}, No alignments available with Uniprot",ali.to_json])
                 @noAlignments = true
               else
+                chain_flag = {}
                 uniprotData.each do |uniprot,chains|
                   chains.each do |chain|
                     ali = Hash.new
@@ -96,7 +97,10 @@ module MainManager
                     ali["organism"] = uniLengths[uniprot][3]
                     ali["gene_symbol"] = uniLengths[uniprot][2]
                     ali["emdb"] = identifierName
-                    @optionsArray.push(["#{chain} - #{ali["gene_symbol"]}, #{ali["uniprotTitle"]}",ali.to_json])
+                    if not chain_flag.key? chain then
+                      @optionsArray.push(["#{chain} - #{ali["gene_symbol"]}, #{ali["uniprotTitle"]}",ali.to_json])
+                      chain_flag[chain] = true
+                    end
                   end
                 end
               end

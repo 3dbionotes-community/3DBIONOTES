@@ -5,7 +5,7 @@ class EbiServicesController < ApplicationController
     type = params[:type]
     uniprotAc = params[:name]
     toReturn = getFeaturesFromEBI( uniprotAc, type )
-    jsonData = JSON.parse toReturn
+    jsonData = toReturn
     if jsonData.key? 'errorMessage'
       myStatus = :not_found
     else

@@ -31,7 +31,12 @@ module InfoManager
  
         url = BaseUrl+"api/mappings/EMDB/PDB/"+emdbId
         jsonData = getUrl(url)
-        pdbData = JSON.parse(jsonData)
+        pdbData = {}
+        begin
+          pdbData = JSON.parse(jsonData)
+        rescue
+          raise url+" DID NOT RETURN A JSON OBJECT"
+        end
         pdbs = []
         if pdbData.has_key?(emdbId)
           pdbs = pdbData[emdbId]
@@ -45,7 +50,12 @@ module InfoManager
         pdbs.each do |__pdb|
           url = BaseUrl+"api/info/PDB/available/"+__pdb.downcase
           jsonData = getUrl(url)
-          titlePDBJson = JSON.parse(jsonData)
+          titlePDBJson = {}
+          begin
+            titlePDBJson = JSON.parse(jsonData)
+          rescue
+            raise url+" DID NOT RETURN A JSON OBJECT"
+          end
           if titlePDBJson["available"] != true and emdbInfo["available"] == true
             emdbInfo["available"] = false
           end

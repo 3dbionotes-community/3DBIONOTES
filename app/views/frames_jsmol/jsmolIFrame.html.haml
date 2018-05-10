@@ -15,11 +15,11 @@
         bionotes_jsmol();
         miApplet = new JSmolClass();
       }else if(viewerType=="ngl"){
-        miApplet = new nglClass( options );
+        var viewer_class = require("viewer_class");
+        miApplet = new viewer_class( options );
       }else if(viewerType=="chimera"){
         miApplet = new chimeraClass();
       }
-      miApplet.start(options);
       $j(window).load(function(){
         var size = {};
         size["width"]=window.innerWidth;

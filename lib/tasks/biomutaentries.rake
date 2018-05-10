@@ -7,7 +7,7 @@ namespace :biomutaentries do
   localAppDB = Settings.GS_LocalAppDB
 
   task seed_biomuta: :environment do
-    data = `awk -F","  '{if($10!=$11 && $12!="-" && $12~/damaging/ && $13!="-" && $14!="-")print $0}' #{localDB}/BIOMUTA/BioMuta.csv | sort -k2`
+    data = `awk -F","  '{if($10!=$11 && $12!="-" && $12~/damaging/ && $13!="-" && $14!="-")print $2","$9","$10","$11","$12","$13","$14","$15}' #{localDB}/BIOMUTA/BioMuta.csv | sort | uniq`
     data = data.split(/\n/)
     mutations = { 'XXX' => {} }
     puts "Biomuta processing data"
@@ -18,14 +18,14 @@ namespace :biomutaentries do
     data.each do |l|
       tmp = {}
       linea = l.chomp.split(",")
-      uniprotAc = linea[1].strip
-      position = linea[8].strip
-      original = linea[9].strip
-      variation = linea[10].strip
-      polyphen = linea[11].strip
-      pubmed = linea[12].strip
-      disease = linea[13].strip
-      source = linea[14].strip
+      uniprotAc = linea[0].strip
+      position = linea[1].strip
+      original = linea[2].strip
+      variation = linea[3].strip
+      polyphen = linea[4].strip
+      pubmed = linea[5].strip
+      disease = linea[6].strip
+      source = linea[7].strip
       tmp["start"] = position.to_i
       tmp["end"] = position.to_i
       tmp["position"] = position.to_i

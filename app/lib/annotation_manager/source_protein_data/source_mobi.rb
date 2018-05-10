@@ -33,7 +33,7 @@ module AnnotationManager
             Mobientry.create(proteinId: uniprotAc, data:out.to_json)
           end
         else
-          out = out.data
+          out = JSON.parse(out.data)
         end
         return out 
       end

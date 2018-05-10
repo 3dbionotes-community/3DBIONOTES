@@ -130,7 +130,7 @@ function label_visible(i){
 
 function remove_label(i){
   var internalId = i.attr("id").split(":")[1];
-  var index = miApplet.keep_selected.findIndex(function(i){
+  var index = miApplet.selector_manager.keep_selected.findIndex(function(i){
     return i.id == internalId;
   });
   $j('#label\\:'+internalId).remove();

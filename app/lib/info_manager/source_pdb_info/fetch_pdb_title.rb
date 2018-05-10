@@ -9,7 +9,12 @@ module InfoManager
         request = makeRequest(PdbSummaryUrl,pdb)
         json = {}
         if request
-          json = JSON.parse(request)
+          json = {}
+          begin
+            json = JSON.parse(request)
+          rescue
+            raise PdbSummaryUrl+"/"+pdb+" DID NOT RETURN A JSON OBJECT"
+          end
         end
         title = "Compound title not found"
         json.each do |k,v|

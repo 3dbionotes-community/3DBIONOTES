@@ -16,7 +16,12 @@ module MappingsManager
         if request.nil?
           request = "{}"
         end
-        json = JSON.parse(request)
+        json = {}
+        begin
+          json = JSON.parse(request)
+        rescue
+          raise Server+SIFTSUniprot+"/"+pdbId+" DID NOT RETURN A JSON OBJECT"
+        end
         json.each do |k,v|
           uniprotFromPDB[k] = Hash.new
           v["UniProt"].each do |ki,vi|

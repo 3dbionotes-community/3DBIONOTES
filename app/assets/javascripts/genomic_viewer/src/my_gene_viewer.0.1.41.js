@@ -21055,6 +21055,11 @@ var FeatureViewer = (function () {
                  this.index_shift = options['index_shift'];
          }
 
+         self.init_start = 1+self.index_shift;
+         self.init_end = fvLength+self.index_shift;
+         self.position_start = 1+self.index_shift;
+         self.position_end = fvLength+self.index_shift;
+
         function colorSelectedFeat(feat, object) {
             //change color && memorize
             if (featureSelected !== {}) d3.select(featureSelected.id).style("fill", featureSelected.originalColor);
@@ -22309,6 +22314,12 @@ var FeatureViewer = (function () {
                 self.__highlight( f[0] , f[1], true );
               });
             }
+            if(start>0 && end>0 && start<end){
+              console.log(start+":"+end);
+              self.position_start = start+self.index_shift+1;
+              self.position_end = end+self.index_shift;
+              self.update_region();
+            }
         }
 
         self.__clear_highlighted = function() {
@@ -22540,6 +22551,18 @@ var FeatureViewer = (function () {
             });
         };
 
+        this.update_region = function(){
+          if( $j(".content_region").length>0){
+            $j(".content_region").html( self.position_start+" - "+self.position_end );
+          }else{
+            $j(".svgHeader").append( "<span class=\"view_region\"><span class=\"title_region\">CURRENT REGION:</span> <span class=\"content_region\">"+this.position_start+" - "+this.position_end+"</span><span style=\"padding-left:5px;\"><img title=\"Open region in ENSEMBL\" height=\"16\" style=\"cursor:pointer;position:relative;bottom:2px;\" src=\"/ensemble_img.png\" id=\"open_region\" /></span></span>" );
+            $j("#open_region").click(function(){
+              var url = "http://www.ensembl.org/Homo_sapiens/Location/View?db=core;g="+__genomic_alignment.gene.id+";r="+__genomic_alignment.gene.seq_region_name+":"+self.position_start+"-"+self.position_end;
+              window.open(url);
+            });
+          }
+        }
+
         function initSVG(div, options) {
 
             if (typeof options === 'undefined') {
@@ -22685,6 +22708,9 @@ var FeatureViewer = (function () {
                         }, 300);
                     }
                     // react on right-clicking
+                   self.position_start = self.init_start;
+                   self.position_end = self.init_end;
+                   self.update_region();
                 });
             svgElement = el.getElementsByTagName("svg")[0];
 

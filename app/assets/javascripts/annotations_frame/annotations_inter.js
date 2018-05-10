@@ -51,6 +51,12 @@ function trigger_aa_selection(selection){
   top.window.dispatchEvent(evt);
 }
 
+function trigger_highlight_all(selection){
+  var evt = document.createEvent("CustomEvent");
+  evt.initCustomEvent("highlight_all",true,true,selection);
+  top.window.dispatchEvent(evt);
+}
+
 function trigger_aa_cleared(){
   var evt = document.createEvent("CustomEvent");
   evt.initCustomEvent("aa_cleared",true,true,"upRightBottomFrame");

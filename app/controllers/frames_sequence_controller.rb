@@ -16,11 +16,25 @@ class FramesSequenceController < ApplicationController
         if @alignment["path"]
           url = BaseUrl+"api/alignments/PDB/"+@alignment["path"]
           jsonData = getUrl(url)
-          @alignmentData = JSON.parse(jsonData)[@alignment["pdb"]][@alignment["chain"]][@alignment["uniprot"]]
+          begin
+            json = JSON.parse(jsonData)
+          rescue
+            raise url+" DID NOT RETURN A JSON OBJECT"
+          end
+          @alignmentData = json[@alignment["pdb"]][@alignment["chain"]][@alignment["uniprot"]]
         else
           url = BaseUrl+"api/alignments/PDB/"+@alignment["pdb"]
           jsonData = getUrl(url)
-          @alignmentData = JSON.parse(jsonData)[@alignment["chain"]][@alignment["uniprot"]]
+          begin
+            json = JSON.parse(jsonData)
+          rescue
+            raise url+" DID NOT RETURN A JSON OBJECT"
+          end
+          if json.key? @alignment["chain"] and json[@alignment["chain"]].key? @alignment["uniprot"] then
+            @alignmentData = json[@alignment["chain"]][@alignment["uniprot"]]
+          else
+            @alignmentData = nil
+          end
         end
 
         if @alignmentData.nil?

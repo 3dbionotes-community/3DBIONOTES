@@ -31,8 +31,9 @@ class FramesAnnotationsController < ApplicationController
         @asyncURL.push(["smart", "/api/annotations/SMART/Uniprot/"+@alignment["uniprot"],true])
         @asyncURL.push(["interpro", "/api/annotations/interpro/Uniprot/"+@alignment["uniprot"],true])
         @asyncURL.push(["mobi", "/api/annotations/mobi/Uniprot/"+@alignment["uniprot"],true])
-        @asyncURL.push(["pdb_redo", "/api/annotations/PDB_REDO/"+@alignment["pdb"],false])
-
+        if not @alignment["pdb"].nil? then
+          @asyncURL.push(["pdb_redo", "/api/annotations/PDB_REDO/"+@alignment["pdb"],false])
+        end
       end
     end
     @allURL = @allURL.to_json

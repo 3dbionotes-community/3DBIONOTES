@@ -59,14 +59,24 @@ function build_genomic_display(e_name){
                 color: "#1E90FF",
                 type: "rect",
         });
+
+        ft.addFeature({
+                data: __genomic_alignment['transcript']['alignment']['gene_cds_intervals'],
+                name: "CODING REGION",
+                className: "cds_segments",
+                color: "#b6e1fc",
+                type: "rect",
+        });
         
         ft.addFeature({
                 data: __genomic_alignment['transcript']['alignment']['gene_uniprot_intervals'],
                 name: "UNIPROT ALIGN",
                 className: "uniprot_coverage",
-                color: "#87CEFA",
+                color: "#ff8b4d",
                 type: "rect",
         });
+
+        ft.update_region();
 
 	add_transcripts(ft);
 	add_variations(ft,start_flag);
@@ -82,8 +92,20 @@ function build_genomic_display(e_name){
 }
 
 function add_transcripts(ft){
+        if(!('other_coding' in __genomic_annotations['transcripts']) || Object.keys(__genomic_annotations['transcripts']['other_coding']).length==0){
+          $j("#oct_cb").parent().css("display","none");
+        }
+        if(!('non_coding' in __genomic_annotations['transcripts']) || Object.keys(__genomic_annotations['transcripts']['non_coding']).length==0){
+          $j("#nct_cb").parent().css("display","none");
+        }
+        if(!('coding' in __genomic_annotations['transcripts']) || Object.keys(__genomic_annotations['transcripts']['coding']).length==0){
+          $j("#pct_cb").parent().css("display","none");
+        }
 	if( $j('#pct_cb').is(':checked') ){
 		__add_pct(ft);
+	}
+        if( $j('#oct_cb').is(':checked') ){
+		__add_oct(ft);
 	}
 	if( $j('#nct_cb').is(':checked') ){
 		__add_nct(ft);
@@ -118,7 +140,23 @@ function __add_pct(ft){
 	              	data: transcript,
         	      	name: i,
                		className: i,
-                	color: "#1E90FF",
+                	color: "#66b3ff",
+                	type: "rect",
+        	});
+	}
+}
+function __add_oct(ft){
+	for( var i in __genomic_annotations['transcripts']['other_coding'] ){
+		var transcript = [];
+		__genomic_annotations['transcripts']['other_coding'][i].forEach(function(j){
+			transcript.push({'x':j['x']-ft.index_shift,'y':j['y']-ft.index_shift});
+			
+		});
+		ft.addFeature({
+	              	data: transcript,
+        	      	name: i,
+               		className: i,
+                	color: "#9999ff",
                 	type: "rect",
         	});
 	}
@@ -189,11 +227,11 @@ function add_annotations(ft){
 function add_variations (ft,start_flag){
 	var __variations = {};
 	var __strand = {'1':'Positive','-1':'Negative','0':'Unknown'};
-	var __ensembl_colors = {"Pathogenic":"#FF0000","Benign":"#00FF00","Unknown":"#FF00FF","transcript_ablation":"#ff0000","splice_acceptor":"#FF581A","splice_donor":"#FF581A","stop_gained":"#ff0000","frameshift":"#9400D3","stop_lost":"#ff0000","start_lost":"#ffd700","transcript_amplification":"#ff69b4","inframe_insertion":"#ff69b4","inframe_deletion":"#ff69b4","missense":"#ffd700","protein_altering":"#FF0080","splice_region":"#ff7f50","incomplete_terminal_codon":"#ff00ff","stop_retained":"#76ee00","synonymous":"#76ee00","coding_sequence":"#458b00","mature_miRNA":"#458b00","5_prime_UTR":"#7ac5cd","3_prime_UTR":"#7ac5cd","non_coding_transcript_exon":"#32cd32","intron":"#02599c","NMD_transcript":"#ff4500","non_coding_transcript":"#32cd32","upstream_gene":"#a2b5cd","downstream_gene":"#a2b5cd","TFBS_ablation":"#a52a2a","TFBS_amplification":"#a52a2a","TF_binding_site":"#a52a2a","regulatory_region_ablation":"#a52a2a","regulatory_region_amplification":"#a52a2a","feature_elongation":"#7f7f7f","regulatory_region":"#a52a2a","feature_truncation":"#7f7f7f","intergenic":"#636363"};
+	var __ensembl_colors = {"Pathogenic":"#FF0000","Benign":"#00FF00","Uncertain":"#FF00FF","transcript_ablation":"#ff0000","splice_acceptor":"#FF581A","splice_donor":"#FF581A","stop_gained":"#ff0000","frameshift":"#9400D3","stop_lost":"#ff0000","start_lost":"#ffd700","transcript_amplification":"#ff69b4","inframe_insertion":"#ff69b4","inframe_deletion":"#ff69b4","missense":"#ffd700","protein_altering":"#FF0080","splice_region":"#ff7f50","incomplete_terminal_codon":"#ff00ff","stop_retained":"#76ee00","synonymous":"#76ee00","coding_sequence":"#458b00","mature_miRNA":"#458b00","5_prime_UTR":"#7ac5cd","3_prime_UTR":"#7ac5cd","non_coding_transcript_exon":"#32cd32","intron":"#02599c","NMD_transcript":"#ff4500","non_coding_transcript":"#32cd32","upstream_gene":"#a2b5cd","downstream_gene":"#a2b5cd","TFBS_ablation":"#a52a2a","TFBS_amplification":"#a52a2a","TF_binding_site":"#a52a2a","regulatory_region_ablation":"#a52a2a","regulatory_region_amplification":"#a52a2a","feature_elongation":"#7f7f7f","regulatory_region":"#a52a2a","feature_truncation":"#7f7f7f","intergenic":"#636363"};
 
 	__genomic_variations['variation'].forEach(function(i){
 
-		if(!i['clinical_significance'])i['clinical_significance'] = ["Unknown"];
+		if(!i['clinical_significance'])i['clinical_significance'] = ["Uncertain"];
                 if(!i['alleles'])i['alleles']=["Unknown"];
                 if(!i['consequence_type'])return;
 
@@ -208,8 +246,9 @@ function add_variations (ft,start_flag){
                   __consequence = "Benign";
                   __clinical_significance = "Likely Benign";
                 }else{
-                  __consequence = "Unknown";
-                  return;
+                  __consequence = "Uncertain";
+                  __clinical_significance = "Uncertain";
+                  //return;
                 }
 
 
@@ -248,11 +287,17 @@ function add_variations (ft,start_flag){
 
 	if(start_flag)__build_gfv_display_variants( __variations );
 
-	["Pathogenic", "Benign", "Unknown"].forEach(function(i){
+        var n_variants = 0;
+	["Pathogenic", "Benign", "Uncertain"].forEach(function(i){
 		var __name = i.replace(/_/g," ").toUpperCase();
 		var __color = "#FF8C00";
 		if(i in __ensembl_colors)__color = __ensembl_colors[i];
 		if( __name.length > 12) __name = __name.substring(0,13); 
+                if( !__variations[i] || __variations[i].length==0){
+                  n_variants += 0;
+                }else{
+                  n_variants += __variations[i].length;
+                }
 		if( $j('#'+i).is(':checked') )ft.addFeature({
         	        data: __variations[i],
                		name: __name,
@@ -261,6 +306,9 @@ function add_variations (ft,start_flag){
                 	type: "rect",
         	});
 	});
+        if(n_variants == 0){
+          $j(".show_gfv_display_variants").css("display","none");
+        }
 }
 
 function __build_gfv_display_variants( __variations ){

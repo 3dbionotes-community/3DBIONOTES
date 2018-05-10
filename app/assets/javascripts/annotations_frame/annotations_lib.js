@@ -42,8 +42,13 @@ function build_ProtVista(){
     if(obj.feature.internalId=="fake_0"){
       $j('.up_pftv_tooltip-container').css('visibility','hidden');
     }else{
-      var selection = {begin:begin, end:end, color:color, frame:"upRightBottomFrame"};
-      trigger_aa_selection(selection);
+      if(obj['feature'] && obj['feature']['type']=='DISULFID'){
+        var selection = [{begin:begin, end:begin, color:color},{begin:end, end:end, color:color}];
+        trigger_highlight_all(selection);
+      }else{
+        var selection = {begin:begin, end:end, color:color, frame:"upRightBottomFrame"};
+        trigger_aa_selection(selection);
+      }
     }
   });
   

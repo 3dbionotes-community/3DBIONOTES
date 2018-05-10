@@ -14,7 +14,12 @@ module InfoManager
         if request.nil?
           request = "{}"
         end
-        json = JSON.parse(request)
+        json = {}
+        begin
+          json = JSON.parse(request)
+        rescue
+          raise EmdbSummaryUrl+"/"+emdbId+" DID NOT RETURN A JSON OBJECT"
+        end
         title = "Compound title not found"
         json.each do |k,v|
           if !v[0].empty?

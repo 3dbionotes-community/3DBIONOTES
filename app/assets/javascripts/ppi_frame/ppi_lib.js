@@ -3,29 +3,43 @@
 function display_active_data(node){
   var ch = node.cyTarget.id();
   var selection = {};
-  selection[ch]=[];
+  selection[ch] = [];
+
+  var values = {};
+  $j(".item_clicked").each(function(i,e){
+    values[$j(e).attr("value")]=true;
+  });
   for(var key in cytoscape_graph.annotations){
     var v = cytoscape_graph.annotations[key];
     if(v.active && ch in v.data.location){
-      v.data.location[ch].all.forEach(function(i){
-        selection[ch].push({begin:i,end:i,color:v.data.color});
+      v.data.location[ch]["all"].forEach(function(i){
+        if(i.type in values || $j( "#"+key+"_all" ).hasClass('item_clicked') ){
+          selection[ch].push({begin:i.start,end:i.end,color:i.color});
+        }
       });
     }
   }
+
   var evt = document.createEvent("CustomEvent");
   evt.initCustomEvent("global_highlight",true,true,selection);
   top.window.dispatchEvent(evt);
 
   if(top.global_infoAlignment && top.global_infoAlignment.chain == ch ){
     var evt = document.createEvent("CustomEvent");
-    evt.initCustomEvent("highlight_all",true,true,selection[ch]);
+    evt.initCustomEvent("highlight_all_except_structure",true,true,selection[ch]);
     top.window.dispatchEvent(evt);   
   }
+
 }
 
 function display_active_data_edge(edge){
   var source = edge.cyTarget.source().id();
   var target = edge.cyTarget.target().id();
+
+  var values = {};
+  $j(".item_clicked").each(function(i,e){
+    values[$j(e).attr("value")]=true;
+  });
 
   var selection = {};
   selection[source]=[];
@@ -34,8 +48,10 @@ function display_active_data_edge(edge){
   for(var key in cytoscape_graph.annotations){
     var v = cytoscape_graph.annotations[key];
     if(v.active && source in v.data.location && target in v.data.location[source].bs ){
-      Object.keys(v.data.location[source].bs[target]).forEach(function(i){
-        selection[source].push({begin:i,end:i,color:v.data.color});
+      v.data.location[source].bs[target].forEach(function(i){
+        if(i.type in values || $j( "#"+key+"_all" ).hasClass('item_clicked')){
+          selection[source].push({begin:i.start,end:i.end,color:i.color});
+        }
       });
     }
   }
@@ -43,8 +59,10 @@ function display_active_data_edge(edge){
   for(var key in cytoscape_graph.annotations){
     var v = cytoscape_graph.annotations[key];
     if(v.active && target in v.data.location && source in v.data.location[target].bs ){
-      Object.keys(v.data.location[target].bs[source]).forEach(function(i){
-        selection[target].push({begin:i,end:i,color:v.data.color});
+      v.data.location[target].bs[source].forEach(function(i){
+        if(i.type in values || $j( "#"+key+"_all" ).hasClass('item_clicked')){
+          selection[target].push({begin:i.start,end:i.end,color:i.color});
+        }
       });
     }
   }
@@ -53,15 +71,15 @@ function display_active_data_edge(edge){
   evt.initCustomEvent("global_highlight",true,true,selection);
   top.window.dispatchEvent(evt);
 
-  /*if(top.global_infoAlignment && top.global_infoAlignment.chain == source ){
+  if(top.global_infoAlignment && top.global_infoAlignment.chain == source ){
     var evt = document.createEvent("CustomEvent");
-    evt.initCustomEvent("highlight_all",true,true,selection[source]);
+    evt.initCustomEvent("highlight_all_except_structure",true,true,selection[source]);
     top.window.dispatchEvent(evt);   
   }else if(top.global_infoAlignment && top.global_infoAlignment.chain == target ){
     var evt = document.createEvent("CustomEvent");
-    evt.initCustomEvent("highlight_all",true,true,selection[target]);
+    evt.initCustomEvent("highlight_all_except_structure",true,true,selection[target]);
     top.window.dispatchEvent(evt);
-  }*/
+  }
 
 }
 

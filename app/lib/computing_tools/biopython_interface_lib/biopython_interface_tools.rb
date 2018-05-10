@@ -16,14 +16,25 @@ module ComputingTools
             if out.key?('error')
               raise "#{LocalScripts}/structure_interface_json ERROR: #{out['error']}"
             else
-              BiopythonInterface.create( pdbId: pdbId, asa: out['asa'].to_json, interface:out['interface'].to_json, rri:out['rri'].to_json, rri_raw:out['rri_raw'].to_json )
+              puts(out['rri_n'].to_json)
+              BiopythonInterface.create( pdbId: pdbId,
+                                         asa: out['asa'].to_json, 
+                                         interface:out['interface'].to_json, 
+                                         rri:out['rri'].to_json, 
+                                         rri_raw:out['rri_raw'].to_json,
+                                         rri_n:out['rri_n'].to_json
+              )
             end
           else
-            out = {asa:JSON.parse(out['asa']), interface:JSON.parse(out['interface']), rri:JSON.parse(out['rri']), rri_raw:JSON.parse(out['rri_raw'])}
+            out = { asa:JSON.parse(out['asa']), 
+                    interface:JSON.parse(out['interface']), 
+                    rri:JSON.parse(out['rri']), 
+                    rri_raw:JSON.parse(out['rri_raw']), 
+                    rri_n:JSON.parse(out['rri_n'])
+            }
           end
         else
           filename = LocalPath+"/"+path+"/biopython_interface_recover_data.json"
-          puts(filename);
           if File.exist?(filename)
             out = recover(path)
           else

@@ -66,7 +66,30 @@ function add_frames_listener(){
       frames.forEach(function(frame_id){
         top.document.getElementById(frame_id).contentWindow.dispatchEvent(evtOut);
       });
-    },  100);
+    },100);
+  });
+
+  window.addEventListener("highlight_all_except_structure",function(evt){
+    global_selection =  null;
+    var frames = global_frames;
+    var evtOut = document.createEvent("Event");
+    evtOut.initEvent("clear_aa",true,true);
+    frames.forEach(function(frame_id){
+      if( frame_id != "leftBottomFrame"){
+        top.document.getElementById(frame_id).contentWindow.dispatchEvent(evtOut);
+      }
+    });
+    
+    setTimeout(function(){
+      var selection = evt.detail;
+      var evtOut = document.createEvent("CustomEvent");
+      evtOut.initCustomEvent("highlight_all", true, true, selection);
+      frames.forEach(function(frame_id){
+        if( frame_id != "leftBottomFrame"){
+          top.document.getElementById(frame_id).contentWindow.dispatchEvent(evtOut);
+        }
+      });
+    },100);
   });
 
   window.addEventListener("global_highlight",function(evt){

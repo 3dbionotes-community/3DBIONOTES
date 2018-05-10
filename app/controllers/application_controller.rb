@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
 
   def render_403(exception)
     if request.format != :js
+      @error_short = exception.message
       @error_message = "\n\nEXCEPTION\n"+exception.message+"\n"+exception.backtrace.join("\n")+"\nEND exception\n\n"
       logger.warn( @error_message )
       respond_to do |format|

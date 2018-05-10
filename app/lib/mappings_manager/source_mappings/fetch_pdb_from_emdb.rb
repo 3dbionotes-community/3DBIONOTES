@@ -14,7 +14,13 @@ module MappingsManager
         if request.nil?
           request = "{}"
         end
-        json = JSON.parse(request)
+        json = {}
+        begin
+          json = JSON.parse(request)
+        rescue
+          raise Server+EmdbFit+"/"+emdbId+" DID NOT RETURN A JSON OBJECT"
+        end
+        #json = JSON.parse(request)
         json.each do |k,v|
           tmpArray = []
           v.each do |fit|

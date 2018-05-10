@@ -13,7 +13,10 @@
         %a{:class=>"nostyle menu", :target=>"_blank", :href=>"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=#{@alignment['gene']['id']}" }
           #{ @alignment['gene']['display_name'] },
         %span{:class => "gene_title"}
-          #{ @alignment['gene']['description'].gsub(/\s\[.*/,'') } -
+          -if @alignment['gene'].key? 'description'
+            #{ @alignment['gene']['description'].gsub(/\s\[.*/,'') } -
+          -else
+            N/A
         %span{:class => "gene_title"}
           #{ @alignment['gene']['species'].gsub(/_/,' ').capitalize }.
         %span.key
@@ -35,6 +38,8 @@
     %div.up_gfv_display{:id => "gfv_display"}
       %span
         %input{:id=>"pct_cb", :class=>"gfv_cb", :type=>"checkbox", :checked=>"1"} CODING TRANSCRIPTS
+      %span{:style=>"padding-left:15px;"}
+        %input{:id=>"oct_cb", :class=>"gfv_cb", :type=>"checkbox" } OTHER CODING TRANSCRIPTS
       %span{:style=>"padding-left:15px;"}
         %input{:id=>"nct_cb", :class=>"gfv_cb", :type=>"checkbox" } NONCODING TRANSCRIPTS
       %span.show_gfv_display_variants{:style=>"padding-left:15px;"}

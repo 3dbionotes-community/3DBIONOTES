@@ -38,6 +38,7 @@ module MainManager
             url = BaseUrl+"api/lengths/UniprotMulti/"+options.keys.uniq.join(",")
             jsonData = getUrl(url)
             uniLengths = JSON.parse(jsonData)
+            chain_flag = {}
             options.each do |uniprot,chains|
               chains.each do |chain|
                 ali = Hash.new
@@ -50,7 +51,10 @@ module MainManager
                 ali["uniprotTitle"] = uniLengths[uniprot][1]
                 ali["organism"] = uniLengths[uniprot][3]
                 ali["gene_symbol"] = uniLengths[uniprot][2]
-                @optionsArray.push(["#{chain} - #{ali["gene_symbol"]}, #{ali["uniprotTitle"]}",ali.to_json])
+                if not chain_flag.key? chain then
+                  @optionsArray.push(["#{chain} - #{ali["gene_symbol"]}, #{ali["uniprotTitle"]}",ali.to_json])
+                  chain_flag[chain] = true
+                end
               end
             end
           end

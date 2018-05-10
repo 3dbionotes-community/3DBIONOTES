@@ -7,10 +7,14 @@ function add_top_window_listener(){
     var end = selection.end-1;
     sequence_panel.setSelection();
     sequence_panel.removeAllHighlights()
-    sequence_panel.setSelection(begin,end);
-    var divSelected = "#0_"+begin;
-    if( $j(divSelected).length > 0 ){ 
-      $j(".body_div").scrollTop( $j(divSelected).offset().top - $j(divSelected).parent().offset().top );
+    if(begin>=0 && end>=0){
+      sequence_panel.setSelection(begin,end);
+      var divSelected = "#0_"+begin;
+      if( $j(divSelected).length > 0 ){ 
+        $j(".body_div").scrollTop( $j(divSelected).offset().top - $j(divSelected).parent().offset().top );
+      }else{
+        $j(".body_div").scrollTop(0);
+      }
     }
   });
 

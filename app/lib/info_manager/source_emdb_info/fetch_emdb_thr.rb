@@ -15,7 +15,12 @@ module InfoManager
         if request.nil?
           request = "{}"
         end
-        json = JSON.parse(request)
+        json = {}
+        begin
+          json = JSON.parse(request)
+        rescue
+          raise EmdbMapUrl+"/"+emdbId+" DID NOT RETURN A JSON OBJECT"
+        end
         emdbInfo = {}
         json.each do |k,v|
           if !v[0].empty?

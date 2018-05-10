@@ -12,16 +12,15 @@ function graph_class(args){
           container: document.getElementById(self.element_id),
           style: cytoscape.stylesheet()
             .selector('node').css({
-              'shape': 'ellipse',
-              'height': 50,
-              'width': 50,
+              'shape': 'data(shape)',
+              'height': 'data(height)',
+              'width': 'data(width)',
               'content': 'data(name)',
               'text-valign': 'bottom',
-              'color': '#11111',
               'font-family': '"Helvetica neue", helvetica, arial, sans-serif',
               'font-size': '10px',
-              'background-color': '#FFFFFF',
-              'border-color': '#aaa',
+              'background-color': 'data(backgroundColor)',
+              'border-color': 'data(borderColor)',
               'border-width': 2,
               'ann-size': 4,
               'text-outline-color': '#555',
@@ -32,7 +31,7 @@ function graph_class(args){
               "border-color": "#ffcc00",
             })
             .selector('edge').css({
-              'line-color': '#aaa',
+              'line-color': 'data(lineColor)',
               'line-style': 'solid',
               'width': 2,
               'ann-size': 4
@@ -71,6 +70,7 @@ function graph_class(args){
       console.log("elements NOT FOUND");
     }
   }
+
   self.selectChain = function(){
     var ch_ = top.global_infoAlignment.chain;
     self.cy.$('node').selectify();
@@ -80,15 +80,20 @@ function graph_class(args){
     self.cy.$('node').unselectify();
   }
 
-  self.load_variants = function(){
+  self.load_features = function(name){
     var pdb;
     var url;
+    
+    if(name in self.annotations){
+      self.display_filter(null,name);
+      return;
+    }
     if(top.global_infoAlignment.pdb){
       pdb = top.global_infoAlignment.pdb;
       if(top.global_infoAlignment.path){
-        url = "/api/annotations/ppi/variants/"+pdb.replace(".","__")+"?path="+top.global_infoAlignment.path
+        url = "/api/annotations/ppi/"+name+"/"+pdb.replace(".","__")+"?path="+top.global_infoAlignment.path
       }else{
-        url = "/api/annotations/ppi/variants/"+pdb
+        url = "/api/annotations/ppi/"+name+"/"+pdb
       }
     }else{
       return;
@@ -97,8 +102,8 @@ function graph_class(args){
     $j.ajax({
       url:url,
       success:function(data){
-        self.annotations['variants']={'data':data,'active':true};
-        self.display_variants(data);
+        self.annotations[name]={'data':data,'active':true};
+        self.display_filter(data.graph,name);
       },
       error:function(e){
         console.log(e);
@@ -106,24 +111,125 @@ function graph_class(args){
     });
   }
 
-  self.display_variants = function(_data){
+  self.clear_annotations = function(){
     self.cy.nodes(function(i,node){
-      if(_data.graph.nodes[node.id()]){
-        node.data('nodeAnnotations',_data.graph.nodes[node.id()]);
-      }
+      node.data('nodeAnnotations',[]);
     });
 
     self.cy.edges(function(i,edge){
-      var source = edge.source().id();
-      var target = edge.target().id();
-      if(_data.graph.edges[source+target]){
-        edge.data('sourceAnnotations',_data.graph.edges[source+target]);
+      edge.data('sourceAnnotations',[]);
+      edge.data('targetAnnotations',[]);
+    });   
+  }
+  
+  self.display_filter = function(graph_data,key){
+    $j(".annotaion_filter").css("display","none");
+    if( $j("#"+key+"_annotaion_filter").length == 0 ){
+      var keys = {};
+      for(var ch in graph_data.nodes){
+        graph_data.nodes[ch].forEach(function(i){
+          keys[i.subtype]=i.color;
+        });
       }
-      if(_data.graph.edges[target+source]){
-        edge.data('targetAnnotations',_data.graph.edges[target+source]);
+      for(var cc in graph_data.edges){
+        graph_data.edges[cc].forEach(function(i){
+          keys[i.subtype]=i.color;
+        });
       }
-    });
-
+      $j("#body").append("<div class=\"annotaion_filter\" id=\""+key+"_annotaion_filter\"><div class=\"title_filter\"><span>FILTER "+key.toUpperCase()+"</span></div></div>")
+      $j("#"+key+"_annotaion_filter").append("<div id=\""+key+"_all\" class=\"item_filter item_clicked show_all\" value=\""+key+"\"><span>SHOW ALL</span></div>");
+      for(var k in keys){
+        $j("#"+key+"_annotaion_filter").append("<div class=\"item_filter\" value=\""+k+"\"><span>"+format_name(k,key).toUpperCase()+"</span><span style=\"color:"+keys[k]+";\">&nbsp;&nbsp;&#9899;</span></div>"); 
+      }
+      $j("#"+key+"_annotaion_filter .item_filter").click(function(e){
+        if( $j(this).attr('id')!=key+"_all" ){
+          $j( "#"+key+"_all" ).removeClass('item_clicked');
+        }else{
+          var flag = false;
+          if( $j(this).hasClass('item_clicked') )flag=true;
+          $j("#"+key+"_all").siblings().removeClass('item_clicked');
+          if(flag) $j(this).addClass('item_clicked');
+        }
+        if( $j(this).hasClass('item_clicked') ){
+          $j(this).removeClass('item_clicked');
+        }else{
+          $j(this).addClass('item_clicked');
+        }
+        self.filter_annotations();
+      });
+    }else{
+      $j("#"+key+"_annotaion_filter").css("display","block");
+    }
+    self.filter_annotations();
   }
 
+  self.filter_annotations = function(){
+    self.clear_annotations();
+    var data = {};
+    for(var key in self.annotations){
+      var _data = self.__filter_annotations(key);
+      for(var ch in _data){
+        if(ch in data){
+          data[ch].push.apply(data[ch], _data[ch])
+        }else{
+          data[ch]=_data[ch];
+        }
+      }
+    }
+    self.cy.nodes(function(i,node){
+      if(data[node.id()]){
+        node.data('nodeAnnotations',data[node.id()]);
+      }
+    });
+    self.cy.edges(function(i,edge){
+      var source = edge.source().id();
+      var target = edge.target().id();
+      if(data[source+target]){
+        edge.data('sourceAnnotations',data[source+target]);
+      }
+      if(data[target+source]){
+        edge.data('targetAnnotations',data[target+source]);
+      }
+    });
+  }
+
+  self.__filter_annotations = function(key){
+    var values = {};
+    if($j( "#"+key+"_all" ).hasClass('item_clicked') ){
+      values = "ALL";
+    }else{
+      $j(".item_clicked").each(function(i,e){
+        values[$j(e).attr("value")]=true;
+      });
+    }
+    var data = {};
+    for(var ch in self.annotations[key].data.graph.nodes){
+      data[ch] = []
+      self.annotations[key].data.graph.nodes[ch].forEach(function(i){
+        if(values == "ALL" || i.subtype in values){
+          data[ch].push(i);
+        }
+      });
+    }
+    for(var cc in self.annotations[key].data.graph.edges){
+      data[cc] = []
+      self.annotations[key].data.graph.edges[cc].forEach(function(i){
+        if(values == "ALL" || i.subtype in values){
+          data[cc].push(i);
+        }
+      });
+    }
+    return data;
+  }
+
+}
+
+function format_name(name,key){
+  var out = name;
+  if(key=="variants" && name.match(/doi/i)){
+    var x = name.split("/ ");
+    var y = x[1].split(" [");
+    out = y[0];
+  }
+  return out;
 }

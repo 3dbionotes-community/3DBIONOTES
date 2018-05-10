@@ -1,0 +1,64 @@
+div.annotaion_filter{
+  text-align:left;
+  position:absolute;
+  top:0px;
+  left:5px;
+  z-index:1000000;
+  /*border:1px solid #FFFFFF;*/
+  padding:5 5 5 5;
+
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: #606060;
+
+}
+
+div.title_filter {
+  font-weight:bold;
+  color: #999999;
+}
+
+div.title_filter span{
+  cursor:pointer;
+}
+
+
+div.annotaion_filter:hover {
+  border:1px solid #C3C3C3;
+  background:white;
+}
+
+div.item_filter {
+  padding-top:10px;
+  display:none;
+}
+
+div.item_filter span {
+  cursor:pointer;
+  font-size: 10px;
+  letter-spacing:1px;
+}
+
+div.item_filter span:hover {
+  font-weight:bold;
+}
+
+div.item_filter::before{
+  content:"\25CB  ";
+}
+
+div.item_filter:hover::before{
+  content:"\25CF  ";
+}
+
+div.item_clicked{
+  font-weight:bold;
+}
+
+div.item_clicked::before{
+  content:"\25CF  ";
+}
+
+div.annotaion_filter:hover div ~ .item_filter{
+  display:block;
+}

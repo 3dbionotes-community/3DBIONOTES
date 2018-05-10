@@ -87,6 +87,7 @@ module GlobalTools
             end
           rescue
             puts "Error: #{$!}"
+            raise "URL "+url+input+" NOT ACCESSIBLE"
           end
         else
           begin
@@ -96,6 +97,7 @@ module GlobalTools
             response = http.request(request)
           rescue
             puts "Error: #{$!}"
+            raise "URL "+url+input+" NOT ACCESSIBLE"
           end
           if response.code != "200"
             data= nil
@@ -110,6 +112,7 @@ module GlobalTools
           data = Net::HTTP.new(uri.host).post(uri.path,input.join(",")).body
         rescue
           puts "Error: #{$!}"
+          raise "URL "+url+input+" NOT ACCESSIBLE"
         end
       end
       return data

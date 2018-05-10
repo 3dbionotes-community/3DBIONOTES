@@ -46,20 +46,40 @@ module ProteinManager
         short_name = long_name[0..11]+" ..."
       end
       out['name'] = {'short'=>short_name,'long'=>long_name}
-      if tmp[0].include? " OS"
-        long_org = tmp[1].chop.chop.chop
-        short_org = long_org
-        if short_org.length > 15
-          short_org = long_org[0..11]+" ..."
+      out['org'] = "N/A"
+      #if tmp[0].include? " OS"
+      #  long_org = tmp[1].chop.chop.chop
+      #  short_org = long_org
+      #  if short_org.length > 15
+      #    short_org = long_org[0..11]+" ..."
+      #  end
+      #  out['org'] = {'short'=>short_org, 'long'=>long_org} 
+      #end
+      flag = false
+      tmp.each do |t|
+        if flag
+          long_org = t.chop.chop.chop
+          short_org = long_org
+          if short_org.length > 15
+            short_org = long_org[0..11]+" ..."
+          end
+          out['org'] = {'short'=>short_org, 'long'=>long_org}
+          flag = false
         end
-        out['org'] = {'short'=>short_org, 'long'=>long_org} 
-      else
-        out['org'] = "N/A"
+        if t.include? " OS"
+          flag = true
+        end
       end
-      if tmp[1].include? " GN"
-        out['gene'] = tmp[2].chop.chop.chop
-      else
-        out['gene'] = "N/A"
+      flag = false
+      out['gene'] = "N/A"
+      tmp.each do |t|
+        if flag
+          out['gene'] = t.chop.chop.chop
+          flag = false
+        end
+        if t.include? " GN"
+          flag = true
+        end
       end
       return out
     end

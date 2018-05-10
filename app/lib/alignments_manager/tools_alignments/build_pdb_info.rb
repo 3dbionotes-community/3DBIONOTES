@@ -26,25 +26,27 @@ module AlignmentsManager
             info[chain][uni]["pdbSeq"] = "-" * fastaUniprot.length
             # itero por elementos con correspondencia de indices
             mappings.each do |uniIndex,tupla|
-              pdbIndex = tupla["pos"]
-              pdbRes = tupla["residue"]
-              if info[chain][uni]["mapping"][uniIndex.to_i-1].nil?
-                info[chain][uni]["mapping"][uniIndex.to_i-1] = Hash.new
-              end
-              info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbIndex"] = pdbIndex.to_i
-              info[chain][uni]["inverse"][pdbIndex.to_i]=uniIndex.to_i
-              info[chain][uni]["pdbSeq"][uniIndex.to_i-1] = pdbRes
-              if !tupla["heterogeneity"].nil?
-                if info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"].nil?
-                  info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"] = Hash.new
+              if (uniIndex.to_i-1) < fastaUniprot.length then
+                pdbIndex = tupla["pos"]
+                pdbRes = tupla["residue"]
+                if info[chain][uni]["mapping"][uniIndex.to_i-1].nil?
+                  info[chain][uni]["mapping"][uniIndex.to_i-1] = Hash.new
                 end
-                info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"]["heterogeneity"] = tupla["heterogeneity"]
-              end
-              if !tupla["modified"].nil?
-                if info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"].nil?
-                  info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"] = Hash.new
+                info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbIndex"] = pdbIndex.to_i
+                info[chain][uni]["inverse"][pdbIndex.to_i]=uniIndex.to_i
+                info[chain][uni]["pdbSeq"][uniIndex.to_i-1] = pdbRes
+                if !tupla["heterogeneity"].nil?
+                  if info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"].nil?
+                    info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"] = Hash.new
+                  end
+                  info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"]["heterogeneity"] = tupla["heterogeneity"]
                 end
-                info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"]["modifications"] = tupla["modified"]
+                if !tupla["modified"].nil?
+                  if info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"].nil?
+                    info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"] = Hash.new
+                  end
+                  info[chain][uni]["mapping"][uniIndex.to_i-1]["pdbAnnots"]["modifications"] = tupla["modified"]
+                end
               end
             end
           end

@@ -5,6 +5,7 @@ class MainController < ApplicationController
   include MainManager::ToolsMain::BuildAlignment
   include ProteinManager::BlastSearch
   include ProteinManager::FetchSequenceInfo
+  include AlignmentsManager::BuildAlignments 
 
   LocalPath = Settings.GS_LocalUpload 
   LocalScripts = Settings.GS_LocalScripts
@@ -51,6 +52,7 @@ class MainController < ApplicationController
 
   def pdb_redo
     pdb = params[:name]
+    logger.info("  HTTP Referer: https://pdb-redo.eu/db/"+pdb) 
     rand_path = "pdb_redo_"+pdb
     file_name = pdb+"_final.pdb"
     url = PDB_REDO+"/"+pdb+"/"+file_name
@@ -79,7 +81,8 @@ class MainController < ApplicationController
       @choice = {}
       do_not_repeat = {}
       aCC = {}
-      pdbData = JSON.parse( PdbDatum.find_by(pdbId: pdb).data )
+      #pdbData = JSON.parse( PdbDatum.find_by(pdbId: pdb).data )
+      pdbData = fetchPDBalignment(pdb)
       @sequences.each do |ch,seq|
         acc = pdbData[ch].keys[0]
         aCC[acc] = true

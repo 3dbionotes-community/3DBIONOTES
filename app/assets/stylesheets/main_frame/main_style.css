@@ -451,11 +451,21 @@ table.menu_options_table{
   display:none;
   text-align:right;
   margin:0 20 0 20;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
 table.menu_options_table tr td{
   padding-top:10px;
 }
+
+table.menu_options_table tr td.row_title{
+  padding-top:20px;
+  font-size:12px;
+  font-weight:bold;
+  font-weight:bold; 
+  color:#999;
+}
+
 
 table.menu_options_table tr td a{
   font-size:12px;
