@@ -7,8 +7,14 @@ module EbiServicesManager
       out = nil
       if info.nil?
         features_url = Settings.GS_UniProtServer+"/"+type+"/"+uniprotAc
-        out = getUrl(features_url)
-        features = JSON.parse(out)
+        begin
+          out = getUrl(features_url)
+          features = JSON.parse(out)
+        rescue
+          puts "Error: #{$!}"
+          raise "#{$!}\nURL "+features_url+" NOT ACCESSIBLE"
+        end
+ 
         if not features.key? 'errorMessage'
           Ebifeaturesentry.create(proteinId: uniprotAc, data: out, features_type: type) 
         end

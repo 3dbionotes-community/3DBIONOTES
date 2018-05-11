@@ -2,13 +2,15 @@ module InfoManager
   module SourcePdbInfo
     module FetchPdbAvailty
 
+      PDBe_URL = Settings.GS_PDBe
+
       include PdbSites
       include GlobalTools::FetchParserTools
 
       def queryPDBavailty(pdb)
         pdbInfo = {}
         if pdb =~ /^\d{1}\w{3}$/ and pdb !~ /^\d{4}$/
-          url = URI.parse("https://www.ebi.ac.uk/pdbe/entry-files/download/"+params[:name].downcase+".cif")
+          url = URI.parse(PDBe_URL+params[:name].downcase+".cif")
           begin
             req = Net::HTTP.new(url.host, url.port)
             req.use_ssl = true
