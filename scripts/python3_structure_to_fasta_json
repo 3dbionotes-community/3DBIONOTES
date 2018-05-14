@@ -1,0 +1,50 @@
+#!/services/bionotes/apps/miniconda3/envs/biopython/bin/python -W ignore
+ 
+from Bio.PDB.PDBParser import PDBParser 
+from Bio.PDB.MMCIFParser import MMCIFParser
+from Bio.PDB.Polypeptide import three_to_one
+from Bio.PDB.Polypeptide import is_aa
+from Bio.PDB.Polypeptide import CaPPBuilder
+from Bio.Alphabet import IUPAC
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+
+import re
+import json
+import sys
+ 
+try:
+  ## The only argument is the PDB file
+  pdbFile = sys.argv[1]
+   
+  ## First, open and parse the protein file
+  if re.match( r'(.*)(cif)$', pdbFile):
+    p = MMCIFParser()
+  else:
+    p = PDBParser(PERMISSIVE=1)
+  
+  structure = p.get_structure(pdbFile, pdbFile)
+  
+  n_models=len(structure)
+  sequences =  {}
+  alignment = {}
+  no_aa_ch = {}
+  for chain in structure[0]:
+    ch_id  = chain.get_id()
+    sequences[ ch_id ] = ''
+    alignment[ ch_id ] = []
+    no_aa_ch[ch_id] = True
+    for res in chain:
+      if is_aa( res.get_resname(), standard=True ):
+        sequences[ ch_id ] += three_to_one(res.get_resname())
+        alignment[ ch_id ].append( (str(res.get_id()[1])+res.get_id()[2]).strip() )
+        no_aa_ch.pop(ch_id, None)
+  
+  print(json.dumps( {'n_models':n_models,'sequences':sequences,'mapping':alignment,'no_aa_ch':no_aa_ch} ))
+
+except Exception as e: 
+   print(json.dumps( {'error':str(e)} ))
+
+
+sys.exit(0)
+

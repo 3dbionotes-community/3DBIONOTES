@@ -1,0 +1,302 @@
+#!/services/bionotes/apps/miniconda3/envs/biopython/bin/python -W ignore
+ 
+from Bio.PDB.PDBParser import PDBParser 
+from Bio.PDB.MMCIFParser import MMCIFParser
+from Bio.PDB.mmtf import MMTFParser
+from Bio.PDB.Polypeptide import three_to_one
+from Bio.PDB.Polypeptide import is_aa
+from Bio.PDB.Polypeptide import CaPPBuilder
+from Bio.Alphabet import IUPAC
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+from Bio.PDB import Selection
+from Bio.PDB import NeighborSearch
+from Bio.PDB.DSSP import DSSP
+from Bio.PDB.NACCESS import *
+from Bio.PDB import PDBIO
+
+import re
+import json
+import sys
+import traceback
+import string
+import random
+import os
+import xmltodict
+import json
+from subprocess import call
+ 
+try:
+  pdb = sys.argv[1]
+  prefix = sys.argv[2]
+
+  config_fh = open(os.path.dirname(os.path.realpath(__file__))+'/config.json.cfg')
+  data = json.load(config_fh)
+  
+  pdbFile = data["upload_path"]+"/"+prefix+"/"+pdb
+  json_file = data["upload_path"]+"/"+prefix+"/"+"interface.json"
+  json_asa_file = data["upload_path"]+"/"+prefix+"/"+"asa.json"
+  json_rri_file = data["upload_path"]+"/"+prefix+"/"+"rri.json"
+  json_rri_raw_file = data["upload_path"]+"/"+prefix+"/"+"rri_raw.json"
+  json_rri_n_file = data["upload_path"]+"/"+prefix+"/"+"rri_n.json" 
+  
+  if prefix  == "pdb":
+    import mysql.connector
+
+    cnx = mysql.connector.connect(user=data['user'], password=data['password'], host=data['host'], database=data['database'])
+    query="select data from pdb_data where pdbId=\""+pdb+"\";"
+    cursor = cnx.cursor()
+    cursor.execute(query)
+    _align = cursor.next()
+    alignment = {pdb:json.loads( _align[0] )}
+    cursor.close()
+    cnx.close()
+  else:
+    alignment = json.loads( open(data["upload_path"]+"/"+prefix+"/"+"alignment.json").readlines()[0] )
+   
+  ## First, open and parse the protein file
+  if prefix  == "pdb":
+    p = MMTFParser()
+  if re.match( r'(.*)(cif)$', pdbFile):
+    p = MMCIFParser()
+  else:
+    p = PDBParser(PERMISSIVE=1)
+  
+  if prefix  == "pdb":
+    structure = MMTFParser.get_structure_from_url(pdb)
+  else:
+    structure = p.get_structure(pdbFile, pdbFile)
+  
+  n_models=len( structure )
+  
+  
+  thr = 8
+  
+  binding_sites  = []
+  max_bs = 0 
+  
+  ASA  =  []
+  rri_pairs = []
+  rri_raw = []
+  rri_n = []
+  
+  n_model = 1
+  for s in structure:
+
+    rand = None
+    rm_rand = False
+    if prefix == "pdb":
+      rand =''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(20))
+      rm_rand = True
+      model_file = data["tmp_path"]+"/tmp_pdb/"+rand+".pdb"
+      io=PDBIO()
+      io.set_structure(s)
+      io.save(model_file)
+    else:
+      model_file = data["upload_path"]+"/"+prefix+"/MODELS/model."+str( n_model )+".pdb"
+      rand = prefix
+      io=PDBIO()
+      io.set_structure(s)
+      io.save(model_file)
+    n_model += 1
+
+    FNULL = open(os.devnull, 'w')
+    call(["/services/bionotes/apps/PSAIA/PSAIA-1.0/bin/linux/psa/psa", "/services/bionotes/apps/bionotes/scripts/psa.cfg", model_file, rand], stdout=FNULL, stderr=subprocess.STDOUT)
+    psa_file = data["tmp_path"]+"/tmp_psa/"+rand+".xml"
+
+    res_asa =  {}
+    if os.path.isfile(psa_file): 
+      psa = xmltodict.parse( "".join(open(psa_file).readlines()) )
+
+      if rm_rand:
+        os.remove(model_file)
+      os.remove(psa_file)
+    
+      if 'serial_id' in psa['cPdbPeptide']['chains']['chain']:
+        _ch = psa['cPdbPeptide']['chains']['chain']
+        ch = _ch['serial_id']
+        res_asa[ch] = []
+        for _res in _ch['residues']['residue']:
+          res_id = _res['serial_id']
+          asa = float('%.2f'%(float(_res['relative_asa']['total'])/100))
+          if asa < 0: 
+            asa = 0
+          elif asa > 1: 
+            asa = 1
+
+          if ch in alignment[pdb] and str(res_id) in alignment[pdb][ch][ list(alignment[pdb][ch].keys())[0] ]['inverse']:
+            res_asa[ch].append( [alignment[pdb][ch][ list(alignment[pdb][ch].keys())[0] ]['inverse'][ str(res_id) ],asa ])
+      else:
+        for _ch in psa['cPdbPeptide']['chains']['chain']:
+          ch = _ch['serial_id']
+          res_asa[ch] = []
+          for _res in _ch['residues']['residue']:
+            if type(_res) is str:
+              continue
+            res_id = _res['serial_id']
+            asa = float('%.2f'%(float(_res['relative_asa']['total'])/100))
+            if asa < 0: 
+              asa = 0
+            elif asa > 1: 
+              asa = 1
+            if ch in alignment[pdb] and str(res_id) in alignment[pdb][ch][ list(alignment[pdb][ch].keys())[0] ]['inverse']:
+              res_asa[ch].append( [alignment[pdb][ch][ list(alignment[pdb][ch].keys())[0] ]['inverse'][ str(res_id) ],asa ])
+  
+    ASA.append( res_asa )
+
+    atom_list = [ atom for atom in s.get_atoms() if atom.name == 'CA' ]
+    
+    non_res_atom_list = [ atom for atom in s.get_atoms() if not is_aa(atom.get_parent()) ]
+    non_res_atom_list.extend(atom_list)
+    PPI = NeighborSearch( non_res_atom_list ).search_all( thr ,'A' )
+    RRI_n = {}
+    BS_n = {}
+    for ppi in PPI:
+      if is_aa(ppi[0].get_parent()) and not is_aa(ppi[1].get_parent()):
+        ch = ppi[0].get_parent().get_parent().get_id()
+        res = ppi[0].get_parent().get_id()
+        ch_n = ppi[1].get_parent().get_parent().get_id()
+        res_n = int(ppi[1].get_parent().get_id()[1])
+        name = ppi[1].get_parent().get_resname()
+      elif is_aa(ppi[1].get_parent()) and not is_aa(ppi[0].get_parent()):
+        ch = ppi[1].get_parent().get_parent().get_id()
+        res = ppi[1].get_parent().get_id()
+        ch_n = ppi[0].get_parent().get_parent().get_id()
+        res_n = int(ppi[0].get_parent().get_id()[1])
+        name = ppi[0].get_parent().get_resname()
+      else:
+        continue
+
+      if re.match('^(DA|DT|DG|DC)$',name):
+        name = "DNA"
+        res_n = ch_n
+      elif re.match('^(A|C|G|T|U)$',name):
+        name = "RNA"
+        res_n = ch_n
+
+      if not ch in RRI_n:
+        RRI_n[ch] = {}
+      if not ch_n in RRI_n[ch]:
+        RRI_n[ch][ch_n] = {}
+      if not name in RRI_n[ch][ch_n]:
+        RRI_n[ch][ch_n][name] = {}
+      
+      RRI_n[ch][ch_n][name][res_n] = True
+
+    for ch in RRI_n:
+      for ch_n in RRI_n[ch]:
+        for name in RRI_n[ch][ch_n]:
+          RRI_n[ch][ch_n][name] = list(RRI_n[ch][ch_n][name ].keys())
+
+    rri_n.append(RRI_n)
+
+    PPI = NeighborSearch( atom_list ).search_all( thr ,'A' )
+    dict_residue_bs = {}
+    RRI = {}
+    RRI_raw = {}
+    for ppi in PPI:
+
+      ch_i = ppi[0].get_full_id()[2]
+      res_i = ppi[0].get_full_id()[3][1]
+      ch_j = ppi[1].get_full_id()[2]
+      res_j = ppi[1].get_full_id()[3][1]
+
+      if ch_i != ch_j:
+
+        if not ch_i in dict_residue_bs:
+          dict_residue_bs[ch_i ]= {}
+        dict_residue_bs[ch_i][res_i] = True
+
+        if not ch_j in dict_residue_bs:
+          dict_residue_bs[ch_j ]= {}
+        dict_residue_bs[ch_j][res_j] = True
+
+        if not ch_i in RRI_raw:
+          RRI_raw[ch_i] = {}
+        if not ch_j in RRI_raw[ch_i]:
+          RRI_raw[ch_i][ch_j] = []
+
+        if not ch_j in RRI_raw:
+          RRI_raw[ch_j] = {}
+        if not ch_i in RRI_raw[ch_j]:
+          RRI_raw[ch_j][ch_i] = []
+          
+        RRI_raw[ch_i][ch_j].append( [int(res_i),int(res_j)] )
+        RRI_raw[ch_j][ch_i].append( [int(res_j),int(res_i)] )
+
+        if ch_i in alignment[pdb]:
+          acc_i = list(alignment[pdb][ch_i].keys())[0]
+        else:
+          continue
+        if ch_j in alignment[pdb]:
+          acc_j = list(alignment[pdb][ch_j].keys())[0]
+        else:
+          continue
+
+        if not ch_i in RRI:
+          RRI[ch_i] = {}
+        if not ch_j in RRI[ch_i]:
+          RRI[ch_i][ch_j] = []
+
+        if not ch_j in RRI:
+          RRI[ch_j] = {}
+        if not ch_i in RRI[ch_j]:
+          RRI[ch_j][ch_i] = []
+          
+        if (str(res_i) in alignment[pdb][ch_i][ acc_i ]['inverse']) and (str(res_j) in alignment[pdb][ch_j][ acc_j ]['inverse']):
+          RRI[ch_i][ch_j].append( [alignment[pdb][ch_i][ acc_i ]['inverse'][str(res_i)],alignment[pdb][ch_j][ acc_j ]['inverse'][str(res_j)]] )
+          RRI[ch_j][ch_i].append( [alignment[pdb][ch_j][ acc_j ]['inverse'][str(res_j)],alignment[pdb][ch_i][ acc_i ]['inverse'][str(res_i)]] )
+
+    rri_pairs.append(RRI)
+    rri_raw.append(RRI_raw)
+    residue_bs = {}
+    for ch in dict_residue_bs:
+      if ch in alignment[pdb]:
+        residue_bs[ch] = sorted([ alignment[pdb][ch][list(alignment[pdb][ch].keys())[0] ]['inverse'][ str(x) ] for x in list( dict_residue_bs[ch] ) if str(x) in alignment[pdb][ch][list(alignment[pdb][ch].keys())[0] ]['inverse'] ])
+      else:
+        residue_bs[ch] = []
+      
+      N=len( residue_bs[ch] )
+      n=0
+      aux = []
+      while n<(N-1):
+        begin=residue_bs[ch][n]
+        while n<(N-1):
+          n += 1
+          if residue_bs[ch][n-1]+1 != residue_bs[ch][n]:
+            break
+        end=residue_bs[ch][n-1]
+        aux.append({'begin':begin,'end':end})
+      if len(aux)>max_bs:
+        max_bs = len( aux )
+      residue_bs[ch]=aux
+    if len( residue_bs ) > 0:
+      binding_sites.append( residue_bs )
+  
+  binding_sites = [max_bs] + binding_sites
+  
+  binding_sites_json = json.dumps( binding_sites )
+  ASA_json = json.dumps( ASA )
+  rri_pairs_json = json.dumps( rri_pairs )
+  rri_raw_json = json.dumps( rri_raw )
+  rri_n_json = json.dumps( rri_n )
+  
+
+  if prefix != "pdb":
+    open(json_file,"w").write( binding_sites_json )
+    open(json_asa_file,"w").write( ASA_json )
+    open(json_rri_file,"w").write( rri_pairs_json )
+    open(json_rri_raw_file,"w").write( rri_raw_json )
+    open(json_rri_n_file,"w").write( rri_n_json )
+
+
+  print( "{\"interface\":"+binding_sites_json+",\"asa\":"+ASA_json+",\"rri\":"+rri_pairs_json+",\"rri_raw\":"+rri_raw_json+", \"rri_n\":"+rri_n_json+"}" )
+  
+  
+except Exception as e: 
+   print(json.dumps( {'error':str(e)} ))
+   if len(sys.argv) > 3:
+     print(traceback.print_exc())
+
+sys.exit(0)
+

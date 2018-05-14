@@ -1,0 +1,66 @@
+#!/services/bionotes/apps/miniconda3/envs/biopython/bin/python -W ignore
+
+from Bio.PDB.PDBParser import PDBParser 
+from Bio.PDB.MMCIFParser import MMCIFParser
+from Bio.PDB.mmtf import MMTFParser
+from Bio.PDB.Polypeptide import three_to_one
+from Bio.PDB.Polypeptide import is_aa
+from Bio.PDB.Polypeptide import CaPPBuilder
+from Bio.Alphabet import IUPAC
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+from Bio.PDB import Selection
+from Bio.PDB import NeighborSearch
+from Bio.PDB.DSSP import DSSP
+from Bio.PDB.NACCESS import *
+from Bio.PDB import PDBIO
+
+import re
+import json
+import sys
+import traceback
+import string
+import random
+import os
+import xmltodict
+from subprocess import call
+ 
+try:
+  pdb = sys.argv[1]
+  pdb = pdb.lower()
+
+  config_fh = open(os.path.dirname(os.path.realpath(__file__))+'/config.json.cfg')
+  data = json.load(config_fh)
+  
+  p = MMTFParser()
+  structure = MMTFParser.get_structure_from_url(pdb)
+  n_models=len( structure )
+
+  pdb_tmp_path = data["tmp_path"]+"/tmp_mp/"+pdb
+  os.mkdir(pdb_tmp_path)
+
+  pdb_tmp_path = data["tmp_path"]+"/tmp_mp/"+pdb+"/MODELS"
+  mp_tmp_path = data["tmp_path"]+"/tmp_mp/"+pdb+"/MOLPROBITY"
+  
+  os.mkdir(pdb_tmp_path)
+  os.mkdir(mp_tmp_path)
+
+  n = 1
+  for s in structure:
+    model_file = pdb_tmp_path+"/model."+str(n)+".pdb"
+    n+=1
+    io=PDBIO()
+    io.set_structure(s)
+    io.save(model_file)
+
+  FNULL = open(os.devnull, 'w')
+  call([data["molprobity_script"],pdb,"pdb"], stdout=FNULL, stderr=subprocess.STDOUT)
+
+
+  
+  
+except Exception as e: 
+   print(json.dumps( {'error':str(e)} ))
+
+sys.exit(0)
+
