@@ -139,6 +139,7 @@ class viewer_class {
   }
 
   global_highlight(pdb, list){
+    console.log(list);
     var self = this;
     self.remove_multiple_selection();
     self.reset_chain_view();
@@ -146,6 +147,7 @@ class viewer_class {
     var global_selection = {};
     var global_cartoon = [];
     var color;
+
 
     for(var ch in list){
       global_cartoon.push( ch );
@@ -160,13 +162,17 @@ class viewer_class {
             selection[color][j]=true;
           });
       });
-      for(var color in selection){
+      var keys = Object.keys(selection);
+      keys.sort(function(a, b) {
+        return (Object.keys(selection[b]).length - Object.keys(selection[a]).length);
+      });
+      keys.forEach(function(color){
         var res = Object.keys(selection[color]);
         if(res.length > 0){
           if(!(color in global_selection))global_selection[color]=[]
           global_selection[color].push( ":"+ch+" and ("+res.join(" or ")+")" ); 
         }
-      }
+      });
     }
 
     var model_flag = '';
@@ -184,6 +190,8 @@ class viewer_class {
     self.Structures[ pdb ]['representations']['selection']['ball+stick'].setVisibility(false);
     self.Structures[ pdb ]['representations']['selection']['spacefill'].setVisibility(false);
 
+
+    
     for(var color in global_selection){
       if(global_selection[color].length >0){
         var selection_string = "protein "+model_flag+"and (("+global_selection[color].join(") or (")+"))";

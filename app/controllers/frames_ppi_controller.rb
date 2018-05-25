@@ -59,18 +59,18 @@ class FramesPpiController < ApplicationController
             nodes.push({data:{  id: ki, 
                                 name: gene_name, 
                                 nodeAnnotations:[], 
-                                borderColor:'#4db5ff', 
+                                borderColor: '#bbb',#'#4db5ff', 
                                 backgroundColor:'#fff',
                                 shape:'ellipse',
-                                width:50,
-                                height:50
+                                width:60,
+                                height:60
             }})
           end
           if not vi.nil?
             vi.each do |kj,vj|
               if not ( track.key? ki+kj or track.key? kj+ki)
                 track[ki+kj] = true
-                edges.push({data:{id: ki+kj, source: ki, target: kj, lineColor: '#80caff', type: 'protein',sourceAnnotations: [  ], targetAnnotations: [  ]}})
+                edges.push({data:{id: ki+kj, source: ki, target: kj, lineColor: '#bbb', type: 'protein',sourceAnnotations: [  ], targetAnnotations: [  ]}})
               end
             end
           end
@@ -90,8 +90,8 @@ class FramesPpiController < ApplicationController
                                 borderColor:'#4db5ff', 
                                 backgroundColor:'#fff',
                                 shape:'ellipse',
-                                width:50,
-                                height:50
+                                width:60,
+                                height:60
             }})
 
             #nodes.push( {data: {id: ch, name: "chain "+ch, nodeAnnotations:[]}} )
@@ -110,14 +110,14 @@ class FramesPpiController < ApplicationController
                     borderColor = "#FF8000"
                     backgroundColor = "#FFE5CC"
                     shape = "ellipse"
-                    width = 50
+                    width = 60
                     height = 25
                     name = id.to_s+" - "+name
                   elsif name == "RNA"
                     borderColor = "#FF8000"
                     backgroundColor = "#FFE5CC"
                     shape = "ellipse"
-                    width = 50
+                    width = 60
                     height = 25
                     name = id.to_s+" - "+name
                   else
@@ -137,7 +137,7 @@ class FramesPpiController < ApplicationController
                                       height:height
                   }})
                 end
-                edges.push({data:{id: ch+id.to_s, source: ch, target: id.to_s+ch_n, type: 'protein', lineColor: '#80caff', sourceAnnotations: [  ], targetAnnotations: [  ]}})
+                edges.push({data:{id: ch+id.to_s, source: ch, target: id.to_s+ch_n, type: 'protein', lineColor: '#bbb', sourceAnnotations: [  ], targetAnnotations: [  ]}})
               end
             end
           end

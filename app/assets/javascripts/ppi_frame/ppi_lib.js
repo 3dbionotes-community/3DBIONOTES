@@ -80,6 +80,14 @@ function display_active_data_edge(edge){
     evt.initCustomEvent("highlight_all_except_structure",true,true,selection[target]);
     top.window.dispatchEvent(evt);
   }
-
+  return selection;
 }
 
+function highlight_rri(CH,RR){
+  var selection = {}  
+  selection[CH[0]] = [{'begin':RR[0],'end':RR[0],'color':'rgb(255, 233, 153)'}];
+  selection[CH[1]] = [{'begin':RR[1],'end':RR[1],'color':'rgb(255, 233, 153)'}];
+  var evt = document.createEvent("CustomEvent");
+  evt.initCustomEvent("global_highlight",true,true,selection);
+  top.window.dispatchEvent(evt);
+} 

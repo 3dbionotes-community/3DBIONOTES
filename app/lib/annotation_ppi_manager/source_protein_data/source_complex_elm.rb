@@ -9,7 +9,9 @@ module AnnotationPpiManager
       def sourceComplexELM(pdbId,path=nil)
         config = { 
                     'colors'=>{
-                      'default'=>"#402060"
+                      'default'=>"#402060",
+                      'elm'=>"#402060",
+                      'lip'=>"#CC2060"
                     },
                     'type_key'=>'type'
         }

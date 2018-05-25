@@ -5,6 +5,11 @@ function graph_class(args){
   self.elements = self.args.elements;
   self.positions = false;
   self.annotations = {};
+  self.default_color = "#80a2ff";
+  self.default_color_c = "#00e63d";//"#80ffa2";
+  self.border_color = "#bbb";//"#4db5ff";
+  self.selected_color = " #fff";//"#ffdd99";
+  self.interface_instance = require("interface_viewer");
   self.drawGraph = function(){
     if(self.elements){
       if( $j("#graph_div").css("display") == "block" ){
@@ -18,17 +23,19 @@ function graph_class(args){
               'content': 'data(name)',
               'text-valign': 'bottom',
               'font-family': '"Helvetica neue", helvetica, arial, sans-serif',
-              'font-size': '10px',
+              'font-size': '12px',
               'background-color': 'data(backgroundColor)',
               'border-color': 'data(borderColor)',
               'border-width': 2,
               'ann-size': 4,
               'text-outline-color': '#555',
               'text-outline-width': '1px',
-              'color': '#fff'
+              'color': '#ccc'
             })
             .selector('node:selected').css({
-              "border-color": "#ffcc00",
+              "color": self.selected_color,
+              'font-size': '18px',
+              'text-outline-width': '2px'
             })
             .selector('edge').css({
               'line-color': 'data(lineColor)',
@@ -56,14 +63,26 @@ function graph_class(args){
           var ch_ = top.global_infoAlignment.chain;
           self.cy.$('#'+ch_).select();
           self.selected = '#'+ch_;
+          self.cy.$('#'+ch_).data("borderColor",self.default_color)
         }
         self.cy.$('node').unselectify();
         self.cy.nodes().on("click", function(n){
+          self.reset_node_color();
+          var id = n.cyTarget.id();
+          self.cy.$('#'+id).data("borderColor",self.default_color)
           display_active_data(n);
         });
 
         self.cy.edges().on("click", function(n){
-          display_active_data_edge(n);
+          self.reset_node_color(); 
+          var source = n.cyTarget.source().id();
+          var target = n.cyTarget.target().id();
+          self.cy.$('#'+source).data("borderColor",self.default_color);
+          self.cy.$('#'+target).data("borderColor",self.default_color_c);
+          var selection = display_active_data_edge(n);
+          if( n.originalEvent.shiftKey ){
+            self.display_interface(n.cyTarget,selection);
+          }
         });
       }
     }else{
@@ -71,12 +90,21 @@ function graph_class(args){
     }
   }
 
+  self.reset_node_color = function(){
+    self.cy.nodes(function(i,node){
+      if( node.data("borderColor") == self.default_color || node.data("borderColor") == self.default_color_c ){
+        node.data("borderColor",self.border_color);
+      }
+    });
+  }
   self.selectChain = function(){
     var ch_ = top.global_infoAlignment.chain;
     self.cy.$('node').selectify();
     self.cy.$(self.selected).unselect();
     self.cy.$('#'+ch_).select();
     self.selected = '#'+ch_;
+    self.reset_node_color();
+    self.cy.$('#'+ch_).data("borderColor",self.default_color)
     self.cy.$('node').unselectify();
   }
 
@@ -220,6 +248,50 @@ function graph_class(args){
       });
     }
     return data;
+  }
+
+  self.display_interface = function(edge,selection){
+    var source = edge.source().id();
+    var target = edge.target().id();
+    $j("#interface_div").remove();
+    $j(body).append("<div id=\"interface_div\"><div><div><p id=\"close_interface\">&#10006;</p><svg id=\"interface_svg\"/></div></div></div>");
+    $j("#close_interface").click(function(){
+      $j("#interface_div").remove();
+    });
+
+    
+    var $ALIGNMENTS = top.$ALIGNMENTS;
+    var pdb = top.global_infoAlignment["pdb"];
+
+    var source_acc = Object.keys($ALIGNMENTS[pdb][source])[0]
+    var soruce_len = $ALIGNMENTS[pdb][source][source_acc]["uniprotSeq"].length
+
+    var target_acc = Object.keys($ALIGNMENTS[pdb][target])[0]
+    var target_len = $ALIGNMENTS[pdb][target][target_acc]["uniprotSeq"].length
+
+    var g_interface = new self.interface_instance.interface_viewer({ dom_id:"interface_svg", seq_N:soruce_len, seq_M:target_len, ch_x:source, ch_y:target, x_color:self.default_color, y_color:self.default_color_c });
+
+    var ch_x = source;
+    var ch_y = target;
+    if(soruce_len<target_len){
+      ch_x = target;
+      ch_y = source;
+    }
+    var annotations = []
+    selection[ch_x].forEach(function(i){
+      annotations.push({start:i.begin,end:i.end,color:i.color})
+    });
+    selection[ch_y].forEach(function(i){
+      annotations.push({start:i.begin,end:i.end,color:i.color,seq:"M"})
+    });
+    g_interface.add_multiple_annotations(annotations);
+
+    var n_model = 0;
+    var rri = top.$COMPUTED_FEATURES[pdb]["rri"][n_model][source][target];
+    if( target_len>soruce_len){
+      rri = top.$COMPUTED_FEATURES[pdb]["rri"][n_model][target][source];
+    }
+    g_interface.add_multiple_pairs(rri);
   }
 
 }

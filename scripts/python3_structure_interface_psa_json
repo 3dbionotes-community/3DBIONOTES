@@ -70,7 +70,7 @@ try:
   n_models=len( structure )
   
   
-  thr = 8
+  thr = 6
   
   binding_sites  = []
   max_bs = 0 
@@ -144,7 +144,8 @@ try:
   
     ASA.append( res_asa )
 
-    atom_list = [ atom for atom in s.get_atoms() if atom.name == 'CA' ]
+    #atom_list = [ atom for atom in s.get_atoms() if atom.name == 'CA' ]
+    atom_list = [ atom for atom in s.get_atoms() if atom.name != 'H' and is_aa(atom.get_parent())]
     
     non_res_atom_list = [ atom for atom in s.get_atoms() if not is_aa(atom.get_parent()) ]
     non_res_atom_list.extend(atom_list)
@@ -259,13 +260,13 @@ try:
       N=len( residue_bs[ch] )
       n=0
       aux = []
-      while n<(N-1):
+      while n<N:
         begin=residue_bs[ch][n]
-        while n<(N-1):
+        end=begin
+        while (n+1)<N and (residue_bs[ch][n]+1)==residue_bs[ch][n+1]:
           n += 1
-          if residue_bs[ch][n-1]+1 != residue_bs[ch][n]:
-            break
-        end=residue_bs[ch][n-1]
+          end=residue_bs[ch][n]
+        n += 1
         aux.append({'begin':begin,'end':end})
       if len(aux)>max_bs:
         max_bs = len( aux )

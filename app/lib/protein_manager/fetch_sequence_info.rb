@@ -19,49 +19,48 @@ module ProteinManager
       return fasta
     end
 
-    def __fetchUniprotMultipleSequences(uniprotAc)
-      returnValue = {}
-      begin
-
-        data = `/external/ncbi-blast/bin/blastdbcmd -entry #{uniprotAc} -db /external/db-blast/sprot/sprot`
-        if data.length == 0
-          data = `/external/ncbi-blast/bin/blastdbcmd -entry #{uniprotAc} -db /external/db-blast/trembl/trembl`
-        end
-        if data.length == 0
-          if uniprotAc.split(",").length > 1
-            data = Net::HTTP.get_response(URI.parse(UniprotURL+"?query="+uniprotAc+"&format=fasta")).body
-          else
-            data = Net::HTTP.get_response(URI.parse(UniprotURL+uniprotAc+".fasta")).body
-          end
-        end
-
-      rescue
-        puts "Error: #{$!}"
-        data = 404
-      end
-      fasta = nil
-      if data != "404"
-        fasta = Bio::Alignment::MultiFastaFormat.new(data)
-      end
-      fasta.entries.each do |entry|
-        definition = ""
-        accession = ""
-        if entry.definition =~/sp/
-          definition = entry.definition.split(/\|/)[2].split(/\sOS=/)[0].split(/\s/,2)[1].upcase
-          accession = entry.accession
-        else
-          aux = entry.definition
-          accession = aux.split(/\s/)[0]
-          aux = aux.sub  "\s" , "|"
-          definition = aux.split(/\|/)[1].split(/\sOS=/)[0].split(/\s/,2)[1].upcase
-        end
-        returnValue[accession] = [entry.seq.length,definition]
-      end
-      return render json: returnValue, status: :ok
-    end
-
     def fetchUniprotMultipleSequences(uniprotAc,fasta_obj_flag=nil,dict_flag=nil)
       returnValue = {}
+      fasta_array = []
+      begin
+        if uniprotAc.split(",").length > 1
+          uniprotAc.split(",").each do |acc|
+            fasta = fetchUniprotSequence(acc)
+            fasta_array.push( fasta )
+          end
+        else
+          fasta = fetchUniprotSequence(uniprotAc)
+          fasta_array.push(fasta)
+        end
+      rescue
+        puts "Error: #{$!}"
+      end
+
+      fasta_array.each do |entry|
+        entry_definition = "Unknown"
+        accession = "N/A"
+        if !entry.definition.nil? and entry.definition.include? "OS="
+          accession = entry.definition.split(" ")[0]
+          aux = entry.definition.split("=")
+          entry_definition = aux[0].split(" ")[1..aux[0].length].join(" ").chop.chop.chop
+          organism_name = aux[1].chop.chop.chop
+          gene_symbol = "N/A"
+          if aux[2] =~ /GN/
+            gene_symbol = aux[3].chop.chop.chop
+          end
+        end
+        if dict_flag.nil?
+          returnValue[accession] = [entry.seq.length,entry_definition,gene_symbol,organism_name]
+        else
+          returnValue[accession ] = {'sequence'=>entry.seq,'definition'=>entry_definition,'organism'=>organism_name, 'gene_symbol'=>gene_symbol}
+        end
+      end
+      return returnValue
+    end
+
+    def __fetchUniprotMultipleSequences(uniprotAc,fasta_obj_flag=nil,dict_flag=nil)
+      returnValue = {}
+      puts(UniprotURL+"?query="+uniprotAc+"&format=fasta")
       begin
         if uniprotAc.split(",").length > 1
           data = Net::HTTP.get_response(URI.parse(UniprotURL+"?query="+uniprotAc+"&format=fasta"))

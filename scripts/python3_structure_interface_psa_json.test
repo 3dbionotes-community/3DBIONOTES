@@ -30,7 +30,7 @@ try:
   pdb = sys.argv[1]
   prefix = sys.argv[2]
 
-  config_fh = open('config.json.cfg')
+  config_fh = open(os.path.dirname(os.path.realpath(__file__))+'/config.json.cfg')
   data = json.load(config_fh)
   
   pdbFile = data["upload_path"]+"/"+prefix+"/"+pdb
@@ -259,13 +259,13 @@ try:
       N=len( residue_bs[ch] )
       n=0
       aux = []
-      while n<(N-1):
+      while n<N:
         begin=residue_bs[ch][n]
-        while n<(N-1):
+        end=begin
+        while (n+1)<N and (residue_bs[ch][n]+1)==residue_bs[ch][n+1]:
           n += 1
-          if residue_bs[ch][n-1]+1 != residue_bs[ch][n]:
-            break
-        end=residue_bs[ch][n-1]
+          end=residue_bs[ch][n]
+        n += 1
         aux.append({'begin':begin,'end':end})
       if len(aux)>max_bs:
         max_bs = len( aux )
