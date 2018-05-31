@@ -8,7 +8,7 @@ function graph_class(args){
   self.default_color = "#80a2ff";
   self.default_color_c = "#00e63d";//"#80ffa2";
   self.border_color = "#bbb";//"#4db5ff";
-  self.selected_color = " #fff";//"#ffdd99";
+  self.selected_color = "#ffd11a";//"#ffdd99";
   self.interface_instance = require("interface_viewer");
   self.drawGraph = function(){
     if(self.elements){
