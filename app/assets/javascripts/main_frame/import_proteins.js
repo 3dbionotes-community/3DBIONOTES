@@ -105,6 +105,7 @@ function import_annotations(acc_data){
   delete x.ppi_iframe_url;
   delete x.annot_iframe_url;
   delete x.seq_iframe_url; 
+  delete x.analysis_iframe_url;
 
   var annot_iframe_url = "/imported_annotationsIFrame/?imported_acc="+acc+"&alignment="+encodeURI( JSON.stringify(x) );
   var seq_iframe_url = "/sequenceIFrame/?imported_flag=true&alignment="+encodeURI( JSON.stringify(x) );

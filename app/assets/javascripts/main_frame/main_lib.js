@@ -53,19 +53,21 @@ function processAlignment(data){
   return data;
 }
 
-function change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url, ppi_iframe_url ){
+function change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url, ppi_iframe_url, analysis_iframe_url ){
 
   global_infoAlignment["annot_iframe_url"] = annot_iframe_url;
   global_infoAlignment["seq_iframe_url"] = seq_iframe_url;
   global_infoAlignment["genomic_iframe_url"] = genomic_iframe_url;
   global_infoAlignment["ppi_iframe_url"] = ppi_iframe_url;
+  global_infoAlignment["analysis_iframe_url"] = analysis_iframe_url;
 
   var seq_iframe = 'iframe#downRightBottomFrame';
   var annot_iframe = 'iframe#upRightBottomFrame';
   var genomic_iframe = 'iframe#genomicFrame';
   var ppi_iframe = 'iframe#ppiFrame';
+  var analysis_iframe = 'iframe#analysisFrame';
 
-  if(top.ppiFrame_load){
+  if(top.ppiFrame_load || top.network_flag){
     var evtOut = document.createEvent("CustomEvent");
     evtOut.initCustomEvent("ppiFrame_selectChain",true,true,top.global_infoAlignment.chain);
     if( top.document.getElementById("ppiFrame") )top.document.getElementById("ppiFrame").contentWindow.dispatchEvent(evtOut);
@@ -83,10 +85,11 @@ function change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url
     clear_wm();
     check_imported_select();
     $j( genomic_iframe ).attr('src', genomic_iframe_url);
-    if(!top.ppiFrame_load){
+    if(!top.ppiFrame_load && !top.network_flag){
       $j( ppi_iframe ).attr('src', ppi_iframe_url);
       top.ppiFrame_load = true;
     }
+    $j( analysis_iframe ).attr('src', analysis_iframe_url);
     $j( annot_iframe ).unbind("load");
   }); 
 }
@@ -110,7 +113,7 @@ function clear_wm(){
 function getValueSelection(elem,myFirstTime){
 
   global_selection =  null;
-  $LOG = { 'protein':{}, 'gene':{}, 'interaction:':{} };
+  $LOG = { 'protein':{}, 'gene':{}, 'interaction:':{} , 'analysis':{} };
 
   hide_imported_select();
 
@@ -127,10 +130,7 @@ function getValueSelection(elem,myFirstTime){
 
     var infoAlignmentEval = eval("("+infoAlignment+")");
     global_infoAlignment = infoAlignmentEval;
-    if(top.uploaded_annotations && !top.uploaded_annotations_ready){
-      file_read(uploaded_annotations,true);
-      top.uploaded_annotations_ready = true;
-    }
+
     var baseUrl = "/";
 
     var info = {};
@@ -142,7 +142,6 @@ function getValueSelection(elem,myFirstTime){
     info.pdbsToLoad = infoAlignmentEval.pdbList;
     info.activepdb = infoAlignmentEval.pdb;
     info.activechain = infoAlignmentEval.chain;
-
     var evtOut = document.createEvent("CustomEvent");
     evtOut.initCustomEvent("molInfo",true,true,info);
     document.getElementById("leftBottomFrame").contentWindow.dispatchEvent(evtOut);
@@ -164,13 +163,23 @@ function getValueSelection(elem,myFirstTime){
     var genomic_iframe_url = "/genomicIFrame/?uniprot_acc="+uniprot;
     var ppi_iframe_url = "/ppiIFrame?pdb="+pdb;
     if(path)ppi_iframe_url += "&path="+path;
+    var analysis_iframe_url = "/analysisIFrame?alignment="+encodeURI(infoAlignment);
+    if(info.origin=="Uniprot"){
+      analysis_iframe_url += "&acc="+uniprot
+    }else{
+      analysis_iframe_url += "&pdb="+pdb
+    }
 
     if( pdb in $ALIGNMENTS ){
+      if(top.uploaded_annotations && !top.uploaded_annotations_ready){
+        file_read(uploaded_annotations,true);
+        top.uploaded_annotations_ready = true;
+      }
       data = $ALIGNMENTS[  pdb ];
       if(data[chain]!=undefined && data[chain][uniprot]!=undefined){
         alignmentTranslation = data[chain][uniprot].mapping;
       }
-      change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url, ppi_iframe_url );
+      change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url, ppi_iframe_url, analysis_iframe_url );
     }else{
       wait_message("BUILDING SEQUENCE ALIGNMENT");
       var starts = new Date().getTime();
@@ -180,16 +189,20 @@ function getValueSelection(elem,myFirstTime){
         data: {},
         success: function(data){
           $ALIGNMENTS[  pdb ] = data;
+          if(top.uploaded_annotations && !top.uploaded_annotations_ready){
+            file_read(uploaded_annotations,true);
+            top.uploaded_annotations_ready = true;
+          }
           if(data[chain]!=undefined && data[chain][uniprot]!=undefined){
             alignmentTranslation = data[chain][uniprot].mapping;
           }
         },
         error: function(data){
-          console.log("JQuery ajax error");
+          console.log("JQuery ajax error, URL: "+myUrl);
           alignmentTranslation = null;
         },
         complete: function(){
-          change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url, ppi_iframe_url );
+          change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url, ppi_iframe_url, analysis_iframe_url );
         },
         jsonpCallback: 'processAlignment'
       }).done(function(){
@@ -199,6 +212,7 @@ function getValueSelection(elem,myFirstTime){
       });
     }
   }
+
   return myFirstTime;
 }
 
@@ -334,7 +348,7 @@ function reload_annotations_frame(){
 }
 
 function change_view(e){
-  var views = ['#proteomic_panel','#genomic_panel','#ppi_panel'];
+  var views = ['#proteomic_panel','#genomic_panel','#ppi_panel','#analysis_panel'];
 
   if( $j(e).css('display')=='block' ) return;
   $j('.imported_targets_div').css('display','none');
@@ -355,10 +369,12 @@ function change_view(e){
 function display_noAlignments(PDB){
   $j( "#alignment" ).css( "display", "none" );
   $j( "#uniprotLogo").css( "display", "none" );
-  $j( "#controls").css( "display", "none" );
-  var label = " - <span style=\"color:red;font-size:18px;\">WARNING: </span>PROTEINS OF THIS COMPLEX COULD NOT BE IDENTIFIED";
+  $j( "i.demo-icon").css( "visibility", "hidden" );
+  $j( "#downRightBottomFrame").remove();
+  $j( "#leftBottom").css("width","100%");
+  $j( "#rightBottom").remove();
+  var label = " - <span style=\"color:red;font-size:18px;\">WARNING: </span>PROTEINS IN THIS COMPLEX COULD NOT BE IDENTIFIED, DISPLAYING DENSITY VOLUME";
   if(PDB[0]){
-    console.log(PDB[0]);
     label += " - <a id=\"manual_annotation\" href=\"#\" style=\"cursor:pointer\" >MANUAL IDENTIFICATION</a>";
   }
   $j( "label" ).html(label);
@@ -392,3 +408,20 @@ function hide_tools(){
   $j('.imported_targets_div').css('display','none');
 }
 
+function add_ppi_network_hidden_form(){
+  $j("#ppi_panel").append("<form id=\"ppi_network_hidden_form\" style=\"display:none;\" action=\"/ppiIFrame\" method=\"post\" target=\"ppiFrame\"><input name=\"ppi_network\" type=\"hidden\" value='"+JSON.stringify(top.network_graph)+"'></form>");
+  $j("#ppi_network_hidden_form").submit();
+}
+
+function network_selection(data){
+  var id = data.acc.replace(":","\\:");
+  $j("#alignment").html( $j("#alignment\\:"+id).html() );
+  $j('#alignment > option:nth-child(2)').prop('selected', true);
+  $j('#alignment').trigger('change');
+  var evtOut = document.createEvent("CustomEvent");
+  var _data = {'file':data.file};
+  if(data.edge) _data.edge = data.edge;
+  if(data.node) _data.node = data.node;
+  evtOut.initCustomEvent("load_interactome3d", true, true, _data); 
+  top.document.getElementById("leftBottomFrame").contentWindow.dispatchEvent(evtOut);
+}

@@ -35,6 +35,34 @@ function add_top_window_listener(){
     miApplet.global_highlight( infoGlobal.activepdb, selection );
   });
 
+  window.addEventListener("molInfo", function(evt){
+    $j('#selected_residues').css( 'visibility','hidden' );
+    infoGlobal = evt.detail;
+    if (infoGlobal.origin=="Uniprot"){
+      miApplet.open_url((infoGlobal.activepdb).toUpperCase(),false,infoGlobal.activechain);
+      miApplet.reset_view();
+      miApplet.highlight_chain(infoGlobal.activepdb,infoGlobal.activechain);
+    }else{
+      miApplet.highlight_chain(infoGlobal.activepdb,infoGlobal.activechain);
+    }
+  });
+
+  window.addEventListener("load_interactome3d", function(evt){ 
+    var data = evt.detail
+    var file = data.file;
+
+    var infoAlignmentEval = top.global_infoAlignment
+    infoGlobal.origin = infoAlignmentEval.origin;
+    infoGlobal.pdbsToLoad = infoAlignmentEval.pdbList;
+    infoGlobal.activepdb = infoAlignmentEval.pdb;
+    infoGlobal.activechain = infoAlignmentEval.chain;
+    if(!file){
+       miApplet.open_url(false,false,false,true);
+    }else{
+       miApplet.open_url("/interactome_pdb/"+file,data);
+    }
+  });
+
 }
 
 function trigger_aa_selection(selection){
@@ -43,4 +71,11 @@ function trigger_aa_selection(selection){
   evt.initCustomEvent("aa_selected",true,true,selection);
   top.window.dispatchEvent(evt);
 }
+
+function trigger_interactome_active_data(data){
+  var evt = document.createEvent("CustomEvent");
+  evt.initCustomEvent("ppiFrame_display_active_data",true,true,data);
+  top.window.dispatchEvent(evt);
+}
+
 

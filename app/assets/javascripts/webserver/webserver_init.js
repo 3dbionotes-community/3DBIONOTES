@@ -21,5 +21,6 @@ $j(document).ready(function(){
       $j( ".wait_div" ).css('display','block');
     }
   });
+
 });
 

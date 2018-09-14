@@ -180,11 +180,12 @@ function parse_track(track){
     key = 'acc';
     if( track.uniprot ){
       id = track.uniprot;
+    }else if( track.acc ){
+      id = track.acc;
     }else{
       id = global_infoAlignment.uniprot;
     }
   }
-
   if(track.track_name){
     track_name = track.track_name;
   }else{

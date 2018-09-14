@@ -19,5 +19,7 @@
       var __alignment =  #{@alignment.to_json};
       var imported_alignment = #{@imported_alignment.to_json};
       top.global_imported_alignment = #{@imported_alignment.to_json};
+      var extend_features_flag = true;
+      var feature_analysis_flag = false;
   :javascript
     #{@log}

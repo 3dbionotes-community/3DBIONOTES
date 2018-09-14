@@ -9,7 +9,7 @@
       %br
       %br
       
-      %div{:style=>"font-size:14px;margin-bottom:5px;"} 
+      %div{:style=>"font-weight:bold;font-size:14px;margin-bottom:5px;"} 
         STRUCTURE FILE in
         %a{:href=>"http://www.wwpdb.org/documentation/file-format",  :target=>"_blank"} PDB 
         or 
@@ -18,10 +18,11 @@
       = file_field_tag(:structure_file)
       %br
       = hidden_field_tag(:viewer_type,@viewerType)
+      %div{style:"font-size:14px;font-weight:bold;margin-bottom:5px;margin-top:10px;"}UPLOAD YOUR ANNOTATIONS
+      = file_field_tag(:annotations_file, {style:"font-size:12px;"})
       %br
-
+      %br
       = button_tag("Submit")
-    %br
     %a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE1"} Example (AKT1-PIN1 docking models)
     %br
     %a{:href=>"/AKT1_PIN1.pdb", :style=>"margin-top:10px;"} Example file (AKT1_PIN1.pdb)

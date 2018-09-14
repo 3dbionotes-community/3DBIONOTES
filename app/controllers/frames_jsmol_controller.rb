@@ -7,6 +7,9 @@ class FramesJsmolController < ApplicationController
 
   def jsmolIFrame
     pdbListRaw = params[:pdbs]
+    if pdbListRaw.nil? then
+      pdbListRaw = []
+    end
     emdbRaw = params[:emdb]
     origin = params[:origin]
     @origin = origin

@@ -5,42 +5,30 @@ module MappingsManager
       include GlobalTools::FetchParserTools
       include MappingsSites
       include InfoManager::FetchPdbInfo
+      include AlignmentsManager::BuildAlignments
 
       def queryUniprotfromPDB(pdbId)
-        uniprotFromPDB = Hash.new
+        uniprotFromPDB = {}
         if pdbId =~ /^\d{1}\w{3}$/
-          request = makeRequest(Server+SIFTSUniprot,pdbId)
-        else
-          request = {}
+          data = fetchPDBalignment(pdbId)
         end
-        if request.nil?
-          request = "{}"
-        end
-        json = {}
-        begin
-          json = JSON.parse(request)
-        rescue
-          raise Server+SIFTSUniprot+"/"+pdbId+" DID NOT RETURN A JSON OBJECT"
-        end
-        json.each do |k,v|
-          uniprotFromPDB[k] = Hash.new
-          v["UniProt"].each do |ki,vi|
-            if uniprotFromPDB[k][ki].nil?
-              uniprotFromPDB[k][ki] = Array.new
-            end
-            vi["mappings"].each do |mapping|
-              uniprotFromPDB[k][ki].push(mapping["chain_id"])
-            end
+        data.each do |ch,v|
+          v.each do |acc,w|
+            uniprotFromPDB[acc] = [] unless(uniprotFromPDB.key?(acc))
+            uniprotFromPDB[acc].push(ch)
           end
         end
-        if uniprotFromPDB == {}
+        if uniprotFromPDB == {} then
           is_available = fetchPDBavailty(pdbId)
           if is_available.key?('available') && is_available['available'] == true
             uniprotFromPDB = {pdbId=>[]}
           end
+        else
+          uniprotFromPDB = {pdbId=>uniprotFromPDB}
         end
+        puts(uniprotFromPDB)
         return uniprotFromPDB
-      end 
+      end
 
     end
   end

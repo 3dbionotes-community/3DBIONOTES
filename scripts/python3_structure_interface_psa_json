@@ -33,12 +33,23 @@ try:
   config_fh = open(os.path.dirname(os.path.realpath(__file__))+'/config.json.cfg')
   data = json.load(config_fh)
   
-  pdbFile = data["upload_path"]+"/"+prefix+"/"+pdb
-  json_file = data["upload_path"]+"/"+prefix+"/"+"interface.json"
-  json_asa_file = data["upload_path"]+"/"+prefix+"/"+"asa.json"
-  json_rri_file = data["upload_path"]+"/"+prefix+"/"+"rri.json"
-  json_rri_raw_file = data["upload_path"]+"/"+prefix+"/"+"rri_raw.json"
-  json_rri_n_file = data["upload_path"]+"/"+prefix+"/"+"rri_n.json" 
+  if prefix == "interactome3d":
+    pdbFile = data["interactome3d_path"]+"/pdb/"+pdb
+    json_file = data["interactome3d_path"]+"/biopython/"+pdb+"/interface.json"
+    json_asa_file = data["interactome3d_path"]+"/biopython/"+pdb+"/asa.json"
+    json_rri_file = data["interactome3d_path"]+"/biopython/"+pdb+"/rri.json"
+    json_rri_raw_file = data["interactome3d_path"]+"/biopython/"+pdb+"/rri_raw.json"
+    json_rri_n_file = data["interactome3d_path"]+"/biopython/"+pdb+"/rri_n.json" 
+    json_alignment_file = data["interactome3d_path"]+"/alignnments/"+pdb+".json"
+   
+  else:
+    pdbFile = data["upload_path"]+"/"+prefix+"/"+pdb
+    json_file = data["upload_path"]+"/"+prefix+"/"+"interface.json"
+    json_asa_file = data["upload_path"]+"/"+prefix+"/"+"asa.json"
+    json_rri_file = data["upload_path"]+"/"+prefix+"/"+"rri.json"
+    json_rri_raw_file = data["upload_path"]+"/"+prefix+"/"+"rri_raw.json"
+    json_rri_n_file = data["upload_path"]+"/"+prefix+"/"+"rri_n.json" 
+    json_alignment_file = data["upload_path"]+"/"+prefix+"/"+"alignment.json"
   
   if prefix  == "pdb":
     import mysql.connector
@@ -51,8 +62,19 @@ try:
     alignment = {pdb:json.loads( _align[0] )}
     cursor.close()
     cnx.close()
+  elif prefix  == "interactome3d":
+    import mysql.connector
+
+    cnx = mysql.connector.connect(user=data['user'], password=data['password'], host=data['host'], database=data['database'])
+    query="select data from interactome3d_data where pdbId=\""+pdb+"\";"
+    cursor = cnx.cursor()
+    cursor.execute(query)
+    _align = cursor.next()
+    alignment = {pdb:json.loads( _align[0] )}
+    cursor.close()
+    cnx.close()
   else:
-    alignment = json.loads( open(data["upload_path"]+"/"+prefix+"/"+"alignment.json").readlines()[0] )
+    alignment = json.loads( open(json_alignment_file).readlines()[0] )
    
   ## First, open and parse the protein file
   if prefix  == "pdb":
@@ -82,16 +104,22 @@ try:
   
   n_model = 1
   for s in structure:
-
     rand = None
     rm_rand = False
+    save_failed = False
     if prefix == "pdb":
       rand =''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(20))
       rm_rand = True
       model_file = data["tmp_path"]+"/tmp_pdb/"+rand+".pdb"
-      io=PDBIO()
-      io.set_structure(s)
-      io.save(model_file)
+      try:
+        io=PDBIO()
+        io.set_structure(s)
+        io.save(model_file)
+      except:
+        save_failed = True
+    elif prefix == "interactome3d":
+       model_file = pdbFile     
+       rand =''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(20))
     else:
       model_file = data["upload_path"]+"/"+prefix+"/MODELS/model."+str( n_model )+".pdb"
       rand = prefix
@@ -101,7 +129,8 @@ try:
     n_model += 1
 
     FNULL = open(os.devnull, 'w')
-    call(["/services/bionotes/apps/PSAIA/PSAIA-1.0/bin/linux/psa/psa", "/services/bionotes/apps/bionotes/scripts/psa.cfg", model_file, rand], stdout=FNULL, stderr=subprocess.STDOUT)
+    if not save_failed:
+      call(["/services/bionotes/apps/PSAIA/PSAIA-1.0/bin/linux/psa/psa", "/services/bionotes/apps/bionotes/scripts/psa.cfg", model_file, rand], stdout=FNULL, stderr=subprocess.STDOUT)
     psa_file = data["tmp_path"]+"/tmp_psa/"+rand+".xml"
 
     res_asa =  {}
@@ -283,7 +312,7 @@ try:
   rri_n_json = json.dumps( rri_n )
   
 
-  if prefix != "pdb":
+  if prefix != "pdb" and prefix != "interactome3d":
     open(json_file,"w").write( binding_sites_json )
     open(json_asa_file,"w").write( ASA_json )
     open(json_rri_file,"w").write( rri_pairs_json )
@@ -295,7 +324,7 @@ try:
   
   
 except Exception as e: 
-   print(json.dumps( {'error':str(e)} ))
+   print(json.dumps( {'error':'structure_interface_json ERROR: '+str(e)} ))
    if len(sys.argv) > 3:
      print(traceback.print_exc())
 

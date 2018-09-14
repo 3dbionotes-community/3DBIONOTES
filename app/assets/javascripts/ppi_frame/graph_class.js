@@ -7,9 +7,12 @@ function graph_class(args){
   self.annotations = {};
   self.default_color = "#80a2ff";
   self.default_color_c = "#00e63d";//"#80ffa2";
+  self.name_color = "#bbbbff";
+  self.name_color_c = "#bbffbb";//"#80ffa2";
   self.border_color = "#bbb";//"#4db5ff";
   self.selected_color = "#ffd11a";//"#ffdd99";
   self.interface_instance = require("interface_viewer");
+  self.network_flag = top.network_flag;
   self.drawGraph = function(){
     if(self.elements){
       if( $j("#graph_div").css("display") == "block" ){
@@ -23,23 +26,22 @@ function graph_class(args){
               'content': 'data(name)',
               'text-valign': 'bottom',
               'font-family': '"Helvetica neue", helvetica, arial, sans-serif',
-              'font-size': '12px',
+              'font-size': '14px',
               'background-color': 'data(backgroundColor)',
               'border-color': 'data(borderColor)',
               'border-width': 2,
               'ann-size': 4,
               'text-outline-color': '#555',
               'text-outline-width': '1px',
-              'color': '#ccc'
+              'color': 'data(color)'
             })
             .selector('node:selected').css({
-              "color": self.selected_color,
-              'font-size': '18px',
+              'font-size': '20px',
               'text-outline-width': '2px'
             })
             .selector('edge').css({
               'line-color': 'data(lineColor)',
-              'line-style': 'solid',
+              'line-style': 'data(lineStyle)',
               'width': 2,
               'ann-size': 4
             }),
@@ -59,35 +61,97 @@ function graph_class(args){
           elements: self.elements
         });
 
-        if(top.global_infoAlignment){
+        if(top.global_infoAlignment && !top.network_selected){
           var ch_ = top.global_infoAlignment.chain;
           self.cy.$('#'+ch_).select();
           self.selected = '#'+ch_;
           self.cy.$('#'+ch_).data("borderColor",self.default_color)
+          self.cy.$('#'+ch_).data("color",self.selected_color);
+        }else if(top.network_selected){
+          var acc = top.network_selected;
+          self.cy.$('#'+acc).select();
+          self.cy.$('#'+acc).data("color",self.name_color);
         }
         self.cy.$('node').unselectify();
+
         self.cy.nodes().on("click", function(n){
-          self.reset_node_color();
-          var id = n.cyTarget.id();
-          self.cy.$('#'+id).data("borderColor",self.default_color)
-          display_active_data(n);
+          if(top.network_flag){
+            if(top.global_infoAlignment.file != n.cyTarget.data("file") || (!n.cyTarget.data("file") && top.global_infoAlignment.acc != n.cyTarget.data("acc")) ){
+              self.reset_node_color_name();
+              var data = {'file':n.cyTarget.data("file"),'acc':n.cyTarget.id(),'node':n};
+              var evt = document.createEvent("CustomEvent");
+              evt.initCustomEvent("network_selection",true,true,data);
+              top.window.dispatchEvent(evt);
+              self.cy.$('node').selectify();
+              self.cy.$(":selected").unselect();
+              n.cyTarget.data("color",self.name_color);
+              n.cyTarget.select();
+              self.cy.$('node').unselectify();
+            }else{
+              setTimeout(function(){
+                var selection = display_active_data(n);
+              },300);
+            }
+          }else{
+            self.reset_node_color();
+            var id = n.cyTarget.id();
+            self.cy.$('#'+id).data("borderColor",self.default_color)
+            display_active_data(n);
+          }
         });
 
         self.cy.edges().on("click", function(n){
-          self.reset_node_color(); 
-          var source = n.cyTarget.source().id();
-          var target = n.cyTarget.target().id();
-          self.cy.$('#'+source).data("borderColor",self.default_color);
-          self.cy.$('#'+target).data("borderColor",self.default_color_c);
-          var selection = display_active_data_edge(n);
-          if( n.originalEvent.shiftKey ){
-            self.display_interface(n.cyTarget,selection);
+          if(top.network_flag){
+            if(!n.cyTarget.data("file"))return;
+            self.reset_node_color_name();
+            var source = n.cyTarget.source().id();
+            var target = n.cyTarget.target().id();
+            self.cy.$('#'+source).data("color",self.name_color);
+            self.cy.$('#'+target).data("color",self.name_color_c);
+            if(top.global_infoAlignment.file != n.cyTarget.data("file")){
+              var data = {'file':n.cyTarget.data("file"),'acc':n.cyTarget.id(),'edge':n};
+              var evt = document.createEvent("CustomEvent");
+              evt.initCustomEvent("network_selection",true,true,data);
+              top.window.dispatchEvent(evt);
+              self.cy.$('node').selectify();
+              self.cy.$(":selected").unselect();
+              var source = n.cyTarget.source().id();
+              var target = n.cyTarget.target().id();
+              self.cy.$('#'+source).select();
+              self.cy.$('#'+source).data("color",self.name_color);
+              self.cy.$('#'+target).select();
+              self.cy.$('#'+target).data("color",self.name_color_c); 
+              self.cy.$('node').unselectify();           
+            }else{
+              setTimeout(function(){
+                var selection = display_active_data_edge(n);
+              },300);
+            }
+          }else{
+            self.reset_node_color(); 
+            var source = n.cyTarget.source().id();
+            var target = n.cyTarget.target().id();
+            self.cy.$('#'+source).data("borderColor",self.default_color);
+            self.cy.$('#'+target).data("borderColor",self.default_color_c);
+            var selection = display_active_data_edge(n);
+            if( n.originalEvent.shiftKey ){
+              self.display_interface(n.cyTarget,selection);
+            }
           }
         });
       }
     }else{
       console.log("elements NOT FOUND");
     }
+  }
+
+  self.reset_node_color_name = function(){
+    if(!self.cy)return;
+    self.cy.nodes(function(i,node){
+      if( node.data("color") != "#bbb" ){
+        node.data("color","#bbb");
+      }
+    });
   }
 
   self.reset_node_color = function(){
@@ -98,40 +162,110 @@ function graph_class(args){
     });
   }
   self.selectChain = function(){
-    var ch_ = top.global_infoAlignment.chain;
-    self.cy.$('node').selectify();
-    self.cy.$(self.selected).unselect();
-    self.cy.$('#'+ch_).select();
-    self.selected = '#'+ch_;
-    self.reset_node_color();
-    self.cy.$('#'+ch_).data("borderColor",self.default_color)
-    self.cy.$('node').unselectify();
+    if(!self.cy)return;
+    if(top.network_flag){
+      self.reset_node_color_name();
+      var acc = top.global_infoAlignment.acc;
+      self.cy.$('#'+acc).data("color",self.name_color);
+    }else{
+      var ch_ = top.global_infoAlignment.chain;
+      self.cy.$('node').selectify();
+      self.cy.$(self.selected).unselect();
+      self.cy.$('#'+ch_).select();
+      self.selected = '#'+ch_;
+      self.reset_node_color();
+      self.cy.$('#'+ch_).data("borderColor",self.default_color)
+      self.reset_node_color_name();
+      self.cy.$('#'+ch_).data("color",self.selected_color);
+      self.cy.$('node').unselectify();
+    }
   }
 
   self.load_features = function(name){
     var pdb;
     var url;
-    
+    if( $j("#loading_div").length > 0 ){
+      swal({
+        title: "DOWNLOAD IN PROGRESS",
+        text: "PLEASE, WAIT UNTIL THE CURRENT DOWLOAD IS FINISHED",
+        timer: 2000,
+        type: "warning",
+        showConfirmButton: true
+      });
+      return;
+    }
     if(name in self.annotations){
       self.display_filter(null,name);
       return;
     }
-    if(top.global_infoAlignment.pdb){
-      pdb = top.global_infoAlignment.pdb;
-      if(top.global_infoAlignment.path){
-        url = "/api/annotations/ppi/"+name+"/"+pdb.replace(".","__")+"?path="+top.global_infoAlignment.path
-      }else{
-        url = "/api/annotations/ppi/"+name+"/"+pdb
-      }
+    if(self.network_flag){
+      self.post_features(name,"network");
+    }else if(name == "custom"){
+      self.post_features(name,"complex");
     }else{
-      return;
+      if(top.global_infoAlignment.pdb){
+        pdb = top.global_infoAlignment.pdb;
+        if(top.global_infoAlignment.path){
+          url = "/api/annotations/ppi/"+name+"/"+pdb.replace(".","__")+"?path="+top.global_infoAlignment.path
+        }else{
+          url = "/api/annotations/ppi/"+name+"/"+pdb
+        }
+      }else{
+        return;
+      }
+      $j.ajax({
+        url:url,
+        success: function(data){
+          $j(".annotaion_filter").css("display","none");
+          $j("#body").append("<div class=\"annotaion_filter\" id=\"loading_div\"><div class=\"title_filter\"><span>LOADING ...</span></div></div>")
+          self.recursive_check(data['job_id'],name);
+        },
+        error:function(e){
+          console.log(e);
+        }
+      });
     }
-   
+  }
+  self.recursive_check = function(job_id,name){
+    var url = "/api/job/status/"+job_id;
     $j.ajax({
-      url:url,
-      success:function(data){
-        self.annotations[name]={'data':data,'active':true};
-        self.display_filter(data.graph,name);
+      type: "GET",
+      url: url,
+      success: function(data){
+        console.log(data);
+        if(data['outputs']){
+          $j("#loading_div").remove();
+          self.annotations[name]={'data':data['outputs'],'active':true};
+          self.display_filter(data['outputs'].graph,name);
+        }else{
+          setTimeout(function(){
+            $j("#loading_div div.title_filter span").html("LOADING "+data['status']+"%");
+            self.recursive_check(job_id,name);
+          },1200);
+        }
+      }
+    });
+  }; 
+  self.post_features = function(name,type){
+    var url;
+    var data;
+    if(type=="network"){
+      url = "/api/annotations/ppi/network";
+      data = {'network':JSON.stringify(ppi_network),'name':name};
+    }else if(type=="complex"){
+      url = "/api/annotations/ppi/custom";
+      data = { 'pdb': top.global_infoAlignment.pdb, 'path': top.global_infoAlignment.path };
+    }
+    if(name=="custom") data['annotations'] = top.uploaded_annotations.result;
+    $j.ajax({
+      type: "POST",
+      url: url,
+      data: data,
+      dataType: 'json',
+      success: function(data){
+        $j(".annotaion_filter").css("display","none");
+        $j("#body").append("<div class=\"annotaion_filter\" id=\"loading_div\"><div class=\"title_filter\"><span>LOADING 0%</span></div></div>")
+        self.recursive_check(data['job_id'],name);
       },
       error:function(e){
         console.log(e);
@@ -166,9 +300,22 @@ function graph_class(args){
       }
       $j("#body").append("<div class=\"annotaion_filter\" id=\""+key+"_annotaion_filter\"><div class=\"title_filter\"><span>FILTER "+key.toUpperCase()+"</span></div></div>")
       $j("#"+key+"_annotaion_filter").append("<div id=\""+key+"_all\" class=\"item_filter item_clicked show_all\" value=\""+key+"\"><span>SHOW ALL</span></div>");
+
+      var format_keys = []
+      var eq_key = {}
       for(var k in keys){
-        $j("#"+key+"_annotaion_filter").append("<div class=\"item_filter\" value=\""+k+"\"><span>"+format_name(k,key).toUpperCase()+"</span><span style=\"color:"+keys[k]+";\">&nbsp;&nbsp;&#9899;</span></div>"); 
+        var i = format_name(k,key).toUpperCase();
+        format_keys.push( i );
+        if(i in eq_key){
+          console.log(k+"\n"+eq_key[i]);
+        }
+        eq_key[i]=k;
       }
+      
+      format_keys.sort().forEach( function(i){
+        var k = eq_key[i];
+        $j("#"+key+"_annotaion_filter").append("<div class=\"item_filter\" value=\""+k+"\"><span>"+i+"</span><span style=\"color:"+keys[k]+";\">&nbsp;&nbsp;&#9899;</span></div>"); 
+      });
       $j("#"+key+"_annotaion_filter .item_filter").click(function(e){
         if( $j(this).attr('id')!=key+"_all" ){
           $j( "#"+key+"_all" ).removeClass('item_clicked');

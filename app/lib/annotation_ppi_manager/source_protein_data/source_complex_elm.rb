@@ -15,7 +15,8 @@ module AnnotationPpiManager
                     },
                     'type_key'=>'type'
         }
-        return sourceComplexFeature(pdbId, "collectElmDataFromUniprot", config, path=path) 
+        job = SetComplexFeatureJob.perform_later(pdbId, "collectElmDataFromUniprot", config, path=path)
+        return {job_id:job.job_id}
       end
 
     end

@@ -1,4 +1,4 @@
-var global_frames = ["upRightBottomFrame","leftBottomFrame","downRightBottomFrame","genomicFrame"];
+var global_frames = ["upRightBottomFrame","leftBottomFrame","downRightBottomFrame","genomicFrame","analysisFrame"];
 
 function add_frames_listener(){
 
@@ -111,4 +111,15 @@ function add_frames_listener(){
     },  100);
   });
 
+  window.addEventListener("network_selection",function(evt){
+    var data = evt.detail;
+    network_selection(data);
+  });
+
+  window.addEventListener("ppiFrame_display_active_data",function(evt){
+    var data = evt.detail;
+    var evtOut = document.createEvent("CustomEvent");
+    evtOut.initCustomEvent("ppiFrame_display_active_data",true,true,data);
+    top.document.getElementById("ppiFrame").contentWindow.dispatchEvent(evtOut);
+  });
 }

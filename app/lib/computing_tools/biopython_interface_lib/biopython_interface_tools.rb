@@ -8,47 +8,73 @@ module ComputingTools
       def runBiopythonInterface(pdbId_,path_)
         pdbId = pdbId_
         path = path_
-        pdbId.sub! "__","."
-        if path.nil?
-          out = BiopythonInterface.find_by(pdbId: pdbId)
-          if out.nil?
-            out  = JSON.parse( `#{LocalScripts}/structure_interface_json #{pdbId} pdb` )
-            if out.key?('error')
-              raise "#{LocalScripts}/structure_interface_json ERROR: #{out['error']}"
+        pdbId.gsub! "__","."
+        begin
+          if path.nil?
+            out = BiopythonInterface.find_by(pdbId: pdbId)
+            if out.nil?
+              out  = JSON.parse( `#{LocalScripts}/structure_interface_json #{pdbId} pdb` )
+              if out.key?('error')
+                puts "#{LocalScripts}/structure_interface_json ERROR: #{out['error']}"
+              else
+                BiopythonInterface.create( pdbId: pdbId,
+                                           asa: out['asa'].to_json, 
+                                           interface:out['interface'].to_json, 
+                                           rri:out['rri'].to_json, 
+                                           rri_raw:out['rri_raw'].to_json,
+                                           rri_n:out['rri_n'].to_json
+                )
+              end
             else
-              puts(out['rri_n'].to_json)
-              BiopythonInterface.create( pdbId: pdbId,
-                                         asa: out['asa'].to_json, 
-                                         interface:out['interface'].to_json, 
-                                         rri:out['rri'].to_json, 
-                                         rri_raw:out['rri_raw'].to_json,
-                                         rri_n:out['rri_n'].to_json
-              )
+              out = { asa:JSON.parse(out['asa']), 
+                      interface:JSON.parse(out['interface']), 
+                      rri:JSON.parse(out['rri']), 
+                      rri_raw:JSON.parse(out['rri_raw']), 
+                      rri_n:JSON.parse(out['rri_n'])
+              }
+            end
+          elsif path =~ /interactome3d/ then
+            out = BiopythonInteractome3d.find_by(pdbId: pdbId)
+            if out.nil?
+              out  = JSON.parse( `#{LocalScripts}/structure_interface_json #{pdbId} interactome3d` )
+              if out.key?('error')
+                puts "#{LocalScripts}/structure_interface_json #{pdbId} interactome3d ; ERROR: #{out['error']}"
+              else
+                BiopythonInteractome3d.create( pdbId: pdbId,
+                                           asa: out['asa'].to_json, 
+                                           interface:out['interface'].to_json, 
+                                           rri:out['rri'].to_json, 
+                                           rri_raw:out['rri_raw'].to_json,
+                                           rri_n:out['rri_n'].to_json
+                )
+              end
+            else
+              out = { asa:JSON.parse(out['asa']), 
+                      interface:JSON.parse(out['interface']), 
+                      rri:JSON.parse(out['rri']), 
+                      rri_raw:JSON.parse(out['rri_raw']), 
+                      rri_n:JSON.parse(out['rri_n'])
+              }
             end
           else
-            out = { asa:JSON.parse(out['asa']), 
-                    interface:JSON.parse(out['interface']), 
-                    rri:JSON.parse(out['rri']), 
-                    rri_raw:JSON.parse(out['rri_raw']), 
-                    rri_n:JSON.parse(out['rri_n'])
-            }
-          end
-        else
-          filename = LocalPath+"/"+path+"/biopython_interface_recover_data.json"
-          if File.exist?(filename)
-            out = recover(path)
-          else
-            puts("#{LocalScripts}/structure_interface_json #{pdbId} #{path}")
-            out  = JSON.parse( `#{LocalScripts}/structure_interface_json #{pdbId} #{path}` )
-            
-            if out.key?('error')
-              raise "#{LocalScripts}/structure_interface_json ERROR: #{out['error']}"
+            filename = LocalPath+"/"+path+"/biopython_interface_recover_data.json"
+            if File.exist?(filename)
+              out = recover(path)
             else
-              save_data(out,path)
+              out  = JSON.parse( `#{LocalScripts}/structure_interface_json #{pdbId} #{path}` )
+              
+              if out.key?('error')
+                puts "#{LocalScripts}/structure_interface_json ERROR: #{out['error']}"
+              else
+                save_data(out,path)
+              end
             end
           end
+        rescue Exception => e 
           
-        end
+          out = {'error'=>e.message+"\nTrace: "+JSON.parse(e.backtrace.inspect).join("\n")}
+        end 
+
         return out
       end
 

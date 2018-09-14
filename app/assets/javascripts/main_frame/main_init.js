@@ -14,7 +14,7 @@ var $CUSTOM_TRACKS = {};
 
 var $COMPUTED_FEATURES = {};
 
-var $LOG = { 'protein':{}, 'gene':{}, 'interaction:':{} };
+var $LOG = { 'protein':{}, 'gene':{}, 'interaction:':{}, 'analysis':{} };
 
 var global_selection =  null;
 var $j = jQuery.noConflict();
@@ -103,6 +103,10 @@ $j(document).ready(function(){
     change_view("#proteomic_panel");    
   });
 
+  $j('#analysis_view').click(function(){
+    change_view("#analysis_panel");    
+  });
+
   $j('#genomic_view').click(function(){
      change_view("#genomic_panel");   
   });
@@ -145,6 +149,12 @@ $j(document).ready(function(){
     display_elms();
   });
 
+   $j('#ppi_custom_annotations').click(function(){
+    display_ppi_custom_annotations();
+  }); 
+
   add_frames_listener();
+
+  if(top.network_flag)change_view("#ppi_panel");
 
 });

@@ -1,0 +1,84 @@
+:javascript
+  $j(document).ready(function(){
+    $ALIGNMENTS = #{ @alignment.to_json };
+  });
+:javascript
+  var procheck = null;
+:javascript
+  var no_aa_ch = #{ @no_aa_ch.to_json };
+
+-if @external_annotations
+  :javascript
+    top.uploaded_annotations = {result:'#{@external_annotations}'};
+    top.upload_flag = true;
+
+#menu
+  =image_tag("3dbionotes_ws_logo_no_partners.png",height:'50')
+  %ul#topnav
+    %li
+      %a.nostyle.menu{:onclick=>'window.location.href="/ws/home"',:style=>"cursor:pointer;font-weight:bold;"}HOME
+    %li
+      %a.nostyle.menu{:onclick=>'window.location.href="/ws/submit"',:style=>"cursor:pointer;font-weight:bold;"}SUBMIT
+    %li
+      %a.nostyle.menu{:onclick=>'window.location.href="/ws/network"',:style=>"cursor:pointer;font-weight:bold;"}NETWORK
+    %li
+      %a.nostyle.menu{:onclick=>'window.location.href="/ws/database"',:style=>"cursor:pointer;font-weight:bold;"}QUERY
+    %li
+      %a.nostyle.menu{:onclick=>'window.location.href="/ws/help"',:style=>"cursor:pointer;font-weight:bold;"}HELP
+  #partners
+    =image_tag("partners.png",id:'partners_logo')
+
+#topFrame
+  #molTitle
+    #{ @title }
+  #secondForm
+    = form_tag({controller: "main", action: "home"}, :method => :get,id: "selectOptionForm") do
+      = label_tag(:labelForm, "PROTEINS IN THIS MODEL:",:style=>"font-family: Verdana, Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;color:#606060;")
+      = select_tag("alignment", options_for_select(@optionsArray),:onchange=>"firstTime=getValueSelection(this,firstTime);",:title=>"Choose one of the alignments",:prompt=>"SELECT MENU",:style=>"width:300px;margin-left:10px;font-size:10px;font-family: 'Lucida Console', Monaco, monospace")
+      -@selection_array.each do |acc,data|
+        %div{id:"alignment:"+acc,style:"display:none"}
+          %option{value:""}SELECT MENU
+          = options_for_select(data)
+      #uniprotLogo{:style=>"display:inline;position:relative;top:5px;left:3px;"}
+        =link_to(image_tag("uniprot.png",size:"18x18"),"http://www.uniprot.org/",:target=>"_blank")
+      #controls{:style=>"margin-top:3px;background-color:transparent;"}
+        %i{:class=>"demo-icon icon-ccw" ,:title=>"Reset view"}
+          &#xe803;
+        %i{:class=>"demo-icon icon-light-up" ,:title=>"Display/hide atoms of selected residues"}
+          &#xe800;
+        %i{:class=>"demo-icon icon-eye-off" ,:title=>"Display/hide heteroatoms"}
+          &#xe805;
+        %i{:class=>"demo-icon icon-target" ,:title=>"Label selected annotation"}
+          &#xe804;
+        %i{:class=>"demo-icon icon-th-list" ,:title=>"Display selected annotations"}
+          &#xe806;
+        %i{:class=>"demo-icon icon-camera" ,:title=>"Save image"}
+          &#xe807;
+        -if @viewerType!="ngl"
+          = image_tag("screenshot.gif",:onclick=>"javascript:takeScreenshot();",:align=>"center",:title=>"Save image - It takes some time",:class=>"hideHetero",:style=>"cursor:pointer;vertical-align:middle;")
+
+
+:javascript
+  var firstTime = true;
+  var alignmentTranslation;
+  var uniprotLength = true;
+  var noAlignments = false;
+  var network_flag = true;
+  var network_graph = #{@network_graph};
+  var network_selected = '#{@default_acc}';
+  $j(document).ready(function(){
+    $j('#chance').keypress(function(event){
+      if(event.keyCode==13){
+        event.preventDefault();
+      }
+    });
+
+    $j('#leftBottomFrame').load(function(){
+      if($j('#leftBottomFrame').attr('src')=="jsmolIFrame"){
+        $j('#leftBottomFrame')[0].src = "/jsmolIFrame/?viewer_type=#{@viewerType}&origin=#{@identifierType}&pdbs="+encodeURI('#{@pdbList.to_json}');
+      }
+      if(noAlignments)clear_wm();
+    });
+    add_ppi_network_hidden_form();
+   });
+= render 'main'

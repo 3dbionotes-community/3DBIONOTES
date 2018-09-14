@@ -9,8 +9,14 @@ module AlignmentsManager
 
       def sourcePDBalignment(pdbId)
         info = nil
-        if pdbId =~ /[A-Z]{20}/ or pdbId =~ /EXAMPLE\d/ or pdbId =~ /pdb_redo_\w{4}/
-          info = File.read(LocalPath+"/"+pdbId+"/alignment.json")
+        if pdbId =~ /[A-Z]{20}/ or pdbId =~ /EXAMPLE\d/ or pdbId =~ /pdb_redo_\w{4}/ then
+          localPath = Settings.GS_LocalData+"upload/"
+          info = JSON.parse(File.read(localPath+"/"+pdbId+"/alignment.json"))
+        elsif pdbId =~ /interactome3d/ then
+           pdbId = pdbId.split(":")[1]
+           pdbId.gsub! '__','.'
+           dbData = Interactome3dDatum.find_by(pdbId: pdbId)
+           info = {pdbId=>JSON.parse(dbData.data)}
         else
           dbData = PdbDatum.find_by(pdbId: pdbId)
           if !dbData.nil? 

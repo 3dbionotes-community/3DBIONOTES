@@ -59,9 +59,15 @@ class PostRequestController < ApplicationController
 
         DataFile.save_string(file_content, file_name, rand_path, post_info={ "title"=>title, "file_name"=>file_name })
 
-        if not params[:url_annotations].nil? then
-          url_annotations=params[:url_annotations]
-          annotations_content, http_code, http_code_name = getUrl(url_annotations,verbose=true)
+        annotations_url = nil
+        if params[:url_annotations] then
+          annotations_url = params[:url_annotations]
+        elsif params[:annotations_url] then
+          annotations_url = params[:annotations_url]
+        end
+        
+        if annotations_url then
+          annotations_content, http_code, http_code_name = getUrl(annotations_url,verbose=true)
           if http_code.to_i < 399 and http_code.to_i > 0 then 
             ann_file_name="external_annotations.json"
             DataFile.save_string(annotations_content, ann_file_name, rand_path)

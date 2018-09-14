@@ -1,0 +1,52 @@
+:javascript
+  var job_id = "#{@job_id}";
+  var step = 1;
+
+  function check_status(){
+    var url = "/api/job/status/"+job_id
+    $j.ajax({
+      url: url,
+      success: function(data){
+        if(data['status']==100 && data['step'] == 2){
+          $j(".status_div").html( "100%" );
+          $j("#job_id").attr("value", job_id);
+          $j("#query_form").submit();
+        }else{
+          console.log(data);
+          $j(".status_div").html( data['status']+"%" );
+          $j(".step_div").html( data['step']+"/2" );
+          setTimeout(function(){
+            check_status();
+          },3000);
+        }
+      }
+    });
+  }
+  $j(document).ready(function(){
+    $j(".status_div").css("display","block");
+    setTimeout(function(){
+      check_status();
+    },3000);
+  });
+
+.ws_main_div
+  .database_form
+    = form_tag({controller: "main", action: "network"}, :method => :get,id: "query_form",:style=>"margin-top:20px;") do 
+      = hidden_field_tag(:job_id,"null")
+      =  hidden_field_tag(:queryId,"null")
+
+  .wait_div{:style=>'display:block'}
+    %span.wait_text PLEASE BE PATIENT
+    %br
+    %br
+    %br
+    =image_tag("loading.gif",size:"170x170")
+    %br
+    %br
+    %br
+    %span.status_div{style:"font-size:40px;font-weight:bold;"}0%
+    %br
+    %span.step_div{style:"font-size:20px;font-weight:bold;"}0/2
+    %br
+    %br
+    %span.wait_text THIS PROCESS MAY TAKE A FEW MINUTES

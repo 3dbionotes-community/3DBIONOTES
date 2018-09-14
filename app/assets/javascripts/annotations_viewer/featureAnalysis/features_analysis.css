@@ -1,0 +1,39 @@
+.contingency_header {
+  width:100%;
+  padding-left:200px;
+  margin-top:50px;
+  margin-bottom:15px;
+}
+
+.contingency_header div{
+  width:760px;
+  font-size:20px;
+}
+
+.disease_stats {
+  background-color:#FFF;
+  border: 1px solid #cacaca;
+  margin-bottom:20px;
+}
+
+.disease_stats table{
+  font-family: 'Helvetica neue',Helvetica,Arial,sans-serif !important;
+  font-size: 10px !important;
+  color:#666;
+}
+
+.disease_stats table tr td:nth-child(2){
+  padding-left:20px;
+}
+
+
+.no_relation{
+  width:100%;
+  text-align:center;
+  font-family: 'Helvetica neue',Helvetica,Arial,sans-serif !important;
+  font-size: 16px !important;
+  font-weight:bold;
+  color:#e68a00;
+  margin-top:100px;
+}
+

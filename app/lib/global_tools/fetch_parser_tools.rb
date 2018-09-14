@@ -1,6 +1,9 @@
 module GlobalTools
   module FetchParserTools 
 
+    require 'net/http'
+    require 'net/https'
+
     def generateDigest(cadena)
       return Digest::SHA256.hexdigest(cadena)
     end
@@ -60,6 +63,8 @@ module GlobalTools
           puts "Error downloading data:\n#{$!}"
           data = "#{$!}"
         end
+
+
         return data, code, code_name
       end
     end  

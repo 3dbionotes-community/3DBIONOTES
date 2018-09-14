@@ -13,7 +13,8 @@ module AnnotationPpiManager
                     },
                     'type_key'=>'type'
         }
-        return sourceComplexFeature(pdbId, "collectSmartDataFromUniprot", config, path=path) 
+        job = SetComplexFeatureJob.perform_later(pdbId, "collectSmartDataFromUniprot", config, path=path)
+        return {job_id:job.job_id}
       end
 
     end

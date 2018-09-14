@@ -1,1 +1,1 @@
-viewer_class.bundle.20180522.js
+viewer_class.bundle.20180718.js

@@ -25,7 +25,7 @@ $j(document).ready(function(){
   var yourDiv = document.getElementById('snippetDiv');
   if( !yourDiv ) return;
 
-  get_all_external_soruces();
+  if(extend_features_flag) get_all_external_soruces();
 
   window.addEventListener("modelChange", function(evt){
     var fake_click = new MouseEvent("click");

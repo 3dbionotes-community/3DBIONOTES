@@ -13,6 +13,12 @@ class RunMolprobityController < ApplicationController
       data = Molprobityentry.find_by(pdbId: suffix)
       directory = LocalMolProobity_tmp+'/'+suffix+'/MOLPROBITY'
       pdbData = JSON.parse(PdbDatum.find_by(pdbId: suffix).data)
+    elsif suffix =~ /interactome3d:/ then
+      i3d_pdb = suffix.gsub "interactome3d:",""
+      i3d_pdb.gsub! "__","."
+      data = Molprobityentry.find_by(pdbId: i3d_pdb)
+      pdbData = JSON.parse(Interactome3dDatum.find_by(pdbId: i3d_pdb).data)
+      directory = LocalMolProobity_tmp+'/'+i3d_pdb+'/MOLPROBITY'
     else
       directory = LocalPath+'/'+suffix+'/MOLPROBITY'
       pdbData = JSON.parse( File.open(LocalPath+'/'+suffix+'/alignment.json').read )
@@ -22,14 +28,17 @@ class RunMolprobityController < ApplicationController
     if data.nil?
       out = {'status'=>'running', 'id'=>suffix}
       if not File.exists?(directory)
-        if suffix =~ /^\d{1}\w{3}$/ and suffix !~ /^\d{4}$/
+        if suffix =~ /^\d{1}\w{3}$/ and suffix !~ /^\d{4}$/ then
           system( LocalScripts+"/python3_run_molprobity "+suffix+" &" )
+        elsif suffix =~ /interactome3d:/ then
+          FileUtils.mkdir_p directory
+          system( LocalScripts+"/run_molprobity "+i3d_pdb+" interactome3d >"+directory+"/stdout &>"+directory+"/stderr &")
         else
           Dir.mkdir(directory)
-          system( LocalScripts+"/run_molprobity "+suffix+" local >"+directory+"/stdout 2>"+directory+"/stderr &")
+          system( LocalScripts+"/run_molprobity "+suffix+" local >"+directory+"/stdout &>"+directory+"/stderr &")
         end
       else
-        if File.exists?(directory+'/done')
+        if File.exists?(directory+'/done') then
           out['status'] = 'complete'
           out['rama'] = get_rama(directory,pdbData)
           out['omega'] = get_omega(directory,pdbData)
@@ -37,7 +46,13 @@ class RunMolprobityController < ApplicationController
           if suffix =~ /^\d{1}\w{3}$/ and suffix !~ /^\d{4}$/
             Molprobityentry.create(pdbId: suffix, data: out.to_json)
             FileUtils.rm_rf( LocalMolProobity_tmp+'/'+suffix )
+          elsif suffix =~ /interactome3d:/ then
+            Molprobityentry.create(pdbId: i3d_pdb, data: out.to_json)
+            FileUtils.rm_rf( LocalMolProobity_tmp+'/'+i3d_pdb )
           end
+        elsif File.exists?(directory+'/stderr') then
+          err = File.read(directory+'/stderr')
+          out = {'status'=>'error', 'error'=>err}if(err.length > 0)
         end
       end
     else

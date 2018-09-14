@@ -35,6 +35,11 @@ module AlignmentsManager
             end
             PdbDatum.create(pdbId: pdbId, digest: digest, data: info.to_json)
           end
+        elsif pdbId_ch =~ /interactome3d/ then
+          rand, pdbId, ch = pdbId_ch.split("::")
+          pdbId.gsub! '_dot_','.'
+          dbData = Interactome3dDatum.find_by(pdbId: pdbId) 
+          info = JSON.parse(dbData.data)
         else
           rand, pdb, ch = pdbId_ch.split("::")
           info = JSON.parse(File.read(LocalPath+"/"+rand+"/alignment.json"))

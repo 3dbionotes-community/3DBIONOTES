@@ -1,0 +1,2 @@
+module JobStatusHelper
+end

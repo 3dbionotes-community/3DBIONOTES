@@ -61,6 +61,8 @@ try:
   
 except Exception as e: 
    print(json.dumps( {'error':str(e)} ))
-
+   open(mp_tmp_path+"/stderr",'w').write(str(e))
+   if len(sys.argv) > 2:
+     print(traceback.print_exc())
 sys.exit(0)
 

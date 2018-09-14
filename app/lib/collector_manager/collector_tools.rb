@@ -21,6 +21,10 @@ module CollectorManager
         out = "crotonylation"
       elsif ptm =~ /citrul/i then
         out = "citrullination"
+      elsif ptm =~ /disulfid/i then
+        out = "disulfid"
+      elsif ptm =~ /ribosyl/i then
+        out = "ribosylation"
       end
       return out
     end

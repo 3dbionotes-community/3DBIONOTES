@@ -13,11 +13,20 @@ if [ $2 == "pdb" ]; then
   out_path=`$DIR/read_json $CONFIG_FILE tmp_path`"/tmp_mp/"$suffix"/MOLPROBITY";
 fi
 
+if [ $2 == "interactome3d" ]; then
+  models_path=`$DIR/read_json $CONFIG_FILE interactome3d_path`"/pdb/"$suffix;
+  out_path=`$DIR/read_json $CONFIG_FILE tmp_path`"/tmp_mp/"$suffix"/MOLPROBITY";
+fi
+
 molprobity_path=`$DIR/read_json $CONFIG_FILE molprobity_bin`;
 
 for i in `ls $models_path`; do
   file=$models_path/$i;
   out_file_suffix=$(echo $i | sed 's/\.pdb//');
+  if [ $2 == "interactome3d" ]; then
+    file=$i
+    out_file_suffix="model.1";
+  fi
 
   echo "running phenix.ramalyze $i";
   $molprobity_path/phenix.ramalyze $file | awk  -F":" '{if($5=="OUTLIER")print $0}' >  $out_path/$out_file_suffix.ramalyze

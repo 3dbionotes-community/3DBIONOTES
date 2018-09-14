@@ -24,6 +24,7 @@ div.ngl_em_loading {
 	font-size:18px;
 	/*font-weight:bold;*/
 	color:#606060;
+        z-index:1000000;
 }
 
 
@@ -36,6 +37,7 @@ div.ngl_loading {
 	font-size:36px;
 	/*font-weight:bold;*/
 	color:#606060;
+        z-index:1000000;
 }
 
 div.ngl_loading img {
@@ -43,6 +45,7 @@ div.ngl_loading img {
 	position:relative;
 	top:2px;
 	left:10px;
+        z-index:1000000;
 }
 
 div.label_display {

@@ -4,10 +4,13 @@
       var imported_flag = #{@imported_flag};
     = stylesheet_link_tag('annotations_viewer/uniprot_viewer_main.css')
     = stylesheet_link_tag('annotations_viewer/extend_style.css')
+    = stylesheet_link_tag('annotations_viewer/features_analysis.css')
     = stylesheet_link_tag('annotations_frame/annotations_style.css')
     = stylesheet_link_tag('global_tools/sweetalert.css')
     = stylesheet_link_tag('/font-awesome/css/font-awesome.min.css')
 
+    = javascript_include_tag('annotations_viewer/featuresAnalysis.bundle')
+    = javascript_include_tag('annotations_viewer/analyse_data')
     = javascript_include_tag('annotations_viewer/extendProtVista.bundle')
     = javascript_include_tag('annotations_viewer/extend_data')
     = javascript_include_tag('annotations_viewer/protvista')

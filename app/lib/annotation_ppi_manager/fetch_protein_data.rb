@@ -43,5 +43,11 @@ module AnnotationPpiManager
       return toReturn
     end
 
+    include SourceProteinData::SourceComplexCustomData
+    def fetchComplexCustomData(pdbId,path,annotations)
+      toReturn = sourceComplexCustomData(pdbId,path,annotations)
+      return toReturn
+    end
+
   end
 end

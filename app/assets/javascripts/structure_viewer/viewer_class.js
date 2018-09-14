@@ -139,8 +139,9 @@ class viewer_class {
   }
 
   global_highlight(pdb, list){
-    console.log(list);
     var self = this;
+    if(!pdb)return;
+    if(!self.Structures[ pdb ])return;
     self.remove_multiple_selection();
     self.reset_chain_view();
 
@@ -208,14 +209,14 @@ class viewer_class {
       if('representations' in self.Structures[ pdb ] && 'multiple_selection' in self.Structures[ pdb ]['representations']){
         self.Structures[ pdb ]['representations']['multiple_selection'].forEach(function(i){
           i.setVisibility(false);
-          i.removeRepresentation();
+          self.stage.removeComponent(i.uuid)
         });
         self.Structures[ pdb ]['representations']['multiple_selection']=[];
       }
       if('representations' in self.Structures[ pdb ] && 'multiple_cartoon' in self.Structures[ pdb ]['representations']){
         self.Structures[ pdb ]['representations']['multiple_cartoon'].forEach(function(i){
           i.setVisibility(false);
-          i.removeRepresentation();
+          self.stage.removeComponent(i.uuid)
         });
         self.Structures[ pdb ]['representations']['multiple_cartoon']=[];
       }
@@ -245,7 +246,7 @@ class viewer_class {
     if( aux >=0 && aux < self.args.n_models){
       self.model = aux;
       self.highlight_chain( self.selected.pdb, self.selected.chain );
-      self.dsiplay_selection();
+      self.display_selection();
       var evt = document.createEvent("CustomEvent");
       evt.initCustomEvent("modelChange",true,true,[aux+1]);
       window.top.document.dispatchEvent(evt);
@@ -257,9 +258,10 @@ class viewer_class {
 
   color_by_chain_simple( list, _pdb, chain, _color, non_exec ){
     var self = this;
-    self.highlight_chain( _pdb, chain );
+    var pdb = _pdb;
+
+    self.highlight_chain( pdb, chain );
     
-    var pdb = _pdb.toLowerCase();
     var color = "#FFE999";
     if(_color)  color = _color;
     
@@ -413,19 +415,38 @@ class viewer_class {
 
   open_url( pdb, append_flag, chain, non_exec ){
     var self = this;
+    if(!pdb)return;
     self.stage.removeAllComponents();
+    if(non_exec){
+      self.message_manager.show_no_file();
+      return;
+    }
     self.p_chain = chain;
     var pdb_code = pdb;
-    self.message_manager.show_message( pdb_code.toUpperCase() );
-    var url_file = "rcsb://"+pdb_code.toUpperCase()+".mmtf";
-    self.stage.loadFile( url_file, {ext:"mmtf", firstModelOnly:true, sele:":"+chain} ).then( 
-      function(i){
-        self.loader_manager.initChain(self.loader_manager,i);
-    }).catch(function(e){
-      console.error(e);
-      var url = url_file;
-      console.log("URL "+url_file+" ERROR");
-    });
+    if(pdb_code.includes("interactome_pdb")){
+      self.message_manager.show_message( "FILE" );
+      self.stage.loadFile( pdb_code, {ext:"pdb", firstModelOnly:true} ).then( 
+        function(i){
+          self.loader_manager.initLocalStructure(self.loader_manager,i,true);
+          self.highlight_chain(infoGlobal.activepdb,infoGlobal.activechain);
+          trigger_interactome_active_data( append_flag );
+      }).catch(function(e){
+        console.error(e);
+        var url_file = pdb_code;
+        console.log("URL "+url_file+" ERROR");
+      });     
+    }else{
+      self.message_manager.show_message( pdb_code.toUpperCase() );
+      var url_file = "rcsb://"+pdb_code.toUpperCase()+".mmtf";
+      self.stage.loadFile( url_file, {ext:"mmtf", firstModelOnly:true, sele:":"+chain} ).then( 
+        function(i){
+          self.loader_manager.initChain(self.loader_manager,i);
+      }).catch(function(e){
+        console.error(e);
+        var url = url_file;
+        console.log("URL "+url_file+" ERROR");
+      });
+    }
   }
 
   hide_hetero(non_exec){

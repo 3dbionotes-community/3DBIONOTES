@@ -5,6 +5,7 @@
     %meta{:name => "keywords", :content => "bioinformatics, proteins, PDB, emdb, Uniprot"}
 
     = stylesheet_link_tag('ppi_frame/ppi_style')
+    = stylesheet_link_tag('global_tools/sweetalert.css')
 
     = javascript_include_tag('ppi_frame/cytoscape.min')
     = javascript_include_tag('ppi_frame/rhill-voronoi-core')
@@ -14,6 +15,7 @@
     = javascript_include_tag('ppi_frame/ppi_inter')
     = javascript_include_tag('ppi_frame/graph_class')
     = javascript_include_tag('interface_viewer/interface_viewer.bundle')
+    = javascript_include_tag('global_tools/sweetalert.min')
 
   %body{:id => "body"}
     =yield

@@ -1,0 +1,56 @@
+.ws_main_div
+  %h3{style:"color:orange;"}
+    Under development!
+  .database_form
+    = form_tag({controller: "main", action: "network_build"}, :multipart => true, :method => :post,id: "query_form",:style=>"margin-top:20px;") do 
+      %select{:id=>"prot_organisms", :name=>"dataset", :style=>"vertical-align:top;"}
+        %option{:value=>"athaliana"}Arabidopsis thaliana
+        %option{:value=>"bsubtilis"}Bacillus subtilis
+        %option{:value=>"btaurus"}Bos taurus
+        %option{:value=>"celegans"}Caenorhabditis elegans
+        %option{:value=>"cjejuni"}Campylobacter jejuni
+        %option{:value=>"fly"}Drosophila melanogaster
+        %option{:value=>"ecoli"}Escherichia coli
+        %option{:value=>"hpylori"}Helicobacter pylori
+        %option{:value=>"human", :selected=>"selected"}Homo sapiens
+        %option{:value=>"mouse"}Mus musculus
+        %option{:value=>"mtuberculosis"}Mycobacterium tuberculosis
+        %option{:value=>"mpneumoniae"}Mycoplasma pneumoniae
+        %option{:value=>"pfalciparum"}Plasmodium falciparum
+        %option{:value=>"rat"}Rattus norvegicus
+        %option{:value=>"yeast"}Saccharomyces cerevisiae
+        %option{:value=>"spombe"}Schizosaccharomyces pombe
+        %option{:value=>"ssp"}Synechocystis sp. (strain PCC 6803 / Kazusa)
+        %option{:value=>"tpallidum"}Treponema pallidum
+      %h3
+        Enter a list of UniProt accession
+      =text_area_tag(:queryId,content=nil, options={rows: 10, cols: 60})
+      = hidden_field_tag(:viewer_type,@viewerType)
+      %table{style:"color:#606060;"}
+        %tr
+          %td
+            =check_box(:has_structure_flag,"flag", {checked:true,style:"transform:scale(0.8);"}, "yes", "no")
+          %td
+            %div{style:"font-size:12px;"}INCLUDE ONLY NEIGHBOURS WITH STRUCTURAL DATA
+      %div{style:"font-size:14px;font-weight:bold;margin-bottom:5px;margin-top:10px;"}UPLOAD YOUR ANNOTATIONS
+      = file_field_tag(:annotations_file, {style:"font-size:12px;"})
+      %br
+      %br
+      = button_tag("Submit")
+      %br
+      %br
+      %br
+  .wait_div{:style=>'display:none'}
+    %span.wait_text PLEASE BE PATIENT
+    %br
+    %br
+    %br
+    =image_tag("loading.gif",size:"170x170")
+    %br
+    %br
+    %br
+    %span.status_div{style:"font-size:40px;font-weight:bold;"}0%
+    %br
+    %br
+    %br
+    %span.wait_text THIS PROCESS MAY TAKE A FEW MINUTES

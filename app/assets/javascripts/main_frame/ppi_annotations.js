@@ -25,3 +25,8 @@ function display_epitopes(){
 function display_elms(){
   document.getElementById("ppiFrame").contentWindow.cytoscape_graph.load_features("elms");
 }
+
+function display_ppi_custom_annotations(){
+  document.getElementById("ppiFrame").contentWindow.cytoscape_graph.load_features("custom");
+}
+

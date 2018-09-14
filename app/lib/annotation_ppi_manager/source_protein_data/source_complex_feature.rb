@@ -8,7 +8,7 @@ module AnnotationPpiManager
       include ComputingTools::BiopythonInterfaceLib::BiopythonInterfaceTools
       include CollectorManager::CollectProteinData 
       
-      def sourceComplexFeature(pdbId, feature_call, config_, path=nil)
+      def sourceComplexFeature(pdbId, feature_call, config_, path=nil, job=nil)
         config = config_
         rri_key = :rri
         asa_key = :asa
@@ -54,6 +54,29 @@ module AnnotationPpiManager
           end
         end
 
+        custom_data = {}
+        if feature_call == "custom_data" then
+          annotations = JSON.parse(config['annotations'])
+          unless annotations.kind_of? Array then
+            annotations = [annotations]
+          end
+          annotations.each do |a|
+            if a.key? "chain" then
+              custom_data[a['chain']] = [] unless custom_data.key? a['chain']
+              custom_data[a['chain']].concat a['data']
+            elsif a.key? "acc" or a.key? "uniprot" then
+              acc = nil
+              if a.key? "acc" then 
+                acc = a["acc"]
+              elsif a.key? "uniprot" then
+                acc = a["uniprot"]
+              end
+              custom_data[ acc ] = [] unless custom_data.key? acc
+              custom_data[ acc ].concat a['data']
+            end
+          end
+        end
+
         mapping = {}
         if path.nil? then
           mapping = fetchUniprotfromPDB(pdbId) 
@@ -62,24 +85,38 @@ module AnnotationPpiManager
         end 
         features = {}
         location = {}
+        job.init_status(mapping.length) if(job)
         mapping.each do |k,v|
           v.each do |ki,vi_|
-            x = send(feature_call, ki)
+            job.update_status() if(job)
+            x = []
+            unless feature_call == "custom_data" then
+              x = send(feature_call, ki)
+            else
+              if custom_data.key? ki then
+                x = custom_data[ki]
+              end
+            end
             if path.nil? then
               vi = vi_
             else
               vi = [k]
             end
             vi.each do |ch|
+              if feature_call == "custom_data" and custom_data.key? ch then
+                x.concat custom_data[ch]
+              end
               unless features.key? ch
                 features[ch] = {'buried'=>{}, 'surface'=>{}, 'interface'=> {}}
                 location[ch] = { 'all'=>[],'bs'=>{} }
               end
               x.each do |k|
                 type = k[config['type_key']].downcase
-                if  config['colors'].key? type then
+                if k.key? 'color' then
+                  color = k['color']
+                elsif config.key? 'colors' and not config['colors'].nil? and config['colors'].key? type then
                   color = config['colors'][type]
-                elsif not config['colors']['default'].nil? then
+                elsif config['colors'].key? 'default' and not config['colors']['default'].nil? then
                   color = config['colors']['default']
                 else
                   color = "%06x" % (rand * 0xffffff)

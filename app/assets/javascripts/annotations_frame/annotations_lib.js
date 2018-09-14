@@ -1,6 +1,7 @@
 function update_interacting_residues(n){
   if(imported_flag || !top.binding_residues) return;
   var bs = add_binding_residues(n);
+  if(!bs)return;
   $j.map(feature_viewer.data, function(n,i){
     if(n[0]==bs[0])feature_viewer.data[i]=bs;
   });
@@ -23,7 +24,7 @@ function build_ProtVista(){
   if( !yourDiv ) return;
   var app = require("ProtVista");
   try {
-    instance = new app({el: yourDiv, text: 'biojs', uniprotacc : __accession });
+    instance = new app({el: yourDiv, text: 'biojs', uniprotacc : __accession, extend_features_flag:extend_features_flag });
   } catch (err) {
     console.log(err);
   }       
@@ -46,7 +47,9 @@ function build_ProtVista(){
         var selection = [{begin:begin, end:begin, color:color},{begin:end, end:end, color:color}];
         trigger_highlight_all(selection);
       }else{
-        var selection = {begin:begin, end:end, color:color, frame:"upRightBottomFrame"};
+        var _frame = "upRightBottomFrame";
+        if(feature_analysis_flag)_frame="analysisFrame";
+        var selection = {begin:begin, end:end, color:color, frame:_frame};
         trigger_aa_selection(selection);
       }
     }

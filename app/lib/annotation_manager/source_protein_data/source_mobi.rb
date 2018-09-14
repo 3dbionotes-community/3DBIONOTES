@@ -10,12 +10,16 @@ module AnnotationManager
         out = Mobientry.find_by(proteinId: uniprotAc)
         if out.nil?
           url = MobiURL+"/"+uniprotAc+"/consensus"
+          data = {}
           begin
             data = Net::HTTP.get_response(URI.parse(url)).body
+            data = JSON.parse(data)
           rescue
-            puts "Error downloading data:\n#{$!}"
+            puts "Error downloading data\nURL: #{url}\nERROR: #{$!}"
+            data = {}
+            #raise "Error downloading data:\n#{$!}"
           end   
-          data = JSON.parse(data)
+          
           main_out = {}
           out = {}
           flag =  false

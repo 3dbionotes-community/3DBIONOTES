@@ -42,6 +42,7 @@ class FramesAnnotationsController < ApplicationController
   def imported_annotationsIFrame
     import_acc = params[:imported_acc]
     alignment = params[:alignment]
+    puts(alignment)
     @imported_flag = true
     if !alignment.nil?
       @alignment = JSON.parse(alignment)
@@ -82,6 +83,24 @@ class FramesAnnotationsController < ApplicationController
     end
     @allURL = @allURL.to_json
     @asyncURL = @asyncURL.to_json
+  end
+
+  def analysisIFrame
+    alignment = params[:alignment]
+    @imported_flag = false 
+    @feature_analysis_url = [];
+    unless alignment.nil? then
+      @alignment = JSON.parse(alignment)
+      @uniprotACC = @alignment["uniprot"]
+      @log = ""
+      if(@alignment['origin']=="Uniprot") then
+        @feature_analysis_url.push([@alignment["uniprot"],"/compute/contingency/uniprot/"+@alignment["uniprot"],"contingency","acc"])
+      elsif @alignment.key? "path" then
+        @feature_analysis_url.push([@alignment["pdb"], "/compute/contingency/pdb/"+@alignment["path"]+"?file="+@alignment["pdb"],"contingency","pdb"])
+      else
+        @feature_analysis_url.push([@alignment["pdb"], "/compute/contingency/pdb/"+@alignment["pdb"],"contingency","pdb"])
+      end
+    end
   end
 
 end

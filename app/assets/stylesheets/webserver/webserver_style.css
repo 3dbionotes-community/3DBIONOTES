@@ -42,7 +42,7 @@ a{
 }
 
 .options {
-  width:75%;
+  width:90%;
   margin-top:50px;
   margin-left:auto;
   margin-right:auto;
@@ -90,7 +90,7 @@ a{
   background-color:rgb(212,212,212);
   text-align: center;
   width:100%;
-  color:606060;
+  color:#606060;
 }
 
 .footer a{
@@ -104,12 +104,13 @@ a{
 
 .ws_main_div {
   width:66%;
-  margin-top:50px;
+  margin-top:20px;
+  margin-bottom:50px;
   margin-left:auto;
   margin-right:auto;
   font-family:Verdana, Arial, Helvetica, sans-serif;
   font-size:18px;
-  color:606060;
+  color:#606060;
   position:relative;
 }
 
@@ -146,5 +147,23 @@ a{
 .database_form a:hover{
   color:#96C8C8;
   cursor:pointer;
+}
+
+h2.api_header{
+  position:relative;
+  left:-50px;
+}
+
+h3.api_header{
+  margin-top:40px;
+  margin-bottom:0px;
+  position:relative;
+  left:-25px;
+}
+
+.api_div {
+  font-size:14px;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  line-height: 150%;
 }
 

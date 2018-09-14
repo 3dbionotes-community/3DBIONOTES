@@ -17,20 +17,14 @@ module AlignmentsEnsemblManager
           end
         end
         ids = ''
-        _n = 0
         _ids.each do |k,v|
           ids += k+','
-          _n += 1
         end
         ids = ids.chomp(',')
-        if _n > 1
-          _seq = fetchUniprotMultipleSequences(ids,fasta_obj_flag=true)
-        else
-          _seq = fetchUniprotMultipleSequences(ids,fasta_obj_flag=true)
-        end
+        _seq = fetchUniprotMultipleSequences(ids,fasta_obj_flag=nil,dict_flag=true)
         out = {}
-        _seq.entries.each do |entry|
-          out[ entry.accession ] = entry.seq
+        _seq.each do |acc,entry|
+          out[ acc ] = entry['sequence']
         end
         return out
       end

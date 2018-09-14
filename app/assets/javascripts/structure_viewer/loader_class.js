@@ -10,19 +10,25 @@ class loader_class{
 
   load(){
     var self = this;
-    if(self.viewer.args.origin == "local"){
+    if(self.viewer.args.origin == "local" || self.viewer.args.origin == "interactome3d"){
       self.viewer.message_manager.show_message( "FILE" );
       var ext = "pdb";
-      if( self.viewer.args.pdb_list[1].includes("cif") ){
+      if( self.viewer.args.pdb_list[1] && self.viewer.args.pdb_list[1].includes("cif") ){
         ext = "cif";
       }
-      self.viewer.stage.loadFile( "/upload/"+self.viewer.args.pdb_list[0]+"/"+self.viewer.args.pdb_list[1], {ext:ext} ).then( 
+      var pdb_url = null;
+      if(self.viewer.args.origin == "local"){
+        pdb_url = "/upload/"+self.viewer.args.pdb_list[0]+"/"+self.viewer.args.pdb_list[1];
+      }else if(self.viewer.args.origin == "interactome3d"){
+        pdb_url = self.viewer.args.pdb_list[0];
+      }
+      self.viewer.stage.loadFile( pdb_url, {ext:ext} ).then( 
         function(i){
           self.initLocalStructure(self,i);
       }).catch( function(e){
-      console.error(e);
+        console.error(e);
         swal({
-          title: "ERROR LOADING "+self.viewer.args.pdb_list[1]+" FILE",
+          title: "ERROR LOADING "+pdb_url+" FILE",
           text: "FILE FORMAT ERROR",
           timer: 5000,
           type: "error",
@@ -61,14 +67,21 @@ class loader_class{
           self.init_map(self,i);
       }).catch(function(e){
         console.error(e);
+        swal({
+          title: "ERROR LOADING "+url_map+" FILE",
+          text: "FILE FORMAT ERROR",
+          timer: 5000,
+          type: "error",
+          showConfirmButton: true
+        });
       });
     }
     if(self.viewer.args.pdb_list.length == 0) self.trigger_alignment();
   }
 
-  initLocalStructure(self,ngl){
+  initLocalStructure(self,ngl,no_trigger_flag){
     self.init(ngl,true,false,true);
-    self.trigger_alignment();
+    if(!no_trigger_flag)self.trigger_alignment();
     self.viewer.message_manager.clear_message();
   }
 
@@ -153,15 +166,18 @@ class loader_class{
         depthWrite:true,
         isolevel:5
       });
+      self.viewer.message_manager.clear_em_message();       
     }else{
       self.viewer.Density['surface'] = ngl.addRepresentation( "surface", {
         color:"#33ABF9",
         depthWrite:true,
         isolevel:5
       });
-      self.viewer.stage.autoView();
+      setTimeout(function(){
+        self.viewer.stage.autoView();
+        self.viewer.message_manager.clear_em_message();       
+      },6000);
     }
-    self.viewer.message_manager.clear_em_message();       
   }
 
 }

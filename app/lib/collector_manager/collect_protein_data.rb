@@ -36,5 +36,14 @@ module CollectorManager
       return _collectElmDataFromUniprot(acc)
     end
 
+    include ProteinDataCollectors::CollectNucleotideBindingData
+    def collectNucleotideBindingDataFromUniprot(acc)
+      return _collectNucleotideBindingDataFromUniprot(acc)
+    end
+
+    include ProteinDataCollectors::CollectMetalBindingData
+    def collectMetalBindingDataFromUniprot(acc)
+      return _collectMetalBindingDataFromUniprot(acc)
+    end
   end
 end

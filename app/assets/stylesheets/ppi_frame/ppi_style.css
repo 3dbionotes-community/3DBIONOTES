@@ -26,6 +26,8 @@ div.title_filter span{
 div.annotaion_filter:hover {
   border:1px solid #C3C3C3;
   background:white;
+  max-height:90%;
+  overflow-x:auto;
 }
 
 div.item_filter {

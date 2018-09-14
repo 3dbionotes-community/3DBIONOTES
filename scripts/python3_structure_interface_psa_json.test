@@ -33,12 +33,23 @@ try:
   config_fh = open(os.path.dirname(os.path.realpath(__file__))+'/config.json.cfg')
   data = json.load(config_fh)
   
-  pdbFile = data["upload_path"]+"/"+prefix+"/"+pdb
-  json_file = data["upload_path"]+"/"+prefix+"/"+"interface.json"
-  json_asa_file = data["upload_path"]+"/"+prefix+"/"+"asa.json"
-  json_rri_file = data["upload_path"]+"/"+prefix+"/"+"rri.json"
-  json_rri_raw_file = data["upload_path"]+"/"+prefix+"/"+"rri_raw.json"
-  json_rri_n_file = data["upload_path"]+"/"+prefix+"/"+"rri_n.json" 
+  if prefix == "interactome3d":
+    pdbFile = data["interactome3d_path"]+"/pdb/"+pdb
+    json_file = data["interactome3d_path"]+"/biopython/"+pdb+"/interface.json"
+    json_asa_file = data["interactome3d_path"]+"/biopython/"+pdb+"/asa.json"
+    json_rri_file = data["interactome3d_path"]+"/biopython/"+pdb+"/rri.json"
+    json_rri_raw_file = data["interactome3d_path"]+"/biopython/"+pdb+"/rri_raw.json"
+    json_rri_n_file = data["interactome3d_path"]+"/biopython/"+pdb+"/rri_n.json" 
+    json_alignment_file = data["interactome3d_path"]+"/alignnments/"+pdb+".json"
+   
+  else:
+    pdbFile = data["upload_path"]+"/"+prefix+"/"+pdb
+    json_file = data["upload_path"]+"/"+prefix+"/"+"interface.json"
+    json_asa_file = data["upload_path"]+"/"+prefix+"/"+"asa.json"
+    json_rri_file = data["upload_path"]+"/"+prefix+"/"+"rri.json"
+    json_rri_raw_file = data["upload_path"]+"/"+prefix+"/"+"rri_raw.json"
+    json_rri_n_file = data["upload_path"]+"/"+prefix+"/"+"rri_n.json" 
+    json_alignment_file = data["upload_path"]+"/"+prefix+"/"+"alignment.json"
   
   if prefix  == "pdb":
     import mysql.connector
@@ -51,8 +62,19 @@ try:
     alignment = {pdb:json.loads( _align[0] )}
     cursor.close()
     cnx.close()
+  elif prefix  == "interactome3d":
+    import mysql.connector
+
+    cnx = mysql.connector.connect(user=data['user'], password=data['password'], host=data['host'], database="bionotes_development")
+    query="select data from interactome3d_data where pdbId=\""+pdb+"\";"
+    cursor = cnx.cursor()
+    cursor.execute(query)
+    _align = cursor.next()
+    alignment = {pdb:json.loads( _align[0] )}
+    cursor.close()
+    cnx.close()
   else:
-    alignment = json.loads( open(data["upload_path"]+"/"+prefix+"/"+"alignment.json").readlines()[0] )
+    alignment = json.loads( open(json_alignment_file).readlines()[0] )
    
   ## First, open and parse the protein file
   if prefix  == "pdb":
@@ -70,7 +92,7 @@ try:
   n_models=len( structure )
   
   
-  thr = 8
+  thr = 6
   
   binding_sites  = []
   max_bs = 0 
@@ -92,6 +114,9 @@ try:
       io=PDBIO()
       io.set_structure(s)
       io.save(model_file)
+    elif prefix == "interactome3d":
+       model_file = pdbFile     
+       rand =''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(20))
     else:
       model_file = data["upload_path"]+"/"+prefix+"/MODELS/model."+str( n_model )+".pdb"
       rand = prefix
@@ -144,7 +169,8 @@ try:
   
     ASA.append( res_asa )
 
-    atom_list = [ atom for atom in s.get_atoms() if atom.name == 'CA' ]
+    #atom_list = [ atom for atom in s.get_atoms() if atom.name == 'CA' ]
+    atom_list = [ atom for atom in s.get_atoms() if atom.name != 'H' and is_aa(atom.get_parent())]
     
     non_res_atom_list = [ atom for atom in s.get_atoms() if not is_aa(atom.get_parent()) ]
     non_res_atom_list.extend(atom_list)
@@ -282,7 +308,7 @@ try:
   rri_n_json = json.dumps( rri_n )
   
 
-  if prefix != "pdb":
+  if prefix != "pdb" and prefix != "interactome3d":
     open(json_file,"w").write( binding_sites_json )
     open(json_asa_file,"w").write( ASA_json )
     open(json_rri_file,"w").write( rri_pairs_json )

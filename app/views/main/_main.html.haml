@@ -12,6 +12,9 @@
             %td 
               %a.nostyle{:id=>"proteomic_view", :style=>"cursor:pointer;"}PROTEIN VIEW
           %tr
+            %td 
+              %a.nostyle{:id=>"analysis_view", :style=>"cursor:pointer;"}ANALYSIS VIEW
+          %tr
             %td
               %a.nostyle{:id=>"genomic_view", :style=>"cursor:pointer;"}GENE VIEW
           %tr
@@ -76,8 +79,17 @@
             %tr
               %td 
                 %a.nostyle{:id=>"elms_analysis", :style=>"cursor:pointer;"}DISPLAY LINEAR MOTIFS
+            -if @external_annotations then
+              %tr
+                %td.row_title
+                  %span CUSTOM ANNOTATIONS
+              %tr
+                %td 
+                  %a.nostyle{:id=>"ppi_custom_annotations", :style=>"cursor:pointer;"}DISPLAY UPLOADED DATA
 
-        %iframe#ppiFrame{:src=>"ppiIFrame",:scrolling=>"yes"}
+        %iframe#ppiFrame{:name=>"ppiFrame",:src=>"ppiIFrame",:scrolling=>"yes"}
+      #analysis_panel
+        %iframe#analysisFrame{:name=>"analysisFrame",:src=>"analysisIFrame",:scrolling=>"yes"}
 
 :javascript
   #{@log}

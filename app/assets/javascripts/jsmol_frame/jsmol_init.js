@@ -1,19 +1,8 @@
 var $j = jQuery.noConflict();
+var infoGlobal;
 
 $j(document).ready(function(){
  
-  window.addEventListener("molInfo", function(evt){
-    $j('#selected_residues').css( 'visibility','hidden' );
-    infoGlobal = evt.detail;
-    if (infoGlobal.origin=="Uniprot"){
-      miApplet.open_url((infoGlobal.activepdb).toUpperCase(),false,infoGlobal.activechain);
-      miApplet.reset_view();
-      miApplet.highlight_chain(infoGlobal.activepdb,infoGlobal.activechain);
-    }else{
-      miApplet.highlight_chain(infoGlobal.activepdb,infoGlobal.activechain);
-    }
-  });
-
   window.addEventListener("nextModel", function(evt){
     nextModel();
   });
@@ -50,5 +39,4 @@ $j(document).ready(function(){
   add_top_window_listener();
 
 });
-
 

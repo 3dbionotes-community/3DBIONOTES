@@ -1,6 +1,9 @@
 class AnnotationsPpiController < ApplicationController
   
+  skip_before_filter :verify_authenticity_token, :only => [:getPOST,:getComplexCustomData]
+
   include AnnotationPpiManager::FetchProteinData
+  include AnnotationPpiManager::FetchNetworkData
 
   def getComplexVariants
     pdbId = params[:name]
@@ -48,6 +51,25 @@ class AnnotationsPpiController < ApplicationController
     pdbId = params[:name]
     path = params[:path]
     out = fetchComplexELM(pdbId,path)
+    return render json: out, status: :ok
+  end
+
+  def getComplexCustomData
+    pdbId = params[:pdb]
+    path = params[:path]
+    annotations = params[:annotations]
+    out = fetchComplexCustomData(pdbId,path,annotations)
+    return render json: out, status: :ok
+  end
+
+  def getPOST
+    name = params[:name]
+    network = JSON.parse(params[:network])
+    annotations=nil
+    if params[:annotations] then
+      annotations = JSON.parse(params[:annotations])
+    end
+    out = fetchNetworkFeature(network,name,annotations)
     return render json: out, status: :ok
   end
 

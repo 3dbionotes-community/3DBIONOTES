@@ -1,6 +1,6 @@
 .ws_main_div
   .database_form
-    = form_tag({controller: "main", action: "home",anchor: "query"}, :method => :get,id: "query_form",:style=>"margin-top:20px;") do 
+    = form_tag({controller: "main", action: "home",anchor: "query"}, :method => :post, :multipart => true, id: "query_form",:style=>"margin-top:20px;") do 
       %h3
         Search by
         %a{:href=>"javascript:window.open('http://www.emdatabank.org/')", :title=>"E.g. EMD-2810"} EMDB
@@ -11,6 +11,8 @@
         accession
       =text_field_tag(:queryId)
       = hidden_field_tag(:viewer_type,@viewerType)
+      %div{style:"font-size:14px;font-weight:bold;margin-bottom:5px;margin-top:10px;"}UPLOAD YOUR ANNOTATIONS
+      = file_field_tag(:annotations_file, {style:"font-size:12px;"})
       %br
       %br
       = button_tag("Submit")

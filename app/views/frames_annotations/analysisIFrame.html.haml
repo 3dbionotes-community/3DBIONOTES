@@ -1,0 +1,27 @@
+-if @alignment.nil?
+  :javascript
+    $j('#loading').css('display','none');
+  %h2{:id=>"default_text", :style=>"margin-right:8px;color:#606060;font-size:14px;margin-top:14px;text-align:center;font-family: Verdana, Arial, Helvetica, sans-serif;"}
+    USE THE SELECT MENU TO BROWSE PROTEIN ANNOTATIONS
+-else
+  %div{:id => "molTitle"} 
+    %b #{@alignment['gene_symbol']}
+    \- #{@alignment['uniprotTitle']} -
+    #{@alignment['organism']} -
+    %a{:target=>"_blank", :href=>"http://www.uniprot.org/uniprot/"+@alignment['uniprot']}
+      #{@alignment['uniprot']}
+  %div{:id => "snippetDiv"}
+    :javascript
+      $j(".body_div").prepend("<div id=\"local_loading\"><img src=\"/images/loading.gif\" width=\"600\" height=\"600\" style=\"display:block;margin:auto;position:relative;top:50%;transform:translateY(20%);\"/></div>");
+      $j("#molTitle").css("visibility","hidden");
+      $j("#snippetDiv").css("visibility","hidden");
+      var __accession = '#{@uniprotACC}';
+      var __alignment =  #{@alignment.to_json};
+      var extend_features_flag = false;
+      var feature_analysis_flag = true;
+      var feature_analysis_url = #{@feature_analysis_url.to_json};
+      $j(document).ready(function(){
+        build_ProtVista();
+      });
+  :javascript
+    #{@log}

@@ -6,6 +6,7 @@ class MainController < ApplicationController
   include ProteinManager::BlastSearch
   include ProteinManager::FetchSequenceInfo
   include AlignmentsManager::BuildAlignments 
+  include NetworkPpiManager::NetworkManager
 
   LocalPath = Settings.GS_LocalUpload 
   LocalScripts = Settings.GS_LocalScripts
@@ -22,6 +23,25 @@ class MainController < ApplicationController
     @isAvailable = true
     @viewerType = viewer_type( params[:viewer_type] )
 
+    annotations = params[:annotations_file]
+    if params[:annotations_file] then
+      annotations = params[:annotations_file].read
+      annotations.gsub!(/\r\n?/,"")
+      annotations.gsub!(/\s/,"")
+      annotations = JSON.parse(annotations)
+      @external_annotations = annotations.to_json
+    elsif params[:annotations_url] then
+      url = params[:annotations_url]
+      ann_content, http_code, http_code_name = getUrl(url,verbose=true)
+      if http_code.to_i > 399
+        logger.info( "ERROR URL "+url+" was not reachable http_error"+http_code_name ) 
+      elsif http_code.to_i == 0
+        logger.info( "ERROR exception URL "+url+" http_error "+http_code_name ) 
+      else
+        annotations = JSON.parse(ann_content)
+        @external_annotations = annotations.to_json
+      end
+    end
     identifierName = params[:queryId]
     if !identifierName.nil?
       identifierName.strip!
@@ -49,6 +69,65 @@ class MainController < ApplicationController
       end
     end
   end 
+
+  def network_restore
+    job_id = params[:job_id]
+    @job_id = job_id
+    render layout: "layouts/webserver", status: :ok
+  end 
+
+  def network_build
+    acc_list = params[:queryId]
+    organism = params[:dataset]
+    has_structure_flag = params[:has_structure_flag]
+    if has_structure_flag["flag"] == "no" then
+      has_structure_flag = false
+    else
+      has_structure_flag = true
+    end
+    annotations = params[:annotations_file]
+    if annotations then
+      annotations = params[:annotations_file].read
+      annotations.gsub!(/\r\n?/,"")
+      annotations.gsub!(/\s/,"")
+      annotations = JSON.parse(annotations)
+    end
+    viewer_type = viewer_type( params[:viewer_type] )
+    job = CharacterizeNetworkJob.perform_later(acc_list,organism,viewer_type,annotations=annotations,has_structure_flag=has_structure_flag) 
+    return redirect_to '/network/restore/'+job.job_id
+  end
+
+  def network
+    job_id = params[:job_id]
+    job = JobStatus.find_by(jobId:job_id)
+    outputs = JSON.parse(job.outputs)
+    inputs = JSON.parse(job.inputs)
+    annotations = inputs['annotations']
+    uniprot = outputs['sequences']
+    if annotations then
+      @external_annotations = annotations.to_json
+    end
+
+    network_graph = {nodes:outputs['nodes'],edges:outputs['edges']}
+    selection_array = optionSelectorArray( network_graph,uniprot )
+
+    @selection_array = selection_array
+    @viewerType = viewer_type( params[:viewer_type] )
+    @network_graph = network_graph.to_json
+    
+    selection_array.each do |k,v|
+      if JSON.parse(v[0][1])['file'] then
+        @default_acc = k
+        break
+      end
+    end
+
+    @optionsArray = selection_array[@default_acc]
+    @pdbList = [JSON.parse(@optionsArray[0][1])["pdbList"]]
+
+    @alignment = outputs['alignments']
+    @identifierType = "interactome3d"
+  end
 
   def pdb_redo
     pdb = params[:name]
@@ -81,14 +160,12 @@ class MainController < ApplicationController
       @choice = {}
       do_not_repeat = {}
       aCC = {}
-      #pdbData = JSON.parse( PdbDatum.find_by(pdbId: pdb).data )
       pdbData = fetchPDBalignment(pdb)
       @sequences.each do |ch,seq|
         acc = pdbData[ch].keys[0]
         aCC[acc] = true
       end
       aCC = fetchUniprotMultipleSequences(aCC.keys.join(","),fasta_obj_flag=nil,dict_flag=true)
-      puts(aCC)
       @sequences.each do |ch,seq|
         acc = pdbData[ch].keys[0]
         @choice[ch] = acc+"__sprot__"+aCC[acc]["definition"]+"__"+aCC[acc]["organism"]+"__"+aCC[acc]["gene_symbol"]
@@ -133,6 +210,14 @@ class MainController < ApplicationController
         end
       end
       @viewerType = params[:viewer_type]
+    end
+    annotations = params[:annotations_file]
+    if annotations then
+      annotations = params[:annotations_file].read
+      annotations.gsub!(/\r\n?/,"")
+      annotations.gsub!(/\s/,"")
+      annotations = JSON.parse(annotations)
+      DataFile.save_string(annotations.to_json, "external_annotations.json", rand_path)
     end
   end
 
@@ -205,8 +290,9 @@ class MainController < ApplicationController
                   'file'=>@file
                  }, rand)
     end
+
     if File.exists?( LocalPath+'/'+rand+'/external_annotations.json' ) then
-      @external_annotations = JSON.parse( File.read(LocalPath+"/"+rand+"/external_annotations.json").sub(/\n/,"") ).to_json
+      @external_annotations = JSON.parse( File.read(LocalPath+"/"+rand+"/external_annotations.json").gsub(/\n/,"") ).to_json
     else
       @external_annotations = nil
     end
