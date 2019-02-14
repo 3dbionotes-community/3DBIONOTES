@@ -89,7 +89,7 @@ class selector_class {
     self.viewer.Structures[ pdb ]['representations']['keep_selection']=[];
     self.keep_selected.forEach(function(i){
       var model_flag = '';
-      if( self.viewer.model >=0 ) model_flag = 'and /'+self.model.toString()+' ';
+      if( self.viewer.model >=0 ) model_flag = 'and /'+self.viewer.model.toString()+' ';
       var selection = "protein "+model_flag+'and '+i.selection;
       var label_selection = "protein "+model_flag+'and '+i.label_selection;
       var color = i.color;

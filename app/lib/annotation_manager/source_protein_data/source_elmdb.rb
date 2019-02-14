@@ -16,7 +16,12 @@ module AnnotationManager
         else
           out = out.data
         end
-        return JSON.parse(out)
+        begin
+          out = JSON.parse(out)
+        rescue
+          out = JSON.parse({})
+        end
+        return out
       end
     end 
   end

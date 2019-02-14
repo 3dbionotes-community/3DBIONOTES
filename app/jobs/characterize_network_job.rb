@@ -16,11 +16,25 @@ class CharacterizeNetworkJob < ActiveJob::Base
     nodes.each do |n|
       accs.push(n[:acc])
     end
-    sequences = fetchUniprotMultipleSequences(accs.join(","),fasta_obj_flag=nil,dict_flag=true)
-    alignments = getAlignments(nodes,edges,sequences,job=self)
+    sequences = nil
+    alignments = nil
+    if accs.length > 0 then
+      sequences = fetchUniprotMultipleSequences(accs.join(","),fasta_obj_flag=nil,dict_flag=true)
+      alignments = getAlignments(nodes,edges,sequences,job=self)
+    end
     out = {nodes:nodes,edges:edges,sequences:sequences,alignments:alignments}
-    JobStatus.find_by(jobId:self.job_id).update(outputs:out.to_json)
-    JobStatus.find_by(jobId:self.job_id).update(status:100)
+    if nodes.length > 0 then
+      begin
+        JobStatus.find_by(jobId:self.job_id).update(outputs:out.to_json)
+        JobStatus.find_by(jobId:self.job_id).update(status:100)
+        JobStatus.find_by(jobId:self.job_id).update(step:2)
+      rescue
+        JobStatus.find_by(jobId:self.job_id).update(outputs:"{\"error\":\"JSON failed in "+out.to_s+"\"}")
+        JobStatus.find_by(jobId:self.job_id).update(status:-1)
+      end
+    else
+      JobStatus.find_by(jobId:self.job_id).update(status:-2)
+    end
   end
 
   def init_status(n,step=nil,info=nil)
@@ -36,8 +50,8 @@ class CharacterizeNetworkJob < ActiveJob::Base
     end
   end
 
-  def update_status(info=nil)
-    self.n_ += 1
+  def update_status(dn=1, info=nil)
+    self.n_ += dn
     n = (100*self.n_/self.n_status).to_i
     if n == 100 then
       n = 99

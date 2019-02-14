@@ -80,7 +80,11 @@ function add_analysis(features,analysis){
     var out = [];
     features[h].forEach(function(i){
       filter_type(i);
-      out.push({begin:i['begin'], end:i['end'], type:i['type'], internalId:'contingency_'+n});
+      var x = {begin:i['begin'], end:i['end'], type:i['type'], internalId:'contingency_'+n};
+      if(i['color']){
+        x['color'] = i['color'];
+      }
+      out.push(x);
       n++;
     });
     feature_viewer.drawCategories([[h,out]],feature_viewer);
@@ -211,20 +215,37 @@ function filter_header(name){
 
 function add_disease_menu(d_n,k){
   var $div = $j( $j(".up_pftv_track-header").get(k) );
+  var $reset = $div.children(".up_pftv_buttons").children(".up_pftv_inner-icon-container").children(".up_pftv_icon-reset");
+  $reset.click(function(i){
+    var $active = $div.find(".active_disease");
+    $active.each(function(i,e){
+      $j(e).removeClass("active_disease");
+      $j(e).addClass("unactive_disease");
+      var disease = $j(e).html();
+      disease = "&#9675;"+disease.substr(1);
+      $j(e).html(disease);
+    });
+    var $track = $div.parent().children(".up_pftv_track");
+    filter_by_disease_name( [], $track );
+  });
   $div.append("<div class=\"up_pftv_diseases\" style=\"display:block;top:0px;position:relative;\"><h4>Diseases</h4><div id=\"disease_menu_"+d_n+"\"></div></div>");
-  for(var d in disease_menu[d_n]['variants']){
+  var keys = Object.keys(disease_menu[d_n]['variants']);
+  keys.sort();
+  //for(var d in disease_menu[d_n]['variants']){
+  keys.forEach(function(d){
     $j( "#disease_menu_"+d_n ).append("<span class=\"disease_item unactive_disease\" title=\""+d+"\" index=\""+d_n+"\">&#9675; "+d+"</span>");
     $j( "#disease_menu_"+d_n ).append("<div style=\"font-size:9px;\">FISHER EXACT TEST</div>");
     $j( "#disease_menu_"+d_n ).append("<div class=\"disease_stats\">"+include_stats_table(disease_menu[d_n]['variants'][d]['stats'])+"</div>");
-  }
+  });
 }
 
 function include_stats_table(test){
   var table = "<table>";
   var p_val = test['p_value'].toExponential(2);
   table += "<tr><td>p-value</td><td>"+p_val+"</td></tr>";
+  table += "<tr><td>#features</td><td>"+(test['m_l'])+"</td></tr>";
   table += "<tr><td>#variants</td><td>"+(test['m_ij']+test['m_j'])+"</td></tr>";
-  table += "<tr><td>#interesct</td><td>"+test['m_ij']+"</td></tr>";
+  table += "<tr><td>#co-occur</td><td>"+test['m_ij']+"</td></tr>";
   table += "</table>";
   return table;
 }
@@ -260,7 +281,12 @@ function filter_by_disease_name( D, $track ){
 }
 
 function _filter_by_disease_name( D, $track ){
-  if( D.length == 0 ) return;
+  if( D.length == 0 ){ 
+    $track.find('.up_pftv_variant').each(function(i,e){
+      $j(e).css('opacity',1);
+    });   
+    return;
+  }
   var keep_variants = {}
   D.forEach( function(i){
     disease_menu[ i[1] ]['variants'][ i[0] ]["aa"].forEach(function(j){
@@ -268,7 +294,11 @@ function _filter_by_disease_name( D, $track ){
     });
   });
   $track.find('.up_pftv_variant').each(function(i,e){
-    if(!keep_variants[ $j(e).attr("name") ])$j(e).remove();
+    if(!keep_variants[ $j(e).attr("name") ]){
+      $j(e).css('opacity',0);
+    }else{
+      $j(e).css('opacity',1);
+    }
   });
 }
 
@@ -310,7 +340,7 @@ function get_analysis_data( URL ){
   var acc;
 
   if( acc_or_pdb_flag == "pdb" ){
-    acc = __alignment.pdb+":"+__alignment.chain;
+    acc = __alignment.pdb;//__alignment.pdb+":"+__alignment.chain;
     external_data_key = 'PDBchain';
   }else if(acc_or_pdb_flag == "acc" ){
     acc = __alignment.uniprot
@@ -318,8 +348,6 @@ function get_analysis_data( URL ){
   }
 
   if( key in $EXTERNAL_DATA[external_data_key] && acc in $EXTERNAL_DATA[external_data_key][key] ){
-    var async_data = $EXTERNAL_DATA[external_data_key][key][acc];
-
     if("n_sources" in $LOG.analysis){
       $LOG.analysis['n_sources']--;
       if($LOG.analysis['n_sources']==0)remove_loading_icon();
@@ -328,6 +356,8 @@ function get_analysis_data( URL ){
       get_analysis_data(URL);
       return;
     }else{
+      var async_data = $EXTERNAL_DATA[external_data_key][key][acc];
+      add_analysis_data[key](async_data);
       format_analysis_view();
     }
   }else{

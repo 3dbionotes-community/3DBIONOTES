@@ -12,7 +12,9 @@ module AnnotationManager
           url = MobiURL+"/"+uniprotAc+"/consensus"
           data = {}
           begin
-            data = Net::HTTP.get_response(URI.parse(url)).body
+            http = Net::HTTP.new(url)
+            http.open_timeout = 5
+            data = http.get_response(URI.parse(url)).body
             data = JSON.parse(data)
           rescue
             puts "Error downloading data\nURL: #{url}\nERROR: #{$!}"

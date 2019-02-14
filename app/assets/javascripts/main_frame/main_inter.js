@@ -26,7 +26,7 @@ function add_frames_listener(){
   });
 
   window.addEventListener("check_global_selection",function(evt){
-    if(global_selection){
+    if(global_selection && "begin" in global_selection){
       var frame_id = evt.detail;
       var selection = { begin:global_selection.begin, end:global_selection.end, color:global_selection.color };
       var evtOut = document.createEvent("CustomEvent");
@@ -89,7 +89,7 @@ function add_frames_listener(){
           top.document.getElementById(frame_id).contentWindow.dispatchEvent(evtOut);
         }
       });
-    },100);
+    },2000);
   });
 
   window.addEventListener("global_highlight",function(evt){

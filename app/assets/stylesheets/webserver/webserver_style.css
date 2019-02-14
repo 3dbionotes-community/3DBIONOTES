@@ -167,3 +167,12 @@ h3.api_header{
   line-height: 150%;
 }
 
+span#network_example{
+  font-size:12px;
+  color:#074987; 
+}
+
+span#network_example:hover{
+  color:#96C8C8;; 
+  cursor:pointer;
+}

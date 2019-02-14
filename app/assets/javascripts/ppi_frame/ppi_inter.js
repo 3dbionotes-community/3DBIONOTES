@@ -1,5 +1,7 @@
 window.addEventListener("ppiFrame_vissible",function(evt){
-  cytoscape_graph.drawGraph(); 
+  if(!top.network_flag){
+    cytoscape_graph.drawGraph(); 
+  }
 });
 
 window.addEventListener("ppiFrame_selectChain",function(evt){

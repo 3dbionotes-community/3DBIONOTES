@@ -12,33 +12,42 @@ module NetworkPpiManager
       accs.split(",").each do |a|
         query_acc[a] = true
       end
+      if query_acc.length == 1 then
+        has_structure_flag=true
+      end
       url = Settings.GS_Interactome3D+"&dataset="+organism+"&ids="+accs
       html = getUrl(url)
       pairs = html.split("textarea")[1].split(">")[1].chop.chop.chop.split("\n")
 
       job.init_status(2*pairs.length,step=1) if(job)
       edges = []
+      aux_update = 0
       pairs.each do |p|
         x = p.split(/\s/)
-        if query_acc.key? x[0] or query_acc.key? x[1] then
+        if query_acc.key? x[0] and query_acc.key? x[1] then
           e = Interactome3dInteraction.where("(accA=\"#{x[0]}\" and accB=\"#{x[1]}\") or (accB=\"#{x[0]}\" and accA=\"#{x[1]}\")")[0]
           if not e.nil? then
-            getPDBstructre(e[:file],"interaction")
-            edges.push({accA:e[:accA],accB:e[:accB],type:e[:model_type],file:e[:file]})
             _nodes[x[0]]=true
             _nodes[x[1]]=true
-          elsif (not has_structure_flag) and (query_acc.key? x[0] or query_acc.key? x[1]) then
+          else
             edges.push({accA:x[0],accB:x[1],type:nil,file:nil})
             _nodes[x[0]]=true
             _nodes[x[1]]=true
           end
+        elsif (query_acc.key? x[0] or query_acc.key? x[1]) and has_structure_flag then
+          e = Interactome3dInteraction.where("(accA=\"#{x[0]}\" and accB=\"#{x[1]}\") or (accB=\"#{x[0]}\" and accA=\"#{x[1]}\")")[0]
+          if not e.nil? then
+            _nodes[x[0]]=true
+            _nodes[x[1]]=true
+          end
         end
-        job.update_status() if(job)
+        aux_update += 1 
+        job.update_status(dn=5) if(job and aux_update % 5 == 0)
       end
      
       pairs.each do |p|
         x = p.split(/\s/)
-        if (_nodes.key? x[0] and _nodes.key? x[1]) and not(query_acc.key? x[0] or query_acc.key? x[1]) then
+        if _nodes.key? x[0] and _nodes.key? x[1] then
           e = Interactome3dInteraction.where("(accA=\"#{x[0]}\" and accB=\"#{x[1]}\") or (accB=\"#{x[0]}\" and accA=\"#{x[1]}\")")[0]
           if not e.nil? then
             getPDBstructre(e[:file],"interaction")
@@ -47,12 +56,13 @@ module NetworkPpiManager
             edges.push({accA:x[0],accB:x[1],type:nil,file:nil})
           end
         end
-        job.update_status() if(job)
+        aux_update += 1 
+        job.update_status(dn=5) if(job and aux_update % 5 == 0)
       end
       _nodes = _nodes.keys()
       nodes = []
       _nodes.each do |x|
-        e = Interactome3dProtein.find_by(acc: x)
+        e = Interactome3dProtein.order('coverage DESC').find_by(acc:x)
         if e.nil? then
           nodes.push({acc:x,type:nil,file:nil})
         else

@@ -206,9 +206,10 @@ function parse_track(track){
   }else if( $UPLOADED_DATA[key][id][track_name] && $UPLOADED_DATA[key][id][track_name]['visualization_type'] == "continuous" ){
     $UPLOADED_DATA[key][id][track_name] = { visualization_type:visualization_type,  data:[] };
   }
-  if(track.data.forEach){
+  if(track.data && track.data.forEach){
     track.data.forEach(function(x){
       var y = x;
+      if(track.visualization_type == "continuous" && !y.end) y.end = y.begin;
       if(translate_flag) y = translate_to_uniprot(x,id);
       if(y.begin != -10) $UPLOADED_DATA[key][id][track_name]['data'].push(y);
 

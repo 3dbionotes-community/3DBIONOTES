@@ -155,6 +155,6 @@ $j(document).ready(function(){
 
   add_frames_listener();
 
-  if(top.network_flag)change_view("#ppi_panel");
+  if(top.network_flag)change_to_ppi();
 
 });

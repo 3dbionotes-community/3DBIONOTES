@@ -7,14 +7,22 @@ module Interactome3dManager
     def getPDBstructre(file,type)
       filename = Settings.GS_LocalInteractome3D+"pdb/"+file
       unless File.file?(filename) then
+        url = Settings.GS_Interactome3Dpdb+"filename="+file+"&type="+type
+        xml = nil
         begin
-          url = Settings.GS_Interactome3Dpdb+"filename="+file+"&type="+type
           xml = getUrl(url)
-          pdb = xml.split("<contents>")[1].split("</contents>")[0]
-          File.open(filename,"w").write(pdb)
         rescue Exception => e
           raise StandardError, "URL>\n"+url+"\nERROR>\n"=>e.message+"\nTRACE>\n"+JSON.parse(e.backtrace.inspect).join("\n")
         end
+        if xml !~ /contents/ then
+          raise "XML <contents> tag not found at >"+url+"<"
+        end
+        pdb = xml.split("<contents>")[1].split("</contents>")[0]
+        if pdb !~ /ATOM/ then
+          raise "PDB ATOM tag not found in >"+pdb+"<"
+        end
+        File.open(filename, 'w') {|f| f.write(pdb) }
+        #File.open(filename,"w").write(pdb)
       end
     end
 

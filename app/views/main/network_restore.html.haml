@@ -11,6 +11,8 @@
           $j(".status_div").html( "100%" );
           $j("#job_id").attr("value", job_id);
           $j("#query_form").submit();
+        }if( data['status']==-2){
+          $j(".wait_div").html( "<br/><br/>NO INTERACTIONS WERE FOUND" );
         }else{
           console.log(data);
           $j(".status_div").html( data['status']+"%" );

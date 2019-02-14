@@ -1,6 +1,4 @@
 .ws_main_div
-  %h3{style:"color:orange;"}
-    Under development!
   .database_form
     = form_tag({controller: "main", action: "network_build"}, :multipart => true, :method => :post,id: "query_form",:style=>"margin-top:20px;") do 
       %select{:id=>"prot_organisms", :name=>"dataset", :style=>"vertical-align:top;"}
@@ -24,15 +22,20 @@
         %option{:value=>"tpallidum"}Treponema pallidum
       %h3
         Enter a list of UniProt accession
+        %span{id:"network_example"}
+          (EXAMPLE)
       =text_area_tag(:queryId,content=nil, options={rows: 10, cols: 60})
       = hidden_field_tag(:viewer_type,@viewerType)
       %table{style:"color:#606060;"}
         %tr
           %td
-            =check_box(:has_structure_flag,"flag", {checked:true,style:"transform:scale(0.8);"}, "yes", "no")
+            =check_box(:has_structure_flag,"flag", {checked:false,style:"transform:scale(0.8);"}, "yes", "no")
           %td
-            %div{style:"font-size:12px;"}INCLUDE ONLY NEIGHBOURS WITH STRUCTURAL DATA
-      %div{style:"font-size:14px;font-weight:bold;margin-bottom:5px;margin-top:10px;"}UPLOAD YOUR ANNOTATIONS
+            %div{style:"font-size:12px;"}INCLUDE NEIGHBOURS WITH STRUCTURAL DATA
+      %div{style:"font-size:14px;font-weight:bold;margin-bottom:5px;margin-top:10px;"}
+        UPLOAD YOUR ANNOTATIONS
+        %a{target:'_blank', title:'Example file for PDB 4G3X' , href:'/4g3x_ann_full_example.json'}
+          =image_tag("help_icon.png", height: '12', width: '12')
       = file_field_tag(:annotations_file, {style:"font-size:12px;"})
       %br
       %br

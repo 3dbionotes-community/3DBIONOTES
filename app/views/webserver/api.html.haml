@@ -39,6 +39,11 @@
   %h3.api_header
     EMDB info
   %p
+    %b Source
+    \- 
+    %a{:href => "http://www.ebi.ac.uk/pdbe/api/doc/" , :target=>"_blank"}
+      PDBe REST API
+  %p
     %b available
     \- Check if a particular EMDB entry is available
     %br
@@ -69,6 +74,11 @@
   %h3.api_header
     UniProt info
   %p
+    %b Source
+    \- 
+    %a{:href => "https://www.ebi.ac.uk/proteins/api/doc/" , :target=>"_blank"}
+      UniProt API
+  %p
     %b sequence
     \- Get UniProt accession sequence 
     %br
@@ -85,6 +95,11 @@
   %h3.api_header
     PDB info
   %p
+    %b Source
+    \- 
+    %a{:href => "http://www.ebi.ac.uk/pdbe/api/doc/" , :target=>"_blank"}
+      PDBe REST API
+  %p
     %b available
     \- Check if a particular PDB entry is available
     %br
@@ -100,7 +115,11 @@
   
   %h3.api_header
     EMDB mappings
-  
+  %p
+    %b Source
+    \- 
+    %a{:href => "http://www.ebi.ac.uk/pdbe/api/doc/" , :target=>"_blank"}
+      PDBe REST API 
   %p
     %b fitted PDB
     \- Get fitted PDB IDs for a particular EMDB entry
@@ -110,7 +129,11 @@
   
   %h3.api_header
     UniProt mappings
-  
+  %p
+    %b Source
+    \- 
+    %a{:href => "http://www.ebi.ac.uk/pdbe/api/doc/" , :target=>"_blank"}
+      PDBe REST API 
   %p
     %b UniProt to PDB structures
     \- Get all the PDB structures associated to a UniProt accession
@@ -127,7 +150,11 @@
   
   %h3.api_header
     PDB mappings
-  
+  %p
+    %b Source
+    \- 
+    %a{:href => "http://www.ebi.ac.uk/pdbe/api/doc/" , :target=>"_blank"}
+      PDBe REST API 
   %p
     %b PDB to UniProt
     \- Get the UniProt accessions related to the chains of a particular PDB entry
@@ -137,7 +164,11 @@
   
   %h3.api_header
     PDB alignments
-  
+  %p
+    %b Source
+    \- 
+    %a{:href => "http://www.ebi.ac.uk/pdbe/api/doc/" , :target=>"_blank"}
+      PDBe REST API 
   %p
     %b PDB to UniProt sequence alignment
     \- Sequence alignment between a PDB entry and the related UniProt accessions
@@ -147,7 +178,11 @@
   
   %h3.api_header
     ENSEMBL alignments
-  
+  %p
+    %b Source
+    \- 
+    %a{:href => "https://rest.ensembl.org/" , :target=>"_blank"}
+      ENSEMBL REST API 
   %p
     %b ENSEMBL to UniProt sequence alignment
     \- Protein sequence alignment between a ENSEMBL transcript and a related UniProt accession
@@ -162,12 +197,23 @@
     %b UniProt annotations
     \- Get UniProt annotations for a particular UniProt accession
     %br
-    %a{:href => "http://3dbionotes.cnb.csic.es/api/annotations/Uniprot/P01112", :target=>"_blank"}
-      http://3dbionotes.cnb.csic.es/api/annotations/Uniprot/:uniprot_acc
+    %b Source
+    \- 
+    %a{:href => "https://www.ebi.ac.uk/proteins/api/doc/" , :target=>"_blank"}
+      UniProt API
+    %br
+    %a{:href => "http://3dbionotes.cnb.csic.es/api/annotations/EBI/features/P01112", :target=>"_blank"}
+      http://3dbionotes.cnb.csic.es/api/annotations/EBI/features/:uniprot_acc
+
   
   %p
     %b IEDB annotations
     \- Get IEDB annotations for a particular UniProt accession
+    %br
+    %b Source
+    \- 
+    %a{:href => "https://www.iedb.org/" , :target=>"_blank"}
+      Immune Epitope DB
     %br
     %a{:href => "http://3dbionotes.cnb.csic.es/api/annotations/IEDB/Uniprot/P01112", :target=>"_blank"}
       http://3dbionotes.cnb.csic.es/api/annotations/IEDB/Uniprot/:uniprot_acc
@@ -176,6 +222,11 @@
     %b PhosphoSitePlus annotations
     \- Get PhosphoSitePlus annotations for a particular UniProt accession
     %br
+    %b Source
+    \- 
+    %a{:href => "https://www.phosphosite.org/homeAction.action" , :target=>"_blank"}
+      PhosphoSitePlus
+    %br
     %a{:href => "http://3dbionotes.cnb.csic.es/api/annotations/Phosphosite/Uniprot/P01112", :target=>"_blank"}
       http://3dbionotes.cnb.csic.es/api/annotations/Phosphosite/Uniprot/:uniprot_acc
   
@@ -183,12 +234,22 @@
     %b BioMuta annotations
     \- Get BioMuta annotations for a particular UniProt accession
     %br
+    %b Source
+    \- 
+    %a{:href => "https://hive.biochemistry.gwu.edu/biomuta" , :target=>"_blank"}
+      BioMuta
+    %br
     %a{:href => "http://3dbionotes.cnb.csic.es/api/annotations/Phosphosite/Uniprot/P01112", :target=>"_blank"}
       http://3dbionotes.cnb.csic.es/api/annotations/Phosphosite/Uniprot/:uniprot_acc
   
   %p
-    %b dSysMap annootations
+    %b dSysMap annotations
     \- Get dSysMap annotations for a particular UniProt accession
+    %br
+    %b Source
+    \- 
+    %a{:href => "https://dsysmap.irbbarcelona.org/" , :target=>"_blank"}
+      dSysMap
     %br
     %a{:href => "http://3dbionotes.cnb.csic.es/api/annotations/dsysmap/Uniprot/P01112", :target=>"_blank"}
       http://3dbionotes.cnb.csic.es/api/annotations/dsysmap/Uniprot/:uniprot_acc

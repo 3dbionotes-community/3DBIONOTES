@@ -84,6 +84,10 @@ function change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url
   $j( annot_iframe ).load(function(){
     clear_wm();
     check_imported_select();
+    if( $j("#genomic_panel").css('display') != "block"){
+      $j("#genomic_panel").css('visibility','hidden');
+      $j("#genomic_panel").css('display','block');
+    }
     $j( genomic_iframe ).attr('src', genomic_iframe_url);
     if(!top.ppiFrame_load && !top.network_flag){
       $j( ppi_iframe ).attr('src', ppi_iframe_url);
@@ -350,7 +354,7 @@ function reload_annotations_frame(){
 function change_view(e){
   var views = ['#proteomic_panel','#genomic_panel','#ppi_panel','#analysis_panel'];
 
-  if( $j(e).css('display')=='block' ) return;
+  if( $j(e).css('display')=='block' && $j(e).css('visibility')!='hidden') return;
   $j('.imported_targets_div').css('display','none');
 
   views.forEach(function(i){
@@ -364,6 +368,14 @@ function change_view(e){
   if(e == '#proteomic_panel'){
     check_imported_select();
   }
+}
+
+function change_to_ppi(){
+
+  $j("#proteomic_panel").css('display','none');
+  $j("#ppi_panel").css('display','block');
+  $j("#ppi_panel").css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 500);
+
 }
 
 function display_noAlignments(PDB){

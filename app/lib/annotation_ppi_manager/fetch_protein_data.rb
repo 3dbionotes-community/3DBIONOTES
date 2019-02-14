@@ -2,8 +2,8 @@ module AnnotationPpiManager
   module FetchProteinData
 
     include SourceProteinData::SourceComplexVariants
-    def fetchComplexVariants(pdbId,path=nil)
-      toReturn = sourceComplexVariants(pdbId,path=path)
+    def fetchComplexVariants(pdbId,path=nil,annotations=nil)
+      toReturn = sourceComplexVariants(pdbId,path=path,annotations=annotations)
       return toReturn
     end
 

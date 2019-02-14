@@ -18,24 +18,27 @@
       = file_field_tag(:structure_file)
       %br
       = hidden_field_tag(:viewer_type,@viewerType)
-      %div{style:"font-size:14px;font-weight:bold;margin-bottom:5px;margin-top:10px;"}UPLOAD YOUR ANNOTATIONS
+      %div{style:"font-size:14px;font-weight:bold;margin-bottom:5px;margin-top:10px;"}
+        UPLOAD YOUR ANNOTATIONS
+        %a{target:'_blank', title:'Example file for PDB 4G3X' , href:'/4g3x_ann_full_example.json'}
+          =image_tag("help_icon.png", height: '12', width: '12')
       = file_field_tag(:annotations_file, {style:"font-size:12px;"})
       %br
       %br
       = button_tag("Submit")
-    %a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE1"} Example (AKT1-PIN1 docking models)
-    %br
-    %a{:href=>"/AKT1_PIN1.pdb", :style=>"margin-top:10px;"} Example file (AKT1_PIN1.pdb)
-    %br
-    %br
-    %a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE2"} Example (HRAS interactions homology models)
-    %br
-    %a{:href=>"/HRAS_ppi.pdb", :style=>"margin-top:10px;"} Example file (HRAS_ppi.pdb)
-    %br
-    %br
-    %a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE3"} Example (NR5A1 homology model)
-    %br
-    %a{:href=>"/NR5A1.pdb", :style=>"margin-top:10px;"} Example file (NR5A1.pdb)
+    //%a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE1"} Example (AKT1-PIN1 docking models)
+    //%br
+    //%a{:href=>"/AKT1_PIN1.pdb", :style=>"margin-top:10px;"} Example file (AKT1_PIN1.pdb)
+    //%br
+    //%br
+    //%a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE2"} Example (HRAS interactions homology models)
+    //%br
+    //%a{:href=>"/HRAS_ppi.pdb", :style=>"margin-top:10px;"} Example file (HRAS_ppi.pdb)
+    //%br
+    //%br
+    //%a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE3"} Example (NR5A1 homology model)
+    //%br
+    //%a{:href=>"/NR5A1.pdb", :style=>"margin-top:10px;"} Example file (NR5A1.pdb)
 
   .wait_div{:style=>'display:none'}
     %span.wait_text PLEASE BE PATIENT

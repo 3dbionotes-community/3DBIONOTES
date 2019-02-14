@@ -10,9 +10,13 @@ module CollectorManager
         data.each do |x|
           out.push( {'start'=> x['start'], 'end'=> x['end'], 'disease'=>filterDisease(x['disease']), 'original'=>x['original'], 'variation'=>x['variation']} )
         end
-        data = fetchDsysmapFromUniprot(acc)
+        #data = fetchDsysmapFromUniprot(acc)
+        #data.each do |x|
+        #  out.push( {'start'=> x['start'], 'end'=> x['end'], 'disease'=>filterDisease(x['disease']['text']), 'original'=>x['original'], 'variation'=>x['variation']} )
+        #end
+        data = fetchSwissvarFromUniprot(acc)
         data.each do |x|
-          out.push( {'start'=> x['start'], 'end'=> x['end'], 'disease'=>filterDisease(x['disease']['text']), 'original'=>x['original'], 'variation'=>x['variation']} )
+          out.push( {'start'=> x['start'], 'end'=> x['end'], 'disease'=>filterDisease(x['disease']), 'original'=>x['original'], 'variation'=>x['variation']} )
         end
         return out
       end
@@ -22,8 +26,10 @@ module CollectorManager
           x = name.split("/ ")
           y = x[1].split(" [")
           name = y[0]
+        elsif name =~ /colon\s/i then
+          name.sub! 'colon', 'colorectal'
         end
-        return name
+        return name.downcase
       end
 
     end

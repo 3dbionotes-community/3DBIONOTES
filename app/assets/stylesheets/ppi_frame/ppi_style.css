@@ -28,6 +28,7 @@ div.annotaion_filter:hover {
   background:white;
   max-height:90%;
   overflow-x:auto;
+  width:35%;
 }
 
 div.item_filter {

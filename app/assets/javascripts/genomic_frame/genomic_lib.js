@@ -15,7 +15,11 @@ function update_genomic_display(e_name,e){
           success: function(d){
 		__genomic_alignment = d;
                 $(e_name).empty();
+                //top.$j("#genomic_panel").css('visibility','hidden');
+                //top.$j("#genomic_panel").css('display','block');
           	build_genomic_display(e_name);
+                //top.$j("#genomic_panel").css('visibility','display');
+                //top.$j("#genomic_panel").css('display','none');
 		document.getElementById('transcript_loading').style.display = "none";
 		document.getElementById('gfv').style.display = "block";
 		document.getElementById('gfv_buttons').style.display = "block";

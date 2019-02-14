@@ -9,7 +9,7 @@ class PostRequestController < ApplicationController
   LocalScripts = Settings.GS_LocalScripts
 
   def upload
-    if !params[:structure_file].nil?
+    if !params[:structure_file].nil? then
       rand_path = (0...20).map { ('a'..'z').to_a[rand(26)] }.join.upcase
       original_filename = params[:structure_file].original_filename
       if original_filename.include? "cif"
@@ -23,6 +23,19 @@ class PostRequestController < ApplicationController
       end
 
       DataFile.save(params[:structure_file], file_name,rand_path, post_info={"title"=>title, "file_name"=>file_name})
+
+      annotations = params[:annotations_file]
+      if annotations then
+        begin
+          annotations = params[:annotations_file].read
+          annotations.gsub!(/\r\n?/,"")
+          #annotations.gsub!(/\s/,"")
+          annotations = JSON.parse(annotations)
+          DataFile.save_string(annotations.to_json, "external_annotations.json", rand_path)
+        rescue
+          logger.info( "ERROR PARSING JSON FILE "+annotations)
+        end
+      end
 
       toReturn = { "id"=>rand_path, "file_name"=>original_filename, "title"=>title}
       return render json: toReturn.to_json, status: :ok

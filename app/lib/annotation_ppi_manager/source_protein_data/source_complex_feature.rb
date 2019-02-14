@@ -5,8 +5,12 @@ module AnnotationPpiManager
       LocalPath = Settings.GS_LocalUpload
 
       include MappingsManager::FetchMappings
+      include AlignmentsManager::BuildAlignments
       include ComputingTools::BiopythonInterfaceLib::BiopythonInterfaceTools
       include CollectorManager::CollectProteinData 
+      include GlobalTools::FetchParserTools
+      include ContingencyAnalysisManager::FetchContingencyAnalysis
+      include SourceTools
       
       def sourceComplexFeature(pdbId, feature_call, config_, path=nil, job=nil)
         config = config_
@@ -17,6 +21,19 @@ module AnnotationPpiManager
           rri_key = 'rri'
           asa_key = 'asa'
         end
+        contingency = nil
+        if feature_call == "collectVariantDataFromUniprot" then
+          job.update_info( "Processing Contingency" ) if(job)
+          user_variants = nil
+          if config.key? "annotations" then
+            user_variants = get_variants(config['annotations'])
+            contingency = process_contingency(pdbId,annotations=config['annotations'],file=path)
+          else
+            contingency = process_contingency(pdbId,annotations=nil,file=path)
+          end
+          job.update_info( "Processing Contingency END" ) if(job)
+        end
+        job.update_info( "runBiopythonInterface" ) if(job)
         asa_rri = runBiopythonInterface(pdbId, path)
         interface = {}
         asa_rri[rri_key][0].each do |chi,vi|
@@ -41,7 +58,7 @@ module AnnotationPpiManager
             end
           end
         end
-
+        job.update_info( "runBiopythonInterface END" ) if(job)
         buried = {}
         asa_rri[asa_key][0].each do |ch,v|
           buried[ch] = {}
@@ -56,10 +73,16 @@ module AnnotationPpiManager
 
         custom_data = {}
         if feature_call == "custom_data" then
+          if path.nil? then
+            alignment = fetchPDBalignment(pdbId)[pdbId]
+          else
+            alignment = fetchPDBalignment(path)[pdbId]
+          end
           annotations = JSON.parse(config['annotations'])
           unless annotations.kind_of? Array then
             annotations = [annotations]
           end
+          annotations = check_annotations(annotations,alignment)
           annotations.each do |a|
             if a.key? "chain" then
               custom_data[a['chain']] = [] unless custom_data.key? a['chain']
@@ -85,13 +108,32 @@ module AnnotationPpiManager
         end 
         features = {}
         location = {}
-        job.init_status(mapping.length) if(job)
+        _n_status = 0
+        if job then
+          mapping.each do |k,v|
+            v.each do |ki,vi_|
+              if path.nil? then
+                vi = vi_
+              else
+                vi = [k]
+              end
+              vi.each do |ch|
+                _n_status += 1
+              end
+            end
+          end
+          job.init_status(_n_status) if(job)
+        end
         mapping.each do |k,v|
+          #if path.nil? then k => pdbId else k => ch
           v.each do |ki,vi_|
-            job.update_status() if(job)
+            #if path.nil? then ki => acc ; vi_ => [ch_i] else ki => acc ; vi_ => {mapping=>[]}
             x = []
             unless feature_call == "custom_data" then
               x = send(feature_call, ki)
+              if !user_variants.nil? and user_variants.key? ki then
+                x.concat user_variants[ki] 
+              end
             else
               if custom_data.key? ki then
                 x = custom_data[ki]
@@ -103,6 +145,10 @@ module AnnotationPpiManager
               vi = [k]
             end
             vi.each do |ch|
+              job.update_info( "Chain "+ch+" "+" UniProt "+ki ) if(job)
+              if !user_variants.nil? and user_variants.key? ch then
+                x.concat user_variants[ch] 
+              end
               if feature_call == "custom_data" and custom_data.key? ch then
                 x.concat custom_data[ch]
               end
@@ -111,7 +157,11 @@ module AnnotationPpiManager
                 location[ch] = { 'all'=>[],'bs'=>{} }
               end
               x.each do |k|
-                type = k[config['type_key']].downcase
+                if k.key? config['type_key'] then
+                  type = k[ config['type_key'] ].downcase
+                else
+                  next
+                end
                 if k.key? 'color' then
                   color = k['color']
                 elsif config.key? 'colors' and not config['colors'].nil? and config['colors'].key? type then
@@ -179,27 +229,42 @@ module AnnotationPpiManager
                   location[ch]['all'].push( {start:k['start'].to_i, end:k['end'].to_i, type:type, color:color} )
                 end
               end
-
+              job.update_status() if(job)
             end
           end
         end
-
-        out = {'nodes'=>{},'edges'=>{}}
+        
+        out = {'nodes'=>{},'edges'=>{}, 'enriched'=>{}}
         features.each do |ch,v|
           out['nodes'][ch] = []
           if v['surface'] then
             v['surface'].each do |subtype,w|
-              out['nodes'][ch].push({shape:'circle', subtype:subtype ,color:w, type:'surface'}) 
+              flag = 0
+              if !contingency.nil? and contingency[ch][:alt].key? subtype.upcase then
+                flag = 1
+                out['enriched'][subtype.upcase]=true
+              end
+             out['nodes'][ch].push({shape:'circle', subtype:subtype ,color:w, type:'surface', enriched:flag}) 
             end
           end
           if v['buried'] then
             v['buried'].each do |subtype,w|
-              out['nodes'][ch].push({shape:'circle', subtype:subtype, color:w, type:'core'})
+              flag = 0
+              if !contingency.nil? and contingency[ch][:alt].key? subtype.upcase then
+                flag = 1
+                out['enriched'][subtype.upcase]=true
+              end
+             out['nodes'][ch].push({shape:'circle', subtype:subtype, color:w, type:'core', enriched:flag})
             end
           end
           if v['unknown'] then
             v['unknown'].each do |subtype,w|
-              out['nodes'][ch].push({shape:'square', subtype:subtype, color:w, type:'unknown'})
+              flag = 0
+              if !contingency.nil? and contingency[ch][:alt].key? subtype.upcase then
+                flag = 1
+                out['enriched'][subtype.upcase]=true
+              end
+            out['nodes'][ch].push({shape:'square', subtype:subtype, color:w, type:'unknown', enriched:flag})
             end
           end
           if v['interface'].keys.length > 0 then
@@ -208,13 +273,43 @@ module AnnotationPpiManager
                 unless out['edges'].key? ch+chj then
                   out['edges'][ch+chj]=[]
                 end
-                out['edges'][ch+chj].push({shape:'circle', subtype:subtype, color:vk})
+                flag = 0
+                if !contingency.nil? and contingency[ch][:bs].key? subtype.upcase then
+                  flag = 1
+                  out['enriched'][subtype.upcase]=true
+                end
+                out['edges'][ch+chj].push({shape:'circle', subtype:subtype, color:vk, enriched: flag})
               end
             end
           end
         end
 
         return {graph:out,location:location}
+      end
+
+      def process_contingency(pdbId,annotations=nil,file=nil)
+        out = {}
+        params = {pdb:pdbId, annotations:annotations, type:"contingency"}
+        if not file.nil? and params[:pdb] =~ /interactome3d/ then
+          params[:file] = file
+        elsif not file.nil? then
+          params[:file] = params[:pdb]
+          params[:pdb] = file
+        end
+        contingency = f_analyse_pdb(params)
+        contingency[:analysis].each do |ch,v_ch|
+          out[ch] = {bs:{}, alt:{}} unless out.key? ch
+          v_ch.each do |ann,v_ann|
+            v_ann.each do |dys,v_dys|
+              if ann =~ /INTERFACE/ then
+                out[ch][:bs][dys] = true
+              else
+                out[ch][:alt][dys] = true
+              end
+            end
+          end
+        end
+        return out
       end
 
     end

@@ -22,5 +22,9 @@ $j(document).ready(function(){
     }
   });
 
+  $j("#network_example").click(function(){
+    $j("#queryId").html("P01111\nP01112\nP01116");
+    $j("#has_structure_flag_flag").prop('checked', true);
+  });
 });
 

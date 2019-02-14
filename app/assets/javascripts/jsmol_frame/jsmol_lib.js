@@ -94,10 +94,10 @@ function add_to_label_display(i){
 
 function label_text_visible(i){
   var internalId = i.attr("id").split(":")[1];
-  var index = miApplet.keep_selected.findIndex(function(i){
+  var index = miApplet.selector_manager.keep_selected.findIndex(function(i){
     return i.id == internalId;
   })
-  var item = miApplet.keep_selected[ index ];
+  var item = miApplet.selector_manager.keep_selected[ index ];
   if(item.text_visible){
     item.text_visible = false;
   }else{
@@ -107,15 +107,15 @@ function label_text_visible(i){
       label_visible( $j('#label_visible\\:'+internalId) );
     }
   }
-  miApplet.__keep_selection();
+  miApplet.selector_manager.keep_selection();
 }
 
 function label_visible(i){
   var internalId = i.attr("id").split(":")[1];
-  var index = miApplet.keep_selected.findIndex(function(i){
+  var index = miApplet.selector_manager.keep_selected.findIndex(function(i){
     return i.id == internalId;
   });
-  var item = miApplet.keep_selected[ index ];
+  var item = miApplet.selector_manager.keep_selected[ index ];
   if(item.label_visible){
     item.label_visible = false;
     if( $j('#label_text_visible\\:'+internalId).prop( "checked" ) ){
@@ -125,7 +125,7 @@ function label_visible(i){
   }else{
     item.label_visible = true;
   }
-  miApplet.__keep_selection();
+  miApplet.selector_manager.keep_selection();
 }
 
 function remove_label(i){

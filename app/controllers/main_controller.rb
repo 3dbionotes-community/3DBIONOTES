@@ -25,11 +25,16 @@ class MainController < ApplicationController
 
     annotations = params[:annotations_file]
     if params[:annotations_file] then
-      annotations = params[:annotations_file].read
-      annotations.gsub!(/\r\n?/,"")
-      annotations.gsub!(/\s/,"")
-      annotations = JSON.parse(annotations)
-      @external_annotations = annotations.to_json
+      begin
+        annotations = params[:annotations_file].read
+        annotations.gsub!(/\r\n?/,"")
+        #annotations.gsub!(/\s/,"")
+        annotations = JSON.parse(annotations)
+        @external_annotations = annotations.to_json
+      rescue
+        logger.info( "ERROR PARSING JSON FILE "+annotations)
+        @external_annotations = nil
+      end
     elsif params[:annotations_url] then
       url = params[:annotations_url]
       ann_content, http_code, http_code_name = getUrl(url,verbose=true)
@@ -38,8 +43,13 @@ class MainController < ApplicationController
       elsif http_code.to_i == 0
         logger.info( "ERROR exception URL "+url+" http_error "+http_code_name ) 
       else
-        annotations = JSON.parse(ann_content)
-        @external_annotations = annotations.to_json
+        begin
+          annotations = JSON.parse(ann_content)
+          @external_annotations = annotations.to_json
+        rescue
+          logger.info( "ERROR PARSING JSON FILE "+ann_content)
+          @external_annotations = nil
+        end
       end
     end
     identifierName = params[:queryId]
@@ -87,10 +97,15 @@ class MainController < ApplicationController
     end
     annotations = params[:annotations_file]
     if annotations then
-      annotations = params[:annotations_file].read
-      annotations.gsub!(/\r\n?/,"")
-      annotations.gsub!(/\s/,"")
-      annotations = JSON.parse(annotations)
+      begin
+        annotations = params[:annotations_file].read
+        annotations.gsub!(/\r\n?/,"")
+        #annotations.gsub!(/\s/,"")
+        annotations = JSON.parse(annotations)
+      rescue
+        logger.info( "ERROR PARSING JSON FILE "+annotations)
+        @external_annotations = nil
+      end
     end
     viewer_type = viewer_type( params[:viewer_type] )
     job = CharacterizeNetworkJob.perform_later(acc_list,organism,viewer_type,annotations=annotations,has_structure_flag=has_structure_flag) 
@@ -213,11 +228,16 @@ class MainController < ApplicationController
     end
     annotations = params[:annotations_file]
     if annotations then
-      annotations = params[:annotations_file].read
-      annotations.gsub!(/\r\n?/,"")
-      annotations.gsub!(/\s/,"")
-      annotations = JSON.parse(annotations)
-      DataFile.save_string(annotations.to_json, "external_annotations.json", rand_path)
+      begin
+        annotations = params[:annotations_file].read
+        annotations.gsub!(/\r\n?/,"")
+        #annotations.gsub!(/\s/,"")
+        annotations = JSON.parse(annotations)
+        DataFile.save_string(annotations.to_json, "external_annotations.json", rand_path)
+      rescue
+        logger.info( "ERROR PARSING JSON FILE "+annotations)
+        @external_annotations = nil
+      end
     end
   end
 

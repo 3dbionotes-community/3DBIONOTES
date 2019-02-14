@@ -31,6 +31,12 @@ module AnnotationManager
       return toReturn
     end
 
+    include SourceProteinData::SourceSwissvar
+    def fetchSwissvarFromUniprot(uniprotAc)
+      toReturn = sourceSwissvarFromUniprot(uniprotAc)
+      return toReturn
+    end
+
     include SourceProteinData::SourceElmdb
     def fetchElmdbFromUniprot(uniprotAc)
       toReturn = sourceElmdbFromUniprot(uniprotAc)

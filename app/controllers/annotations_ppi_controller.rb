@@ -1,6 +1,6 @@
 class AnnotationsPpiController < ApplicationController
   
-  skip_before_filter :verify_authenticity_token, :only => [:getPOST,:getComplexCustomData]
+  skip_before_filter :verify_authenticity_token, :only => [:getPOST,:getComplexCustomData,:getComplexVariants]
 
   include AnnotationPpiManager::FetchProteinData
   include AnnotationPpiManager::FetchNetworkData
@@ -8,7 +8,8 @@ class AnnotationsPpiController < ApplicationController
   def getComplexVariants
     pdbId = params[:name]
     path = params[:path]
-    out = fetchComplexVariants(pdbId,path)
+    annotations = params[:annotations]
+    out = fetchComplexVariants(pdbId,path,annotations)
     return render json: out, status: :ok
   end
 

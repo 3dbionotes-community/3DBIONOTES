@@ -21,7 +21,11 @@ function add_analysis(features,analysis){
     var out = [];
     features[h].forEach(function(i){
       filter_type(i);
-      out.push({begin:i['begin'], end:i['end'], type:i['type'], internalId:'contingency_'+n});
+      var x = {begin:i['begin'], end:i['end'], type:i['type'], internalId:'contingency_'+n};
+      if(i['color']){
+        x['color'] = i['color'];
+      }
+      out.push(x);
       n++;
     });
     feature_viewer.drawCategories([[h,out]],feature_viewer);

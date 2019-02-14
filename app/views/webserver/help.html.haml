@@ -9,6 +9,9 @@
     %a{:href=>"#databases"} - EMDB, PDB OR UNIPROT ENTRY 
 
   %div{:class=>"index2"}
+    %a{:href=>"#network"} - MULTIPLE UNIPROT ACCESIONS
+
+  %div{:class=>"index2"}
     %a{:href=>"#submit"} - UPLOADING YOUR STRUCTURE FILE
 
   %div{:class=>"index2"}
@@ -35,23 +38,50 @@
 
   %br
   %div{:class=>"index1"}
+    %a{:href=>"#other_panels"} - OTHER PANELS
+
+  %div{:class=>"index2"}
+    %a{:href=>"#gene_panel"} - GENE PANEL
+
+  %div{:class=>"index2"}
+    %a{:href=>"#ppi_panel"} - PPI PANEL
+
+  %div{:class=>"index2"}
+    %a{:href=>"#analysis_panel"} - ANALYSIS PANEL
+
+  %br
+  %div{:class=>"index1"}
+    %a{:href=>"#ann_files"} - UPLOADING ANNOTATION FILES
+
+  %br
+  %div{:class=>"index1"}
     %a{:href=>"#adding"} - ADDING ANNOTATIONS
 
   %div{:class=>"index2"}
-    %a{:href=>"#uploading"} - UPLOADING CUSTOM ANNOTATIONS
+    %a{:href=>"#uploading"} - UPLOADING CUSTOM ANNOTATIONS FROM THE PROTEIN ANNOTATION VIEWER
 
   %div{:class=>"index2"}
     %a{:href=>"#transferring"} - TRANFERRING ANNOTATIONS
 
   %br
-  %div{:class=>"index1"}
-    %a{:href=>"#adding"} - HOW TO ...
+  %div{:class=>"index1", :id=>"how_to",  }
+    %a{:href=>"#how_to"} - HOW TO ...
 
   %div{:class=>"index2"}
     %a{:target=>"_blank", :href=>"/tutorials/annotate_structure_tutorial1.pdf"} - ANNOTATE A PROTEIN STRUCTUE (.pdf)
 
   %div{:class=>"index2"}
     %a{:target=>"_blank", :href=>"/tutorials/annottaion_transfer_tutorial2.pdf"} - TRASNFER PROTEIN ANNOTATIONS (.pdf)
+
+  %div{:class=>"index2"}
+    %a{:target=>"_blank", :href=>"/tutorials/analysis_panel_tutorial3.pdf"} - USE THE CONTINGENCY ANALYSIS (.pdf)
+
+  %div{:class=>"index2"}
+    %a{:target=>"_blank", :href=>"/tutorials/ppi_network_analysis_tutorial4.pdf"} - USE THE NETWORK ANALYSIS (.pdf)
+
+  %div{:class=>"index2"}
+    %a{:target=>"_blank", :href=>"/tutorials/submit_custom_ann_tutorial5.pdf"} - UPLOAD CUSTOM ANNOTATIONS (.pdf)
+
   %br
   %br
   %br
@@ -70,6 +100,12 @@
       =image_tag("databases.png")
       %div{:class=>"legend"}Figure #{x=x}
 
+  %div{:class=>"section", :id=>"network"}MULTIPLE UNIPROT ACCESIONS
+  %div{:class=>"section_text"}
+    The information for multiple UniProt accession can requested in order to explore protein-protein interaction networks. To that end, first the organism of interest has to be selected using the select menu (Figure #{x=x+1}A); then, the UniProt accessions can be typed in the text panel (Figure #{x}B). If the checkbox (Figure #{x}C) is checked the application will also return the information for the interaction partners of the submitted proteins for which structural information is available. 
+    %div{:class=>"section_image"}
+      =image_tag("network_query.png")
+      %div{:class=>"legend"}Figure #{x=x}
 
   %div{:class=>"section", :id=>"submit"}UPLOADING YOUR STRUCTURE
   %div{:class=>"section_text"}
@@ -165,7 +201,7 @@
 
   %div{:class=>"section", :id=>"seq"}SEQUENCE PANEL
   %div{:class=>"section_text"}
-    The sequence panel shows the alignments between the chains in the structural model and their corresponding UniProt sequence that were selected in the identification step (Figure #{x=x+1}).
+    The sequence panel shows the alignments between the chains in the structural model and their corresponding UniProt accessions that were selected in the identification step (Figure #{x=x+1}).
     %div{:class=>"section_image"}
       =image_tag("seq.png")
       %div{:class=>"legend"}Figure #{x}
@@ -198,6 +234,58 @@
       =image_tag("struct4.png")
       %div{:class=>"legend"}Figure #{x}
 
+  %div{:class=>"section", :id=>"other_panels" }OTHER PANELS
+  %div{:class=>"section_text"}
+
+  %div{:class=>"section", :id=>"gene_panel" }GENE PANEL
+  %div{:class=>"section_text"}
+    The gene panel (Figure #{x=x+1}) displays the information collected from ENSEMBL database. The panel header (Figure #{x}A) contains the title, assembly and coordinates of the ENSEMBL gene associated to the selected protein. The select menu (Figure #{x}B) is used to select among the different ENSEMBL transcripts associated to the gene. The checkboxes (Figure #{x}C) can be used to hide or display the different panel tracks (Figure #{x}D). From top to bottom the different tracks displays: (POS STRAND) positive sequence of the DNA gene. (NEG STRAND) negative sequence of the DNA gene. (PROTEIN SEQ) sequence of the protein. (KRAS-202) exons of the current selected transcript, in this example  KRAS-202. (CODING REGION) transcript regions that are translated. (UNIPROT ALIGN) regions that can be aligned with the associated UniProt sequence. 
+    %div{:class=>"section_image"}
+      =image_tag("gene_panel.png")
+      %div{:class=>"legend"}Figure #{x}
+
+  %div{:class=>"section", :id=>"ppi_panel" }PPI PANEL
+  %div{:class=>"section_text"}
+    Protein-protein interaction networks are displayed using a graph-based representation (Figure #{x=x+1}). In this graph nodes represent proteins and edges interaction among them. The color code indicates the source of the structural information: blue if is compiled from experimental data, yellow if comes from homology models or gray when structural data is not available. At the same time, yellow edges can be drawn as a continuous or discontinuous  line depending whether the structure was predicted from sequence homology modeling or domain-domain interaction templates.
+    %div{:class=>"section_image"}
+      =image_tag("ppi_panel.png")
+      %div{:class=>"legend"}Figure #{x}
+    The “FEATURES” menu located on the top right side of the GUI (Figure #{x=x+1}A) can be used to map annotations on the network.
+    %div{:class=>"section_image"}
+      =image_tag("ppi_panel_features.png")
+      %div{:class=>"legend"}Figure #{x}
+
+    The "FILTER *" menu (Figure #{x=x+1}A) can be used to hide and display specific annotations. 
+    %div{:class=>"section_image"}
+      =image_tag("ppi_panel_variants.png")
+      %div{:class=>"legend"}Figure #{x}
+
+    For example, in Figure (Figure #{x=x+1}) only annotations associated to “Colorectal cancer” are displayed.
+    %div{:class=>"section_image"}
+      =image_tag("ppi_panel_colorectal.png")
+      %div{:class=>"legend"}Figure #{x}
+
+  %div{:class=>"section", :id=>"analysis_panel" }ANALYSIS PANEL
+  %div{:class=>"section_text"}
+    The analysis panel displays those diseases for which the cooccurrence of their associated variants with a specific biochemical feature is statistically significant when Fisher’s exact test is computed. The statistically significance is defined in terms of Fisher’s exact test p-value and the Benjamini–Hochberg procedure with a false discovery rate of 1% to control the amount of false positives or Type I error. This information is displayed in two different tracks (Figure #{x=x+1}): the first track displays the biochemical feature regions (Figure #{x}A) and the second track the list of diseases with the results of Fisher’s exact test (Figure #{x}B) and the genomic variants (Figure #{x}C) using a colour code of red, if they are within the selected biochemical feature region ('Nucleotide Binding Site', in this case), or grey, if they are outside. 
+    %div{:class=>"section_image"}
+      =image_tag("analysis_panel.png")
+      %div{:class=>"legend"}Figure #{x}
+
+    Variants can be filtered by disease in such a way that only variants for the selected diseases are visible. For example, in Figure #{x=x+1} only variants associated to 'Colorectal cancer' are visible.
+    %div{:class=>"section_image"}
+      =image_tag("analysis_colorectal.png")
+      %div{:class=>"legend"}Figure #{x}
+
+  %div{:class=>"section", :id=>"ann_files" }UPLOADING ANNOTATION FILES
+  %div{:class=>"section_text"}
+    A custom annotation file can be attached when requesting information to 3DBIONOTES. Annotation files must be submitted in 
+    %a{target:"blank_",href:"http://3dbionotes.cnb.csic.es/4g3x_ann_full_example.json"}JSON 
+    format (Figure #{x=x+1}). An array must contain all the annotations. Each annotation (Figure #{x}A) encodes the information as a hash. The “track_name” key indicates the name of the lane that will appear in the annotation viewer. The key “visualization_type” is used to choose the type of data: “variants”, “continuous” or segments when the “visualization_type” is not present. Then the “chain” key indicates that the annotations are associated to the PDB chain and when the “acc” key is available (Figure #{x}B) means that the annotation are associated to proteins with this accession. Finally, “data” contains an array describing the positions in the sequence, value, amino acid variation and wild type, type (sub-track name in the annotation viewer) and a description. All analysis tools and viewers are available for the attached annotations.
+    %div{:class=>"section_image"}
+      =image_tag("annotation_format.png")
+      %div{:class=>"legend"}Figure #{x}
+
   %div{:class=>"section", :id=>"adding" }ADDING ANNOTATIONS
   %div{:class=>"section_text"}
     The annotation panel provide different tools to add custom annotations or to transfer them from similar proteins. This tools are available on the annotation  pane 'MENU' (Figure  #{x=x+1}).
@@ -205,8 +293,11 @@
       =image_tag("import_upload_menu.png")
       %div{:class=>"legend"}Figure #{x}
 
-  %div{:class=>"section", :id=>"uploading" }UPLOADING CUSTOM ANNOTATIONS
+  %div{:class=>"section", :id=>"uploading" }UPLOADING CUSTOM ANNOTATIONS FROM THE PROTEIN ANNOTATION VIEWER
   %div{:class=>"section_text"}
+    %span{style:"color:red;font-weight:bold;"}WARNING:
+    %span{style:"font-weight:bold;"}This annotations will not be included in the genomic variant analysis and viewers.
+    %br
     Adding your annotations can be done in two different ways: uploading a file (Figure #{x=x+1}A)  or manually (Figure #{x}B). Uploaded files must  be in JSON  format, <a href="/upload_annotations.txt" target="_blank" >here</a>  you can find an example and description of the format. Adding an annotation manually only requires to fill the form displayed in the Figure #{x}B. The 'COLOR' field describes the annotation color using its name (e.g. red, orange, pink) or hexadecimal number (e.g. #FF0000, #C345D8). The 'INDEX' selector is used to select the desired coordinates, thus if 'INDEX'  value is 'SEQUENCE' 'BEGIN' and  'END' values will be related to the sequence positions  while in  'INDEX' value is structure will  be related to the residues id of the PDB structure.
     %div{:class=>"section_image"}
       =image_tag("upload_menu.png")

@@ -129,7 +129,8 @@ a.nostyle{
   height:100%;
   width:100%;
   position:absolute;
-  display:none;
+  visibility:hidden;
+  /*display:none;*/
 }
 
 #ppi_panel{

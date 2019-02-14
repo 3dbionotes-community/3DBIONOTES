@@ -33,7 +33,7 @@ function get_analysis_data( URL ){
   var acc;
 
   if( acc_or_pdb_flag == "pdb" ){
-    acc = __alignment.pdb+":"+__alignment.chain;
+    acc = __alignment.pdb;//__alignment.pdb+":"+__alignment.chain;
     external_data_key = 'PDBchain';
   }else if(acc_or_pdb_flag == "acc" ){
     acc = __alignment.uniprot
@@ -41,8 +41,6 @@ function get_analysis_data( URL ){
   }
 
   if( key in $EXTERNAL_DATA[external_data_key] && acc in $EXTERNAL_DATA[external_data_key][key] ){
-    var async_data = $EXTERNAL_DATA[external_data_key][key][acc];
-
     if("n_sources" in $LOG.analysis){
       $LOG.analysis['n_sources']--;
       if($LOG.analysis['n_sources']==0)remove_loading_icon();
@@ -51,6 +49,8 @@ function get_analysis_data( URL ){
       get_analysis_data(URL);
       return;
     }else{
+      var async_data = $EXTERNAL_DATA[external_data_key][key][acc];
+      add_analysis_data[key](async_data);
       format_analysis_view();
     }
   }else{

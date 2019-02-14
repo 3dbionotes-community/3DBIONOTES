@@ -90,7 +90,7 @@ function graph_class(args){
             }else{
               setTimeout(function(){
                 var selection = display_active_data(n);
-              },300);
+              },1000);
             }
           }else{
             self.reset_node_color();
@@ -202,6 +202,8 @@ function graph_class(args){
       self.post_features(name,"network");
     }else if(name == "custom"){
       self.post_features(name,"complex");
+    }else if(name == "variants" && top.uploaded_annotations && top.uploaded_annotations.result){
+      self.post_features(name,null);
     }else{
       if(top.global_infoAlignment.pdb){
         pdb = top.global_infoAlignment.pdb;
@@ -255,8 +257,16 @@ function graph_class(args){
     }else if(type=="complex"){
       url = "/api/annotations/ppi/custom";
       data = { 'pdb': top.global_infoAlignment.pdb, 'path': top.global_infoAlignment.path };
+    }else if(name=="variants"){
+      var pdb = top.global_infoAlignment.pdb;
+      if(top.global_infoAlignment.path){
+        url = "/api/annotations/ppi/"+name+"/"+pdb.replace(".","__")+"?path="+top.global_infoAlignment.path
+      }else{
+        url = "/api/annotations/ppi/"+name+"/"+pdb
+      }
+      data = {};
     }
-    if(name=="custom") data['annotations'] = top.uploaded_annotations.result;
+    if( (name=="custom" || name=="variants") && top.uploaded_annotations && top.uploaded_annotations.result ) data['annotations'] = top.uploaded_annotations.result;
     $j.ajax({
       type: "POST",
       url: url,
@@ -314,7 +324,11 @@ function graph_class(args){
       
       format_keys.sort().forEach( function(i){
         var k = eq_key[i];
-        $j("#"+key+"_annotaion_filter").append("<div class=\"item_filter\" value=\""+k+"\"><span>"+i+"</span><span style=\"color:"+keys[k]+";\">&nbsp;&nbsp;&#9899;</span></div>"); 
+        var color_flag = "<span style=\"font-size:12px;color:"+keys[k]+";\">&nbsp;&nbsp;&#9679;</span>";
+        if( graph_data.enriched && i in graph_data.enriched ){
+          color_flag = "<span style=\"font-size:12px;color:"+keys[k]+";\">&nbsp;&nbsp;&#9673;</span>";
+        }
+        $j("#"+key+"_annotaion_filter").append("<div class=\"item_filter\" value=\""+k+"\"><span>"+i+"</span>"+color_flag+"</div>"); 
       });
       $j("#"+key+"_annotaion_filter .item_filter").click(function(e){
         if( $j(this).attr('id')!=key+"_all" ){

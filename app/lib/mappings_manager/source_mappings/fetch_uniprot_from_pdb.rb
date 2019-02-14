@@ -26,7 +26,6 @@ module MappingsManager
         else
           uniprotFromPDB = {pdbId=>uniprotFromPDB}
         end
-        puts(uniprotFromPDB)
         return uniprotFromPDB
       end
 

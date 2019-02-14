@@ -11,16 +11,19 @@
         accession
       =text_field_tag(:queryId)
       = hidden_field_tag(:viewer_type,@viewerType)
-      %div{style:"font-size:14px;font-weight:bold;margin-bottom:5px;margin-top:10px;"}UPLOAD YOUR ANNOTATIONS
+      %div{style:"font-size:14px;font-weight:bold;margin-bottom:5px;margin-top:10px;"}
+        UPLOAD YOUR ANNOTATIONS
+        %a{target:'_blank', title:'Example file for PDB 4G3X' , href:'/4g3x_ann_full_example.json'}
+          =image_tag("help_icon.png", height: '12', width: '12')
       = file_field_tag(:annotations_file, {style:"font-size:12px;"})
       %br
       %br
       = button_tag("Submit")
       %br
       %br
-      %a{:href=>'javascript:window.location.href=\'/?queryId=P01112&viewer_type=ngl&button=#query\''} Example (HRAS)
+      %a{:href=>'javascript:window.location.href=\'/?queryId=P01116&viewer_type=ngl&button=#query\''} Example (KRAS)
       %br
-      %a{:href=>'javascript:window.location.href=\'/?&queryId=emd-2924&viewer_type=ngl&button=#query\''} Example (Human APC/C-Cdh1-Emi1)
+      %a{:href=>'javascript:window.location.href=\'/?&queryId=emd-8978&viewer_type=ngl&button=#query\''} Example (Human Gs/CGRP receptor)
   .wait_div{:style=>'display:none'}
     %span.wait_text PLEASE BE PATIENT
     %br
