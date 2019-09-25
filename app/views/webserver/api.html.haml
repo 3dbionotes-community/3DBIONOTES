@@ -7,29 +7,25 @@
     %b External annotations
     \- Display custom annotations for a PDB, EMDB or UniProt entry
     %br
-    %a{:href => "https://3dbionotes.cnb.csic.es?queryId=1acb&annotations_url=http://cantor.cnb.csic.es/pdb/external_annotations.json", :target=>"_blank"}
       https://3dbionotes.cnb.csic.es?queryId=:id&annotations_url=:url
     %div
       \:id > PDB / EMDB / UniProt (e.g. 1acb, emd-2924, P01112)
       %br
-      \:url > URL annotations request (e.g.
-      %a{:href => "http://cantor.cnb.csic.es/pdb/external_annotations.json" , :target=>"_blank"}http://cantor.cnb.csic.es/pdb/external_annotations.json
-      )
+      \:url > URL annotations request (e.g. "https://[your_server_here].cnb.csic.es/pdb/external_annotations.json")
   %h3.api_header
     EXTERNAL STRUCTURE
   %p
     %b External protein struture
     \- Display external structure and optional annotations
     %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/programmatic/autofetch?url=http://cantor.cnb.csic.es/pdb/1ACB.pdb&annotations_url=http://cantor.cnb.csic.es/pdb/external_annotations.json&title=title_name", :target=>"_blank"}
       https://3dbionotes.cnb.csic.es/programmatic/autofetch?url=:structure_url&annotations_url=:annotations_url&title=:name
     %div
       \:structure_url > URL structure request (e.g.
-      %a{:href => "http://cantor.cnb.csic.es/pdb/1ACB.pdb" , :target=>"_blank"}http://cantor.cnb.csic.es/pdb/1ACB.pdb
+      http://[your_server_here].cnb.csic.es/pdb/1ACB.pdb
       )
       %br
       \:annotations_url > URL annotations request (optional, e.g.
-      %a{:href => "http://cantor.cnb.csic.es/pdb/external_annotations.json" , :target=>"_blank"}http://cantor.cnb.csic.es/pdb/external_annotations.json
+      http://[your_server_here].cnb.csic.es/pdb/external_annotations.json
       )
       %br
       \:name > STRING title of the submission (e.g. "my title") 
