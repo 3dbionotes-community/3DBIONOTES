@@ -183,7 +183,7 @@ function nglClass( args ) {
 			if( self.args.emdb ){
 				var __emdb = self.args.emdb.replace("EMD-", "emd_");
                                 __show_em_message( self.args.emdb );
-                                var __map = location.protocol+"//www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
+                                var __map = "https//www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
 				self.stage.loadFile( __map, {useWorker: true} ).then( initMap );
 			}
                 	self.stage.viewer.container.addEventListener( "dblclick", function(){

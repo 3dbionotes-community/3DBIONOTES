@@ -280,7 +280,7 @@
   %div{:class=>"section", :id=>"ann_files" }UPLOADING ANNOTATION FILES
   %div{:class=>"section_text"}
     A custom annotation file can be attached when requesting information to 3DBIONOTES. Annotation files must be submitted in 
-    %a{target:"blank_",href:"http://3dbionotes.cnb.csic.es/4g3x_ann_full_example.json"}JSON 
+    %a{target:"blank_",href:"https://3dbionotes.cnb.csic.es/4g3x_ann_full_example.json"}JSON 
     format (Figure #{x=x+1}). An array must contain all the annotations. Each annotation (Figure #{x}A) encodes the information as a hash. The “track_name” key indicates the name of the lane that will appear in the annotation viewer. The key “visualization_type” is used to choose the type of data: “variants”, “continuous” or segments when the “visualization_type” is not present. Then the “chain” key indicates that the annotations are associated to the PDB chain and when the “acc” key is available (Figure #{x}B) means that the annotation are associated to proteins with this accession. Finally, “data” contains an array describing the positions in the sequence, value, amino acid variation and wild type, type (sub-track name in the annotation viewer) and a description. All analysis tools and viewers are available for the attached annotations.
     %div{:class=>"section_image"}
       =image_tag("annotation_format.png")
