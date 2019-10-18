@@ -4,7 +4,7 @@ module MainManager
     
       def _identify_type(identifierName)
         if identifierName != nil
-          if identifierName.upcase =~ /^EMD-\d{4}$/
+          if identifierName.upcase =~ /^EMD-\d+$/
             identifierName.upcase!
             identifierType = "EMDB"
           elsif identifierName.downcase =~ /^\d{1}\w{3}$/ and identifierName.downcase !~ /^\d{4}$/

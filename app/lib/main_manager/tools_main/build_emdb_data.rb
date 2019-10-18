@@ -10,6 +10,10 @@ module MainManager
         jsonData = getUrl(url)
         if !jsonData.nil?
           availJson  = JSON.parse(jsonData)
+          
+          logger.info("URL:  "+url)
+          logger.info("jsonData:  "+jsonData)
+
         else
           availJson = nil
         end
