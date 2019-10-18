@@ -6,7 +6,7 @@ module InfoManager
       include GlobalTools::FetchParserTools
 
       def queryEMDBtitle(emdbId)
-        if emdbId =~ /^EMD-\d{4}$/
+        if emdbId =~ /^EMD-\d{4,5}$/
           request = makeRequest(EmdbSummaryUrl,emdbId)
         else
           request = nil

@@ -62,6 +62,7 @@ class loader_class{
       var __emdb = self.viewer.args.emdb.replace("EMD-", "emd_");
       self.viewer.message_manager.show_em_message( self.viewer.args.emdb );
       var url_map = "https://www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
+      var url_map = "ftp://ftp.ebi.ac.uk/pub/databases/emdb/structures/"+self.viewer.args.emdb+"/map/"+__emdb+".map.gz"
       self.viewer.stage.loadFile( url_map, {useWorker: true} ).then( 
         function(i){
           self.init_map(self,i);

@@ -184,6 +184,7 @@ function nglClass( args ) {
 				var __emdb = self.args.emdb.replace("EMD-", "emd_");
                                 __show_em_message( self.args.emdb );
                                 var __map = "https//www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
+                                var __map = "ftp://ftp.ebi.ac.uk/pub/databases/emdb/structures/"+self.args.emdb+"/map/"+__emdb+".map.gz"
 				self.stage.loadFile( __map, {useWorker: true} ).then( initMap );
 			}
                 	self.stage.viewer.container.addEventListener( "dblclick", function(){

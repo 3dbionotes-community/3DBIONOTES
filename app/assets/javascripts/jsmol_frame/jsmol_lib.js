@@ -107,7 +107,7 @@ function label_text_visible(i){
       label_visible( $j('#label_visible\\:'+internalId) );
     }
   }
-  miApplet.selector_manager.keep_selection();
+  miApplet.selector_manager.display_selection();
 }
 
 function label_visible(i){
@@ -125,7 +125,7 @@ function label_visible(i){
   }else{
     item.label_visible = true;
   }
-  miApplet.selector_manager.keep_selection();
+  miApplet.selector_manager.display_selection();
 }
 
 function remove_label(i){
