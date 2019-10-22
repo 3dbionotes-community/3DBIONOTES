@@ -74,8 +74,8 @@ class loader_class{
       }).catch(function(e){
         console.error(e);
         swal({
-          title: "ERROR LOADING "+self.viewer.args.emdb+" FILE",
-          text: "FILE FORMAT ERROR" + "\n" + url_map,
+          title: "ERROR LOADING "+url_map+" FILE",
+          text: "FILE FORMAT ERROR",
           timer: 5000,
           type: "error",
           showConfirmButton: true
