@@ -61,16 +61,21 @@ class loader_class{
     if( self.viewer.args.emdb ){
       var __emdb = self.viewer.args.emdb.replace("EMD-", "emd_");
       self.viewer.message_manager.show_em_message( self.viewer.args.emdb );
-      var url_map = "https://www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
-      var url_map = "ftp://ftp.ebi.ac.uk/pub/databases/emdb/structures/"+self.viewer.args.emdb+"/map/"+__emdb+".map.gz"
+      var num_code = self.viewer.args.emdb.replace("EMD-", "");
+      if (num_code.length == 4) {
+        var url_map = "https://www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
+      }  
+      else {
+        var url_map = "ftp://ftp.ebi.ac.uk/pub/databases/emdb/structures/"+self.viewer.args.emdb+"/map/"+__emdb+".map.gz"
+      }
       self.viewer.stage.loadFile( url_map, {useWorker: true} ).then( 
         function(i){
           self.init_map(self,i);
       }).catch(function(e){
         console.error(e);
         swal({
-          title: "ERROR LOADING "+url_map+" FILE",
-          text: "FILE FORMAT ERROR",
+          title: "ERROR LOADING "+self.viewer.args.emdb+" FILE",
+          text: "FILE FORMAT ERROR" + "\n" + url_map,
           timer: 5000,
           type: "error",
           showConfirmButton: true
