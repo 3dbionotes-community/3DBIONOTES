@@ -65,9 +65,6 @@ class loader_class{
       if (num_code.length == 4) {
         var url_map = "https://www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
       }  
-      else {
-        var url_map = "ftp://ftp.ebi.ac.uk/pub/databases/emdb/structures/"+self.viewer.args.emdb+"/map/"+__emdb+".map.gz"
-      }
       self.viewer.stage.loadFile( url_map, {useWorker: true} ).then( 
         function(i){
           self.init_map(self,i);
