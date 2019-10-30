@@ -1,7 +1,7 @@
 module GlobalTools
   module GlobalSites
 
-    GS_BaseUrl = "http://bionotes-service.cnb.csic.es/"
+    GS_BaseUrl = "https://bionotes-service.cnb.csic.es/"
     GS_EnsemblServer = "http://rest.ensembl.org/"
     GS_UniServer = "http://www.uniprot.org/"
     GS_SIFTSUrl = "http://ftp.ebi.ac.uk/pub/databases/msd/sifts/xml/"
