@@ -182,11 +182,8 @@ function nglClass( args ) {
 			}
 			if( self.args.emdb ){
 				var __emdb = self.args.emdb.replace("EMD-", "emd_");
-        __show_em_message( self.args.emdb );
-        var num_code = self.args.emdb.replace("EMD-", "");
-        if (num_code.length == 4) {
-          var __map = "https://www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
-        }  
+                                __show_em_message( self.args.emdb );
+                                var __map = "https//www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
 				self.stage.loadFile( __map, {useWorker: true} ).then( initMap );
 			}
                 	self.stage.viewer.container.addEventListener( "dblclick", function(){

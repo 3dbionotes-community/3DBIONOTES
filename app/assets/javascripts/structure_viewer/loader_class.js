@@ -61,10 +61,7 @@ class loader_class{
     if( self.viewer.args.emdb ){
       var __emdb = self.viewer.args.emdb.replace("EMD-", "emd_");
       self.viewer.message_manager.show_em_message( self.viewer.args.emdb );
-      var num_code = self.viewer.args.emdb.replace("EMD-", "");
-      if (num_code.length == 4) {
-        var url_map = "https://www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
-      }  
+      var url_map = "https://www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
       self.viewer.stage.loadFile( url_map, {useWorker: true} ).then( 
         function(i){
           self.init_map(self,i);
