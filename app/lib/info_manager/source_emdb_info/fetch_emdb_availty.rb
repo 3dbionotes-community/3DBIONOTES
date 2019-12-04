@@ -13,29 +13,27 @@ module InfoManager
         emdbInfo = {}
         if emdbId =~ /^EMD-\d{4,5}$/  
           emdb_code  = emdbId[4..emdbId.length]
+          # ftp://ftp.ebi.ac.uk/pub/databases/emdb/structures/EMD-20204/map/emd_20204.map.gz
           emdb_url = EMDB_URL+"EMD-"+emdb_code+"/map/"+"emd_"+emdb_code+".map.gz"
           url = URI.parse( emdb_url )
           begin
             ftp = Net::FTP.new(url.host)
             ftp.login
-            begin
-              file_size = ftp.size(url.path)  # will fail if file does not exist
-            rescue Exception => e
-              reply = e.message
-              err_code = reply[0,3].to_i
-              emdbInfo = {"id"=>emdbId,"available"=>false, "error"=>"HTTP ERROR "+"Not Found in "+ url.path}
-              myStatus = :not_found
-            end
-              emdbInfo = {"id"=>emdbId,"available"=>true,
-                          "file_size"=>file_size,
-                          "url"=>emdb_url}
-              ftp.close
-          rescue
-            emdbInfo = {"id"=>emdbId,"available"=>false, "error"=>"HTTP ERROR "+err_code}
+            file_size = ftp.size(url.path)  # will fail if file does not exist
+          rescue Exception => e
+            reply = e.message
+            err_code = reply[0,3].to_i
+            emdbInfo = {"id"=>emdbId,"available"=>false, "error"=>"ERROR: "+"File Not Found, "+emdb_url}
             myStatus = :not_found
+          else
+            emdbInfo = {"id"=>emdbId,"available"=>true,
+                        "file_size"=>file_size,
+                        "url"=>emdb_url}
+            ftp.close
           end
         else
           emdbInfo = {"id"=>emdbId,"available"=>false, "error"=>"UNKNOWN EMDB ID"} 
+          myStatus = :not_found
         end
  
         url = BaseUrl+"api/mappings/EMDB/PDB/"+emdbId
