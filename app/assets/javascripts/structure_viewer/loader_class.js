@@ -61,7 +61,8 @@ class loader_class{
     if( self.viewer.args.emdb ){
       var __emdb = self.viewer.args.emdb.replace("EMD-", "emd_");
       self.viewer.message_manager.show_em_message( self.viewer.args.emdb );
-      var url_map = "https://www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
+      // var url_map = "https://www.ebi.ac.uk/pdbe/static/files/em/maps/"+__emdb+".map.gz"
+      var url_map = "https://3dbionotes.cnb.csic.es/ws/pond/maps/"+self.viewer.args.emdb+"/file/"+__emdb+".map.gz"
       self.viewer.stage.loadFile( url_map, {useWorker: true} ).then( 
         function(i){
           self.init_map(self,i);

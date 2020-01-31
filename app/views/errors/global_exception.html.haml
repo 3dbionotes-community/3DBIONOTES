@@ -1,8 +1,8 @@
 = stylesheet_link_tag('webserver/home_style.css')
 .ws_main_div
-  %h2 3DBIONOTES-WS IS NOT AVAILABLE
-  %h2 AN ERROR OCCURRED
-  %h2 PLEASE TRY AGAIN LATER
+  %h2 3DBIONOTES-WS is having some problems
+  %h3 AN INTERNAL SERVER ERROR OCCURRED
+  %h4 PLEASE TRY AGAIN LATER
   %a{href:"https://3dbionotes.cnb.csic.es"} BACK
   %div{:style=>"display:none;"}
     #{@error_message}
