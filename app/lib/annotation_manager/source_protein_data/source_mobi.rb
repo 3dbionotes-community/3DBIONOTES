@@ -27,8 +27,8 @@ module AnnotationManager
           out = {}
           flag =  false
           if data.key?("mobidb_consensus") and data['mobidb_consensus'].key?("disorder") 
-            #for j in ['db','derived','predictors']
-            for j in ['db','derived']
+            for j in ['db','derived','predictors']
+            # for j in ['db','derived']
               if data['mobidb_consensus']['disorder'].key?(j)
                 out[source[j]] = []
                 data['mobidb_consensus']['disorder'][j].each do |i|
