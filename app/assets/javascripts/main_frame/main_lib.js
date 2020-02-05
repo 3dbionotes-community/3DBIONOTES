@@ -385,7 +385,7 @@ function display_noAlignments(PDB){
   $j( "#downRightBottomFrame").remove();
   $j( "#leftBottom").css("width","100%");
   $j( "#rightBottom").remove();
-  var label = " - <span style=\"color:red;font-size:18px;\">WARNING: </span>PROTEINS IN THIS COMPLEX COULD NOT BE IDENTIFIED, DISPLAYING DENSITY VOLUME";
+  var label = " - <span style=\"color:red;font-size:18px;\">WARNING: </span>PROTEINS IN THIS COMPLEX COULD NOT BE IDENTIFIED, DISPLAYING DENSITY VOLUME ONLY";
   if(PDB[0]){
     label += " - <a id=\"manual_annotation\" href=\"#\" style=\"cursor:pointer\" >MANUAL IDENTIFICATION</a>";
   }
