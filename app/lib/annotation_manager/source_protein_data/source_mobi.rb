@@ -2,7 +2,7 @@ module AnnotationManager
   module SourceProteinData
     module SourceMobi 
 
-      MobiURL = Settings.GS_MobiURL#"http://mobidb.bio.unipd.it/ws/entries/"
+      MobiURL = Settings.GS_MobiURL # http://mobidb.bio.unipd.it/ws
 
       def sourceMobiFromUniprot(uniprotAc)
         method = {'full'=>'curated databases', 'missing_residues'=>'missing electron densities', 'bfactor'=>'high temperature residues', 'mobile'=>'backbone displacemen in NMR structures', 'mobi2'=>'Inferred from PDB structures' }
@@ -12,9 +12,10 @@ module AnnotationManager
           url = MobiURL+"/"+uniprotAc+"/consensus"
           data = {}
           begin
-            http = Net::HTTP.new(url)
-            http.open_timeout = 5
-            data = http.get_response(URI.parse(url)).body
+            # http = Net::HTTP.new(url)
+            # http.open_timeout = 5
+            # data = http.get_response(URI.parse(url)).body
+            data = Net::HTTP.get_response(URI.parse(url)).body
             data = JSON.parse(data)
           rescue
             puts "Error downloading data\nURL: #{url}\nERROR: #{$!}"
@@ -26,8 +27,8 @@ module AnnotationManager
           out = {}
           flag =  false
           if data.key?("mobidb_consensus") and data['mobidb_consensus'].key?("disorder") 
-            #for j in ['db','derived','predictors']
-            for j in ['db','derived']
+            for j in ['db','derived','predictors']
+            # for j in ['db','derived']
               if data['mobidb_consensus']['disorder'].key?(j)
                 out[source[j]] = []
                 data['mobidb_consensus']['disorder'][j].each do |i|
