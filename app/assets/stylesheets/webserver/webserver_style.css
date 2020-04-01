@@ -26,6 +26,7 @@ a{
   font-size:32px;
   font-weight:bold;
   margin-top:25px;
+  color: #498a4a;
 }
 
 .who a{
@@ -59,7 +60,7 @@ a{
   height:75px; 
   text-align:center; 
   vertical-align:middle;
-  background-color:#074987;
+  background-color:#405d27;
   font-family:Verdana, Arial, Helvetica, sans-serif;
   font-size:24px;
   font-weight:bold;

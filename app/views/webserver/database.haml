@@ -1,0 +1,91 @@
+.ws_main_div
+  .database_form
+    = form_tag({controller: "main", action: "home",anchor: "query"}, :method => :post, :multipart => true, id: "query_form",:style=>"margin-top:20px;") do 
+      %table
+        %tr
+          %td
+            %h3
+              Search by
+              %a{:href=>"javascript:window.open('http://www.emdatabank.org/')", :title=>"E.g. EMD-2810"} EMDB
+              code,
+              %a{:href=>"javascript:window.open('http://www.rcsb.org/')", :title=>"E.g. 101M"} PDB
+              ID or
+              %a{:href=>"javascript:window.open('http://www.uniprot.org/')", :title=>"E.g. P01112"} Uniprot
+              accession
+              =text_field_tag(:queryId)
+              = hidden_field_tag(:viewer_type,@viewerType)
+              = button_tag("Submit")
+          %td
+            %h4
+              UPLOAD YOUR ANNOTATIONS
+              %a{target:'_blank', title:'Example file for PDB 4G3X' , href:'/4g3x_ann_full_example.json'}
+              =image_tag("help_icon.png", height: '12', width: '12')
+              = file_field_tag(:annotations_file, {style:"font-size:12px;"})
+      %hr
+      %h4
+        Selected entries
+      %table
+        %tr
+          %td
+            %a{:href=>'/?queryId=EMD-7573&viewer_type=ngl&button=#query'}  SARS Spike Glycoprotein, Stabilized variant, C3 symmetry (EMD-7573)
+        %tr
+          %td 
+            %a{:href=>'/?queryId=EMD-8069&viewer_type=ngl&button=#query'}  Prefusion structure of a human coronavirus spike protein (EMD-8069)
+        %tr
+          %td
+            %a{:href=>'/?queryId=6VSB&viewer_type=ngl&button=#query'}  Prefusion 2019-nCoV spike glycoprotein with a single receptor-binding domain up (6VSB)
+        %tr
+          %td
+            %a{:href=>'/?queryId=6ACG&viewer_type=ngl&button=#query'}  Trypsin-cleaved and low pH-treated SARS-CoV spike glycoprotein and ACE2 complex, ACE2-bound conformation 1 (6ACG)
+
+      %hr      
+      %h4
+        All Currently collected related entries
+      %table
+        %tr
+          %td
+            
+            %a{target:'_blank', title:'All Currently collected related entries' , href:'/sars_covid_2_raw_entries.json'}
+              Download JSON file
+              =image_tag("volume.gif", height: '12', width: '12')
+      
+
+      %hr
+      %h4
+        External data sources and collaborations
+      %table
+        %tr
+          %td
+            %a{:href=>'https://www.ebi.ac.uk/ena/pathogens/covid-19'} Pathogens: EMBL-EBI relating to the COVID-19 outbreak
+        %tr
+          %td
+            %a{:href=>'https://evosalut1.uv.es/'} NextSpain: Spanish site for Nextstrain: Consortium for Genomic Epidemiology of Pathogens.
+        %tr
+          %td
+            %a{:href=>'https://viralzone.expasy.org/8996'} SARS coronavirus 2 (SARS-CoV-2) proteome
+        %tr
+          %td
+            %a{:href=>'https://github.com/thorn-lab/coronavirus_structural_task_force'} A. Thon's Coronavirus Structural Task Force
+          %tr
+            %td
+              %a{:href=>'https://covid-19.uniprot.org/uniprotkb?query=*'} Latest available pre-release UniProtKB data for the SARS-CoV-2
+          %tr
+            %td
+              %a{:href=>'https://elixir-europe.org/covid-19-resources'} ELIXIR support for SARS-CoV-2 research
+          %tr
+            %td
+              %a{:href=>'https://www.ebi.ac.uk/covid-19'} EMBL-EBI COVID-19 Portal
+          %tr
+            %td
+              %a{:href=>'https://viralzone.expasy.org/8996'} SARS coronavirus 2 (SARS-CoV-2) proteome
+          
+  
+  .wait_div{:style=>'display:none'}
+    %span.wait_text PLEASE BE PATIENT
+    %br
+    %br
+    =image_tag("loading.gif",size:"300x300")
+    %br
+    %br
+    %span.wait_text THIS PROCESS MAY TAKE A FEW MINUTES
+
