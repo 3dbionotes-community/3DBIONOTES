@@ -4,11 +4,12 @@
   %h3 AN INTERNAL SERVER ERROR (or something) OCCURRED
   %h4 PLEASE TRY AGAIN
   %h5 and feel free to contact us if the error persists
-  %a{href:"https://3dbionotes.cnb.csic.es"} OK (and go back)
+  %a{href:"/ws"} OK (and go back)
   %div{:style=>"display:none;"}
     #{@error_message}
 :javascript
   $j(document).ready(function(){
+    $j('.logo').css('visibility','hidden');
     $j('.options').css('visibility','hidden');
     $j('.who').css('visibility','hidden');
     $j('.footer').css('visibility','hidden');

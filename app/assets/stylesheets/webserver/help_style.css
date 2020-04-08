@@ -1,5 +1,4 @@
 .index1 {
-  margin-bottom:10px;
   font-weight:bold;
   font-size:14px;
 }
@@ -18,9 +17,7 @@
 }
 
 .index2 {
-  font-size:14px;
-  margin-left:40px;
-  margin-bottom:10px;
+  font-size:14px;  
   font-weight:normal;
 }
 
@@ -37,6 +34,26 @@
   cursor:pointer;
 }
 
+.index3 {
+  font-size:14px;
+  margin-left:60px;
+  margin-top:10px;
+  margin-bottom:10px;
+  font-weight:normal;
+}
+
+.index3 a{
+  color:#074987;
+}
+
+.index3 a:visited{
+  color:#074987;
+}
+
+.index3 a:hover{
+  color:#96C8C8;
+  cursor:pointer;
+}
 
 .section{
   font-size:20px;
@@ -81,3 +98,97 @@
   cursor:pointer;
 }
 
+/* --- CARD Styles --- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Float four columns side by side */
+.card_column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding in columns */
+.card_row {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.card_row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+  padding: 25px;
+  text-align: center;
+  background-color: #f1f1f1;
+  font-size: 12pt;
+}
+
+/* Responsive columns - one column layout (vertical) on small screens */
+@media screen and (max-width: 600px) {
+  .card_column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Dashed border */
+hr.dashed {
+  border-top: 3px dashed #bbb;
+}
+
+/* Dotted border */
+hr.dotted {
+  border-top: 3px dotted #bbb;
+}
+
+/* Solid border */
+hr.solid {
+  border-top: 3px solid #bbb;
+}
+
+/* Rounded border */
+hr.rounded {
+  border-top: 8px solid #bbb;
+  border-radius: 5px;
+}
+
+
+.cv_prot_list {
+  width:75%;
+  margin-top:20px;
+  margin-bottom:50px;
+  margin-left:auto;
+  margin-right:auto;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  font-size:18px;
+  color:#606060;
+  position:relative;
+}
+
+.cv_upper_content, .cv_mid_content, .cv_lower_content {
+  width:80%;
+  margin-top:20px;
+  margin-bottom:50px;
+  margin-left:auto;
+  margin-right:auto;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  font-size:18px;
+  color:#606060;
+  position:relative;
+}
+
+.model_img {
+  padding:16px;
+  width:150px
+}
