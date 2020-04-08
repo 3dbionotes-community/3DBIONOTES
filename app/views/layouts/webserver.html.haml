@@ -1,6 +1,7 @@
 %html(lang="en")
   %head
     = stylesheet_link_tag('webserver/webserver_style.css')
+    = stylesheet_link_tag('webserver/w3.css')
     = javascript_include_tag('webserver/webserver_lib')
     = javascript_include_tag('webserver/webserver_init')
   %body
@@ -26,13 +27,13 @@
                 %td
                   = image_tag 'https://inb-elixir.es/sites/default/files/inbelixir.png', alt: 'INB_Elixir_Spain-logo', height: '50'
 
-    /.who
-    /  %a{:href=>"http://biocomputingunit.es", :target=>"_blank"} Biocomputing Unit
-    /  @
-    /  %a{:href=>"http://www.cnb.csic.es/index.php/en", :target=>"_blank"} CNB
-    /  \- 
-    /  %a{:href=>"http://www.csic.es/", :target=>"_blank"} CSIC
-    /  %br
+    -# .who
+    -#   %a{:href=>"http://biocomputingunit.es", :target=>"_blank"} Biocomputing Unit
+    -#   @
+    -#   %a{:href=>"http://www.cnb.csic.es/index.php/en", :target=>"_blank"} CNB
+    -#   \- 
+    -#   %a{:href=>"http://www.csic.es/", :target=>"_blank"} CSIC
+    -#   %br
     .options
       %table
         %tr
