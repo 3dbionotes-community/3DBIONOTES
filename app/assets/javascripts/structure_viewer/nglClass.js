@@ -232,116 +232,110 @@ function nglClass( args ) {
             	});
 	};
 
-        self.multiple_highlight = function(pdb,  chain, list){
-          self.remove_multiple_selection();
-          var selection = {};
-          var color;
-          list.forEach(function(i){
-              color = i.color;
-              var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, top.alignmentTranslation);
-              pdbPosList.forEach(function(j){
-                selection[j]=true;
-              });
-          });
-          selection = Object.keys(selection);
-          self.selected.residues = selection;
-          if(selection.length == 0) return;
+  self.multiple_highlight = function(pdb,  chain, list){
+    self.remove_multiple_selection();
+    var selection = {};
+    var color;
+    list.forEach(function(i){
+        color = i.color;
+        var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, top.alignmentTranslation);
+        pdbPosList.forEach(function(j){
+          selection[j]=true;
+        });
+    });
+    selection = Object.keys(selection);
+    self.selected.residues = selection;
+    if(selection.length == 0) return;
 
-          var model_flag = '';
-          if(self.model>=0) model_flag = 'and /'+self.model.toString()+' ';
+    var model_flag = '';
+    if(self.model>=0) model_flag = 'and /'+self.model.toString()+' ';
 
-          self.Structures[ pdb ]['representations']['cartoon'].setSelection( "protein "+model_flag+"and :"+chain );
+    self.Structures[ pdb ]['representations']['cartoon'].setSelection( "protein "+model_flag+"and :"+chain );
 
 	  self.Structures[ pdb ]['representations']['selection']['cartoon'].setSelection( "" );
 	  self.Structures[ pdb ]['representations']['selection']['spacefill'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+selection.join(" or ")+")" );
 	  self.Structures[ pdb ]['representations']['selection']['ball+stick'].setSelection( "" );
-
-          self.Structures[ pdb ]['representations']['selection']['spacefill'].setColor(color);
-
+    self.Structures[ pdb ]['representations']['selection']['spacefill'].setColor(color);
 	  self.Structures[ pdb ]['representations']['selection']['cartoon'].setVisibility(false);
 	  self.Structures[ pdb ]['representations']['selection']['ball+stick'].setVisibility(false);
 	  self.Structures[ pdb ]['representations']['selection']['spacefill'].setVisibility(true);
 
-        };
+  };
 
-        self.global_highlight = function(pdb, list){
-          self.remove_multiple_selection();
+  self.global_highlight = function(pdb, list){
+    self.remove_multiple_selection();
 
-          var global_selection = {};
-          var global_cartoon = [];
-          var color;
-          for(var ch in list){
-            global_cartoon.push( ":"+ch );
-            var selection = {};
-            list[ch].forEach(function(i){
-                color = i.color;
-                var uniprot = Object.keys( top.$ALIGNMENTS[  pdb ][ch] )[0];
-                var ch_alignmentTranslation = top.$ALIGNMENTS[  pdb ][ch][uniprot].mapping;
-                var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, ch_alignmentTranslation);
-                if(!(color in selection))selection[color]={};
-                pdbPosList.forEach(function(j){
-                  selection[color][j]=true;
-                });
-            });
-            for(var color in selection){
-              res = Object.keys(selection[color]);
-              if(res.length > 0){
-                if(!(color in global_selection))global_selection[color]=[]
-                global_selection[color].push( ":"+ch+" and ("+res.join(" or ")+")" ); 
-              }
-            }
-          }
-
-          var model_flag = '';
-          if(self.model>=0) model_flag = 'and /'+self.model.toString()+' ';
-
-          //self.Structures[ pdb ]['representations']['cartoon'].setSelection( "protein "+model_flag+"and ("+global_cartoon.join(" or ")+")" );
-          self.Structures[ pdb ]['representations']['cartoon'].setSelection( "none" );
-
-          var _cols = ["#CFFFCF","#CFCFFF"];
-          if(global_cartoon.length == 1) _cols = ["#B9B9B9"];
-          global_cartoon.forEach(function(sel,i){
-            self.Structures[ pdb ]['representations']['multiple_cartoon'].push(
-              self.Structures[ pdb ].obj.addRepresentation("cartoon",{visible:true,sele:"protein "+model_flag+" and ("+sel+")",color:_cols[i]})
-            );
+    var global_selection = {};
+    var global_cartoon = [];
+    var color;
+    for(var ch in list){
+      global_cartoon.push( ":"+ch );
+      var selection = {};
+      list[ch].forEach(function(i){
+          color = i.color;
+          var uniprot = Object.keys( top.$ALIGNMENTS[  pdb ][ch] )[0];
+          var ch_alignmentTranslation = top.$ALIGNMENTS[  pdb ][ch][uniprot].mapping;
+          var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, ch_alignmentTranslation);
+          if(!(color in selection))selection[color]={};
+          pdbPosList.forEach(function(j){
+            selection[color][j]=true;
           });
-          self.Structures[ pdb ]['representations']['trace'].setSelection("protein "+model_flag+"and not ("+global_cartoon.join(" or ")+")");
+      });
+      for(var color in selection){
+        res = Object.keys(selection[color]);
+        if(res.length > 0){
+          if(!(color in global_selection))global_selection[color]=[]
+          global_selection[color].push( ":"+ch+" and ("+res.join(" or ")+")" );
+        }
+      }
+    }
 
+    var model_flag = '';
+    if(self.model>=0) model_flag = 'and /'+self.model.toString()+' ';
+
+    //self.Structures[ pdb ]['representations']['cartoon'].setSelection( "protein "+model_flag+"and ("+global_cartoon.join(" or ")+")" );
+    self.Structures[ pdb ]['representations']['cartoon'].setSelection( "none" );
+
+    var _cols = ["#CFFFCF","#CFCFFF"];
+    if(global_cartoon.length == 1) _cols = ["#B9B9B9"];
+    global_cartoon.forEach(function(sel,i){
+      self.Structures[ pdb ]['representations']['multiple_cartoon'].push(
+        self.Structures[ pdb ].obj.addRepresentation("cartoon",{visible:true,sele:"protein "+model_flag+" and ("+sel+")",color:_cols[i]})
+      );
+    });
+    self.Structures[ pdb ]['representations']['trace'].setSelection("protein "+model_flag+"and not ("+global_cartoon.join(" or ")+")");
 	  self.Structures[ pdb ]['representations']['selection']['cartoon'].setVisibility(false); 
 	  self.Structures[ pdb ]['representations']['selection']['ball+stick'].setVisibility(false);
 	  self.Structures[ pdb ]['representations']['selection']['spacefill'].setVisibility(false);
 
+    for(var color in global_selection){
+      if(global_selection[color].length >0){
+        var selection_string = "protein "+model_flag+"and (("+global_selection[color].join(") or (")+"))";
+        self.Structures[ pdb ]['representations']['multiple_selection'].push(
+          self.Structures[ pdb ].obj.addRepresentation("spacefill",{visible:true,sele:selection_string,color:color})
+        );
+      }
+    }
+  };
 
-          for(var color in global_selection){
-            if(global_selection[color].length >0){
-              var selection_string = "protein "+model_flag+"and (("+global_selection[color].join(") or (")+"))";
-	      self.Structures[ pdb ]['representations']['multiple_selection'].push(
-                self.Structures[ pdb ].obj.addRepresentation("spacefill",{visible:true,sele:selection_string,color:color})
-              );
-            }
-          }
-
-
-        };
-
-        self.remove_multiple_selection = function(){
-          for(var pdb in self.Structures){
-            if('representations' in self.Structures[ pdb ] && 'multiple_selection' in self.Structures[ pdb ]['representations']){
-              self.Structures[ pdb ]['representations']['multiple_selection'].forEach(function(i){
-                i.setVisibility(false);
-                i.removeRepresentation();
-              });
-              self.Structures[ pdb ]['representations']['multiple_selection']=[];
-            }
-            if('representations' in self.Structures[ pdb ] && 'multiple_cartoon' in self.Structures[ pdb ]['representations']){
-              self.Structures[ pdb ]['representations']['multiple_cartoon'].forEach(function(i){
-                i.setVisibility(false);
-                i.removeRepresentation();
-              });
-              self.Structures[ pdb ]['representations']['multiple_cartoon']=[];
-            }
-          }
-        };
+  self.remove_multiple_selection = function(){
+    for(var pdb in self.Structures){
+      if('representations' in self.Structures[ pdb ] && 'multiple_selection' in self.Structures[ pdb ]['representations']){
+        self.Structures[ pdb ]['representations']['multiple_selection'].forEach(function(i){
+          i.setVisibility(false);
+          i.removeRepresentation();
+        });
+        self.Structures[ pdb ]['representations']['multiple_selection']=[];
+      }
+      if('representations' in self.Structures[ pdb ] && 'multiple_cartoon' in self.Structures[ pdb ]['representations']){
+        self.Structures[ pdb ]['representations']['multiple_cartoon'].forEach(function(i){
+          i.setVisibility(false);
+          i.removeRepresentation();
+        });
+        self.Structures[ pdb ]['representations']['multiple_cartoon']=[];
+      }
+    }
+  };
 
 	self.resize = function( new_size ){
 	};
