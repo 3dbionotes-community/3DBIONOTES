@@ -7,18 +7,18 @@
       %table
         %tr
           %td
-            %h3
-              Query by entry ID
-              = text_field_tag(:queryId, nil, placeholder: 'Uniprot accession,PDB ID,EMDB code')
+            %p
+              Entry ID
+              = text_field_tag(:queryId, nil, maxlength: 15, size: 35, placeholder: 'Uniprot accession,PDB ID,EMDB code')
               = hidden_field_tag(:viewer_type,@viewerType)
               = button_tag("Query")
           %td
-          %td
-            %h4
-              You may also upload your own annotations
-              %a{target:'_blank', title:'Example file for PDB 4G3X' , href:'/4g3x_ann_full_example.json'}
-              = image_tag("help_icon.png", height: '12', width: '12')
-              = file_field_tag(:annotations_file, {style:"font-size:12px;"})
+          -# %td
+          -#   %h4
+          -#     You may also upload your own annotations
+          -#     %a{target:'_blank', title:'Example file for PDB 4G3X' , href:'/4g3x_ann_full_example.json'}
+          -#     = image_tag("help_icon.png", height: '12', width: '12')
+          -#     = file_field_tag(:annotations_file, {style:"font-size:12px;"})
 
   %hr.dashed
   #examples.w3-container
@@ -40,15 +40,12 @@
       %p Prefusion 2019-nCoV spike glycoprotein with a single receptor-binding domain up
       = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/6acg_deposited_chain_front_image-200x200.png', alt: '6ACG', height: '150', width: '', class: 'w3-button w3-bar-item w3-circle'), '/?queryId=6ACG&viewer_type=ngl&button=#query'
 
-
-
-
-
-
   %hr.solid
 
 .cv_prot_list
   %h3 SARS-CoV-2 virus proteome
+  .warning.w3-panel.w3-pale-yellow.w3-display-container.w3-leftbar.w3-rightbar.w3-border-amber
+    %p(style = "font-family: cursive, sans-serif") Please, note this web site is work in progress. Feel free to report any missing or inconsistent data or behaviour.
 
   .index_map
     %table.w3-table.w3-responsive
@@ -159,373 +156,712 @@
             %a{:href=>"#R1ab"} R1ab
   %hr.dashed
 
-
-    %table.w3-table.w3-bordered
-
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP1
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                  %tr
-                    %td
-                      =image_tag("https://swissmodel.expasy.org/interactive/YxJyvF/models/01.png", height:150)
-                      %h4 NSP1
-                      %h5 P0DTD1 - R1A_WCPV
-                      %p Host translation Inhibitor, nsp1
-                    %td
-                    %td
-                    %td
-                      %a{:href=>'https://swissmodel.expasy.org/interactive/YxJyvF/models/'} Available low quality models
-
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP2
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                  %tr
-                    %td
-                      = image_tag("sphere.gif")
-                      %h4 NSP2
-                      %p Non-structural protein 2
-                    %td
-                    %td
-                    %td
-                      %a{:href=>'https://swissmodel.expasy.org/interactive/UrUkRp/models'} Available low quality models
-            
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP3
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      =image_tag("https://swissmodel.expasy.org/interactive/5hYU6g/models/01.png", height:150)
-                      %h4 NSP3 / PL-PRO
-                      %p Papain-like proteinase
-                    %td
-                      %a{:href=>'/?queryId=6vxs&viewer_type=ngl&button=#query'}
-                        6vxs
-                        =image_tag("https://cdn.rcsb.org/images/rutgers/vx/6vxs/6vxs.pdb1-500.jpg", height:100)
-                      %a{:href=>'/?queryId=6w02&viewer_type=ngl&button=#query'}
-                        6w02
-                        =image_tag("https://cdn.rcsb.org/images/rutgers/w0/6w02/6w02.pdb1-500.jpg", height:100)
-                      
-                      %a{:href=>'/?queryId=6w6y&viewer_type=ngl&button=#query'}
-                        6w6y
-                        =image_tag("https://cdn.rcsb.org/images/rutgers/w6/6w6y/6w6y.pdb1-500.jpg", height:100)
-
-                      %a{:href=>'/?queryId=6w9c&viewer_type=ngl&button=#query'}
-                        6w9c
-                        =image_tag("https://cdn.rcsb.org/images/rutgers/w9/6w9c/6w9c.pdb1-500.jpg", height:100)
-
-                    %td
-                    %td
-
-
-              
-              
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP4 NSP4
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP5
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 3C-like proteinase
-                      %ul.w3-ul.w3-card-2
-                        %li
-                          3CL-PRO
-
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP6 NSP6
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP7 NSP7
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP8 NSP8
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP9 NSP9
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP10 NSP10
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP11 NSP11
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP12 RNA-directed RNA polymerase (Pol/RdRp)
-
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP13 NSP13
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP14 NSP14
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP15 NSP15
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NSP16 NSP16
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#S
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 S glycoprotein
-                      %ul.w3-ul.w3-card-2
-                        %li
-                          Spike glycoprotein
-                        %li 
-                          =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/03.png", height:150)
-                        %li
-                          %a{:href=>'https://covid-19.uniprot.org/uniprotkb/P0DTC2'}
-                          SPIKE_SARS2
-                        %li
-                          SPIKE_WCPV
-                        %li
-                          %a{:href=>'/?queryId=P0DTC2&viewer_type=ngl&button=#query'} P0DTC2
-                        
-                    %td
-                      %a{:href=>'/?queryId=6lvn&viewer_type=ngl&button=#query'}
-                        6lvn
-                        =image_tag("https://cdn.rcsb.org/images/rutgers/lv/6lvn/6lvn.pdb1-500.jpg", height:100)
-
-                      %a{:href=>'/?queryId=6vsb&viewer_type=ngl&button=#query'}
-                        6vsb
-                        =image_tag("https://cdn.rcsb.org/images/rutgers/vs/6vsb/6vsb.pdb1-500.jpg", height:100)
-
-                      %a{:href=>'/?queryId=6vxx&viewer_type=ngl&button=#query'}
-                        6vxx
-                        =image_tag("https://cdn.rcsb.org/images/rutgers/vx/6vxx/6vxx.pdb1-500.jpg", height:100)
-
-                      %a{:href=>'/?queryId=6vyb&viewer_type=ngl&button=#query'}
-                        6vyb
-                        =image_tag("https://cdn.rcsb.org/images/rutgers/vy/6vyb/6vyb.pdb1-500.jpg", height:100)
-
-                      %a{:href=>'/?queryId=6w41&viewer_type=ngl&button=#query'}
-                        6w41
-                        =image_tag("https://cdn.rcsb.org/images/rutgers/w4/6w41/6w41.pdb1-500.jpg", height:100)
-                    %td
-                    %td
-                    %td
-                    %td
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NS3a
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 NS3a
-
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#E
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 E
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#M
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 M
-
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NS6
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 NS6
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NS3a
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 NS3a
-
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NS7a
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 NS7a
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NS7b
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 NS7b
-
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NS8
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 NS8
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NS9b
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 NS9b
-
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#N
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 N
-      %tr
-        %td.w3-ul.w3-card-2.entry.w3-card-4.section#NS14
-          %table.w3-responsive
-            %tr
-              %td
-                %table.w3-responsive
-                  %tr
-                    %th Uniprot
-                    %th PDB
-                    %th EMDB
-                    %th Swiss-Model
-                    %th pdb-redo
-                    %th rebuilt-isolde
-                  %tr
-                    %td
-                      %h4 NS14
-
-      %tr
   %hr.solid
+  .cv_mid_content.w3-container
+    %h4 Known Proteins
+
+    %ul.prot_list.w3-ul.w3-tiny
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP1
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            = image_tag 'https://swissmodel.expasy.org/interactive/YxJyvF/models/01.png', alt: '', height: '150', width: '', class: 'w3-bar-item w3-circle'
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NSP1
+            %br
+            %h5 Host translation Inhibitor
+            %br
+            %p Description
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP2
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NSP2
+            %br
+            %h5 Non-structural protein 2
+            %br
+            %p Description
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP3
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            = image_tag 'https://swissmodel.expasy.org/interactive/YxJyvF/models/01.png', alt: '', height: '150', width: '', class: 'w3-bar-item w3-circle'
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray PL-Pro
+            %br
+            %h5 Papain-like proteinase
+            %br
+            %p Description
+
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            %h5 PDB
+            %ul.w3-ul
+              %li
+                %a{:href=>'/?queryId=6vxs&viewer_type=ngl&button=#query'}
+                  6vxs
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/vx/6vxs/6vxs.pdb1-500.jpg", height:100)
+              %li
+                %a{:href=>'/?queryId=6w02&viewer_type=ngl&button=#query'}
+                  6w02
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/w0/6w02/6w02.pdb1-500.jpg", height:100)
+              %li
+                %a{:href=>'/?queryId=6w6y&viewer_type=ngl&button=#query'}
+                  6w6y
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/w6/6w6y/6w6y.pdb1-500.jpg", height:100)
+              %li
+                %a{:href=>'/?queryId=6w9c&viewer_type=ngl&button=#query'}
+                  6w9c
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/w9/6w9c/6w9c.pdb1-500.jpg", height:100)
+
+
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            %h5 Swiss-Model
+            %ul.w3-ul
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/interactive/5hYU6g/models/13', target: '_blank'}
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/13.png', height: '50'
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/01', target: '_blank'}
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/01.png', height: '50'
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/02', target: '_blank'}
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/02.png', height: '50'
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/03', target: '_blank'}
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/03.png', height: '50'
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/10', target: '_blank'}
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/10.png', height: '50'
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/11', target: '_blank'}
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/11.png', height: '50'
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/12', target: '_blank'}
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/12.png', height: '50'
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/08', target: '_blank'}
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/08.png', height: '50'
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/04', target: '_blank'}
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/04.png', height: '50'
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/06', target: '_blank'}
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/06.png', height: '50'
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/07', target: '_blank'}
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/07.png', height: '50'
+              %li
+
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP4
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            = image_tag 'https://swissmodel.expasy.org/interactive/0cKKrV/models/01.png', alt: '', height: '150', width: '', class: 'w3-bar-item w3-circle'
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NSP4
+            %br
+            %h5 Non-structural protein 4
+            %br
+            %p Description
+
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            %h5 Swiss-Model
+            %ul.w3-ul
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/interactive/0cKKrV/models/01', target: '_blank'}
+                  =image_tag("https://swissmodel.expasy.org/interactive/0cKKrV/models/01.png", height:50)
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP5
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray 3CL
+            %br
+            %h5 3C-like proteinase
+            %br
+            %p Description
+
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            %h5 PDB
+            %ul.w3-ul
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5r7y', target: '_blank'}5r7y
+                = image_tag 'https://cdn.rcsb.org/images/rutgers/r7/5r7y/5r7y.pdb1-500.jpg', height: '75'
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5r7z', target: '_blank'}5r7z
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5r80', target: '_blank'}5r80
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5r81', target: '_blank'}5r81
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5r82', target: '_blank'}5r82
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5r83', target: '_blank'}5r83
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5r84', target: '_blank'}5r84
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5r8t', target: '_blank'}5r8t
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5re4', target: '_blank'}5re4
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5re5', target: '_blank'}5re5
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5re6', target: '_blank'}5re6
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5re7', target: '_blank'}5re7
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5re8', target: '_blank'}5re8
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5re9', target: '_blank'}5re9
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rea', target: '_blank'}5rea
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5reb', target: '_blank'}5reb
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rec', target: '_blank'}5rec
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5red', target: '_blank'}5red
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5ree', target: '_blank'}5ree
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5ref', target: '_blank'}5ref
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5reg', target: '_blank'}5reg
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5reh', target: '_blank'}5reh
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rei', target: '_blank'}5rei
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rej', target: '_blank'}5rej
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rek', target: '_blank'}5rek
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rel', target: '_blank'}5rel
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rem', target: '_blank'}5rem
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5ren', target: '_blank'}5ren
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5reo', target: '_blank'}5reo
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rep', target: '_blank'}5rep
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rer', target: '_blank'}5rer
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5res', target: '_blank'}5res
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5ret', target: '_blank'}5ret
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5reu', target: '_blank'}5reu
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rev', target: '_blank'}5rev
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rew', target: '_blank'}5rew
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rex', target: '_blank'}5rex
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rey', target: '_blank'}5rey
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rez', target: '_blank'}5rez
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rf0', target: '_blank'}5rf0
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rf1', target: '_blank'}5rf1
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rf2', target: '_blank'}5rf2
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rf3', target: '_blank'}5rf3
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rf4', target: '_blank'}5rf4
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rf5', target: '_blank'}5rf5
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rf6', target: '_blank'}5rf6
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rf7', target: '_blank'}5rf7
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rf8', target: '_blank'}5rf8
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rf9', target: '_blank'}5rf9
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfa', target: '_blank'}5rfa
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfb', target: '_blank'}5rfb
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfc', target: '_blank'}5rfc
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfd', target: '_blank'}5rfd
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfe', target: '_blank'}5rfe
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rff', target: '_blank'}5rff
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfg', target: '_blank'}5rfg
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfh', target: '_blank'}5rfh
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfi', target: '_blank'}5rfi
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfj', target: '_blank'}5rfj
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfk', target: '_blank'}5rfk
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfl', target: '_blank'}5rfl
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfm', target: '_blank'}5rfm
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfn', target: '_blank'}5rfn
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfo', target: '_blank'}5rfo
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfp', target: '_blank'}5rfp
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfq', target: '_blank'}5rfq
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfr', target: '_blank'}5rfr
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfs', target: '_blank'}5rfs
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rft', target: '_blank'}5rft
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfu', target: '_blank'}5rfu
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfv', target: '_blank'}5rfv
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfw', target: '_blank'}5rfw
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfx', target: '_blank'}5rfx
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfy', target: '_blank'}5rfy
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rfz', target: '_blank'}5rfz
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/5rg0', target: '_blank'}5rg0
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/6lu7', target: '_blank'}6lu7
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/6m03', target: '_blank'}6m03
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/6w63', target: '_blank'}6w63
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/6y2e', target: '_blank'}6y2e
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/6y2f', target: '_blank'}6y2f
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/6y2g', target: '_blank'}6y2g
+              %li
+                %a{:href=>'https://www.rcsb.org/structure/6y84', target: '_blank'}6y84
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP6
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NSP6
+            %br
+            %h5 Non-structural protein 6
+            %br
+            %p Description
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP7
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NSP7
+            %br
+            %h5 Non-structural protein 7
+            %br
+            %p Description
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP8
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NSP8
+            %br
+            %h5 Non-structural protein 8
+            %br
+            %p Description
+            
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP9
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NSP9
+            %br
+            %h5 Non-structural protein 9
+            %br
+            %p Description
+            
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP10
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NSP10
+            %br
+            %h5 Non-structural protein 10
+            %br
+            %p Description
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP11
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NSP11
+            %br
+            %h5 Non-structural protein 11
+            %br
+            %p Uncharacterized small protein
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP12
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray Pol/RdRp
+            %br
+            %h5 RNA-directed RNA polymerase
+            %br
+            %p RNA transcription and replication
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP13
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray Hel
+            %br
+            %h5 Helicase
+            %br
+            %p RNA transcription and replication
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP14
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray ExoN
+            %br
+            %h5 Guanine-N7 methyltransferase
+            %br
+            %p Non-structural protein 14
+ 
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP15
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NendoU
+            %br
+            %h5 Uridylate-specific endoribonuclease
+            %br
+            %p Non-structural protein 15
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NSP16
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NSP16
+            %br
+            %h5 Methyltransferase
+            %br
+            %p Description
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#S
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-large
+            %a{:href=>'/?queryId=P0DTC2&viewer_type=ngl&button=#query'}
+              = image_tag 'https://swissmodel.expasy.org/interactive/YxJyvF/models/01.png', alt: '', height: '150', width: '', class: 'w3-bar-item w3-circle'
+              P0DTC2
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray S
+            %br
+            %h5 S Glycoprotein
+            %br
+            %p Spike glycoprotein          
+            %ul.w3-ul
+              %li
+                %a{:href=>'https://www.ncbi.nlm.nih.gov/protein/YP_009724390.1', target: '_blank'}
+                YP_009724390.1
+              %li
+                %a{:href=>'https://covid-19.uniprot.org/uniprotkb/P0DTC2', target: '_blank'}
+                  SPIKE_SARS2
+              %li
+                %a{:href=>'https://covid-19.uniprot.org/uniprotkb/P0DTC2', target: '_blank'}
+                  SPIKE_WCPV
+
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            %h5 PDB
+            %ul.w3-ul
+              %li
+                %a{:href=>'/?queryId=6vsb&viewer_type=ngl&button=#query'}
+                  6vsb
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/vs/6vsb/6vsb.pdb1-500.jpg", height:100)
+              %li
+                %a{:href=>'/?queryId=6lzg&viewer_type=ngl&button=#query'}
+                  6lzg
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/lz/6lzg/6lzg.pdb1-500.jpg", height:100)
+              %li
+                %a{:href=>'/?queryId=6vyb&viewer_type=ngl&button=#query'}
+                  6vyb
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/vy/6vyb/6vyb.pdb1-500.jpg", height:100)
+              %li
+                %a{:href=>'/?queryId=6vw1&viewer_type=ngl&button=#query'}
+                  6vw1
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/vw/6vw1/6vw1.pdb1-500.jpg", height:100)
+              %li
+                %a{:href=>'/?queryId=6m17&viewer_type=ngl&button=#query'}
+                  6m17
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/m1/6m17/6m17.pdb1-500.jpg", height:100)
+              %li
+                %a{:href=>'/?queryId=6vsj&viewer_type=ngl&button=#query'}
+                  6vsj
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/vs/6vsj/6vsj.pdb1-500.jpg", height:100)
+              %li
+                %a{:href=>'/?queryId=6lvn&viewer_type=ngl&button=#query'}
+                  6lvn
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/lv/6lvn/6lvn.pdb1-500.jpg", height:100)
+              %li
+                %a{:href=>'/?queryId=6vxx&viewer_type=ngl&button=#query'}
+                  6vxx
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/vx/6vxx/6vxx.pdb1-500.jpg", height:100)
+              %li
+                %a{:href=>'/?queryId=6lxt&viewer_type=ngl&button=#query'}
+                  6lxt
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/lx/6lxt/6lxt.pdb1-500.jpg", height:100)
+              %li
+                %a{:href=>'/?queryId=6m0j&viewer_type=ngl&button=#query'}
+                  6m0j
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/m0/6m0j/6m0j.pdb1-500.jpg", height:100)
+
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            %h5 EMDB
+            %ul.w3-ul
+              %li
+                %a{:href=>'/?queryId=EMD-21375&viewer_type=ngl&button=#query'}
+                  EMD-21375
+                  =image_tag("https://www.ebi.ac.uk/pdbe/static/entry/EMD-21375/400_21375.gif", height:100)
+              %li
+                %a{:href=>'/?queryId=EMD-21457&viewer_type=ngl&button=#query'}
+                  EMD-21457
+                  =image_tag("https://www.ebi.ac.uk/pdbe/static/entry/EMD-21457/400_21457.gif", height:100)
+              %li
+                %a{:href=>'/?queryId=EMD-30039&viewer_type=ngl&button=#query'}
+                  EMD-30039
+                  =image_tag("https://www.ebi.ac.uk/pdbe/static/entry/EMD-30039/400_30039.gif", height:100)
+              %li
+                %a{:href=>'/?queryId=EMD-21377&viewer_type=ngl&button=#query'}
+                  EMD-21377
+                  =image_tag("https://www.ebi.ac.uk/pdbe/static/entry/EMD-21377/400_21377.gif", height:100)
+              %li
+                %a{:href=>'/?queryId=EMD-21452&viewer_type=ngl&button=#query'}
+                  EMD-21452
+                  =image_tag("https://www.ebi.ac.uk/pdbe/static/entry/EMD-21452/400_21452.gif", height:100)
+            
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            %h5 pdb-redo
+            %ul.w3-ul
+              %li
+                %a{:href=>'https://pdb-redo.eu/db/6lzg', target: '_blank'}
+                  6lzg
+              %li
+                %a{:href=>'https://pdb-redo.eu/db/6w41', target: '_blank'}
+                  6w41
+              %li
+                %a{:href=>'https://pdb-redo.eu/db/6vw1', target: '_blank'}
+                  6vw1
+              %li
+                %a{:href=>'https://pdb-redo.eu/db/6lvn', target: '_blank'}
+                  6lvn
+              %li
+                %a{:href=>'https://pdb-redo.eu/db/6lxt', target: '_blank'}
+                  6lxt
+              %li
+                %a{:href=>'https://pdb-redo.eu/db/6m0j', target: '_blank'}
+                  6m0j
+
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            %h5 Isolde
+            %ul.w3-ul
+              %li
+                6w41
+              %li
+                6vw1
+              %li
+                6lvn
+              %li
+                6lxt
+              %li
+                6m0j
+
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            %h5 Swiss-Model
+            %ul.w3-ul
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/01', target: '_blank'}
+                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/01.png", height:50)
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/02', target: '_blank'}
+                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/02.png", height:50)
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/03', target: '_blank'}
+                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/03.png", height:50)
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/04', target: '_blank'}
+                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/04.png", height:50)
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/05', target: '_blank'}
+                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/05.png", height:50)
+
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            %h5 SARS-CoV
+
+
+
+
+
+
+
+
+
+
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NS3a
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray 3A
+            %br
+            %h5 3a Protein
+            %br
+            %p Accessory protein 3a
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#E
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray E
+            %br
+            %h5 Envelope small membrane protein
+            %br
+            %p ESCRT-independent budding
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#M
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray M
+            %br
+            %h5 Membrane protein
+            %br
+            %p Virion morphegenesis
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NS6
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NS6
+            %br
+            %h5 Non-structural protein 6
+            %br
+            %p Non-structural protein 6
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NS7a
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NS7a
+            %br
+            %h5 Protein 7a
+            %br
+            %p Accessory protein 7a
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NS7b
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NS7b
+            %br
+            %h5 Protein 7b
+            %br
+            %p Non-structural protein 7b
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NS8
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NS8
+            %br
+            %h5 Protein 8
+            %br
+            %p Non-structural protein 8
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NS9b
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NS9b
+            %br
+            %h5 Protein 9b 
+            %br
+            %p Non-structural 9b, Accessory protein. Viral genome packaging
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#N
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray N
+            %br
+            %h5 Nucleoprotein
+            %br
+            %p Nucleocapsid protein
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NS14
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NS14
+            %br
+            %h5 Uncharacterized protein 14
+            %br
+            %p Description
+
+
+      %li.prot_list_item
+        .prot_card.w3-cell-row.w3-card.section#NS10
+          .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
+            &#9991
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            #abrev.topic.w3-tag.w3-round.w3-gray NS10
+            %br
+            %h5 ORF10 protein
+            %br
+            %p Hypothetical ORF10 protein
+
+
+
+
+
+
+
 
 
 

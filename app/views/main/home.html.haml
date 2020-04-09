@@ -39,7 +39,7 @@
     =image_tag("3dbionotes_ws_logo_no_partners.png",height:'50')
     %ul#topnav
       %li
-        %a.nostyle.menu{:onclick=>'window.location.href="/ws/home"',:style=>"cursor:pointer;font-weight:bold;"}HOME
+        %a.nostyle.menu{:onclick=>'window.location.href="https://3dbionotes.cnb.csic.es/ws/home"',:style=>"cursor:pointer;font-weight:bold;"}HOME
       -#%li
       -#  %a.nostyle.menu{:onclick=>'window.location.href="/ws/submit"',:style=>"cursor:pointer;font-weight:bold;"}SUBMIT
       -#%li
@@ -49,7 +49,7 @@
       -#%li
       -#  %a.nostyle.menu{:onclick=>'window.location.href="/ws/help"',:style=>"cursor:pointer;font-weight:bold;"}HELP
     #partners
-      =image_tag("partners.png",id:'partners_logo')
+      =image_tag("partners.png",id:'partners_logo',height: '70')
   #topFrame
     #molTitle
       #{@moleculeTitle}
