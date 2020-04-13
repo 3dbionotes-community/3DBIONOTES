@@ -62,16 +62,17 @@ a{
   height:75px; 
   text-align:center; 
   vertical-align:middle;
-  background-color:#405d27;
+  background-color:#074987;
   font-family:Verdana, Arial, Helvetica, sans-serif;
-  font-size:24px;
+  font-size:18px;
   font-weight:bold;
   color:white;
   border: 10px solid white;
 }
 
-#option_disabled {
+#option_covid {
   color: #808080;
+  background-color:#405d27;
 }
 
 .options table tr td a{
