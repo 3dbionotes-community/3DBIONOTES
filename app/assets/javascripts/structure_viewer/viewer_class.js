@@ -154,11 +154,12 @@ class viewer_class {
     self.Structures[ pdb ]['representations']['selection']['spacefill'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+selection.join(" or ")+")" );
     self.Structures[ pdb ]['representations']['selection']['ball+stick'].setSelection( "" );
 
-    self.Structures[ pdb ]['representations']['selection']['spacefill'].setColor(color);
+    // Set the color for
+    self.Structures[ pdb ]['representations']['selection']['cartoon'].setColor(schemeId);
 
-    self.Structures[ pdb ]['representations']['selection']['cartoon'].setVisibility(false);
+    self.Structures[ pdb ]['representations']['selection']['cartoon'].setVisibility(true);
     self.Structures[ pdb ]['representations']['selection']['ball+stick'].setVisibility(false);
-    self.Structures[ pdb ]['representations']['selection']['spacefill'].setVisibility(true);
+    self.Structures[ pdb ]['representations']['selection']['spacefill'].setVisibility(false);
   }
 
   global_highlight(pdb, list){
