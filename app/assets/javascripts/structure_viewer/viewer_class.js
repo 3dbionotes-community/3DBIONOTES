@@ -120,12 +120,12 @@ class viewer_class {
 
       // Add the color element if missing
       if (schemeData[color] === undefined) {
-        schemeData[color] = "";
+        schemeData[color] = [color, ""];
       } else {
-        schemeData[color] = schemeData[color] + " or "
+        schemeData[color][1] = schemeData[color][1] + " or "
       }
 
-      schemeData[color] = schemeData[color] + i.begin + "-" + i.end;
+      schemeData[color][1] = schemeData[color][1] + i.begin + "-" + i.end;
 
       var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, top.alignmentTranslation);
       pdbPosList.forEach(function(j){
@@ -134,8 +134,9 @@ class viewer_class {
     });
 
     let schemeParam = [];
+    var colorItem ;
     for (colorItem in schemeData) {
-      schemeParam.push([colorItem, schemeData[colorItem]])
+      schemeParam.push(schemeData[colorItem]);
     };
 
     var schemeId = NGL.ColormakerRegistry.addSelectionScheme(schemeParam, "Custom scheme");
