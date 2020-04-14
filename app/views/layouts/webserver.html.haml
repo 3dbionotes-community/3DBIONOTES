@@ -5,26 +5,27 @@
     = javascript_include_tag('webserver/webserver_init')
   %body
     .logo
-      = image_tag("3dbionotes_ws_logo.png")
+      =image_tag("3dbionotes_ws_logo.png")
     .who
-      %a{:href=>"http://biocomputingunit.es", :target=>"_blank"} Biocomputing Unit
       @
-      %a{:href=>"http://www.cnb.csic.es/index.php/en", :target=>"_blank"} CNB
-      \- 
-      %a{:href=>"http://www.csic.es/en", :target=>"_blank"} CSIC
+      %a{:href=>"http://biocomputingunit.es", :target=>"_blank"} Biocomputing Unit
+      \-
+      %a{:href=>"http://www.inab.org", :target=>"_blank"} INB
+      \-
+      %a{:href=>"https://www.elixir-europe.org", :target=>"_blank"} ELIXIR
     .options
       %table
         %tr
           %td 
             %a{:href=>"/ws/home"} HOME
-          %td#option_covid
-            %a{:href=>"http://campins.cnb.csic.es:8080/ws/database"} CoVid-19
           %td 
             %a{:href=>"/ws/submit"} SUBMIT
           %td 
             %a{:href=>"/ws/network"} NETWORK
           %td 
             %a{:href=>"/ws/database"} QUERY 
+          %td 
+            %a{:href=>"/ws/covid19"} COVID-19 outbreak 
           %td 
             %a{:href=>"/ws/api"} API
           %td 

@@ -1,9 +1,10 @@
 = stylesheet_link_tag('webserver/home_style.css')
 .ws_main_div
   %h2 3DBIONOTES-WS is having some problems
-  %h3 AN INTERNAL SERVER ERROR OCCURRED
-  %h4 PLEASE TRY AGAIN LATER
-  %a{href:"https://3dbionotes.cnb.csic.es"} BACK
+  %h3 AN INTERNAL SERVER ERROR (or something) OCCURRED
+  %h4 PLEASE TRY AGAIN
+  %h5 and feel free to contact us if the error persists
+  %a{href:"https://3dbionotes.cnb.csic.es"} OK (and go back)
   %div{:style=>"display:none;"}
     #{@error_message}
 :javascript

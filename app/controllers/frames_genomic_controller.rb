@@ -64,7 +64,7 @@ class FramesGenomicController < ApplicationController
         @annotations = annotations
       else
         @alignment = nil
-        @message = "ALIGNMENT BETWEEN UNIPROT AND ENSEMBL NOT FOUND"
+        @message = "ALIGNMENT BETWEEN UNIPROT AND ENSEMBL NOT FOUND..."
       end
     end
 
