@@ -19,8 +19,8 @@ $ gem install bundler:1.17.3
 $ bundle install
 $ cp config/database.example.yml config/database.yml
 $ cp config/secrets.example.yml config/secrets.yml
-$ bundle exec bin/rake db:migrate RAILS_ENV=development
-$ bundle exec bin/rails server
+$ bundle exec rake db:migrate RAILS_ENV=development
+$ bundle exec rails server
 ```
 
 Copyright (c) 2018-19, [Biocomputing Unit](http://biocomputingunit.es), CNB-CSIC
