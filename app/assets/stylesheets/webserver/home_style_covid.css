@@ -1,0 +1,21 @@
+.home_text{
+  width:40%;
+  position:absolute;
+  left:0px;
+  top:75px;
+  font-size:16px;
+  line-height:2;
+  text-align:justify;
+}
+
+.home_image{
+  width:50%;
+  position:absolute;
+  right:0px;
+  top:0px;
+}
+
+.home_image img{
+  width:100%;
+}
+

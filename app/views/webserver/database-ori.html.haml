@@ -1,0 +1,47 @@
+.ws_main_div
+  .database_form
+    = form_tag({controller: "main", action: "home",anchor: "query"}, :method => :post, :multipart => true, id: "query_form",:style=>"margin-top:20px;") do 
+      %h3
+        Search by
+        %a{:href=>"javascript:window.open('http://www.emdatabank.org/')", :title=>"E.g. EMD-2810"} EMDB
+        code,
+        %a{:href=>"javascript:window.open('http://www.rcsb.org/')", :title=>"E.g. 101M"} PDB
+        ID or
+        %a{:href=>"javascript:window.open('http://www.uniprot.org/')", :title=>"E.g. P01112"} Uniprot
+        accession
+      =text_field_tag(:queryId)
+      = hidden_field_tag(:viewer_type,@viewerType)
+      %div{style:"font-size:14px;font-weight:bold;margin-bottom:5px;margin-top:10px;"}
+        UPLOAD YOUR ANNOTATIONS
+        %a{target:'_blank', title:'Example file for PDB 4G3X' , href:'/4g3x_ann_full_example.json'}
+          =image_tag("help_icon.png", height: '12', width: '12')
+      = file_field_tag(:annotations_file, {style:"font-size:12px;"})
+      %br
+      %br
+      = button_tag("Submit")
+      %br
+      %br
+      %h4 A few examples related to COVID-19 outbreak:
+      %a{:href=>'https://3dbionotes.cnb.csic.es/?queryId=EMD-7573&viewer_type=ngl&button=#query'}  SARS Spike Glycoprotein, Stabilized variant, C3 symmetry (EMD-7573)
+      %br
+      %a{:href=>'https://3dbionotes.cnb.csic.es/?queryId=EMD-8069&viewer_type=ngl&button=#query'}  Prefusion structure of a human coronavirus spike protein (EMD-8069)
+      %br
+      %a{:href=>'https://3dbionotes.cnb.csic.es/?queryId=6VSB&viewer_type=ngl&button=#query'}  Prefusion 2019-nCoV spike glycoprotein with a single receptor-binding domain up (6VSB)
+      %br
+      %a{:href=>'https://3dbionotes.cnb.csic.es/?queryId=6ACG&viewer_type=ngl&button=#query'}  Trypsin-cleaved and low pH-treated SARS-CoV spike glycoprotein and ACE2 complex, ACE2-bound conformation 1 (6ACG)
+      %br
+      %br
+      %a{:href=>'https://3dbionotes.cnb.csic.es/?queryId=EMD-20202&viewer_type=ngl&button=#query'} Example (EMD-20202)
+      %br
+      %a{:href=>'javascript:window.location.href=\'/?queryId=P01116&viewer_type=ngl&button=#query\''} Example (KRAS)
+      %br
+      %a{:href=>'javascript:window.location.href=\'/?queryId=emd-8978&viewer_type=ngl&button=#query\''} Example (Human Gs/CGRP receptor)
+  .wait_div{:style=>'display:none'}
+    %span.wait_text PLEASE BE PATIENT
+    %br
+    %br
+    =image_tag("loading.gif",size:"300x300")
+    %br
+    %br
+    %span.wait_text THIS PROCESS MAY TAKE A FEW MINUTES
+

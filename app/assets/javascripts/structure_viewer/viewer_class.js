@@ -111,13 +111,35 @@ class viewer_class {
     self.remove_multiple_selection();
     var selection = {};
     var color;
-    list.forEach(function(i){
-        color = i.color;
-        var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, top.alignmentTranslation);
-        pdbPosList.forEach(function(j){
-          selection[j]=true;
-        });
+
+    // Add a color scheme: http://nglviewer.org/ngl/api/manual/usage/coloring.html#selection-based-coloring
+    let schemeData = {};
+
+    list.forEach(function(i) {
+      color = i.color;
+
+      // Add the color element if missing
+      if (schemeData[color] === undefined) {
+        schemeData[color] = "";
+      } else {
+        schemeData[color] = schemeData[color] + " or "
+      }
+
+      schemeData[color] = schemeData[color] + i.begin + "-" + i.end;
+
+      var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, top.alignmentTranslation);
+      pdbPosList.forEach(function(j){
+        selection[j]=true;
+      });
     });
+
+    let schemeParam = [];
+    for (colorItem in schemeData) {
+      schemeParam.push([colorItem, schemeData[colorItem]])
+    };
+
+    var schemeId = NGL.ColormakerRegistry.addSelectionScheme(schemeParam, "Custom scheme");
+
     selection = Object.keys(selection);
     self.selected.residues = selection;
     if(selection.length == 0) return;

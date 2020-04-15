@@ -1,33 +1,55 @@
 %html(lang="en")
   %head
     = stylesheet_link_tag('webserver/webserver_style.css')
+    = stylesheet_link_tag('webserver/w3.css')
     = javascript_include_tag('webserver/webserver_lib')
     = javascript_include_tag('webserver/webserver_init')
   %body
     .logo
-      = image_tag("3dbionotes_ws_logo.png")
+      %table
+        %tr
+          %td
+            = image_tag '3DBionotesWS_CoVid_logo.png', alt: '3DBionotes-logo', height: '270'
+          %td
+            %table
+              %tr
+                %td
+                  = image_tag 'http://www.cnb.csic.es/images/Julia2015/Logos/logos_2019/80_Ministerio_de_Ciencia_e_Innovacion.jpg', alt: 'Ministerio_Ciencia-logo', height: '50'
+                %td
+                  = image_tag 'http://www.cnb.csic.es/images/Julia2015/Logos/logos_2019/100_CSIC.jpg', alt: 'CSIC-logo', height: '50'
+                %td
+                  = image_tag 'CNB_logo.jpg', alt: 'CNB-logo', height: '50'
+              %tr
+                %td
+                  = image_tag 'estevirusloparamosunidos.png', alt: 'CoVid_Campain-logo', height: '50'
+                %td
+                  = image_tag 'https://instruct-eric.eu/templates/instructeric/images/logos/instruct-eric-logo-noline.png', alt: 'Intruct-logo', height: '50'
+                %td
+                  = image_tag 'https://inb-elixir.es/sites/default/files/inbelixir.png', alt: 'INB_Elixir_Spain-logo', height: '50'
+
     .who
       %a{:href=>"http://biocomputingunit.es", :target=>"_blank"} Biocomputing Unit
       @
       %a{:href=>"http://www.cnb.csic.es/index.php/en", :target=>"_blank"} CNB
       \- 
-      %a{:href=>"http://www.csic.es/en", :target=>"_blank"} CSIC
+      %a{:href=>"http://www.csic.es/", :target=>"_blank"} CSIC
+      %br
     .options
       %table
         %tr
           %td 
             %a{:href=>"/ws/home"} HOME
           %td#option_covid
-            %a{:href=>"http://campins.cnb.csic.es:8080/ws/database"} CoVid-19
+            %a{:href=>"/ws/database"} CoVid-19
           %td 
             %a{:href=>"/ws/submit"} SUBMIT
           %td 
             %a{:href=>"/ws/network"} NETWORK
           %td 
             %a{:href=>"/ws/database"} QUERY 
-          %td 
+          %td
             %a{:href=>"/ws/api"} API
-          %td 
+          %td
             %a{:href=>"/ws/help"} HELP
           %td 
             %a{:href=>"http://biocomputingunit.es", :target=>"_blank"} ABOUT US

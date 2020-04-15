@@ -1,0 +1,48 @@
+[
+  { 
+    "track_name":"continuous_track_1", 
+    "visualization_type":"continuous",
+    "chain":"A",
+    "data":[
+      {"begin":10,"value":0.567099895929477},
+      {"begin":11,"value":2.20246376282134},
+      {"begin":12,"value":0.214324032613771},
+      {"begin":13,"value":4.46020393560932},
+      {"begin":14,"value":1.61429623438872},
+      {"begin":15,"value":3.68651815100741},
+      {"begin":16,"value":0.928219087174238},
+      {"begin":17,"value":2.02385708943023}
+    ]
+  },{ 
+        "track_name":"track_name_1", 
+        "acc":"P01112",
+        "data":[
+          {"begin":5,"end":25,"type":"type_name_11","color":"red","description":"My description text"},
+          {"begin":27,"end":40,"type":"type_name_12","color":"blue","description":"My description text"}
+        ] 
+    },{ 
+        "track_name":"track_name_2", 
+        "chain":"B",
+        "data":[
+          {"begin":60,"end":65,"type":"type_name_21","color":"orange","description":"My description text"}
+        ] 
+    },{ 
+        "track_name":"track_name_3", 
+        "acc":"P04049",
+        "data":[
+          {"begin":255,"end":265,"type":"type_name_31","color":"green","description":"My description text"}
+        ] 
+    },{
+        "track_name":"track_variants", 
+        "acc":"P01112",
+        "visualization_type":"variants",
+        "data":[
+          {"begin":33,"variation":"I","wildtype":"D","disease":"my disease"},
+          {"begin":34,"variation":"I","wildtype":"P","disease":"my disease"},
+          {"begin":35,"variation":"A","wildtype":"T","disease":"my disease"},
+          {"begin":35,"variation":"K","wildtype":"T","disease":"my disease"},
+          {"begin":38,"variation":"N","wildtype":"D","disease":"my disease"}
+        ]
+    }
+]
+

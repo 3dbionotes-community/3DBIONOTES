@@ -16,6 +16,8 @@ a{
     display: block;
     margin-left: auto;
     margin-right: auto;
+    padding: 10px;
+    float: left;
 }
 
 .who{
@@ -26,6 +28,7 @@ a{
   font-size:32px;
   font-weight:bold;
   margin-top:25px;
+  color: #498a4a;
 }
 
 .who a{
