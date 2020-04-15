@@ -1,0 +1,36 @@
+rake db:reset
+
+cd ~/databases/UNIPROT_MAPPING
+bash wget_data.sh
+rake uniprotmappingentries:seed_uniprotmapping
+
+cd ~/databases/DBPTM/
+bash wget_data.sh
+rake dbptmentries:seed_dbptm
+
+cd ~/databases/INTERPRO/
+rake interproentries:seed_interpro
+
+cd ~/databases/PHOSPHOSITE/
+bash wget_data.sh
+rake phosphoentries:seed_phospho
+
+cd ~/databases/BIOMUTA/
+bash wget_data.sh
+rake biomutaentries:seed_biomuta
+
+cd ~/databases/INTERACTOME3D/
+perl get_dat_files.pl
+rake interactome3d:seed_interactome3d
+
+cd ~/databases/SWISSVAR/
+bash wget_data.sh
+rake swissvarentries:seed_swissvar
+
+cp /services/bionotes/apps/bionotes/db/mysql/*tsv /var/lib/mysql-files/
+
+cd ~/databases/IEDB/
+bash wget_data.sh
+#DROP SCHEMA IEDB;
+#CREATE SCHEMA IEDB;
+mysql -u root -p IEDB < iedb_public.sql

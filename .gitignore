@@ -25,7 +25,9 @@
 /data
 /old_files
 /bin
-/db
+
+/db/dump
+/db/mysql
 
 /app/assets/javascripts/interface_viewer/package-lock.json
 /app/assets/javascripts/old_js
