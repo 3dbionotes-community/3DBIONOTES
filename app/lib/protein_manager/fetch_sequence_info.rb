@@ -8,9 +8,12 @@ module ProteinManager
 
     def fetchUniprotSequence(uniprotAc)
       begin
-        data = `/external/ncbi-blast/bin/blastdbcmd -entry #{uniprotAc} -db /external/db-blast/sprot/sprot`
+        data = `/external/ncbi-blast/bin/blastdbcmd -entry #{uniprotAc} -db /external/db-blast/covidBlastDv/covidBlastDv`        
         if data.length == 0
-          data = `/external/ncbi-blast/bin/blastdbcmd -entry #{uniprotAc} -db /external/db-blast/trembl/trembl`
+          data = `/external/ncbi-blast/bin/blastdbcmd -entry #{uniprotAc} -db /external/db-blast/sprot/sprot`
+          if data.length == 0
+            data = `/external/ncbi-blast/bin/blastdbcmd -entry #{uniprotAc} -db /external/db-blast/trembl/trembl`
+          end
         end
         if data.length == 0
           url = Settings.GS_UniServer+"uniprot/"+uniprotAc+".fasta"
