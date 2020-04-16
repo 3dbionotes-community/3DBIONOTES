@@ -24,22 +24,24 @@
   #examples.w3-container
     %h3 Selected entries
 
-    .example.w3-card.w3-hover-shadow.w3-light-grey.w3-third.w3-center
-      %h4 EMD-7573
-      %p SARS Spike Glycoprotein, Stabilized variant, C3 symmetry
+    .example.w3-card.w3-hover-shadow.w3-light-grey.w3-quarter.w3-center
+      = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/EMD-30039/400_30039.gif', alt: 'EMD-30039', height: '150', width: '', class: 'w3-button w3-bar-item w3-circle'), '/?queryId=EMD-30039&viewer_type=ngl&button=#query'
+      %h5 EMD-30039
+      %p.w3-padding-small SARS-CoV-2 Spike Glycoprotein
+    .example.w3-card.w3-hover-shadow.w3-light-grey.w3-quarter.w3-center
+      = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/6m17_deposited_chain_front_image-200x200.png', alt: '6M17', height: '150', width: '', class: 'w3-button w3-bar-item w3-circle'), '/?queryId=6M17&viewer_type=ngl&button=#query'
+      %h5 6M17
+      %p.w3-padding-small The 2019-nCoV RBD/ACE2-B0AT1 complex
+    .example.w3-card.w3-hover-shadow.w3-light-grey.w3-quarter.w3-center
+      = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/6lzg_deposited_chain_front_image-200x200.png', alt: '6ACG', height: '150', width: '', class: 'w3-button w3-bar-item w3-circle'), '/?queryId=6LZG&viewer_type=ngl&button=#query'
+      %h4 6LZG
+      %p.w3-padding-small Structure of novel coronavirus spike receptor-binding domain complexed with its receptor ACE2
+    .example.w3-card.w3-hover-shadow.w3-light-grey.w3-quarter.w3-center
       = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/EMD-7573/400_7573.gif', alt: 'EMD-7573', height: '150', width: '', class: 'w3-button w3-bar-item w3-circle'), '/?queryId=EMD-7573&viewer_type=ngl&button=#query'
-
-    .example.w3-card.w3-hover-shadow.w3-light-grey.w3-third.w3-center
-      %h4 EMD-8069
-      %p Prefusion structure of a human coronavirus spike protein
-      = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/EMD-8069/400_8069.gif', alt: 'EMD-8069', height: '150', width: '', class: 'w3-button w3-bar-item w3-circle'), '/?queryId=EMD-8069&viewer_type=ngl&button=#query'
-
-
-    .example.w3-card.w3-hover-shadow.w3-light-grey.w3-third.w3-center
-      %h4 6ACG
-      %p Prefusion 2019-nCoV spike glycoprotein with a single receptor-binding domain up
-      = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/6acg_deposited_chain_front_image-200x200.png', alt: '6ACG', height: '150', width: '', class: 'w3-button w3-bar-item w3-circle'), '/?queryId=6ACG&viewer_type=ngl&button=#query'
-
+      %h4 EMD-7573
+      %p.w3-padding-small SARS Spike Glycoprotein, Stabilized variant, C3 symmetry
+      
+  
   %hr.solid
 
 .cv_prot_list
@@ -188,7 +190,7 @@
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             = image_tag 'https://swissmodel.expasy.org/interactive/YxJyvF/models/01.png', alt: '', height: '150', width: '', class: 'w3-bar-item w3-circle'
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray PL-Pro
+            #abrev.topic.w3-tag.w3-round.w3-blue-gray PL-Pro
             %br
             %h5 Papain-like proteinase
             %br
@@ -216,41 +218,41 @@
 
 
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            %h5 Swiss-Model
+            %h5 Computational models (Swiss-Model)
             %ul.w3-ul
               %li
                 %a{:href=>'https://swissmodel.expasy.org/interactive/5hYU6g/models/13', target: '_blank'}
-                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/13.png', height: '50'
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/13.png', height:100
               %li
                 %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/01', target: '_blank'}
-                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/01.png', height: '50'
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/01.png', height:100
               %li
                 %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/02', target: '_blank'}
-                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/02.png', height: '50'
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/02.png', height:100
               %li
                 %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/03', target: '_blank'}
-                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/03.png', height: '50'
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/03.png', height:100
               %li
                 %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/10', target: '_blank'}
-                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/10.png', height: '50'
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/10.png', height:100
               %li
                 %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/11', target: '_blank'}
-                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/11.png', height: '50'
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/11.png', height:100
               %li
                 %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/12', target: '_blank'}
-                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/12.png', height: '50'
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/12.png', height:100
               %li
                 %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/08', target: '_blank'}
-                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/08.png', height: '50'
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/08.png', height:100
               %li
                 %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/04', target: '_blank'}
-                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/04.png', height: '50'
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/04.png', height:100
               %li
                 %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/06', target: '_blank'}
-                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/06.png', height: '50'
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/06.png', height:100
               %li
                 %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/07', target: '_blank'}
-                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/07.png', height: '50'
+                  = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/07.png', height:100
               %li
 
 
@@ -266,18 +268,18 @@
             %p Description
 
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            %h5 Swiss-Model
+            %h5 Computational models (Swiss-Model)
             %ul.w3-ul
               %li
                 %a{:href=>'https://swissmodel.expasy.org/interactive/0cKKrV/models/01', target: '_blank'}
-                  =image_tag("https://swissmodel.expasy.org/interactive/0cKKrV/models/01.png", height:50)
+                  =image_tag("https://swissmodel.expasy.org/interactive/0cKKrV/models/01.png", height:100)
 
       %li.prot_list_item
         .prot_card.w3-cell-row.w3-card.section#NSP5
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             &#9991
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray 3CL
+            #abrev.topic.w3-tag.w3-round.w3-blue-gray 3CL
             %br
             %h5 3C-like proteinase
             %br
@@ -287,172 +289,98 @@
             %h5 PDB
             %ul.w3-ul
               %li
-                %a{:href=>'https://www.rcsb.org/structure/5r7y', target: '_blank'}5r7y
+                %a{:href=>'/?queryId=5r7y&viewer_type=ngl&button=#query'}5r7y
                 = image_tag 'https://cdn.rcsb.org/images/rutgers/r7/5r7y/5r7y.pdb1-500.jpg', height: '75'
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5r7z', target: '_blank'}5r7z
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5r80', target: '_blank'}5r80
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5r81', target: '_blank'}5r81
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5r82', target: '_blank'}5r82
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5r83', target: '_blank'}5r83
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5r84', target: '_blank'}5r84
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5r8t', target: '_blank'}5r8t
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5re4', target: '_blank'}5re4
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5re5', target: '_blank'}5re5
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5re6', target: '_blank'}5re6
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5re7', target: '_blank'}5re7
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5re8', target: '_blank'}5re8
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5re9', target: '_blank'}5re9
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rea', target: '_blank'}5rea
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5reb', target: '_blank'}5reb
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rec', target: '_blank'}5rec
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5red', target: '_blank'}5red
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5ree', target: '_blank'}5ree
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5ref', target: '_blank'}5ref
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5reg', target: '_blank'}5reg
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5reh', target: '_blank'}5reh
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rei', target: '_blank'}5rei
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rej', target: '_blank'}5rej
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rek', target: '_blank'}5rek
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rel', target: '_blank'}5rel
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rem', target: '_blank'}5rem
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5ren', target: '_blank'}5ren
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5reo', target: '_blank'}5reo
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rep', target: '_blank'}5rep
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rer', target: '_blank'}5rer
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5res', target: '_blank'}5res
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5ret', target: '_blank'}5ret
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5reu', target: '_blank'}5reu
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rev', target: '_blank'}5rev
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rew', target: '_blank'}5rew
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rex', target: '_blank'}5rex
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rey', target: '_blank'}5rey
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rez', target: '_blank'}5rez
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rf0', target: '_blank'}5rf0
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rf1', target: '_blank'}5rf1
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rf2', target: '_blank'}5rf2
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rf3', target: '_blank'}5rf3
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rf4', target: '_blank'}5rf4
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rf5', target: '_blank'}5rf5
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rf6', target: '_blank'}5rf6
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rf7', target: '_blank'}5rf7
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rf8', target: '_blank'}5rf8
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rf9', target: '_blank'}5rf9
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfa', target: '_blank'}5rfa
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfb', target: '_blank'}5rfb
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfc', target: '_blank'}5rfc
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfd', target: '_blank'}5rfd
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfe', target: '_blank'}5rfe
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rff', target: '_blank'}5rff
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfg', target: '_blank'}5rfg
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfh', target: '_blank'}5rfh
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfi', target: '_blank'}5rfi
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfj', target: '_blank'}5rfj
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfk', target: '_blank'}5rfk
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfl', target: '_blank'}5rfl
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfm', target: '_blank'}5rfm
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfn', target: '_blank'}5rfn
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfo', target: '_blank'}5rfo
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfp', target: '_blank'}5rfp
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfq', target: '_blank'}5rfq
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfr', target: '_blank'}5rfr
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfs', target: '_blank'}5rfs
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rft', target: '_blank'}5rft
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfu', target: '_blank'}5rfu
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfv', target: '_blank'}5rfv
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfw', target: '_blank'}5rfw
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfx', target: '_blank'}5rfx
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfy', target: '_blank'}5rfy
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rfz', target: '_blank'}5rfz
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/5rg0', target: '_blank'}5rg0
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/6lu7', target: '_blank'}6lu7
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/6m03', target: '_blank'}6m03
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/6w63', target: '_blank'}6w63
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/6y2e', target: '_blank'}6y2e
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/6y2f', target: '_blank'}6y2f
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/6y2g', target: '_blank'}6y2g
-              %li
-                %a{:href=>'https://www.rcsb.org/structure/6y84', target: '_blank'}6y84
+                %a{:href=>'/?queryId=5r7z&viewer_type=ngl&button=#query'}5r7z
+                %a{:href=>'/?queryId=5r80&viewer_type=ngl&button=#query'}5r80
+                %a{:href=>'/?queryId=5r81&viewer_type=ngl&button=#query'}5r81
+                %a{:href=>'/?queryId=5r82&viewer_type=ngl&button=#query'}5r82
+                %a{:href=>'/?queryId=5r83&viewer_type=ngl&button=#query'}5r83
+                %a{:href=>'/?queryId=5r84&viewer_type=ngl&button=#query'}5r84
+                %a{:href=>'/?queryId=5r8t&viewer_type=ngl&button=#query'}5r8t
+                %a{:href=>'/?queryId=5re4&viewer_type=ngl&button=#query'}5re4
+                %a{:href=>'/?queryId=5re5&viewer_type=ngl&button=#query'}5re5
+              %li
+                %a{:href=>'/?queryId=5re6&viewer_type=ngl&button=#query'}5re6
+                %a{:href=>'/?queryId=5re7&viewer_type=ngl&button=#query'}5re7
+                %a{:href=>'/?queryId=5re8&viewer_type=ngl&button=#query'}5re8
+                %a{:href=>'/?queryId=5re9&viewer_type=ngl&button=#query'}5re9
+                %a{:href=>'/?queryId=5rea&viewer_type=ngl&button=#query'}5rea
+                %a{:href=>'/?queryId=5reb&viewer_type=ngl&button=#query'}5reb
+                %a{:href=>'/?queryId=5rec&viewer_type=ngl&button=#query'}5rec
+                %a{:href=>'/?queryId=5red&viewer_type=ngl&button=#query'}5red
+                %a{:href=>'/?queryId=5ree&viewer_type=ngl&button=#query'}5ree
+                %a{:href=>'/?queryId=5ref&viewer_type=ngl&button=#query'}5ref
+              %li
+                %a{:href=>'/?queryId=5reg&viewer_type=ngl&button=#query'}5reg
+                %a{:href=>'/?queryId=5reh&viewer_type=ngl&button=#query'}5reh
+                %a{:href=>'/?queryId=5rei&viewer_type=ngl&button=#query'}5rei
+                %a{:href=>'/?queryId=5rej&viewer_type=ngl&button=#query'}5rej
+                %a{:href=>'/?queryId=5rek&viewer_type=ngl&button=#query'}5rek
+                %a{:href=>'/?queryId=5rel&viewer_type=ngl&button=#query'}5rel
+                %a{:href=>'/?queryId=5rem&viewer_type=ngl&button=#query'}5rem
+                %a{:href=>'/?queryId=5ren&viewer_type=ngl&button=#query'}5ren
+                %a{:href=>'/?queryId=5reo&viewer_type=ngl&button=#query'}5reo
+                %a{:href=>'/?queryId=5rep&viewer_type=ngl&button=#query'}5rep
+              %li
+                %a{:href=>'/?queryId=5rer&viewer_type=ngl&button=#query'}5rer
+                %a{:href=>'/?queryId=5res&viewer_type=ngl&button=#query'}5res
+                %a{:href=>'/?queryId=5ret&viewer_type=ngl&button=#query'}5ret
+                %a{:href=>'/?queryId=5reu&viewer_type=ngl&button=#query'}5reu
+                %a{:href=>'/?queryId=5rev&viewer_type=ngl&button=#query'}5rev
+                %a{:href=>'/?queryId=5rew&viewer_type=ngl&button=#query'}5rew
+                %a{:href=>'/?queryId=5rex&viewer_type=ngl&button=#query'}5rex
+                %a{:href=>'/?queryId=5rey&viewer_type=ngl&button=#query'}5rey
+                %a{:href=>'/?queryId=5rez&viewer_type=ngl&button=#query'}5rez
+                %a{:href=>'/?queryId=5rf0&viewer_type=ngl&button=#query'}5rf0
+              %li
+                %a{:href=>'/?queryId=5rf1&viewer_type=ngl&button=#query'}5rf1
+                %a{:href=>'/?queryId=5rf2&viewer_type=ngl&button=#query'}5rf2
+                %a{:href=>'/?queryId=5rf3&viewer_type=ngl&button=#query'}5rf3
+                %a{:href=>'/?queryId=5rf4&viewer_type=ngl&button=#query'}5rf4
+                %a{:href=>'/?queryId=5rf5&viewer_type=ngl&button=#query'}5rf5
+                %a{:href=>'/?queryId=5rf6&viewer_type=ngl&button=#query'}5rf6
+                %a{:href=>'/?queryId=5rf7&viewer_type=ngl&button=#query'}5rf7
+                %a{:href=>'/?queryId=5rf8&viewer_type=ngl&button=#query'}5rf8
+                %a{:href=>'/?queryId=5rf9&viewer_type=ngl&button=#query'}5rf9
+                %a{:href=>'/?queryId=5rfa&viewer_type=ngl&button=#query'}5rfa
+              %li
+                %a{:href=>'/?queryId=5rfb&viewer_type=ngl&button=#query'}5rfb
+                %a{:href=>'/?queryId=5rfc&viewer_type=ngl&button=#query'}5rfc
+                %a{:href=>'/?queryId=5rfd&viewer_type=ngl&button=#query'}5rfd
+                %a{:href=>'/?queryId=5rfe&viewer_type=ngl&button=#query'}5rfe
+                %a{:href=>'/?queryId=5rff&viewer_type=ngl&button=#query'}5rff
+                %a{:href=>'/?queryId=5rfg&viewer_type=ngl&button=#query'}5rfg
+                %a{:href=>'/?queryId=5rfh&viewer_type=ngl&button=#query'}5rfh
+                %a{:href=>'/?queryId=5rfi&viewer_type=ngl&button=#query'}5rfi
+                %a{:href=>'/?queryId=5rfj&viewer_type=ngl&button=#query'}5rfj
+                %a{:href=>'/?queryId=5rfk&viewer_type=ngl&button=#query'}5rfk
+              %li
+                %a{:href=>'/?queryId=5rfl&viewer_type=ngl&button=#query'}5rfl
+                %a{:href=>'/?queryId=5rfm&viewer_type=ngl&button=#query'}5rfm
+                %a{:href=>'/?queryId=5rfn&viewer_type=ngl&button=#query'}5rfn
+                %a{:href=>'/?queryId=5rfo&viewer_type=ngl&button=#query'}5rfo
+                %a{:href=>'/?queryId=5rfp&viewer_type=ngl&button=#query'}5rfp
+                %a{:href=>'/?queryId=5rfq&viewer_type=ngl&button=#query'}5rfq
+                %a{:href=>'/?queryId=5rfr&viewer_type=ngl&button=#query'}5rfr
+                %a{:href=>'/?queryId=5rfs&viewer_type=ngl&button=#query'}5rfs
+                %a{:href=>'/?queryId=5rft&viewer_type=ngl&button=#query'}5rft
+                %a{:href=>'/?queryId=5rfu&viewer_type=ngl&button=#query'}5rfu
+              %li
+                %a{:href=>'/?queryId=5rfv&viewer_type=ngl&button=#query'}5rfv
+                %a{:href=>'/?queryId=5rfw&viewer_type=ngl&button=#query'}5rfw
+                %a{:href=>'/?queryId=5rfx&viewer_type=ngl&button=#query'}5rfx
+                %a{:href=>'/?queryId=5rfy&viewer_type=ngl&button=#query'}5rfy
+                %a{:href=>'/?queryId=5rfz&viewer_type=ngl&button=#query'}5rfz
+                %a{:href=>'/?queryId=5rg0&viewer_type=ngl&button=#query'}5rg0
+                %a{:href=>'/?queryId=6lu7&viewer_type=ngl&button=#query'}6lu7
+                %a{:href=>'/?queryId=6m03&viewer_type=ngl&button=#query'}6m03
+                %a{:href=>'/?queryId=6w63&viewer_type=ngl&button=#query'}6w63
+                %a{:href=>'/?queryId=6y2e&viewer_type=ngl&button=#query'}6y2e
+              %li
+                %a{:href=>'/?queryId=6y2f&viewer_type=ngl&button=#query'}6y2f
+                %a{:href=>'/?queryId=6y2g&viewer_type=ngl&button=#query'}6y2g
+                %a{:href=>'/?queryId=6y84&viewer_type=ngl&button=#query'}6y84
 
       %li.prot_list_item
         .prot_card.w3-cell-row.w3-card.section#NSP6
@@ -582,7 +510,7 @@
               = image_tag 'https://swissmodel.expasy.org/interactive/YxJyvF/models/01.png', alt: '', height: '150', width: '', class: 'w3-bar-item w3-circle'
               P0DTC2
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray S
+            #abrev.topic.w3-tag.w3-round.w3-cyan S
             %br
             %h5 S Glycoprotein
             %br
@@ -609,6 +537,8 @@
                 %a{:href=>'/?queryId=6lzg&viewer_type=ngl&button=#query'}
                   6lzg
                   =image_tag("https://cdn.rcsb.org/images/rutgers/lz/6lzg/6lzg.pdb1-500.jpg", height:100)
+                .w3-tag.w3-round.w3-teal
+                  %a{:href=>'https://pdb-redo.eu/db/6lzg', target: '_blank'} PDB-redo
               %li
                 %a{:href=>'/?queryId=6vyb&viewer_type=ngl&button=#query'}
                   6vyb
@@ -617,18 +547,20 @@
                 %a{:href=>'/?queryId=6vw1&viewer_type=ngl&button=#query'}
                   6vw1
                   =image_tag("https://cdn.rcsb.org/images/rutgers/vw/6vw1/6vw1.pdb1-500.jpg", height:100)
+                  .w3-tag.w3-round.w3-teal
+                    %a{:href=>'https://pdb-redo.eu/db/6vw1', target: '_blank'} PDB-redo
+                  .w3-tag.w3-round.w3-light-blue Isolde
               %li
                 %a{:href=>'/?queryId=6m17&viewer_type=ngl&button=#query'}
                   6m17
                   =image_tag("https://cdn.rcsb.org/images/rutgers/m1/6m17/6m17.pdb1-500.jpg", height:100)
               %li
-                %a{:href=>'/?queryId=6vsj&viewer_type=ngl&button=#query'}
-                  6vsj
-                  =image_tag("https://cdn.rcsb.org/images/rutgers/vs/6vsj/6vsj.pdb1-500.jpg", height:100)
-              %li
                 %a{:href=>'/?queryId=6lvn&viewer_type=ngl&button=#query'}
                   6lvn
                   =image_tag("https://cdn.rcsb.org/images/rutgers/lv/6lvn/6lvn.pdb1-500.jpg", height:100)
+                  .w3-tag.w3-round.w3-teal
+                    %a{:href=>'https://pdb-redo.eu/db/6lvn', target: '_blank'} PDB-redo
+                  .w3-tag.w3-round.w3-light-blue Isolde
               %li
                 %a{:href=>'/?queryId=6vxx&viewer_type=ngl&button=#query'}
                   6vxx
@@ -637,10 +569,9 @@
                 %a{:href=>'/?queryId=6lxt&viewer_type=ngl&button=#query'}
                   6lxt
                   =image_tag("https://cdn.rcsb.org/images/rutgers/lx/6lxt/6lxt.pdb1-500.jpg", height:100)
-              %li
-                %a{:href=>'/?queryId=6m0j&viewer_type=ngl&button=#query'}
-                  6m0j
-                  =image_tag("https://cdn.rcsb.org/images/rutgers/m0/6m0j/6m0j.pdb1-500.jpg", height:100)
+                  .w3-tag.w3-round.w3-teal
+                    %a{:href=>'https://pdb-redo.eu/db/6lxt', target: '_blank'} PDB-redo
+                  .w3-tag.w3-round.w3-light-blue Isolde
 
           .w3-cell.w3-container.w3-border-left.w3-cell-top
             %h5 EMDB
@@ -658,79 +589,52 @@
                   EMD-30039
                   =image_tag("https://www.ebi.ac.uk/pdbe/static/entry/EMD-30039/400_30039.gif", height:100)
               %li
+                %a{:href=>'/?queryId=EMD-21452&viewer_type=ngl&button=#query'}
+                  EMD-21452
+                  =image_tag("https://www.ebi.ac.uk/pdbe/static/entry/EMD-21452/400_21452.gif", height:100)
+
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            %h5 Computational models (Swiss-Model)
+            %ul.w3-ul
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/01', target: '_blank'}
+                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/01.png", height:100)
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/02', target: '_blank'}
+                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/02.png", height:100)
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/03', target: '_blank'}
+                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/03.png", height:100)
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/04', target: '_blank'}
+                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/04.png", height:100)
+              %li
+                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/05', target: '_blank'}
+                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/05.png", height:100)
+
+          .w3-cell.w3-container.w3-border-left.w3-cell-top
+            %h5 Related / Interacting  proteins
+            %ul.w3-ul
+              %li
+                %p Mouse coronavirus
                 %a{:href=>'/?queryId=EMD-21377&viewer_type=ngl&button=#query'}
                   EMD-21377
                   =image_tag("https://www.ebi.ac.uk/pdbe/static/entry/EMD-21377/400_21377.gif", height:100)
               %li
-                %a{:href=>'/?queryId=EMD-21452&viewer_type=ngl&button=#query'}
-                  EMD-21452
-                  =image_tag("https://www.ebi.ac.uk/pdbe/static/entry/EMD-21452/400_21452.gif", height:100)
-            
-          .w3-cell.w3-container.w3-border-left.w3-cell-top
-            %h5 pdb-redo
-            %ul.w3-ul
+                %a{:href=>'/?queryId=6vsj&viewer_type=ngl&button=#query'}
+                  6vsj
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/vs/6vsj/6vsj.pdb1-500.jpg", height:100)
               %li
-                %a{:href=>'https://pdb-redo.eu/db/6lzg', target: '_blank'}
-                  6lzg
-              %li
-                %a{:href=>'https://pdb-redo.eu/db/6w41', target: '_blank'}
-                  6w41
-              %li
-                %a{:href=>'https://pdb-redo.eu/db/6vw1', target: '_blank'}
-                  6vw1
-              %li
-                %a{:href=>'https://pdb-redo.eu/db/6lvn', target: '_blank'}
-                  6lvn
-              %li
-                %a{:href=>'https://pdb-redo.eu/db/6lxt', target: '_blank'}
-                  6lxt
-              %li
-                %a{:href=>'https://pdb-redo.eu/db/6m0j', target: '_blank'}
+                %a{:href=>'/?queryId=6m0j&viewer_type=ngl&button=#query'}
                   6m0j
-
-          .w3-cell.w3-container.w3-border-left.w3-cell-top
-            %h5 Isolde
-            %ul.w3-ul
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/m0/6m0j/6m0j.pdb1-500.jpg", height:100)
+                  .w3-tag.w3-round.w3-teal
+                    %a{:href=>'https://pdb-redo.eu/db/6m0j', target: '_blank'} PDB-redo
+                  .w3-tag.w3-round.w3-light-blue Isolde
               %li
-                6w41
-              %li
-                6vw1
-              %li
-                6lvn
-              %li
-                6lxt
-              %li
-                6m0j
-
-          .w3-cell.w3-container.w3-border-left.w3-cell-top
-            %h5 Swiss-Model
-            %ul.w3-ul
-              %li
-                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/01', target: '_blank'}
-                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/01.png", height:50)
-              %li
-                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/02', target: '_blank'}
-                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/02.png", height:50)
-              %li
-                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/03', target: '_blank'}
-                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/03.png", height:50)
-              %li
-                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/04', target: '_blank'}
-                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/04.png", height:50)
-              %li
-                %a{:href=>'https://swissmodel.expasy.org/interactive/7dVLxC/models/05', target: '_blank'}
-                  =image_tag("https://swissmodel.expasy.org/interactive/7dVLxC/models/05.png", height:50)
-
-          .w3-cell.w3-container.w3-border-left.w3-cell-top
-            %h5 SARS-CoV
-
-
-
-
-
-
-
-
+                %a{:href=>'/?queryId=6m18&viewer_type=ngl&button=#query'}
+                  6m18
+                  =image_tag("https://cdn.rcsb.org/images/rutgers/m1/6m18/6m18.pdb1-500.jpg", height:100)
 
 
 
@@ -739,7 +643,7 @@
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             &#9991
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray 3A
+            #abrev.topic.w3-tag.w3-round.w3-amber 3A
             %br
             %h5 3a Protein
             %br
@@ -750,7 +654,7 @@
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             &#9991
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray E
+            #abrev.topic.w3-tag.w3-round.w3-purple E
             %br
             %h5 Envelope small membrane protein
             %br
@@ -761,7 +665,7 @@
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             &#9991
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray M
+            #abrev.topic.w3-tag.w3-round.w3-blue M
             %br
             %h5 Membrane protein
             %br
@@ -772,7 +676,7 @@
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             &#9991
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray NS6
+            #abrev.topic.w3-tag.w3-round.w3-orange NS6
             %br
             %h5 Non-structural protein 6
             %br
@@ -783,7 +687,7 @@
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             &#9991
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray NS7a
+            #abrev.topic.w3-tag.w3-round.w3-orange NS7a
             %br
             %h5 Protein 7a
             %br
@@ -794,7 +698,7 @@
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             &#9991
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray NS7b
+            #abrev.topic.w3-tag.w3-round.w3-orange NS7b
             %br
             %h5 Protein 7b
             %br
@@ -805,7 +709,7 @@
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             &#9991
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray NS8
+            #abrev.topic.w3-tag.w3-round.w3-brown NS8
             %br
             %h5 Protein 8
             %br
@@ -816,7 +720,7 @@
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             &#9991
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray NS9b
+            #abrev.topic.w3-tag.w3-round.w3-orange NS9b
             %br
             %h5 Protein 9b 
             %br
@@ -827,7 +731,7 @@
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             &#9991
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray N
+            #abrev.topic.w3-tag.w3-round.w3-green N
             %br
             %h5 Nucleoprotein
             %br
@@ -838,7 +742,7 @@
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             &#9991
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray NS14
+            #abrev.topic.w3-tag.w3-round.w3-orange NS14
             %br
             %h5 Uncharacterized protein 14
             %br
@@ -850,21 +754,11 @@
           .model_img.w3-cell.w3-cell-middle.w3-hide-small.w3-blue-gray.w3-center.w3-xxlarge
             &#9991
           .w3-cell.w3-container.w3-border-left.w3-cell-top
-            #abrev.topic.w3-tag.w3-round.w3-gray NS10
+            #abrev.topic.w3-tag.w3-round.w3-red NS10
             %br
             %h5 ORF10 protein
             %br
             %p Hypothetical ORF10 protein
-
-
-
-
-
-
-
-
-
-
 
   .ws_lower_div
     %h4
