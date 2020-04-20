@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get '/webserver' => 'webserver#home'
   get '/ws/submit' => 'webserver#submit'
   get '/ws/database' => 'webserver#database'
+  get '/ws/database-ori' => 'webserver#database-ori'
   get '/ws/covid19' => 'webserver#covid19'
   get '/ws/network' => 'webserver#network'
   get '/ws/help' => 'webserver#help'
