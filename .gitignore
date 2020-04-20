@@ -15,6 +15,11 @@
 /public/tutorials
 /public/*.pdb
 /public/upload
+public/SVG
+public/interactome_pdb
+public/jsmol
+public/jsmolIFrame
+public/ngl
 
 /config/secrets.yml
 /config/database.yml
@@ -34,7 +39,8 @@
 *node_modules*
 
 Makefile
-.rvmrc
+
+*.code-workspace
 
 # Logs and databases
 *.log
