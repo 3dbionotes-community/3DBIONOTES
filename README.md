@@ -4,17 +4,18 @@
 
 **3DBIONOTES-WS** is a web application designed to automatically annotate biochemical and biomedical information onto structural models. Current sources of information include:
 
-- post-translational modifications
-- genomic variations associated to diseases
-- short linear motifs,
-- immune epitopes sites,
-- disordered regions and
-- domain families.
+-   post-translational modifications
+-   genomic variations associated to diseases
+-   short linear motifs,
+-   immune epitopes sites,
+-   disordered regions and
+-   domain families.
 
 ## Setup
 
+Make sure rvm is configured so the project .rvmrc is used when entering to the directory. Then run:
+
 ```
-$ rvm use 2.2.1
 $ gem install bundler:1.17.3
 $ bundle install
 $ cp config/database.example.yml config/database.yml
