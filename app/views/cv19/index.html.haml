@@ -1,0 +1,60 @@
+%html(lang="en")
+  %head
+    = stylesheet_link_tag('webserver/webserver_style.css')
+    = stylesheet_link_tag('webserver/w3.css')
+    = javascript_include_tag('webserver/webserver_lib')
+    = javascript_include_tag('webserver/webserver_init')
+  %body
+    .cv_header
+      .w3-row.w3-container
+        .cv_app_logo.w3-col.m7.w3-left
+          = image_tag '3DBionotesWS_CoVid_logo.png', alt: '3DBionotes-logo', width: '500'
+        .cv_partners_logos.w3-col.m5
+          .w3-bar
+            .w3-bar-item.w3-mobile.w3-right
+              = link_to image_tag('Ministerio_de_Ciencia_e_Innovacion_logo.jpg', alt: 'CSIC-Ministerio_Ciencia', height: '25'), 'http://www.csic.es/en', target: "_blank"
+            .w3-bar-item.w3-mobile.w3-right
+              = link_to image_tag('CNB_logo.jpg', alt: 'CNB-logo', height: '25'), 'http://www.cnb.csic.es/index.php/en/', target: "_blank"
+              = link_to image_tag('CSIC_logo.jpg', alt: 'CSIC-Ministerio_Ciencia', height: '25'), 'http://www.csic.es/en', target: "_blank"
+            .w3-bar-item.w3-mobile.w3-right
+              = link_to image_tag('https://instruct-eric.eu/templates/instructeric/images/logos/instruct-eric-logo-noline.png', alt: 'Intruct-logo', height: '25'), 'https://instruct-eric.eu', target: "_blank"
+            .w3-bar-item.w3-mobile.w3-right
+              = link_to image_tag('https://inb-elixir.es/sites/default/files/inbelixir.png', alt: 'INB_Elixir_Spain-logo', height: '25'), 'https://inb-elixir.es', target: "_blank"
+
+      .w3-row.w3-container
+        .cv_who.w3-col.w3-center
+          = link_to 'Biocomputing Unit', "http://biocomputingunit.es", target: "_blank", style:"font-weight:bold;color:#074987;"
+          \@
+          = link_to 'CNB', "http://www.cnb.csic.es/index.php/en", target: "_blank", style:"font-weight:bold;color:#074987;"
+          \-
+          = link_to 'CSIC', "http://www.csic.es/", target: "_blank", style:"font-weight:bold;color:#074987;"
+
+
+    .cv_h_menu.w3-container
+      .w3-panel.w3-card.w3-light-gray
+        .w3-bar.w3-center.w3-mobile
+          = link_to 'HOME', "/ws/home",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", style:"width:10%"
+          = link_to 'CoVid-19', nil,  style:"font-weight:bold", class: "w3-button w3-green w3-round ", style:"width:10%"
+          = link_to 'SUBMIT', "/ws/submit",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", style:"width:10%"
+          = link_to 'NETWORK', "/ws/network",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", style:"width:10%"
+          = link_to 'QUERY', "/ws/database",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", style:"width:10%"
+          = link_to 'API', "/ws/api",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", style:"width:10%"
+          = link_to 'HELP', "/ws/help",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", style:"width:10%"
+          = link_to 'ABOUT US', "http://biocomputingunit.es",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", target: '_blank', style:"width:10%"
+
+
+    .cv_content.w3-container
+      .cv_examples
+
+      .cv_query_form
+
+      .cv_proteome
+
+        .cvp_index
+
+        .cv_protein_list
+
+          .cv_protein_item
+
+
+    %footer.cv_footer
