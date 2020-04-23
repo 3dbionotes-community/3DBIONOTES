@@ -37,11 +37,10 @@
           = link_to 'ABOUT US', "http://biocomputingunit.es",  style:"font-weight:bold", class: "w3-bar-item w3-button w3-blue w3-round w3-right", target: '_blank', style:"width:10%"
 
     %hr.dashed
-
     #cv_page_content.w3-container
 
       #cv_examples.w3-container
-        %h3.w3-center Selected entries
+        %h3.w3-center{style:"font-weight:bold"} Selected entries
         .w3-row.w3-padding
           .w3-card.w3-padding-small.w3-hover-shadow.w3-center
             = link_to 'S - Spike glycoprotein - P0DTC2', '/?queryId=P0DTC2&viewer_type=ngl&button=#query', style:"font-weight:bold"
@@ -55,14 +54,119 @@
 
 
       %hr.dashed
-
       #cv_query_form
-
       %hr.dashed
 
       #cv_data_content
 
         #cv_data_index
+          %h3.w3-center{style:"font-weight:bold"} SARS-CoV-2 virus proteome
+          %table.w3-table.w3-responsive
+            %tr
+              %td.w3-tag.w3-round.w3-dark-gray.w3-center{:colspan => 11}
+                .index1
+                  %a{:href=>"#R1a"} R1a
+            %tr
+              %td.w3-tag.w3-round.w3-gray{:rowspan => 2}
+                .index2
+                  %a{:href=>"#NSP1"} NSP1
+              %td.w3-tag.w3-round.w3-gray{:rowspan => 2}
+                .index2
+                  %a{:href=>"#NSP2"} NSP2
+              %td.w3-tag.w3-round.w3-blue-gray{:rowspan => 2}
+                .index2
+                  %a{:href=>"#NSP3"} PL-Pro
+              %td.w3-tag.w3-round.w3-gray{:rowspan => 2}
+                .index2
+                  %a{:href=>"#NSP4"} NSP4
+              %td.w3-tag.w3-round.w3-blue-gray{:rowspan => 2}
+                .index2
+                  %a{:href=>"#NSP5"} 3CL
+              %td.w3-tag.w3-round.w3-gray{:rowspan => 2}
+                .index2
+                  %a{:href=>"#NSP6"} NSP6
+              %td.w3-tag.w3-round.w3-gray{:rowspan => 2}
+                .index2
+                  %a{:href=>"#NSP7"} NSP7
+              %td.w3-tag.w3-round.w3-gray{:rowspan => 2}
+                .index2
+                  %a{:href=>"#NSP8"} NSP8
+              %td.w3-tag.w3-round.w3-gray{:rowspan => 2}
+                .index2
+                  %a{:href=>"#NSP9"} NSP9
+              %td.w3-tag.w3-round.w3-gray{:rowspan => 2}
+                .index2
+                  %a{:href=>"#NSP10"} NSP10
+              %td.w3-tag.w3-round.w3-gray{:rowspan => 2}
+                .index2
+                  %a{:href=>"#NSP11"} NSP11
+              %td.w3-tag.w3-tag.w3-round.w3-white{:colspan => 5}
+              %td.w3-tag.w3-tag.w3-round.w3-cyan
+                .index2
+                  %a{:href=>"#S"} S
+              %td.w3-tag.w3-tag.w3-round.w3-white{:colspan => 2}
+              %td.w3-tag.w3-tag.w3-round.w3-lime
+                .index2
+                  %a{:href=>"#M"} M
+              %td.w3-tag.w3-tag.w3-round.w3-white
+              %td.w3-tag.w3-tag.w3-round.w3-blue
+                .index2
+                  %a{:href=>"#NS7a"} NS7a
+              %td.w3-tag.w3-tag.w3-round.w3-white
+              %td.w3-tag.w3-tag.w3-round.w3-brown
+                .index2
+                  %a{:href=>"#NS8"} NS8
+              %td.w3-tag.w3-tag.w3-round.w3-white
+              %td.w3-tag.w3-tag.w3-round.w3-green
+                .index2
+                  %a{:href=>"#N"} N
+            %tr
+              %td.w3-tag.w3-round.w3-gray
+                .index2
+                  %a{:href=>"#NSP12"} NSP12
+              %td.w3-tag.w3-round.w3-gray
+                .index2
+                  %a{:href=>"#NSP13"} NSP13
+              %td.w3-tag.w3-round.w3-gray
+                .index2
+                  %a{:href=>"#NSP14"} NSP14
+              %td.w3-tag.w3-round.w3-gray
+                .index2
+                  %a{:href=>"#NSP15"} NSP15
+              %td.w3-tag.w3-round.w3-gray
+                .index2
+                  %a{:href=>"#NSP16"} NSP16
+              %td.w3-tag.w3-tag.w3-round.w3-white
+              %td.w3-tag.w3-tag.w3-round.w3-amber
+                .index2
+                  %a{:href=>"#NS3a"} NS3a
+              %td.w3-tag.w3-tag.w3-round.w3-purple
+                .index2
+                  %a{:href=>"#E"} E
+              %td.w3-tag.w3-tag.w3-round.w3-white
+              %td.w3-tag.w3-tag.w3-round.w3-orange
+                .index2
+                  %a{:href=>"#NS6"} NS6
+              %td.w3-tag.w3-tag.w3-round.w3-white
+              %td.w3-tag.w3-tag.w3-round.w3-orange
+                .index2
+                  %a{:href=>"#NS7b"} NS7b
+              %td.w3-tag.w3-tag.w3-round.w3-white
+              %td.w3-tag.w3-tag.w3-round.w3-orange
+                .index2
+                  %a{:href=>"#NS9b"} NS9b
+              %td.w3-tag.w3-tag.w3-round.w3-white
+              %td.w3-tag.w3-tag.w3-round.w3-orange
+                .index2
+                  %a{:href=>"#NS14"} NS14
+              %td.w3-tag.w3-tag.w3-round.w3-white
+              %td.w3-tag.w3-tag.w3-round.w3-red
+                .index2
+                  %a{:href=>"#NS10"} NS10
+            %tr
+              %td.w3-tag.w3-round.w3-dark-grey.w3-center{:colspan => 16} 
+                .index1
+                  %a{:href=>"#R1ab"} R1ab
 
         %hr.dashed
 
@@ -77,10 +181,10 @@
  
 
     %hr.dashed
-
     #cv_page_footer
       #cv_ext_resources
 
+      %hr.dashed
       #cv_afilliation.w3-container
         .w3-row
           .w3-col-padding.w3-center{style:"font-weight:bold;color:#074987;"}
