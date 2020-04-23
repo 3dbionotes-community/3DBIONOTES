@@ -40,7 +40,7 @@
     #cv_page_content.w3-container
 
       #cv_examples.w3-container
-        %h3.w3-center{style:"font-weight:bold"} Selected entries
+        %h3.w3-center.w3-opacity{style:"font-weight:bold;color:#074987;"} Selected entries
         .w3-row.w3-padding
           .w3-card.w3-padding-small.w3-hover-shadow.w3-center
             = link_to 'S - Spike glycoprotein - P0DTC2', '/?queryId=P0DTC2&viewer_type=ngl&button=#query', style:"font-weight:bold"
@@ -55,12 +55,12 @@
 
       %hr.dashed
       #cv_query_form
-      %hr.dashed
+      
 
       #cv_data_content
 
         #cv_data_index
-          %h3.w3-center{style:"font-weight:bold"} SARS-CoV-2 virus proteome
+          %h3.w3-center.w3-opacity{style:"font-weight:bold;color:#074987;"} SARS-CoV-2 virus proteome
           %table.w3-table.w3-responsive
             %tr
               %td.w3-tag.w3-round.w3-dark-gray.w3-center{:colspan => 11}
@@ -171,6 +171,7 @@
         %hr.dashed
 
         #cv_dataset_content
+          %h3.w3-center.w3-opacity{style:"font-weight:bold;color:#074987;"} Known Proteins
 
           #cv_data_item_content
             %p.w3-opacity{style:"font-weight:bold;color:#074987;"} #Item
