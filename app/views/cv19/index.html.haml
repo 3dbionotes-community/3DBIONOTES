@@ -4,57 +4,79 @@
     = stylesheet_link_tag('webserver/w3.css')
     = javascript_include_tag('webserver/webserver_lib')
     = javascript_include_tag('webserver/webserver_init')
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1"}
+
   %body
-    .cv_header
-      .w3-row.w3-container
-        .cv_app_logo.w3-col.m7.w3-left
-          = image_tag '3DBionotesWS_CoVid_logo.png', alt: '3DBionotes-logo', width: '500'
-        .cv_partners_logos.w3-col.m5
-          .w3-bar
-            .w3-bar-item.w3-mobile.w3-right
-              = link_to image_tag('Ministerio_de_Ciencia_e_Innovacion_logo.jpg', alt: 'CSIC-Ministerio_Ciencia', height: '25'), 'http://www.csic.es/en', target: "_blank"
-            .w3-bar-item.w3-mobile.w3-right
-              = link_to image_tag('CNB_logo.jpg', alt: 'CNB-logo', height: '25'), 'http://www.cnb.csic.es/index.php/en/', target: "_blank"
-              = link_to image_tag('CSIC_logo.jpg', alt: 'CSIC-Ministerio_Ciencia', height: '25'), 'http://www.csic.es/en', target: "_blank"
-            .w3-bar-item.w3-mobile.w3-right
-              = link_to image_tag('https://instruct-eric.eu/templates/instructeric/images/logos/instruct-eric-logo-noline.png', alt: 'Intruct-logo', height: '25'), 'https://instruct-eric.eu', target: "_blank"
-            .w3-bar-item.w3-mobile.w3-right
-              = link_to image_tag('https://inb-elixir.es/sites/default/files/inbelixir.png', alt: 'INB_Elixir_Spain-logo', height: '25'), 'https://inb-elixir.es', target: "_blank"
+    #cv_header.w3-container
+      .w3-row
+        #cv_app_logo.w3-col.m10.w3-left
+          = image_tag '3DBionotesWS_CoVid_logo.png', alt: '3DBionotes-logo', height: '200'
+        #cv_partners_logos.w3-col.m2.w3-right
+          .w3-bar-block
+            .w3-bar-item.w3-right
+              = image_tag 'Ministerio_de_Ciencia_e_Innovacion_logo.jpg', alt: 'CSIC-Ministerio_Ciencia', height: '55', class: 'w3-bar-item w3-mobile w3-right'
+            .w3-bar-item.w3-right
+              .w3-right
+                = link_to image_tag('CNB_logo.jpg', alt: 'CNB-logo', height: '30'), 'http://www.cnb.csic.es/index.php/en/', target: "_blank"
+                = link_to image_tag('CSIC_logo.jpg', alt: 'CSIC-Ministerio_Ciencia', height: '30'), 'http://www.csic.es/en', target: "_blank"
+            .w3-bar-item.w3-right
+              = link_to image_tag('https://instruct-eric.eu/templates/instructeric/images/logos/instruct-eric-logo-noline.png', alt: 'Intruct-logo', height: '30'), 'https://instruct-eric.eu', target: "_blank", class: 'w3-right'
+            .w3-bar-item.w3-right
+              = link_to image_tag('https://inb-elixir.es/sites/default/files/inbelixir.png', alt: 'INB_Elixir_Spain-logo', height: '30'), 'https://inb-elixir.es', target: "_blank", class: 'w3-right'
 
-      .w3-row.w3-container
-        .cv_who.w3-col.w3-center
-          = link_to 'Biocomputing Unit', "http://biocomputingunit.es", target: "_blank", style:"font-weight:bold;color:#074987;"
-          \@
-          = link_to 'CNB', "http://www.cnb.csic.es/index.php/en", target: "_blank", style:"font-weight:bold;color:#074987;"
-          \-
-          = link_to 'CSIC', "http://www.csic.es/", target: "_blank", style:"font-weight:bold;color:#074987;"
+      #cv_who.w3-container
+        .w3-row
+          .w3-col.w3-center
+            = link_to 'Biocomputing Unit', "http://biocomputingunit.es", target: "_blank", style:"font-weight:bold;color:#074987;"
+            \@
+            = link_to 'CNB', "http://www.cnb.csic.es/index.php/en", target: "_blank", style:"font-weight:bold;color:#074987;"
+            \-
+            = link_to 'CSIC', "http://www.csic.es/", target: "_blank", style:"font-weight:bold;color:#074987;"
 
 
-    .cv_h_menu.w3-container
+    #cv_h_menu.w3-container
       .w3-panel.w3-card.w3-light-gray
         .w3-bar.w3-center.w3-mobile
-          = link_to 'HOME', "/ws/home",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", style:"width:10%"
+          = link_to 'HOME', "/ws/home",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
           = link_to 'CoVid-19', nil,  style:"font-weight:bold", class: "w3-button w3-green w3-round ", style:"width:10%"
-          = link_to 'SUBMIT', "/ws/submit",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", style:"width:10%"
-          = link_to 'NETWORK', "/ws/network",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", style:"width:10%"
-          = link_to 'QUERY', "/ws/database",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", style:"width:10%"
-          = link_to 'API', "/ws/api",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", style:"width:10%"
-          = link_to 'HELP', "/ws/help",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", style:"width:10%"
-          = link_to 'ABOUT US', "http://biocomputingunit.es",  style:"font-weight:bold", class: "w3-button w3-indigo w3-round", target: '_blank', style:"width:10%"
+          = link_to 'SUBMIT', "/ws/submit",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
+          = link_to 'NETWORK', "/ws/network",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
+          = link_to 'QUERY', "/ws/database",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
+          = link_to 'API', "/ws/api",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
+          = link_to 'HELP', "/ws/help",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
+          = link_to 'ABOUT US', "http://biocomputingunit.es",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", target: '_blank', style:"width:10%"
 
 
-    .cv_content.w3-container
-      .cv_examples
+    %hr.dashed
+    #cv_content.w3-container
 
+      #cv_examples.w3-container
+        %h3.w3-center Selected entries
+        .w3-row.w3-padding
+          .w3-card.w3-padding-small.w3-hover-shadow.w3-center
+            = link_to 'S - Spike glycoprotein - P0DTC2', '/?queryId=P0DTC2&viewer_type=ngl&button=#query', style:"font-weight:bold"
+        .w3-row.w3-padding
+          .w3-card.w3-padding.w3-hover-shadow.w3-half.w3-center
+            = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/EMD-21452/400_21452.gif', alt: 'EMD-21452', height: '150'),'/?queryId=EMD-21452&viewer_type=ngl&button=#query', style:"font-weight:bold"
+            %p.w3-padding-small{style:"font-weight:bold"} EMD-21452
+          .w3-card.w3-padding.w3-hover-shadow.w3-half.w3-center
+            = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/6lzg_deposited_chain_front_image-200x200.png', alt: '6ACG', height: '150'), '/?queryId=6LZG&viewer_type=ngl&button=#query'
+            %p.w3-padding-small{style:"font-weight:bold"} 6LZG
+
+
+      %hr.dashed
       .cv_query_form
+      %hr.dashed
 
       .cv_proteome
 
         .cvp_index
+        %hr.dashed
 
         .cv_protein_list
 
           .cv_protein_item
 
+    %hr.dashed
 
     %footer.cv_footer
