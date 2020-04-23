@@ -7,7 +7,7 @@
     %meta{name: "viewport", content: "width=device-width, initial-scale=1"}
 
   %body
-    #cv_header.w3-container
+    #cv_page_header.w3-container
       .w3-row
         #cv_app_logo.w3-col.m10.w3-left
           = image_tag '3DBionotesWS_CoVid_logo.png', alt: '3DBionotes-logo', height: '200'
@@ -24,31 +24,21 @@
             .w3-bar-item.w3-right
               = link_to image_tag('https://inb-elixir.es/sites/default/files/inbelixir.png', alt: 'INB_Elixir_Spain-logo', height: '30'), 'https://inb-elixir.es', target: "_blank", class: 'w3-right'
 
-      #cv_who.w3-container
-        .w3-row
-          .w3-col.w3-center
-            = link_to 'Biocomputing Unit', "http://biocomputingunit.es", target: "_blank", style:"font-weight:bold;color:#074987;"
-            \@
-            = link_to 'CNB', "http://www.cnb.csic.es/index.php/en", target: "_blank", style:"font-weight:bold;color:#074987;"
-            \-
-            = link_to 'CSIC', "http://www.csic.es/", target: "_blank", style:"font-weight:bold;color:#074987;"
-
-
     #cv_h_menu.w3-container
       .w3-panel.w3-card.w3-light-gray
         .w3-bar.w3-center.w3-mobile
-          = link_to 'HOME', "/ws/home",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
-          = link_to 'CoVid-19', nil,  style:"font-weight:bold", class: "w3-button w3-green w3-round ", style:"width:10%"
+          = link_to 'HOME', "/ws/home",  style:"font-weight:bold", class: "w3-button w3-blue w3-round w3-left", style:"width:10%"
+          = link_to 'CoVid-19', nil,  style:"font-weight:bold", class: "w3-button w3-teal w3-round", style:"width:10%"
+          = link_to 'QUERY', "/ws/database",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
           = link_to 'SUBMIT', "/ws/submit",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
           = link_to 'NETWORK', "/ws/network",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
-          = link_to 'QUERY', "/ws/database",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
           = link_to 'API', "/ws/api",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
           = link_to 'HELP', "/ws/help",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
-          = link_to 'ABOUT US', "http://biocomputingunit.es",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", target: '_blank', style:"width:10%"
-
+          = link_to 'ABOUT US', "http://biocomputingunit.es",  style:"font-weight:bold", class: "w3-bar-item w3-button w3-blue w3-round w3-right", target: '_blank', style:"width:10%"
 
     %hr.dashed
-    #cv_content.w3-container
+
+    #cv_page_content.w3-container
 
       #cv_examples.w3-container
         %h3.w3-center Selected entries
@@ -65,18 +55,43 @@
 
 
       %hr.dashed
-      .cv_query_form
+
+      #cv_query_form
+
       %hr.dashed
 
-      .cv_proteome
+      #cv_data_content
 
-        .cvp_index
+        #cv_data_index
+
         %hr.dashed
 
-        .cv_protein_list
+        #cv_dataset_content
 
-          .cv_protein_item
+          #cv_data_item_content
+            %p.w3-opacity{style:"font-weight:bold;color:#074987;"} #Item
+            .w3-panel.w3-white.w3-card.w3-display-container
+              %p.w3-text GENE
+              %p MODELS
+              %p MAPS
+ 
 
     %hr.dashed
 
-    %footer.cv_footer
+    #cv_page_footer
+      #cv_ext_resources
+
+      #cv_afilliation.w3-container
+        .w3-row
+          .w3-col-padding.w3-center{style:"font-weight:bold;color:#074987;"}
+            = link_to 'Biocomputing Unit', "http://biocomputingunit.es", target: "_blank"
+            \@
+            = link_to 'CNB', "http://www.cnb.csic.es/index.php/en", target: "_blank"
+            \|
+            = link_to 'CSIC', "http://www.csic.es/", target: "_blank"
+            \|
+            = link_to 'I2PC', 'https://instruct-eric.eu', target: "_blank"
+            \|
+            = link_to 'INB', 'https://inb-elixir.es', target: "_blank"
+            \|
+            = link_to 'Elixir', 'https://inb-elixir.es', target: "_blank"
