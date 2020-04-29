@@ -26,7 +26,7 @@
               = link_to image_tag('https://inb-elixir.es/sites/default/files/inbelixir.png', alt: 'INB_Elixir_Spain-logo', height: '30'), 'https://inb-elixir.es', target: "_blank", class: 'w3-right'
 
     #cv_h_menu.w3-container
-      .w3-panel.w3-card.w3-light-gray
+      .w3-panel
         .w3-bar.w3-center.w3-mobile
           = link_to 'HOME', "/ws/home",  style:"font-weight:bold", class: "w3-button w3-blue w3-round w3-left", style:"width:10%"
           = link_to 'CoVid-19', nil,  style:"font-weight:bold", class: "w3-button w3-teal w3-round", style:"width:10%"
@@ -102,23 +102,23 @@
                   .index2
                     %a{:href=>"#S"} S
                 %td.w3-tag.w3-tag.w3-round.w3-white{:colspan => 2}
-                %td.w3-tag.w3-tag.w3-round.w3-lime
+                %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
                     %a{:href=>"#M"} M
                 %td.w3-tag.w3-tag.w3-round.w3-white
-                %td.w3-tag.w3-tag.w3-round.w3-blue
+                %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
                     %a{:href=>"#NS7a"} NS7a
                 %td.w3-tag.w3-tag.w3-round.w3-white
-                %td.w3-tag.w3-tag.w3-round.w3-brown
+                %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
                     %a{:href=>"#NS8"} NS8
                 %td.w3-tag.w3-tag.w3-round.w3-white
-                %td.w3-tag.w3-tag.w3-round.w3-green
+                %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
                     %a{:href=>"#N"} N
               %tr
-                %td.w3-tag.w3-round.w3-light-grey
+                %td.w3-tag.w3-round.w3-blue-grey
                   .index2
                     %a{:href=>"#NSP12"} NSP12
                 %td.w3-tag.w3-round.w3-light-grey
@@ -134,30 +134,30 @@
                   .index2
                     %a{:href=>"#NSP16"} NSP16
                 %td.w3-tag.w3-tag.w3-round.w3-white
-                %td.w3-tag.w3-tag.w3-round.w3-amber
+                %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
                     %a{:href=>"#NS3a"} NS3a
-                %td.w3-tag.w3-tag.w3-round.w3-purple
+                %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
                     %a{:href=>"#E"} E
                 %td.w3-tag.w3-tag.w3-round.w3-white
-                %td.w3-tag.w3-tag.w3-round.w3-orange
+                %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
                     %a{:href=>"#NS6"} NS6
                 %td.w3-tag.w3-tag.w3-round.w3-white
-                %td.w3-tag.w3-tag.w3-round.w3-orange
+                %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
                     %a{:href=>"#NS7b"} NS7b
                 %td.w3-tag.w3-tag.w3-round.w3-white
-                %td.w3-tag.w3-tag.w3-round.w3-orange
+                %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
                     %a{:href=>"#NS9b"} NS9b
                 %td.w3-tag.w3-tag.w3-round.w3-white
-                %td.w3-tag.w3-tag.w3-round.w3-orange
+                %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
                     %a{:href=>"#NS14"} NS14
                 %td.w3-tag.w3-tag.w3-round.w3-white
-                %td.w3-tag.w3-tag.w3-round.w3-red
+                %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
                     %a{:href=>"#NS10"} NS10
               %tr
@@ -176,19 +176,20 @@
               .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
               - @alt_names[uEntry].each do |a_name|
                 .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+
               - uEntry = "NSP3"
               #PLPro.data_item_content.w3-card.section#NSP3
                 %header.w3-padding
                   .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
                   .w3-tag.w3-padding-large.w3-round.w3-light-grey= 'PL-Pro'
                   .w3-tag.w3-padding-large.w3-round.w3-light-grey= 'Papain-like proteinase'
-                #tabs_panel.w3-panel.w3-responsive
+                #tabs_panel.w3-panel.w3-responsive.w3-border
                   .w3-bar.w3-round.w3-light-grey.w3-border
                     %button.w3-bar-item.w3-button.tablink.w3-grey{onclick:"openTab(event,'NSP3_PDB','nsp3_item_tab')"} PDB
-                    %button.w3-bar-item.w3-button.tablink.w3-disabled{onclick:"openTab(event,'NSP3_EMDB','nsp3_item_tab')"} EMDB
+                    %button.w3-bar-item.w3-button.tablink.w3-disabled EMDB
                     %button.w3-bar-item.w3-button.tablink{onclick:"openTab(event,'NSP3_CompModels','nsp3_item_tab')"} Computational Models
-                    %button.w3-bar-item.w3-button.tablink.w3-disabled{onclick:"openTab(event,'NSP3_Interactions','nsp3_item_tab')"} Interactions
-                    %button.w3-bar-item.w3-button.tablink.w3-disabled{onclick:"openTab(event,'NSP3_OtherRelated','nsp3_item_tab')"} Other Related
+                    %button.w3-bar-item.w3-button.tablink.w3-disabled Interactions
+                    %button.w3-bar-item.w3-button.tablink.w3-disabled Other Related
                   #NSP3_PDB.nsp3_item_tab.w3-panel.w3-mobile
                     - @nsp3_models.each do | modelId |
                       .models.w3-cell.w3-button.w3-round
@@ -196,83 +197,127 @@
                         -query_path = @bionotes_qry_pre + modelId + @bionotes_qry_sub
                         = link_to image_tag(img_path, alt: modelId, height: '100'), query_path
                         %p.w3-padding-small{style:"font-weight:bold"}= modelId
-                        = link_to 'PDB-redo', 'https://pdb-redo.eu/db/6vsb', target: '_blank', class: "w3-tag w3-round w3-teal"
-                  #NSP3_EMDB.nsp3_item_tab.w3-panel.w3-mobile{style: "display:none"}
-                    .maps.w3-cell
-                      %p <i class="fa fa-spinner w3-spin" style="font-size:32px"></i>
+                        - if @nsp3_pdb_redo.include? modelId
+                          = link_to 'PDB-redo','https://pdb-redo.eu/db/'+modelId, target: '_blank', class: "w3-tag w3-round w3-teal"
+                  -# #NSP3_EMDB.nsp3_item_tab.w3-panel.w3-mobile{style: "display:none"}
+                  -#   .maps.w3-cell
+                  -#     %p <i class="fa fa-spinner w3-spin" style="font-size:32px"></i>
                   #NSP3_CompModels.nsp3_item_tab.w3-panel.w3-mobile{style: "display:none"}
-                    #c_models.w3-cell
-                      .c_models.w3-cell.w3-button.w3-round
-                        %a{:href=>'https://swissmodel.expasy.org/interactive/5hYU6g/models/13', target: '_blank'}
-                          = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/13.png', height:100
-                      .c_models.w3-cell.w3-button.w3-round
-                        %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/01', target: '_blank'}
-                          = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/01.png', height:100
-                      .c_models.w3-cell.w3-button.w3-round
-                        %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/02', target: '_blank'}
-                          = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/02.png', height:100
-                      .c_models.w3-cell.w3-button.w3-round
-                        %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/03', target: '_blank'}
-                          = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/03.png', height:100
-                      .c_models.w3-cell.w3-button.w3-round
-                        %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/10', target: '_blank'}
-                          = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/10.png', height:100
-                      .c_models.w3-cell.w3-button.w3-round
-                        %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/11', target: '_blank'}
-                          = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/11.png', height:100
-                      .c_models.w3-cell.w3-button.w3-round
-                        %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/12', target: '_blank'}
-                          = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/12.png', height:100
-                      .c_models.w3-cell.w3-button.w3-round
-                        %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/08', target: '_blank'}
-                          = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/08.png', height:100
-                      .c_models.w3-cell.w3-button.w3-round
-                        %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/04', target: '_blank'}
-                          = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/04.png', height:100
-                      .c_models.w3-cell.w3-button.w3-round
-                        %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/06', target: '_blank'}
-                          = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/06.png', height:100
-                      .c_models.w3-cell.w3-button.w3-round
-                        %a{:href=>'https://swissmodel.expasy.org/5hYU6g/models/07', target: '_blank'}
-                          = image_tag 'https://swissmodel.expasy.org/interactive/5hYU6g/models/07.png', height:100
+                    #c_models.w3-cell.w3-padding
+                      .w3-panel.w3-border
+                        %p SWISS-MODEL
+                        - @nsp3_c_models_sm.each do |cmodel|
+                          .c_models.w3-cell.w3-button.w3-round
+                            = link_to image_tag(@swissmodel_path_pre+@nsp3_c_modelset+@swissmodel_path_sub1+cmodel+@swissmodel_path_sub2, alt: 'model #'+cmodel, height: '100'), @swissmodel_path_pre+@nsp3_c_modelset+@swissmodel_path_sub1+cmodel, target: "_blank"
+                            %p.w3-padding-small{style:"font-weight:bold"}= 'model #'+cmodel
+                            
+                  -# #NSP3_Interactions.nsp3_item_tab.w3-panel.w3-mobile{style: "display:none"}
+                  -#   .interactions.w3-cell
+                  -#     %p <i class="fa fa-spinner w3-spin" style="font-size:32px"></i>
+                  -# #NSP3_OtherRelated.nsp3_item_tab.w3-panel.w3-mobile{style: "display:none"}
+                  -#   .o_related.w3-cell
+                  -#     %p <i class="fa fa-spinner w3-spin" style="font-size:32px"></i>
 
-                  #NSP3_Interactions.nsp3_item_tab.w3-panel.w3-mobile{style: "display:none"}
-                    .interactions.w3-cell
-                      %p <i class="fa fa-spinner w3-spin" style="font-size:32px"></i>
-                  #NSP3_OtherRelated.nsp3_item_tab.w3-panel.w3-mobile{style: "display:none"}
-                    .o_related.w3-cell
-                      %p <i class="fa fa-spinner w3-spin" style="font-size:32px"></i>            
+              - uEntry = "NSP5"
+              #PLPro.data_item_content.w3-card.section#NSP5
+                %header.w3-padding
+                  - @nsp5_names.each do | a_name |
+                    .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+                #tabs_panel.w3-panel.w3-responsive.w3-border
+                  .w3-bar.w3-round.w3-light-grey.w3-border
+                    %button.w3-bar-item.w3-button.tablink.w3-grey{onclick:"openTab(event,'NSP5_PDB','nsp5_item_tab')"} PDB
+                    %button.w3-bar-item.w3-button.tablink.w3-disabled EMDB
+                    %button.w3-bar-item.w3-button.tablink.w3-disabled Computational Models
+                    %button.w3-bar-item.w3-button.tablink{onclick:"openTab(event,'NSP5_Interactions','nsp5_item_tab')"} Interactions
+                    %button.w3-bar-item.w3-button.tablink.w3-disabled Other Related
+                  #NSP5_PDB.nsp5_item_tab.w3-panel.w3-mobile
+                    - @nsp5_models2.each do | modelId |
+                      .models.w3-cell.w3-button.w3-round
+                        -img_path = @pdb_img_path_pre + modelId + @pdb_img_path_sub
+                        -query_path = @bionotes_qry_pre + modelId + @bionotes_qry_sub
+                        = link_to image_tag(img_path, alt: modelId, height: '100'), query_path
+                        %p.w3-padding-small{style:"font-weight:bold"}= modelId
+                        - if @nsp5_pdb_redo.include? modelId
+                          = link_to 'PDB-redo','https://pdb-redo.eu/db/'+modelId, target: '_blank', class: "w3-tag w3-round w3-teal"
+                  #NSP5_Interactions.nsp5_item_tab.w3-panel.w3-mobile{style: "display:none"}
+                    #interactions.w3-cell.w3-padding
+                    .w3-panel
+                      %p Ligands
+                      - @nsp5_inter_ligands.each do | modelId |
+                        .models.w3-cell.w3-button.w3-round
+                          -img_path = @pdb_img_path_pre + modelId + @pdb_img_path_sub
+                          -query_path = @bionotes_qry_pre + modelId + @bionotes_qry_sub
+                          = link_to image_tag(img_path, alt: modelId, height: '100'), query_path
+                          %p.w3-padding-small{style:"font-weight:bold"}= modelId
 
+          .w3.panel
+            %p
           - uEntry = "P0DTD1"
           #P0DTD1.data_item_content.w3-card
             %header.w3-padding
               .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
               - @alt_names[uEntry].each do |a_name|
                 .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
+
+              - uEntry = "NSP12"
+              #NSP12.data_item_content.w3-card.section#NSP12
+                %header.w3-padding
+                  - @nsp12_names.each do | a_name |
+                    .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+                #tabs_panel.w3-panel.w3-responsive.w3-border
+                  .w3-bar.w3-round.w3-light-grey.w3-border
+                    %button.w3-bar-item.w3-button.tablink.w3-grey{onclick:"openTab(event,'NSP12_PDB','nsp12_item_tab')"} PDB
+                    %button.w3-bar-item.w3-button.tablink{onclick:"openTab(event,'NSP12_EMDB','nsp12_item_tab')"} EMDB
+                    %button.w3-bar-item.w3-button.tablink.w3-disabled Computational Models
+                    %button.w3-bar-item.w3-button.tablink.w3-disabled Interactions
+                    %button.w3-bar-item.w3-button.tablink.w3-disabled Other Related
+                  #NSP12_PDB.nsp12_item_tab.w3-panel.w3-mobile
+                    - @nsp12_models.each do | modelId |
+                      .models.w3-cell.w3-button.w3-round
+                        -img_path = @pdb_img_path_pre + modelId + @pdb_img_path_sub
+                        -query_path = @bionotes_qry_pre + modelId + @bionotes_qry_sub
+                        = link_to image_tag(img_path, alt: modelId, height: '100'), query_path
+                        %p.w3-padding-small{style:"font-weight:bold"}= modelId
+                        - if @nsp12_pdb_redo.include? modelId
+                          = link_to 'PDB-redo','https://pdb-redo.eu/db/'+modelId, target: '_blank', class: "w3-tag w3-round w3-teal"
+                        - if @nsp12_isolde.include? modelId
+                          .w3-tag.w3-round.w3-cyan Isolde
+                  #NSP12_EMDB.nsp12_item_tab.w3-panel.w3-mobile{style: "display:none"}
+                    - @nsp12_maps.each do | mapId |
+                      .maps.w3-cell.w3-button
+                        -img_path = @map_img_path_pre + mapId + @map_img_path_sub1 + mapId[4..8] + @map_img_path_sub2
+                        -query_path = @bionotes_qry_pre + mapId + @bionotes_qry_sub
+                        = link_to image_tag(img_path, alt: mapId, height: '100'), query_path
+                        %p.w3-padding-small{style:"font-weight:bold"}= mapId
+                        
 
 
+          .w3.panel
+            %p
           - uEntry = "P0DTC2"
           #P0DTC2.data_item_content.w3-card.section#S
             %header.w3-padding
               - @s_names.each do | a_name |
                 .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
+            #tabs_panel.w3-panel.w3-responsive.w3-border
               .w3-bar.w3-round.w3-light-grey.w3-border
                 %button.w3-bar-item.w3-button.tablink.w3-grey{onclick:"openTab(event,'S_PDB','s_item_tab')"} PDB
                 %button.w3-bar-item.w3-button.tablink{onclick:"openTab(event,'S_EMDB','s_item_tab')"} EMDB
-                %button.w3-bar-item.w3-button.tablink.w3-disabled{onclick:"openTab(event,'S_CompModels','s_item_tab')"} Computational Models
-                %button.w3-bar-item.w3-button.tablink.w3-disabled{onclick:"openTab(event,'S_Interactions','s_item_tab')"} Interactions
-                %button.w3-bar-item.w3-button.tablink.w3-disabled{onclick:"openTab(event,'S_OtherRelated','s_item_tab')"} Other Related
+                %button.w3-bar-item.w3-button.tablink.w3-disabled Computational Models
+                %button.w3-bar-item.w3-button.tablink.w3-disabled Interactions
+                %button.w3-bar-item.w3-button.tablink.w3-disabled Other Related
               #S_PDB.s_item_tab.w3-panel.w3-mobile
-                - @s_models.each do | modelId |
+                - @s_pdbs.each do | modelId |
                   .models.w3-cell.w3-button.w3-round
                     -img_path = @pdb_img_path_pre + modelId + @pdb_img_path_sub
                     -query_path = @bionotes_qry_pre + modelId + @bionotes_qry_sub
                     = link_to image_tag(img_path, alt: modelId, height: '100'), query_path
                     %p.w3-padding-small{style:"font-weight:bold"}= modelId
-                    = link_to 'PDB-redo', 'https://pdb-redo.eu/db/6vsb', target: '_blank', class: "w3-tag w3-round w3-teal"
-                    = link_to 'Isolde', 'https://swissmodel.expasy.org/5hYU6g/models/04', target: '_blank', class: "w3-tag w3-round w3-cyan"
+                    - if @s_pdb_redo.include? modelId
+                      = link_to 'PDB-redo','https://pdb-redo.eu/db/'+modelId, target: '_blank', class: "w3-tag w3-round w3-teal"
+                    - if @s_isolde.include? modelId
+                      .w3-tag.w3-round.w3-cyan Isolde
+
               #S_EMDB.s_item_tab.w3-panel.w3-mobile{style: "display:none"}
                 - @s_maps.each do | mapId |
                   .maps.w3-cell.w3-button
@@ -290,98 +335,108 @@
                 .o_related.w3-cell
                   %p <i class="fa fa-spinner w3-spin" style="font-size:32px"></i>
 
-          - uEntry = "P0DTC3"
-          #P0DTC3.data_item_content.w3-card
-            %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-              - @alt_names[uEntry].each do |a_name|
-                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
+          -# - uEntry = "P0DTC3"
+          -# #P0DTC3.data_item_content.w3-card.section#NS3a
+          -#   %header.w3-padding
+          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+          -#     - @alt_names[uEntry].each do |a_name|
+          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+          -#   #tabs_panel.w3-panel.w3-responsive
 
-          - uEntry = "P0DTC4"
-          #P0DTC4.data_item_content.w3-card
-            %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-              - @alt_names[uEntry].each do |a_name|
-                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
+          -# - uEntry = "P0DTC4"
+          -# #P0DTC4.data_item_content.w3-card.section#E
+          -#   %header.w3-padding
+          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+          -#     - @alt_names[uEntry].each do |a_name|
+          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+          -#   #tabs_panel.w3-panel.w3-responsive
 
-          - uEntry = "P0DTC5"
-          #P0DTC5.data_item_content.w3-card
-            %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-              - @alt_names[uEntry].each do |a_name|
-                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
+          -# - uEntry = "P0DTC5"
+          -# #P0DTC5.data_item_content.w3-card.section#M
+          -#   %header.w3-padding
+          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+          -#     - @alt_names[uEntry].each do |a_name|
+          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+          -#   #tabs_panel.w3-panel.w3-responsive
 
-          - uEntry = "P0DTC6"
-          #P0DTC6.data_item_content.w3-card
-            %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-              - @alt_names[uEntry].each do |a_name|
-                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
+          -# - uEntry = "P0DTC6"
+          -# #P0DTC6.data_item_content.w3-card.section#NS6
+          -#   %header.w3-padding
+          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+          -#     - @alt_names[uEntry].each do |a_name|
+          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+          -#   #tabs_panel.w3-panel.w3-responsive
 
-          - uEntry = "P0DTC7"
-          #P0DTC7.data_item_content.w3-card
-            %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-              - @alt_names[uEntry].each do |a_name|
-                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
+          -# - uEntry = "P0DTC7"
+          -# #P0DTC7.data_item_content.w3-card.section#NS7a
+          -#   %header.w3-padding
+          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+          -#     - @alt_names[uEntry].each do |a_name|
+          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+          -#   #tabs_panel.w3-panel.w3-responsive
 
-          - uEntry = "P0DTC8"
-          #P0DTC8.data_item_content.w3-card
-            %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-              - @alt_names[uEntry].each do |a_name|
-                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
+          -# - uEntry = "P0DTC8"
+          -# #P0DTC8.data_item_content.w3-card.section#NS8
+          -#   %header.w3-padding
+          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+          -#     - @alt_names[uEntry].each do |a_name|
+          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+          -#   #tabs_panel.w3-panel.w3-responsive
 
-          - uEntry = "P0DTD8"
-          #P0DTD8.data_item_content.w3-card
-            %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-              - @alt_names[uEntry].each do |a_name|
-                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
+          -# - uEntry = "P0DTD8"
+          -# #P0DTD8.data_item_content.w3-card.section#NS7b
+          -#   %header.w3-padding
+          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+          -#     - @alt_names[uEntry].each do |a_name|
+          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+          -#   #tabs_panel.w3-panel.w3-responsive
 
-          - uEntry = "P0DTC9"
-          #P0DTC9.data_item_content.w3-card
-            %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-              - @alt_names[uEntry].each do |a_name|
-                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
+          -# - uEntry = "P0DTC9"
+          -# #P0DTC9.data_item_content.w3-card.section#N
+          -#   %header.w3-padding
+          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+          -#     - @alt_names[uEntry].each do |a_name|
+          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+          -#   #tabs_panel.w3-panel.w3-responsive
 
-          - uEntry = "P0DTD2"
-          #P0DTD2.data_item_content.w3-card
-            %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-              - @alt_names[uEntry].each do |a_name|
-                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
-
-
-          - uEntry = "P0DTD3"
-          #P0DTD3.data_item_content.w3-card
-            %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-              - @alt_names[uEntry].each do |a_name|
-                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
+          -# - uEntry = "P0DTD2"
+          -# #P0DTD2.data_item_content.w3-card.section#NS9b
+          -#   %header.w3-padding
+          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+          -#     - @alt_names[uEntry].each do |a_name|
+          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+          -#   #tabs_panel.w3-panel.w3-responsive
 
 
-          - uEntry = "A0A663DJA2"
-          #A0A663DJA2.data_item_content.w3-card
-            %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-              - @alt_names[uEntry].each do |a_name|
-                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-            #tabs_panel.w3-panel.w3-responsive
+          -# - uEntry = "P0DTD3"
+          -# #P0DTD3.data_item_content.w3-card.section#NS14
+          -#   %header.w3-padding
+          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+          -#     - @alt_names[uEntry].each do |a_name|
+          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+          -#   #tabs_panel.w3-panel.w3-responsive
 
 
- 
+          -# - uEntry = "A0A663DJA2"
+          -# #A0A663DJA2.data_item_content.w3-card.section#NS10
+          -#   %header.w3-padding
+          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+          -#     - @alt_names[uEntry].each do |a_name|
+          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+          -#   #tabs_panel.w3-panel.w3-responsive
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     %hr.dashed
