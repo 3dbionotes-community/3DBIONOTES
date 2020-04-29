@@ -33,41 +33,34 @@
           %span.navbar-toggler-icon
         #navcol-1.collapse.navbar-collapse.navbarLinks
           %ul.nav.navbar-nav.mx-auto
-            %li.nav-item{:role => "presentation"}
-              %a.nav-link.active{:href => "#"} HOME
-            %li.nav-item{:role => "presentation"}
-              %a.nav-link{:href => "#"} CoVid-19
-            %li.nav-item{:role => "presentation"}
-              %a.nav-link{:href => "submit.html"} SUBMIT
-            %li.nav-item{:role => "presentation"}
-              %a.nav-link{:href => "network.html"} NETWORK
-            %li.nav-item{:role => "presentation"}
-              %a.nav-link{:href => "query.html"} QUERY
-            %li.nav-item{:role => "presentation"}
-              %a.nav-link{:href => "api.html"} API
-            %li.nav-item{:role => "presentation"}
-              %a.nav-link{:href => "#"} HELP
-            %li.nav-item{:role => "presentation"}
-              %a.nav-link{:href => "http://biocomputingunit.es/"} ABOUT US
+            = menu_item("HOME", action: "home")
+            = menu_item("CoVid-19", url: "#")
+            = menu_item("SUBMIT", action: "submit")
+            = menu_item("NETWORK", action: "network")
+            = menu_item("QUERY", action: "query")
+            = menu_item("API", action: "api")
+            = menu_item("HELP", url: "#")
+            = menu_item("ABOUT US", url: "http://biocomputingunit.es/")
 
     = yield
 
-    %footer
-    .container.text-center
-      .row
-        .col
-          %h4
-            %strong
-              3DBIONOTES-
-              %em WS
-            %br/
-          %p
-            %strong An ELIXIR Recommended Interoperability Resource
-            %br/
-          .footerLinks
-            %p
-              %a{:href => "#"}> Biocomputing Unit
-               @
-              %a{:href => "#"} CNB
-              \-
-              %a{:href => "#"} CSIC
+    .bg-primary.footer-dark#mainFooter
+      %footer
+        .container.text-center
+          .row
+            .col
+              %h4
+                %strong
+                  3DBIONOTES-
+                  %em WS
+                %br/
+              %p
+                %strong An ELIXIR Recommended Interoperability Resource
+                %br/
+              .footerLinks
+                %p
+                  %a{:href => "#"}> Biocomputing Unit
+                   @
+                  %a{:href => "#"} CNB
+                  \-
+                  %a{:href => "#"} CSIC
