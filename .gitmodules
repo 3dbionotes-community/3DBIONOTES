@@ -1,6 +1,3 @@
 [submodule "app/assets/javascripts/annotations_viewer/myProtVista"]
 	path = app/assets/javascripts/annotations_viewer/myProtVista
 	url = https://jsegurmor@gitlab.com/jsegurmor/myProtVista.git
-[submodule "app/assets/javascripts/annotations_viewer/extendProtVista"]
-	path = app/assets/javascripts/annotations_viewer/extendProtVista
-	url = https://jsegurmor@gitlab.com/jsegurmor/extendProtVista.git
