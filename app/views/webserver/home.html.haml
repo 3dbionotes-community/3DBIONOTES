@@ -1,6 +1,13 @@
-= stylesheet_link_tag('webserver/home_style.css')
-.ws_main_div
-  .home_text
-    3DBIONOTES-WS is a web application designed to automatically annotate biochemical and biomedical information onto structural models. Current sources of information include post-translational modifications, genomic variations associated to diseases, short linear motifs, immune epitopes sites, disordered regions and domain families.
-  .home_image
-    =image_tag("home_image_covid.png")
+#welcome.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.align-items-md-center.align-items-lg-center.align-items-xl-center{:style => "min-height: 580px;"}
+  .container
+    .jumbotron
+      %p
+        %strong> 3DBIONOTES-WS
+        = " "
+        is a web application designed to automatically annotate biochemical and biomedical information onto structural models. Current sources of information include post-translational modifications, genomic variations
+        associated to diseases, short linear motifs, immune epitopes sites, disordered regions and domain families.
+        %br/
+      %p
+        %a.btn.btn-primary.btn-lg{:role => "button"} Call to Action
+        %a.btn.btn-secondary.btn-lg{:role => "button", :style => "margin-left: 10px;"} More Info
+#mainFooter.bg-primary.footer-dark

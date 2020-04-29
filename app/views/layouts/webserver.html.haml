@@ -1,66 +1,73 @@
 %html(lang="en")
   %head
     = stylesheet_link_tag('webserver/webserver_style.css')
-    = stylesheet_link_tag('webserver/w3.css')
     = stylesheet_link_tag('application')
+    = stylesheet_link_tag("https://fonts.googleapis.com/css?family=Lato:400,700,400italic&amp;display=swap")
+    = stylesheet_link_tag('webserver/footer-dark.css')
+    = stylesheet_link_tag('webserver/main.css')
+
     = javascript_include_tag('webserver/webserver_lib')
     = javascript_include_tag('webserver/webserver_init')
     = javascript_include_tag('application')
   %body
-    .logo
-      %table
-        %tr
-          %td
-            = image_tag '3DBionotesWS_CoVid_logo.png', alt: '3DBionotes-logo', height: '270'
-          %td
-            %table
-              %tr
-                %td
-                  = image_tag 'http://www.cnb.csic.es/images/Julia2015/Logos/logos_2019/80_Ministerio_de_Ciencia_e_Innovacion.jpg', alt: 'Ministerio_Ciencia-logo', height: '50'
-                %td
-                  = image_tag 'http://www.cnb.csic.es/images/Julia2015/Logos/logos_2019/100_CSIC.jpg', alt: 'CSIC-logo', height: '50'
-                %td
-                  = image_tag 'CNB_logo.jpg', alt: 'CNB-logo', height: '50'
-              %tr
-                %td
-                  = image_tag 'estevirusloparamosunidos.png', alt: 'CoVid_Campain-logo', height: '50'
-                %td
-                  = image_tag 'https://instruct-eric.eu/templates/instructeric/images/logos/instruct-eric-logo-noline.png', alt: 'Intruct-logo', height: '50'
-                %td
-                  = image_tag 'https://inb-elixir.es/sites/default/files/inbelixir.png', alt: 'INB_Elixir_Spain-logo', height: '50'
+    %header.mainHeader.d-flex.align-items-center
+      .container
+        %img#mainLogo.d-block.float-md-left.float-lg-left.float-xl-left.mx-auto.mx-sm-auto{:src => "/assets/3DBionotesLogo.jpg"}/
+        #partners.text-right.d-block.float-md-right.float-lg-right.float-xl-right.mx-sm-auto
+          .d-flex.d-sm-flex.justify-content-center.justify-content-sm-center.justify-content-md-end.justify-content-lg-end.justify-content-xl-end
+            %img{:src => "/assets/inbelixir.png", :style => "max-width: 135px;"}/
+            %img{:src => "/assets/instruct-eric-logo-noline.png", :style => "max-width: 122px;"}/
+          .d-flex.d-sm-flex.justify-content-center.justify-content-sm-center.justify-content-md-end.at-title-link
+            %p
+              %a{:href => "#"}> Biocomputing Unit
+               @
+              %a{:href => "#"} CNB
+              \-
+              %a{:href => "#"} CSIC
+    %nav#menuBar.navbar.navbar-dark.navbar-expand-md.bg-primary
+      .container
+        %a.navbar-brand.d-print-none.d-md-none.d-lg-none.d-xl-none{:href => "#"}
+          %strong 3DBionotes-WS
+        %button.navbar-toggler{"data-target" => "#navcol-1", "data-toggle" => "collapse"}
+          %span.sr-only Toggle navigation
+          %span.navbar-toggler-icon
+        #navcol-1.collapse.navbar-collapse.navbarLinks
+          %ul.nav.navbar-nav.mx-auto
+            %li.nav-item{:role => "presentation"}
+              %a.nav-link.active{:href => "#"} HOME
+            %li.nav-item{:role => "presentation"}
+              %a.nav-link{:href => "#"} CoVid-19
+            %li.nav-item{:role => "presentation"}
+              %a.nav-link{:href => "submit.html"} SUBMIT
+            %li.nav-item{:role => "presentation"}
+              %a.nav-link{:href => "network.html"} NETWORK
+            %li.nav-item{:role => "presentation"}
+              %a.nav-link{:href => "query.html"} QUERY
+            %li.nav-item{:role => "presentation"}
+              %a.nav-link{:href => "api.html"} API
+            %li.nav-item{:role => "presentation"}
+              %a.nav-link{:href => "#"} HELP
+            %li.nav-item{:role => "presentation"}
+              %a.nav-link{:href => "http://biocomputingunit.es/"} ABOUT US
 
-    .who
-      %a{:href=>"http://biocomputingunit.es", :target=>"_blank"} Biocomputing Unit
-      @
-      %a{:href=>"http://www.cnb.csic.es/index.php/en", :target=>"_blank"} CNB
-      \- 
-      %a{:href=>"http://www.csic.es/", :target=>"_blank"} CSIC
-      %br
-    .options
-      %table
-        %tr
-          %td 
-            %a{:href=>"/ws/home"} HOME
-          %td#option_covid
-            %a{:href=>"/ws/database"} CoVid-19
-          %td 
-            %a{:href=>"/ws/submit"} SUBMIT
-          %td 
-            %a{:href=>"/ws/network"} NETWORK
-          %td 
-            %a{:href=>"/ws/database-ori"} QUERY 
-          %td
-            %a{:href=>"/ws/api"} API
-          %td
-            %a{:href=>"/ws/help"} HELP
-          %td 
-            %a{:href=>"http://biocomputingunit.es", :target=>"_blank"} ABOUT US
     = yield
-    .footer
-      3DBIONOTES web-server was developed and is maintained at the 
-      %a{:href=>"http://biocomputingunit.es/", :target=>"_blank"} Biocomputing Unit 
-      \- 
-      %a{:href=>"http://www.cnb.csic.es/index.php/en", :target=>"_blank"} CNB 
-      by Joan Segura Mora. Citing the web-server
-      %a{:href=>"https://doi.org/10.1093/bioinformatics/btx483", :target=>"_blank", :style=>"font-weight:bold;"} ?
- 
+
+    %footer
+    .container.text-center
+      .row
+        .col
+          %h4
+            %strong
+              3DBIONOTES-
+              %em WS
+            %br/
+          %p
+            %strong An ELIXIR Recommended Interoperability Resource
+            %br/
+          .footerLinks
+            %p
+              %a{:href => "#"}> Biocomputing Unit
+               @
+              %a{:href => "#"} CNB
+              \-
+              %a{:href => "#"} CSIC

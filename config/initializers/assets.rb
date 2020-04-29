@@ -87,4 +87,6 @@ Rails.application.config.assets.precompile += %w( webserver/help_style.css )
 Rails.application.config.assets.precompile += %w( webserver/home_style.css )
 Rails.application.config.assets.precompile += %w( webserver/webserver_lib.js )
 Rails.application.config.assets.precompile += %w( webserver/webserver_init.js )
+Rails.application.config.assets.precompile += %w( webserver/footer-dark.css )
+Rails.application.config.assets.precompile += %w( webserver/main.css )
 
