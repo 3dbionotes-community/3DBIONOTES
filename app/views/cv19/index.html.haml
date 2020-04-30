@@ -46,13 +46,22 @@
           .w3-card.w3-padding-small.w3-hover-shadow.w3-center
             = link_to 'S - Spike glycoprotein - P0DTC2', '/?queryId=P0DTC2&viewer_type=ngl&button=#query', style:"font-weight:bold"
         .w3-row.w3-padding
-          .w3-card.w3-padding.w3-hover-shadow.w3-half.w3-center
+          .w3-card.w3-padding.w3-hover-shadow.w3-quarter.w3-center
             = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/EMD-21375/400_21375.gif', alt: 'EMD-30039', height: '150'),'/?queryId=EMD-21375&viewer_type=ngl&button=#query', style:"font-weight:bold"
             %p.w3-padding-small{style:"font-weight:bold"} EMD-21375
-          .w3-card.w3-padding.w3-hover-shadow.w3-half.w3-center
+          
+          .w3-card.w3-padding.w3-hover-shadow.w3-quarter.w3-center
+            = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/EMD-30210/400_30210.gif', alt: 'EMD-30210', height: '150'),'/?queryId=EMD-30210&viewer_type=ngl&button=#query', style:"font-weight:bold"
+            %p.w3-padding-small{style:"font-weight:bold"} EMD-30210
+
+          .w3-card.w3-padding.w3-hover-shadow.w3-quarter.w3-center
             = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/6lzg_deposited_chain_front_image-200x200.png', alt: '6LZG', height: '150'), '/?queryId=6LZG&viewer_type=ngl&button=#query'
             %p.w3-padding-small{style:"font-weight:bold"} 6LZG
   
+          .w3-card.w3-padding.w3-hover-shadow.w3-quarter.w3-center
+            = link_to image_tag('https://www.ebi.ac.uk/pdbe/static/entry/6w9c_deposited_chain_front_image-200x200.png', alt: '6W9C', height: '150'), '/?queryId=6W9C&viewer_type=ngl&button=#query'
+            %p.w3-padding-small{style:"font-weight:bold"} 6W9C
+
       #cv_data_content
 
         #cv_data_index
@@ -173,7 +182,8 @@
           - uEntry = "P0DTC1"
           #P0DTC1.data_item_content.w3-card
             %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
               - @alt_names[uEntry].each do |a_name|
                 .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
 
@@ -255,7 +265,8 @@
           - uEntry = "P0DTD1"
           #P0DTD1.data_item_content.w3-card
             %header.w3-padding
-              .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
               - @alt_names[uEntry].each do |a_name|
                 .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
 
@@ -297,8 +308,10 @@
           - uEntry = "P0DTC2"
           #P0DTC2.data_item_content.w3-card.section#S
             %header.w3-padding
-              - @s_names.each do | a_name |
-                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+            .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+              = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
+            - @s_names.each do | a_name |
+              .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
             #tabs_panel.w3-panel.w3-responsive.w3-border
               .w3-bar.w3-round.w3-light-grey.w3-border
                 %button.w3-bar-item.w3-button.tablink.w3-grey{onclick:"openTab(event,'S_PDB','s_item_tab')"} PDB
@@ -335,95 +348,106 @@
                 .o_related.w3-cell
                   %p <i class="fa fa-spinner w3-spin" style="font-size:32px"></i>
 
-          -# - uEntry = "P0DTC3"
-          -# #P0DTC3.data_item_content.w3-card.section#NS3a
-          -#   %header.w3-padding
-          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-          -#     - @alt_names[uEntry].each do |a_name|
-          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-          -#   #tabs_panel.w3-panel.w3-responsive
+          - uEntry = "P0DTC3"
+          #P0DTC3.data_item_content.w3-card.section#NS3a
+            %header.w3-padding
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
+              - @alt_names[uEntry].each do |a_name|
+                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+            #tabs_panel.w3-panel.w3-responsive
 
-          -# - uEntry = "P0DTC4"
-          -# #P0DTC4.data_item_content.w3-card.section#E
-          -#   %header.w3-padding
-          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-          -#     - @alt_names[uEntry].each do |a_name|
-          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-          -#   #tabs_panel.w3-panel.w3-responsive
+          - uEntry = "P0DTC4"
+          #P0DTC4.data_item_content.w3-card.section#E
+            %header.w3-padding
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
+              - @alt_names[uEntry].each do |a_name|
+                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+            #tabs_panel.w3-panel.w3-responsive
 
-          -# - uEntry = "P0DTC5"
-          -# #P0DTC5.data_item_content.w3-card.section#M
-          -#   %header.w3-padding
-          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-          -#     - @alt_names[uEntry].each do |a_name|
-          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-          -#   #tabs_panel.w3-panel.w3-responsive
+          - uEntry = "P0DTC5"
+          #P0DTC5.data_item_content.w3-card.section#M
+            %header.w3-padding
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
+              - @alt_names[uEntry].each do |a_name|
+                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+            #tabs_panel.w3-panel.w3-responsive
 
-          -# - uEntry = "P0DTC6"
-          -# #P0DTC6.data_item_content.w3-card.section#NS6
-          -#   %header.w3-padding
-          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-          -#     - @alt_names[uEntry].each do |a_name|
-          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-          -#   #tabs_panel.w3-panel.w3-responsive
+          - uEntry = "P0DTC6"
+          #P0DTC6.data_item_content.w3-card.section#NS6
+            %header.w3-padding
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
+              - @alt_names[uEntry].each do |a_name|
+                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+            #tabs_panel.w3-panel.w3-responsive
 
-          -# - uEntry = "P0DTC7"
-          -# #P0DTC7.data_item_content.w3-card.section#NS7a
-          -#   %header.w3-padding
-          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-          -#     - @alt_names[uEntry].each do |a_name|
-          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-          -#   #tabs_panel.w3-panel.w3-responsive
+          - uEntry = "P0DTC7"
+          #P0DTC7.data_item_content.w3-card.section#NS7a
+            %header.w3-padding
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
+              - @alt_names[uEntry].each do |a_name|
+                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+            #tabs_panel.w3-panel.w3-responsive
 
-          -# - uEntry = "P0DTC8"
-          -# #P0DTC8.data_item_content.w3-card.section#NS8
-          -#   %header.w3-padding
-          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-          -#     - @alt_names[uEntry].each do |a_name|
-          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-          -#   #tabs_panel.w3-panel.w3-responsive
+          - uEntry = "P0DTC8"
+          #P0DTC8.data_item_content.w3-card.section#NS8
+            %header.w3-padding
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
+              - @alt_names[uEntry].each do |a_name|
+                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+            #tabs_panel.w3-panel.w3-responsive
 
-          -# - uEntry = "P0DTD8"
-          -# #P0DTD8.data_item_content.w3-card.section#NS7b
-          -#   %header.w3-padding
-          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-          -#     - @alt_names[uEntry].each do |a_name|
-          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-          -#   #tabs_panel.w3-panel.w3-responsive
+          - uEntry = "P0DTD8"
+          #P0DTD8.data_item_content.w3-card.section#NS7b
+            %header.w3-padding
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
+              - @alt_names[uEntry].each do |a_name|
+                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+            #tabs_panel.w3-panel.w3-responsive
 
-          -# - uEntry = "P0DTC9"
-          -# #P0DTC9.data_item_content.w3-card.section#N
-          -#   %header.w3-padding
-          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-          -#     - @alt_names[uEntry].each do |a_name|
-          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-          -#   #tabs_panel.w3-panel.w3-responsive
+          - uEntry = "P0DTC9"
+          #P0DTC9.data_item_content.w3-card.section#N
+            %header.w3-padding
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
+              - @alt_names[uEntry].each do |a_name|
+                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+            #tabs_panel.w3-panel.w3-responsive
 
-          -# - uEntry = "P0DTD2"
-          -# #P0DTD2.data_item_content.w3-card.section#NS9b
-          -#   %header.w3-padding
-          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-          -#     - @alt_names[uEntry].each do |a_name|
-          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-          -#   #tabs_panel.w3-panel.w3-responsive
-
-
-          -# - uEntry = "P0DTD3"
-          -# #P0DTD3.data_item_content.w3-card.section#NS14
-          -#   %header.w3-padding
-          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-          -#     - @alt_names[uEntry].each do |a_name|
-          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-          -#   #tabs_panel.w3-panel.w3-responsive
+          - uEntry = "P0DTD2"
+          #P0DTD2.data_item_content.w3-card.section#NS9b
+            %header.w3-padding
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
+              - @alt_names[uEntry].each do |a_name|
+                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+            #tabs_panel.w3-panel.w3-responsive
 
 
-          -# - uEntry = "A0A663DJA2"
-          -# #A0A663DJA2.data_item_content.w3-card.section#NS10
-          -#   %header.w3-padding
-          -#     .w3-tag.w3-padding-large.w3-round.w3-light-grey= uEntry
-          -#     - @alt_names[uEntry].each do |a_name|
-          -#       .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
-          -#   #tabs_panel.w3-panel.w3-responsive
+          - uEntry = "P0DTD3"
+          #P0DTD3.data_item_content.w3-card.section#NS14
+            %header.w3-padding
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
+              - @alt_names[uEntry].each do |a_name|
+                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+            #tabs_panel.w3-panel.w3-responsive
+
+
+          - uEntry = "A0A663DJA2"
+          #A0A663DJA2.data_item_content.w3-card.section#NS10
+            %header.w3-padding
+              .w3-tag.w3-padding-large.w3-round.w3-blue-grey
+                = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
+              - @alt_names[uEntry].each do |a_name|
+                .w3-tag.w3-padding-large.w3-round.w3-light-grey= a_name
+            #tabs_panel.w3-panel.w3-responsive
 
 
 

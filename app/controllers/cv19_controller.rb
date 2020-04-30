@@ -48,7 +48,7 @@ class Cv19Controller < ApplicationController
 
     # P0DTC2
     # > S
-    @s_names = ["P0DTC2","S","Spike glycoprotein","SPIKE_WCPV","surface_glycoprotein"]
+    @s_names = ["S","Spike glycoprotein","SPIKE_WCPV","surface_glycoprotein"]
     @s_pdbs_data = loadPDBData('S')
     @s_pdbs = @s_pdbs_data["S"]["PDB"].keys
     @s_maps_data = loadEmdbData('S')
