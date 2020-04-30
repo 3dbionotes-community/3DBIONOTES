@@ -13,7 +13,8 @@ module ApplicationHelper
     is_active = path.is_a?(Hash) ? params[:action] === path[:action] : false
 
     content_tag(:li, class: "nav-item", role: "presentation") do
-      link_to(text, link_url, class: ["nav-link", *(is_active ? ["active"]: [])])
+      css_classes = ["nav-link", *(is_active ? ["active"] : [])]
+      link_to(text, link_url, class: css_classes)
     end
   end
 end

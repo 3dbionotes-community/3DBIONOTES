@@ -3,27 +3,29 @@
     = stylesheet_link_tag('webserver/webserver_style.css')
     = stylesheet_link_tag('application')
     = stylesheet_link_tag("https://fonts.googleapis.com/css?family=Lato:400,700,400italic&amp;display=swap")
-    = stylesheet_link_tag('webserver/footer-dark.css')
     = stylesheet_link_tag('webserver/main.css')
+    = stylesheet_link_tag('webserver/carousel.css')
+    = stylesheet_link_tag('webserver/proteome.css')
 
-    = javascript_include_tag('webserver/webserver_lib')
-    = javascript_include_tag('webserver/webserver_init')
     = javascript_include_tag('application')
+    = javascript_include_tag('webserver/carousel')
+    = javascript_include_tag('webserver/popover')
   %body
-    %header.mainHeader.d-flex.align-items-center
-      .container
-        %img#mainLogo.d-block.float-md-left.float-lg-left.float-xl-left.mx-auto.mx-sm-auto{:src => "/assets/3DBionotesLogo.jpg"}/
-        #partners.text-right.d-block.float-md-right.float-lg-right.float-xl-right.mx-sm-auto
-          .d-flex.d-sm-flex.justify-content-center.justify-content-sm-center.justify-content-md-end.justify-content-lg-end.justify-content-xl-end
-            %img{:src => "/assets/inbelixir.png", :style => "max-width: 135px;"}/
-            %img{:src => "/assets/instruct-eric-logo-noline.png", :style => "max-width: 122px;"}/
-          .d-flex.d-sm-flex.justify-content-center.justify-content-sm-center.justify-content-md-end.at-title-link
-            %p
-              %a{:href => "#"}> Biocomputing Unit (COVID19 layout)
-               @
-              %a{:href => "#"} CNB
-              \-
-              %a{:href => "#"} CSIC
+    %header.covid19Header.d-flex.align-items-center
+      .container.text-center.text-sm-center.text-md-center.text-lg-left.text-xl-left
+        %img#mainLogoCovid19{:src => "/assets/3DBionotes-Logo-CoVid-19-revisited.jpg"}/
+        #partnersCovid19.d-inline-block.float-lg-right.float-xl-right
+          .row
+            .col
+              %img.partnerLogo{:src => "/assets/80_Ministerio_de_Ciencia_e_Innovacion.jpg"}/
+              %img.partnerLogo{:src => "/assets/100_CSIC.jpg", :style => "width: 120px;"}/
+              %img.partnerLogo{:src => "/assets/CNB_logo-30fc3586b103c993eeacd7d1f9a0d02dbd445703f5ab29e8cc9e26a48d35ad0d.jpg", :style => "width: 90px;"}/
+          .row
+            .col
+              %img.partnerLogo{:src => "/assets/2020_03_15_No_23-uuuuhh.jpg", :style => "width: 100px;"}/
+              %img.partnerLogo{:src => "/assets/inbelixir.png"}/
+              %img.partnerLogo{:src => "/assets/instruct-eric-logo-noline.png"}/
+
     %nav#menuBar.navbar.navbar-dark.navbar-expand-md.bg-primary
       .container
         %a.navbar-brand.d-print-none.d-md-none.d-lg-none.d-xl-none{:href => "#"}

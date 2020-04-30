@@ -1,0 +1,22 @@
+- if items
+  .card.proteinSub
+    #pSub-1.card-header
+      %h5.d-inline.mb-0 #{name}
+      %span.d-inline-block.float-right.paginationText
+        #{items.size} of #{items.size} items
+        %button.modalButton{"data-target" => "#modalContent-1", "data-toggle" => "modal", :type => "button"}
+          View All (TODO)
+    #pSubBod-1.card-body
+      .row
+        - items.each do |item|
+          - name = item[:name]
+          .col-sm-6.col-md-3.col-lg-2.col-xl-2
+            .subItem
+              %a{:href => item[:url], :title => "Open query"}
+                %img{:src => item[:image_url]}/
+                %h6 #{name}
+              - item[:links].each do |link|
+                %button{"data-content" => "<h6>Title</h6><p>Paragraph</p><a class='card-link' href='#{link[:url]}'>Link</a></div>", "data-html" => "true", "data-placement" => "bottom", "data-toggle" => "popover", :title => "Popover title", :type => "button"}
+                  %span{:class => "badge badge-primary itemBadge w3-#{link[:style]}"}
+                    %strong
+                      = link[:name]

@@ -4,8 +4,10 @@ class ApplicationController < ActionController::Base
   require 'net/http'
   protect_from_forgery with: :exception
 
-  rescue_from Exception do |exception|
-    render_403(exception)
+  unless Rails.env.development?
+    rescue_from Exception do |exception|
+      render_403(exception)
+    end
   end
 
   def render_403(exception)

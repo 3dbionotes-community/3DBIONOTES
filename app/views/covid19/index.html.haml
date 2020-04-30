@@ -1,1 +1,248 @@
-%div TODO: Covid19 index contents
+.d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
+  .container
+    .searchBox
+      %label.d-block.text-center Search by Entry ID
+      #mainSearch.input-group.form-control-lg.md-form.form-sm.form-2.pl-0.justify-content-center
+        %input.form-control.form-control-lg.my-0.py-1.amber-border{"aria-label" => "Search", :placeholder => "Uniprot accession, PDB ID, EMDB code", :type => "text"}/
+        %i.fas.fa-search.text-grey.searchIconMain{"aria-hidden" => "true"}
+    .contentBox
+      .contentTitle
+        %h4
+          %strong Selected entries
+          %br/
+      .contentData
+        .container-fluid.carouselContainer
+          #myCarousel.carousel.slide{"data-ride" => "carousel"}
+            .carousel-inner.row.w-100.mx-auto
+              - @selected_entries.each_with_index do |entry, idx|
+                %div{:class => ["carousel-item", "col-md-4", idx == 0 ? "active" : nil].compact}
+                  .card
+                    %a{:href => entry[:query_url]}
+                      %img.card-img-top.img-fluid{:alt => entry[:name], :src => entry[:image_url]}/
+                      .card-body
+                        %h4.card-title
+                          = entry[:name]
+                        %p.card-text
+                          = entry[:description]
+            %a.carousel-control-prev{"data-slide" => "prev", :href => "#myCarousel", :role => "button"}
+              %span.carousel-control-prev-icon{"aria-hidden" => "true"}
+              %span.sr-only Previous
+            %a.carousel-control-next{"data-slide" => "next", :href => "#myCarousel", :role => "button"}
+              %span.carousel-control-next-icon{"aria-hidden" => "true"}
+              %span.sr-only Next
+    .contentBox
+      .contentTitle
+        %h4
+          %strong SARS-CoV-2 virus proteome
+          %br/
+      .contentData
+        .alert.alert-warning{:role => "alert"}
+          %span
+            %em
+              Please, note this web site is work in progress. Feel
+              free to report any missing or inconsistent data or behaviour.
+            %br/
+        %div
+          %table#proteomeTable.table
+            %tbody
+              %tr
+                %td.w3-dark-gray.w3-center{:colspan => "11"}
+                  .index1
+                    %a{:href => "#R1a"} R1a
+              %tr
+                %td.w3-gray{:rowspan => "2"}
+                  .index2
+                    %a{:href => "#NSP1"} NSP1
+                %td.w3-gray{:rowspan => "2"}
+                  .index2
+                    %a{:href => "#NSP2"} NSP2
+                %td.w3-blue-gray{:rowspan => "2"}
+                  .index2
+                    %a{:href => "#NSP3"} PL-Pro
+                %td.w3-gray{:rowspan => "2"}
+                  .index2
+                    %a{:href => "#NSP4"} NSP4
+                %td.w3-blue-gray{:rowspan => "2"}
+                  .index2
+                    %a{:href => "#NSP5"} 3CL
+                %td.w3-gray{:rowspan => "2"}
+                  .index2
+                    %a{:href => "#NSP6"} NSP6
+                %td.w3-gray{:rowspan => "2"}
+                  .index2
+                    %a{:href => "#NSP7"} NSP7
+                %td.w3-gray{:rowspan => "2"}
+                  .index2
+                    %a{:href => "#NSP8"} NSP8
+                %td.w3-gray{:rowspan => "2"}
+                  .index2
+                    %a{:href => "#NSP9"} NSP9
+                %td.w3-gray{:rowspan => "2"}
+                  .index2
+                    %a{:href => "#NSP10"} NSP10
+                %td.w3-gray{:rowspan => "2"}
+                  .index2
+                    %a{:href => "#NSP11"} NSP11
+                %td.w3-tag.w3-white{:colspan => "5"}
+                %td.w3-tag.w3-cyan
+                  .index2
+                    %a{:href => "#S"} S
+                %td.w3-tag.w3-white{:colspan => "2"}
+                %td.w3-tag.w3-lime
+                  .index2
+                    %a{:href => "#M"} M
+                %td.w3-tag.w3-white
+                %td.w3-tag.w3-blue
+                  .index2
+                    %a{:href => "#NS7a"} NS7a
+                %td.w3-tag.w3-white
+                %td.w3-tag.w3-brown
+                  .index2
+                    %a{:href => "#NS8"} NS8
+                %td.w3-tag.w3-white
+                %td.w3-tag.w3-green
+                  .index2
+                    %a{:href => "#N"} N
+              %tr
+                %td.w3-gray
+                  .index2
+                    %a{:href => "#NSP12"} NSP12
+                %td.w3-gray
+                  .index2
+                    %a{:href => "#NSP13"} NSP13
+                %td.w3-gray
+                  .index2
+                    %a{:href => "#NSP14"} NSP14
+                %td.w3-gray
+                  .index2
+                    %a{:href => "#NSP15"} NSP15
+                %td.w3-gray
+                  .index2
+                    %a{:href => "#NSP16"} NSP16
+                %td.w3-tag.w3-white
+                %td.w3-tag.w3-amber
+                  .index2
+                    %a{:href => "#NS3a"} NS3a
+                %td.w3-tag.w3-purple
+                  .index2
+                    %a{:href => "#E"} E
+                %td.w3-tag.w3-white
+                %td.w3-tag.w3-orange
+                  .index2
+                    %a{:href => "#NS6"} NS6
+                %td.w3-tag.w3-white
+                %td.w3-tag.w3-orange
+                  .index2
+                    %a{:href => "#NS7b"} NS7b
+                %td.w3-tag.w3-white
+                %td.w3-tag.w3-orange
+                  .index2
+                    %a{:href => "#NS9b"} NS9b
+                %td.w3-tag.w3-white
+                %td.w3-tag.w3-orange
+                  .index2
+                    %a{:href => "#NS14"} NS14
+                %td.w3-tag.w3-white
+                %td.w3-tag.w3-red
+                  .index2
+                    %a{:href => "#NS10"} NS10
+              %tr
+                %td.w3-dark-gray.w3-center{:colspan => "16"}
+                  .index1
+                    %a{:href => "#R1ab"} R1ab
+        %p
+          %span.badge.badge-primary.proteomeBadge.w3-gradient Non-structural protein (NSXx)
+          %span.badge.badge-primary.proteomeBadge.w3-cyan
+            %strong Spike (S)
+            %br/
+          %span.badge.badge-primary.proteomeBadge.w3-lime
+            %strong Membrane protein (M)
+            %br/
+          %span.badge.badge-primary.proteomeBadge.w3-green
+            %strong Nucleo protein (N)
+            %br/
+          %span.badge.badge-primary.proteomeBadge.w3-purple
+            %strong Envelope protein (E)
+            %br/
+          %span.badge.badge-primary.text-truncate.proteomeBadge.w3-red
+            %strong
+              Hypothetical protein - Open Reading
+              Frame (NS10): It is not clear yet if it is a protein
+            %br/
+        %h5{:style => "margin-top: 20px;margin-bottom: 9px;font-weight: bold;"}
+          About the SARS-CoV-2 virus proteome
+          %br/
+        %p
+          %em
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex
+            ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim
+            id est laborum.
+          %br/
+    .proteinsHeader
+      .contentTitle
+        %h4.d-inline-flex
+          %strong Known Proteins
+          %br/
+        %form#proteinSearch.float-right.d-inline-flex
+          %input.form-control{"aria-label" => "Search", :placeholder => "Live Search", :type => "text"}/
+          %i.fas.fa-search.text-grey.searchIcon{"aria-hidden" => "true"}
+    .contentBox.proteinBox
+    - @proteins.each do |protein|
+      .proteinBox
+        #NSP3.contentData
+          %span{:class => "badge badge-primary proteinBadge #{protein_css_class(protein)}"}
+            %strong #{protein[:name]}
+            %br/
+          %span{:class => "badge badge-primary proteinBadge w3-blue-gray"}
+            %strong TODO-P0DTC2
+            %br/
+          %h5
+            %strong
+              = protein[:names].join(" | ")
+            %br/
+          = render partial: "section", locals: {name: "PDB", items: protein[:pdb]}
+    .contentBox
+      .contentTitle
+        %h4
+          %strong External data sources and collaborations
+          %br/
+      .contentData
+        %p
+          %em
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex
+            ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim
+            id est laborum.
+          %br/
+        %a.d-block{:href => "http://google.com", :target => "_blank"}
+          %i.fa.fa-external-link-square>
+          Pathogens: EMBL-EBI relating to the COVID-19 outbreak
+        %a.d-block{:href => "#", :target => "_blank"}
+          %i.fa.fa-external-link-square>
+          NextSpain: Spanish site
+          for Nextstrain: Consortium for Genomic Epidemiology of Pathogens.
+        %a.d-block{:href => "#", :target => "_blank"}
+          %i.fa.fa-external-link-square>
+          SARS coronavirus 2
+          (SARS-CoV-2) proteome
+        %a.d-block{:href => "#", :target => "_blank"}
+          %i.fa.fa-external-link-square>
+          A. Thon's Coronavirus Structural Task Force
+        %a.d-block{:href => "#", :target => "_blank"}
+          %i.fa.fa-external-link-square>
+          Latest available pre-release UniProtKB
+          data for the SARS-CoV-2
+        %a.d-block{:href => "#", :target => "_blank"}
+          %i.fa.fa-external-link-square>
+          ELIXIR support for SARS-CoV-2 research
+        %a.d-block{:href => "#", :target => "_blank"}
+          %i.fa.fa-external-link-square>
+          EMBL-EBI COVID-19
+          Portal
+        %a.d-block{:href => "#", :target => "_blank"}
+          %i.fa.fa-external-link-square>
+          SARS
+          coronavirus 2 (SARS-CoV-2) proteome
