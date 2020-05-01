@@ -4,7 +4,7 @@ body, html {
 
 #welcome {
   padding: 20px;
-  background: image-url("mainBackground.jpg") no-repeat;
+  background: image-url('../../assets/img/mainBackground.jpg') no-repeat;
   background-size: cover;
   background-position: center;
 }
@@ -72,11 +72,6 @@ body, html {
 .navbar-dark .navbar-nav .nav-link {
   color: #A2BECB;
   margin: 0px;
-}
-
-.menuHL a {
-  color: rgb(129,210,91) !important;
-  font-weight: 700;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
@@ -584,14 +579,6 @@ a i {
   margin-bottom: 0;
 }
 
-.helpContents li {
-  margin-top: 2px;
-}
-
-.helpContents .first {
-  margin-top: 20px;
-}
-
 .helpContents h4 {
   margin-top: 20px;
   margin-bottom: 9px;
@@ -621,6 +608,7 @@ a i {
 }
 
 .w3-link {
+  margin-top: 18px;
   color: #268BBE;
 }
 
@@ -742,7 +730,6 @@ a i {
   background-color: #ffffff;
   box-shadow: 0 0px 20px rgba(0,0,0,.2), 0 0px 23px rgba(0,0,0,.2);
   padding: 40px 10px;
-  margin: 80px auto;
 }
 
 .errorMain .btn {
@@ -849,7 +836,3 @@ a i {
 }
 
 /* END CAROUSEL STYLES */
-
-body {
-  font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
