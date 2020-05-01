@@ -1,22 +1,30 @@
-- if items
-  .card.proteinSub
-    #pSub-1.card-header
-      %h5.d-inline.mb-0 #{name}
-      %span.d-inline-block.float-right.paginationText
+- id = protein[:name] + "-" + section[:name]
+- name = section[:name]
+- items = section[:items] || []
+
+%div{:class => ["card", is_main ? "proteinSub" : "proteinNest"]}
+  #pSub-1.card-header
+    %h5.d-inline.mb-0 #{name}
+    %span.d-inline-block.float-right.paginationText
+      - if items.present?
         #{items.size} of #{items.size} items
-        %button.modalButton{"data-target" => "#modalContent-1", "data-toggle" => "modal", :type => "button"}
+        %button.modalButton{"data-target" => "#modalContent-1", "data-toggle" => "modal", :type => "button", :style => "display: none"}
           View All (TODO)
-    #pSubBod-1.card-body
-      .row
-        - items.each do |item|
-          - name = item[:name]
-          .col-sm-6.col-md-3.col-lg-2.col-xl-2
-            .subItem
-              %a{:href => item[:url], :title => "Open query"}
-                %img{:src => item[:image_url]}/
-                %h6 #{name}
-              - item[:links].each do |link|
-                %button{"data-content" => "<h6>Title</h6><p>Paragraph</p><a class='card-link' href='#{link[:url]}'>Link</a></div>", "data-html" => "true", "data-placement" => "bottom", "data-toggle" => "popover", :title => "Popover title", :type => "button"}
-                  %span{:class => "badge badge-primary itemBadge w3-#{link[:style]}"}
-                    %strong
-                      = link[:name]
+      %a.collapseToggle{"aria-controls" => "pSubBod-#{id}", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#pSubBod-#{id}"}
+        %i.fa.fa-chevron-down
+
+  %div{:id => "pSubBod-#{id}", :class => "card-body collapsable-body collapse show"}
+    .row
+      - items.each do |item|
+        - name = item[:name]
+        .col-sm-6.col-md-3.col-lg-2.col-xl-2
+          .subItem{"data-content" => render(partial: "info", formats: ["html"], locals: {item: item}), "data-html" => "true", "data-placement" => "top", "data-toggle" => "popover", :title => name}
+            %div{:href => item[:url]}
+              %img{:src => item[:image_url]}/
+              %h6 #{name}
+            - item[:links].each do |link|
+              %span{:class => "badge badge-primary itemBadge w3-#{link[:style]}"}
+                %strong #{link[:name]}
+    - (section[:subsections] || []).each do |section|
+      -if section[:items].present?
+        = render partial: "section", locals: {protein: protein, section: section, is_main: false}
