@@ -1,0 +1,7 @@
+%span
+  - item[:links].each do |link|
+    %p
+      = link_to link[:name], link[:url], {class: "card-link"}
+  - if item[:related].present?
+    %p Related: #{item[:related].join(', ')}
+  = link_to "External link", item[:external_link]

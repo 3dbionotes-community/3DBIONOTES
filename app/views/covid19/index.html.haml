@@ -1,10 +1,12 @@
+:javascript
+  var proteinsData = #{@proteins_data.to_json.html_safe};
 .d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
   .container
     .searchBox
       %label.d-block.text-center Search by Entry ID
       #mainSearch.input-group.form-control-lg.md-form.form-sm.form-2.pl-0.justify-content-center
         %input.form-control.form-control-lg.my-0.py-1.amber-border{"aria-label" => "Search", :placeholder => "Uniprot accession, PDB ID, EMDB code", :type => "text"}/
-        %i.fas.fa-search.text-grey.searchIconMain{"aria-hidden" => "true"}
+        %i.fa.fa-search.text-grey.searchIconMain{"aria-hidden" => "true"}
     .contentBox
       .contentTitle
         %h4
@@ -186,23 +188,26 @@
           %strong Known Proteins
           %br/
         %form#proteinSearch.float-right.d-inline-flex
-          %input.form-control{"aria-label" => "Search", :placeholder => "Live Search", :type => "text"}/
-          %i.fas.fa-search.text-grey.searchIcon{"aria-hidden" => "true"}
+          %input#search-protein.form-control{"aria-label" => "Search", :placeholder => "Live Search", :type => "text"}/
+          %i.fa.fa-search.text-grey.searchIcon{"aria-hidden" => "true"}
     .contentBox.proteinBox
-    - @proteins.each do |protein|
-      .proteinBox
+    .no-matches.h No matches
+    - @proteins_data[:proteins].each do |protein|
+      %div{class: ["proteinBox", "protein", "protein-" + protein[:name]]}
         #NSP3.contentData
           %span{:class => "badge badge-primary proteinBadge #{protein_css_class(protein)}"}
             %strong #{protein[:name]}
             %br/
-          %span{:class => "badge badge-primary proteinBadge w3-blue-gray"}
-            %strong TODO-P0DTC2
-            %br/
+          - if #{protein[:group]}
+            %span{:class => "badge badge-primary proteinBadge w3-blue-gray"}
+              %strong #{protein[:group]}
+              %br/
           %h5
             %strong
               = protein[:names].join(" | ")
             %br/
-          = render partial: "section", locals: {name: "PDB", items: protein[:pdb]}
+          - protein[:sections].each do |section|
+            = render partial: "section", locals: {protein: protein, section: section, is_main: true}
     .contentBox
       .contentTitle
         %h4

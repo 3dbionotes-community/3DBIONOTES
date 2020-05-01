@@ -42,33 +42,88 @@ class Covid19
     urls.map { |url| {name: name, style: style, url: url} }
   end
 
-  def self.proteins
-    json_path = File.join(__dir__, "..", "data", "cv-data.json")
-    json = JSON.parse(open(json_path).read)
-    proteins_json = JSON.parse(open(json_path).read).slice("S") # DEBUG: slice
+  def self.pdb_base(pdb_key)
+    short_code = pdb_key[1, 2]
+    {
+      name: pdb_key,
+      url: "/?queryId=#{pdb_key}&viewer_type=ngl&button=#query",
+      image_url: "https://cdn.rcsb.org/images/rutgers/#{short_code}/#{pdb_key}/#{pdb_key}.pdb1-500.jpg",
+      external_link: "https://www.rcsb.org/structure/#{pdb_key}",
+      related: [],
+      links: [],
+    }
+  end
 
-    proteins_json.map do |name, protein|
-      new_protein = protein.map do |key, value|
-        case key
-        when "names"
-          [key.to_sym, value]
-        when "PDB"
-          new_value = value.map do |pdb_key, pdb_hash|
-            {
-              name: pdb_key,
-              url: "/?queryId=#{pdb_key}&viewer_type=ngl&button=#query",
-              image_url: "https://cdn.rcsb.org/images/rutgers/#{pdb_key[1,2]}/#{pdb_key}/#{pdb_key}.pdb1-500.jpg",
-              links: [
-                *get_links("PDB-Redo", :turq, pdb_hash, ["validation", "pdb-redo"]),
-                *get_links("Isolde", :cyan, pdb_hash, ["rebuilt-isolde"]),
-              ],
-            }
-          end
-          [:pdb, new_value]
-        end
-      end.compact.to_h
-
-      {name: name}.merge(new_protein)
+  def self.parse_pdb(protein, keys)
+    entries = protein.dig(*keys) || []
+    entries.map do |pdb_key, pdb_hash|
+      {
+        **pdb_base(pdb_key),
+        related: pdb_hash["emdbs"] || [],
+        links: [
+          *get_links("PDB-Redo", :turq, pdb_hash, ["validation", "pdb-redo"]),
+          *get_links("Isolde", :cyan, pdb_hash, ["rebuilt-isolde"]),
+        ],
+      }
     end
   end
+
+  def self.parse_emdb(protein, keys)
+    entries = protein.dig(*keys) || []
+    entries.map do |emdb_key, emdb_value|
+      code = emdb_key.split("-")[1]
+      {
+        name: emdb_key,
+        url: "/?queryId=#{emdb_key}&viewer_type=ngl&button=#query",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/#{emdb_key}/400_#{code}.gif",
+        related: emdb_value["pdbs"] || [],
+        external_link: "https://www.ebi.ac.uk/pdbe/entry/emdb/#{emdb_key}",
+        links: [],
+      }
+    end
+  end
+
+  def self.load_data
+    json_path = File.join(__dir__, "../data/cv-data.json")
+    JSON.parse(open(json_path).read)
+  end
+
+  def self.proteins_data
+    data = DATA
+    proteins_raw = data.select { |key, value| value.has_key?("PDB") }.slice("S")
+    groups = data.select { |key, value| value.has_key?("proteins") }
+
+    proteins_by_group = groups
+      .map { |key, value| [key, value["proteins"]] }
+      .to_h
+    group_by_protein = proteins_by_group.flat_map do |group_key, protein_names|
+      protein_names.map { |protein_name| [protein_name, group_key] }
+    end.to_h
+
+    proteins = proteins_raw.map do |name, protein|
+      other_related = protein.dig("Related", "OtherRelated") || []
+      other_related_items = other_related.map { |pdb_key| pdb_base(pdb_key) }
+      {
+        name: name,
+        names: protein["names"],
+        group: group_by_protein[name],
+        sections: [
+          {name: "PDB", items: parse_pdb(protein, ["PDB"])},
+          {name: "EMDB", items: parse_emdb(protein, ["EMDB"])},
+          {name: "Interactions", subsections: [
+            {name: "PPComplex", items: parse_pdb(protein, ["Interactions", "PPComplex"])},
+            {name: "Ligands", items: parse_pdb(protein, ["Interactions", "Ligands"])}
+          ]},
+          {name: "Related", subsections: [
+            {name: "SARS-CoV", items: parse_pdb(protein, ["Related", "SARS-CoV"])},
+            {name: "Other", items: other_related_items},
+          ]},
+        ],
+      }
+    end
+
+    {proteins: proteins, relations: []}
+  end
+
+  DATA = self.load_data
 end

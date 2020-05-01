@@ -94,4 +94,6 @@ Rails.application.config.assets.precompile += %w( webserver/carousel.css )
 
 Rails.application.config.assets.precompile += %w( webserver/carousel.js )
 Rails.application.config.assets.precompile += %w( webserver/popover.js )
+Rails.application.config.assets.precompile += %w( webserver/collapse.js )
+Rails.application.config.assets.precompile += %w( covid19.js )
 
