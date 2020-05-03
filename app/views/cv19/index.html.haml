@@ -292,7 +292,9 @@
                         - if @nsp12_pdb_redo.include? modelId
                           = link_to 'PDB-redo','https://pdb-redo.eu/db/'+modelId, target: '_blank', class: "w3-tag w3-round w3-teal"
                         - if @nsp12_isolde.include? modelId
-                          .w3-tag.w3-round.w3-cyan Isolde
+                          -# .w3-tag.w3-round.w3-cyan Isolde
+                          = link_to 'Isolde',@bionotes_qry_pre + "ISOLDE-" + modelId + @bionotes_qry_sub, class: "w3-tag w3-round w3-cyan"
+
                   #NSP12_EMDB.nsp12_item_tab.w3-panel.w3-mobile{style: "display:none"}
                     - @nsp12_maps.each do | mapId |
                       .maps.w3-cell.w3-button
@@ -329,7 +331,8 @@
                     - if @s_pdb_redo.include? modelId
                       = link_to 'PDB-redo','https://pdb-redo.eu/db/'+modelId, target: '_blank', class: "w3-tag w3-round w3-teal"
                     - if @s_isolde.include? modelId
-                      .w3-tag.w3-round.w3-cyan Isolde
+                      -# .w3-tag.w3-round.w3-cyan Isolde
+                      = link_to 'Isolde',@bionotes_qry_pre + "ISOLDE-" + modelId + @bionotes_qry_sub, class: "w3-tag w3-round w3-cyan"
 
               #S_EMDB.s_item_tab.w3-panel.w3-mobile{style: "display:none"}
                 - @s_maps.each do | mapId |
