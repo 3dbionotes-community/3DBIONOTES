@@ -194,7 +194,7 @@
     .no-matches.h No matches
     - @proteins_data[:proteins].each do |protein|
       %div{class: ["proteinBox", "protein", "protein-" + protein[:name]]}
-        #NSP3.contentData
+        %div.contentData{id: protein[:name]}
           %span{:class => "badge badge-primary proteinBadge #{protein_css_class(protein)}"}
             %strong #{protein[:name]}
             %br/

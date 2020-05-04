@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
   height: 100%;
 }
 
@@ -75,7 +76,7 @@ body, html {
 }
 
 .menuHL a {
-  color: rgb(129,210,91) !important;
+  color: rgb(129, 210, 91) !important;
   font-weight: 700;
 }
 
@@ -689,10 +690,10 @@ a i {
 }
 
 .w3-gradient {
-  background: -moz-linear-gradient(left,  #484848 0%, #ffc107 32%, #ff9800 69%, #7db9e8 100%);
-  background: -webkit-linear-gradient(left,  #484848 0%,#ffc107 32%,#ff9800 69%,#7db9e8 100%);
-  background: linear-gradient(to right,  #484848 0%,#ffc107 32%,#ff9800 69%,#7db9e8 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#484848', endColorstr='#7db9e8',GradientType=1 );
+  background: -moz-linear-gradient(left, #484848 0%, #ffc107 32%, #ff9800 69%, #7db9e8 100%);
+  background: -webkit-linear-gradient(left, #484848 0%, #ffc107 32%, #ff9800 69%, #7db9e8 100%);
+  background: linear-gradient(to right, #484848 0%, #ffc107 32%, #ff9800 69%, #7db9e8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#484848', endColorstr='#7db9e8', GradientType=1);
 }
 
 #proteomeTable {
@@ -702,16 +703,16 @@ a i {
 
 #proteomeTable td {
   border: 3px solid white !important;
-  color: rgb(255,255,255) !important;
+  color: rgb(255, 255, 255) !important;
   padding: 9px;
   text-align: center;
   vertical-align: middle;
 }
 
-.badge.badge-primary.proteomeBadge.w3-lime {
-}
+.badge.badge-primary.proteomeBadge.w3-lime {}
 
-#proteomeTable a, #proteomeTable a:hover {
+#proteomeTable a,
+#proteomeTable a:hover {
   color: #fff;
   text-decoration: initial;
   font-weight: 700;
@@ -721,14 +722,14 @@ a i {
 .proteomeBadge {
   padding: 6px 12px;
   font-size: 14px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   margin: 3px 2px;
 }
 
 .proteinBadge {
   padding: 6px 12px;
   font-size: 14px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   margin: 2px 0px;
 }
 
@@ -756,7 +757,7 @@ a i {
 
 .errorMain {
   background-color: #ffffff;
-  box-shadow: 0 0px 20px rgba(0,0,0,.2), 0 0px 23px rgba(0,0,0,.2);
+  box-shadow: 0 0px 20px rgba(0, 0, 0, .2), 0 0px 23px rgba(0, 0, 0, .2);
   padding: 40px 10px;
   margin: 80px auto;
 }
@@ -779,26 +780,34 @@ a i {
 /* show 3 items */
 
 @media (min-width: 768px) {
-  .carousel-inner .active, .carousel-inner .active + .carousel-item, .carousel-inner .active + .carousel-item + .carousel-item {
+
+  .carousel-inner .active,
+  .carousel-inner .active+.carousel-item,
+  .carousel-inner .active+.carousel-item+.carousel-item {
     display: block;
   }
 }
 
 @media (min-width: 768px) {
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left), .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item, .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item {
+
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)+.carousel-item,
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)+.carousel-item+.carousel-item {
     transition: none;
   }
 }
 
 @media (min-width: 768px) {
-  .carousel-inner .carousel-item-next, .carousel-inner .carousel-item-prev {
+
+  .carousel-inner .carousel-item-next,
+  .carousel-inner .carousel-item-prev {
     position: relative;
     transform: translate3d(0, 0, 0);
   }
 }
 
 @media (min-width: 768px) {
-  .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item {
+  .carousel-inner .active.carousel-item+.carousel-item+.carousel-item+.carousel-item {
     position: absolute;
     top: 0;
     right: -33.3333%;
@@ -811,7 +820,11 @@ a i {
 /* left or forward direction */
 
 @media (min-width: 768px) {
-  .active.carousel-item-left + .carousel-item-next.carousel-item-left, .carousel-item-next.carousel-item-left + .carousel-item, .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item, .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item {
+
+  .active.carousel-item-left+.carousel-item-next.carousel-item-left,
+  .carousel-item-next.carousel-item-left+.carousel-item,
+  .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item,
+  .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item+.carousel-item {
     position: relative;
     transform: translate3d(-100%, 0, 0);
     visibility: visible;
@@ -834,7 +847,11 @@ a i {
 /* right or prev direction */
 
 @media (min-width: 768px) {
-  .active.carousel-item-right + .carousel-item-prev.carousel-item-right, .carousel-item-prev.carousel-item-right + .carousel-item, .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item, .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item {
+
+  .active.carousel-item-right+.carousel-item-prev.carousel-item-right,
+  .carousel-item-prev.carousel-item-right+.carousel-item,
+  .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item,
+  .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item+.carousel-item {
     position: relative;
     transform: translate3d(100%, 0, 0);
     visibility: visible;
@@ -860,7 +877,8 @@ a i {
   width: 96% !important;
 }
 
-.carousel-control-prev, .carousel-control-next {
+.carousel-control-prev,
+.carousel-control-next {
   filter: invert(1);
 }
 
@@ -870,8 +888,14 @@ body {
   font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+/* hidden */
 .h {
   display: none;
+}
+
+/* highlighted */
+.hl {
+  border: solid 4px #224;
 }
 
 .popover {}

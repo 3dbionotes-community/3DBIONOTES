@@ -122,7 +122,19 @@ class Covid19
       }
     end
 
-    {proteins: proteins, relations: []}
+    relations0 = proteins.flat_map do |protein|
+      protein[:sections].flat_map do |section|
+        items = (section[:items] || []).map { |item| [item[:name], protein[:name]] }
+        subsection_items = (section[:subsections] || []).flat_map do |subsection|
+          (subsection[:items] || []).map { |item| [item[:name], protein[:name]] }
+        end
+        items + subsection_items
+      end
+    end
+
+    relations = relations0.group_by { |k, v| k }.transform_values { |vs| vs.map(&:second) }
+
+    {proteins: proteins, relations: relations}
   end
 
   DATA = self.load_data
