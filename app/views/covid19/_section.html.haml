@@ -3,7 +3,7 @@
 - items = section[:items] || []
 
 %div{:class => ["card", is_main ? "proteinSub" : "proteinNest"]}
-  #pSub-1.card-header
+  %div{id: "#pSub-#{id}", class: "card-header"}
     %h5.d-inline.mb-0 #{name}
     %span.d-inline-block.float-right.paginationText
       - if items.present?
