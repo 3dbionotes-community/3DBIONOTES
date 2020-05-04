@@ -48,9 +48,7 @@
             = menu_item("QUERY", {controller: "webserver", action: "query"})
             = menu_item("API", {controller: "webserver", action: "api"})
             = menu_item("HELP", {controller: "webserver", action: "help"})
-            %li.nav-item{:role => "presentation"}
-            %a.nav-link{:href => "http://biocomputingunit.es/", :target => "_blank"} ABOUT US
-
+            = menu_item("ABOUT US", "http://biocomputingunit.es/", target: "_blank")
 
     = yield
 

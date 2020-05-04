@@ -30,14 +30,13 @@
         #navcol-1.collapse.navbar-collapse.navbarLinks
           %ul.nav.navbar-nav.mx-auto
             = menu_item("HOME", {controller: "webserver", action: "home"})
-            = menu_item("CoVid-19", {controller: "covid19", action: "index",})
+            = menu_item("CoVid-19", {controller: "covid19", action: "index"}, css_class: "menuHL")
             = menu_item("SUBMIT", {controller: "webserver", action: "submit"})
             = menu_item("NETWORK", {controller: "webserver", action: "network"})
             = menu_item("QUERY", {controller: "webserver", action: "query"})
             = menu_item("API", {controller: "webserver", action: "api"})
             = menu_item("HELP", {controller: "webserver", action: "help"})
-            %li.nav-item{:role => "presentation"}
-            %a.nav-link{:href => "http://biocomputingunit.es/", :target => "_blank"} ABOUT US
+            = menu_item("ABOUT US", "http://biocomputingunit.es/", target: "_blank")
 
     = yield
 
