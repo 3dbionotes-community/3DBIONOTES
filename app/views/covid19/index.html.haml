@@ -191,7 +191,17 @@
           %input#search-protein.form-control{"aria-label" => "Search", :placeholder => "Live Search", :type => "text"}/
           %i.fa.fa-search.text-grey.searchIcon{"aria-hidden" => "true"}
     .contentBox.proteinBox
-    .no-matches.h No matches
+
+    .matches.h.badge.badge-primary.proteinBadge.w3-w3-green
+      %span.matches-length N
+      %span protein(s) matched text '
+      %span.matches-text TEXT
+      %span '
+    .no-matches.badge.badge-primary.proteinBadge.h.w3-gray
+      %span No matches for text '
+      %span.matches-text TEXT
+      %span '
+
     - @proteins_data[:proteins].each do |protein|
       %div{class: ["proteinBox", "protein", "protein-" + protein[:name]]}
         %div.contentData{id: protein[:name]}

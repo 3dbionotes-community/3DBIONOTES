@@ -21,7 +21,7 @@ function initLiveSearch() {
             hideProteinsAndRemoveItemHighlights();
             processProteinMatches(allProteins, text) ||
                 processItemMatches(relations, text) ||
-                showNoMatches(true);
+                showMatch(null);
         }
     });
 }
@@ -35,7 +35,7 @@ function processProteinMatches(allProteins, text) {
     if (proteinNames.length === 0) {
         return false;
     } else {
-        showNoMatches(false);
+        showMatch({ count: proteinNames.length, text });
         showProteins(proteinNames);
         return true;
     }
@@ -55,7 +55,7 @@ function processItemMatches(relations, text) {
             })
         );
 
-        showNoMatches(false);
+        showMatch({ count: proteins.length, text });
         showProteins(proteins);
 
         proteins.forEach((protein) => {
@@ -80,12 +80,22 @@ function hideProteinsAndRemoveItemHighlights() {
     $(".item").removeClass("hl");
 }
 
-function showNoMatches(isVisible) {
-    $(".no-matches").toggleClass("h", !isVisible);
+function showMatch(match) {
+    if (match) {
+        const { count, text } = match;
+        $(".matches-length").text(count);
+        $(".matches-text").text(text);
+        $(".no-matches").addClass("h");
+        $(".matches").removeClass("h");
+    } else {
+        $(".no-matches").removeClass("h");
+        $(".matches").addClass("h");
+    }
 }
 
 function clearSearch() {
-    showNoMatches(false);
+    $(".no-matches").addClass("h");
+    $(".matches").addClass("h");
     $(".protein").removeClass("h");
     $(".item").removeClass("hl");
     setCollapsables($(document), true);
