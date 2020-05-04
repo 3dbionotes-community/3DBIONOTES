@@ -895,7 +895,29 @@ body {
 
 /* highlighted */
 .hl {
-  border: solid 4px #224;
+      border: solid 2px rgb(107, 171, 208);
+      border-radius: 10px;
+      box-shadow: 0 0px 10px rgba(107, 171, 208, 0.25), 0 0px 23px rgba(107, 171, 208, 0.4);
+}
+
+.hl-label {
+  position: relative;
+  border: solid 2px #75a4bb;
+  border-radius: 6px;
+  box-shadow: 0 0px 10px rgba(107, 171, 208, 0.5), 0 0px 23px rgba(107, 171, 208, 0.8);
+}
+
+.hl-label:before {
+  content: " ";
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  border: solid 2px #ffffff;
+  border-radius: 4px;
+
 }
 
 .popover {}
