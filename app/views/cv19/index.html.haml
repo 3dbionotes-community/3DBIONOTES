@@ -29,7 +29,7 @@
       .w3-panel
         .w3-bar.w3-center.w3-mobile
           = link_to 'HOME', "/ws/home",  style:"font-weight:bold", class: "w3-button w3-blue w3-round w3-left", style:"width:10%"
-          = link_to 'CoVid-19', nil,  style:"font-weight:bold", class: "w3-button w3-teal w3-round", style:"width:10%"
+          = link_to 'CoVid-19', nil,  style:"font-weight:bold", class: "w3-button w3-disabled w3-teal w3-round", style:"width:10%"
           = link_to 'QUERY', "/ws/database",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
           = link_to 'SUBMIT', "/ws/submit",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
           = link_to 'NETWORK', "/ws/network",  style:"font-weight:bold", class: "w3-button w3-blue w3-round", style:"width:10%"
@@ -208,7 +208,7 @@
                         = link_to image_tag(img_path, alt: modelId, height: '100'), query_path
                         %p.w3-padding-small{style:"font-weight:bold"}= modelId
                         - if @nsp3_pdb_redo.include? modelId
-                          = link_to 'PDB-redo','https://pdb-redo.eu/db/'+modelId, target: '_blank', class: "w3-tag w3-round w3-teal"
+                          = link_to 'PDB-redo',@bionotes_qry_pre + "PDB-REDO-" + modelId + @bionotes_qry_sub, class: "w3-tag w3-round w3-teal"
                   -# #NSP3_EMDB.nsp3_item_tab.w3-panel.w3-mobile{style: "display:none"}
                   -#   .maps.w3-cell
                   -#     %p <i class="fa fa-spinner w3-spin" style="font-size:32px"></i>
@@ -248,7 +248,7 @@
                         = link_to image_tag(img_path, alt: modelId, height: '100'), query_path
                         %p.w3-padding-small{style:"font-weight:bold"}= modelId
                         - if @nsp5_pdb_redo.include? modelId
-                          = link_to 'PDB-redo','https://pdb-redo.eu/db/'+modelId, target: '_blank', class: "w3-tag w3-round w3-teal"
+                          = link_to 'PDB-redo',@bionotes_qry_pre + "PDB-REDO-" + modelId + @bionotes_qry_sub, class: "w3-tag w3-round w3-teal"
                   #NSP5_Interactions.nsp5_item_tab.w3-panel.w3-mobile{style: "display:none"}
                     #interactions.w3-cell.w3-padding
                     .w3-panel
@@ -290,9 +290,13 @@
                         = link_to image_tag(img_path, alt: modelId, height: '100'), query_path
                         %p.w3-padding-small{style:"font-weight:bold"}= modelId
                         - if @nsp12_pdb_redo.include? modelId
-                          = link_to 'PDB-redo','https://pdb-redo.eu/db/'+modelId, target: '_blank', class: "w3-tag w3-round w3-teal"
+                          = link_to 'PDB-redo',@bionotes_qry_pre + "PDB-REDO-" + modelId + @bionotes_qry_sub, class: "w3-tag w3-round w3-teal"
                         - if @nsp12_isolde.include? modelId
-                          .w3-tag.w3-round.w3-cyan Isolde
+                          - @nsp12_isolde.each_with_index do |model, index|
+                            - if model == modelId
+                              -# .w3-tag.w3-round.w3-cyan= "Isolde - " + @nsp12_isolde_uuid[index]
+                              = link_to 'Isolde',@bionotes_qry_pre + "ISOLDE-" + modelId + "&uuid=" + @nsp12_isolde_uuid[index] + @bionotes_qry_sub, class: "w3-tag w3-round w3-cyan"
+
                   #NSP12_EMDB.nsp12_item_tab.w3-panel.w3-mobile{style: "display:none"}
                     - @nsp12_maps.each do | mapId |
                       .maps.w3-cell.w3-button
@@ -327,9 +331,12 @@
                     = link_to image_tag(img_path, alt: modelId, height: '100'), query_path
                     %p.w3-padding-small{style:"font-weight:bold"}= modelId
                     - if @s_pdb_redo.include? modelId
-                      = link_to 'PDB-redo','https://pdb-redo.eu/db/'+modelId, target: '_blank', class: "w3-tag w3-round w3-teal"
+                      = link_to 'PDB-redo',@bionotes_qry_pre + "PDB-REDO-" + modelId + @bionotes_qry_sub, class: "w3-tag w3-round w3-teal"
                     - if @s_isolde.include? modelId
-                      .w3-tag.w3-round.w3-cyan Isolde
+                      - @s_isolde.each_with_index do |model, index|
+                        - if model == modelId
+                          -# .w3-tag.w3-round.w3-cyan= "Isolde - " + @nsp12_isolde_uuid[index]
+                          = link_to 'Isolde',@bionotes_qry_pre + "ISOLDE-" + modelId + "&uuid=" + @s_isolde_uuid[index] + @bionotes_qry_sub, class: "w3-tag w3-round w3-cyan"
 
               #S_EMDB.s_item_tab.w3-panel.w3-mobile{style: "display:none"}
                 - @s_maps.each do | mapId |

@@ -25,6 +25,16 @@ module MainManager
     def fetch_uniprot_data(identifierName)
       return _fetch_uniprot_data(identifierName)
     end
+    
+    include ToolsMain::BuildIsoldeData
+    def fetch_isolde_data(identifierName)
+      return _fetch_isolde_data(identifierName)
+    end
+ 
+    include ToolsMain::BuildPdbredoData
+    def fetch_pdbredo_data(identifierName)
+      return _fetch_pdbredo_data(identifierName)
+    end
 
   end
 end
