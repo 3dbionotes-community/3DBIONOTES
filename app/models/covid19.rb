@@ -122,13 +122,13 @@ class Covid19
   end
 
   def self.card_wrapper(name, subsections)
-    subsections_with_items = subsections.compact
+    subsections_with_items = subsections.compact.map { |subsection| subsection.merge(parent: name) }
     subsections_with_items.size > 0 ? {name: name, subsections: subsections_with_items} : nil
   end
 
   def self.get_related_items(protein)
     other_related = protein.dig("Related", "OtherRelated") || []
-    other_related.map { |pdb_key| pdb_base(pdb_key) }
+    other_related.uniq.map { |pdb_key| pdb_base(pdb_key) }
   end
 
   def self.get_relations(proteins)

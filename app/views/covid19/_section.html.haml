@@ -8,23 +8,14 @@
     %span.d-inline-block.float-right.paginationText
       - if items.present?
         #{items.size} of #{items.size} items
-        %button.modalButton{"data-target" => "#modalContent-1", "data-toggle" => "modal", :type => "button", :style => "display: none"}
-          View All (TODO)
+        %button.modalButton{"data-target" => "#modalContent-" + id, "data-toggle" => "modal", :type => "button"}
+          View All
+        = render partial: "section_popup", locals: {items: items, id: id, title: section_popup_title(protein, section)}
       %a.collapseToggle{"aria-controls" => "pSubBod-#{id}", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#pSubBod-#{id}"}
         %i.fa.fa-chevron-down
 
   %div{:id => "pSubBod-#{id}", :class => "card-body collapsable-body collapse show"}
-    .row
-      - items.each do |item|
-        - name = item[:name]
-        %div{class: "col-sm-6 col-md-3 col-lg-2 col-xl-2 item item-" + item[:name]}
-          .subItem{"data-content" => render(partial: "info", formats: ["html"], locals: {item: item}), "data-html" => "true", "data-placement" => "top", "data-toggle" => "popover", :title => name}
-            %div{:href => item[:url]}
-              %img{:src => item[:image_url]}/
-              %h6 #{name}
-            - item[:links].each do |link|
-              %span{:class => "badge badge-primary itemBadge w3-#{link[:style]}"}
-                %strong #{link[:name]}
+    = render partial: "items", locals: {items: items}
     - (section[:subsections] || []).each do |section|
       -if section[:items].present?
         = render partial: "section", locals: {protein: protein, section: section, is_main: false}
