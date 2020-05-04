@@ -198,9 +198,9 @@
           %span{:class => "badge badge-primary proteinBadge #{protein_css_class(protein)}"}
             %strong #{protein[:name]}
             %br/
-          - if #{protein[:group]}
+          - protein[:polyproteins].each do |polyprotein|
             %span{:class => "badge badge-primary proteinBadge w3-blue-gray"}
-              %strong #{protein[:group]}
+              %strong #{polyprotein}
               %br/
           %h5
             %strong

@@ -106,24 +106,23 @@ class Covid19
     data = JSON.parse(open(json_path).read)
 
     proteins_raw = data.select { |key, value| value.has_key?("PDB") } #.slice("NSP1", "S", "NSP3")
-    groups = data.select { |key, value| value.has_key?("proteins") }
-    group_by_protein = groups
-      .flat_map do |group_key, value|
-        protein_names = value["proteins"]
-        protein_names.map { |protein_name| [protein_name, group_key] }
-      end
-      .to_h
+    polyproteins = data.select { |key, value| value.has_key?("proteins") }
 
-    get_proteins_data(proteins_raw, group_by_protein)
+    polyproteins_by_protein = polyproteins
+      .flat_map { |name, polyprotein| polyprotein["proteins"].map { |protein| [protein, name] } }
+      .group_by(&:first)
+      .transform_values { |xs| xs.map(&:second) }
+
+    get_proteins_data(proteins_raw, polyproteins_by_protein)
   end
 
   def self.card(name, items)
-    items.present? ? {name: name, items: items} : nil
+    items.present? ? {name: name, items: items, subsections: []} : nil
   end
 
   def self.card_wrapper(name, subsections)
-    subsections_with_items = subsections.compact.map { |subsection| subsection.merge(parent: name) }
-    subsections_with_items.size > 0 ? {name: name, subsections: subsections_with_items} : nil
+    subsections2 = subsections.compact.map { |subsection| subsection.merge(parent: name) }
+    subsections2.size > 0 ? {name: name, items: [], subsections: subsections2} : nil
   end
 
   def self.get_related_items(protein)
@@ -134,23 +133,23 @@ class Covid19
   def self.get_relations(proteins)
     relations_base = proteins.flat_map do |protein|
       protein[:sections].flat_map do |section|
-        items = (section[:items] || []).map { |item| [item[:name], protein[:name]] }
-        subsection_items = (section[:subsections] || []).flat_map do |subsection|
+        items = section[:items].map { |item| [item[:name], protein[:name]] }
+        subsection_items = section[:subsections].flat_map do |subsection|
           subsection[:items].map { |item| [item[:name], protein[:name]] }
         end
         items + subsection_items
       end
     end
 
-    relations_base.group_by { |k, v| k }.transform_values { |vs| vs.map(&:second) }
+    relations_base.group_by { |k, v| k }.transform_values { |vs| vs.map(&:second).uniq }
   end
 
-  def self.get_proteins_data(proteins_raw, group_by_protein)
+  def self.get_proteins_data(proteins_raw, polyproteins_by_protein)
     proteins = proteins_raw.map do |name, protein|
       {
         name: name,
         names: protein["names"],
-        group: group_by_protein[name],
+        polyproteins: polyproteins_by_protein[name],
         sections: [
           card("PDB", parse_pdb(protein, ["PDB"])),
           card("EMDB", parse_emdb(protein, ["EMDB"])),
