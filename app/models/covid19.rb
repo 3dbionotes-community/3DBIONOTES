@@ -39,8 +39,8 @@ class Covid19
 
     urls = if entry.is_a?(Array)
       entry
-    elsif entry.is_a?(Hash)
-      (entry["links"].try(:values) || []).flatten
+    elsif entry.is_a?(Hash) && entry["links"].is_a?(Hash) && (ext_link = entry.dig("links", "ext_link"))
+      [ext_link]
     else
       []
     end
