@@ -28,13 +28,19 @@ class Covid19
     ]
   end
 
+  def self.proteins_data
+    PROTEINS_DATA
+  end
+
+  private
+
   def self.get_links(name, style, hash, keys)
     entry = hash.dig(*keys)
 
     urls = if entry.is_a?(Array)
       entry
     elsif entry.is_a?(Hash)
-      entry["links"].try(:values) || []
+      (entry["links"].try(:values) || []).flatten
     else
       []
     end
@@ -43,40 +49,52 @@ class Covid19
   end
 
   def self.pdb_base(pdb_key)
-    short_code = pdb_key[1, 2]
+    code2 = pdb_key[1, 2]
     {
       name: pdb_key,
       url: "/?queryId=#{pdb_key}&viewer_type=ngl&button=#query",
-      image_url: "https://cdn.rcsb.org/images/rutgers/#{short_code}/#{pdb_key}/#{pdb_key}.pdb1-500.jpg",
+      image_url: "https://cdn.rcsb.org/images/rutgers/#{code2}/#{pdb_key}/#{pdb_key}.pdb1-500.jpg",
       external_link: "https://www.rcsb.org/structure/#{pdb_key}",
       related: [],
       links: [],
     }
   end
 
+  def self.get_related_keys(data)
+    case
+    when data.is_a?(Array)
+      data
+    when data.is_a?(Hash)
+      data.keys
+    else
+      []
+    end
+  end
+
   def self.parse_pdb(protein, keys)
     entries = protein.dig(*keys) || []
-    entries.map do |pdb_key, pdb_hash|
+    entries.sort.map do |pdb_key, pdb_hash|
+      return if pdb_hash.blank?
       {
         **pdb_base(pdb_key),
-        related: pdb_hash["emdbs"] || [],
+        related: get_related_keys(pdb_hash["emdbs"]),
         links: [
           *get_links("PDB-Redo", :turq, pdb_hash, ["validation", "pdb-redo"]),
           *get_links("Isolde", :cyan, pdb_hash, ["rebuilt-isolde"]),
         ],
       }
-    end
+    end.compact
   end
 
   def self.parse_emdb(protein, keys)
     entries = protein.dig(*keys) || []
-    entries.map do |emdb_key, emdb_value|
+    entries.sort.map do |emdb_key, emdb_value|
       code = emdb_key.split("-")[1]
       {
         name: emdb_key,
         url: "/?queryId=#{emdb_key}&viewer_type=ngl&button=#query",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/#{emdb_key}/400_#{code}.gif",
-        related: emdb_value["pdbs"] || [],
+        related: get_related_keys(emdb_value["pdbs"]),
         external_link: "https://www.ebi.ac.uk/pdbe/entry/emdb/#{emdb_key}",
         links: [],
       }
@@ -85,57 +103,72 @@ class Covid19
 
   def self.load_data
     json_path = File.join(__dir__, "../data/cv-data.json")
-    JSON.parse(open(json_path).read)
+    data = JSON.parse(open(json_path).read)
+
+    proteins_raw = data.select { |key, value| value.has_key?("PDB") } #.slice("NSP1", "S", "NSP3")
+    groups = data.select { |key, value| value.has_key?("proteins") }
+    group_by_protein = groups
+      .flat_map do |group_key, value|
+        protein_names = value["proteins"]
+        protein_names.map { |protein_name| [protein_name, group_key] }
+      end
+      .to_h
+
+    get_proteins_data(proteins_raw, group_by_protein)
   end
 
-  def self.proteins_data
-    data = DATA
-    proteins_raw = data.select { |key, value| value.has_key?("PDB") }.slice("S")
-    groups = data.select { |key, value| value.has_key?("proteins") }
+  def self.card(name, items)
+    items.present? ? {name: name, items: items} : nil
+  end
 
-    proteins_by_group = groups
-      .map { |key, value| [key, value["proteins"]] }
-      .to_h
-    group_by_protein = proteins_by_group.flat_map do |group_key, protein_names|
-      protein_names.map { |protein_name| [protein_name, group_key] }
-    end.to_h
+  def self.card_wrapper(name, subsections)
+    subsections_with_items = subsections.compact
+    subsections_with_items.size > 0 ? {name: name, subsections: subsections_with_items} : nil
+  end
 
-    proteins = proteins_raw.map do |name, protein|
-      other_related = protein.dig("Related", "OtherRelated") || []
-      other_related_items = other_related.map { |pdb_key| pdb_base(pdb_key) }
-      {
-        name: name,
-        names: protein["names"],
-        group: group_by_protein[name],
-        sections: [
-          {name: "PDB", items: parse_pdb(protein, ["PDB"])},
-          {name: "EMDB", items: parse_emdb(protein, ["EMDB"])},
-          {name: "Interactions", subsections: [
-            {name: "PPComplex", items: parse_pdb(protein, ["Interactions", "PPComplex"])},
-            {name: "Ligands", items: parse_pdb(protein, ["Interactions", "Ligands"])}
-          ]},
-          {name: "Related", subsections: [
-            {name: "SARS-CoV", items: parse_pdb(protein, ["Related", "SARS-CoV"])},
-            {name: "Other", items: other_related_items},
-          ]},
-        ],
-      }
-    end
+  def self.get_related_items(protein)
+    other_related = protein.dig("Related", "OtherRelated") || []
+    other_related.map { |pdb_key| pdb_base(pdb_key) }
+  end
 
-    relations0 = proteins.flat_map do |protein|
+  def self.get_relations(proteins)
+    relations_base = proteins.flat_map do |protein|
       protein[:sections].flat_map do |section|
         items = (section[:items] || []).map { |item| [item[:name], protein[:name]] }
         subsection_items = (section[:subsections] || []).flat_map do |subsection|
-          (subsection[:items] || []).map { |item| [item[:name], protein[:name]] }
+          subsection[:items].map { |item| [item[:name], protein[:name]] }
         end
         items + subsection_items
       end
     end
 
-    relations = relations0.group_by { |k, v| k }.transform_values { |vs| vs.map(&:second) }
-
-    {proteins: proteins, relations: relations}
+    relations_base.group_by { |k, v| k }.transform_values { |vs| vs.map(&:second) }
   end
 
-  DATA = self.load_data
+  def self.get_proteins_data(proteins_raw, group_by_protein)
+    proteins = proteins_raw.map do |name, protein|
+      {
+        name: name,
+        names: protein["names"],
+        group: group_by_protein[name],
+        sections: [
+          card("PDB", parse_pdb(protein, ["PDB"])),
+          card("EMDB", parse_emdb(protein, ["EMDB"])),
+          card_wrapper("Interactions", [
+            card("PPComplex", parse_pdb(protein, ["Interactions", "PPComplex"])),
+            card("Ligands", parse_pdb(protein, ["Interactions", "Ligands"])),
+          ]),
+          card_wrapper("Related", [
+            card("SARS-CoV", parse_pdb(protein, ["Related", "SARS-CoV"])),
+            card("Other", get_related_items(protein)),
+          ]),
+        ].compact,
+      }
+    end
+
+    {proteins: proteins, relations: get_relations(proteins)}
+  end
+
+
+  PROTEINS_DATA = self.load_data
 end
