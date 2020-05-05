@@ -40,3 +40,11 @@
       Citing the web-server
       %a{:href=>"https://doi.org/10.1093/bioinformatics/btz118", :target=>"_blank", :style=>"font-weight:bold;"} ?
  
+-# Global site tag (gtag.js) - Google Analytics
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-93698320-1"></script>
+:javascript
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-93698320-1');
