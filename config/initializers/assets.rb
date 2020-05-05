@@ -89,11 +89,13 @@ Rails.application.config.assets.precompile += %w( webserver/webserver_lib.js )
 Rails.application.config.assets.precompile += %w( webserver/webserver_init.js )
 
 Rails.application.config.assets.precompile += %w( webserver/main.css )
+Rails.application.config.assets.precompile += %w( webserver/ekko-lightbox.css )
 Rails.application.config.assets.precompile += %w( webserver/proteome.css )
 Rails.application.config.assets.precompile += %w( webserver/carousel.css )
 
 Rails.application.config.assets.precompile += %w( webserver/carousel.js )
 Rails.application.config.assets.precompile += %w( webserver/popover.js )
 Rails.application.config.assets.precompile += %w( webserver/collapse.js )
+Rails.application.config.assets.precompile += %w( webserver/ekko-lightbox.min.js )
+Rails.application.config.assets.precompile += %w( webserver/lightbox.js )
 Rails.application.config.assets.precompile += %w( covid19.js )
-

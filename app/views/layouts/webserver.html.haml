@@ -2,17 +2,28 @@
   %head
     %title 3DBionotes-WS
     %meta{:content => "An ELIXIR Recommended Interoperability Resource", :name => "description"}/
+    %meta{:content => "Bioinformatics,Biology,Biotechnology,CoVid-19", :name => "keywords"}/
     %meta{:content => "Biocomputing Unit - CNB", :name => "author"}/
     %meta{:content => "Biocomputing Unit - CNB", :name => "copyright"}/
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "english", :name => "language"}/
+    %meta{:content => "text/html", "http-equiv" => "content-type"}/
+    %meta{:content => "”index,follow”", :name => "”robots”"}/
+    %meta{:content => "telephone=yes", :name => "format-detection"}/
+    %meta{:content => "true", :name => "HandheldFriendly"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     = stylesheet_link_tag('webserver/webserver_style.css')
     = stylesheet_link_tag('application')
     = stylesheet_link_tag("https://fonts.googleapis.com/css?family=Lato:400,700,400italic&amp;display=swap")
     = stylesheet_link_tag('webserver/main.css')
+    = stylesheet_link_tag('webserver/ekko-lightbox.css')
     = stylesheet_link_tag('/font-awesome/css/font-awesome.min.css')
 
     = javascript_include_tag('webserver/webserver_lib')
     = javascript_include_tag('webserver/webserver_init')
     = javascript_include_tag('application')
+    = javascript_include_tag('webserver/ekko-lightbox.min')
+    = javascript_include_tag('webserver/lightbox')
   %body
     %header.mainHeader.d-flex.align-items-center
       .container.text-center.text-sm-center.text-md-center.text-lg-left.text-xl-left
@@ -36,7 +47,7 @@
             = menu_item("QUERY", {controller: "webserver", action: "query"})
             = menu_item("API", {controller: "webserver", action: "api"})
             = menu_item("HELP", {controller: "webserver", action: "help"})
-            = menu_item("ABOUT US", "http://biocomputingunit.es/", target: "_blank")
+            = menu_item("CONTACT US", "mailto:a@b.es", target: "_blank")
 
     = yield
 
@@ -61,14 +72,8 @@
                   \-
                   %a{:href => "http://www.csic.es/en", :target => "_blank"} CSIC
               %p
-                %a{:href => "http://biocomputingunit.es/", :target => "_blank"} About
-                %strong   · 
-                %a{:href => "#"} Contact
-                %br/
-              %p
                 %strong 3DBIONOTES web-server was developed and is maintained at the Biocomputing Unit - CNB
                 %br/
                 %strong Citing the web-server 
                 %a{:href => "https://doi.org/10.1093/bioinformatics/btx483", :target => "_blank"}
                   %i.fa.fa-external-link
-                %br/

@@ -9,10 +9,25 @@
       %label{:style => "font-weight: bold;"} Select specie
       %form{:style => "max-width: 400px;"}
         %select.custom-select
-          %optgroup{:label => "This is a group"}
-            %option{:selected => "selected", :value => "12"} Homo sapiens
-            %option{:value => "13"} This is item 2
-            %option{:value => "14"} This is item 3
+          %optgroup{:label => "List of species"}
+            %option{:value => "athaliana"} Arabidopsis thaliana
+            %option{:value => "bsubtilis"} Bacillus subtilis
+            %option{:value => "btaurus"} Bos taurus
+            %option{:value => "celegans"} Caenorhabditis elegans
+            %option{:value => "cjejuni"} Campylobacter jejuni
+            %option{:value => "fly"} Drosophila melanogaster
+            %option{:value => "ecoli"} Escherichia coli
+            %option{:value => "hpylori"} Helicobacter pylori
+            %option{:selected => "selected", :value => "human"} Homo sapiens
+            %option{:value => "mouse"} Mus musculus
+            %option{:value => "mtuberculosis"} Mycobacterium tuberculosis
+            %option{:value => "mpneumoniae"} Mycoplasma pneumoniae
+            %option{:value => "pfalciparum"} Plasmodium falciparum
+            %option{:value => "rat"} Rattus norvegicus
+            %option{:value => "yeast"} Saccharomyces cerevisiae
+            %option{:value => "spombe"} Schizosaccharomyces pombe
+            %option{:value => "ssp"} Synechocystis sp. (strain PCC 6803 / Kazusa)
+            %option{:value => "tpallidum"} Treponema pallidum
         %label{:style => "font-weight: bold;"} Enter a list of UniProt accession
         %small Example
         %input.form-control.form-control-lg{:type => "text"}/
