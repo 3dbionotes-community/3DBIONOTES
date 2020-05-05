@@ -71,7 +71,7 @@
               %tr
                 %td.w3-tag.w3-round.w3-grey.w3-center{:colspan => 11}
                   .index1
-                    %a{:href=>"#R1a"} R1a
+                    %a{:href=>"#R1a"} R1a (P0DTC1)
               %tr
                 %td.w3-tag.w3-round.w3-light-grey{:rowspan => 2}
                   .index2
@@ -81,13 +81,13 @@
                     %a{:href=>"#NSP2"} NSP2
                 %td.w3-tag.w3-round.w3-blue-gray{:rowspan => 2}
                   .index2
-                    %a{:href=>"#NSP3"} PL-Pro
+                    %a{:href=>"#NSP3"} NSP3 (PL-Pro)
                 %td.w3-tag.w3-round.w3-light-grey{:rowspan => 2}
                   .index2
                     %a{:href=>"#NSP4"} NSP4
                 %td.w3-tag.w3-round.w3-blue-gray{:rowspan => 2}
                   .index2
-                    %a{:href=>"#NSP5"} 3CL
+                    %a{:href=>"#NSP5"} NSP5 (3CL)
                 %td.w3-tag.w3-round.w3-light-grey{:rowspan => 2}
                   .index2
                     %a{:href=>"#NSP6"} NSP6
@@ -172,7 +172,7 @@
               %tr
                 %td.w3-tag.w3-round.w3-grey.w3-center{:colspan => 16} 
                   .index1
-                    %a{:href=>"#R1ab"} R1ab
+                    %a{:href=>"#R1ab"} R1ab (P0DTD1)
               %hr.dashed
 
         #cv_dataset_content.w3-container
@@ -180,7 +180,7 @@
           %hr.dashed
 
           - uEntry = "P0DTC1"
-          #P0DTC1.data_item_content.w3-card
+          #P0DTC1.data_item_content.w3-card.section#R1a
             %header.w3-padding
               .w3-tag.w3-padding-large.w3-round.w3-blue-grey
                 = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
@@ -263,7 +263,7 @@
           .w3.panel
             %p
           - uEntry = "P0DTD1"
-          #P0DTD1.data_item_content.w3-card
+          #P0DTD1.data_item_content.w3-card.section#R1ab
             %header.w3-padding
               .w3-tag.w3-padding-large.w3-round.w3-blue-grey
                 = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
