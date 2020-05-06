@@ -76,6 +76,10 @@ class MainController < ApplicationController
         fetch_pdb_data(identifierName)
       elsif identifierType=="Uniprot"
         fetch_uniprot_data(identifierName)
+      elsif identifierType=="ISOLDE"
+        fetch_isolde_data(identifierName)
+      elsif identifierType=="PDB-REDO"
+        fetch_pdbredo_data(identifierName)
       end
     end
   end 

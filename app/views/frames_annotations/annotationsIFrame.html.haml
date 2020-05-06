@@ -19,5 +19,13 @@
       var __alignment =  #{@alignment.to_json};
       var extend_features_flag = true;
       var feature_analysis_flag = false;
+      var url = "/cv19_annotations/" + __accession + "_annotations.json";
+      var __cvData = {};
+
+      $j.getJSON(url, function (data) {
+        __cvData = data;
+        console.log("->>> HAML getJSON reading __cvData from ", url);
+      });
+      
   :javascript
     #{@log}
