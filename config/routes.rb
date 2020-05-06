@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   get '/ws/submit' => 'webserver#submit'
   get '/ws/query' => 'webserver#query'
   get '/covid19' => 'covid19#index'
-  get '/ws/database' => 'webserver#database' # DEBUG
   get '/ws/network' => 'webserver#network'
   get '/ws/help' => 'webserver#help'
   get '/ws/home' => 'webserver#home'
