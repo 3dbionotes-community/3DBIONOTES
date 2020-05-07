@@ -9,28 +9,31 @@
 $(initLiveSearch);
 
 function initLiveSearch() {
+    const onSearchThrottled = throttle(onSearch, 300);
+    $("#search-protein").keyup(onSearchThrottled);
+}
+
+function onSearch(ev) {
     const allProteins = proteinsData.proteins;
     const relations = proteinsData.relations;
 
-    $("#search-protein").keyup((ev) => {
-        const text = $(ev.currentTarget).val().toLowerCase().trim();
+    const text = $(ev.currentTarget).val().toLowerCase().trim();
 
-        if (!text) {
-            clearSearch();
-        } else {
-            hideProteinsAndRemoveItemHighlights();
-            processProteinMatches(allProteins, text) ||
-                processItemMatches(relations, text) ||
-                showMatch({ count: 0, text });
-        }
-    });
+    if (!text) {
+        clearSearch();
+    } else {
+        hideProteinsAndRemoveItemHighlights();
+        processProteinMatches(allProteins, text) ||
+            processItemMatches(relations, text) ||
+            showMatch({ count: 0, text });
+    }
 }
 
 function processProteinMatches(allProteins, text) {
     const includesText = (name) => name.toLowerCase().includes(text);
     const proteinNames = uniq(
         allProteins
-            .filter((protein) => [protein.name, ...protein.polyproteins].some(includesText))
+            .filter((protein) => [protein.name].concat(protein.polyproteins).some(includesText))
             .map((protein) => protein.name)
     );
 
@@ -114,9 +117,25 @@ function setCollapsables(parent, isVisible) {
 }
 
 function flatten(xss) {
-    return uniq([].concat(...xss));
+    return [].concat.apply([], xss);
 }
 
 function uniq(xs) {
     return Array.from(new Set(xs));
+}
+
+function throttle(fn, wait) {
+    let timeout = undefined;
+
+    return function () {
+        const this_ = this;
+        const args = arguments;
+
+        if (timeout) clearTimeout(timeout);
+
+        timeout = setTimeout(function () {
+            timeout = undefined;
+            fn.apply(this_, args);
+        }, wait);
+    };
 }
