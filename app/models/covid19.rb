@@ -49,12 +49,11 @@ class Covid19
   end
 
   def self.pdb_base(pdb_key)
-    code2 = pdb_key[1, 2]
     {
       name: pdb_key,
       url: "/?queryId=#{pdb_key}&viewer_type=ngl&button=#query",
-      image_url: "https://cdn.rcsb.org/images/rutgers/#{code2}/#{pdb_key}/#{pdb_key}.pdb1-500.jpg",
-      external_link: "https://www.rcsb.org/structure/#{pdb_key}",
+      image_url: "https://www.ebi.ac.uk/pdbe/static/entry/#{pdb_key}_deposited_chain_front_image-200x200.png",
+      external_link: "https://www.ebi.ac.uk/pdbe/entry/pdb/#{pdb_key}",
       related: [],
       links: [],
     }
