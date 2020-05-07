@@ -205,7 +205,7 @@
     - @proteins_data[:proteins].each do |protein|
       %div{class: ["proteinBox", "protein", "protein-" + protein[:name]]}
         %div.contentData{id: protein[:name]}
-          %span{:class => "badge badge-primary proteinBadge #{protein_css_class(protein)}"}
+          %span{:class => "badge badge-primary protein-name proteinBadge #{protein_css_class(protein)}"}
             %strong #{protein[:name]}
             %br/
           - protein[:polyproteins].each do |polyprotein|

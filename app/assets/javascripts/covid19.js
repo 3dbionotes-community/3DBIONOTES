@@ -21,22 +21,24 @@ function initLiveSearch() {
             hideProteinsAndRemoveItemHighlights();
             processProteinMatches(allProteins, text) ||
                 processItemMatches(relations, text) ||
-                showMatch(null);
+                showMatch({ count: 0, text });
         }
     });
 }
 
 function processProteinMatches(allProteins, text) {
     const includesText = (name) => name.toLowerCase().includes(text);
-    const proteinNames = allProteins
-        .filter((protein) => [protein.name, ...protein.names].some(includesText))
-        .map((protein) => protein.name);
+    const proteinNames = uniq(
+        allProteins
+            .filter((protein) => [protein.name, ...protein.polyproteins].some(includesText))
+            .map((protein) => protein.name)
+    );
 
     if (proteinNames.length === 0) {
         return false;
     } else {
         showMatch({ count: proteinNames.length, text });
-        showProteins(proteinNames);
+        showProteins(proteinNames, { highlightProtein: true });
         return true;
     }
 }
@@ -56,7 +58,7 @@ function processItemMatches(relations, text) {
         );
 
         showMatch({ count: proteins.length, text });
-        showProteins(proteins);
+        showProteins(proteins, { highlightProtein: false });
 
         proteins.forEach((protein) => {
             $(`.protein-${protein} .card`).each((_idx, cardEl) => {
@@ -70,9 +72,11 @@ function processItemMatches(relations, text) {
     }
 }
 
-function showProteins(proteinNames) {
-    const proteinsCssClasses = uniq(proteinNames.map((key) => ".protein-" + key));
-    $(proteinsCssClasses.join(",")).removeClass("h");
+function showProteins(proteinNames, options) {
+    const { highlightProtein } = options;
+    $(proteinNames.map((k) => `.protein-${k}`).join(",")).removeClass("h");
+    if (highlightProtein)
+        $(proteinNames.map((k) => `.protein-${k} .protein-name`).join(",")).addClass("hl-label");
 }
 
 function hideProteinsAndRemoveItemHighlights() {
@@ -81,10 +85,11 @@ function hideProteinsAndRemoveItemHighlights() {
 }
 
 function showMatch(match) {
-    if (match) {
-        const { count, text } = match;
-        $(".matches-length").text(count);
-        $(".matches-text").text(text);
+    const { count, text } = match;
+    $(".matches-length").text(count);
+    $(".matches-text").text(text);
+
+    if (count > 0) {
         $(".no-matches").addClass("h");
         $(".matches").removeClass("h");
     } else {
@@ -97,6 +102,7 @@ function clearSearch() {
     $(".no-matches").addClass("h");
     $(".matches").addClass("h");
     $(".protein").removeClass("h");
+    $(".protein-name.hl-label").removeClass("hl-label");
     $(".item").removeClass("hl");
     setCollapsables($(document), true);
 }
