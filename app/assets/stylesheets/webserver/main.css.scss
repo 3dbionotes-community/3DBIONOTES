@@ -108,8 +108,8 @@ body {
     }
 }
 
-.navbar-dark .navbar-nav .show > .nav-link,
-.navbar-dark .navbar-nav .active > .nav-link,
+.navbar-dark .navbar-nav .show>.nav-link,
+.navbar-dark .navbar-nav .active>.nav-link,
 .navbar-dark .navbar-nav .nav-link.show,
 .navbar-dark .navbar-nav .nav-link.active {
     color: #fff;
@@ -117,8 +117,9 @@ body {
 }
 
 @media (max-width: 767px) {
-    .navbar-dark .navbar-nav .show > .nav-link,
-    .navbar-dark .navbar-nav .active > .nav-link,
+
+    .navbar-dark .navbar-nav .show>.nav-link,
+    .navbar-dark .navbar-nav .active>.nav-link,
     .navbar-dark .navbar-nav .nav-link.show,
     .navbar-dark .navbar-nav .nav-link.active {
         border-bottom: none;
@@ -160,6 +161,7 @@ body {
 }
 
 @media (max-width: 768px) {
+
     #mainLogo,
     #mainLogoCovid19 {
         margin-top: 10px;
@@ -515,8 +517,7 @@ a i {
     color: #fff;
 }
 
-.modal-close {
-}
+.modal-close {}
 
 .popover {
     border: 0px;
@@ -606,7 +607,7 @@ a i {
     }
 }
 
-.footer-dark .item.social > a {
+.footer-dark .item.social>a {
     font-size: 20px;
     width: 36px;
     height: 36px;
@@ -620,7 +621,7 @@ a i {
     opacity: 0.75;
 }
 
-.footer-dark .item.social > a:hover {
+.footer-dark .item.social>a:hover {
     opacity: 0.9;
 }
 
@@ -740,8 +741,7 @@ a i {
     vertical-align: middle;
 }
 
-.badge.badge-primary.proteomeBadge.w3-lime {
-}
+.badge.badge-primary.proteomeBadge.w3-lime {}
 
 #proteomeTable a,
 #proteomeTable a:hover {
@@ -812,27 +812,25 @@ a i {
 /* show 3 items */
 
 @media (min-width: 768px) {
+
     .carousel-inner .active,
-    .carousel-inner .active + .carousel-item,
-    .carousel-inner .active + .carousel-item + .carousel-item {
+    .carousel-inner .active+.carousel-item,
+    .carousel-inner .active+.carousel-item+.carousel-item {
         display: block;
     }
 }
 
 @media (min-width: 768px) {
+
     .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-    .carousel-inner
-        .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)
-        + .carousel-item,
-    .carousel-inner
-        .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)
-        + .carousel-item
-        + .carousel-item {
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)+.carousel-item,
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)+.carousel-item+.carousel-item {
         transition: none;
     }
 }
 
 @media (min-width: 768px) {
+
     .carousel-inner .carousel-item-next,
     .carousel-inner .carousel-item-prev {
         position: relative;
@@ -841,7 +839,7 @@ a i {
 }
 
 @media (min-width: 768px) {
-    .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    .carousel-inner .active.carousel-item+.carousel-item+.carousel-item+.carousel-item {
         position: absolute;
         top: 0;
         right: -33.3333%;
@@ -854,10 +852,11 @@ a i {
 /* left or forward direction */
 
 @media (min-width: 768px) {
-    .active.carousel-item-left + .carousel-item-next.carousel-item-left,
-    .carousel-item-next.carousel-item-left + .carousel-item,
-    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
-    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item {
+
+    .active.carousel-item-left+.carousel-item-next.carousel-item-left,
+    .carousel-item-next.carousel-item-left+.carousel-item,
+    .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item,
+    .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item+.carousel-item {
         position: relative;
         transform: translate3d(-100%, 0, 0);
         visibility: visible;
@@ -880,10 +879,11 @@ a i {
 /* right or prev direction */
 
 @media (min-width: 768px) {
-    .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
-    .carousel-item-prev.carousel-item-right + .carousel-item,
-    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
-    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item {
+
+    .active.carousel-item-right+.carousel-item-prev.carousel-item-right,
+    .carousel-item-prev.carousel-item-right+.carousel-item,
+    .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item,
+    .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item+.carousel-item {
         position: relative;
         transform: translate3d(100%, 0, 0);
         visibility: visible;
@@ -955,5 +955,16 @@ body {
     border-radius: 4px;
 }
 
-.popover {
+.popover a {
+    color: #268bbe;
+}
+
+.bs-popover-top {
+    margin-bottom: 0;
+    padding-bottom: 0.5em;
+}
+
+.bs-popover-bottom {
+    margin-top: 0;
+    padding-top: 0.5em;
 }
