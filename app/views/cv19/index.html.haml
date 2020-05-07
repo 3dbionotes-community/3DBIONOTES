@@ -117,11 +117,11 @@
                 %td.w3-tag.w3-tag.w3-round.w3-white
                 %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
-                    %a{:href=>"#NS7a"} NS7a
+                    %a{:href=>"#ORF7a"} ORF7a
                 %td.w3-tag.w3-tag.w3-round.w3-white
                 %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
-                    %a{:href=>"#NS8"} NS8
+                    %a{:href=>"#ORF8"} ORF8
                 %td.w3-tag.w3-tag.w3-round.w3-white
                 %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
@@ -145,30 +145,30 @@
                 %td.w3-tag.w3-tag.w3-round.w3-white
                 %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
-                    %a{:href=>"#NS3a"} NS3a
+                    %a{:href=>"#ORF3a"} ORF3a
                 %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
                     %a{:href=>"#E"} E
                 %td.w3-tag.w3-tag.w3-round.w3-white
                 %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
-                    %a{:href=>"#NS6"} NS6
+                    %a{:href=>"#ORF6"} ORF6
                 %td.w3-tag.w3-tag.w3-round.w3-white
                 %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
-                    %a{:href=>"#NS7b"} NS7b
+                    %a{:href=>"#ORF7b"} ORF7b
                 %td.w3-tag.w3-tag.w3-round.w3-white
                 %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
-                    %a{:href=>"#NS9b"} NS9b
+                    %a{:href=>"#ORF9b"} ORF9b
                 %td.w3-tag.w3-tag.w3-round.w3-white
                 %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
-                    %a{:href=>"#NS14"} NS14
+                    %a{:href=>"#ORF14"} ORF14
                 %td.w3-tag.w3-tag.w3-round.w3-white
                 %td.w3-tag.w3-tag.w3-round.w3-light-grey
                   .index2
-                    %a{:href=>"#NS10"} NS10
+                    %a{:href=>"#ORF10"} ORF10
               %tr
                 %td.w3-tag.w3-round.w3-grey.w3-center{:colspan => 16} 
                   .index1
@@ -176,6 +176,11 @@
               %hr.dashed
 
         #cv_dataset_content.w3-container
+
+          #cv_notice.w3-panel-pading.w3-center.w3-sand.w3-leftbar.w3-border-orange.w3-border.w3-round-large
+            %p Please note this is an on-going effort to collect all possible relevant information from many diverse sources in a semi-automatic way, sometimes manually.
+            %p If you spot something missing, missplaced, incorrect or misbehaving, please feel free to contact us ( 3dbionotes @ cnb.csic.es).
+
           %h3.w3-center.w3-opacity{style:"font-weight:bold;color:#074987;"} Known Proteins
           %hr.dashed
 
@@ -356,7 +361,7 @@
                   %p <i class="fa fa-spinner w3-spin" style="font-size:32px"></i>
 
           - uEntry = "P0DTC3"
-          #P0DTC3.data_item_content.w3-card.section#NS3a
+          #P0DTC3.data_item_content.w3-card.section#ORF3a
             %header.w3-padding
               .w3-tag.w3-padding-large.w3-round.w3-blue-grey
                 = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
@@ -383,7 +388,7 @@
             #tabs_panel.w3-panel.w3-responsive
 
           - uEntry = "P0DTC6"
-          #P0DTC6.data_item_content.w3-card.section#NS6
+          #P0DTC6.data_item_content.w3-card.section#ORF6
             %header.w3-padding
               .w3-tag.w3-padding-large.w3-round.w3-blue-grey
                 = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
@@ -392,7 +397,7 @@
             #tabs_panel.w3-panel.w3-responsive
 
           - uEntry = "P0DTC7"
-          #P0DTC7.data_item_content.w3-card.section#NS7a
+          #P0DTC7.data_item_content.w3-card.section#ORF7a
             %header.w3-padding
               .w3-tag.w3-padding-large.w3-round.w3-blue-grey
                 = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
@@ -401,7 +406,7 @@
             #tabs_panel.w3-panel.w3-responsive
 
           - uEntry = "P0DTC8"
-          #P0DTC8.data_item_content.w3-card.section#NS8
+          #P0DTC8.data_item_content.w3-card.section#ORF8
             %header.w3-padding
               .w3-tag.w3-padding-large.w3-round.w3-blue-grey
                 = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
@@ -410,7 +415,7 @@
             #tabs_panel.w3-panel.w3-responsive
 
           - uEntry = "P0DTD8"
-          #P0DTD8.data_item_content.w3-card.section#NS7b
+          #P0DTD8.data_item_content.w3-card.section#ORF7b
             %header.w3-padding
               .w3-tag.w3-padding-large.w3-round.w3-blue-grey
                 = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
@@ -428,7 +433,7 @@
             #tabs_panel.w3-panel.w3-responsive
 
           - uEntry = "P0DTD2"
-          #P0DTD2.data_item_content.w3-card.section#NS9b
+          #P0DTD2.data_item_content.w3-card.section#ORF9b
             %header.w3-padding
               .w3-tag.w3-padding-large.w3-round.w3-blue-grey
                 = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
@@ -438,7 +443,7 @@
 
 
           - uEntry = "P0DTD3"
-          #P0DTD3.data_item_content.w3-card.section#NS14
+          #P0DTD3.data_item_content.w3-card.section#ORF14
             %header.w3-padding
               .w3-tag.w3-padding-large.w3-round.w3-blue-grey
                 = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
@@ -448,7 +453,7 @@
 
 
           - uEntry = "A0A663DJA2"
-          #A0A663DJA2.data_item_content.w3-card.section#NS10
+          #A0A663DJA2.data_item_content.w3-card.section#ORF10
             %header.w3-padding
               .w3-tag.w3-padding-large.w3-round.w3-blue-grey
                 = link_to uEntry, @bionotes_qry_pre+uEntry+@bionotes_qry_sub
@@ -508,10 +513,10 @@
   }
 
 -# Global site tag (gtag.js) - Google Analytics
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-93698320-1"></script>
-:javascript
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+-# <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93698320-1"></script>
+-# :javascript
+-#   window.dataLayer = window.dataLayer || [];
+-#   function gtag(){dataLayer.push(arguments);}
+-#   gtag('js', new Date());
 
-  gtag('config', 'UA-93698320-1');
+-#   gtag('config', 'UA-93698320-1');
