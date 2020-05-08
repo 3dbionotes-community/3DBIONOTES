@@ -1,11 +1,14 @@
-/* Global variables:
+/* Initialize covid19 live search:
 
-    declare const proteinsData: {
-        proteins: Record<string, Protein>,
+    proteinsData: {
+        proteins: Record<string, {name: string, polyproteins: string[]}>,
         relations: Record<string, string[]>,
     }
-*/
 
+    options: {
+        maxItems: number;
+    }
+*/
 function initLiveSearch(proteinsData, options) {
     const onSearchWithArgs = (ev) => onSearch(ev, proteinsData, options);
     const onSearchThrottled = throttle(onSearchWithArgs, 300);
@@ -70,7 +73,7 @@ function processItemMatches(relations, text, options) {
         showProteins(proteins, { highlightTags: false });
 
         proteins.forEach((protein) => {
-            $(`.protein-${protein} .card.proteinNest .card-body`).each((_idx, cardEl) => {
+            $(`.protein-${protein} .card-body`).each((_idx, cardEl) => {
                 const card = $(cardEl);
                 const highlighted = card.find(".item.hl");
                 const notHighlighted = card.find(".item:not(.hl)");
