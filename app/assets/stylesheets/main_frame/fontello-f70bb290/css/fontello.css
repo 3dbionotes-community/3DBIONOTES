@@ -1,21 +1,19 @@
 @font-face {
   font-family: 'fontello';
-  src: url('/fonts/main_frame/fontello.eot');
-  src: url('/fonts/main_frame/fontello.eot#iefix') format('embedded-opentype'),
-       url('/fonts/main_frame/fontello.woff') format('woff'),
-       url('/fonts/main_frame/fontello.ttf') format('truetype'),
-       url('/fonts/main_frame/fontello.svg#fontello') format('svg');
+  src: url('/assets/main_frame/font/fontello.eot');
+  src: url('/assets/main_frame/font/fontello.eot#iefix') format('embedded-opentype'),
+    url('/assets/main_frame/font/fontello.woff') format('woff'),
+    url('/assets/main_frame/font/fontello.ttf') format('truetype'),
+    url('/assets/main_frame/font/fontello.svg#fontello') format('svg');
   font-weight: normal;
   font-style: normal;
 }
- 
-.demo-icon
-{
+
+.demo-icon {
   font-family: "fontello";
   font-style: normal;
   font-weight: bold;
-  speak: none;
- 
+
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
@@ -31,7 +29,7 @@
   font-size: 16px !important;
 }
 
-.demo-icon:hover{
-  cursor:pointer;
-  color:black;
+.demo-icon:hover {
+  cursor: pointer;
+  color: black;
 }
