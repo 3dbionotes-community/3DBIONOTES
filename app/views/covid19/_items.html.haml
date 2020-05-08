@@ -1,7 +1,7 @@
 .row
-  - items.each do |item|
+  - items.each_with_index do |item, index|
     - name = item[:name]
-    %div{class: "col-sm-6 col-md-3 col-lg-2 col-xl-2 item item-" + item[:name]}
+    %div{class: ["col-sm-6 col-md-3 col-lg-2 col-xl-2 item", "item-" + item[:name], max_items && index >= max_items ? "h" : ""]}
       .subItem{"data-content" => render(partial: "info", formats: ["html"], locals: {item: item}), "data-html" => "true", "data-placement" => "top", "data-toggle" => "popover", :title => name}
         %div{:href => item[:url]}
           %img{:src => item[:image_url]}/

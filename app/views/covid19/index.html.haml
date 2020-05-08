@@ -1,5 +1,7 @@
 :javascript
   var proteinsData = #{@proteins_data.to_json.html_safe};
+  $(function() { initLiveSearch(proteinsData, {maxItems: 20}) });
+
 .d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
   .container
     .searchBox

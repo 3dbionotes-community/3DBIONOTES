@@ -6,6 +6,6 @@
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} ×
       .modal-body
-        = render partial: "items", locals: {items: items}
+        = render partial: "items", locals: {items: items, max_items: nil}
       .modal-footer
         %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close

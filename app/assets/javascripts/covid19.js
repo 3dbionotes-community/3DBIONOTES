@@ -6,17 +6,15 @@
     }
 */
 
-$(initLiveSearch);
-
-function initLiveSearch() {
-    const onSearchThrottled = throttle(onSearch, 300);
+function initLiveSearch(proteinsData, options) {
+    const onSearchWithArgs = (ev) => onSearch(ev, proteinsData, options);
+    const onSearchThrottled = throttle(onSearchWithArgs, 300);
     $("#search-protein").keyup(onSearchThrottled);
 }
 
-function onSearch(ev) {
+function onSearch(ev, proteinsData, options) {
     const allProteins = proteinsData.proteins;
     const relations = proteinsData.relations;
-
     const text = $(ev.currentTarget).val().toLowerCase().trim();
 
     if (!text) {
@@ -24,7 +22,7 @@ function onSearch(ev) {
     } else {
         hideProteinsAndRemoveItemHighlights();
         processProteinMatches(allProteins, text) ||
-            processItemMatches(relations, text) ||
+            processItemMatches(relations, text, options) ||
             showMatch({ count: 0, text });
     }
 }
@@ -46,7 +44,8 @@ function processProteinMatches(allProteins, text) {
     }
 }
 
-function processItemMatches(relations, text) {
+function processItemMatches(relations, text, options) {
+    const maxItems = options.maxItems;
     const items = Object.keys(relations).filter((key) => key.toLowerCase().includes(text));
 
     if (items.length === 0) {
@@ -54,8 +53,8 @@ function processItemMatches(relations, text) {
     } else {
         const proteins = flatten(
             items.map((item) => {
-                const itemsCssClasses = items.map((name) => ".item-" + name);
-                $(itemsCssClasses.join(",")).addClass("hl");
+                const itemsCssClasses = items.map((name) => ".item-" + name).join(",");
+                $(itemsCssClasses).addClass("hl");
                 return relations[item];
             })
         );
@@ -64,10 +63,19 @@ function processItemMatches(relations, text) {
         showProteins(proteins, { highlightProtein: false });
 
         proteins.forEach((protein) => {
-            $(`.protein-${protein} .card`).each((_idx, cardEl) => {
+            $(`.protein-${protein} .card.proteinNest .card-body`).each((_idx, cardEl) => {
                 const card = $(cardEl);
-                const hasMatches = card.find(".hl").size() > 0;
-                setCollapsables(card, hasMatches);
+                const highlighted = card.find(".item.hl");
+                const notHighlighted = card.find(".item:not(.hl)");
+                const highlightedCountAll = highlighted.size();
+                const highlightedCount = Math.min(highlightedCountAll, maxItems);
+                const restCount = maxItems - highlightedCount;
+                highlighted.slice(0, highlightedCount).removeClass("h");
+                highlighted.slice(highlightedCount).addClass("h");
+                notHighlighted.slice(0, restCount).removeClass("h");
+                notHighlighted.slice(restCount).addClass("h");
+                const hasMatches = highlightedCountAll > 0;
+                setCollapsables(card.closest(".card"), hasMatches);
             });
         });
 
@@ -76,7 +84,7 @@ function processItemMatches(relations, text) {
 }
 
 function showProteins(proteinNames, options) {
-    const { highlightProtein } = options;
+    const highlightProtein = options.highlightProtein;
     $(proteinNames.map((k) => `.protein-${k}`).join(",")).removeClass("h");
     if (highlightProtein)
         $(proteinNames.map((k) => `.protein-${k} .protein-name`).join(",")).addClass("hl-label");
@@ -88,7 +96,8 @@ function hideProteinsAndRemoveItemHighlights() {
 }
 
 function showMatch(match) {
-    const { count, text } = match;
+    const count = match.count;
+    const text = match.text;
     $(".matches-length").text(count);
     $(".matches-text").text(text);
 
@@ -125,17 +134,17 @@ function uniq(xs) {
 }
 
 function throttle(fn, wait) {
-    let timeout = undefined;
+    var timeout = undefined;
 
     return function () {
-        const this_ = this;
-        const args = arguments;
+        var this_ = this;
+        var arguments_ = arguments;
 
         if (timeout) clearTimeout(timeout);
 
         timeout = setTimeout(function () {
             timeout = undefined;
-            fn.apply(this_, args);
+            fn.apply(this_, arguments_);
         }, wait);
     };
 }

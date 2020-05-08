@@ -432,6 +432,7 @@ h5,
 
 .proteinSub .row {
     margin-bottom: 8px;
+    display: flex;
 }
 
 .proteinSub .row:last-child {
@@ -445,7 +446,9 @@ h5,
 }
 
 .proteinSub .item {
-    margin-bottom: 14px;
+    margin-bottom: 0px;
+    padding-bottom: 20px;
+    order: 1;
 }
 
 a i {
@@ -536,6 +539,10 @@ a i {
 
 .arrow::after {
     border-bottom-color: #607d8b !important;
+}
+
+.popover .array {
+    width: 100%;
 }
 
 .footer-dark {
@@ -930,10 +937,11 @@ body {
 
 /* highlighted */
 
-.hl {
+.proteinSub .hl {
     border: solid 2px rgb(107, 171, 208);
     border-radius: 10px;
     box-shadow: 0 0px 10px rgba(107, 171, 208, 0.25), 0 0px 23px rgba(107, 171, 208, 0.4);
+    order: 0;
 }
 
 .hl-label {
@@ -961,10 +969,8 @@ body {
 
 .bs-popover-top {
     margin-bottom: 0;
-    padding-bottom: 0.5em;
 }
 
 .bs-popover-bottom {
     margin-top: 0;
-    padding-top: 0.5em;
 }
