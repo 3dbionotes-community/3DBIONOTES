@@ -1,3 +1,8 @@
 [submodule "app/assets/javascripts/annotations_viewer/myProtVista"]
-	path = app/assets/javascripts/annotations_viewer/myProtVista
-	url = https://jsegurmor@gitlab.com/jsegurmor/myProtVista.git
+path = app/assets/javascripts/annotations_viewer/myProtVista
+url = https://github.com/3dbionotes-community/myProtVista
+branch = adding_resolution
+[submodule "app/assets/javascripts/annotations_viewer/extendProtVista"]
+path = app/assets/javascripts/annotations_viewer/extendProtVista
+url = https://github.com/3dbionotes-community/extendProtVista
+branch = localresolution
