@@ -24,13 +24,22 @@
     = javascript_include_tag('application')
     = javascript_include_tag('webserver/ekko-lightbox.min')
     = javascript_include_tag('webserver/lightbox')
+    = javascript_include_tag('webserver/carousel')
+    = javascript_include_tag('webserver/popover')
+    = javascript_include_tag('webserver/collapse')
+    = javascript_include_tag('covid19')
+
   %body
-    %header.mainHeader.d-flex.align-items-center
-      .container.text-center.text-sm-center.text-md-center.text-lg-left.text-xl-left
-        %img#mainLogo{:src => "/assets/3DBionotesLogo.jpg"}/
-        #partners.d-inline-block.float-md-right.float-lg-right.float-xl-right
-          %img.partnerLogo{:src => "/assets/inbelixir.png"}/
-          %img.partnerLogo{:src => "/assets/instruct-eric-logo-noline.png"}/
+    - if @layout_options && layout_header = @layout_options[:header]
+      = render partial: layout_header
+    - else
+      %header.mainHeader.d-flex.align-items-center
+        .container.text-center.text-sm-center.text-md-center.text-lg-left.text-xl-left
+          %img#mainLogo{:src => "/assets/3DBionotesLogo.jpg"}/
+          #partners.d-inline-block.float-md-right.float-lg-right.float-xl-right
+            %img.partnerLogo{:src => "/assets/inbelixir.png"}/
+            %img.partnerLogo{:src => "/assets/instruct-eric-logo-noline.png"}/
+
     %nav#menuBar.navbar.navbar-dark.navbar-expand-md.bg-primary
       .container
         %a.navbar-brand.d-print-none.d-md-none.d-lg-none.d-xl-none{:href => "#"}
