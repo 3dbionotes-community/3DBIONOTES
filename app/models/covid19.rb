@@ -29,7 +29,7 @@ class Covid19
   end
 
   def self.proteins_data
-    PROTEINS_DATA
+    load_data
   end
 
   private
@@ -104,7 +104,7 @@ class Covid19
     json_path = File.join(__dir__, "../data/cv-data.json")
     data = JSON.parse(open(json_path).read)
 
-    proteins_raw = data.select { |key, value| value.has_key?("PDB") } #.slice("NSP1", "S", "NSP3")
+    proteins_raw = data.select { |key, value| value.has_key?("PDB") }
     polyproteins = data.select { |key, value| value.has_key?("proteins") }
 
     polyproteins_by_protein = polyproteins
@@ -166,7 +166,4 @@ class Covid19
 
     {proteins: proteins, relations: get_relations(proteins)}
   end
-
-
-  PROTEINS_DATA = self.load_data
 end
