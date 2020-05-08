@@ -39,7 +39,14 @@ function processProteinMatches(allProteins, text) {
         return false;
     } else {
         showMatch({ count: proteinNames.length, text });
-        showProteins(proteinNames, { highlightProtein: true });
+        const highlightTags = uniq(
+            flatten(
+                allProteins.map((protein) =>
+                    [protein.name].concat(protein.polyproteins).filter(includesText)
+                )
+            )
+        );
+        showProteins(proteinNames, { highlightTags });
         return true;
     }
 }
@@ -60,7 +67,7 @@ function processItemMatches(relations, text, options) {
         );
 
         showMatch({ count: proteins.length, text });
-        showProteins(proteins, { highlightProtein: false });
+        showProteins(proteins, { highlightTags: false });
 
         proteins.forEach((protein) => {
             $(`.protein-${protein} .card.proteinNest .card-body`).each((_idx, cardEl) => {
@@ -84,10 +91,11 @@ function processItemMatches(relations, text, options) {
 }
 
 function showProteins(proteinNames, options) {
-    const highlightProtein = options.highlightProtein;
+    const highlightTags = options.highlightTags;
     $(proteinNames.map((k) => `.protein-${k}`).join(",")).removeClass("h");
-    if (highlightProtein)
-        $(proteinNames.map((k) => `.protein-${k} .protein-name`).join(",")).addClass("hl-label");
+
+    $(".proteinBadge").removeClass("hl-label");
+    if (highlightTags) $(highlightTags.map((k) => `.b-${k}`).join(",")).addClass("hl-label");
 }
 
 function hideProteinsAndRemoveItemHighlights() {
