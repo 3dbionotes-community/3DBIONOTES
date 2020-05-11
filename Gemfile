@@ -8,7 +8,7 @@ gem 'rails', '4.2.11.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.6'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier', '4.2.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -61,3 +61,6 @@ group :development, :test do
   gem 'spring'
 end
 
+group :production do
+  gem 'passenger', '5.1.12'
+end
