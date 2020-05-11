@@ -1,5 +1,6 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
 
+Rails.application.routes.draw do
   get '/' => 'main#home'
   post '/' => 'main#home'
   get '/pdb_redo/:name' => 'main#pdb_redo'
@@ -17,7 +18,7 @@ Rails.application.routes.draw do
   get '/ws' => 'webserver#home'
   get '/webserver' => 'webserver#home'
   get '/ws/submit' => 'webserver#submit'
-  get '/ws/query' => 'webserver#query'
+  get '/ws/database' => 'webserver#query'
   get '/covid19' => 'covid19#index'
   get '/ws/network' => 'webserver#network'
   get '/ws/help' => 'webserver#help'
@@ -336,7 +337,7 @@ Rails.application.routes.draw do
       end
     end
   end
-  get '*a', :to => 'errors#routing'
+  get '*a', to: 'errors#routing'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
