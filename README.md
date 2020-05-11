@@ -13,10 +13,11 @@
 
 ## Setup
 
-Make sure rvm is configured so the project .rvmrc is used when entering to the directory. Then run:
+Use rvm or rbenv to select the Ruby version specified in Gemfile and then run:
 
 ```
 $ gem install bundler:1.17.3
+$ sudo apt install libgsl-dev libmysqlclient-dev # Debian/Ubuntu
 $ bundle install
 $ cp config/database.example.yml config/database.yml
 $ cp config/secrets.example.yml config/secrets.yml

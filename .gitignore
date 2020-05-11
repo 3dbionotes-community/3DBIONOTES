@@ -60,3 +60,6 @@ ehthumbs.db
 Thumbs.db
 *.swp
 *.swo
+
+# Ruby/Rails
+.byebug_history

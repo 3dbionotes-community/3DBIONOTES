@@ -120,12 +120,12 @@ class viewer_class {
 
       // Add the color element if missing
       if (schemeData[color] === undefined) {
-        schemeData[color] = "";
+        schemeData[color] = [color, ""];
       } else {
-        schemeData[color] = schemeData[color] + " or "
+        schemeData[color][1] = schemeData[color][1] + " or "
       }
 
-      schemeData[color] = schemeData[color] + i.begin + "-" + i.end;
+      schemeData[color][1] = schemeData[color][1] + i.begin + "-" + i.end;
 
       var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, top.alignmentTranslation);
       pdbPosList.forEach(function(j){
@@ -134,8 +134,9 @@ class viewer_class {
     });
 
     let schemeParam = [];
+    var colorItem ;
     for (colorItem in schemeData) {
-      schemeParam.push([colorItem, schemeData[colorItem]])
+      schemeParam.push(schemeData[colorItem]);
     };
 
     var schemeId = NGL.ColormakerRegistry.addSelectionScheme(schemeParam, "Custom scheme");
@@ -153,11 +154,12 @@ class viewer_class {
     self.Structures[ pdb ]['representations']['selection']['spacefill'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+selection.join(" or ")+")" );
     self.Structures[ pdb ]['representations']['selection']['ball+stick'].setSelection( "" );
 
-    self.Structures[ pdb ]['representations']['selection']['spacefill'].setColor(color);
+    // Set the color for
+    self.Structures[ pdb ]['representations']['selection']['cartoon'].setColor(schemeId);
 
-    self.Structures[ pdb ]['representations']['selection']['cartoon'].setVisibility(false);
+    self.Structures[ pdb ]['representations']['selection']['cartoon'].setVisibility(true);
     self.Structures[ pdb ]['representations']['selection']['ball+stick'].setVisibility(false);
-    self.Structures[ pdb ]['representations']['selection']['spacefill'].setVisibility(true);
+    self.Structures[ pdb ]['representations']['selection']['spacefill'].setVisibility(false);
   }
 
   global_highlight(pdb, list){

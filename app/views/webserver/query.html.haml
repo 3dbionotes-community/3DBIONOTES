@@ -1,0 +1,28 @@
+.d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
+  .container.contentBox
+    .contentTitle
+      %h4 Query
+    .contentData
+      %p
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute
+        iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      %form{:style => "max-width: 500px;"}
+        %label.d-block{:style => "font-weight: bold;"}
+          Search by 
+          %a{:href => "javascript:window.open('http://www.emdatabank.org/')"}> EMDB
+           code, 
+          %a{:href => "javascript:window.open('http://www.rcsb.org/')"}> PDB
+           ID or 
+          %a{:href => "javascript:window.open('http://www.uniprot.org/')"}> Uniprot
+           accession
+        %input.form-control{:type => "text"}/
+        %label.d-block{:style => "font-weight: bold;"} Upload your annotations
+        %input{:type => "file"}/
+        %button.btn.btn-primary.d-block{:type => "button"} Submit
+      %h4{:style => "margin-top: 20px;margin-bottom: 9px;"} A few examples related to COVID-19 outbreak:
+      %p
+        %a{:href => "https://3dbionotes.cnb.csic.es/?queryId=EMD-7573&viewer_type=ngl&button=#query"} SARS Spike Glycoprotein, Stabilized variant, C3 symmetry (EMD-7573)
+        %br/
+        %a{:href => "https://3dbionotes.cnb.csic.es/?queryId=EMD-8069&viewer_type=ngl&button=#query"} Prefusion structure of a human coronavirus spike protein (EMD-8069)
+        %br/
+        %a{:href => "https://3dbionotes.cnb.csic.es/?queryId=6ACG&viewer_type=ngl&button=#query"} Trypsin-cleaved and low pH-treated SARS-CoV spike glycoprotein and ACE2 complex, ACE2-bound conformation 1 (6ACG)

@@ -1,0 +1,25 @@
+%html(lang="en")
+  %head
+    %title 3DBionotes-WS
+    %meta{:content => "An ELIXIR Recommended Interoperability Resource", :name => "description"}/
+    %meta{:content => "Biocomputing Unit - CNB", :name => "author"}/
+    %meta{:content => "Biocomputing Unit - CNB", :name => "copyright"}/
+    = stylesheet_link_tag('application')
+    = stylesheet_link_tag("https://fonts.googleapis.com/css?family=Lato:400,700,400italic&amp;display=swap")
+    = stylesheet_link_tag('webserver/main.css')
+    = javascript_include_tag('application')
+
+  %body#errorBody
+    .container
+      .row.text-center
+        .col-12.col-sm-10.col-lg-8.offset-sm-1.offset-lg-2.errorMain
+          .row
+            .col-12.col-sm-10.col-lg-8.offset-sm-1.offset-lg-2
+              %h1.m-0 404
+              %h5 The page you were looking for doesn't exist.
+              %p You may have mistyped the address or the page may have moved.
+              %p.small If you are the application owner check the logs for more information.
+              %a.btn.btn-primary{:href => ws_home_path, :role => "button"} Take me to the Home Page
+              %a.d-block{:href => "ws"}
+                %img.w-75{:src => "assets/img/3DBionotesLogo.jpg"}/
+          %div

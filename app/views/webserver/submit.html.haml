@@ -1,51 +1,24 @@
-.ws_main_div
-  .submit_form
-    = form_tag({controller: "main", action: "upload"}, :multipart => true, :method => :post,id: "query_form",:style=>"margin-top:20px;") do 
-      %h3
-        UPLOAD YOUR ATOMIC STRUCTURE 
-      %br
-      = text_field_tag(:title)
-      JOB TITLE (opt.)
-      %br
-      %br
-      
-      %div{:style=>"font-weight:bold;font-size:14px;margin-bottom:5px;"} 
-        STRUCTURE FILE in
-        %a{:href=>"http://www.wwpdb.org/documentation/file-format",  :target=>"_blank"} PDB 
-        or 
-        %a{:href=>"http://mmcif.wwpdb.org",  :target=>"_blank"} mmCIF 
-        format
-      = file_field_tag(:structure_file)
-      %br
-      = hidden_field_tag(:viewer_type,@viewerType)
-      %div{style:"font-size:14px;font-weight:bold;margin-bottom:5px;margin-top:10px;"}
-        UPLOAD YOUR ANNOTATIONS
-        %a{target:'_blank', title:'Example file for PDB 4G3X' , href:'/4g3x_ann_full_example.json'}
-          =image_tag("help_icon.png", height: '12', width: '12')
-      = file_field_tag(:annotations_file, {style:"font-size:12px;"})
-      %br
-      %br
-      = button_tag("Submit")
-    //%a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE1"} Example (AKT1-PIN1 docking models)
-    //%br
-    //%a{:href=>"/AKT1_PIN1.pdb", :style=>"margin-top:10px;"} Example file (AKT1_PIN1.pdb)
-    //%br
-    //%br
-    //%a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE2"} Example (HRAS interactions homology models)
-    //%br
-    //%a{:href=>"/HRAS_ppi.pdb", :style=>"margin-top:10px;"} Example file (HRAS_ppi.pdb)
-    //%br
-    //%br
-    //%a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE3"} Example (NR5A1 homology model)
-    //%br
-    //%a{:href=>"/NR5A1.pdb", :style=>"margin-top:10px;"} Example file (NR5A1.pdb)
-
-  .wait_div{:style=>'display:none'}
-    %span.wait_text PLEASE BE PATIENT
-    %br
-    %br
-    =image_tag("loading.gif",size:"300x300")
-    %br
-    %br
-    %span.wait_text THIS PROCESS MAY TAKE A FEW MINUTES
-
+.d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
+  .container.contentBox
+    .contentTitle
+      %h4 Upload your Atomic Structure
+    .contentData
+      %p
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute
+        iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      %form{:style => "max-width: 500px;"}
+        %label{:style => "font-weight: bold;"} Job Title
+        %small Optional
+        %input.form-control{:placeholder => "Job Title", :type => "text"}/
+        %label.d-block
+          Structure file in 
+          %a{:href => "http://www.wwpdb.org/documentation/file-format"}
+            %strong PDB
+          or
+          %a{:href => "http://mmcif.wwpdb.org/"}
+            %strong mmCIF
+          format
+        %input{:type => "file"}/
+        %label.d-block Upload your annotations
+        %input{:type => "file"}/
+        %button.btn.btn-primary.d-block{:type => "button"} Submit
