@@ -22,6 +22,7 @@ class MainController < ApplicationController
     @noAlignments = false
     @isAvailable = true
     @viewerType = viewer_type( params[:viewer_type] )
+    @source_url = request.referer || ws_database_path
 
     annotations = params[:annotations_file]
     if params[:annotations_file] then
