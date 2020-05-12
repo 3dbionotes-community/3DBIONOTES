@@ -31,7 +31,7 @@
         = hidden_field_tag(:viewer_type,@viewerType)
         .form-check
           = check_box(:has_structure_flag, "flag", {checked:false, class: "form-check-input"}, "yes", "no")
-          %label.form-check-label{:for => "formCheck-1"} Include neighbours with structural data
+          %label.form-check-label{:for => "has_structure_flag_flag"} Include neighbours with structural data
         %label.d-block{:style => "font-weight: bold;"} Upload your annotations
         = file_field_tag(:annotations_file, {style:"font-size:12px;"})
         %button.btn.btn-primary.d-block{:type => "submit"} Submit
