@@ -218,6 +218,10 @@
             %strong
               = protein[:names].join(" | ")
             %br/
+          - if protein[:description]
+            %p
+              %em #{protein[:description]}
+              %br/
           - protein[:sections].each do |section|
             = render partial: "section", locals: {protein: protein, section: section, is_main: true}
     .contentBox
