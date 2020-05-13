@@ -11,14 +11,18 @@ module Covid19Helper
     [protein[:name], section[:parent], section[:name]].compact.join(" > ")
   end
 
-  def reference(text, urls)
+  def reference(links)
     content_tag(:p) do
-      safe_join([
-        content_tag(:i, "", class: "fa fa-external-link-square"),
-        content_tag(:span, text + " - ", class: "reference"),
-        safe_join(urls.map { |url| content_tag(:a, "link", href: url, target: "_blank") }, " | "),
-      ])
+      safe_join(links.map do |text, url|
+        link_to(url, target: "_blank") do
+          link_icon + content_tag(:span, text, class: "reference2")
+        end
+      end, " | ")
     end
+  end
+
+  def link_icon
+    content_tag(:i, "", class: "fa fa-external-link-square")
   end
 
   def item_info(item)
