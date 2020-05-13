@@ -3,6 +3,8 @@
     .contentTitle
       %h4 Upload your Atomic Structure
     .contentData
+      %p
+        Models under study and not deposited to PDB yet can be analysed too. Annotations from similar entries based on BLAST sequence match will be displayed, but also customised annotations can be provided by the user. Job title (if provided) will be used to identify the model, otherwise the file name will be used.
       = form_tag({controller: "main", action: "upload"}, :multipart => true, :method => :post,id: "query_form",:style=>"max-width: 500px;") do
         %label{:style => "font-weight: bold;"} Job Title
         %small Optional

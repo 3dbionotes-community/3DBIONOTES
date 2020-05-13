@@ -3,6 +3,8 @@
     .contentTitle
       %h4 Network
     .contentData
+      %p
+        In order to calculate Protein-protein interaction networks please, select the species and provide a list of protein identifiers.
       %label{:style => "font-weight: bold;"} Select species
       = form_tag({controller: "main", action: "network_build"}, :multipart => true, :method => :post,id: "query_form",:style=>"max-width: 400px;") do
         %select.custom-select{:id=>"prot_organisms", :name=>"dataset"}
