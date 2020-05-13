@@ -34,7 +34,7 @@ class Covid19
 
   private
 
-  def self.get_pdb_redo_links(title, style, hash, keys)
+  def self.get_pdb_redo_links(title, style, pdb_key, hash, keys)
     entries0 = hash && keys ? (hash.dig(*keys) || []) : []
     entries = entries0.is_a?(Hash) ? [entries0] : entries0
 
@@ -44,7 +44,7 @@ class Covid19
         title: title_indexed,
         name: name,
         style: style,
-        query_url: "/?queryId=PDB-REDO-#{name}&viewer_type=ngl&button=#query",
+        query_url: "/?queryId=PDB-REDO-#{pdb_key}&viewer_type=ngl&button=#query",
         external_url: "https://pdb-redo.eu/db/#{name}",
       }
     end
@@ -55,8 +55,9 @@ class Covid19
     entries.map.with_index(1) { |entry, idx| [entry, append_index ? "#{title} (#{idx})" : title] }
   end
 
-  def self.get_isolde_links(title, style, hash, keys)
-    entries = hash && keys ? (hash.dig(*keys) || []) : []
+  def self.get_isolde_links(title, style, pdb_key, hash, keys)
+    return [] unless hash && keys
+    entries = hash.dig(*keys) || []
 
     with_indexes(entries, title).map do |entry, title_indexed|
       entry_name, uuid = entry.values_at("name", "uuid")
@@ -64,7 +65,7 @@ class Covid19
         title: title_indexed,
         name: entry_name,
         style: style,
-        query_url: "/?queryId=ISOLDE-#{title}&uuid=#{uuid}&viewer_type=ngl&button=#query",
+        query_url: "/?queryId=ISOLDE-#{pdb_key}&uuid=#{uuid}&viewer_type=ngl&button=#query",
       }
     end
   end
@@ -92,11 +93,11 @@ class Covid19
         description: pdb_hash["description"],
         query_url: "/?queryId=#{pdb_key}&viewer_type=ngl&button=#query",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/#{pdb_key}_deposited_chain_front_image-200x200.png",
-        external_url: "https://www.ebi.ac.uk/pdbe/entry/pdb/#{pdb_key}",
+        external: {text: "EBI", url: "https://www.ebi.ac.uk/pdbe/entry/pdb/#{pdb_key}"},
         related: get_related_keys(pdb_hash["emdbs"]),
         links: [
-          *get_pdb_redo_links("PDB-Redo", :turq, pdb_hash, ["validation", "pdb-redo"]),
-          *get_isolde_links("Isolde", :cyan, pdb_hash, ["validation", "isolde"]),
+          *get_pdb_redo_links("PDB-Redo", :turq, pdb_key, pdb_hash, ["validation", "pdb-redo"]),
+          *get_isolde_links("Isolde", :cyan, pdb_key, pdb_hash, ["validation", "isolde"]),
         ],
       }
     end.compact
@@ -111,8 +112,8 @@ class Covid19
         description: emdb_hash["description"],
         query_url: "/?queryId=#{emdb_key}&viewer_type=ngl&button=#query",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/#{emdb_key}/400_#{code}.gif",
-        related: get_related_keys(emdb_hash["pdbs"]),
-        external_url: "https://www.ebi.ac.uk/pdbe/entry/emdb/#{emdb_key}",
+        related: get_related_keys(emdb_hash["pdbs"] || emdb_hash["pdb"]),
+        external: {text: "EBI", url: "https://www.ebi.ac.uk/pdbe/entry/emdb/#{emdb_key}"},
         links: [],
       }
     end
@@ -124,9 +125,10 @@ class Covid19
       project, model, description = entry.values_at("project", "model", "description")
       {
         name: "#{project}-#{model}",
-        description: description,
+        description: ["project: #{project}", "model: #{model}", description].compact.join(" | "),
         query_url: "/?queryId=SWISS-MODEL-#{project}-#{model}&viewer_type=ngl&button=#query”",
         image_url: "https://swissmodel.expasy.org/interactive/#{project}/models/#{model}.png",
+        external: {text: "SWISS-MODEL", url: "https://swissmodel.expasy.org/interactive/#{project}/"},
         links: [],
       }
     end
@@ -181,7 +183,7 @@ class Covid19
           ]),
           card_wrapper("Related", [
             card("SARS-CoV", parse_db(protein, ["Related", "SARS-CoV"])),
-            card("Other", parse_db(protein, ["OtherRelated"]))
+            card("Other", parse_db(protein, ["Related", "OtherRelated"]))
           ]),
           card_wrapper("Computational Models", [
             card("Swiss Model", parse_swiss_model(protein, ["CompModels", "swiss-model"])),
