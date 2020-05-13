@@ -2,28 +2,28 @@ class Covid19
   def self.selected_entries
     [
       {
-        name: "EMD-30039",
-        description: "SARS-CoV-2 Spike Glycoprotein",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30039/400_30039.gif",
-        query_url: "/?queryId=EMD-30039&viewer_type=ngl&button=#query",
+        name: "EMD-21375",
+        description: "Prefusion 2019-nCoV spike glycoprotein with a single receptor-binding domain up (EMD-21375)",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-21375/400_21375.gif",
+        query_url: "/?queryId=EMD-21375&viewer_type=ngl&button=#query",
       },
       {
-        name: "6M17",
-        description: "The 2019-nCoV RBD/ACE2-B0AT1 complex",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6m17_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=6M17&viewer_type=ngl&button=#query",
+        name: "EMD-30210",
+        description: "The nsp12-nsp7-nsp8 complex bound to the template-primer RNA and triphosphate form of Remdesivir(RTP) (EMD-30210)",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30210/400_30210.gif",
+        query_url: "/?queryId=EMD-30210&viewer_type=ngl&button=#query",
       },
       {
-        name: "6ACG",
+        name: "6LZG",
         description: "Structure of novel coronavirus spike receptor-binding domain complexed with its receptor ACE2",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6lzg_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=6LZG&viewer_type=ngl&button=#query",
       },
       {
-        name: "EMD-7573",
-        description: "SARS Spike Glycoprotein, Stabilized variant, C3 symmetry",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-7573/400_7573.gif",
-        query_url: "/?queryId=EMD-7573&viewer_type=ngl&button=#query",
+        name: "6W9C",
+        description: "The crystal structure of papain-like protease of SARS CoV-2",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6w9c_deposited_chain_front_image-200x200.png",
+        query_url: "/?queryId=6W9C&viewer_type=ngl&button=#query",
       },
     ]
   end

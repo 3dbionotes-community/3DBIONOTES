@@ -62,4 +62,6 @@ Thumbs.db
 *.swo
 
 # Ruby/Rails
+bak/
 .byebug_history
+public/assets/
