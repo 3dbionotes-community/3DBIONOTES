@@ -1,11 +1,13 @@
 module MainManager
   module ToolsMain
-    module BuildPdbData
+    module BuildIsoldeData
 
       include MainManager::SourceMain::MainSites  
       include GlobalTools::FetchParserTools
 
-      def _fetch_pdb_data(identifierName)
+      def _fetch_isolde_data(isoldeIdentifierName)
+        identifierName = isoldeIdentifierName.last(4) 
+
         url = BaseUrl+"api/info/PDB/available/"+identifierName
         jsonData = getUrl(url)
         availJson  = JSON.parse(jsonData)
