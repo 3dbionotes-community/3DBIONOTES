@@ -4,7 +4,7 @@ $(() => {
         $el.popover({
             trigger: "hover",
             container: $el,
-            delay: { show: 50, hide: 50 },
+            delay: { show: 750, hide: 150 },
         });
     });
 });

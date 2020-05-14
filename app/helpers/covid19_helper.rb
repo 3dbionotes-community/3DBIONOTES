@@ -11,27 +11,40 @@ module Covid19Helper
     [protein[:name], section[:parent], section[:name]].compact.join(" > ")
   end
 
-  def reference(text, urls)
+  def reference(links)
     content_tag(:p) do
-      safe_join([
-        content_tag(:i, "", class: "fa fa-external-link-square"),
-        content_tag(:span, text + " - ", class: "reference"),
-        safe_join(urls.map { |url| content_tag(:a, "link", href: url, target: "_blank") }, " | "),
-      ])
+      safe_join(links.map do |text, url|
+        link_to(url, target: "_blank") do
+          link_icon + content_tag(:span, text, class: "reference2")
+        end
+      end, " | ")
     end
+  end
+
+  def link_icon
+    content_tag(:i, "", class: "fa fa-external-link-square")
   end
 
   def item_info(item)
     content_tag(:span) do
-      item[:links].map do |link|
-        content_tag(:p) do
-          link_to link[:name], link[:url], {class: "card-link"}
-        end
-      end.join + (
+      safe_join([
+        (content_tag(:p, content_tag(:em, item[:description])) if item[:description]),
+
+        item[:links].map do |link|
+          content_tag(:p) do
+            safe_join([
+              content_tag(:span, link[:title] + ": ") + link_to(link[:name], link[:query_url]),
+              link[:external_url] ? link_to(content_tag(:span, "External ") + link_icon, link[:external_url], target: "_blank") : nil,
+            ].compact, " | ")
+          end
+        end.join,
+
         item[:related].present? ?
-          content_tag(:p, "Related: #{item[:related].join(', ')}") : ""
-        ) +
-        link_to("External link", item[:external_link])
+          content_tag(:p, "Related: #{item[:related].join(', ')}") : "",
+        (item[:external] ?
+          link_to(content_tag(:span, item[:external][:text]) + " " + link_icon, item[:external][:url], target: "_blank")
+          : "")
+      ])
     end
   end
 end
