@@ -1,0 +1,14 @@
+.row
+  - items.each_with_index do |item, index|
+    - name = item[:name]
+    - has_many_links = item[:links].size > 1
+    %div{class: ["col-sm-6 col-md-3 col-lg-2 col-xl-2 item", "item-" + item[:name], max_items && index >= max_items ? "h" : ""]}
+      .subItem{"data-content" => item_info(item), "data-html" => "true", "data-placement" => "top", "data-toggle" => "popover", :title => name}
+        = link_to(item[:query_url] || "#") do
+          %div
+            %img{:src => item[:image_url]}/
+            %h6 #{name}
+        - item[:links].each do |link|
+          = link_to(link[:query_url] || "#") do
+            %span{:class => ["badge badge-primary itemBadge w3-#{link[:style]}", has_many_links ? "multi" : ""]}
+              %strong #{link[:title]}

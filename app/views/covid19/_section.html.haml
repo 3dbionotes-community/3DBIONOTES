@@ -1,0 +1,22 @@
+- id = protein[:name] + "-" + section[:name]
+- name = section[:name]
+- items = section[:items] || []
+- max_items = 20
+
+%div{:class => ["card", is_main ? "proteinSub" : "proteinNest"]}
+  %div{id: "#pSub-#{id}", class: "card-header"}
+    %h5.d-inline.mb-0 #{name}
+    %span.d-inline-block.float-right.paginationText
+      - if items.present? && items.size > max_items
+        #{[items.size, max_items].min} of #{items.size} items
+        %button.modalButton{"data-target" => "#modalContent-" + id, "data-toggle" => "modal", :type => "button"}
+          View All
+        = render partial: "section_popup", locals: {items: items, id: id, title: section_popup_title(protein, section)}
+      %a.collapseToggle{"aria-controls" => "pSubBod-#{id}", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#pSubBod-#{id}"}
+        %i.fa.fa-chevron-down
+
+  %div{:id => "pSubBod-#{id}", :class => "card-body collapsable-body collapse show"}
+    = render partial: "items", locals: {items: items, max_items: max_items}
+    - (section[:subsections] || []).each do |section|
+      -if section[:items].present?
+        = render partial: "section", locals: {protein: protein, section: section, is_main: false}
