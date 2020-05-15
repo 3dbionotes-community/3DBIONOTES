@@ -6,7 +6,7 @@
       .subItem{"data-content" => item_info(item), "data-html" => "true", "data-placement" => "top", "data-toggle" => "popover", :title => name}
         = link_to(item[:query_url] || "#") do
           %div
-            %img{:src => item[:image_url]}/
+            %img{:src => item[:image_url] || image_path("ComingSoon.png")}/
             %h6 #{name}
         - item[:links].each do |link|
           = link_to(link[:query_url] || "#") do

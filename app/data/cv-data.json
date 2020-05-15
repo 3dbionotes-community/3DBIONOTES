@@ -323,57 +323,52 @@
             "CompModels": {
                 "swiss-model": [
                     {
-                        "model": "model_13",
+                        "model": "01",
                         "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
-                        "model": "model_01",
+                        "model": "02",
                         "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
-                        "model": "model_02",
+                        "model": "03",
                         "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
-                        "model": "model_03",
+                        "model": "04",
                         "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
-                        "model": "model_10",
+                        "model": "05",
                         "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
-                        "model": "model_11",
+                        "model": "06",
                         "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
-                        "model": "model_12",
+                        "model": "07",
                         "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
-                        "model": "model_08",
+                        "model": "08",
                         "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
-                        "model": "model_04",
+                        "model": "09",
                         "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
-                        "model": "model_06",
-                        "project": "5hYU6g",
-                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
-                    },
-                    {
-                        "model": "model_07",
+                        "model": "10",
                         "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     }

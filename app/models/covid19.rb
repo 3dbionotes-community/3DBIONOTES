@@ -134,6 +134,29 @@ class Covid19
     end
   end
 
+  def self.parse_alphafold(protein, keys)
+    entries = protein.dig(*keys) || []
+    entries.map do |entry|
+      name, uuid, description = entry.values_at("name", "uuid", "description")
+      {
+        name: name,
+        description: description,
+        links: [],
+      }
+    end
+  end
+
+  def self.parse_bsm_arc(protein, keys)
+    entries = protein.dig(*keys) || []
+    entries.map do |entry|
+      model, = entry.values_at("model")
+      {
+        name: "#{model}",
+        links: [],
+      }
+    end
+  end
+
   def self.parse_db(protein, keys)
     parse_pdb(protein, [*keys, "PDB"]) + parse_emdb(protein, [*keys, "EMDB"])
   end
@@ -187,7 +210,8 @@ class Covid19
           ]),
           card_wrapper("Computational Models", [
             card("Swiss Model", parse_swiss_model(protein, ["CompModels", "swiss-model"])),
-            # TODO: AlphaFold
+            card("AlphaFold", parse_alphafold(protein, ["CompModels", "AlphaFold"])),
+            card("BSM-Arc", parse_bsm_arc(protein, ["CompModels", "BSM-Arc"])),
           ]),
         ].compact,
       }
