@@ -1,4 +1,8 @@
 {
+  "name": "FeatureAnalysis",
+  "scripts": {
+    "build": "browserify -r ./featuresAnalysis.js:featuresAnalysis -o featuresAnalysis.bundle.js"
+  },
   "devDependencies": {
     "browserify": "^16.5.1"
   }
