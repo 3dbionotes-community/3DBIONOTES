@@ -1,4 +1,3 @@
-
 {
     "SARS-CoV-2 Proteome": {
         "S": {
@@ -103,6 +102,17 @@
                     {
                         "project": "7dVLxC",
                         "model": "04"
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009724390_v03_1"
+                    },
+                    {
+                        "model": "YP_009724390_v03_2"
+                    },
+                    {
+                        "model": "YP_009724390_v03_3"
                     }
                 ]
             },
@@ -243,7 +253,7 @@
             ],
             "description": "Part of Replicase polyprotein 1a and 1ab. Responsible for the cleavages located at the N-terminus of the replicase polyprotein. In addition, PL-PRO possesses a deubiquitinating/deISGylating activity and processes both 'Lys-48'- and 'Lys-63'-linked polyubiquitin chains from cellular substrates. Participates together with nsp4 in the assembly of virally-induced cytoplasmic double-membrane vesicles necessary for viral replication. Antagonizes innate immune induction of type I interferon by blocking the phosphorylation, dimerization and subsequent nuclear translocation of host IRF3. Prevents also host NF-kappa-B signaling",
             "names": [
-                "nsp3",
+                "",
                 "Non-structural protein 3",
                 "PL-Pro",
                 "Papain-like proteinase"
@@ -314,57 +324,57 @@
                 "swiss-model": [
                     {
                         "model": "model_13",
-                        "project": "13",
+                        "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
                         "model": "model_01",
-                        "project": "01",
+                        "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
                         "model": "model_02",
-                        "project": "02",
+                        "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
                         "model": "model_03",
-                        "project": "03",
+                        "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
                         "model": "model_10",
-                        "project": "10",
+                        "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
                         "model": "model_11",
-                        "project": "11",
+                        "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
                         "model": "model_12",
-                        "project": "12",
+                        "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
                         "model": "model_08",
-                        "project": "08",
+                        "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
                         "model": "model_04",
-                        "project": "04",
+                        "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
                         "model": "model_06",
-                        "project": "06",
+                        "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     },
                     {
                         "model": "model_07",
-                        "project": "07",
+                        "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     }
                 ],
@@ -373,6 +383,26 @@
                         "name": "PL-PRO_C_terminal",
                         "uuid": "To-be-Determined",
                         "description": "PL-PRO C terminal domain.UniProt R1AB_WCPV, corresponds to residues 2389 - 2743. Included as this region appeared not to be covered by SWISS-MODEL."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725299_1_v01"
+                    },
+                    {
+                        "model": "YP_009725299_2_v01"
+                    },
+                    {
+                        "model": "YP_009725299_3_v01"
+                    },
+                    {
+                        "model": "YP_009725299_4_v01"
+                    },
+                    {
+                        "model": "YP_009725299_5_v01"
+                    },
+                    {
+                        "model": "YP_009725299_6_v01"
                     }
                 ]
             },
@@ -429,14 +459,9 @@
                 "6yb7": {}
             },
             "CompModels": {
-                "swiss-model": [
+                "BSM-Arc": [
                     {
-                        "project": "JDUya4",
-                        "model": "01"
-                    },
-                    {
-                        "project": "JDUya4",
-                        "model": "02"
+                        "model": "YP_009725301_v01"
                     }
                 ]
             },
@@ -776,6 +801,14 @@
                         "model": "04",
                         "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
                     }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009724397_1_v01"
+                    },
+                    {
+                        "model": "YP_009724397_2_v01"
+                    }
                 ]
             },
             "Related": {
@@ -843,6 +876,11 @@
                         "project": "X6zRCV",
                         "model": "04",
                         "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                    }
+                ],
+                "BMS-Arc": [
+                    {
+                        "model": "YP_009725306_v01 "
                     }
                 ]
             },
@@ -998,6 +1036,11 @@
                         "model": "03",
                         "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
                     }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725303_v01"
+                    }
                 ]
             },
             "Interactions": {
@@ -1066,6 +1109,11 @@
                         "project": "M4qFvm",
                         "model": "03",
                         "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725304_v01"
                     }
                 ]
             },
@@ -1159,6 +1207,11 @@
                         "model": "03",
                         "description": "Experimental structures (PDB: 6w4b, 6w9q) and high quality models are available which we predict to be homo-dimers."
                     }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725305_v01 "
+                    }
                 ]
             },
             "Related": {
@@ -1245,6 +1298,11 @@
                         "model": "03",
                         "description": "Experimental structures (PDB: 6vww, 6w01, 6wlc) and high quality models are available."
                     }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725310_v01"
+                    }
                 ]
             },
             "Interactions": {
@@ -1287,6 +1345,11 @@
                         "project": "7BgWuu",
                         "model": "04",
                         "description": "High quality models are available."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725309_v02"
                     }
                 ]
             },
@@ -1337,6 +1400,11 @@
                         "project": "YxJyvF",
                         "model": "02",
                         "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                    }
+                ],
+                "BMS-Arc": [
+                    {
+                        "model": "YP_009725297_v01"
                     }
                 ]
             },
@@ -1434,6 +1502,11 @@
                         "model": "05",
                         "description": "High quality models are available."
                     }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725308_v01"
+                    }
                 ]
             },
             "Related": {
@@ -1509,7 +1582,7 @@
         },
         "ORF7a": {
             "uniprotAccession": [
-                "P0DTC"
+                "P0DTC7"
             ],
             "description": "Non-structural protein which is dispensable for virus replication in cell culture.",
             "names": [
@@ -1541,6 +1614,11 @@
                         "project": "5Bbtxw",
                         "model": "03",
                         "description": "Partial coverage by an experimental structure (PDB: 6w37) and high quality models are available."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009724395_v01"
                     }
                 ]
             },
@@ -1582,6 +1660,20 @@
                         "uuid": "To-be-Determined",
                         "description": "Nsp6.UniProt R1AB_WCPV, corresponds to residues 3570 - 3859.Uncertainty about positions of residues 84 - 132 and 238 - 278 relative to rest of structure (prediction PDB indexing)."
                     }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725311_v02_1"
+                    },
+                    {
+                        "model": "YP_009725311_v02_2"
+                    },
+                    {
+                        "model": "YP_009725311_v02_3"
+                    },
+                    {
+                        "model": "YP_009725311_v02_4"
+                    }
                 ]
             }
         },
@@ -1618,6 +1710,25 @@
                 "RNA-directed RNA polymerase",
                 "RNA-dependent RNA polymerase"
             ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "JDUya4",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
+                    },
+                    {
+                        "project": "JDUya4",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
+                    }
+                ],
+                "BMS-Arc": [
+                    {
+                        "model": "YP_009725307_v01"
+                    }
+                ]
+            },
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
@@ -1688,6 +1799,11 @@
                         "model": "01",
                         "description": "Model quality estimates are low - use with care."
                     }
+                ],
+                "BMS-Arc": [
+                    {
+                        "model": "YP_009724392_v01"
+                    }
                 ]
             },
             "Related": {
@@ -1723,6 +1839,11 @@
                         "name": "nsp4",
                         "uuid": "To-be-Determined",
                         "description": "Nsp4. UniProt R1AB_WCPV, corresponds to residues 2764 - 3252. Uncertainty highest between domains."
+                    }
+                ],
+                "BMS-Arc": [
+                    {
+                        "model": "YP_009725300_v01 "
                     }
                 ]
             }
@@ -1773,5 +1894,4 @@
             ]
         }
     }
-  }
-  
+}
