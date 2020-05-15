@@ -13,6 +13,20 @@ function initLiveSearch(proteinsData, options) {
     const onSearchWithArgs = (ev) => onSearch(ev, proteinsData, options);
     const onSearchThrottled = throttle(onSearchWithArgs, 300);
     $("#search-protein").keyup(onSearchThrottled);
+    $(".modal.fade").on("show.bs.modal", onModalOpen);
+}
+
+function onModalOpen(ev) {
+    const modal = $(ev.currentTarget);
+    setImagesSrc(modal);
+}
+
+function setImagesSrc(container) {
+    container
+        .find("img")
+        .get()
+        .map($)
+        .forEach((el$) => el$.attr("src", el$.attr("data-src")));
 }
 
 function onSearch(ev, proteinsData, options) {
@@ -73,14 +87,15 @@ function processItemMatches(relations, text, options) {
         showProteins(proteins, { highlightTags: false });
 
         proteins.forEach((protein) => {
-            $(`.protein-${protein} .card-body`).each((_idx, cardEl) => {
-                const card = $(cardEl);
+            $(`.protein-${protein} .card-body > .row`).each((_idx, row) => {
+                const card = $(row.closest(".card-body"));
                 const highlighted = card.find(".item.hl");
                 const notHighlighted = card.find(".item:not(.hl)");
                 const highlightedCountAll = highlighted.size();
                 const highlightedCount = Math.min(highlightedCountAll, maxItems);
                 const restCount = maxItems - highlightedCount;
                 highlighted.slice(0, highlightedCount).removeClass("h");
+                setImagesSrc(highlighted.slice(0, highlightedCount));
                 highlighted.slice(highlightedCount).addClass("h");
                 notHighlighted.slice(0, restCount).removeClass("h");
                 notHighlighted.slice(restCount).addClass("h");
