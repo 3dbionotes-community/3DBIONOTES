@@ -1,8 +1,18 @@
-# Extended ProtVista for 3DBIONOTES
+# Feature Analysis
 
-Add more functionalities to UniProt-myProtVista
+## Requirements
+
+- Node: v8
+
+## Build
+
+```
+$ npm install
+$ npm run build
+```
 
 ## License
+
 This software is licensed under the Apache 2 license, quoted below.
 
 Copyright (c) 2018, CNB-CSIC
