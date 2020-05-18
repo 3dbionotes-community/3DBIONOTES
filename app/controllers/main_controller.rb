@@ -14,6 +14,9 @@ class MainController < ApplicationController
   PDB_REDO = Settings.GS_PDB_REDO
 
   def home
+    if params[:queryId].blank? && params[:annotations_url].blank?
+        redirect_to webserver_path
+    end
     if request.referer
       logger.info("  HTTP Referer: #{request.referer}") 
     end
