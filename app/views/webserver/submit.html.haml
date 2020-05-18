@@ -1,45 +1,29 @@
-.ws_main_div
-  .submit_form
-    = form_tag({controller: "main", action: "upload"}, :multipart => true, :method => :post,id: "query_form",:style=>"margin-top:20px;") do 
-      %h3
-        UPLOAD YOUR ATOMIC STRUCTURE 
-      %br
-      = text_field_tag(:title)
-      JOB TITLE (opt.)
-      %br
-      %br
-      
-      %div{:style=>"font-weight:bold;font-size:14px;margin-bottom:5px;"} 
-        STRUCTURE FILE in
-        %a{:href=>"http://www.wwpdb.org/documentation/file-format",  :target=>"_blank"} PDB 
-        or 
-        %a{:href=>"http://mmcif.wwpdb.org",  :target=>"_blank"} mmCIF 
-        format
-      = file_field_tag(:structure_file)
-      %br
-      = hidden_field_tag(:viewer_type,@viewerType)
-      %div{style:"font-size:14px;font-weight:bold;margin-bottom:5px;margin-top:10px;"}
-        UPLOAD YOUR ANNOTATIONS
-        %a{target:'_blank', title:'Example file for PDB 4G3X' , href:'/4g3x_ann_full_example.json'}
-          =image_tag("help_icon.png", height: '12', width: '12')
-      = file_field_tag(:annotations_file, {style:"font-size:12px;"})
-      %br
-      %br
-      = button_tag("Submit")
-    //%a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE1"} Example (AKT1-PIN1 docking models)
-    //%br
-    //%a{:href=>"/AKT1_PIN1.pdb", :style=>"margin-top:10px;"} Example file (AKT1_PIN1.pdb)
-    //%br
-    //%br
-    //%a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE2"} Example (HRAS interactions homology models)
-    //%br
-    //%a{:href=>"/HRAS_ppi.pdb", :style=>"margin-top:10px;"} Example file (HRAS_ppi.pdb)
-    //%br
-    //%br
-    //%a{:href=>"/chain_mapping?recover=true&rand=EXAMPLE3"} Example (NR5A1 homology model)
-    //%br
-    //%a{:href=>"/NR5A1.pdb", :style=>"margin-top:10px;"} Example file (NR5A1.pdb)
+.d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
+  .container.contentBox
+    .contentTitle
+      %h4 Upload your Atomic Structure
+    .contentData
+      %p
+        Models under study and not deposited to PDB yet can be analysed too. Annotations from similar entries based on BLAST sequence match will be displayed, but also customised annotations can be provided by the user. Job title (if provided) will be used to identify the model, otherwise the file name will be used.
+      = form_tag({controller: "main", action: "upload"}, :multipart => true, :method => :post,id: "query_form",:style=>"max-width: 500px;") do
+        %label{:style => "font-weight: bold;"} Job Title
+        %small Optional
+        = text_field_tag(:title, "", :placeholder => "Job Title", :class => "form-control")
+        %label.d-block
+          Structure file in 
+          %a{:href => "http://www.wwpdb.org/documentation/file-format"}
+            %strong PDB
+          or
+          %a{:href => "http://mmcif.wwpdb.org/"}
+            %strong mmCIF
+          format
+        = file_field_tag(:structure_file)
+        %label.d-block Upload your annotations
 
+        = hidden_field_tag(:viewer_type, @viewerType)
+
+        = file_field_tag(:annotations_file)
+        %button.btn.btn-primary.d-block{:type => "submit"} Submit
   .wait_div{:style=>'display:none'}
     %span.wait_text PLEASE BE PATIENT
     %br

@@ -1,0 +1,71 @@
+[   /*Array of annotation tracks*/
+  { 
+    track_name:"track_name_1",   /*track name; track  names can be repeated, the annotation will be grouped in the same track*/ 
+
+    /*By  default the begin and end fields points to the protein sequence*/
+    data:[
+     {begin:5,end:25,type:"type_name_11",color:"red",description:"My description text"},   /*The annotation are grouped by type*/
+     {begin:6,end:30,type:"type_name_11",color:"pink",description:"My description text"},
+     {begin:7,end:70,type:"type_name_12",color:"#FF00FF",description:"My description text"},
+     {begin:15,end:50,type:"type_name_12",color:"#00FF00",description:"My description text"}
+    ] 
+  },
+  { 
+    track_name:"track_name_2",
+    chain:"A",   /*If chain filed exists the begin and end elements of data will point to the residues IDs of the PDB structure*/
+    data:[
+      {begin:5,end:25,type:"type_name_21",color:"red",description:"My description text"},
+      {begin:6,end:30,type:"type_name_21",color:"yellow",description:"My description text"},
+      {begin:7,end:70,type:"type_name_22",color:"orange",description:"My description text"},
+      {begin:15,end:50,type:"type_name_23",color:"purple",description:"My description text"}
+    ] 
+  },
+  { 
+    track_name:"continuous_track", 
+    visualization_type:"continuous",   /*tracks can cancontain continuos data but the track name must be unique or the other annotation within the track will be deleted*/
+    data:[
+      {begin:10,value:0.567099895929477},
+      {begin:11,value:2.20246376282134},
+      {begin:12,value:0.214324032613771},
+      {begin:13,value:4.46020393560932},
+      {begin:14,value:1.61429623438872},
+      {begin:15,value:3.68651815100741},
+      {begin:16,value:0.928219087174238},
+      {begin:17,value:2.02385708943023},
+      {begin:18,value:1.72252333602232},
+      {begin:19,value:2.5931932279525},
+      {begin:20,value:1.0372950801038},
+      {begin:21,value:3.39412150550505},
+      {begin:22,value:3.93316593967478},
+      {begin:23,value:3.51667455089121},
+      {begin:24,value:3.08098839283273},
+      {begin:25,value:4.66961579557445},
+      {begin:26,value:4.71529719522012},
+      {begin:27,value:2.57493222073677},
+      {begin:28,value:3.66508419890328},
+      {begin:29,value:3.06120790461595},
+      {begin:30,value:4.85202806686127},
+      {begin:31,value:3.49415453174764},
+      {begin:32,value:4.1668606318474},
+      {begin:33,value:2.56198834735255},
+      {begin:34,value:4.96807410229041},
+      {begin:35,value:1.78859514212633},
+      {begin:36,value:0.128262972466953},
+      {begin:37,value:1.86302672906795},
+      {begin:38,value:3.25107390952235},
+      {begin:39,value:0.671622921510462},
+      {begin:40,value:4.34112878485307},
+      {begin:41,value:1.39301218434948},
+      {begin:42,value:3.58243602330107},
+      {begin:43,value:1.33616307589634},
+      {begin:44,value:1.16932126470948},
+      {begin:45,value:2.7543981732882},
+      {begin:46,value:3.62232156197345},
+      {begin:47,value:1.63800089589635},
+      {begin:48,value:0.986494182929913},
+      {begin:49,value:2.25718846260502},
+      {begin:50,value:2.14657823612486}
+    ]
+  }
+]
+
