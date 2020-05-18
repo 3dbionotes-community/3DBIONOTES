@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get '/', to: redirect('/ws')
+  get '/' => 'main#home'
   post '/' => 'main#home'
   get '/pdb_redo/:name' => 'main#pdb_redo'
   post '/upload' => 'main#upload'
