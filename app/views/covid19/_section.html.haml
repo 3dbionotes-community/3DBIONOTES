@@ -1,7 +1,7 @@
-- id = protein[:name] + "-" + section[:name]
+- id = (protein[:name] + "-" + section[:name]).parameterize
 - name = section[:name]
 - items = section[:items] || []
-- max_items = 20
+- max_items = 12
 
 %div{:class => ["card", is_main ? "proteinSub" : "proteinNest"]}
   %div{id: "#pSub-#{id}", class: "card-header"}
@@ -16,7 +16,7 @@
         %i.fa.fa-chevron-down
 
   %div{:id => "pSubBod-#{id}", :class => "card-body collapsable-body collapse show"}
-    = render partial: "items", locals: {items: items, max_items: max_items}
+    = render partial: "items", locals: {items: items, max_items: max_items, max_images: max_items}
     - (section[:subsections] || []).each do |section|
       -if section[:items].present?
         = render partial: "section", locals: {protein: protein, section: section, is_main: false}
