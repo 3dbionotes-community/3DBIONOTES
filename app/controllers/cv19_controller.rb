@@ -14,7 +14,7 @@ class Cv19Controller < ApplicationController
     
     
     @uniprot_entries=["P0DTC1","P0DTD1","P0DTC2","P0DTC3","P0DTC4","P0DTC5","P0DTC6","P0DTC7","P0DTD8","P0DTC8","P0DTC9","P0DTD2","P0DTD3","A0A663DJA2"]
-    @alt_names = {"P0DTC1"=>["Replicase polyprotein 1a", "R1a", "R1A_WCPV"], "P0DTD1"=>["Replicase polyprotein 1ab", "R1ab", "R1AB_WCPV"], "P0DTC2"=>["Spike glycoprotein", "S", "SPIKE_WCPV", "surface_glycoprotein"], "P0DTC3"=>["Protein 3a", "AP3A_WCPV"], "P0DTC4"=>["P0DTC4 Envelope small membrane protein", "E", "VEMP_WCPV"], "P0DTC5"=>["Membrane protein", "M", "VME1_WCPV"], "P0DTC6"=>["Non-structural protein 6", "NS6_WCPV"], "P0DTC7"=>["Protein 7a", "NS7A", "NS7A_WCPV"], "P0DTD8"=>["Protein 7b", "NS7B", "NS7B_WCPV"], "P0DTC8"=>["Non-structural protein 8", "NS8", "NS8_WCPV"], "P0DTC9"=>["nucleocapsid protein", "Nucleoprotein", "N", "NCAP_WCPV"], "P0DTD3"=>["Uncharacterized protein 14", "Y14_WCPV"], "P0DTD2"=>["Protein 9b", "P0DTD2"], "A0A663DJA2"=>["Hypothetical ORF10 protein", "A0A663DJA2_9BETC"]}
+    @alt_names = {"P0DTC1"=>["Replicase polyprotein 1a", "R1a", "R1A_WCPV"], "P0DTD1"=>["Replicase polyprotein 1ab", "R1ab", "R1AB_WCPV"], "P0DTC2"=>["Spike glycoprotein", "S", "SPIKE_WCPV", "Surface Glycoprotein"], "P0DTC3"=>["ORF3a Protein","NS3a", "AP3A_WCPV"], "P0DTC4"=>["Envelope small membrane protein", "E", "VEMP_WCPV"], "P0DTC5"=>["Membrane protein", "M", "VME1_WCPV"], "P0DTC6"=>["ORF6 protein","Accessory Protein 6","Accessory Factor 6", "NS6_WCPV"], "P0DTC7"=>["ORF7a Protein", "NS7A_WCPV"], "P0DTD8"=>["ORF7b Protein", "NS7B_WCPV"], "P0DTC8"=>["ORF8 Protein", "NS8_WCPV"], "P0DTC9"=>["Nucleocapsid Protein", "Nucleoprotein", "N", "NCAP_WCPV"], "P0DTD3"=>["ORF14 Protein", "Y14_WCPV"], "P0DTD2"=>["ORF9b Protein", "P0DTD2"], "A0A663DJA2"=>["Hypothetical ORF10 Protein", "A0A663DJA2_9BETC"]}
 
     # P0DTC1
     # > NSP3
@@ -68,7 +68,7 @@ class Cv19Controller < ApplicationController
 
 
     # P0DTC3
-    # > NS3A
+    # > ORF3a
 
     # P0DTC4
     # > E
@@ -77,28 +77,28 @@ class Cv19Controller < ApplicationController
     # > M
 
     # P0DTC6
-    # > NS6
+    # > ORF16
 
     # P0DTC7
-    # > NS7A
+    # > ORF17A
 
     # P0DTD8
-    # > NS7B
+    # > ORF17B
 
     # P0DTC8
-    # > NS8
+    # > ORF18
 
     # P0DTC9
     # > N
 
     # P0DTD3
-    # > NS14
+    # > ORF114
 
     # P0DTD2
-    # > NSP9B
+    # > ORF1P9B
 
     # A0A663DJA2
-    # > NS10
+    # > ORF10
 
   end
   
