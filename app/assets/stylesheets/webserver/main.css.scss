@@ -19,6 +19,13 @@ body {
     height: 250px;
 }
 
+#mainAlert {
+  width: 100%;
+  display: block;
+  margin: 20px 0px -20px;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, .025), 0 0px 23px rgba(0, 0, 0, .04);
+}
+
 #welcome {
     padding: 20px;
     background: image-url("mainBackground.jpg") no-repeat;
