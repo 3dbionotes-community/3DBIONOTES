@@ -33,7 +33,6 @@ public/ngl
 /db/dump
 /db/mysql
 
-/app/assets/javascripts/interface_viewer/package-lock.json
 /app/assets/javascripts/old_js
 /app/assets/stylesheets/old_css
 *node_modules*
