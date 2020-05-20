@@ -21,7 +21,7 @@ class FramesAnnotationsController < ApplicationController
         if @alignment["pdb"] and not @alignment["path"]
 	      @allURL.push(["coverage", "/api/alignments/Coverage/"+@alignment["pdb"].downcase+@alignment["chain"],false])
           # Adding resolution data
-          @allURL.push(["emlr", "http://rinchen-dos.cnb.csic.es:8083/lrs/pdbAnnotFromMap/all/"+@alignment["pdb"].downcase+"/"+@alignment["chain"]+"/?format=json",false])
+          @allURL.push(["emlr", "/ws/lrs/pdbAnnotFromMap/all/"+@alignment["pdb"].downcase+"/"+@alignment["chain"]+"/?format=json",false])
           # @allURL.push(["emlr", "https://my-json-server.typicode.com/pconesa/demo/emres",false])
         elsif @alignment["pdb"] and @alignment["path"]
           @allURL.push(["coverage", "/api/alignments/Coverage/"+@alignment["path"]+"::"+@alignment["pdb"].gsub!('.', '_dot_')+"::"+@alignment["chain"],false])
