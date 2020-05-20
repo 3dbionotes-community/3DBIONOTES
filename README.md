@@ -100,6 +100,14 @@ Some extra modules are also part of the application:
      $ npm run build
      ```
 
+- interface_viewer
+   - Path: app/assets/javascripts/interface_viewer
+   - Installation dependencies: node version 8
+   - How to install:
+     ```
+     $ npm install
+     $ npm run build
+     ```
 
 ## Other dependencies
 - ngl
