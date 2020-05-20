@@ -81,7 +81,7 @@ The application contains two git sub-modules:
      $ npm run build
      ```
 
-An extra module is also part of the application:
+Some extra modules are also part of the application:
 - featureAnalysis
    - Path: app/assets/javascripts/annotations_viewer/featureAnalysis
    - Installation dependencies: node version 8
@@ -90,6 +90,16 @@ An extra module is also part of the application:
      $ npm install
      $ npm run build
      ```
+
+- structure_viewer
+   - Path: app/assets/javascripts/structure_viewer
+   - Installation dependencies: node version 8
+   - How to install:
+     ```
+     $ npm install
+     $ npm run build
+     ```
+
 
 ## Other dependencies
 - ngl
