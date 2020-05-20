@@ -15,7 +15,7 @@ class MainController < ApplicationController
 
   def home
     if params[:queryId].blank? && params[:annotations_url].blank?
-        redirect_to webserver_path
+        redirect_to ws_path
     end
     if request.referer
       logger.info("  HTTP Referer: #{request.referer}") 
