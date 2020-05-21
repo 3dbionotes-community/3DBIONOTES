@@ -42,7 +42,7 @@
                         ],
                         "pdb-redo": [
                             {
-                                "name": "6lvn_final"
+                                "name": "6lvn"
                             }
                         ]
                     }
@@ -61,7 +61,7 @@
                         ],
                         "pdb-redo": [
                             {
-                                "name": "6lxt_final"
+                                "name": "6lxt"
                             }
                         ]
                     }
@@ -270,7 +270,7 @@
                         ],
                         "pdb-redo": [
                             {
-                                "name": "6w9c_final"
+                                "name": "6w9c"
                             }
                         ]
                     }
@@ -281,7 +281,7 @@
                     "validation": {
                         "pdb-redo": [
                             {
-                                "name": "6w02_final"
+                                "name": "6w02"
                             }
                         ]
                     }
@@ -294,7 +294,7 @@
                     "validation": {
                         "pdb-redo": [
                             {
-                                "name": "6w6y_final"
+                                "name": "6w6y"
                             }
                         ]
                     }
@@ -313,7 +313,7 @@
                         ],
                         "pdb-redo": [
                             {
-                                "name": "6vxs_final"
+                                "name": "6vxs"
                             }
                         ]
                     }
@@ -738,14 +738,14 @@
                             }
                         ],
                         "pdb-redo": {
-                            "name": "6vyo_final"
+                            "name": "6vyo"
                         }
                     }
                 },
                 "6wji": {
                     "validation": {
                         "pdb-redo": {
-                            "name": "6wji_final"
+                            "name": "6wji"
                         }
                     }
                 },
@@ -762,14 +762,14 @@
                             }
                         ],
                         "pdb-redo": {
-                            "name": "6m3m_final"
+                            "name": "6m3m"
                         }
                     }
                 },
                 "6wkp": {
                     "validation": {
                         "pdb-redo": {
-                            "name": "https://pdb-redo.eu/db/6wkp/6wkp_final.pdb"
+                            "name": "6wkp"
                         }
                     }
                 }
@@ -1178,7 +1178,7 @@
                         ],
                         "pdb-redo": [
                             {
-                                "name": "6w4b_final"
+                                "name": "6w4b"
                             }
                         ]
                     }
@@ -1259,7 +1259,7 @@
                         ],
                         "pdb-redo": [
                             {
-                                "name": "6vww_final"
+                                "name": "6vww"
                             }
                         ]
                     }
@@ -1270,7 +1270,7 @@
                     "validation": {
                         "pdb-redo": [
                             {
-                                "name": "6w01_final"
+                                "name": "6w01"
                             }
                         ]
                     }
@@ -1588,7 +1588,7 @@
                 "6w37": {
                     "validation": {
                         "pdb-redo": {
-                            "name": "6w37_final"
+                            "name": "6w37"
                         }
                     }
                 }
