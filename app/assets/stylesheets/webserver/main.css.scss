@@ -43,9 +43,18 @@ body {
     text-align: justify;
 }
 
+.jumbotron .btn {
+    margin-top: 10px;
+}
+
 @media (min-width: 576px) {
     .jumbotron {
         padding: 4rem 2rem;
+    }
+}
+@media (max-width: 768px) {
+    .jumbotron .btn {
+        margin-left: 0px !important;
     }
 }
 
@@ -271,6 +280,10 @@ h4,
 h5,
 h6 {
     margin-bottom: 0px;
+}
+
+h5, .h5 {
+    color: #212529;
 }
 
 .contentData {
