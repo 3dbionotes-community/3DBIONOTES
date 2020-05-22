@@ -30,15 +30,21 @@ $ bundle exec rails server
 
 ### Setup Production
 
+Add Passenger setup to `/etc/apache2/apache2.conf`:
+
 ```
-$ rvm install ruby-2.4.1
-$ a2ensite bionotes
-$ ln -s /services/bionotes/apps/node/bin/node /usr/local/bin/node
-$ RAILS_ENV=production bundle exec rake assets:precompile
-$ touch ~/apps/bionotes/tmp/restart.txt
+LoadModule passenger_module /services/bionotes/.rvm/gems/ruby-2.4.1@bionotes/gems/passenger-5.1.12/buildout/apache2/mod_passenger.so
+   <IfModule mod_passenger.c>
+     PassengerRoot /services/bionotes/.rvm/gems/ruby-2.4.1@bionotes/gems/passenger-5.1.12
+     PassengerDefaultRuby /services/bionotes/.rvm/gems/ruby-2.4.1@bionotes/wrappers/ruby
+     PassengerMaxPoolSize 64
+     PassengerMinInstances 32
+     PassengerPoolIdleTime 60
+   </IfModule>
 ```
 
-The apache configuration file to properly configure Passenger should like this:
+The site configuration file (`/etc/apache2/sites-enabled/bionotes`) for Apache should like this:
+
 ```
 <VirtualHost *:80>
    ServerName XXX.cnb.csic.es
@@ -57,9 +63,27 @@ The apache configuration file to properly configure Passenger should like this:
 </VirtualHost>
 ```
 
+And finally, run:
+
+```
+$ rvm install ruby-2.4.1
+$ passenger-install-apache2-module --auto
+$ sudo a2ensite bionotes
+$ sudo ln -s /services/bionotes/apps/node/bin/node /usr/local/bin/node
+$ RAILS_ENV=production bundle exec rake assets:precompile
+$ sudo /etc/init.d/apache2 restart
+```
+
+To perform an app restart after a change, just run:
+
+```
+$ touch tmp/restart.txt
+```
+
 ## Sub-modules
 
 The application contains two git sub-modules:
+
 - myProtVista
    - Repository: https://github.com/3dbionotes-community/myProtVista
    - Path: app/assets/javascripts/annotations_viewer/myProtVista
