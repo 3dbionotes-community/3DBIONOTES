@@ -12,10 +12,12 @@ module MappingsManager
         if pdbId =~ /^\d{1}\w{3}$/
           data = fetchPDBalignment(pdbId)
         end
-        data.each do |ch,v|
-          v.each do |acc,w|
-            uniprotFromPDB[acc] = [] unless(uniprotFromPDB.key?(acc))
-            uniprotFromPDB[acc].push(ch)
+        if !data.nil? 
+          data.each do |ch,v|
+            v.each do |acc,w|
+              uniprotFromPDB[acc] = [] unless(uniprotFromPDB.key?(acc))
+              uniprotFromPDB[acc].push(ch)
+            end
           end
         end
         if uniprotFromPDB == {} then
