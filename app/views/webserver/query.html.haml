@@ -1,3 +1,5 @@
+= render partial: "shared/wip"
+
 .d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
   .container.contentBox
     .contentTitle
@@ -17,7 +19,7 @@
         %label.d-block{:style => "font-weight: bold;"} Upload your annotations
         = file_field_tag(:annotations_file)
         %button.btn.btn-primary.d-block{:type => "submit"} Submit
-      %h4{:style => "margin-top: 20px;margin-bottom: 9px;"} A few examples (related to COVID-19 outbreak):
+      %h5{:style => "margin-top: 20px;margin-bottom: 9px;"} A few examples (related to COVID-19 outbreak):
       %p
         %a{:href => "/?queryId=EMD-21375&viewer_type=ngl&button=#query"} Prefusion 2019-nCoV spike glycoprotein with a single receptor-binding domain up (EMD-21375)
         %br/

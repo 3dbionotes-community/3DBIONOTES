@@ -47,7 +47,7 @@ class loader_class{
         console.log("->>> LOADING ISOLDE RE-MODEL for: " + pdb_code);
         // var url_file = "http://rinchen-dos.cnb.csic.es:8083/files/modifiedPdb/download/378289b4-b52a-436b-8c00-1835312ffbd4";
         // var url_file = "http://rinchen-dos.cnb.csic.es:8083/files/modifiedPdb/download/3c7ce463-becb-43c2-a00c-67997fc329e2";
-        var url_file = "/lrs/files/modifiedPdb/download/" + self.viewer.args.uuid;
+        var url_file = "/ws/lrs/files/modifiedPdb/download/" + self.viewer.args.uuid;
                 
         console.log( "LOADING "+url_file );
         self.viewer.stage.loadFile(  url_file, {ext:"pdb", firstModelOnly:true} ).then( 

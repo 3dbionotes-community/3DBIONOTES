@@ -33,7 +33,6 @@ public/ngl
 /db/dump
 /db/mysql
 
-/app/assets/javascripts/interface_viewer/package-lock.json
 /app/assets/javascripts/old_js
 /app/assets/stylesheets/old_css
 *node_modules*
@@ -65,3 +64,7 @@ Thumbs.db
 bak/
 .byebug_history
 public/assets/
+
+app/assets/javascripts/annotations_viewer/featureAnalysis/featuresAnalysis.bundle.js
+app/assets/javascripts/structure_viewer/viewer_class.bundle.js
+app/assets/javascripts/interface_viewer/interface_viewer.bundle.js

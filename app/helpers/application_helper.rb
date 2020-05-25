@@ -17,4 +17,11 @@ module ApplicationHelper
       link_to(text, link_url, class: css_classes, target: target)
     end
   end
+
+  def wip_texts
+    {
+      title: "Please, note this web site is a work in progress",
+      subtitle: "Feel free to report any missing or inconsistent data or behaviour",
+    }
+  end
 end
