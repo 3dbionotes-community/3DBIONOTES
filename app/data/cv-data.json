@@ -119,6 +119,7 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "6wps",
                         "6yor",
                         "6m17",
                         "6lzg",
@@ -128,6 +129,7 @@
                         "6m0j"
                     ],
                     "EMDB": [
+                        "EMD-21864",
                         "EMD-10863",
                         "EMD-30039"
                     ]
