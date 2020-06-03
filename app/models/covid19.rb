@@ -128,7 +128,7 @@ class Covid19
         description: ["project: #{project}", "model: #{model}", description].compact.join(" | "),
         query_url: "/?queryId=SWISS-MODEL-#{project}-#{model}&viewer_type=ngl&button=#query”",
         image_url: "https://swissmodel.expasy.org/interactive/#{project}/models/#{model}.png",
-        external: {text: "SWISS-MODEL", url: "https://swissmodel.expasy.org/interactive/#{project}/"},
+        external: {text: "SWISS-MODEL", url: "https://swissmodel.expasy.org/interactive/#{project}/models/#{model}"},
         links: [],
       }
     end
