@@ -20,10 +20,8 @@ module ApplicationHelper
 
   def wip_texts
     {
-      # title: "Please, note this web site is a work in progress",
-      # subtitle: "Feel free to report any missing or inconsistent data or behaviour",
-      title: "Please, note our CPD is undergoing routine maintenance next Wednesday 3rd June",
-      subtitle: "Although short, mains cut-offs are expected. Please bear with us and try a little bit later if you find the site is down.",
+      title: "Please, note this web site is a work in progress",
+      subtitle: "Feel free to report any missing or inconsistent data or behaviour",
     }
   end
 end
