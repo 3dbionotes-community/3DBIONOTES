@@ -6,7 +6,13 @@ module MainManager
       include GlobalTools::FetchParserTools
 
       def _fetch_swissmodel_data(identifierName)
-        identifierName.slice! "SWISSMODEL-"
+        # identifierName.slice! "SWISSMODEL-"
+        ids = identifierName.split('-')
+        modelType = ids.shift
+        identifierName = ids.shift
+        projectId = ids.shift
+        modelId = ids.shift
+
         @badName = false
         options = Hash.new
         url = BaseUrl+"/api/mappings/Uniprot/PDB/"+identifierName

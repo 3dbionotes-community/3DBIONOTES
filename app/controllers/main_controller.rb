@@ -84,7 +84,7 @@ class MainController < ApplicationController
         fetch_isolde_data(identifierName)
       elsif identifierType=="PDB-REDO"
         fetch_pdbredo_data(identifierName)
-      elsif identifierType=="SWISS-MODEL"
+      elsif identifierType=="SWISSMODEL"
         fetch_swissmodel_data(identifierName)
       elsif identifierType=="ALPHAFOLD"
         fetch_alphafold_data(identifierName)

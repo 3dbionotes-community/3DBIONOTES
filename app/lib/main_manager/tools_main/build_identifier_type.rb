@@ -19,7 +19,7 @@ module MainManager
           elsif identifierName.upcase =~ /^PDB-REDO-\d{1}\w{3}$/
             identifierName.upcase!
             identifierType = "PDB-REDO"
-          elsif identifierName.upcase =~ /^SWISSMODEL-[OPQ][0-9][A-Z0-9]{3}[0-9]$|^[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$/
+          elsif identifierName.upcase =~ /^SWISSMODEL-/
             identifierName.upcase!
             identifierType = "SWISSMODEL"
           elsif identifierName.upcase =~ /^ALPHAFOLD-[OPQ][0-9][A-Z0-9]{3}[0-9]$|^[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$/
