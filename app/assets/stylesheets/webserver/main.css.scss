@@ -1,6 +1,7 @@
 html {
     position: relative;
     min-height: 100vh;
+    /* max-width: 100vw !important; */
 }
 
 body {
@@ -766,8 +767,13 @@ a i {
 }
 
 #proteomeTable {
-    overflow-x: auto;
-    display: block;
+  /* -webkit-overflow-y: auto; /* added css prefix for safari */
+  /* white-space: nowrap;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  */
+  overflow: auto;
+  display: block;
 }
 
 #proteomeTable td {
@@ -778,14 +784,16 @@ a i {
     vertical-align: middle;
 }
 
-.badge.badge-primary.proteomeBadge.w3-lime {}
-
 #proteomeTable a,
 #proteomeTable a:hover {
     color: #fff;
     text-decoration: initial;
     font-weight: 700;
     white-space: nowrap;
+}
+
+.scrollable {
+    overflow-x: scroll;
 }
 
 .proteomeBadge {
