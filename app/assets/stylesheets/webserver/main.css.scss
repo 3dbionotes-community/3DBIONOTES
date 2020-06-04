@@ -766,8 +766,8 @@ a i {
 }
 
 #proteomeTable {
-    overflow-x: auto;
-    display: block;
+  display: block;
+  margin-bottom: 0px;
 }
 
 #proteomeTable td {
@@ -778,14 +778,17 @@ a i {
     vertical-align: middle;
 }
 
-.badge.badge-primary.proteomeBadge.w3-lime {}
-
 #proteomeTable a,
 #proteomeTable a:hover {
     color: #fff;
     text-decoration: initial;
     font-weight: 700;
     white-space: nowrap;
+}
+
+.scrollable {
+    overflow-x: scroll;
+    margin-bottom: 10px;
 }
 
 .proteomeBadge {
