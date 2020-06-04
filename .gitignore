@@ -68,3 +68,6 @@ public/assets/
 app/assets/javascripts/annotations_viewer/featureAnalysis/featuresAnalysis.bundle.js
 app/assets/javascripts/structure_viewer/viewer_class.bundle.js
 app/assets/javascripts/interface_viewer/interface_viewer.bundle.js
+
+# IDE Files
+.idea
