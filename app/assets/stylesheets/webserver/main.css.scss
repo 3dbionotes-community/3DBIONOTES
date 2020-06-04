@@ -767,13 +767,8 @@ a i {
 }
 
 #proteomeTable {
-  /* -webkit-overflow-y: auto; /* added css prefix for safari */
-  /* white-space: nowrap;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-  */
-  overflow: auto;
   display: block;
+  margin-bottom: 0px;
 }
 
 #proteomeTable td {
@@ -794,6 +789,7 @@ a i {
 
 .scrollable {
     overflow-x: scroll;
+    margin-bottom: 10px;
 }
 
 .proteomeBadge {
