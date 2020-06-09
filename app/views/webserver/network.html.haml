@@ -30,7 +30,8 @@
             %option{:value => "ssp"} Synechocystis sp. (strain PCC 6803 / Kazusa)
             %option{:value => "tpallidum"} Treponema pallidum
         %label{:style => "font-weight: bold;"} Enter a list of UniProt accession
-        %small Example
+        %span{id:"network_example"}
+          %small Example
         = text_area_tag(:queryId,content=nil, options={rows: 6, class: "form-control"})
         = hidden_field_tag(:viewer_type,@viewerType)
         .form-check
