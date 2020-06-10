@@ -74,12 +74,10 @@ function change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url
   }
 
   wait_message("FETCHING SEQUENCE ALIGNMENT");
-  //$j(seq_iframe).attr('src', seq_iframe_url);
   $j(seq_iframe).get(0).contentWindow.location.replace(seq_iframe_url);
 
   $j( seq_iframe ).load(function(){
     wait_message("COLLECTING ANNOTATIONS");
-    //$j( annot_iframe ).attr('src', annot_iframe_url);
     $j( annot_iframe ).get(0).contentWindow.location.replace(annot_iframe_url);
     $j( seq_iframe ).unbind("load");
   });
@@ -90,14 +88,11 @@ function change_iframe_src( seq_iframe_url, annot_iframe_url, genomic_iframe_url
       $j("#genomic_panel").css('visibility','hidden');
       $j("#genomic_panel").css('display','block');
     }
-    //$j( genomic_iframe ).attr('src', genomic_iframe_url);
     $j( genomic_iframe ).get(0).contentWindow.location.replace(genomic_iframe_url);
     if(!top.ppiFrame_load && !top.network_flag){
-      //$j( ppi_iframe ).attr('src', ppi_iframe_url);
       $j( ppi_iframe ).get(0).contentWindow.location.replace(ppi_iframe_url);
       top.ppiFrame_load = true;
     }
-    //$j( analysis_iframe ).attr('src', analysis_iframe_url);
     $j( analysis_iframe ).get(0).contentWindow.location.replace(analysis_iframe_url);
     $j( annot_iframe ).unbind("load");
   }); 
