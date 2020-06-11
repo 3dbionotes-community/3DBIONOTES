@@ -126,7 +126,7 @@ class Covid19
       {
         name: "#{project}-#{model}",
         description: ["project: #{project}", "model: #{model}", description].compact.join(" | "),
-        query_url: "/?queryId=SWISS-MODEL-#{project}-#{model}&viewer_type=ngl&button=#query”",
+        query_url: "/?queryId=SWISSMODEL-#{protein['uniprotAccession'][0]}-#{project}-#{model}&viewer_type=ngl&button=#query",
         image_url: "https://swissmodel.expasy.org/interactive/#{project}/models/#{model}.png",
         external: {text: "SWISS-MODEL", url: "https://swissmodel.expasy.org/interactive/#{project}/models/#{model}"},
         links: [],

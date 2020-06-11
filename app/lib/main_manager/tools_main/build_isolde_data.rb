@@ -21,7 +21,6 @@ module MainManager
         @badName = false
         options = Hash.new
         url = BaseUrl+"api/mappings/PDB/Uniprot/"+identifierName
-        # url = "http://campins.cnb.csic.es:8080/api/mappings/PDB/Uniprot/"+identifierName
         jsonData = getUrl(url)
         jsonData.to_s.encode('UTF-8', invalid: :replace, undef: :replace, replace: '?')
         uniprotData = JSON.parse(jsonData)
