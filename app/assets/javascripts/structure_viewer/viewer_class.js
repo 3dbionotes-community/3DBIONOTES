@@ -111,13 +111,36 @@ class viewer_class {
     self.remove_multiple_selection();
     var selection = {};
     var color;
-    list.forEach(function(i){
-        color = i.color;
-        var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, top.alignmentTranslation);
-        pdbPosList.forEach(function(j){
-          selection[j]=true;
-        });
+
+    // Add a color scheme: http://nglviewer.org/ngl/api/manual/usage/coloring.html#selection-based-coloring
+    let schemeData = {};
+
+    list.forEach(function(i) {
+      color = i.color;
+
+      // Add the color element if missing
+      if (schemeData[color] === undefined) {
+        schemeData[color] = [color, ""];
+      } else {
+        schemeData[color][1] = schemeData[color][1] + " or "
+      }
+
+      schemeData[color][1] = schemeData[color][1] + i.begin + "-" + i.end;
+
+      var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, top.alignmentTranslation);
+      pdbPosList.forEach(function(j){
+        selection[j]=true;
+      });
     });
+
+    let schemeParam = [];
+    var colorItem ;
+    for (colorItem in schemeData) {
+      schemeParam.push(schemeData[colorItem]);
+    };
+
+    var schemeId = NGL.ColormakerRegistry.addSelectionScheme(schemeParam, "Custom scheme");
+
     selection = Object.keys(selection);
     self.selected.residues = selection;
     if(selection.length == 0) return;
@@ -131,11 +154,12 @@ class viewer_class {
     self.Structures[ pdb ]['representations']['selection']['spacefill'].setSelection( "protein "+model_flag+"and :"+chain+" and ("+selection.join(" or ")+")" );
     self.Structures[ pdb ]['representations']['selection']['ball+stick'].setSelection( "" );
 
-    self.Structures[ pdb ]['representations']['selection']['spacefill'].setColor(color);
+    // Set the color for
+    self.Structures[ pdb ]['representations']['selection']['cartoon'].setColor(schemeId);
 
-    self.Structures[ pdb ]['representations']['selection']['cartoon'].setVisibility(false);
+    self.Structures[ pdb ]['representations']['selection']['cartoon'].setVisibility(true);
     self.Structures[ pdb ]['representations']['selection']['ball+stick'].setVisibility(false);
-    self.Structures[ pdb ]['representations']['selection']['spacefill'].setVisibility(true);
+    self.Structures[ pdb ]['representations']['selection']['spacefill'].setVisibility(false);
   }
 
   global_highlight(pdb, list){

@@ -1,0 +1,38 @@
+{
+    "name": "structure-viewer",
+    "description": "Structure viewer",
+    "version": "3.1.0",
+    "homepage": "https://github.com/3dbionotes-community/3dbionotes",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/3dbionotes-community/3dbionotes"
+    },
+    "bugs": {
+        "url": "https://github.com/3dbionotes-community/3dbionotes/issues"
+    },
+    "licenses": [
+        {
+            "type": "Apache 2",
+            "url": "https://github.com/3dbionotes-community/3dbionotes/blob/master/LICENSE"
+        }
+    ],
+    "scripts": {
+        "build": "browserify -r ./viewer_class.js:viewer_class | uglifyjs > viewer_class.bundle.js"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "browserify": "^10.2.6",
+        "uglify-js-es6": "^2.8.9"
+    },
+    "keywords": [
+        "feature viewer",
+        "uniprot",
+        "biojs",
+        "protein features viewer",
+        "protein feature viewer",
+        "variation",
+        "proteomics",
+        "domains",
+        "protein"
+    ]
+}

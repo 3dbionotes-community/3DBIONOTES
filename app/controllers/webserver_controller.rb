@@ -4,4 +4,6 @@ class WebserverController < ApplicationController
     @viewerType="ngl"
   end
 
+  def covid19
+  end
 end

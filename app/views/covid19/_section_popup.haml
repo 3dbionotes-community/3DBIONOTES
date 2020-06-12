@@ -1,0 +1,11 @@
+%div{id: "modalContent-" + id, class: "modal fade", "aria-hidden": true, role: "dialog", tabindex: "-1"}
+  .modal-dialog.modal-lg.modal-dialog-scrollable{:role => "document"}
+    .modal-content
+      .modal-header
+        %h5.modal-title #{title}
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body
+        = render partial: "items", locals: {items: items, max_items: nil, max_images: 0}
+      .modal-footer
+        %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close

@@ -1,6 +1,17 @@
-= stylesheet_link_tag('webserver/home_style.css')
-.ws_main_div
-  .home_text
-    3DBIONOTES-WS is a web application designed to automatically annotate biochemical and biomedical information onto structural models. Current sources of information include post-translational modifications, genomic variations associated to diseases, short linear motifs, immune epitopes sites, disordered regions and domain families.
-  .home_image
-    =image_tag("home_image.png")
+#welcome.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.align-items-md-center.align-items-lg-center.align-items-xl-center
+  .container
+    .jumbotron
+      %p
+        %strong> 3DBIONOTES-WS
+        = " "
+        is a web application designed to automatically annotate biochemical and biomedical information onto structural models. Current sources of information include post-translational modifications, genomic variations associated to diseases, short linear motifs, immune epitopes sites, disordered regions and domain families.
+        %br/
+      .alert.alert-warning{:role => "alert"}
+        %span
+          %em #{wip_texts[:title]}.
+          %br/
+          %span #{wip_texts[:subtitle]}.
+      %p
+        %a.btn.btn-primary.btn-lg{:href => ws_covid19_path, :role => "button"} CoVid-19 Edition
+        %a.btn.btn-secondary.btn-lg{:href => "/?queryId=EMD-21375&viewer_type=ngl&button=#query", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
+        %a.btn.btn-secondary.btn-lg{:href => "/?queryId=6lzg&viewer_type=ngl&button=#query", :role => "button", :style => "margin-left: 10px;"} Example (6lzg)

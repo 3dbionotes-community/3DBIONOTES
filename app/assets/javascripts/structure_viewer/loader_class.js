@@ -35,6 +35,67 @@ class loader_class{
           showConfirmButton: true
         });
       });
+    }else if (self.viewer.args.origin == "ISOLDE"){
+      
+
+      var n = 1;
+      self.viewer.args.pdb_list.forEach(function(pdb_code){
+        self.pdb_flag = true;
+        if( n == self.viewer.args.pdb_list.length ) self.load_ready = true;
+        self.viewer.message_manager.show_message( pdb_code.toUpperCase() );       
+
+        console.log("->>> LOADING ISOLDE RE-MODEL for: " + pdb_code);
+        // var url_file = "http://rinchen-dos.cnb.csic.es:8083/files/modifiedPdb/download/378289b4-b52a-436b-8c00-1835312ffbd4";
+        // var url_file = "http://rinchen-dos.cnb.csic.es:8083/files/modifiedPdb/download/3c7ce463-becb-43c2-a00c-67997fc329e2";
+        var url_file = "/ws/lrs/files/modifiedPdb/download/" + self.viewer.args.uuid;
+                
+        console.log( "LOADING "+url_file );
+        self.viewer.stage.loadFile(  url_file, {ext:"pdb", firstModelOnly:true} ).then( 
+          function(i){
+            self.initStructure(self,i);
+        }).catch( function(e){
+          console.error(e);
+          var url_file = "rcsb://"+pdb_code.toUpperCase()+".cif";
+          console.log( "->>> LOADING "+url_file );
+          self.viewer.stage.loadFile( url_file, {ext:"cif", firstModelOnly:true} ).then( 
+            function(i){
+              self.initStructure(self,i);
+          });
+        });
+        n++;
+      });
+
+
+    }else if (self.viewer.args.origin == "PDB-REDO"){
+      // https://pdb-redo.eu/db/6lxt/6lxt_final.pdb
+
+      var n = 1;
+      self.viewer.args.pdb_list.forEach(function(pdb_code){
+        self.pdb_flag = true;
+        if( n == self.viewer.args.pdb_list.length ) self.load_ready = true;
+        self.viewer.message_manager.show_message( pdb_code.toUpperCase() );       
+
+        console.log("->>> LOADING IPDB-REDO RE-MODEL for: " + pdb_code);
+        // var url_file = "http://rinchen-dos.cnb.csic.es:8083/files/modifiedPdb/download/378289b4-b52a-436b-8c00-1835312ffbd4";
+        // var url_file = "http://rinchen-dos.cnb.csic.es:8083/files/modifiedPdb/download/3c7ce463-becb-43c2-a00c-67997fc329e2";
+        var url_file = "https://pdb-redo.eu/db/" + pdb_code.toLowerCase() +"/"+pdb_code.toLowerCase()+"_final.pdb";
+                
+        console.log( "LOADING "+url_file );
+        self.viewer.stage.loadFile(  url_file, {ext:"pdb", firstModelOnly:true} ).then( 
+          function(i){
+            self.initStructure(self,i);
+        }).catch( function(e){
+          console.error(e);
+          var url_file = "rcsb://"+pdb_code.toUpperCase()+".cif";
+          console.log( "->>> LOADING "+url_file );
+          self.viewer.stage.loadFile( url_file, {ext:"cif", firstModelOnly:true} ).then( 
+            function(i){
+              self.initStructure(self,i);
+          });
+        });
+        n++;
+      });
+
     }else{
       var n = 1;
       self.viewer.args.pdb_list.forEach(function(pdb_code){

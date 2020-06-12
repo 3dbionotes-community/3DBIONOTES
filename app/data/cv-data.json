@@ -1,0 +1,1944 @@
+{
+    "SARS-CoV-2 Proteome": {
+        "S": {
+            "uniprotAccession": [
+                "P0DTC2"
+            ],
+            "description": "Spike protein, trimeric complex S1-S2-S2': Attaches the virion to the cell membrane by interacting with host receptor, initiating the infection. Binding to human ACE2 receptor and internalization of the virus into the endosomes of the host cell induces conformational changes in the Spike glycoprotein.  Uses also human TMPRSS2 for priming in human lung cells which is an essential step for viral entry. Proteolysis by cathepsin CTSL may unmask the fusion peptide of S2 and activate membranes fusion within endosomes.",
+            "names": [
+                "S",
+                "Spike protein S",
+                "Spike glycoprotein",
+                "Surface Glycoprotein",
+                "SPIKE_WCPV"
+            ],
+            "PDB": {
+                "6vsb": {
+                    "emdbs": [
+                        "EMD-21375"
+                    ]
+                },
+                "6x29": {
+                    "emdbs": [
+                        "EMD-21997"
+                    ]
+                },
+                "6x2a": {
+                    "emdbs": [
+                        "EMD-21999"
+                    ]
+                },"6x2b": {
+                    "emdbs": [
+                        "EMD-22000"
+                    ]
+                },
+                "6x2c": {
+                    "emdbs": [
+                        "EMD-22001"
+                    ]
+                },
+                "6vxx": {
+                    "emdbs": [
+                        "EMD-21452"
+                    ]
+                },
+                "6vyb": {
+                    "emdbs": [
+                        "EMD-21457"
+                    ]
+                },
+                "6lvn": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6lvn_refine_3",
+                                "uuid": "3c7ce463-becb-43c2-a00c-67997fc329e2"
+                            },
+                            {
+                                "name": "Wcwr_final",
+                                "uuid": "5e0317d5-89cb-4528-89d5-6bc02ac3f649"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6lvn"
+                            }
+                        ]
+                    }
+                },
+                "6lxt": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6lxt_refine_6",
+                                "uuid": "bbdddf57-db03-4626-b9b4-0959a4cafda2"
+                            },
+                            {
+                                "name": "QtRM_final",
+                                "uuid": "22d09d22-4140-4196-8d9b-d2f4719632c6"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6lxt"
+                            }
+                        ]
+                    }
+                },
+                "6m1v":{}
+            },
+            "EMDB": {
+                "EMD-21374": {},
+                "EMD-21375": {
+                    "pdb": [
+                        "6vsb"
+                    ]
+                },
+                "EMD-21452": {
+                    "pdb": [
+                        "6vxx"
+                    ]
+                },
+                "EMD-21457": {
+                    "pdb": [
+                        "6vyb"
+                    ]
+                },
+                "EMD-21997": {
+                    "pdb": [
+                        "6x29"
+                    ]
+                },
+                "EMD-21999": {
+                    "pdb": [
+                        "6x2a"
+                    ]
+                },
+                "EMD-22000": {
+                    "pdb": [
+                        "6x2b"
+                    ]
+                },
+                "EMD-22001": {
+                    "pdb": [
+                        "6x2c"
+                    ]
+                }
+            },
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "7dVLxC",
+                        "model": "01"
+                    },
+                    {
+                        "project": "7dVLxC",
+                        "model": "02"
+                    },
+                    {
+                        "project": "7dVLxC",
+                        "model": "03"
+                    },
+                    {
+                        "project": "7dVLxC",
+                        "model": "04"
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009724390_v03_1"
+                    },
+                    {
+                        "model": "YP_009724390_v03_2"
+                    },
+                    {
+                        "model": "YP_009724390_v03_3"
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "6wps",
+                        "6ym0",
+                        "6wpt",
+                        "7bz5",
+                        "7c01",
+                        "6yor",
+                        "6m17",
+                        "6lzg",
+                        "6w41",
+                        "6yla",
+                        "6vw1",
+                        "6m0j"
+                    ],
+                    "EMDB": [
+                        "EMD-21864",
+                        "EMD-10863",
+                        "EMD-30039"
+                    ]
+                }
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "2bez",
+                        "6waq",
+                        "6crv",
+                        "1zvb",
+                        "6ack",
+                        "1wnc",
+                        "2ghv",
+                        "1zv7",
+                        "5x58",
+                        "3d0i",
+                        "6crw",
+                        "5x4s",
+                        "3bgf",
+                        "3scl",
+                        "6acg",
+                        "2fxp",
+                        "2rum",
+                        "6crx",
+                        "2ajf",
+                        "3d0g",
+                        "1wyy",
+                        "5zvm",
+                        "2run",
+                        "1zv8",
+                        "5xjk",
+                        "2ghw",
+                        "6acj",
+                        "5x5b",
+                        "5wrg",
+                        "3scj",
+                        "6cs0",
+                        "5xlr",
+                        "2beq",
+                        "6cs2",
+                        "6cs1",
+                        "3d0h",
+                        "2dd8",
+                        "6acc",
+                        "6acd",
+                        "6nb7",
+                        "6nb6",
+                        "1zva",
+                        "3sci",
+                        "6crz",
+                        "3sck"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "6vsj",
+                        "6y3y",
+                        "5x5f",
+                        "6bfu",
+                        "5w9m",
+                        "6q07",
+                        "5x5c",
+                        "6nb3",
+                        "6q06",
+                        "3jcl",
+                        "6cv0",
+                        "6nb4",
+                        "5w9o",
+                        "5w9l",
+                        "5w9j",
+                        "6nzk",
+                        "6pz8",
+                        "6b3o",
+                        "5w9n",
+                        "5x59",
+                        "6u7h",
+                        "5w9h",
+                        "6u7k",
+                        "5w9i",
+                        "6ohw",
+                        "5w9k",
+                        "6vv5",
+                        "6q05",
+                        "6q04",
+                        "5szs",
+                        "6jx7",
+                        "5i08",
+                        "5w9p",
+                        "6b7n",
+                        "6y3y"
+                    ],
+                    "EMDB": [
+                        "EMD-21377",
+                        "EMD-10676",
+                        "EMD-7573",
+                        "EMD-9594",
+                        "EMD-6703",
+                        "EMD-7574",
+                        "EMD-9591",
+                        "EMD-7575",
+                        "EMD-9593",
+                        "EMD-6705",
+                        "EMD-6679",
+                        "EMD-7578",
+                        "EMD-6732",
+                        "EMD-7582",
+                        "EMD-7579",
+                        "EMD-9588",
+                        "EMD-9589",
+                        "EMD-0404",
+                        "EMD-0403",
+                        "EMD-7577"
+                    ]
+                }
+            }
+        },
+        "NSP3": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. Responsible for the cleavages located at the N-terminus of the replicase polyprotein. In addition, PL-PRO possesses a deubiquitinating/deISGylating activity and processes both 'Lys-48'- and 'Lys-63'-linked polyubiquitin chains from cellular substrates. Participates together with nsp4 in the assembly of virally-induced cytoplasmic double-membrane vesicles necessary for viral replication. Antagonizes innate immune induction of type I interferon by blocking the phosphorylation, dimerization and subsequent nuclear translocation of host IRF3. Prevents also host NF-kappa-B signaling",
+            "names": [
+                "",
+                "Non-structural protein 3",
+                "PL-Pro",
+                "Papain-like proteinase"
+            ],
+            "PDB": {
+                "6wen": {},
+                "6w9c": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6w9c_refine_15",
+                                "uuid": "37ac7edd-da6e-4125-8d14-6c7d3cb2dfbd"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6w9c"
+                            }
+                        ]
+                    }
+                },
+                "6wrh": {},
+                "6ywm": {},
+                "6w02": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6w02"
+                            }
+                        ]
+                    }
+                },
+                "6ywk": {},
+                "6wey": {},
+                "6ywl": {},
+                "6woj": {},
+                "6w6y": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6w6y"
+                            }
+                        ]
+                    }
+                },
+                "6vxs": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6vxs_refine_12",
+                                "uuid": "ca0a1740-0e9f-4647-a59c-c33481339c05"
+                            },
+                            {
+                                "name": "6dui_final",
+                                "uuid": "a00f60fb-059d-4e71-9987-934b0e36ba0a"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6vxs"
+                            }
+                        ]
+                    }
+                },
+                "6wcf": {}
+            },
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "model": "01",
+                        "project": "5hYU6g",
+                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
+                    },
+                    {
+                        "model": "02",
+                        "project": "5hYU6g",
+                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
+                    },
+                    {
+                        "model": "03",
+                        "project": "5hYU6g",
+                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
+                    },
+                    {
+                        "model": "04",
+                        "project": "5hYU6g",
+                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
+                    },
+                    {
+                        "model": "05",
+                        "project": "5hYU6g",
+                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
+                    },
+                    {
+                        "model": "06",
+                        "project": "5hYU6g",
+                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
+                    },
+                    {
+                        "model": "07",
+                        "project": "5hYU6g",
+                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
+                    },
+                    {
+                        "model": "08",
+                        "project": "5hYU6g",
+                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
+                    },
+                    {
+                        "model": "09",
+                        "project": "5hYU6g",
+                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
+                    },
+                    {
+                        "model": "10",
+                        "project": "5hYU6g",
+                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
+                    }
+                ],
+                "AlphaFold": [
+                    {
+                        "name": "PL-PRO_C_terminal",
+                        "uuid": "To-be-Determined",
+                        "description": "PL-PRO C terminal domain.UniProt R1AB_WCPV, corresponds to residues 2389 - 2743. Included as this region appeared not to be covered by SWISS-MODEL."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725299_1_v01"
+                    },
+                    {
+                        "model": "YP_009725299_2_v01"
+                    },
+                    {
+                        "model": "YP_009725299_3_v01"
+                    },
+                    {
+                        "model": "YP_009725299_4_v01"
+                    },
+                    {
+                        "model": "YP_009725299_5_v01"
+                    },
+                    {
+                        "model": "YP_009725299_6_v01"
+                    }
+                ]
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "2fav",
+                        "2acf",
+                        "3mj5",
+                        "2w2g",
+                        "3e9s",
+                        "5y3q",
+                        "2gri",
+                        "5tl6",
+                        "2jzf",
+                        "2fe8",
+                        "2idy",
+                        "2wct",
+                        "2jze",
+                        "2kqw",
+                        "5tl7",
+                        "2k87",
+                        "4mm3",
+                        "5e6j",
+                        "4ow0",
+                        "2kaf",
+                        "4m0w",
+                        "2jzd",
+                        "5y3e",
+                        "4ovz",
+                        "2rnk",
+                        "2kqv"
+                    ]
+                }
+            }
+        },
+        "NSP5": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. Cleaves the C-terminus of replicase polyprotein at 11 sites. Recognizes substrates containing the core sequence [ILMVF]-Q-|-[SGACN] (PubMed:32198291, PubMed:32272481). Also able to bind an ADP-ribose-1''-phosphate (ADRP).",
+            "names": [
+                "3c_like_proteinase",
+                "3CL",
+                "NSP5"
+            ],
+            "PDB": {
+                "6y2e": {},
+                "6m2q": {},
+                "6wqf": {},
+                "6m03": {},
+                "6y84": {},
+                "6yb7": {}
+            },
+            "CompModels": {
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725301_v01"
+                    }
+                ]
+            },
+            "Interactions": {
+                "Ligands": [
+                    "5r7y",
+                    "5r7z",
+                    "5r80",
+                    "5r81",
+                    "5r82",
+                    "5r83",
+                    "5r84",
+                    "5r8t",
+                    "5re4",
+                    "5re5",
+                    "5re6",
+                    "5re7",
+                    "5re8",
+                    "5re9",
+                    "5rea",
+                    "5reb",
+                    "5rec",
+                    "5red",
+                    "5ree",
+                    "5ref",
+                    "5reg",
+                    "5reh",
+                    "5rei",
+                    "5rej",
+                    "5rek",
+                    "5rel",
+                    "5rem",
+                    "5ren",
+                    "5reo",
+                    "5rep",
+                    "5rer",
+                    "5res",
+                    "5ret",
+                    "5reu",
+                    "5rev",
+                    "5rew",
+                    "5rex",
+                    "5rey",
+                    "5rez",
+                    "5rf0",
+                    "5rf1",
+                    "5rf2",
+                    "5rf3",
+                    "5rf4",
+                    "5rf5",
+                    "5rf6",
+                    "5rf7",
+                    "5rf8",
+                    "5rf9",
+                    "5rfa",
+                    "5rfb",
+                    "5rfc",
+                    "5rfd",
+                    "5rfe",
+                    "5rff",
+                    "5rfg",
+                    "5rfh",
+                    "5rfi",
+                    "5rfj",
+                    "5rfk",
+                    "5rfl",
+                    "5rfm",
+                    "5rfn",
+                    "5rfo",
+                    "5rfp",
+                    "5rfq",
+                    "5rfr",
+                    "5rfs",
+                    "5rft",
+                    "5rfu",
+                    "5rfv",
+                    "5rfw",
+                    "5rfx",
+                    "5rfy",
+                    "5rfz",
+                    "5rg0",
+                    "5rg1",
+                    "5rg2",
+                    "5rg3",
+                    "5rgg",
+                    "5rgh",
+                    "5rgi",
+                    "5rgj",
+                    "5rgk",
+                    "5rgl",
+                    "5rgm",
+                    "5rgn",
+                    "5rgo",
+                    "5rgp",
+                    "5rgq",
+                    "5rgr",
+                    "5rgs",
+                    "6lu7",
+                    "6lze",
+                    "6m0k",
+                    "6m2n",
+                    "6w63",
+                    "6wnp",
+                    "6y2f",
+                    "6y2g",
+                    "6ynq",
+                    "6yt8",
+                    "6yz6",
+                    "7bqy",
+                    "7buy"
+                ]
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "3eaj",
+                        "3sne",
+                        "2amq",
+                        "2qc2",
+                        "2pwx",
+                        "1uk2",
+                        "1z1j",
+                        "3aw1",
+                        "3f9e",
+                        "2z9g",
+                        "3ea9",
+                        "3d62",
+                        "2gtb",
+                        "3ebn",
+                        "3tiu",
+                        "2z3e",
+                        "3m3s",
+                        "2z94",
+                        "5n5o",
+                        "4hi3",
+                        "2v6n",
+                        "2vj1",
+                        "3ea7",
+                        "1wof",
+                        "2bx3",
+                        "4mds",
+                        "2d2d",
+                        "2z3c",
+                        "2c3s",
+                        "4twy",
+                        "2bx4",
+                        "5c5o",
+                        "2z9l",
+                        "1uk3",
+                        "5n19",
+                        "3szn",
+                        "2qiq",
+                        "3ea8",
+                        "5b6o",
+                        "3e91",
+                        "2duc",
+                        "3aw0",
+                        "2zu5",
+                        "3v3m",
+                        "3m3t",
+                        "3snb",
+                        "1uj1",
+                        "3tns",
+                        "2gx4",
+                        "3iwm",
+                        "1z1i",
+                        "3vb4",
+                        "3vb5",
+                        "3tit",
+                        "3f9f",
+                        "3avz",
+                        "1uk4",
+                        "2gz8",
+                        "3vb6",
+                        "3vb7",
+                        "3fzd",
+                        "2k7x",
+                        "2zu4",
+                        "3snc",
+                        "3atw",
+                        "3m3v",
+                        "2liz",
+                        "3snd",
+                        "2a5a",
+                        "2h2z",
+                        "2gt8",
+                        "2z9k",
+                        "2z9j",
+                        "3sna",
+                        "2alv",
+                        "3tnt",
+                        "2hob",
+                        "5c5n",
+                        "1q2w",
+                        "2gt7",
+                        "2op9",
+                        "3f9h",
+                        "2gz7",
+                        "2z3d",
+                        "4wy3",
+                        "2a5i",
+                        "2amd",
+                        "3sn8",
+                        "2gz9",
+                        "2a5k",
+                        "3f9g",
+                        "4tww",
+                        "3vb3",
+                        "2q6g",
+                        "2qcy"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "1lvo",
+                        "4wmf",
+                        "4zro",
+                        "3tlo",
+                        "2ynb",
+                        "5gwz",
+                        "4yoj",
+                        "4zuh",
+                        "2q6d",
+                        "4wme",
+                        "5c3n",
+                        "2amp",
+                        "5wkj",
+                        "4rsp",
+                        "5gwy",
+                        "2zu2",
+                        "2q6f",
+                        "2yna",
+                        "4yoi",
+                        "5wkm",
+                        "6fv2",
+                        "6fv1",
+                        "5zqg",
+                        "4xfq",
+                        "5hyo",
+                        "5wkl",
+                        "5eu8",
+                        "4ylu",
+                        "1p9u",
+                        "4wmd",
+                        "4f49",
+                        "5nh0",
+                        "3d23",
+                        "6jij",
+                        "1p9s",
+                        "4yo9",
+                        "5wkk",
+                        "4yog"
+                    ]
+                }
+            }
+        },
+        "N": {
+            "uniprotAccession": [
+                "P0DTC9"
+            ],
+            "description": "Packages the positive strand viral genome RNA into a helical ribonucleocapsid (RNP) and plays a fundamental role during virion assembly through its interactions with the viral genome and membrane protein M. Plays an important role in enhancing the efficiency of subgenomic viral RNA transcription as well as viral replication (By similarity). May modulate transforming growth factor-beta signaling by binding host smad3 (By similarity)",
+            "names": [
+                "Protein N",
+                "NC",
+                "Nucleoprotein",
+                "Nucleocapsid protein"
+            ],
+            "PDB": {
+                "6yi3": {},
+                "6vyo": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6vyo_refine_2",
+                                "uuid": "d944115c-4138-4a57-8b92-4d70836fbe2a"
+                            },
+                            {
+                                "name": "5KTy_final",
+                                "uuid": "5149fb70-eadf-416e-bb9d-599c1e1e6204"
+                            }
+                        ],
+                        "pdb-redo": {
+                            "name": "6vyo"
+                        }
+                    }
+                },
+                "6wji": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6wji"
+                        }
+                    }
+                },
+                "6m3m": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6m3m_refine_6",
+                                "uuid": "d02cfad3-f89b-46a3-ab45-2f2770e8c9fb"
+                            },
+                            {
+                                "name": "3DZj_final",
+                                "uuid": "fbb89118-0e3e-4739-8820-af0278d9b956"
+                            }
+                        ],
+                        "pdb-redo": {
+                            "name": "6m3m"
+                        }
+                    }
+                },
+                "6wkp": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6wkp"
+                        }
+                    }
+                },
+                "6wzq": {},
+                "7c22":{},
+                "6wzo":{},
+                "6yun":{}
+            },
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "UfqxZJ",
+                        "model": "01",
+                        "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
+                    },
+                    {
+                        "project": "UfqxZJ",
+                        "model": "02",
+                        "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
+                    },
+                    {
+                        "project": "UfqxZJ",
+                        "model": "03",
+                        "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
+                    },
+                    {
+                        "project": "UfqxZJ",
+                        "model": "04",
+                        "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009724397_1_v01"
+                    },
+                    {
+                        "model": "YP_009724397_2_v01"
+                    }
+                ]
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "2ofz",
+                        "1ssk",
+                        "2cjr",
+                        "2og3",
+                        "2gib",
+                        "2jw8"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "4kxj",
+                        "4lmc",
+                        "6kl6",
+                        "2bxx",
+                        "4li4",
+                        "2gec",
+                        "4j3k",
+                        "6g13",
+                        "4lm7",
+                        "4lmt",
+                        "3hd4",
+                        "2c86",
+                        "6kl2",
+                        "4lm9",
+                        "2btl",
+                        "4ud1",
+                        "6kl5"
+                    ]
+                }
+            }
+        },
+        "NSP10": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. Plays a pivotal role in viral transcription by stimulating both nsp14 3'-5' exoribonuclease and nsp16 2'-O-methyltransferase activities. Therefore plays an essential role in viral mRNAs cap methylation.",
+            "names": [
+                "NSP10",
+                "Non-structural protein 10"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "X6zRCV",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                    },
+                    {
+                        "project": "X6zRCV",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                    },
+                    {
+                        "project": "X6zRCV",
+                        "model": "03",
+                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                    },
+                    {
+                        "project": "X6zRCV",
+                        "model": "04",
+                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                    }
+                ],
+                "BMS-Arc": [
+                    {
+                        "model": "YP_009725306_v01 "
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "6w4h",
+                        "6w61",
+                        "6w75",
+                        "6wjt",
+                        "6wkq",
+                        "6wks",
+                        "6wq3"
+                    ]
+                },
+                "Ligands": [
+                    "5c8s",
+                    "5c8t"
+                ]
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "2fyg",
+                        "2g9t",
+                        "2ga6",
+                        "5c8s",
+                        "5c8t",
+                        "5c8u"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "3r24",
+                        "5ynn",
+                        "2xyv",
+                        "5nfy",
+                        "2xyr",
+                        "5ynj",
+                        "5yn6",
+                        "5yn8",
+                        "5yno",
+                        "5ynm",
+                        "5ynq",
+                        "5ynf",
+                        "2xyq",
+                        "5yn5",
+                        "5ynp",
+                        "5ynb",
+                        "5yni"
+                    ]
+                }
+            }
+        },
+        "NSP16": {
+            "uniprotAccession": [
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1ab. Methyltransferase that mediates mRNA cap 2'-O-ribose methylation to the 5'-cap structure of viral mRNAs. N7-methyl guanosine cap is a prerequisite for binding of nsp16. Therefore plays an essential role in viral mRNAs cap methylation which is essential to evade immune system.",
+            "names": [
+                "NSP16",
+                "methyltransferase",
+                "2'-O-methyltransferase",
+                "2'-O-ribose methyltransferase"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "X6zRCV",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available."
+                    },
+                    {
+                        "project": "X6zRCV",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available."
+                    },
+                    {
+                        "project": "X6zRCV",
+                        "model": "03",
+                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available."
+                    },
+                    {
+                        "project": "X6zRCV",
+                        "model": "04",
+                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available."
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "6w4h",
+                        "6w61",
+                        "6w75",
+                        "6wjt",
+                        "6wkq",
+                        "6wks",
+                        "6wq3"
+                    ]
+                }
+            },
+            "Related": {
+                "OtherRelated": {
+                    "PDB": [
+                        "5ynm",
+                        "5yni",
+                        "5nfy",
+                        "5c8s",
+                        "5ynj",
+                        "5yn6",
+                        "5ynq",
+                        "2ga6",
+                        "5c8t",
+                        "5yn5",
+                        "5ynb",
+                        "5ynp",
+                        "2fyg",
+                        "5c8u",
+                        "5yn8",
+                        "5ynf",
+                        "5ynn",
+                        "2g9t",
+                        "5yno"
+                    ]
+                }
+            }
+        },
+        "NSP7": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp8 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
+            "names": [
+                "NSP7",
+                "Non-structural protein 7"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "GDvqSz",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
+                    },
+                    {
+                        "project": "GDvqSz",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
+                    },
+                    {
+                        "project": "GDvqSz",
+                        "model": "03",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725303_v01"
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "6wiq",
+                        "6yhu",
+                        "6wqd",
+                        "6m71",
+                        "7bv2",
+                        "7bv1",
+                        "7btf"
+                    ],
+                    "EMDB": [
+                        "EMD-30127",
+                        "EMD-30210",
+                        "EMD-30209",
+                        "EMD-30178"
+                    ]
+                }
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "5f22",
+                        "6nur"
+                    ],
+                    "EMDB": [
+                        "EMD-0520"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "6nus",
+                        "1ysy",
+                        "3ub0",
+                        "2kys",
+                        "2ahm"
+                    ]
+                }
+            }
+        },
+        "NSP8": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp7 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
+            "names": [
+                "NSP8",
+                "Non-structural protein 8"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "M4qFvm",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                    },
+                    {
+                        "project": "M4qFvm",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                    },
+                    {
+                        "project": "M4qFvm",
+                        "model": "03",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725304_v01"
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "6wiq",
+                        "6yhu",
+                        "6wqd",
+                        "6m71",
+                        "7bv2",
+                        "7bv1",
+                        "7btf"
+                    ],
+                    "EMDB": [
+                        "EMD-30127",
+                        "EMD-30210",
+                        "EMD-30209",
+                        "EMD-30178"
+                    ]
+                }
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "5f22",
+                        "6nur",
+                        "6nus"
+                    ],
+                    "EMDB": [
+                        "EMD-0520",
+                        "EMD-0521"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "3ub0",
+                        "2ahm"
+                    ]
+                }
+            }
+        },
+        "NSP9": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. May participate in viral replication by acting as a ssRNA-binding protein.",
+            "names": [
+                "NSP9",
+                "Non-structural protein 9",
+                "ssRNA binding protein"
+            ],
+            "PDB": {
+                "6w4b": {
+                    "description": "",
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6w4b_refine_9",
+                                "uuid": "d26658ad-bb95-4dea-b5c5-5af393c17218"
+                            },
+                            {
+                                "name": "Mgd7_final",
+                                "uuid": "e0fca713-8c59-498e-be49-d084ff968780"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6w4b"
+                            }
+                        ]
+                    }
+                },
+                "6w9q": {}
+            },
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "GqQg8A",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6w4b, 6w9q) and high quality models are available which we predict to be homo-dimers."
+                    },
+                    {
+                        "project": "GqQg8A",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6w4b, 6w9q) and high quality models are available which we predict to be homo-dimers."
+                    },
+                    {
+                        "project": "GqQg8A",
+                        "model": "03",
+                        "description": "Experimental structures (PDB: 6w4b, 6w9q) and high quality models are available which we predict to be homo-dimers."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725305_v01 "
+                    }
+                ]
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "1uw7",
+                        "1qz8",
+                        "3ee7"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "5c94",
+                        "2j97",
+                        "5ym8",
+                        "5ym6",
+                        "5hiz",
+                        "5hiy",
+                        "2j98"
+                    ]
+                }
+            }
+        },
+        "NSP15": {
+            "uniprotAccession": [
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1ab. Mn(2+)-dependent, uridylate-specific enzyme, which leaves 2'-3'-cyclic phosphates 5' to the cleaved bond.",
+            "names": [
+                "NSP15",
+                "Non-structural protein ",
+                "endoriboonuclease",
+                "Uridylate-specific endoribonuclease",
+                "endornase",
+                "NendoU/nsp15"
+            ],
+            "PDB": {
+                "6vww": {
+                    "description": "",
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6vww_refine_14",
+                                "uuid": "8bb06f84-3280-464f-93e5-6f8a6d02571d"
+                            },
+                            {
+                                "name": "UW8C_final",
+                                "uuid": "9051cb07-8096-45e2-8017-ff5825e51e86"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6vww"
+                            }
+                        ]
+                    }
+                },
+                "6wlc": {},
+                "6w01": {
+                    "description": "",
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6w01"
+                            }
+                        ]
+                    }
+                }
+            },
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "H9prKX",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6vww, 6w01, 6wlc) and high quality models are available."
+                    },
+                    {
+                        "project": "H9prKX",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6vww, 6w01, 6wlc) and high quality models are available."
+                    },
+                    {
+                        "project": "H9prKX",
+                        "model": "03",
+                        "description": "Experimental structures (PDB: 6vww, 6w01, 6wlc) and high quality models are available."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725310_v01"
+                    }
+                ]
+            },
+            "Interactions": {
+                "Ligands": [
+                    "6wlc",
+                    "6w01",
+                    "6x4i"
+                ]
+            }
+        },
+        "NSP14": {
+            "uniprotAccession": [
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1ab. Enzyme possessing two different activities: an exoribonuclease activity acting on both ssRNA and dsRNA in a 3' to 5' direction and a N7-guanine methyltransferase activity. Acts as a proofreading exoribonuclease for RNA replication, thereby lowering The sensitivity of the virus to RNA mutagens.",
+            "names": [
+                "NSP14",
+                "Proofreading exoribonuclease",
+                "3'-5' exoribonuclease",
+                "Guanine-N7 methyltransferase",
+                "(ExoN/nsp14)"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "7BgWuu",
+                        "model": "01",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "project": "7BgWuu",
+                        "model": "02",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "project": "7BgWuu",
+                        "model": "03",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "project": "7BgWuu",
+                        "model": "04",
+                        "description": "High quality models are available."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725309_v02"
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "5c8s",
+                        "5c8u",
+                        "5c8t"
+                    ]
+                },
+                "Ligands": [
+                    "5c8t"
+                ]
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "5nfy",
+                        "5c8s",
+                        "5c8u",
+                        "5c8t",
+                        "5c8t",
+                        "5c8u"
+                    ]
+                }
+            }
+        },
+        "NSP1": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. Inhibits host translation by interacting with the 40S ribosomal subunit. The nsp1-40S ribosome complex further induces an endonucleolytic cleavage near the 5'UTR of host mRNAs, targeting them for degradation. Viral mRNAs are not susceptible to nsp1-mediated endonucleolytic RNA cleavage thanks to the presence of a 5'-end leader sequence and are therefore protected from degradation. By suppressing host gene expression, nsp1 facilitates efficient viral gene expression in infected cells and evasion from host immune response.",
+            "names": [
+                "nsp1",
+                "Leader protein",
+                "Host translation inhibitor"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "YxJyvF",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                    },
+                    {
+                        "project": "YxJyvF",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                    }
+                ],
+                "BMS-Arc": [
+                    {
+                        "model": "YP_009725297_v01"
+                    }
+                ]
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "2gdt",
+                        "2hsx"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "5hpy",
+                        "5c5s"
+                    ]
+                }
+            }
+        },
+        "M": {
+            "uniprotAccession": [
+                "P0DTC5"
+            ],
+            "description": "Component of the viral envelope that plays a central role in virus morphogenesis and assembly via its interactions with other viral proteins.",
+            "names": [
+                "Membrane protein",
+                "M",
+                "VME1_WCPV"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "9LzAZz",
+                        "model": "01",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    },
+                    {
+                        "project": "9LzAZz",
+                        "model": "02",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    },
+                    {
+                        "project": "9LzAZz",
+                        "model": "03",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    },
+                    {
+                        "project": "9LzAZz",
+                        "model": "04",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    }
+                ],
+                "AlphaFold": [
+                    {
+                        "name": "M_protein",
+                        "uuid": "To-be-Determined",
+                        "description": "UniProt VME1_WCPV, includes residues 11 - 203."
+                    }
+                ]
+            }
+        },
+        "NSP13": {
+            "uniprotAccession": [
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1ab. Multi-functional protein with a zinc-binding domain in N-terminus displaying RNA and DNA duplex-unwinding activities with 5' to 3' polarity. Activity of helicase is dependent on magnesium.",
+            "names": [
+                "NSP13",
+                "Helicase",
+                "Hel"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "N2NgU3",
+                        "model": "01",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "project": "N2NgU3",
+                        "model": "02",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "project": "N2NgU3",
+                        "model": "03",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "project": "N2NgU3",
+                        "model": "04",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "project": "N2NgU3",
+                        "model": "05",
+                        "description": "High quality models are available."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725308_v01"
+                    }
+                ]
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "6jyt"
+                    ]
+                }
+            }
+        },
+        "ORF6": {
+            "uniprotAccession": [
+                "P0DTC6"
+            ],
+            "description": "Disrupts cell nuclear import complex formation by tethering karyopherin alpha 2 and karyopherin beta 1 to the membrane. Retention of import factors at the ER/Golgi membrane leads to a loss of transport into the nucleus. Thereby prevents STAT1 nuclear translocation in response to interferon signaling, thus blocking the expression of interferon stimulated genes (ISGs) that display multiple antiviral activities.",
+            "names": [
+                "ORF6 protein",
+                "Accessory Protein 6",
+                "Accessory Factor 6",
+                "NS6_WCPV"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "NWaxq5",
+                        "model": "01",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    },
+                    {
+                        "project": "NWaxq5",
+                        "model": "02",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    },
+                    {
+                        "project": "NWaxq5",
+                        "model": "03",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    }
+                ]
+            }
+        },
+        "NSP2": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "May play a role in the modulation of host cell survival signaling pathway by interacting with host PHB and PHB2. Indeed, these two proteins play a role in maintaining the functional integrity of the mitochondria and protecting cells from various stresses.",
+            "names": [
+                "NSP2",
+                "Non-structural protein 2"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "UrUkRp",
+                        "model": "01",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    },
+                    {
+                        "project": "UrUkRp",
+                        "model": "02",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    }
+                ],
+                "AlphaFold": [
+                    {
+                        "name": "nsp2",
+                        "uuid": "To-be-Determined",
+                        "description": "UniProt R1AB_WCPV, corresponds to residues 181 - 818. Substantial uncertainty in residues 346 - 437 (prediction PDB indexing) so coordinates for these residues are not included in the structure file."
+                    }
+                ]
+            }
+        },
+        "ORF7a": {
+            "uniprotAccession": [
+                "P0DTC7"
+            ],
+            "description": "Non-structural protein which is dispensable for virus replication in cell culture.",
+            "names": [
+                "ORF7a Protein",
+                "NS7A_WCPV"
+            ],
+            "PDB": {
+                "6w37": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6w37"
+                        }
+                    }
+                }
+            },
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "5Bbtxw",
+                        "model": "01",
+                        "description": "Partial coverage by an experimental structure (PDB: 6w37) and high quality models are available."
+                    },
+                    {
+                        "project": "5Bbtxw",
+                        "model": "02",
+                        "description": "Partial coverage by an experimental structure (PDB: 6w37) and high quality models are available."
+                    },
+                    {
+                        "project": "5Bbtxw",
+                        "model": "03",
+                        "description": "Partial coverage by an experimental structure (PDB: 6w37) and high quality models are available."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009724395_v01"
+                    }
+                ]
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "1yo4",
+                        "1xak"
+                    ]
+                }
+            }
+        },
+        "NSP6": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. Plays a role in the initial induction of autophagosomes from host reticulum endoplasmic. Later, limits the expansion of these phagosomes that are no longer able to deliver viral components to lysosomes.",
+            "names": [
+                "NSP16",
+                "Non-structural protein 6"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "27R5bK",
+                        "model": "01",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    },
+                    {
+                        "project": "27R5bK",
+                        "model": "02",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    }
+                ],
+                "AlphaFold": [
+                    {
+                        "name": "nsp6",
+                        "uuid": "To-be-Determined",
+                        "description": "Nsp6.UniProt R1AB_WCPV, corresponds to residues 3570 - 3859.Uncertainty about positions of residues 84 - 132 and 238 - 278 relative to rest of structure (prediction PDB indexing)."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725311_v02_1"
+                    },
+                    {
+                        "model": "YP_009725311_v02_2"
+                    },
+                    {
+                        "model": "YP_009725311_v02_3"
+                    },
+                    {
+                        "model": "YP_009725311_v02_4"
+                    }
+                ]
+            }
+        },
+        "ORF3a": {
+            "uniprotAccession": [
+                "P0DTC3"
+            ],
+            "description": "Forms homotetrameric potassium sensitive ion channels (viroporin) and may modulate virus release. Up-regulates expression of fibrinogen subunits FGA, FGB and FGG in host lung epithelial cells. Induces apoptosis in cell culture. Downregulates the type 1 interferon receptor by inducing serine phosphorylation within the IFN alpha-receptor subunit 1 (IFNAR1) degradation motif and increasing IFNAR1 ubiquitination.",
+            "names": [
+                "ORF3a protein",
+                "Protein 3a",
+                "AP3A_WCPV",
+                "Accessory protein 3a",
+                "Protein U274",
+                "Protein X1"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "1rtnjU",
+                        "model": "01",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    }
+                ]
+            }
+        },
+        "NSP12": {
+            "uniprotAccession": [
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1ab. Responsible for replication and transcription of the viral RNA genome.",
+            "names": [
+                "NSP12",
+                "RNA-directed RNA polymerase",
+                "RNA-dependent RNA polymerase"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "JDUya4",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
+                    },
+                    {
+                        "project": "JDUya4",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
+                    }
+                ],
+                "BMS-Arc": [
+                    {
+                        "model": "YP_009725307_v01"
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "6m71",
+                        "7bv2",
+                        "7bv1",
+                        "7btf"
+                    ],
+                    "EMDB": [
+                        "EMD-30127",
+                        "EMD-30210",
+                        "EMD-30209",
+                        "EMD-30178"
+                    ]
+                }
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "6nur",
+                        "6nus"
+                    ],
+                    "EMDB": [
+                        "EMD-0521"
+                    ]
+                }
+            }
+        },
+        "ORF8": {
+            "uniprotAccession": [
+                "P0DTC8"
+            ],
+            "description": "May play a role in host-virus interaction. Simnilar to some Bat coronavirus ns8 genes, but is entirely different from SARS ns8a or Ns8b.",
+            "names": [
+                "ORF8 protein",
+                "Non-structural protein 8",
+                "ns8"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "FKMnGv",
+                        "model": "01",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    },
+                    {
+                        "project": "FKMnGv",
+                        "model": "02",
+                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
+                    }
+                ]
+            }
+        },
+        "E": {
+            "uniprotAccession": [
+                "P0DTC4"
+            ],
+            "description": "Plays a central role in virus morphogenesis and assembly. Acts as a viroporin and self-assembles in host membranes forming pentameric protein-lipid pores that allow ion transport. Also plays a role in the induction of apoptosis.",
+            "names": [
+                "Envelope small membrane protein",
+                "E",
+                "VEMP_WCPV"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "8Tdwfx",
+                        "model": "01",
+                        "description": "Model quality estimates are low - use with care."
+                    }
+                ],
+                "BMS-Arc": [
+                    {
+                        "model": "YP_009724392_v01"
+                    }
+                ]
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "2mm4",
+                        "5xes",
+                        "5xer",
+                        "5x29"
+                    ]
+                }
+            }
+        },
+        "NSP4": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. Participates in the assembly of virally-induced cytoplasmic double-membrane vesicles necessary for viral replication.",
+            "names": [
+                "NSP4",
+                "Non-structural protein 4"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "0cKKrV",
+                        "model": "01"
+                    }
+                ],
+                "AlphaFold": [
+                    {
+                        "name": "nsp4",
+                        "uuid": "To-be-Determined",
+                        "description": "Nsp4. UniProt R1AB_WCPV, corresponds to residues 2764 - 3252. Uncertainty highest between domains."
+                    }
+                ],
+                "BMS-Arc": [
+                    {
+                        "model": "YP_009725300_v01 "
+                    }
+                ]
+            }
+        },
+        "ORF7b": {
+            "uniprotAccession": [
+                "P0DTD8"
+            ],
+            "description": "Small (43 residues) accessory protein.",
+            "names": [
+                "ORF7b Protein",
+                "Accessory protein 7b",
+                "Protein non-structural 7b",
+                "ns7b",
+                "NS7B_WCPV"
+            ]
+        },
+        "NSP11": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab.",
+            "names": [
+                "NSP11",
+                "Non-structural protein 11"
+            ]
+        },
+        "ORF14": {
+            "uniprotAccession": [
+                "P0DTD3"
+            ],
+            "description": "",
+            "names": [
+                "Uncharacterized protein 14",
+                "ORF14 Protein",
+                "Y14_WCPV"
+            ]
+        },
+        "ORF10": {
+            "uniprotAccession": [
+                "A0A663DJA2"
+            ],
+            "description": "",
+            "names": [
+                "Hypothetical ORF10 Protein",
+                "A0A663DJA2_9BETC"
+            ]
+        }
+    }
+}

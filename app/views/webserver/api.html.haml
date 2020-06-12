@@ -1,251 +1,131 @@
-.ws_main_div.api_div
-  %h2.api_header
-    3DBIONOTES CROSS-APP
-  %h3.api_header
-    EXTERNAL ANNOTATIONS
-  %p
-    %b External annotations
-    \- Display custom annotations for a PDB, EMDB or UniProt entry
-    %br
-      https://3dbionotes.cnb.csic.es?queryId=:id&annotations_url=:url
-    %div
-      \:id > PDB / EMDB / UniProt (e.g. 1acb, emd-2924, P01112)
-      %br
-      \:url > URL annotations request (e.g. "https://[your_server_here].cnb.csic.es/pdb/external_annotations.json")
-  %h3.api_header
-    EXTERNAL STRUCTURE
-  %p
-    %b External protein struture
-    \- Display external structure and optional annotations
-    %br
-      https://3dbionotes.cnb.csic.es/programmatic/autofetch?url=:structure_url&annotations_url=:annotations_url&title=:name
-    %div
-      \:structure_url > URL structure request (e.g.
-      http://[your_server_here].cnb.csic.es/pdb/1ACB.pdb
-      )
-      %br
-      \:annotations_url > URL annotations request (optional, e.g.
-      http://[your_server_here].cnb.csic.es/pdb/external_annotations.json
-      )
-      %br
-      \:name > STRING title of the submission (e.g. "my title") 
-  %br
-  %h2.api_header
-    3DBIONOTES API
-  %h3.api_header
-    EMDB info
-  %p
-    %b Source
-    \- 
-    %a{:href => "http://www.ebi.ac.uk/pdbe/api/doc/" , :target=>"_blank"}
-      PDBe REST API
-  %p
-    %b available
-    \- Check if a particular EMDB entry is available
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/info/EMDB/available/EMD-8437", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/info/EMDB/available/:emdb_id
-  
-  %p
-    %b size
-    \- Get the voxels size of a EMDB entry
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/info/EMDB/size/EMD-8437", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/info/EMDB/size/:emdb_id
-  
-  %p
-    %b data
-    \- Get map threshold and grid limits
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/info/EMDB/data/EMD-8437", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/info/EMDB/data/:emdb_id
-  
-  %p
-    %b title 
-    \- Get EMDB entry title
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/info/EMDB/title/EMD-8437", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/info/EMDB/title/:emdb_id
-  
-  %h3.api_header
-    UniProt info
-  %p
-    %b Source
-    \- 
-    %a{:href => "https://www.ebi.ac.uk/proteins/api/doc/" , :target=>"_blank"}
-      UniProt API
-  %p
-    %b sequence
-    \- Get UniProt accession sequence 
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/info/Uniprot/P01112", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/info/Uniprot/:uniprot_acc
-  
-  %p
-    %b title
-    \- Get UniProt accession title
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/info/UniprotTitle/P01112", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/info/UniprotTitle/:uniprot_acc
-  
-  %h3.api_header
-    PDB info
-  %p
-    %b Source
-    \- 
-    %a{:href => "https://www.ebi.ac.uk/pdbe/api/doc/" , :target=>"_blank"}
-      PDBe REST API
-  %p
-    %b available
-    \- Check if a particular PDB entry is available
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/info/PDB/available/101m", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/info/PDB/available/:pdb_id
-  
-  %p
-    %b title
-    \- Get PDB entry title
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/info/PDB/title/101m", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/info/PDB/title/:pdb_id
-  
-  %h3.api_header
-    EMDB mappings
-  %p
-    %b Source
-    \- 
-    %a{:href => "https://www.ebi.ac.uk/pdbe/api/doc/" , :target=>"_blank"}
-      PDBe REST API 
-  %p
-    %b fitted PDB
-    \- Get fitted PDB IDs for a particular EMDB entry
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/mappings/EMDB/PDB/EMD-2810", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/mappings/EMDB/PDB/:emdb_id
-  
-  %h3.api_header
-    UniProt mappings
-  %p
-    %b Source
-    \- 
-    %a{:href => "https://www.ebi.ac.uk/pdbe/api/doc/" , :target=>"_blank"}
-      PDBe REST API 
-  %p
-    %b UniProt to PDB structures
-    \- Get all the PDB structures associated to a UniProt accession
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/mappings/Uniprot/PDB/P01112", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/mappings/Uniprot/PDB/:uniprot_acc
-  
-  %p
-    %b UniProt to ENSEMBL transcripts
-    \- Get all the ENSEMBL transcripts  associated to a UniProt accession
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/mappings/Uniprot/ENSEMBL/transcript/P01112", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/mappings/Uniprot/ENSEMBL/transcript/:uniprot_acc
-  
-  %h3.api_header
-    PDB mappings
-  %p
-    %b Source
-    \- 
-    %a{:href => "https://www.ebi.ac.uk/pdbe/api/doc/" , :target=>"_blank"}
-      PDBe REST API 
-  %p
-    %b PDB to UniProt
-    \- Get the UniProt accessions related to the chains of a particular PDB entry
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/mappings/PDB/Uniprot/101m", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/mappings/PDB/Uniprot/:pdb_id
-  
-  %h3.api_header
-    PDB alignments
-  %p
-    %b Source
-    \- 
-    %a{:href => "https://www.ebi.ac.uk/pdbe/api/doc/" , :target=>"_blank"}
-      PDBe REST API 
-  %p
-    %b PDB to UniProt sequence alignment
-    \- Sequence alignment between a PDB entry and the related UniProt accessions
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/alignments/PDB/101m", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/alignments/PDB/:pdb_id
-  
-  %h3.api_header
-    ENSEMBL alignments
-  %p
-    %b Source
-    \- 
-    %a{:href => "https://rest.ensembl.org/" , :target=>"_blank"}
-      ENSEMBL REST API 
-  %p
-    %b ENSEMBL to UniProt sequence alignment
-    \- Protein sequence alignment between a ENSEMBL transcript and a related UniProt accession
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/alignments/ENSEMBL/ENSG00000174775/ENST00000397596/P01112", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/alignments/ENSEMBL/:ensembl_gene_id/:ensembl_transcript_id/:uniprot_acc
-  
-  %h3.api_header
-    Annotations
-  
-  %p
-    %b UniProt annotations
-    \- Get UniProt annotations for a particular UniProt accession
-    %br
-    %b Source
-    \- 
-    %a{:href => "https://www.ebi.ac.uk/proteins/api/doc/" , :target=>"_blank"}
-      UniProt API
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/annotations/EBI/features/P01112", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/annotations/EBI/features/:uniprot_acc
+= render partial: "shared/wip"
 
-  
-  %p
-    %b IEDB annotations
-    \- Get IEDB annotations for a particular UniProt accession
-    %br
-    %b Source
-    \- 
-    %a{:href => "https://www.iedb.org/" , :target=>"_blank"}
-      Immune Epitope DB
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/annotations/IEDB/Uniprot/P01112", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/annotations/IEDB/Uniprot/:uniprot_acc
-  
-  %p
-    %b PhosphoSitePlus annotations
-    \- Get PhosphoSitePlus annotations for a particular UniProt accession
-    %br
-    %b Source
-    \- 
-    %a{:href => "https://www.phosphosite.org/homeAction.action" , :target=>"_blank"}
-      PhosphoSitePlus
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/annotations/Phosphosite/Uniprot/P01112", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/annotations/Phosphosite/Uniprot/:uniprot_acc
-  
-  %p
-    %b BioMuta annotations
-    \- Get BioMuta annotations for a particular UniProt accession
-    %br
-    %b Source
-    \- 
-    %a{:href => "https://hive.biochemistry.gwu.edu/biomuta" , :target=>"_blank"}
-      BioMuta
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/annotations/biomuta/Uniprot/P01112", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/annotations/biomuta/Uniprot/:uniprot_acc
-  
-  %p
-    %b dSysMap annotations
-    \- Get dSysMap annotations for a particular UniProt accession
-    %br
-    %b Source
-    \- 
-    %a{:href => "https://dsysmap.irbbarcelona.org/" , :target=>"_blank"}
-      dSysMap
-    %br
-    %a{:href => "https://3dbionotes.cnb.csic.es/api/annotations/dsysmap/Uniprot/P01112", :target=>"_blank"}
-      https://3dbionotes.cnb.csic.es/api/annotations/dsysmap/Uniprot/:uniprot_acc
+.d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
+  .container
+    .contentBox
+      .contentTitle
+        %h4 3DBionotes Cross-app
+      .contentData
+        %h4{:style => "margin-top: 20px;margin-bottom: 9px;"} External Annotations
+        %p
+          %strong> External annotations
+           - Display custom annotations for a PDB, EMDB or UniProt entry
+          %br>/
+          https://3dbionotes.cnb.csic.es?queryId=:id&amp;annotations_url=:url
+          %br/
+        %p
+          \:id &gt; PDB / EMDB / UniProt (e.g. 1acb, emd-2924, P01112)
+          %br>/
+          \:url &gt; URL annotations request (e.g. "https://[your_server_here].cnb.csic.es/pdb/external_annotations.json")
+          %br/
+        %h4{:style => "margin-top: 20px;margin-bottom: 9px;"} External Structure
+        %p
+          %strong> External protein struture
+           - Display external structure and optional annotations
+          %br>/
+          https://3dbionotes.cnb.csic.es/programmatic/autofetch?url=:structure_url&amp;annotations_url=:annotations_url&amp;title=:name
+        %p
+          \:structure_url &gt; URL structure request (e.g. http://[your_server_here].cnb.csic.es/pdb/1ACB.pdb )
+          %br>/
+          \:annotations_url &gt; URL annotations request (optional, e.g. http://[your_server_here].cnb.csic.es/pdb/external_annotations.json
+          )
+          %br>/
+          \:name &gt; STRING title of the submission (e.g. "my title")
+    .contentBox
+      .contentTitle
+        %h4 3DBionotes API
+      .contentData
+        %h4{:style => "margin-top: 20px;margin-bottom: 9px;"} EMDB info
+        %p
+          %strong> Source
+           - 
+          %a{:href => "http://www.ebi.ac.uk/pdbe/api/doc/"} PDBe REST API
+          %br/
+        %p
+          %strong> available
+           - Check if a particular EMDB entry is available
+          %br/
+          %a{:href => "https://3dbionotes.cnb.csic.es/api/info/EMDB/available/EMD-8437"} https://3dbionotes.cnb.csic.es/api/info/EMDB/available/:emdb_id
+          %br/
+        %p
+          %strong> size
+           - Get the voxels size of a EMDB entry
+          %br/
+          %a{:href => "https://3dbionotes.cnb.csic.es/api/info/EMDB/size/EMD-8437"} https://3dbionotes.cnb.csic.es/api/info/EMDB/size/:emdb_id
+          %br/
+        %p
+          %strong> data
+           - Get map threshold and grid limits
+          %br/
+          %a{:href => "https://3dbionotes.cnb.csic.es/api/info/EMDB/data/EMD-8437"} https://3dbionotes.cnb.csic.es/api/info/EMDB/data/:emdb_id
+          %br/
+        %p
+          %strong> title
+           - Get EMDB entry title
+          %br/
+          %a{:href => "https://3dbionotes.cnb.csic.es/api/info/EMDB/title/EMD-8437"} https://3dbionotes.cnb.csic.es/api/info/EMDB/title/:emdb_id
+          %br/
+        %h4{:style => "margin-top: 20px;margin-bottom: 9px;"} UniProt info
+        %p
+          %strong> Source
+           - 
+          %a{:href => "https://www.ebi.ac.uk/proteins/api/doc/"} UniProt API
+        %p
+          %strong> sequence
+           - Get UniProt accession sequence
+          %br/
+          %a{:href => "https://3dbionotes.cnb.csic.es/api/info/Uniprot/P01112"} https://3dbionotes.cnb.csic.es/api/info/Uniprot/:uniprot_acc
+        %p
+          %strong> title
+           - Get UniProt accession title
+          %br/
+          %a{:href => "https://3dbionotes.cnb.csic.es/api/info/UniprotTitle/P01112"} https://3dbionotes.cnb.csic.es/api/info/UniprotTitle/:uniprot_acc
+          %br/
+        %h4{:style => "margin-top: 20px;margin-bottom: 9px;"} PDB info
+        %p
+          %strong> Source
+           - 
+          %a{:href => "https://www.ebi.ac.uk/pdbe/api/doc/"} PDBe REST API
+          %br/
+        %p
+          %strong> available
+           - Check if a particular PDB entry is available
+          %br/
+          %a{:href => "https://3dbionotes.cnb.csic.es/api/info/PDB/available/101m"} https://3dbionotes.cnb.csic.es/api/info/PDB/available/:pdb_id
+          %br/
+        %p
+          %strong> title
+           - Get PDB entry title
+          %br/
+          %a{:href => "https://3dbionotes.cnb.csic.es/api/info/PDB/title/101m"} https://3dbionotes.cnb.csic.es/api/info/PDB/title/:pdb_id
+          %br/
+        %h4{:style => "margin-top: 20px;margin-bottom: 9px;"} EMDB mappings
+        %p
+          %strong> Source
+           - 
+          %a{:href => "https://www.ebi.ac.uk/pdbe/api/doc/"} PDBe REST API
+          %br/
+        %p
+          %strong> fitted PDB
+           - Get fitted PDB IDs for a particular EMDB entry
+          %br/
+          %a{:href => "https://3dbionotes.cnb.csic.es/api/mappings/EMDB/PDB/EMD-2810"} https://3dbionotes.cnb.csic.es/api/mappings/EMDB/PDB/:emdb_id
+          %br/
+        %h4{:style => "margin-top: 20px;margin-bottom: 9px;"} UniProt mappings
+        %p
+          %strong> Source
+           - 
+          %a{:href => "https://www.ebi.ac.uk/pdbe/api/doc/"} PDBe REST API
+          %br/
+        %p
+          %strong> UniProt to PDB structures
+           - Get all the PDB structures associated to a UniProt accession
+          %br/
+          %a{:href => "https://3dbionotes.cnb.csic.es/api/mappings/Uniprot/PDB/P01112"} https://3dbionotes.cnb.csic.es/api/mappings/Uniprot/PDB/:uniprot_acc
+          %br/
+        %p
+          %strong> UniProt to ENSEMBL transcripts
+           - Get all the ENSEMBL transcripts associated to a UniProt accession
+          %br/
+          %a{:href => "https://3dbionotes.cnb.csic.es/api/mappings/Uniprot/ENSEMBL/transcript/P01112"} https://3dbionotes.cnb.csic.es/api/mappings/Uniprot/ENSEMBL/transcript/:uniprot_acc
+          %br/

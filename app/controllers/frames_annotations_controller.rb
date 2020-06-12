@@ -19,7 +19,9 @@ class FramesAnnotationsController < ApplicationController
         @allURL.push(["dbptm", "/api/annotations/dbptm/Uniprot/"+@alignment["uniprot"],true])
         @allURL.push(["biomuta", "/api/annotations/biomuta/Uniprot/"+@alignment["uniprot"],true])
         if @alignment["pdb"] and not @alignment["path"]
-	  @allURL.push(["coverage", "/api/alignments/Coverage/"+@alignment["pdb"].downcase+@alignment["chain"],false])
+	      @allURL.push(["coverage", "/api/alignments/Coverage/"+@alignment["pdb"].downcase+@alignment["chain"],false])
+          # Adding resolution data
+          @allURL.push(["emlr", "/ws/lrs/pdbAnnotFromMap/all/"+@alignment["pdb"].downcase+"/"+@alignment["chain"]+"/?format=json",false])
         elsif @alignment["pdb"] and @alignment["path"]
           @allURL.push(["coverage", "/api/alignments/Coverage/"+@alignment["path"]+"::"+@alignment["pdb"].gsub!('.', '_dot_')+"::"+@alignment["chain"],false])
         end

@@ -14,6 +14,9 @@ class MainController < ApplicationController
   PDB_REDO = Settings.GS_PDB_REDO
 
   def home
+    if params[:queryId].blank? && params[:annotations_url].blank?
+        redirect_to ws_path
+    end
     if request.referer
       logger.info("  HTTP Referer: #{request.referer}") 
     end
@@ -22,6 +25,7 @@ class MainController < ApplicationController
     @noAlignments = false
     @isAvailable = true
     @viewerType = viewer_type( params[:viewer_type] )
+    @source_url = request.referer || ws_database_path
 
     annotations = params[:annotations_file]
     if params[:annotations_file] then
@@ -76,6 +80,16 @@ class MainController < ApplicationController
         fetch_pdb_data(identifierName)
       elsif identifierType=="Uniprot"
         fetch_uniprot_data(identifierName)
+      elsif identifierType=="ISOLDE"
+        fetch_isolde_data(identifierName)
+      elsif identifierType=="PDB-REDO"
+        fetch_pdbredo_data(identifierName)
+      elsif identifierType=="SWISSMODEL"
+        fetch_swissmodel_data(identifierName)
+      elsif identifierType=="ALPHAFOLD"
+        fetch_alphafold_data(identifierName)
+      elsif identifierType=="COMPMODEL"
+        fetch_compmodel_data(identifierName)
       end
     end
   end 

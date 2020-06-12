@@ -2,11 +2,13 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   require 'net/http'
-  protect_from_forgery with: :exception
+  # protect_from_forgery with: :exception
 
-  rescue_from Exception do |exception|
-    render_403(exception)
-  end
+ unless Rails.env.development?
+    rescue_from Exception do |exception|
+      render_403(exception)
+    end
+ end
 
   def render_403(exception)
     if request.format != :js
