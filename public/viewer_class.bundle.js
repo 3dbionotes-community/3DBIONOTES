@@ -1,1 +1,1 @@
-../app/assets/javascripts/structure_viewer/viewer_class.bundle.stable.js
+../app/assets/javascripts/structure_viewer/viewer_class.bundle.js
