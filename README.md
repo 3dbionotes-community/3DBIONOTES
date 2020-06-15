@@ -91,7 +91,7 @@ The application contains two git sub-modules:
    - How to install:
      ```
      $ npm install
-     $ node_modules/.bin/gulp build
+     $ npm run build
      ```
 
 
