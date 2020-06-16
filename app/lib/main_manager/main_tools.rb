@@ -36,5 +36,19 @@ module MainManager
       return _fetch_pdbredo_data(identifierName)
     end
 
+    include ToolsMain::BuildSwissmodelData
+    def fetch_swissmodel_data(identifierName)
+      return _fetch_swissmodel_data(identifierName)
+    end
+
+    include ToolsMain::BuildAlphafoldData
+    def fetch_alphafold_data(identifierName)
+      return _fetch_alphafold_data(identifierName)
+    end
+
+    include ToolsMain::BuildCompmodelData
+    def fetch_compmodel_data(identifierName)
+      return _fetch_compmodel_data(identifierName)
+    end
   end
 end

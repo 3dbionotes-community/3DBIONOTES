@@ -3,7 +3,7 @@
     $j(document).ready(function(){
       #{@error.sub! "'" , "\'"}
       clear_wm();
-      swal({title:'ERROR> BioPython parser',text:'#{@error}',type:'error'},function(){
+      swal({title:'ERROR 2> BioPython parser',text:'#{@error}',type:'error'},function(){
         window.location.replace("/ws/submit");
       });
     });

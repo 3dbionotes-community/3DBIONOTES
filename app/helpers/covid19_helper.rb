@@ -25,10 +25,18 @@ module Covid19Helper
     content_tag(:i, "", class: "fa fa-external-link-square")
   end
 
+  def description_text(item)
+    if item[:description]
+      content_tag(:p, content_tag(:em, item[:description]))
+    elsif item[:api]
+      content_tag(:p, content_tag(:em, 'Retrieving information...', class: "no-description"))
+    end
+  end
+
   def item_info(item)
     content_tag(:span) do
       safe_join([
-        (content_tag(:p, content_tag(:em, item[:description])) if item[:description]),
+        description_text(item),
 
         item[:links].map do |link|
           content_tag(:p) do

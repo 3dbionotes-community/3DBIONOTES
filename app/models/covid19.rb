@@ -94,6 +94,8 @@ class Covid19
         query_url: "/?queryId=#{pdb_key}&viewer_type=ngl&button=#query",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/#{pdb_key}_deposited_chain_front_image-200x200.png",
         external: {text: "EBI", url: "https://www.ebi.ac.uk/pdbe/entry/pdb/#{pdb_key}"},
+        api: "https://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/#{pdb_key}",
+        type: 'pdb',
         related: get_related_keys(pdb_hash["emdbs"]),
         links: [
           *get_pdb_redo_links("PDB-Redo", :turq, pdb_key, pdb_hash, ["validation", "pdb-redo"]),
@@ -114,6 +116,8 @@ class Covid19
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/#{emdb_key}/400_#{code}.gif",
         related: get_related_keys(emdb_hash["pdbs"] || emdb_hash["pdb"]),
         external: {text: "EBI", url: "https://www.ebi.ac.uk/pdbe/entry/emdb/#{emdb_key}"},
+        api: "https://www.ebi.ac.uk/pdbe/api/emdb/entry/summary/#{emdb_key}",
+        type: 'emdb',
         links: [],
       }
     end
@@ -126,9 +130,9 @@ class Covid19
       {
         name: "#{project}-#{model}",
         description: ["project: #{project}", "model: #{model}", description].compact.join(" | "),
-        query_url: "/?queryId=SWISS-MODEL-#{project}-#{model}&viewer_type=ngl&button=#query”",
+        query_url: "/?queryId=SWISSMODEL-#{protein['uniprotAccession'][0]}-#{project}-#{model}&viewer_type=ngl&button=#query",
         image_url: "https://swissmodel.expasy.org/interactive/#{project}/models/#{model}.png",
-        external: {text: "SWISS-MODEL", url: "https://swissmodel.expasy.org/interactive/#{project}/"},
+        external: {text: "SWISS-MODEL", url: "https://swissmodel.expasy.org/interactive/#{project}/models/#{model}"},
         links: [],
       }
     end
