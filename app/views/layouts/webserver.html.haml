@@ -27,6 +27,7 @@
     = javascript_include_tag('webserver/carousel')
     = javascript_include_tag('webserver/popover')
     = javascript_include_tag('webserver/collapse')
+    = javascript_include_tag('webserver/imagemapResizer')
     = javascript_include_tag('covid19')
 
   %body
@@ -36,9 +37,15 @@
       %header.mainHeader.d-flex.align-items-center
         .container.text-center.text-sm-center.text-md-center.text-lg-left.text-xl-left
           %img#mainLogo{:src => "/assets/3DBionotesLogo.jpg"}/
-          #partners.d-inline-block.float-md-right.float-lg-right.float-xl-right
-            %img.partnerLogo{:src => "/assets/inbelixir.png"}/
-            %img.partnerLogo{:src => "/assets/instruct-eric-logo-noline.png"}/
+          #partnersCovid19.d-inline-block.float-lg-right.float-xl-right
+            .row
+              .col
+                %img.partnerLogo{:src => "/assets/100_CSIC.jpg", :style => "width: 120px;"}/
+                %img.partnerLogo{:src => "/assets/CNB_logo-30fc3586b103c993eeacd7d1f9a0d02dbd445703f5ab29e8cc9e26a48d35ad0d.jpg", :style => "width: 90px;"}/
+            .row
+              .col
+                %img.partnerLogo{:src => "/assets/inbelixir.png"}/
+                %img.partnerLogo{:src => "/assets/instruct-eric-logo-noline.png"}/
 
     %nav#menuBar.navbar.navbar-dark.navbar-expand-md.bg-primary
       .container
