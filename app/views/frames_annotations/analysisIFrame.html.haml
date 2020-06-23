@@ -21,7 +21,7 @@
       var feature_analysis_flag = true;
       var feature_analysis_url = #{@feature_analysis_url.to_json};
       $j(document).ready(function(){
-        build_ProtVista();
+        //TODO Commented due to performance: build_ProtVista();
       });
   :javascript
     #{@log}
