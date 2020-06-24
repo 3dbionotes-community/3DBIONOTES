@@ -879,6 +879,11 @@ a i {
   text-decoration: none !important;
 }
 
+.filteringStyle button {
+    padding: 2px 8px;
+    font-size: 12px !important;
+}
+
 .filteringStyle .dropdown-item:hover, .dropdown-item:focus, .custom-control-label {
   color: inherit;
   text-decoration: none;

@@ -13,7 +13,16 @@ function initLiveSearch(proteinsData, options) {
     const onSearchWithArgs = (ev) => onSearch(ev, proteinsData, options);
     const onSearchThrottled = throttle(onSearchWithArgs, 300);
     $("#search-protein").keyup(onSearchThrottled);
-    $(".modal.fade").on("show.bs.modal", onModalOpen);
+    $(".modal.fade").on("show.bs.modal", onModalOpen);  
+
+    const onSearchWithArgsInContainer = (ev) => {
+        console.log(proteinsData)
+        onSearch2(ev, proteinsData, options);
+    }
+    $(".dropdown-item").on( "click", onSearchWithArgsInContainer)
+   
+    
+    $("#search-protein").keyup(onSearchThrottled);
 }
 
 function onModalOpen(ev) {
@@ -27,6 +36,70 @@ function setImagesSrc(container) {
         .get()
         .map($)
         .forEach((el$) => el$.attr("src", el$.attr("data-src")));
+}
+
+function onSearch2(ev, proteinsData, options) {
+    const relations = proteinsData.relations;
+    const text = $("#search-protein").val();
+    const sectionId = $(ev.currentTarget).attr('data-section-id')
+
+    const isExperimentEvent = $(ev.currentTarget).hasClass('experiment')
+    const experimentText = isExperimentEvent ? $(ev.currentTarget).html() : $(ev.currentTarget).parents(".paginationText").find(".experiment-selector").text()
+    const experiment = isExperimentEvent ?  $(ev.currentTarget).attr('data-experiment-id') : $(ev.currentTarget).parents(".paginationText").find(".experiment-selector").attr('data-experiment-id')
+    if (isExperimentEvent){
+        $(ev.currentTarget).parents(".filterItem").find(".btn").text(experimentText);
+        $(ev.currentTarget).parents(".filterItem").find(".btn").attr('data-experiment-id', experiment);
+    }
+
+    const isPocketEvent = $(ev.currentTarget).hasClass('pocket')
+    const pocketText = isPocketEvent ? $(ev.currentTarget).html() : $(ev.currentTarget).parents(".paginationText").find(".pocket-selector").text()
+    const pocket = isPocketEvent ?  $(ev.currentTarget).attr('data-pocket-id') : $(ev.currentTarget).parents(".paginationText").find(".pocket-selector").attr('data-pocket-id')
+    if (isPocketEvent){
+        $(ev.currentTarget).parents(".filterItem").find(".btn").text(pocketText);
+        $(ev.currentTarget).parents(".filterItem").find(".btn").attr('data-pocket-id', pocket);
+    }
+
+    const filters = {sectionId: sectionId, experiment: experiment, pocket: pocket}
+    const maxItems = options.maxItems;
+
+    hideProteinsAndRemoveItemHighlights(filters.sectionId)
+
+    if (filters.sectionId){
+        const protein = filters.sectionId.split("-")[0]
+        const items = Object.keys(relations).filter((key) => {
+            return key.toLowerCase().includes(text) &&
+                ((filters.experiment != '' && relations[key].experiment && relations[key].protein.toLowerCase() === protein && relations[key].experiment === filters.experiment) ||
+                (filters.pocket != '' && relations[key].pockets && relations[key].protein.toLowerCase() === protein && filters.pocket in relations[key].pockets) );
+        });
+    
+        const proteins = flatten(
+            items.map((item) => {
+                const itemsCssClasses = items.map((name) => ".item-" + name).join(",");
+                $('#pSubBod-' + sectionId).find(itemsCssClasses).addClass("hl");
+                return relations[item].protein;
+            })
+        );
+    
+        proteins.forEach((protein) => {
+            $(`.protein-${protein} .card-body > .row`).each((_idx, row) => {
+                const card = $(row.closest(".card-body"));
+                const highlighted = card.find(".item.hl");
+                const notHighlighted = card.find(".item:not(.hl)");
+                const highlightedCountAll = highlighted.size();
+                const highlightedCount = Math.min(highlightedCountAll, maxItems);
+                const restCount = maxItems - highlightedCount;
+                highlighted.slice(0, highlightedCount).removeClass("h");
+                setImagesSrc(highlighted.slice(0, highlightedCount));
+                highlighted.slice(highlightedCount).addClass("h");
+                notHighlighted.slice(0, restCount).removeClass("h");
+                notHighlighted.slice(restCount).addClass("h");
+                const hasMatches = highlightedCountAll > 0;
+                setCollapsables(card.closest(".card"), hasMatches);
+            });
+        });
+    }
+
+    
 }
 
 function onSearch(ev, proteinsData, options) {
@@ -79,10 +152,9 @@ function processItemMatches(relations, text, options) {
             items.map((item) => {
                 const itemsCssClasses = items.map((name) => ".item-" + name).join(",");
                 $(itemsCssClasses).addClass("hl");
-                return relations[item];
+                return relations[item].protein;
             })
         );
-
         showMatch({ count: proteins.length, text });
         showProteins(proteins, { highlightTags: false });
 
@@ -116,9 +188,14 @@ function showProteins(proteinNames, options) {
     if (highlightTags) $(highlightTags.map((k) => `.b-${k}`).join(",")).addClass("hl-label");
 }
 
-function hideProteinsAndRemoveItemHighlights() {
-    $(".protein").addClass("h");
-    $(".item").removeClass("hl");
+function hideProteinsAndRemoveItemHighlights(sectionId = '') {
+    if (sectionId == ''){
+        $(".protein").addClass("h");
+        $(".item").removeClass("hl");
+    }
+    else{
+        $(`#pSubBod-${sectionId} .item`).removeClass("hl");
+    }   
 }
 
 function showMatch(match) {

@@ -27,7 +27,8 @@
                     "emdbs": [
                         "EMD-21999"
                     ]
-                },"6x2b": {
+                },
+                "6x2b": {
                     "emdbs": [
                         "EMD-22000"
                     ]
@@ -85,7 +86,7 @@
                         ]
                     }
                 },
-                "6m1v":{}
+                "6m1v": {}
             },
             "EMDB": {
                 "EMD-21374": {},
@@ -177,6 +178,273 @@
                         "EMD-10863",
                         "EMD-30039"
                     ]
+                },
+                "Ligands": {
+                    "BCU-CDR": {
+                        "6VSB": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.052
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.035
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.055
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.022
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 1.0390000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 1.025
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.047
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.038
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 1.0659999999999998
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 1.005
+                                }
+                            ]
+                        },
+                        "6VXX": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.0270000000000001
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.093
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.051
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.023
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 1.0290000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 1.083
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.995
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.044
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 1.03
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 1.0270000000000001
+                                }
+                            ]
+                        },
+                        "6VYB": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.06
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.028
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.026
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.11
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 1.058
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 1.011
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.047
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.0090000000000001
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 1.01
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 1.037
+                                }
+                            ]
+                        },
+                        "6LXT": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.053
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.9390000000000001
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.985
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.846
+                                }
+                            ]
+                        },
+                        "6LVN": {
+                            "pockets": []
+                        },
+                        "6M17": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.9990000000000001
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.026
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.062
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.023
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.992
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 1.0490000000000002
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.087
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 0.991
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 1.001
+                                }
+                            ]
+                        },
+                        "6M0J": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.01
+                                }
+                            ]
+                        },
+                        "6LZG": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.003
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.804
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.988
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.993
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.988
+                                }
+                            ]
+                        },
+                        "6W41": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.961
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.903
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.987
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.927
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.888
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.9990000000000001
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.815
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 0.828
+                                }
+                            ]
+                        }
+                    }
                 }
             },
             "Related": {
@@ -447,6 +715,48 @@
                     }
                 ]
             },
+            "Interactions": {
+                "Ligands": {
+                    "BCU-CDR": {
+                        "6W6Y": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.028
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.993
+                                }
+                            ]
+                        },
+                        "6VXS": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.991
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.018
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.986
+                                }
+                            ]
+                        },
+                        "6W02": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.05
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
             "Related": {
                 "SARS-CoV": {
                     "PDB": [
@@ -507,113 +817,205 @@
                 ]
             },
             "Interactions": {
-                "Ligands": [
-                    "5r7y",
-                    "5r7z",
-                    "5r80",
-                    "5r81",
-                    "5r82",
-                    "5r83",
-                    "5r84",
-                    "5r8t",
-                    "5re4",
-                    "5re5",
-                    "5re6",
-                    "5re7",
-                    "5re8",
-                    "5re9",
-                    "5rea",
-                    "5reb",
-                    "5rec",
-                    "5red",
-                    "5ree",
-                    "5ref",
-                    "5reg",
-                    "5reh",
-                    "5rei",
-                    "5rej",
-                    "5rek",
-                    "5rel",
-                    "5rem",
-                    "5ren",
-                    "5reo",
-                    "5rep",
-                    "5rer",
-                    "5res",
-                    "5ret",
-                    "5reu",
-                    "5rev",
-                    "5rew",
-                    "5rex",
-                    "5rey",
-                    "5rez",
-                    "5rf0",
-                    "5rf1",
-                    "5rf2",
-                    "5rf3",
-                    "5rf4",
-                    "5rf5",
-                    "5rf6",
-                    "5rf7",
-                    "5rf8",
-                    "5rf9",
-                    "5rfa",
-                    "5rfb",
-                    "5rfc",
-                    "5rfd",
-                    "5rfe",
-                    "5rff",
-                    "5rfg",
-                    "5rfh",
-                    "5rfi",
-                    "5rfj",
-                    "5rfk",
-                    "5rfl",
-                    "5rfm",
-                    "5rfn",
-                    "5rfo",
-                    "5rfp",
-                    "5rfq",
-                    "5rfr",
-                    "5rfs",
-                    "5rft",
-                    "5rfu",
-                    "5rfv",
-                    "5rfw",
-                    "5rfx",
-                    "5rfy",
-                    "5rfz",
-                    "5rg0",
-                    "5rg1",
-                    "5rg2",
-                    "5rg3",
-                    "5rgg",
-                    "5rgh",
-                    "5rgi",
-                    "5rgj",
-                    "5rgk",
-                    "5rgl",
-                    "5rgm",
-                    "5rgn",
-                    "5rgo",
-                    "5rgp",
-                    "5rgq",
-                    "5rgr",
-                    "5rgs",
-                    "6lu7",
-                    "6lze",
-                    "6m0k",
-                    "6m2n",
-                    "6w63",
-                    "6wnp",
-                    "6y2f",
-                    "6y2g",
-                    "6ynq",
-                    "6yt8",
-                    "6yz6",
-                    "7bqy",
-                    "7buy"
-                ]
+                "Ligands": {
+                    "PDB": {
+                        "6lze": {},
+                        "6m0k": {},
+                        "6m2n": {},
+                        "6w63": {},
+                        "6wnp": {},
+                        "6y2f": {},
+                        "6y2g": {},
+                        "6ynq": {},
+                        "6yt8": {},
+                        "6yz6": {},
+                        "7buy": {}
+                    },
+                    "DIAMOND": {
+                        "5r7y": {},
+                        "5r7z": {},
+                        "5r80": {},
+                        "5r81": {},
+                        "5r82": {},
+                        "5r83": {},
+                        "5r84": {},
+                        "5r8t": {},
+                        "5re4": {},
+                        "5re5": {},
+                        "5re6": {},
+                        "5re7": {},
+                        "5re8": {},
+                        "5re9": {},
+                        "5rea": {},
+                        "5reb": {},
+                        "5rec": {},
+                        "5red": {},
+                        "5ree": {},
+                        "5ref": {},
+                        "5reg": {},
+                        "5reh": {},
+                        "5rei": {},
+                        "5rej": {},
+                        "5rek": {},
+                        "5rel": {},
+                        "5rem": {},
+                        "5ren": {},
+                        "5reo": {},
+                        "5rep": {},
+                        "5rer": {},
+                        "5res": {},
+                        "5ret": {},
+                        "5reu": {},
+                        "5rev": {},
+                        "5rew": {},
+                        "5rex": {},
+                        "5rey": {},
+                        "5rez": {},
+                        "5rf0": {},
+                        "5rf1": {},
+                        "5rf2": {},
+                        "5rf3": {},
+                        "5rf4": {},
+                        "5rf5": {},
+                        "5rf6": {},
+                        "5rf7": {},
+                        "5rf8": {},
+                        "5rf9": {},
+                        "5rfa": {},
+                        "5rfb": {},
+                        "5rfc": {},
+                        "5rfd": {},
+                        "5rfe": {},
+                        "5rff": {},
+                        "5rfg": {},
+                        "5rfh": {},
+                        "5rfi": {},
+                        "5rfj": {},
+                        "5rfk": {},
+                        "5rfl": {},
+                        "5rfm": {},
+                        "5rfn": {},
+                        "5rfo": {},
+                        "5rfp": {},
+                        "5rfq": {},
+                        "5rfr": {},
+                        "5rfs": {},
+                        "5rft": {},
+                        "5rfu": {},
+                        "5rfv": {},
+                        "5rfw": {},
+                        "5rfx": {},
+                        "5rfy": {},
+                        "5rfz": {},
+                        "5rg0": {},
+                        "5rg1": {},
+                        "5rg2": {},
+                        "5rg3": {},
+                        "5rgg": {},
+                        "5rgh": {},
+                        "5rgi": {},
+                        "5rgj": {},
+                        "5rgk": {},
+                        "5rgl": {},
+                        "5rgm": {},
+                        "5rgn": {},
+                        "5rgo": {},
+                        "5rgp": {},
+                        "5rgq": {},
+                        "5rgr": {},
+                        "5rgs": {}
+                    },
+                    "BCU-CDR": {
+                        "6LU7": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.022
+                                }
+                            ]
+                        },
+                        "6W9C": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.006
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.053
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.003
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.843
+                                }
+                            ]
+                        },
+                        "6YB7": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.973
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.8420000000000001
+                                }
+                            ]
+                        },
+                        "7BQY": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.996
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.8540000000000001
+                                }
+                            ]
+                        },
+                        "6M03": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.9329999999999999
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.937
+                                }
+                            ]
+                        },
+                        "6M2Q": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.022
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.893
+                                }
+                            ]
+                        },
+                        "6Y84": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.006
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.976
+                                }
+                            ]
+                        }
+                    }
+                }
             },
             "Related": {
                 "SARS-CoV": {
@@ -821,9 +1223,9 @@
                     }
                 },
                 "6wzq": {},
-                "7c22":{},
-                "6wzo":{},
-                "6yun":{}
+                "7c22": {},
+                "6wzo": {},
+                "6yun": {}
             },
             "CompModels": {
                 "swiss-model": [
@@ -856,6 +1258,44 @@
                         "model": "YP_009724397_2_v01"
                     }
                 ]
+            },
+            "Interactions": {
+                "Ligands": {
+                    "BCU-CDR": {
+                        "6VYO": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.9790000000000001
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.021
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.988
+                                }
+                            ]
+                        },
+                        "6M3M": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.011
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.022
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.995
+                                }
+                            ]
+                        }
+                    }
+                }
             },
             "Related": {
                 "SARS-CoV": {
@@ -942,10 +1382,98 @@
                         "6wq3"
                     ]
                 },
-                "Ligands": [
-                    "5c8s",
-                    "5c8t"
-                ]
+                "Ligands": {
+                    "PDB": {
+                        "5c8s": {},
+                        "5c8t": {}
+                    },
+                    "BCU-CDR": {
+                        "6W75": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.0090000000000001
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.958
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.9740000000000001
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.943
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.89
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.84
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.843
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 0.965
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.929
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.9079999999999999
+                                }
+                            ]
+                        },
+                        "6WJT": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.9309999999999999
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.925
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.012
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.005
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.856
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.917
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.968
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 0.8809999999999999
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.81
+                                }
+                            ]
+                        }
+                    }
+                }
             },
             "Related": {
                 "SARS-CoV": {
@@ -1027,6 +1555,94 @@
                         "6wks",
                         "6wq3"
                     ]
+                },
+                "Ligands": {
+                    "BCU-CDR": {
+                        "6W75": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.0090000000000001
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.958
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.9740000000000001
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.943
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.89
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.84
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.843
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 0.965
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.929
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.9079999999999999
+                                }
+                            ]
+                        },
+                        "6WJT": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.9309999999999999
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.925
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.012
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.005
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.856
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.917
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.968
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 0.8809999999999999
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.81
+                                }
+                            ]
+                        }
+                    }
                 }
             },
             "Related": {
@@ -1260,6 +1876,40 @@
                     }
                 ]
             },
+            "Interactions": {
+                "Ligands": {
+                    "BCU-CDR": {
+                        "6W9Q": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.866
+                                }
+                            ]
+                        },
+                        "6W4B": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.835
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.88
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.8540000000000001
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.83
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
             "Related": {
                 "SARS-CoV": {
                     "PDB": [
@@ -1352,11 +2002,53 @@
                 ]
             },
             "Interactions": {
-                "Ligands": [
-                    "6wlc",
-                    "6w01",
-                    "6x4i"
-                ]
+                "Ligands": {
+                    "PDB": {
+                        "6x4i": {}
+                    },
+                    "BCU-CDR": {
+                        "6W01": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.061
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.035
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.01
+                                }
+                            ]
+                        },
+                        "6VWW": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.04
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.898
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.0390000000000001
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.867
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.975
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         },
         "NSP14": {
@@ -1408,9 +2100,11 @@
                         "5c8t"
                     ]
                 },
-                "Ligands": [
-                    "5c8t"
-                ]
+                "Ligands": {
+                    "PDB": [
+                        "5c8t"
+                    ]
+                }
             },
             "Related": {
                 "SARS-CoV": {
@@ -1669,6 +2363,89 @@
                     }
                 ]
             },
+            "Interactions": {
+                "Ligands": {
+                    "PDB": {},
+                    "BCU-CDR": {
+                        "7BV1": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.045
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.041
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.981
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.95
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9440000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.9390000000000001
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.848
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.0
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.988
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.932
+                                }
+                            ]
+                        },
+                        "7BV2": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.014
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.9990000000000001
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.003
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.023
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9620000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.836
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.179
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
             "Related": {
                 "SARS-CoV": {
                     "PDB": [
@@ -1790,6 +2567,174 @@
                         "EMD-30209",
                         "EMD-30178"
                     ]
+                },
+                "Ligands": {
+                    "BCU-CDR": {
+                        "7BV1": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.045
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.041
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.981
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.95
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9440000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.9390000000000001
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.848
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.0
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.988
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.932
+                                }
+                            ]
+                        },
+                        "7BV2": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.014
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.9990000000000001
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.003
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.023
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9620000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.836
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.179
+                                }
+                            ]
+                        },
+                        "7BTF": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.024
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.008
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.961
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.046
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.987
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.977
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.963
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.067
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.998
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.992
+                                }
+                            ]
+                        },
+                        "6M71": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.0
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.0290000000000001
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.98
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.002
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.893
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.9
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.85
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.01
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.895
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.9179999999999999
+                                }
+                            ]
+                        }
+                    }
                 }
             },
             "Related": {
@@ -1827,6 +2772,89 @@
                         "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
                     }
                 ]
+            },
+            "Interactions": {
+                "Ligands": {
+                    "PDB": {},
+                    "BCU-CDR": {
+                        "7BV1": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.045
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.041
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.981
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.95
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9440000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.9390000000000001
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.848
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.0
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.988
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.932
+                                }
+                            ]
+                        },
+                        "7BV2": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.014
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.9990000000000001
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.003
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.023
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9620000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.836
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.179
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         },
         "E": {

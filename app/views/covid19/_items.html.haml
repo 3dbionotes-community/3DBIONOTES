@@ -6,7 +6,7 @@
       - is_item_hidden = max_items && index >= max_items
       - is_image_hidden = max_images && index >= max_images
       - image_url = item[:image_url] || image_path("ComingSoon.png")
-      %div{class: ["col-sm-6 col-md-3 col-lg-2 col-xl-2 item", "item-" + item[:name], is_item_hidden ? "h" : ""]}
+      %div{class: ["col-sm-6 col-md-3 col-lg-2 col-xl-2 item", "item-" + item[:name], is_item_hidden ? "h" : ""], "data-experiment": item[:experiment], "data-pockets": item[:pockets]}
         .subItem{"data-content" => item_info(item), "data-html" => "true", "data-placement" => "top", "data-toggle" => "popover", :title => name, "data-api" => item[:api], "data-type" => item[:type]}
           = link_to(item[:query_url] || "#") do
             %img{:src => (image_url if !is_image_hidden), "data-src" => (image_url if is_image_hidden)}/
