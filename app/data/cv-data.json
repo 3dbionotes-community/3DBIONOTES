@@ -124,6 +124,11 @@
                     "pdb": [
                         "6x2c"
                     ]
+                },
+                "EMD-22078": {
+                    "pdb": [
+                        "6x6p"
+                    ]
                 }
             },
             "CompModels": {
@@ -171,12 +176,19 @@
                         "6w41",
                         "6yla",
                         "6vw1",
-                        "6m0j"
+                        "6m0j",
+                        "7byr",
+                        "6yz5",
+                        "6yz7",
+                        "6z2m",
+                        "6z43",
+                        "7bwj"
                     ],
                     "EMDB": [
                         "EMD-21864",
                         "EMD-10863",
-                        "EMD-30039"
+                        "EMD-30039",
+                        "EMD-30247"
                     ]
                 },
                 "Ligands": {
@@ -817,205 +829,118 @@
                 ]
             },
             "Interactions": {
-                "Ligands": {
-                    "PDB": {
-                        "6lze": {},
-                        "6m0k": {},
-                        "6m2n": {},
-                        "6w63": {},
-                        "6wnp": {},
-                        "6y2f": {},
-                        "6y2g": {},
-                        "6ynq": {},
-                        "6yt8": {},
-                        "6yz6": {},
-                        "7buy": {}
-                    },
-                    "DIAMOND": {
-                        "5r7y": {},
-                        "5r7z": {},
-                        "5r80": {},
-                        "5r81": {},
-                        "5r82": {},
-                        "5r83": {},
-                        "5r84": {},
-                        "5r8t": {},
-                        "5re4": {},
-                        "5re5": {},
-                        "5re6": {},
-                        "5re7": {},
-                        "5re8": {},
-                        "5re9": {},
-                        "5rea": {},
-                        "5reb": {},
-                        "5rec": {},
-                        "5red": {},
-                        "5ree": {},
-                        "5ref": {},
-                        "5reg": {},
-                        "5reh": {},
-                        "5rei": {},
-                        "5rej": {},
-                        "5rek": {},
-                        "5rel": {},
-                        "5rem": {},
-                        "5ren": {},
-                        "5reo": {},
-                        "5rep": {},
-                        "5rer": {},
-                        "5res": {},
-                        "5ret": {},
-                        "5reu": {},
-                        "5rev": {},
-                        "5rew": {},
-                        "5rex": {},
-                        "5rey": {},
-                        "5rez": {},
-                        "5rf0": {},
-                        "5rf1": {},
-                        "5rf2": {},
-                        "5rf3": {},
-                        "5rf4": {},
-                        "5rf5": {},
-                        "5rf6": {},
-                        "5rf7": {},
-                        "5rf8": {},
-                        "5rf9": {},
-                        "5rfa": {},
-                        "5rfb": {},
-                        "5rfc": {},
-                        "5rfd": {},
-                        "5rfe": {},
-                        "5rff": {},
-                        "5rfg": {},
-                        "5rfh": {},
-                        "5rfi": {},
-                        "5rfj": {},
-                        "5rfk": {},
-                        "5rfl": {},
-                        "5rfm": {},
-                        "5rfn": {},
-                        "5rfo": {},
-                        "5rfp": {},
-                        "5rfq": {},
-                        "5rfr": {},
-                        "5rfs": {},
-                        "5rft": {},
-                        "5rfu": {},
-                        "5rfv": {},
-                        "5rfw": {},
-                        "5rfx": {},
-                        "5rfy": {},
-                        "5rfz": {},
-                        "5rg0": {},
-                        "5rg1": {},
-                        "5rg2": {},
-                        "5rg3": {},
-                        "5rgg": {},
-                        "5rgh": {},
-                        "5rgi": {},
-                        "5rgj": {},
-                        "5rgk": {},
-                        "5rgl": {},
-                        "5rgm": {},
-                        "5rgn": {},
-                        "5rgo": {},
-                        "5rgp": {},
-                        "5rgq": {},
-                        "5rgr": {},
-                        "5rgs": {}
-                    },
-                    "BCU-CDR": {
-                        "6LU7": {
-                            "pockets": [
-                                {
-                                    "id": 1,
-                                    "bindingSiteScore": 1.022
-                                }
-                            ]
-                        },
-                        "6W9C": {
-                            "pockets": [
-                                {
-                                    "id": 1,
-                                    "bindingSiteScore": 1.006
-                                },
-                                {
-                                    "id": 2,
-                                    "bindingSiteScore": 1.053
-                                },
-                                {
-                                    "id": 3,
-                                    "bindingSiteScore": 1.003
-                                },
-                                {
-                                    "id": 4,
-                                    "bindingSiteScore": 0.843
-                                }
-                            ]
-                        },
-                        "6YB7": {
-                            "pockets": [
-                                {
-                                    "id": 1,
-                                    "bindingSiteScore": 0.973
-                                },
-                                {
-                                    "id": 2,
-                                    "bindingSiteScore": 0.8420000000000001
-                                }
-                            ]
-                        },
-                        "7BQY": {
-                            "pockets": [
-                                {
-                                    "id": 1,
-                                    "bindingSiteScore": 0.996
-                                },
-                                {
-                                    "id": 2,
-                                    "bindingSiteScore": 0.8540000000000001
-                                }
-                            ]
-                        },
-                        "6M03": {
-                            "pockets": [
-                                {
-                                    "id": 1,
-                                    "bindingSiteScore": 0.9329999999999999
-                                },
-                                {
-                                    "id": 2,
-                                    "bindingSiteScore": 0.937
-                                }
-                            ]
-                        },
-                        "6M2Q": {
-                            "pockets": [
-                                {
-                                    "id": 1,
-                                    "bindingSiteScore": 1.022
-                                },
-                                {
-                                    "id": 2,
-                                    "bindingSiteScore": 0.893
-                                }
-                            ]
-                        },
-                        "6Y84": {
-                            "pockets": [
-                                {
-                                    "id": 1,
-                                    "bindingSiteScore": 1.006
-                                },
-                                {
-                                    "id": 2,
-                                    "bindingSiteScore": 0.976
-                                }
-                            ]
-                        }
-                    }
-                }
+                "Ligands": [
+                    "6lu7",
+                    "6lze",
+                    "6m0k",
+                    "6m2n",
+                    "6w63",
+                    "6wnp",
+                    "6y2f",
+                    "6y2g",
+                    "6ynq",
+                    "6yt8",
+                    "6yz6",
+                    "7bqy",
+                    "7buy",
+                    "5rhb",
+                    "5rhc",
+                    "5rhd",
+                    "5rhe",
+                    "5rhf",
+                    "5r7y",
+                    "5r7z",
+                    "5r80",
+                    "5r81",
+                    "5r82",
+                    "5r83",
+                    "5r84",
+                    "5r8t",
+                    "5re4",
+                    "5re5",
+                    "5re6",
+                    "5re7",
+                    "5re8",
+                    "5re9",
+                    "5rea",
+                    "5reb",
+                    "5rec",
+                    "5red",
+                    "5ree",
+                    "5ref",
+                    "5reg",
+                    "5reh",
+                    "5rei",
+                    "5rej",
+                    "5rek",
+                    "5rel",
+                    "5rem",
+                    "5ren",
+                    "5reo",
+                    "5rep",
+                    "5rer",
+                    "5res",
+                    "5ret",
+                    "5reu",
+                    "5rev",
+                    "5rew",
+                    "5rex",
+                    "5rey",
+                    "5rez",
+                    "5rf0",
+                    "5rf1",
+                    "5rf2",
+                    "5rf3",
+                    "5rf4",
+                    "5rf5",
+                    "5rf6",
+                    "5rf7",
+                    "5rf8",
+                    "5rf9",
+                    "5rfa",
+                    "5rfb",
+                    "5rfc",
+                    "5rfd",
+                    "5rfe",
+                    "5rff",
+                    "5rfg",
+                    "5rfh",
+                    "5rfi",
+                    "5rfj",
+                    "5rfk",
+                    "5rfl",
+                    "5rfm",
+                    "5rfn",
+                    "5rfo",
+                    "5rfp",
+                    "5rfq",
+                    "5rfr",
+                    "5rfs",
+                    "5rft",
+                    "5rfu",
+                    "5rfv",
+                    "5rfw",
+                    "5rfx",
+                    "5rfy",
+                    "5rfz",
+                    "5rg0",
+                    "5rg1",
+                    "5rg2",
+                    "5rg3",
+                    "5rgg",
+                    "5rgh",
+                    "5rgi",
+                    "5rgj",
+                    "5rgk",
+                    "5rgl",
+                    "5rgm",
+                    "5rgn",
+                    "5rgo",
+                    "5rgp",
+                    "5rgq",
+                    "5rgr",
+                    "5rgs"
+                ]
             },
             "Related": {
                 "SARS-CoV": {
