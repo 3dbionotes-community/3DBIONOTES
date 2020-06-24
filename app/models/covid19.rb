@@ -87,8 +87,10 @@ class Covid19
 
   def self.parse_pdb(protein, keys)
     entries = protein.dig(*keys) || []
-    to_hash(entries).map do |pdb_key, pdb_hash|
-      {
+    items = []
+    pockets = {}
+    to_hash(entries).each do |pdb_key, pdb_hash|
+      items.push({
         name: pdb_key,
         description: pdb_hash["description"],
         query_url: "/?queryId=#{pdb_key}&viewer_type=ngl&button=#query",
@@ -97,12 +99,23 @@ class Covid19
         api: "https://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/#{pdb_key}",
         type: 'pdb',
         related: get_related_keys(pdb_hash["emdbs"]),
+        pockets: pdb_hash.key?("pockets") ? pdb_hash["pockets"].map { |pocket| pocket['id']} : [],
+        experiment: keys.last,
         links: [
           *get_pdb_redo_links("PDB-Redo", :turq, pdb_key, pdb_hash, ["validation", "pdb-redo"]),
           *get_isolde_links("Isolde", :cyan, pdb_key, pdb_hash, ["validation", "isolde"]),
         ],
-      }
-    end.compact
+      })
+
+      if pdb_hash.key?("pockets")
+        pdb_hash["pockets"].each do |pocket|
+          id = pocket['id']
+          bindingSiteScore = pocket['bindingSiteScore']
+          pockets[id] = bindingSiteScore
+        end
+      end
+    end
+    return items.compact, pockets
   end
 
   def self.parse_emdb(protein, keys)
@@ -161,6 +174,29 @@ class Covid19
     end
   end
 
+  def self.parse_db_with_experiments(protein, keys)
+    entries = protein.dig(*keys) || []
+
+    experiments = []
+    items = []
+    pockets = {}
+
+    entries.each do |key,value|
+      if key == 'EMDB'
+        items = items + parse_emdb(protein, [*keys, "EMDB"])
+      else
+        new_items, pdb_pockets = parse_pdb(protein, [*keys, key])
+        items = items + new_items
+        experiments.push(key)
+        pockets.merge!(pdb_pockets)
+      end
+    end
+    print("pockets_final")
+    print(pockets)
+    return items, experiments, pockets
+    
+  end
+
   def self.parse_db(protein, keys)
     parse_pdb(protein, [*keys, "PDB"]) + parse_emdb(protein, [*keys, "EMDB"])
   end
@@ -171,27 +207,31 @@ class Covid19
     get_proteins_data(data["SARS-CoV-2 Proteome"])
   end
 
-  def self.card(name, items)
-    items.present? ? {name: name, items: items, subsections: []} : nil
+  def self.card(name, items, experiments = [], pockets = [])
+    items.present? ? {name: name, items: items, experiments: experiments, pockets: pockets, subsections: []} : nil
   end
 
   def self.card_wrapper(name, subsections)
     subsections2 = subsections.compact.map { |subsection| subsection.merge(parent: name) }
-    subsections2.size > 0 ? {name: name, items: [], subsections: subsections2} : nil
+    subsections2.size > 0 ? {name: name, items: [], experiments: [], pockets: [], subsections: subsections2} : nil
   end
 
   def self.get_relations(proteins)
-    relations_base = proteins.flat_map do |protein|
-      protein[:sections].flat_map do |section|
-        items = section[:items].map { |item| [item[:name], protein[:name]] }
-        subsection_items = section[:subsections].flat_map do |subsection|
-          subsection[:items].map { |item| [item[:name], protein[:name]] }
+    items = {}
+    relations_base = proteins.each do |protein|
+      protein[:sections].each do |section|
+        section[:items].each do |item|
+           items[item[:name]] = {protein: protein[:name], experiment: item[:experiment], pockets: item[:pockets]}
         end
-        items + subsection_items
+        subsection_items = section[:subsections].flat_map do |subsection|
+          subsection[:items].each do |item|
+            items[item[:name]] = {protein: protein[:name], experiment: item[:experiment], pockets: item[:pockets]}
+          end
+        end
       end
     end
 
-    relations_base.group_by { |k, v| k }.transform_values { |vs| vs.map(&:second).uniq }
+    return items
   end
 
   def self.get_proteins_data(proteins_raw)
@@ -202,21 +242,22 @@ class Covid19
         description: protein["description"],
         polyproteins: protein["uniprotAccession"],
         sections: [
-          card("PDB", parse_pdb(protein, ["PDB"])),
+          card("PDB", *parse_pdb(protein, ["PDB"])),
           card("EMDB", parse_emdb(protein, ["EMDB"])),
           card_wrapper("Interactions", [
-            card("P-P Interactions", parse_db(protein, ["Interactions", "P-P-Interactions"])),
-            card("Ligands", parse_pdb(protein, ["Interactions", "Ligands"])),
+            card("P-P Interactions", *parse_db_with_experiments(protein, ["Interactions", "P-P-Interactions"])),
+            card("Ligands", *parse_db_with_experiments(protein, ["Interactions", "Ligands"])),
           ]),
           card_wrapper("Related", [
-            card("SARS-CoV", parse_db(protein, ["Related", "SARS-CoV"])),
-            card("Other", parse_db(protein, ["Related", "OtherRelated"]))
+            card("SARS-CoV", *parse_db_with_experiments(protein, ["Related", "SARS-CoV"])),
+            card("Other", *parse_db_with_experiments(protein, ["Related", "OtherRelated"]))
           ]),
           card_wrapper("Computational Models", [
             card("Swiss Model", parse_swiss_model(protein, ["CompModels", "swiss-model"])),
             card("AlphaFold", parse_alphafold(protein, ["CompModels", "AlphaFold"])),
             card("BSM-Arc", parse_bsm_arc(protein, ["CompModels", "BSM-Arc"])),
           ]),
+
         ].compact,
       }
     end
