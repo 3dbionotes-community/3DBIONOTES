@@ -15,11 +15,63 @@ function initLiveSearch(proteinsData, options) {
     $("#search-protein").keyup(onSearchThrottled);
     $(".modal.fade").on("show.bs.modal", onModalOpen);  
 
-    const onSearchWithArgsInContainer = (ev) => {
-        console.log(proteinsData)
-        onSearch2(ev, proteinsData, options);
+    const onSearchExperimentInContainer = (ev) => {
+        const currentTarget = $(ev.currentTarget);
+        const experimentText = currentTarget.html();
+        const experiment = currentTarget.attr('data-experiment-id')
+        currentTarget.parents(".filterItem").find(".btn").text(experimentText);
+        currentTarget.parents(".filterItem").find(".btn").attr('data-experiment-id', experiment);
+
+        const pocket = currentTarget.parents(".paginationText").find(".pocket-selector").attr('data-pocket-id')
+
+        const filters = {sectionId: currentTarget.attr('data-section-id'), experiment: experiment, pocket: pocket}
+
+        onSearchInContainer(ev, proteinsData, options, filters);
     }
-    $(".dropdown-item").on( "click", onSearchWithArgsInContainer)
+
+    const onSearchPocketInContainer = (ev) => {
+        const currentTarget = $(ev.currentTarget);
+        const pocketText = currentTarget.html();
+        const pocket = currentTarget.attr('data-pocket-id')
+        currentTarget.parents(".filterItem").find(".btn").text(pocketText);
+        currentTarget.parents(".filterItem").find(".btn").attr('data-pocket-id', pocket);
+
+        const experiment = currentTarget.parents(".paginationText").find(".experiment-selector").attr('data-experiment-id')
+
+        const filters = {sectionId: currentTarget.attr('data-section-id'), experiment: experiment, pocket: pocket}
+
+        onSearchInContainer(ev, proteinsData, options, filters);
+    }
+
+    const onSearchClearPocketInContainer = (ev) => {
+        const currentTarget = $(ev.currentTarget);
+        currentTarget.parents(".paginationText").find(".pocket-selector").removeAttr('data-pocket-id')
+        currentTarget.parents(".filterItem").find(".btn").text('Pocket');
+
+        const experiment = currentTarget.parents(".paginationText").find(".experiment-selector").attr('data-experiment-id')
+
+        const filters = {sectionId: currentTarget.attr('data-section-id'), experiment: experiment, pocket: ''}
+
+        onSearchInContainer(ev, proteinsData, options, filters);
+    }
+
+    const onSearchClearExperimentInContainer = (ev) => {
+        const currentTarget = $(ev.currentTarget);
+        currentTarget.parents(".paginationText").find(".experiment-selector").removeAttr('data-experiment-id')
+        currentTarget.parents(".filterItem").find(".btn").text('Experiment');
+
+        const pocket = currentTarget.parents(".paginationText").find(".pocket-selector").attr('data-pocket-id')
+
+        const filters = {sectionId: currentTarget.attr('data-section-id'), experiment: '', pocket: pocket}
+
+        onSearchInContainer(ev, proteinsData, options, filters);
+    }
+
+    $(".dropdown-item.experiment").on( "click", onSearchExperimentInContainer)
+    $(".dropdown-item.clear-experiment").on( "click", onSearchClearExperimentInContainer)
+
+    $(".dropdown-item.pocket").on( "click", onSearchPocketInContainer)
+    $(".dropdown-item.clear-pocket").on( "click", onSearchClearPocketInContainer)
    
     
     $("#search-protein").keyup(onSearchThrottled);
@@ -38,44 +90,26 @@ function setImagesSrc(container) {
         .forEach((el$) => el$.attr("src", el$.attr("data-src")));
 }
 
-function onSearch2(ev, proteinsData, options) {
+function onSearchInContainer(ev, proteinsData, options, filters) {
+    const allProteins = proteinsData.proteins;
     const relations = proteinsData.relations;
-    const text = $("#search-protein").val();
-    const sectionId = $(ev.currentTarget).attr('data-section-id')
-
-    const isExperimentEvent = $(ev.currentTarget).hasClass('experiment')
-    const experimentText = isExperimentEvent ? $(ev.currentTarget).html() : $(ev.currentTarget).parents(".paginationText").find(".experiment-selector").text()
-    const experiment = isExperimentEvent ?  $(ev.currentTarget).attr('data-experiment-id') : $(ev.currentTarget).parents(".paginationText").find(".experiment-selector").attr('data-experiment-id')
-    if (isExperimentEvent){
-        $(ev.currentTarget).parents(".filterItem").find(".btn").text(experimentText);
-        $(ev.currentTarget).parents(".filterItem").find(".btn").attr('data-experiment-id', experiment);
-    }
-
-    const isPocketEvent = $(ev.currentTarget).hasClass('pocket')
-    const pocketText = isPocketEvent ? $(ev.currentTarget).html() : $(ev.currentTarget).parents(".paginationText").find(".pocket-selector").text()
-    const pocket = isPocketEvent ?  $(ev.currentTarget).attr('data-pocket-id') : $(ev.currentTarget).parents(".paginationText").find(".pocket-selector").attr('data-pocket-id')
-    if (isPocketEvent){
-        $(ev.currentTarget).parents(".filterItem").find(".btn").text(pocketText);
-        $(ev.currentTarget).parents(".filterItem").find(".btn").attr('data-pocket-id', pocket);
-    }
-
-    const filters = {sectionId: sectionId, experiment: experiment, pocket: pocket}
+    const text = $("#search-protein").val().toLowerCase().trim();
     const maxItems = options.maxItems;
 
     hideProteinsAndRemoveItemHighlights(filters.sectionId)
 
-    if (filters.sectionId){
+    if (filters.sectionId && ((getProteinMatch(allProteins, text).length == 0 && text !== '') || (filters.experiment && filters.experiment != '') || (filters.pocket && filters.pocket !== '') )){
         const protein = filters.sectionId.split("-")[0]
         const items = Object.keys(relations).filter((key) => {
-            return key.toLowerCase().includes(text) &&
-                ((filters.experiment != '' && relations[key].experiment && relations[key].protein.toLowerCase() === protein && relations[key].experiment === filters.experiment) ||
-                (filters.pocket != '' && relations[key].pockets && relations[key].protein.toLowerCase() === protein && filters.pocket in relations[key].pockets) );
+            return (getProteinMatch(allProteins, text).length > 0 || key.toLowerCase().includes(text)) &&
+                ((!filters.experiment || filters.experiment == '') || (relations[key].experiment && relations[key].protein.toLowerCase() === protein && relations[key].experiment === filters.experiment)) &&
+                ((!filters.pocket || filters.pocket == '') || (relations[key].pockets && relations[key].protein.toLowerCase() === protein && relations[key].pockets.includes(parseInt(filters.pocket))) );
         });
     
         const proteins = flatten(
             items.map((item) => {
                 const itemsCssClasses = items.map((name) => ".item-" + name).join(",");
-                $('#pSubBod-' + sectionId).find(itemsCssClasses).addClass("hl");
+                $('#pSubBod-' + filters.sectionId).find(itemsCssClasses).addClass("hl");
                 return relations[item].protein;
             })
         );
@@ -117,18 +151,24 @@ function onSearch(ev, proteinsData, options) {
     }
 }
 
-function processProteinMatches(allProteins, text) {
+function getProteinMatch(allProteins, text){
     const includesText = (name) => name.toLowerCase().includes(text);
     const proteinNames = uniq(
         allProteins
             .filter((protein) => [protein.name].concat(protein.polyproteins).some(includesText))
             .map((protein) => protein.name)
     );
+    return proteinNames
+}
+
+function processProteinMatches(allProteins, text) {
+    proteinNames = getProteinMatch(allProteins, text)
 
     if (proteinNames.length === 0) {
         return false;
     } else {
         showMatch({ count: proteinNames.length, text });
+        const includesText = (name) => name.toLowerCase().includes(text);
         const highlightTags = uniq(
             flatten(
                 allProteins.map((protein) =>
