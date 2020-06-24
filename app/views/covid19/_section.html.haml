@@ -22,7 +22,7 @@
           %button.btn.btn-primary.dropdown-toggle.pocket-selector.mr-4.dropDisabled{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"} Pocket
           .dropdown-menu
             - pockets.each do |pocketId, bindingSiteScore|
-              %a.dropdown-item.pocket{"data-section-id" => id, "data-pocket-id" => pocketId} #{pocketId} - BindingSiteScore: #{bindingSiteScore.round(2)}
+              %a.dropdown-item.pocket{"data-section-id" => id, "data-pocket-id" => pocketId} Pocket #{pocketId}
             .dropdown-divider
             %a.dropdown-item.clear-pocket{"data-section-id" => id, "data-pocket-id" => -1} Clear filter
 
