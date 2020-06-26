@@ -12,6 +12,9 @@ class MainController < ApplicationController
   LocalScripts = Settings.GS_LocalScripts
   BaseUrl = Settings.GS_BaseUrl
   PDB_REDO = Settings.GS_PDB_REDO
+  SwissModelUrl = Settings.GS_SWISSMODEL
+  BSMArcUrl = Settings.GS_BSM_ARC
+  AlphaFoldUrl = Settings.GS_ALPHAFOLD
 
   def home
     if params[:queryId].blank? && params[:annotations_url].blank?
@@ -203,6 +206,61 @@ class MainController < ApplicationController
     end
   end
 
+
+  def models
+    protein = params[:protein]
+    source = params[:source]
+    model = params[:model]
+    logger.debug("  QUERY: " + protein + " " + source + " " + model)
+    rand_path = source+"_"+model
+    file_name = model+".pdb"
+    if source == "swiss-model"
+      file_name = model+".pdb"
+      url = SwissModelUrl+model.split('-')[0]+"/models/"+model.split('-')[1]+".pdb"
+    elsif source == "BSM-Arc"
+      file_name = model+".pdb"
+      url = BSMArcUrl+ model+".pdb"
+    elsif source == "AlphaFold"
+      file_name = model+".pdb"
+      url = BaseUrl + AlphaFoldUrl + model + "/"
+    end
+    file_content, http_code, http_code_name = getUrl(url,verbose=true)
+    if http_code.to_i > 399
+      return render json: {"error"=>"URL "+url+" was not reachable", "http_error"=>http_code_name}, status: :ok
+    elsif http_code.to_i == 0
+      return render json: {"error"=>"ruby exception", "url"=> url, "exception"=>file_content}, status: :ok
+    else
+      DataFile.save_string(file_content, file_name, rand_path)
+    end    
+    @title = source.upcase+" model: "+model.upcase
+
+    @rand  = rand_path
+    @file = file_name 
+    @structure_file = LocalPath+'/'+rand_path+'/'+file_name
+    @http_structure_file = BaseUrl+'/upload/'+rand_path+'/'+file_name
+    @mapping  =  JSON.parse(`#{LocalScripts}/structure_to_fasta_json #{@structure_file}`)
+    @error = nil
+    if @mapping.has_key? "error"
+      @error = @mapping["error"]
+    else 
+      @sequences = @mapping['sequences']
+      @choice = {}
+      do_not_repeat = {}
+      @sequences.each do |ch,seq|
+        if  do_not_repeat.key?(seq)
+          @choice[ch] = do_not_repeat[seq]
+        else
+          blast_results = runBlast(seq)
+          @choice[ch] = ( blast_results.sort_by{ |k| -k['cov'].to_f } )
+          if @choice[ch]!=nil && @choice[ch].length>0
+            do_not_repeat[seq] = @choice[ch]
+          end
+        end
+      end
+      @viewerType = "ngl"
+    end
+  end
+  
   def upload
     rand_path = (0...20).map { ('a'..'z').to_a[rand(26)] }.join.upcase
     if params[:structure_file].original_filename.include? "cif"
