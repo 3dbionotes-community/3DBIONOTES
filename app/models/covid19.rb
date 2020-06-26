@@ -44,7 +44,8 @@ class Covid19
         title: title_indexed,
         name: name,
         style: style,
-        query_url: "/?queryId=PDB-REDO-#{pdb_key}&viewer_type=ngl&button=#query",
+        # query_url: "/?queryId=PDB-REDO-#{pdb_key}&viewer_type=ngl&button=#query",
+        query_url: "/pdb_redo/#{pdb_key}",
         external_url: "https://pdb-redo.eu/db/#{name}",
       }
     end
