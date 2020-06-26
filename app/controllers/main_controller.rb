@@ -83,16 +83,6 @@ class MainController < ApplicationController
         fetch_pdb_data(identifierName)
       elsif identifierType=="Uniprot"
         fetch_uniprot_data(identifierName)
-      elsif identifierType=="ISOLDE"
-        fetch_isolde_data(identifierName)
-      elsif identifierType=="PDB-REDO"
-        fetch_pdbredo_data(identifierName)
-      elsif identifierType=="SWISSMODEL"
-        fetch_swissmodel_data(identifierName)
-      elsif identifierType=="ALPHAFOLD"
-        fetch_alphafold_data(identifierName)
-      elsif identifierType=="COMPMODEL"
-        fetch_compmodel_data(identifierName)
       end
     end
   end 
