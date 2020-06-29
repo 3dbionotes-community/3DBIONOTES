@@ -3,7 +3,8 @@
 Rails.application.routes.draw do
   get '/' => 'main#home'
   post '/' => 'main#home'
-  get '/pdb_redo/:name' => 'main#pdb_redo'
+  get '/pdb_redo/:pdbId' => 'main#pdb_redo'
+  get '/isolde/:pdbId/:filename' => 'main#isolde'
   get '/models/:protein/:source/:model' => 'main#models'
   post '/upload' => 'main#upload'
   get '/network' => 'main#network'

@@ -12,6 +12,7 @@ class MainController < ApplicationController
   LocalScripts = Settings.GS_LocalScripts
   BaseUrl = Settings.GS_BaseUrl
   PDB_REDO = Settings.GS_PDB_REDO
+  IsoldeUrl = Settings.GS_ISOLDE
   SwissModelUrl = Settings.GS_SWISSMODEL
   BSMArcUrl = Settings.GS_BSM_ARC
   AlphaFoldUrl = Settings.GS_ALPHAFOLD
@@ -151,7 +152,7 @@ class MainController < ApplicationController
     @identifierType = "interactome3d"
   end
 
-  def pdb_redo
+  def pdb_redo_0
     pdb = params[:name]
     logger.info("  HTTP Referer: https://pdb-redo.eu/db/"+pdb) 
     rand_path = "pdb_redo_"+pdb
@@ -167,6 +168,70 @@ class MainController < ApplicationController
     end
 
     @title = "PDB_REDO entry "+pdb.upcase
+    @rand  = rand_path
+    @file = file_name 
+    @structure_file = LocalPath+'/'+rand_path+'/'+file_name
+    @http_structure_file = BaseUrl+'/upload/'+rand_path+'/'+file_name
+
+    @mapping  =  JSON.parse(`#{LocalScripts}/structure_to_fasta_json #{@structure_file}`)
+
+    @error = nil
+    if @mapping.has_key? "error"
+      @error = @mapping["error"]
+    else 
+      @sequences = @mapping['sequences']
+      @choice = {}
+      do_not_repeat = {}
+      aCC = {}
+      pdbData = fetchPDBalignment(pdb)
+      @sequences.each do |ch,seq|
+        acc = pdbData[ch].keys[0]
+        aCC[acc] = true
+      end
+      aCC = fetchUniprotMultipleSequences(aCC.keys.join(","),fasta_obj_flag=nil,dict_flag=true)
+      @sequences.each do |ch,seq|
+        acc = pdbData[ch].keys[0]
+        @choice[ch] = acc+"__sprot__"+aCC[acc]["definition"]+"__"+aCC[acc]["organism"]+"__"+aCC[acc]["gene_symbol"]
+      end
+      @viewerType = "ngl"
+    end
+  end
+
+  def pdb_redo
+    pdb = params[:pdbId]
+    querytype = "PDB-Redo"
+    logger.info("  PDB-Redo quey "+pdb)
+    rand_path = "pdb_redo_"+pdb
+    file_name = pdb+"_final.pdb"
+    url = PDB_REDO+"/"+pdb+"/"+file_name
+
+    validations(querytype, pdb, url, rand_path, file_name)
+  end
+
+  def isolde
+    pdb = params[:pdbId]
+    file = params[:filename]
+    querytype = "ISOLDE"
+    logger.info("  ISOLDE query "+pdb)
+    rand_path = "isolde_"+pdb
+    file_name = file+".pdb"
+    # url = BaseUrl+IsoldeUrl+file+"/"
+    url = "http://rinchen-dos/"+IsoldeUrl+file+"/"
+
+    validations(querytype, pdb, url, rand_path, file_name)
+  end
+
+  def validations(querytype, pdb, url, rand_path, file_name)
+    file_content, http_code, http_code_name = getUrl(url,verbose=true)
+    if http_code.to_i > 399
+      return render json: {"error"=>"URL "+url+" was not reachable", "http_error"=>http_code_name}, status: :ok
+    elsif http_code.to_i == 0
+      return render json: {"error"=>"ruby exception", "url"=> url, "exception"=>file_content}, status: :ok
+    else
+      DataFile.save_string(file_content, file_name, rand_path)
+    end
+
+    @title = querytype+" entry "+pdb.upcase
     @rand  = rand_path
     @file = file_name 
     @structure_file = LocalPath+'/'+rand_path+'/'+file_name

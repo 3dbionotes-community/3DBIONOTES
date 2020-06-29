@@ -66,7 +66,7 @@ class Covid19
         title: title_indexed,
         name: entry_name,
         style: style,
-        query_url: "/?queryId=ISOLDE-#{pdb_key}&uuid=#{uuid}&viewer_type=ngl&button=#query",
+        query_url: "/isolde/#{pdb_key}/#{entry_name}",
       }
     end
   end
