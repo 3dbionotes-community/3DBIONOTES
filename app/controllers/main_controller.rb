@@ -170,8 +170,8 @@ class MainController < ApplicationController
     logger.info("  ISOLDE query "+pdb)
     rand_path = "isolde_"+pdb
     file_name = file+".pdb"
-    # url = BaseUrl+IsoldeUrl+file+"/"
-    url = "http://rinchen-dos/"+IsoldeUrl+file+"/"
+    url = BaseUrl+IsoldeUrl+file+"/"
+    # url = "http://rinchen-dos/"+IsoldeUrl+file+"/"
 
     validations(querytype, pdb, url, rand_path, file_name)
   end
