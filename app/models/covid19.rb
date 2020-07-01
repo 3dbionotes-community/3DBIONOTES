@@ -44,7 +44,8 @@ class Covid19
         title: title_indexed,
         name: name,
         style: style,
-        query_url: "/?queryId=PDB-REDO-#{pdb_key}&viewer_type=ngl&button=#query",
+        # query_url: "/?queryId=PDB-REDO-#{pdb_key}&viewer_type=ngl&button=#query",
+        query_url: "/pdb_redo/#{pdb_key}",
         external_url: "https://pdb-redo.eu/db/#{name}",
       }
     end
@@ -65,7 +66,7 @@ class Covid19
         title: title_indexed,
         name: entry_name,
         style: style,
-        query_url: "/?queryId=ISOLDE-#{pdb_key}&uuid=#{uuid}&viewer_type=ngl&button=#query",
+        query_url: "/isolde/#{pdb_key}/#{entry_name}",
       }
     end
   end
@@ -143,7 +144,8 @@ class Covid19
       {
         name: "#{project}-#{model}",
         description: ["project: #{project}", "model: #{model}", description].compact.join(" | "),
-        query_url: "/?queryId=SWISSMODEL-#{protein['uniprotAccession'][0]}-#{project}-#{model}&viewer_type=ngl&button=#query",
+        # query_url: "/?queryId=SWISSMODEL-#{protein['uniprotAccession'][0]}-#{project}-#{model}&viewer_type=ngl&button=#query",
+        query_url: "/models/#{protein['uniprotAccession'][0]}/#{keys[1]}/#{project}-#{model}",
         image_url: "https://swissmodel.expasy.org/interactive/#{project}/models/#{model}.png",
         external: {text: "SWISS-MODEL", url: "https://swissmodel.expasy.org/interactive/#{project}/models/#{model}"},
         links: [],
@@ -158,6 +160,8 @@ class Covid19
       {
         name: name,
         description: description,
+        query_url: "/models/#{protein['uniprotAccession'][0]}/#{keys[1]}/#{name}",
+        external: {text: "AlphaFold", url: "https://deepmind.com/research/open-source/computational-predictions-of-protein-structures-associated-with-COVID-19"},
         links: [],
       }
     end
@@ -169,6 +173,8 @@ class Covid19
       model, = entry.values_at("model")
       {
         name: "#{model}",
+        query_url: "/models/#{protein['uniprotAccession'][0]}/#{keys[1]}/#{model}",
+        external: {text: "BSM-Arc", url: "https://bsma.pdbj.org/entry/15"},
         links: [],
       }
     end

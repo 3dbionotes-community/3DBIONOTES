@@ -1,0 +1,16 @@
+-if @error
+  :javascript
+    #{@error.sub! "'" , "\'"}
+    console.log({title:'ERROR> BioPython parser',text:'#{@error}',type:'error'});
+-else
+  .first_step_form
+    = form_tag({controller: "main", action: "chain_mapping"}, :multipart => true, :method => :post,id: "query_form",:style=>"margin-top:20px;") do 
+      = hidden_field_tag(:viewer_type,@viewerType)
+      = hidden_field_tag(:rand,@rand)
+      = hidden_field_tag(:file,@file)
+      = hidden_field_tag(:title,@title)
+      = hidden_field_tag(:mapping,@mapping.to_json)
+      -@choice.each do |ch,val|
+        = hidden_field_tag(ch,val)
+  :javascript
+    document.getElementById("query_form").submit();
