@@ -15,11 +15,22 @@ class FramesSequenceController < ApplicationController
       if !@alignment["pdb"].nil? and !@alignment["uniprot"].nil?
         
         if @alignment["path"]
-          pdb = @alignment["path"].split(//).last(4).join
-          # json = fetchPDBalignment(@alignment["path"])
-          json = fetchPDBalignment(pdb)
-          # @alignmentData = json[@alignment["pdb"]][@alignment["chain"]][@alignment["uniprot"]]
-          @alignmentData = json[@alignment["chain"]][@alignment["uniprot"]]
+          if @alignment["path"].include? "isolde"
+            pdb = @alignment["path"].split(//).last(4).join
+            json = fetchPDBalignment(pdb)
+            @alignmentData = json[@alignment["chain"]][@alignment["uniprot"]]
+          elsif @alignment["path"].include? "swiss-model" or
+                @alignment["path"].include? "AlphaFold" or
+                @alignment["path"].include? "BSM-Arc"
+            url = BaseUrl+"api/info/Uniprot/"+@alignment["uniprot"]
+            jsonData = getUrl(url)
+            @alignmentData = {}
+            @alignmentData["uniprotSeq"] = jsonData
+            @alignmentData["pdbSeq"] = "-"*jsonData.length
+          else
+            json = fetchPDBalignment(@alignment["path"])
+            @alignmentData = json[@alignment["pdb"]][@alignment["chain"]][@alignment["uniprot"]]
+          end
         else
           json = fetchPDBalignment(@alignment["pdb"])
           if json.key? @alignment["chain"] and json[@alignment["chain"]].key? @alignment["uniprot"] then
