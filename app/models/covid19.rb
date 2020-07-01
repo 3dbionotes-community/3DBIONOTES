@@ -192,13 +192,13 @@ class Covid19
         items = items + parse_emdb(protein, [*keys, "EMDB"])
       else
         new_items, pdb_pockets = parse_pdb(protein, [*keys, key])
-        items = items + new_items
-        experiments.push(key)
-        pockets.merge!(pdb_pockets)
+        if new_items.size > 0 
+          items = items + new_items
+          experiments.push(key)
+          pockets.merge!(pdb_pockets)
+        end
       end
     end
-    print("pockets_final")
-    print(pockets)
     return items, experiments, pockets
     
   end
@@ -227,11 +227,13 @@ class Covid19
     relations_base = proteins.each do |protein|
       protein[:sections].each do |section|
         section[:items].each do |item|
-           items[item[:name]] = {protein: protein[:name], experiment: item[:experiment], pockets: item[:pockets]}
+          key = item[:name] + "-" + protein[:name] + "-" + section[:name].parameterize
+          items[key] = {protein: protein[:name], experiment: item[:experiment], pockets: item[:pockets]}
         end
         subsection_items = section[:subsections].flat_map do |subsection|
           subsection[:items].each do |item|
-            items[item[:name]] = {protein: protein[:name], experiment: item[:experiment], pockets: item[:pockets]}
+            key = item[:name] + "-" + protein[:name] + "-" + subsection[:name].parameterize
+            items[key] = {protein: protein[:name], experiment: item[:experiment], pockets: item[:pockets]}
           end
         end
       end
