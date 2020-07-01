@@ -186,7 +186,7 @@ class MainController < ApplicationController
       DataFile.save_string(file_content, file_name, rand_path)
     end
 
-    @title = querytype+" entry "+pdb.upcase
+    @title = querytype+" entry "+pdb.upcase+" ("+file_name+")"
     @rand  = rand_path
     @file = file_name 
     @structure_file = LocalPath+'/'+rand_path+'/'+file_name

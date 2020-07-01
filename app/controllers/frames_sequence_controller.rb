@@ -15,8 +15,11 @@ class FramesSequenceController < ApplicationController
       if !@alignment["pdb"].nil? and !@alignment["uniprot"].nil?
         
         if @alignment["path"]
-          json = fetchPDBalignment(@alignment["path"])
-          @alignmentData = json[@alignment["pdb"]][@alignment["chain"]][@alignment["uniprot"]]
+          pdb = @alignment["path"].split(//).last(4).join
+          # json = fetchPDBalignment(@alignment["path"])
+          json = fetchPDBalignment(pdb)
+          # @alignmentData = json[@alignment["pdb"]][@alignment["chain"]][@alignment["uniprot"]]
+          @alignmentData = json[@alignment["chain"]][@alignment["uniprot"]]
         else
           json = fetchPDBalignment(@alignment["pdb"])
           if json.key? @alignment["chain"] and json[@alignment["chain"]].key? @alignment["uniprot"] then
