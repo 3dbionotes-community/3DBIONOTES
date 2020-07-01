@@ -161,6 +161,7 @@ class Covid19
         name: name,
         description: description,
         query_url: "/models/#{protein['uniprotAccession'][0]}/#{keys[1]}/#{name}",
+        image_url: "/AlphaFold_logo.png",
         external: {text: "AlphaFold", url: "https://deepmind.com/research/open-source/computational-predictions-of-protein-structures-associated-with-COVID-19"},
         links: [],
       }
