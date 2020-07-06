@@ -1,8 +1,8 @@
 /* Initialize covid19 live search:
 
     proteinsData: {
-        proteins: Record<string, {name: string, polyproteins: string[]}>,
-        relations: Record<string, string[]>,
+        proteins: Record<string, {name: string, names: string, description: name, sections: any[], polyproteins: string[]}>,
+        relations: Record<string, {protein: string, experiment: string, pocket: string[]}>,
     }
 
     options: {
@@ -11,9 +11,80 @@
 */
 function initLiveSearch(proteinsData, options) {
     const onSearchWithArgs = (ev) => onSearch(ev, proteinsData, options);
+
     const onSearchThrottled = throttle(onSearchWithArgs, 300);
     $("#search-protein").keyup(onSearchThrottled);
-    $(".modal.fade").on("show.bs.modal", onModalOpen);
+    $(".modal.fade").on("show.bs.modal", onModalOpen);  
+
+    const onSearchExperimentInContainer = (ev) => {
+        const currentTarget = $(ev.currentTarget);
+        const experimentText = currentTarget.html();
+        const experiment = currentTarget.attr('data-experiment-id')
+        currentTarget.parents(".filterItem").find(".btn").text(experimentText);
+        currentTarget.parents(".filterItem").find(".btn").attr('data-experiment-id', experiment);
+
+        const pocket = currentTarget.parents(".paginationText").find(".pocket-selector").attr('data-pocket-id')
+
+        const filters = {sectionId: currentTarget.attr('data-section-id'), experiment: experiment, pocket: pocket}
+
+        onSearchInContainer(ev, proteinsData, options, filters);
+    }
+
+    const onSearchPocketInContainer = (ev) => {
+        const currentTarget = $(ev.currentTarget);
+        const pocketText = currentTarget.html();
+        const pocket = currentTarget.attr('data-pocket-id')
+        currentTarget.parents(".filterItem").find(".btn").text(pocketText);
+        currentTarget.parents(".filterItem").find(".btn").attr('data-pocket-id', pocket);
+
+        const experiment = currentTarget.parents(".paginationText").find(".experiment-selector").attr('data-experiment-id')
+
+        const filters = {sectionId: currentTarget.attr('data-section-id'), experiment: experiment, pocket: pocket}
+
+        onSearchInContainer(ev, proteinsData, options, filters);
+    }
+
+    const onSearchClearPocketInContainer = (ev) => {
+        const currentTarget = $(ev.currentTarget);
+        clearPocketDropdown(currentTarget)
+
+        const experiment = currentTarget.parents(".paginationText").find(".experiment-selector").attr('data-experiment-id')
+
+        const filters = {sectionId: currentTarget.attr('data-section-id'), experiment: experiment, pocket: ''}
+
+        onSearchInContainer(ev, proteinsData, options, filters);
+    }
+
+    const onSearchClearExperimentInContainer = (ev) => {
+        const currentTarget = $(ev.currentTarget);
+        clearExperimentDropdown(currentTarget)
+
+        const pocket = currentTarget.parents(".paginationText").find(".pocket-selector").attr('data-pocket-id')
+
+        const filters = {sectionId: currentTarget.attr('data-section-id'), experiment: '', pocket: pocket}
+
+        onSearchInContainer(ev, proteinsData, options, filters);
+    }
+
+    $(".dropdown-item.experiment").on( "click", onSearchExperimentInContainer)
+    $(".dropdown-item.clear-experiment").on( "click", onSearchClearExperimentInContainer)
+
+    $(".dropdown-item.pocket").on( "click", onSearchPocketInContainer)
+    $(".dropdown-item.clear-pocket").on( "click", onSearchClearPocketInContainer)
+   
+    
+    $("#search-protein").keyup(onSearchThrottled);
+}
+
+function clearPocketDropdown(el){
+    el.parents(".paginationText").find(".pocket-selector").removeAttr('data-pocket-id')
+    el.parents(".filterItem").find(".btn").text('Pocket');
+}
+
+function clearExperimentDropdown(el){
+    el.parents(".paginationText").find(".experiment-selector").removeAttr('data-experiment-id')
+    el.parents(".filterItem").find(".btn").text('Experiment');
+    
 }
 
 function onModalOpen(ev) {
@@ -29,10 +100,60 @@ function setImagesSrc(container) {
         .forEach((el$) => el$.attr("src", el$.attr("data-src")));
 }
 
+function onSearchInContainer(ev, proteinsData, options, filters) {
+    const allProteins = proteinsData.proteins;
+    const relations = proteinsData.relations;
+    const text = $("#search-protein").val().toLowerCase().trim();
+    const maxItems = options.maxItems;
+
+    hideProteinsAndRemoveItemHighlights(filters.sectionId)
+
+    if (filters.sectionId && ((getProteinMatch(allProteins, text).length == 0 && text !== '') || (filters.experiment && filters.experiment != '') || (filters.pocket && filters.pocket !== '') )){
+        const sectionSplit = filters.sectionId.split(/-(.+)/)
+        const protein = sectionSplit[0]
+        const containerId = sectionSplit[1]
+        const items = Object.keys(relations).filter((key) => {
+            return (getProteinMatch(allProteins, text).length > 0 || key.toLowerCase().includes(text)) && key.toLowerCase().includes(containerId) && 
+                ((!filters.experiment || filters.experiment == '') || (relations[key].experiment && relations[key].protein.toLowerCase() === protein && relations[key].experiment === filters.experiment)) &&
+                ((!filters.pocket || filters.pocket == '') || (relations[key].pockets && relations[key].protein.toLowerCase() === protein && relations[key].pockets.includes(parseInt(filters.pocket))) );
+        });
+    
+        const proteins = flatten(
+            items.map((item) => {
+                const itemsCssClasses = items.map((name) => ".item-" + name.split("-")[0]).join(",");
+                $('#pSubBod-' + filters.sectionId).find(itemsCssClasses).addClass("hl");
+                return relations[item].protein;
+            })
+        );
+    
+        proteins.forEach((protein) => {
+            $(`.protein-${protein} .card-body > .row`).each((_idx, row) => {
+                const card = $(row.closest(".card-body"));
+                const highlighted = card.find(".item.hl");
+                const notHighlighted = card.find(".item:not(.hl)");
+                const highlightedCountAll = highlighted.size();
+                const highlightedCount = Math.min(highlightedCountAll, maxItems);
+                const restCount = maxItems - highlightedCount;
+                highlighted.slice(0, highlightedCount).removeClass("h");
+                setImagesSrc(highlighted.slice(0, highlightedCount));
+                highlighted.slice(highlightedCount).addClass("h");
+                notHighlighted.slice(0, restCount).removeClass("h");
+                notHighlighted.slice(restCount).addClass("h");
+            });
+        });
+    }
+
+    
+}
+
 function onSearch(ev, proteinsData, options) {
     const allProteins = proteinsData.proteins;
     const relations = proteinsData.relations;
     const text = $(ev.currentTarget).val().toLowerCase().trim();
+
+    // Reset other filters
+    clearPocketDropdown($(".dropdown-item.clear-pocket"))
+    clearExperimentDropdown($(".dropdown-item.clear-experiment"))
 
     if (!text) {
         clearSearch();
@@ -44,18 +165,24 @@ function onSearch(ev, proteinsData, options) {
     }
 }
 
-function processProteinMatches(allProteins, text) {
+function getProteinMatch(allProteins, text){
     const includesText = (name) => name.toLowerCase().includes(text);
     const proteinNames = uniq(
         allProteins
             .filter((protein) => [protein.name].concat(protein.polyproteins).some(includesText))
             .map((protein) => protein.name)
     );
+    return proteinNames
+}
+
+function processProteinMatches(allProteins, text) {
+    proteinNames = getProteinMatch(allProteins, text)
 
     if (proteinNames.length === 0) {
         return false;
     } else {
         showMatch({ count: proteinNames.length, text });
+        const includesText = (name) => name.toLowerCase().includes(text);
         const highlightTags = uniq(
             flatten(
                 allProteins.map((protein) =>
@@ -77,12 +204,11 @@ function processItemMatches(relations, text, options) {
     } else {
         const proteins = flatten(
             items.map((item) => {
-                const itemsCssClasses = items.map((name) => ".item-" + name).join(",");
+                const itemsCssClasses = items.map((name) => ".item-" + name.split("-")[0]).join(",");
                 $(itemsCssClasses).addClass("hl");
-                return relations[item];
+                return relations[item].protein;
             })
         );
-
         showMatch({ count: proteins.length, text });
         showProteins(proteins, { highlightTags: false });
 
@@ -116,9 +242,14 @@ function showProteins(proteinNames, options) {
     if (highlightTags) $(highlightTags.map((k) => `.b-${k}`).join(",")).addClass("hl-label");
 }
 
-function hideProteinsAndRemoveItemHighlights() {
-    $(".protein").addClass("h");
-    $(".item").removeClass("hl");
+function hideProteinsAndRemoveItemHighlights(sectionId = '') {
+    if (sectionId == ''){
+        $(".protein").addClass("h");
+        $(".item").removeClass("hl");
+    }
+    else{
+        $(`#pSubBod-${sectionId} .item`).removeClass("hl");
+    }   
 }
 
 function showMatch(match) {

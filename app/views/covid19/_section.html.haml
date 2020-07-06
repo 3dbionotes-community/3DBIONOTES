@@ -1,12 +1,37 @@
 - id = (protein[:name] + "-" + section[:name]).parameterize
 - name = section[:name]
 - items = section[:items] || []
+- experiments = section[:experiments] || []
+- pockets = section[:pockets] || []
 - max_items = 12
 
 %div{:class => ["card", is_main ? "proteinSub" : "proteinNest"]}
   %div{id: "#pSub-#{id}", class: "card-header"}
     %h5.d-inline.mb-0 #{name}
     %span.d-inline-block.float-right.paginationText
+      - if experiments.size == 1 && name == 'Ligands'
+        Experiment:
+        .filterItem.filteringStyle
+          %button.btn.btn-primary.dropdown-toggle.experiment-selector.mr-4.dropDisabled{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button", :disabled => true} #{experiments[0]}
+      - if experiments.size > 1
+        Experiment:
+        .filterItem.filteringStyle
+          %button.btn.btn-primary.dropdown-toggle.experiment-selector.mr-4.dropDisabled{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"} Experiment
+          .dropdown-menu
+            - experiments.each do |experiment|
+              %a.dropdown-item.experiment{"data-section-id" => id, "data-experiment-id" => experiment} #{experiment}
+            .dropdown-divider
+            %a.dropdown-item.clear-experiment{"data-section-id" => id, "data-experiment-id" => -1} Clear filter
+      - if pockets.size > 1
+        Pocket:
+        .filterItem.filteringStyle
+          %button.btn.btn-primary.dropdown-toggle.pocket-selector.mr-4.dropDisabled{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"} Pocket
+          .dropdown-menu
+            - pockets.each do |pocketId, bindingSiteScore|
+              %a.dropdown-item.pocket{"data-section-id" => id, "data-pocket-id" => pocketId} Pocket #{pocketId}
+            .dropdown-divider
+            %a.dropdown-item.clear-pocket{"data-section-id" => id, "data-pocket-id" => -1} Clear filter
+
       - if items.present? && items.size > max_items
         #{[items.size, max_items].min} of #{items.size} items
         %button.modalButton{"data-target" => "#modalContent-" + id, "data-toggle" => "modal", :type => "button"}
