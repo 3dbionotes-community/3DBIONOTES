@@ -830,20 +830,7 @@
             },
             "Interactions": {
                 "Ligands": {
-                    "PDB": [
-                        "6lu7",
-                        "6lze",
-                        "6m0k",
-                        "6m2n",
-                        "6w63",
-                        "6wnp",
-                        "6y2f",
-                        "6y2g",
-                        "6ynq",
-                        "6yt8",
-                        "6yz6",
-                        "7bqy",
-                        "7buy",
+                    "DIAMOND": [
                         "5rhb",
                         "5rhc",
                         "5rhd",
@@ -941,6 +928,21 @@
                         "5rgq",
                         "5rgr",
                         "5rgs"
+                    ],
+                    "PDB": [
+                        "6lu7",
+                        "6lze",
+                        "6m0k",
+                        "6m2n",
+                        "6w63",
+                        "6wnp",
+                        "6y2f",
+                        "6y2g",
+                        "6ynq",
+                        "6yt8",
+                        "6yz6",
+                        "7bqy",
+                        "7buy"
                     ]
                 }
             },
