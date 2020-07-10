@@ -171,7 +171,7 @@ class MainController < ApplicationController
     rand_path = "isolde_"+pdb
     file_name = file+".pdb"
     url = BaseUrl+IsoldeUrl+file+"/"
-    # url = "http://rinchen-dos/"+IsoldeUrl+file+"/"
+    url = "http://rinchen-dos/"+IsoldeUrl+file+"/"
 
     validations(querytype, pdb, url, rand_path, file_name)
   end
@@ -204,11 +204,13 @@ class MainController < ApplicationController
       aCC = {}
       pdbData = fetchPDBalignment(pdb)
       @sequences.each do |ch,seq|
+        next if seq.to_s.strip.empty?
         acc = pdbData[ch].keys[0]
         aCC[acc] = true
       end
       aCC = fetchUniprotMultipleSequences(aCC.keys.join(","),fasta_obj_flag=nil,dict_flag=true)
       @sequences.each do |ch,seq|
+        next if seq.to_s.strip.empty?
         acc = pdbData[ch].keys[0]
         @choice[ch] = acc+"__sprot__"+aCC[acc]["definition"]+"__"+aCC[acc]["organism"]+"__"+aCC[acc]["gene_symbol"]
       end
