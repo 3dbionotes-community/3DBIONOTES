@@ -52,12 +52,10 @@
                     "validation": {
                         "isolde": [
                             {
-                                "name": "6lvn_refine_3",
-                                "uuid": "3c7ce463-becb-43c2-a00c-67997fc329e2"
+                                "name": "6lvn_refine_3"
                             },
                             {
-                                "name": "Wcwr_final",
-                                "uuid": "5e0317d5-89cb-4528-89d5-6bc02ac3f649"
+                                "name": "Wcwr_final"
                             }
                         ],
                         "pdb-redo": [
@@ -71,12 +69,10 @@
                     "validation": {
                         "isolde": [
                             {
-                                "name": "6lxt_refine_6",
-                                "uuid": "bbdddf57-db03-4626-b9b4-0959a4cafda2"
+                                "name": "6lxt_refine_6"
                             },
                             {
-                                "name": "QtRM_final",
-                                "uuid": "22d09d22-4140-4196-8d9b-d2f4719632c6"
+                                "name": "QtRM_final"
                             }
                         ],
                         "pdb-redo": [
@@ -590,8 +586,7 @@
                     "validation": {
                         "isolde": [
                             {
-                                "name": "6w9c_refine_15",
-                                "uuid": "37ac7edd-da6e-4125-8d14-6c7d3cb2dfbd"
+                                "name": "6w9c_refine_15"
                             }
                         ],
                         "pdb-redo": [
@@ -629,12 +624,10 @@
                     "validation": {
                         "isolde": [
                             {
-                                "name": "6vxs_refine_12",
-                                "uuid": "ca0a1740-0e9f-4647-a59c-c33481339c05"
+                                "name": "6vxs_refine_12"
                             },
                             {
-                                "name": "6dui_final",
-                                "uuid": "a00f60fb-059d-4e71-9987-934b0e36ba0a"
+                                "name": "6dui_final"
                             }
                         ],
                         "pdb-redo": [
@@ -702,7 +695,6 @@
                 "AlphaFold": [
                     {
                         "name": "PL-PRO_C_terminal",
-                        "uuid": "To-be-Determined",
                         "description": "PL-PRO C terminal domain.UniProt R1AB_WCPV, corresponds to residues 2389 - 2743. Included as this region appeared not to be covered by SWISS-MODEL."
                     }
                 ],
@@ -1107,12 +1099,10 @@
                     "validation": {
                         "isolde": [
                             {
-                                "name": "6vyo_refine_2",
-                                "uuid": "d944115c-4138-4a57-8b92-4d70836fbe2a"
+                                "name": "6vyo_refine_2"
                             },
                             {
-                                "name": "5KTy_final",
-                                "uuid": "5149fb70-eadf-416e-bb9d-599c1e1e6204"
+                                "name": "5KTy_final"
                             }
                         ],
                         "pdb-redo": {
@@ -1131,12 +1121,10 @@
                     "validation": {
                         "isolde": [
                             {
-                                "name": "6m3m_refine_6",
-                                "uuid": "d02cfad3-f89b-46a3-ab45-2f2770e8c9fb"
+                                "name": "6m3m_refine_6"
                             },
                             {
-                                "name": "3DZj_final",
-                                "uuid": "fbb89118-0e3e-4739-8820-af0278d9b956"
+                                "name": "3DZj_final"
                             }
                         ],
                         "pdb-redo": {
@@ -1764,12 +1752,10 @@
                     "validation": {
                         "isolde": [
                             {
-                                "name": "6w4b_refine_9",
-                                "uuid": "d26658ad-bb95-4dea-b5c5-5af393c17218"
+                                "name": "6w4b_refine_9"
                             },
                             {
-                                "name": "Mgd7_final",
-                                "uuid": "e0fca713-8c59-498e-be49-d084ff968780"
+                                "name": "Mgd7_final"
                             }
                         ],
                         "pdb-redo": [
@@ -1879,12 +1865,10 @@
                     "validation": {
                         "isolde": [
                             {
-                                "name": "6vww_refine_14",
-                                "uuid": "8bb06f84-3280-464f-93e5-6f8a6d02571d"
+                                "name": "6vww_refine_14"
                             },
                             {
-                                "name": "UW8C_final",
-                                "uuid": "9051cb07-8096-45e2-8017-ff5825e51e86"
+                                "name": "UW8C_final"
                             }
                         ],
                         "pdb-redo": [
@@ -2129,7 +2113,6 @@
                 "AlphaFold": [
                     {
                         "name": "M_protein",
-                        "uuid": "To-be-Determined",
                         "description": "UniProt VME1_WCPV, includes residues 11 - 203."
                     }
                 ]
@@ -2244,7 +2227,6 @@
                 "AlphaFold": [
                     {
                         "name": "nsp2",
-                        "uuid": "To-be-Determined",
                         "description": "UniProt R1AB_WCPV, corresponds to residues 181 - 818. Substantial uncertainty in residues 346 - 437 (prediction PDB indexing) so coordinates for these residues are not included in the structure file."
                     }
                 ]
@@ -2410,7 +2392,6 @@
                 "AlphaFold": [
                     {
                         "name": "nsp6",
-                        "uuid": "To-be-Determined",
                         "description": "Nsp6.UniProt R1AB_WCPV, corresponds to residues 3570 - 3859.Uncertainty about positions of residues 84 - 132 and 238 - 278 relative to rest of structure (prediction PDB indexing)."
                     }
                 ],
@@ -2841,7 +2822,6 @@
                 "AlphaFold": [
                     {
                         "name": "nsp4",
-                        "uuid": "To-be-Determined",
                         "description": "Nsp4. UniProt R1AB_WCPV, corresponds to residues 2764 - 3252. Uncertainty highest between domains."
                     }
                 ],
