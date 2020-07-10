@@ -143,7 +143,7 @@
                     },
                     {
                         "project": "7dVLxC",
-                        "model": "05"
+                        "model": "04"
                     }
                 ],
                 "BSM-Arc": [
@@ -2048,11 +2048,6 @@
                     {
                         "project": "YxJyvF",
                         "model": "01",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
-                    },
-                    {
-                        "project": "YxJyvF",
-                        "model": "02",
                         "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
                     }
                 ],
