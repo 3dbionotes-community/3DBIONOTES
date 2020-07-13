@@ -67,7 +67,7 @@
                     "emdbs": [
                         "EMD-21997"
                     ]
-                },                
+                },
                 "6x2a": {
                     "emdbs": [
                         "EMD-21999"
@@ -602,7 +602,96 @@
                 "Papain-like proteinase"
             ],
             "PDB": {
-                "6wen": {},
+                "6ywm": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6ywm"
+                            }
+                        ]
+                    }
+                },
+                "6ywl": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6ywl"
+                            }
+                        ]
+                    }
+                },
+                "6ywk": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6ywk"
+                            }
+                        ]
+                    }
+                },
+                "6xg3": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xg3"
+                            }
+                        ]
+                    }
+                },
+                "6wzu": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wzu"
+                            }
+                        ]
+                    }
+                },
+                "6wrh": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wrh"
+                            }
+                        ]
+                    }
+                },
+                "6woj": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wrh"
+                            }
+                        ]
+                    }
+                },
+                "6wey": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wey"
+                            }
+                        ]
+                    }
+                },
+                "6wen": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wen"
+                            }
+                        ]
+                    }
+                },
+                "6wcf": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wcf"
+                            }
+                        ]
+                    }
+                },
                 "6w9c": {
                     "validation": {
                         "isolde": [
@@ -617,26 +706,20 @@
                         ]
                     }
                 },
-                "6wrh": {},
-                "6ywm": {},
-                "6w02": {
-                    "validation": {
-                        "pdb-redo": [
-                            {
-                                "name": "6w02"
-                            }
-                        ]
-                    }
-                },
-                "6ywk": {},
-                "6wey": {},
-                "6ywl": {},
-                "6woj": {},
                 "6w6y": {
                     "validation": {
                         "pdb-redo": [
                             {
                                 "name": "6w6y"
+                            }
+                        ]
+                    }
+                },
+                "6w02": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6w02"
                             }
                         ]
                     }
@@ -657,8 +740,7 @@
                             }
                         ]
                     }
-                },
-                "6wcf": {}
+                }
             },
             "CompModels": {
                 "swiss-model": [
@@ -742,6 +824,14 @@
             },
             "Interactions": {
                 "Ligands": {
+                    "PDB": {
+                        "6yva": {},
+                        "6xa9": {},
+                        "6xaa": {},
+                        "6wx4": {},
+                        "6wuu": {},
+                        "6woj": {}
+                    },
                     "BCU-CDR": {
                         "6w6y": {
                             "pockets": [
