@@ -926,63 +926,77 @@
                         ]
                     }
                 },
-                "6yb7": {"validation": {
-                    "pdb-redo": [
-                        {
-                            "name": "6yb7"
-                        }
-                    ]
-                }},
-                "6y84": {"validation": {
-                    "pdb-redo": [
-                        {
-                            "name": "5y84"
-                        }
-                    ]
-                }},
-                "6y2e": {"validation": {
-                    "pdb-redo": [
-                        {
-                            "name": "6y2e"
-                        }
-                    ]
-                }},
-                "6xhu": {"validation": {
-                    "pdb-redo": [
-                        {
-                            "name": "6xhu"
-                        }
-                    ]
-                }},
-                "6wqf": {"validation": {
-                    "pdb-redo": [
-                        {
-                            "name": "6wqf"
-                        }
-                    ]
-                }},
-                "6m03": {"validation": {
-                    "isolde": [
-                        {
-                            "name": "6m03_refine_1"
-                        },
-                        {
-                            "name": "Hts0_final"
-                        }
-                    ],
-                    "pdb-redo": [
-                        {
-                            "name": "6m03"
-                        }
-                    ]
-                }},
-                "6m2q": {"validation": {
-                    "pdb-redo": [
-                        {
-                            "name": "6m2q"
-                        }
-                    ]
-                }}
+                "6yb7": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6yb7"
+                            }
+                        ]
+                    }
+                },
+                "6y84": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "5y84"
+                            }
+                        ]
+                    }
+                },
+                "6y2e": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6y2e"
+                            }
+                        ]
+                    }
+                },
+                "6xhu": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xhu"
+                            }
+                        ]
+                    }
+                },
+                "6wqf": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wqf"
+                            }
+                        ]
+                    }
+                },
+                "6m03": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6m03_refine_1"
+                            },
+                            {
+                                "name": "Hts0_final"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6m03"
+                            }
+                        ]
+                    }
+                },
+                "6m2q": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6m2q"
+                            }
+                        ]
+                    }
+                }
             },
             "CompModels": {
                 "BSM-Arc": [
@@ -1292,7 +1306,56 @@
                 "Nucleocapsid protein"
             ],
             "PDB": {
+                "7c22": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "7c22"
+                        }
+                    }
+                },
+                "6zco": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6zco"
+                        }
+                    }
+                },
+                "6yun": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6yun"
+                        }
+                    }
+                },
                 "6yi3": {},
+                "6wzq": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6wzq"
+                        }
+                    }
+                },
+                "6wzo": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6wzo"
+                        }
+                    }
+                },
+                "6wkp": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6wkp"
+                        }
+                    }
+                },
+                "6wji": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6wji"
+                        }
+                    }
+                },
                 "6vyo": {
                     "validation": {
                         "isolde": [
@@ -1305,13 +1368,6 @@
                         ],
                         "pdb-redo": {
                             "name": "6vyo"
-                        }
-                    }
-                },
-                "6wji": {
-                    "validation": {
-                        "pdb-redo": {
-                            "name": "6wji"
                         }
                     }
                 },
@@ -1329,18 +1385,7 @@
                             "name": "6m3m"
                         }
                     }
-                },
-                "6wkp": {
-                    "validation": {
-                        "pdb-redo": {
-                            "name": "6wkp"
-                        }
-                    }
-                },
-                "6wzq": {},
-                "7c22": {},
-                "6wzo": {},
-                "6yun": {}
+                }
             },
             "CompModels": {
                 "swiss-model": [
@@ -1443,6 +1488,26 @@
                         "4ud1",
                         "6kl5"
                     ]
+                }
+            }
+        },
+        "ORF9b": {
+            "uniprotAccession": [
+                "P0DTD2"
+            ],
+            "description": "The gene encoding this protein is included within the N gene (alternative ORF). Forms homotetrameric potassium sensitive ion channels (viroporin) and may modulate virus release. Up-regulates expression of fibrinogen subunits FGA, FGB and FGG in host lung epithelial cells. Induces apoptosis in cell culture. Downregulates the type 1 interferon receptor by inducing serine phosphorylation within the IFN alpha-receptor subunit 1 (IFNAR1) degradation motif and increasing IFNAR1 ubiquitination.",
+            "names": [
+                "ORF9b protein",
+                "Protein 9b",
+                "ORF9B_SARS2"
+            ],
+            "PDB": {
+                "6z4u": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6z4u"
+                        }
+                    }
                 }
             }
         },
