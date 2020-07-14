@@ -917,12 +917,72 @@
                 "NSP5"
             ],
             "PDB": {
-                "6y2e": {},
-                "6m2q": {},
-                "6wqf": {},
-                "6m03": {},
-                "6y84": {},
-                "6yb7": {}
+                "7bro": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7bro"
+                            }
+                        ]
+                    }
+                },
+                "6yb7": {"validation": {
+                    "pdb-redo": [
+                        {
+                            "name": "6yb7"
+                        }
+                    ]
+                }},
+                "6y84": {"validation": {
+                    "pdb-redo": [
+                        {
+                            "name": "5y84"
+                        }
+                    ]
+                }},
+                "6y2e": {"validation": {
+                    "pdb-redo": [
+                        {
+                            "name": "6y2e"
+                        }
+                    ]
+                }},
+                "6xhu": {"validation": {
+                    "pdb-redo": [
+                        {
+                            "name": "6xhu"
+                        }
+                    ]
+                }},
+                "6wqf": {"validation": {
+                    "pdb-redo": [
+                        {
+                            "name": "6wqf"
+                        }
+                    ]
+                }},
+                "6m03": {"validation": {
+                    "isolde": [
+                        {
+                            "name": "6m03_refine_1"
+                        },
+                        {
+                            "name": "Hts0_final"
+                        }
+                    ],
+                    "pdb-redo": [
+                        {
+                            "name": "6m03"
+                        }
+                    ]
+                }},
+                "6m2q": {"validation": {
+                    "pdb-redo": [
+                        {
+                            "name": "6m2q"
+                        }
+                    ]
+                }}
             },
             "CompModels": {
                 "BSM-Arc": [
@@ -933,6 +993,48 @@
             },
             "Interactions": {
                 "Ligands": {
+                    "PDB": [
+                        "7c8u",
+                        "7c8t",
+                        "7c8r",
+                        "7buy",
+                        "7brr",
+                        "7brp",
+                        "7bqy",
+                        "6z2e",
+                        "6yz6",
+                        "6yvf",
+                        "6yt8",
+                        "6ynq",
+                        "6y7m",
+                        "6y2g",
+                        "6y2f",
+                        "6xmk",
+                        "6xkh",
+                        "6xkf",
+                        "6xhm",
+                        "6xfn",
+                        "6xch",
+                        "6xbi",
+                        "6xbh",
+                        "6xbg",
+                        "6xb2",
+                        "6xb1",
+                        "6xb0",
+                        "6xa4",
+                        "6wtm",
+                        "6wtk",
+                        "6wtj",
+                        "6wnp",
+                        "6w63",
+                        "6m2n",
+                        "6m0k",
+                        "6lze",
+                        "6lu7",
+                        "6lo0",
+                        "6lny",
+                        "6lnq"
+                    ],
                     "DIAMOND": [
                         "5rhb",
                         "5rhc",
@@ -1031,21 +1133,6 @@
                         "5rgq",
                         "5rgr",
                         "5rgs"
-                    ],
-                    "PDB": [
-                        "6lu7",
-                        "6lze",
-                        "6m0k",
-                        "6m2n",
-                        "6w63",
-                        "6wnp",
-                        "6y2f",
-                        "6y2g",
-                        "6ynq",
-                        "6yt8",
-                        "6yz6",
-                        "7bqy",
-                        "7buy"
                     ]
                 }
             },
