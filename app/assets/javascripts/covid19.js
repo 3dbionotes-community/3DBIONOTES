@@ -14,6 +14,23 @@ function initLiveSearch(proteinsData, options) {
     const onSearchThrottled = throttle(onSearchWithArgs, 300);
     $("#search-protein").keyup(onSearchThrottled);
     $(".modal.fade").on("show.bs.modal", onModalOpen);
+    showIfUrlExists("data-check");
+}
+
+function showIfUrlExists(attributeName) {
+    const promisesFn = $(`[${attributeName}]`)
+        .get()
+        .map((el) => () => showIfUrlExistsFromElement(el, attributeName));
+    runPromisesSequentially(promisesFn);
+}
+
+async function showIfUrlExistsFromElement(el, attributeName) {
+    const url = el.getAttribute(attributeName);
+    if (!url) return;
+    const response = await fetch(url, { method: "HEAD" });
+    if (response.status === 200) {
+        $(el).removeClass("h");
+    }
 }
 
 function onModalOpen(ev) {
@@ -173,4 +190,10 @@ function throttle(fn, wait) {
             fn.apply(this_, arguments_);
         }, wait);
     };
+}
+
+async function runPromisesSequentially(promisesFn) {
+    for (const promiseFn of promisesFn) {
+        await promiseFn().catch((err) => console.error(err));
+    }
 }
