@@ -8,10 +8,22 @@ class Covid19
         query_url: "/?queryId=EMD-21375&viewer_type=ngl&button=#query",
       },
       {
+        name: "EMD-11328",
+        description: "SARS-CoV-2 spike in prefusion state (EMD-11328)",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11328/400_11328.gif",
+        query_url: "/?queryId=EMD-11328&viewer_type=ngl&button=#query",
+      },
+      {
         name: "EMD-30210",
         description: "The nsp12-nsp7-nsp8 complex bound to the template-primer RNA and triphosphate form of Remdesivir(RTP) (EMD-30210)",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30210/400_30210.gif",
         query_url: "/?queryId=EMD-30210&viewer_type=ngl&button=#query",
+      },
+      {
+        name: "6ZOW",
+        description: "SARS-CoV-2 spike in prefusion state",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6zow_deposited_chain_front_image-200x200.png",
+        query_url: "/?queryId=6zow&viewer_type=ngl&button=#query",
       },
       {
         name: "6LZG",
