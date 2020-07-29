@@ -13,9 +13,74 @@
                 "SPIKE_WCPV"
             ],
             "PDB": {
-                "6vsb": {
+                "6zow": {
                     "emdbs": [
-                        "EMD-21375"
+                        "EMD-11328"
+                    ]
+                },
+                "6zp5": {
+                    "emdbs": [
+                        "EMD-11336"
+                    ]
+                },
+                "6zp7": {
+                    "emdbs": [
+                        "EMD-11337"
+                    ]
+                },
+                "6zgi": {
+                    "emdbs": [
+                        "EMD-11207"
+                    ]
+                },
+                "6zgh": {
+                    "emdbs": [
+                        "EMD-11206"
+                    ]
+                },
+                "6zgg": {
+                    "emdbs": [
+                        "EMD-11205"
+                    ]
+                },
+                "6zge": {
+                    "emdbs": [
+                        "EMD-11203"
+                    ]
+                },
+                "6z97": {
+                    "emdbs": [
+                        "EMD-11119"
+                    ]
+                },
+                "6xs6": {
+                    "emdbs": [
+                        "EMD-22301"
+                    ]
+                },
+                "6x6p": {
+                    "emdbs": [
+                        "EMD-22078"
+                    ]
+                },
+                "6x2c": {
+                    "emdbs": [
+                        "EMD-22001"
+                    ]
+                },
+                "6x2b": {
+                    "emdbs": [
+                        "EMD-22000"
+                    ]
+                },
+                "6x2a": {
+                    "emdbs": [
+                        "EMD-21999"
+                    ]
+                },
+                "6x29": {
+                    "emdbs": [
+                        "EMD-21997"
                     ]
                 },
                 "6vxx": {
@@ -26,6 +91,11 @@
                 "6vyb": {
                     "emdbs": [
                         "EMD-21457"
+                    ]
+                },
+                "6vsb": {
+                    "emdbs": [
+                        "EMD-21375"
                     ]
                 },
                 "6lvn": {
@@ -62,64 +132,41 @@
                         ]
                     }
                 },
-                "6m1v": {},
-                "6x29": {
-                    "emdbs": [
-                        "EMD-21997"
-                    ]
-                },
-                "6x2a": {
-                    "emdbs": [
-                        "EMD-21999"
-                    ]
-                },
-                "6x2b": {
-                    "emdbs": [
-                        "EMD-22000"
-                    ]
-                },
-                "6x2c": {
-                    "emdbs": [
-                        "EMD-22001"
-                    ]
-                },
-                "6x6p": {},
-                "6z97": {},
-                "6zge": {},
-                "6zgg": {},
-                "6zgh": {},
-                "6zgi": {}
+                "6m1v": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6m1v"
+                            }
+                        ]
+                    }
+                }
             },
             "EMDB": {
-                "EMD-21374": {},
-                "EMD-21375": {
+                "EMD-11328": {
                     "pdb": [
-                        "6vsb"
+                        "6zow"
                     ]
                 },
-                "EMD-21452": {
+                "EMD-11336": {
                     "pdb": [
-                        "6vxx"
+                        "6zp5"
                     ]
                 },
-                "EMD-21457": {
+                "EMD-11337": {
                     "pdb": [
-                        "6vyb"
+                        "6zp7"
                     ]
                 },
-                "EMD-21997": {
+                "EMD-11341": {},
+                "EMD-22301": {
                     "pdb": [
-                        "6x29"
+                        "6xs6"
                     ]
                 },
-                "EMD-21999": {
+                "EMD-22078": {
                     "pdb": [
-                        "6x2a"
-                    ]
-                },
-                "EMD-22000": {
-                    "pdb": [
-                        "6x2b"
+                        "6x6p"
                     ]
                 },
                 "EMD-22001": {
@@ -127,9 +174,60 @@
                         "6x2c"
                     ]
                 },
-                "EMD-22078": {
+                "EMD-22000": {
                     "pdb": [
-                        "6x6p"
+                        "6x2b"
+                    ]
+                },
+                "EMD-21999": {
+                    "pdb": [
+                        "6x2a"
+                    ]
+                },
+                "EMD-21997": {
+                    "pdb": [
+                        "6x29"
+                    ]
+                },
+                "EMD-21457": {
+                    "pdb": [
+                        "6vyb"
+                    ]
+                },
+                "EMD-21452": {
+                    "pdb": [
+                        "6vxx"
+                    ]
+                },
+                "EMD-21375": {
+                    "pdb": [
+                        "6vsb"
+                    ]
+                },
+                "EMD-21374": {},
+                "EMD-11207": {
+                    "pdb": [
+                        "6zgi"
+                    ]
+                },
+                "EMD-11206": {
+                    "pdb": [
+                        "6zgh"
+                    ]
+                },
+                "EMD-11205": {
+                    "pdb": [
+                        "6zgg"
+                    ]
+                },
+                "EMD-11203": {
+                    "pdb": [
+                        "6zge"
+                    ]
+                },
+                "EMD-11119": {
+                    "pdb": [
+                        "6z97"
                     ]
                 }
             },
@@ -166,41 +264,76 @@
             },
             "Interactions": {
                 "P-P-Interactions": {
-                    "PDB": [
-                        "6m0j",
-                        "6m17",
-                        "6lzg",
-                        "6w41",
-                        "6vw1",
-                        "6wps",
-                        "6wpt",
-                        "6xc2",
-                        "6xc3",
-                        "6xc4",
-                        "6xc7",
-                        "6xcm",
-                        "6xcn",
-                        "6xdg",
-                        "6xe1",
-                        "6yla",
-                        "6ym0",
-                        "6yor",
-                        "6yz5",
-                        "6yz7",
-                        "6z2m",
-                        "6z43",
-                        "6zcz",
-                        "6zdh",
-                        "6zer",
-                        "6zfo",
-                        "7bwj",
-                        "7byr",
-                        "7bz5",
-                        "7c01",
-                        "7c2l",
-                        "7c8w",
-                        "7can"
-                    ],
+                    "PDB": {
+                        "6m0j": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "zc1b_final"
+                                    }
+                                ]
+                            }
+                        },
+                        "6m17": {},
+                        "6lzg": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6lzg_final"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6lzg"
+                                    }
+                                ]
+                            }
+                        },
+                        "6w41": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "9gv9_final"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6w41"
+                                    }
+                                ]
+                            }
+                        },
+                        "6vw1": {},
+                        "6wps": {},
+                        "6wpt": {},
+                        "6xc2": {},
+                        "6xc3": {},
+                        "6xc4": {},
+                        "6xc7": {},
+                        "6xcm": {},
+                        "6xcn": {},
+                        "6xdg": {},
+                        "6xe1": {},
+                        "6yla": {},
+                        "6ym0": {},
+                        "6yor": {},
+                        "6yz5": {},
+                        "6yz7": {},
+                        "6z2m": {},
+                        "6z43": {},
+                        "6zcz": {},
+                        "6zdh": {},
+                        "6zer": {},
+                        "6zfo": {},
+                        "7bwj": {},
+                        "7byr": {},
+                        "7bz5": {},
+                        "7c01": {},
+                        "7c2l": {},
+                        "7c8w": {},
+                        "7c8v": {},
+                        "7can": {}
+                    },
                     "EMDB": [
                         "EMD-21864",
                         "EMD-10863",
@@ -209,6 +342,26 @@
                     ]
                 },
                 "Ligands": {
+                    "PDB": {
+                        "6zp2": {},
+                        "6zp1": {},
+                        "6zp0": {},
+                        "6zoz": {},
+                        "6zoy": {},
+                        "6zox": {},
+                        "6xra": {},
+                        "6xr8": {},
+                        "6xkl": {},
+                        "6xey": {}
+                    },
+                    "EMDB": [
+                        "EMD-11334",
+                        "EMD-11333",
+                        "EMD-11332",
+                        "EMD-11331",
+                        "EMD-11330",
+                        "EMD-11329"
+                    ],
                     "BCU-CDR": {
                         "6vsb": {
                             "pockets": [
@@ -953,6 +1106,15 @@
                         ]
                     }
                 },
+                "6xoa": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xoa"
+                            }
+                        ]
+                    }
+                },
                 "6xhu": {
                     "validation": {
                         "pdb-redo": [
@@ -1023,6 +1185,9 @@
                         "6y7m",
                         "6y2g",
                         "6y2f",
+                        "6xqu",
+                        "6xqt",
+                        "6xqs",
                         "6xmk",
                         "6xkh",
                         "6xkf",
@@ -1492,6 +1657,392 @@
                 }
             }
         },
+        "NSP12": {
+            "uniprotAccession": [
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1ab. Responsible for replication and transcription of the viral RNA genome.",
+            "names": [
+                "NSP12",
+                "RNA-directed RNA polymerase",
+                "RNA-dependent RNA polymerase"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "JDUya4",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
+                    },
+                    {
+                        "project": "JDUya4",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
+                    }
+                ],
+                "BMS-Arc": [
+                    {
+                        "model": "YP_009725307_v01"
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7c2k",
+                        "7bzf",
+                        "7bv2",
+                        "7bv1",
+                        "7btf",
+                        "6m71"
+                    ],
+                    "EMDB": [
+                        "EMD-30275",
+                        "EMD-30252",
+                        "EMD-30210",
+                        "EMD-30209",
+                        "EMD-30178",
+                        "EMD-30127"
+                    ]
+                },
+                "Ligands": {
+                    "BCU-CDR": {
+                        "7bv1": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.045
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.041
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.981
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.95
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9440000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.9390000000000001
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.848
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.0
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.988
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.932
+                                }
+                            ]
+                        },
+                        "7bv2": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.014
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.9990000000000001
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.003
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.023
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9620000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.836
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.179
+                                }
+                            ]
+                        },
+                        "7btf": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.024
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.008
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.961
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.046
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.987
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.977
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.963
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.067
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.998
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.992
+                                }
+                            ]
+                        },
+                        "6m71": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.0
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.0290000000000001
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.98
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.002
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.893
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.9
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.85
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.01
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.895
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.9179999999999999
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "6nur",
+                        "6nus"
+                    ],
+                    "EMDB": [
+                        "EMD-0521"
+                    ]
+                }
+            }
+        },
+        "NSP7": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp8 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
+            "names": [
+                "NSP7",
+                "Non-structural protein 7"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "GDvqSz",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
+                    },
+                    {
+                        "project": "GDvqSz",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
+                    },
+                    {
+                        "project": "GDvqSz",
+                        "model": "03",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725303_v01"
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7c2k",
+                        "7bzf",
+                        "7bv2",
+                        "7bv1",
+                        "7btf",
+                        "6yhu",
+                        "6xip",
+                        "6wqd",
+                        "6wiq",
+                        "6m71"
+                    ],
+                    "EMDB": [
+                        "EMD-30275",
+                        "EMD-30252",
+                        "EMD-30210",
+                        "EMD-30209",
+                        "EMD-30178",
+                        "EMD-30127"
+                    ]
+                }
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "5f22",
+                        "6nur"
+                    ],
+                    "EMDB": [
+                        "EMD-0520"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "6nus",
+                        "1ysy",
+                        "3ub0",
+                        "2kys",
+                        "2ahm"
+                    ]
+                }
+            }
+        },
+        "NSP8": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp7 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
+            "names": [
+                "NSP8",
+                "Non-structural protein 8"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "M4qFvm",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                    },
+                    {
+                        "project": "M4qFvm",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                    },
+                    {
+                        "project": "M4qFvm",
+                        "model": "03",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725304_v01"
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7c2k",
+                        "7bzf",
+                        "7bv2",
+                        "7bv1",
+                        "7btf",
+                        "6yhu",
+                        "6xip",
+                        "6wqd",
+                        "6wiq",
+                        "6m71"
+                    ],
+                    "EMDB": [
+                        "EMD-30275",
+                        "EMD-30252",
+                        "EMD-30210",
+                        "EMD-30209",
+                        "EMD-30178",
+                        "EMD-30127"
+                    ]
+                }
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "5f22",
+                        "6nur",
+                        "6nus"
+                    ],
+                    "EMDB": [
+                        "EMD-0520",
+                        "EMD-0521"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "3ub0",
+                        "2ahm"
+                    ]
+                }
+            }
+        },
         "ORF9b": {
             "uniprotAccession": [
                 "P0DTD2"
@@ -1522,6 +2073,15 @@
                 "NSP10",
                 "Non-structural protein 10"
             ],
+            "PDB": {
+                "6zct": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6zct"
+                        }
+                    }
+                }
+            },
             "CompModels": {
                 "swiss-model": [
                     {
@@ -1560,7 +2120,8 @@
                         "6wjt",
                         "6wkq",
                         "6wks",
-                        "6wq3"
+                        "6wq3",
+                        "7c2j"
                     ]
                 },
                 "Ligands": {
@@ -1734,7 +2295,8 @@
                         "6wjt",
                         "6wkq",
                         "6wks",
-                        "6wq3"
+                        "6wq3",
+                        "7c2j"
                     ]
                 },
                 "Ligands": {
@@ -1848,153 +2410,6 @@
                         "5ynn",
                         "2g9t",
                         "5yno"
-                    ]
-                }
-            }
-        },
-        "NSP7": {
-            "uniprotAccession": [
-                "P0DTC1",
-                "P0DTD1"
-            ],
-            "description": "Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp8 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
-            "names": [
-                "NSP7",
-                "Non-structural protein 7"
-            ],
-            "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "GDvqSz",
-                        "model": "01",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
-                    },
-                    {
-                        "project": "GDvqSz",
-                        "model": "02",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
-                    },
-                    {
-                        "project": "GDvqSz",
-                        "model": "03",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
-                    }
-                ],
-                "BSM-Arc": [
-                    {
-                        "model": "YP_009725303_v01"
-                    }
-                ]
-            },
-            "Interactions": {
-                "P-P-Interactions": {
-                    "PDB": [
-                        "6wiq",
-                        "6yhu",
-                        "6wqd",
-                        "6m71",
-                        "7bv2",
-                        "7bv1",
-                        "7btf"
-                    ],
-                    "EMDB": [
-                        "EMD-30127",
-                        "EMD-30210",
-                        "EMD-30209",
-                        "EMD-30178"
-                    ]
-                }
-            },
-            "Related": {
-                "SARS-CoV": {
-                    "PDB": [
-                        "5f22",
-                        "6nur"
-                    ],
-                    "EMDB": [
-                        "EMD-0520"
-                    ]
-                },
-                "OtherRelated": {
-                    "PDB": [
-                        "6nus",
-                        "1ysy",
-                        "3ub0",
-                        "2kys",
-                        "2ahm"
-                    ]
-                }
-            }
-        },
-        "NSP8": {
-            "uniprotAccession": [
-                "P0DTC1",
-                "P0DTD1"
-            ],
-            "description": "Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp7 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
-            "names": [
-                "NSP8",
-                "Non-structural protein 8"
-            ],
-            "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "M4qFvm",
-                        "model": "01",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
-                    },
-                    {
-                        "project": "M4qFvm",
-                        "model": "02",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
-                    },
-                    {
-                        "project": "M4qFvm",
-                        "model": "03",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
-                    }
-                ],
-                "BSM-Arc": [
-                    {
-                        "model": "YP_009725304_v01"
-                    }
-                ]
-            },
-            "Interactions": {
-                "P-P-Interactions": {
-                    "PDB": [
-                        "6wiq",
-                        "6yhu",
-                        "6wqd",
-                        "6m71",
-                        "7bv2",
-                        "7bv1",
-                        "7btf"
-                    ],
-                    "EMDB": [
-                        "EMD-30127",
-                        "EMD-30210",
-                        "EMD-30209",
-                        "EMD-30178"
-                    ]
-                }
-            },
-            "Related": {
-                "SARS-CoV": {
-                    "PDB": [
-                        "5f22",
-                        "6nur",
-                        "6nus"
-                    ],
-                    "EMDB": [
-                        "EMD-0520",
-                        "EMD-0521"
-                    ]
-                },
-                "OtherRelated": {
-                    "PDB": [
-                        "3ub0",
-                        "2ahm"
                     ]
                 }
             }
@@ -2118,7 +2533,7 @@
             "names": [
                 "NSP15",
                 "Non-structural protein ",
-                "endoriboonuclease",
+                "endoribonuclease",
                 "Uridylate-specific endoribonuclease",
                 "endornase",
                 "NendoU/nsp15"
@@ -2320,6 +2735,16 @@
                         "model": "YP_009725297_v01"
                     }
                 ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "6zoj"
+                    ],
+                    "EMDB": [
+                        "EMD-11320"
+                    ]
+                }
             },
             "Related": {
                 "SARS-CoV": {
@@ -2691,231 +3116,6 @@
                         "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
                     }
                 ]
-            }
-        },
-        "NSP12": {
-            "uniprotAccession": [
-                "P0DTD1"
-            ],
-            "description": "Part of Replicase polyprotein 1ab. Responsible for replication and transcription of the viral RNA genome.",
-            "names": [
-                "NSP12",
-                "RNA-directed RNA polymerase",
-                "RNA-dependent RNA polymerase"
-            ],
-            "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "JDUya4",
-                        "model": "01",
-                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
-                    },
-                    {
-                        "project": "JDUya4",
-                        "model": "02",
-                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
-                    }
-                ],
-                "BMS-Arc": [
-                    {
-                        "model": "YP_009725307_v01"
-                    }
-                ]
-            },
-            "Interactions": {
-                "P-P-Interactions": {
-                    "PDB": [
-                        "6m71",
-                        "7bv2",
-                        "7bv1",
-                        "7btf"
-                    ],
-                    "EMDB": [
-                        "EMD-30127",
-                        "EMD-30210",
-                        "EMD-30209",
-                        "EMD-30178"
-                    ]
-                },
-                "Ligands": {
-                    "BCU-CDR": {
-                        "7bv1": {
-                            "pockets": [
-                                {
-                                    "id": 1,
-                                    "bindingSiteScore": 1.045
-                                },
-                                {
-                                    "id": 2,
-                                    "bindingSiteScore": 1.041
-                                },
-                                {
-                                    "id": 3,
-                                    "bindingSiteScore": 0.981
-                                },
-                                {
-                                    "id": 4,
-                                    "bindingSiteScore": 0.95
-                                },
-                                {
-                                    "id": 5,
-                                    "bindingSiteScore": 0.9440000000000001
-                                },
-                                {
-                                    "id": 6,
-                                    "bindingSiteScore": 0.9390000000000001
-                                },
-                                {
-                                    "id": 7,
-                                    "bindingSiteScore": 0.848
-                                },
-                                {
-                                    "id": 8,
-                                    "bindingSiteScore": 1.0
-                                },
-                                {
-                                    "id": 9,
-                                    "bindingSiteScore": 0.988
-                                },
-                                {
-                                    "id": 10,
-                                    "bindingSiteScore": 0.932
-                                }
-                            ]
-                        },
-                        "7bv2": {
-                            "pockets": [
-                                {
-                                    "id": 1,
-                                    "bindingSiteScore": 1.014
-                                },
-                                {
-                                    "id": 2,
-                                    "bindingSiteScore": 0.9990000000000001
-                                },
-                                {
-                                    "id": 3,
-                                    "bindingSiteScore": 1.003
-                                },
-                                {
-                                    "id": 4,
-                                    "bindingSiteScore": 1.023
-                                },
-                                {
-                                    "id": 5,
-                                    "bindingSiteScore": 0.9620000000000001
-                                },
-                                {
-                                    "id": 6,
-                                    "bindingSiteScore": 0.836
-                                },
-                                {
-                                    "id": 7,
-                                    "bindingSiteScore": 1.179
-                                }
-                            ]
-                        },
-                        "7btf": {
-                            "pockets": [
-                                {
-                                    "id": 1,
-                                    "bindingSiteScore": 1.024
-                                },
-                                {
-                                    "id": 2,
-                                    "bindingSiteScore": 1.008
-                                },
-                                {
-                                    "id": 3,
-                                    "bindingSiteScore": 0.961
-                                },
-                                {
-                                    "id": 4,
-                                    "bindingSiteScore": 1.046
-                                },
-                                {
-                                    "id": 5,
-                                    "bindingSiteScore": 0.987
-                                },
-                                {
-                                    "id": 6,
-                                    "bindingSiteScore": 0.977
-                                },
-                                {
-                                    "id": 7,
-                                    "bindingSiteScore": 0.963
-                                },
-                                {
-                                    "id": 8,
-                                    "bindingSiteScore": 1.067
-                                },
-                                {
-                                    "id": 9,
-                                    "bindingSiteScore": 0.998
-                                },
-                                {
-                                    "id": 10,
-                                    "bindingSiteScore": 0.992
-                                }
-                            ]
-                        },
-                        "6m71": {
-                            "pockets": [
-                                {
-                                    "id": 1,
-                                    "bindingSiteScore": 1.0
-                                },
-                                {
-                                    "id": 2,
-                                    "bindingSiteScore": 1.0290000000000001
-                                },
-                                {
-                                    "id": 3,
-                                    "bindingSiteScore": 0.98
-                                },
-                                {
-                                    "id": 4,
-                                    "bindingSiteScore": 1.002
-                                },
-                                {
-                                    "id": 5,
-                                    "bindingSiteScore": 0.893
-                                },
-                                {
-                                    "id": 6,
-                                    "bindingSiteScore": 0.9
-                                },
-                                {
-                                    "id": 7,
-                                    "bindingSiteScore": 0.85
-                                },
-                                {
-                                    "id": 8,
-                                    "bindingSiteScore": 1.01
-                                },
-                                {
-                                    "id": 9,
-                                    "bindingSiteScore": 0.895
-                                },
-                                {
-                                    "id": 10,
-                                    "bindingSiteScore": 0.9179999999999999
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "Related": {
-                "SARS-CoV": {
-                    "PDB": [
-                        "6nur",
-                        "6nus"
-                    ],
-                    "EMDB": [
-                        "EMD-0521"
-                    ]
-                }
             }
         },
         "ORF8": {
