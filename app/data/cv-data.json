@@ -1185,16 +1185,12 @@
                 ]
             },
             "Interactions": {
-                "P-P-Interactions": {
-                    "PDB": {
-                        "7c7p": {}
-                    }
-                },
                 "Ligands": {
                     "PDB": [
                         "7c8u",
                         "7c8t",
                         "7c8r",
+                        "7c7p",
                         "7buy",
                         "7brr",
                         "7brp",
