@@ -1086,7 +1086,15 @@
                 "NSP5"
             ],
             "PDB": {
-                "7jfq": {},
+                "7jfq": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7jfq"
+                            }
+                        ]
+                    }
+                },
                 "7bro": {
                     "validation": {
                         "pdb-redo": [
@@ -1132,11 +1140,38 @@
                         ]
                     }
                 },
+                "6xkh": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xkh"
+                            }
+                        ]
+                     }
+                },
+                "6xkf": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xkf"
+                            }
+                        ]
+                     }
+                },
                 "6xhu": {
                     "validation": {
                         "pdb-redo": [
                             {
                                 "name": "6xhu"
+                            }
+                        ]
+                    }
+                },
+                "6wtm":{
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wtm"
                             }
                         ]
                     }
@@ -1175,6 +1210,15 @@
                             }
                         ]
                     }
+                },
+                "5r8t": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "5r8t"
+                            }
+                        ]
+                    }
                 }
             },
             "CompModels": {
@@ -1187,10 +1231,12 @@
             "Interactions": {
                 "Ligands": {
                     "PDB": [
+                        "7cbt",
                         "7c8u",
                         "7c8t",
                         "7c8r",
                         "7c7p",
+                        "7c6u",
                         "7buy",
                         "7brr",
                         "7brp",
@@ -1200,15 +1246,12 @@
                         "6yvf",
                         "6yt8",
                         "6ynq",
-                        "6y7m",
                         "6y2g",
                         "6y2f",
                         "6xqu",
                         "6xqt",
                         "6xqs",
                         "6xmk",
-                        "6xkh",
-                        "6xkf",
                         "6xhm",
                         "6xfn",
                         "6xch",
@@ -1219,7 +1262,6 @@
                         "6xb1",
                         "6xb0",
                         "6xa4",
-                        "6wtm",
                         "6wtk",
                         "6wtj",
                         "6wtt",
@@ -1229,9 +1271,7 @@
                         "6m0k",
                         "6lze",
                         "6lu7",
-                        "6lo0",
-                        "6lny",
-                        "6lnq"
+                        "6lo0"
                     ],
                     "DIAMOND": [
                         "5rhb",
@@ -1246,7 +1286,6 @@
                         "5r82",
                         "5r83",
                         "5r84",
-                        "5r8t",
                         "5re4",
                         "5re5",
                         "5re6",
@@ -1337,6 +1376,9 @@
             "Related": {
                 "SARS-CoV": {
                     "PDB": [
+                        "6lnq",
+                        "6lny",
+                        "6y7m",
                         "3eaj",
                         "3sne",
                         "2amq",
