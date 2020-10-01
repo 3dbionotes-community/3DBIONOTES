@@ -1295,8 +1295,7 @@
                         "6m2n",
                         "6m0k",
                         "6lze",
-                        "6lu7",
-                        "6lo0"
+                        "6lu7"
                     ],
                     "DIAMOND": [
                         "5rhb",
@@ -1401,6 +1400,7 @@
             "Related": {
                 "SARS-CoV": {
                     "PDB": [
+                        "6lo0",
                         "6lnq",
                         "6lny",
                         "6y7m",
