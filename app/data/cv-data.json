@@ -53,6 +53,11 @@
                         "EMD-11119"
                     ]
                 },
+                "6x79": {
+                    "emdbs": [
+                        "EMD-22083"
+                    ]
+                },
                 "6xs6": {
                     "emdbs": [
                         "EMD-22301"
@@ -174,6 +179,11 @@
                         "6xm5"
                     ]
                 },
+                "EMD-22083": {
+                    "pdb": [
+                        "6x79"
+                    ]
+                },
                 "EMD-22078": {
                     "pdb": [
                         "6x6p"
@@ -275,6 +285,13 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": {
+                        "7jzu": {},
+                        "7jzn": {},
+                        "7jzm": {},
+                        "7jzl": {},
+                        "7cai": {},
+                        "7cak": {},
+                        "7a98": {},
                         "6m0j": {
                             "validation": {
                                 "isolde": [
@@ -348,13 +365,21 @@
                         "7can": {}
                     },
                     "EMDB": [
+                        "EMD-30333",
+                        "EMD-30332",
+                        "EMD-30247",
+                        "EMD-30039",
+                        "EMD-22574",
+                        "EMD-22534",
+                        "EMD-22533",
+                        "EMD-22532",
                         "EMD-22288",
                         "EMD-21864",
-                        "EMD-10863",
+                        "EMD-11688",
+                        "EMD-11526",
                         "EMD-11218",
                         "EMD-11173",
-                        "EMD-30039",
-                        "EMD-30247"
+                        "EMD-10863"
                     ]
                 },
                 "Ligands": {
@@ -1088,7 +1113,15 @@
                 "NSP5"
             ],
             "PDB": {
-                "7jfq": {},
+                "7jfq": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7jfq"
+                            }
+                        ]
+                    }
+                },
                 "7bro": {
                     "validation": {
                         "pdb-redo": [
@@ -1134,11 +1167,38 @@
                         ]
                     }
                 },
+                "6xkh": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xkh"
+                            }
+                        ]
+                     }
+                },
+                "6xkf": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xkf"
+                            }
+                        ]
+                     }
+                },
                 "6xhu": {
                     "validation": {
                         "pdb-redo": [
                             {
                                 "name": "6xhu"
+                            }
+                        ]
+                    }
+                },
+                "6wtm":{
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wtm"
                             }
                         ]
                     }
@@ -1177,6 +1237,15 @@
                             }
                         ]
                     }
+                },
+                "5r8t": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "5r8t"
+                            }
+                        ]
+                    }
                 }
             },
             "CompModels": {
@@ -1187,16 +1256,14 @@
                 ]
             },
             "Interactions": {
-                "P-P-Interactions": {
-                    "PDB": {
-                        "7c7p": {}
-                    }
-                },
                 "Ligands": {
                     "PDB": [
+                        "7cbt",
                         "7c8u",
                         "7c8t",
                         "7c8r",
+                        "7c7p",
+                        "7c6u",
                         "7buy",
                         "7brr",
                         "7brp",
@@ -1206,15 +1273,12 @@
                         "6yvf",
                         "6yt8",
                         "6ynq",
-                        "6y7m",
                         "6y2g",
                         "6y2f",
                         "6xqu",
                         "6xqt",
                         "6xqs",
                         "6xmk",
-                        "6xkh",
-                        "6xkf",
                         "6xhm",
                         "6xfn",
                         "6xch",
@@ -1225,7 +1289,6 @@
                         "6xb1",
                         "6xb0",
                         "6xa4",
-                        "6wtm",
                         "6wtk",
                         "6wtj",
                         "6wtt",
@@ -1234,10 +1297,7 @@
                         "6m2n",
                         "6m0k",
                         "6lze",
-                        "6lu7",
-                        "6lo0",
-                        "6lny",
-                        "6lnq"
+                        "6lu7"
                     ],
                     "DIAMOND": [
                         "5rhb",
@@ -1252,7 +1312,6 @@
                         "5r82",
                         "5r83",
                         "5r84",
-                        "5r8t",
                         "5re4",
                         "5re5",
                         "5re6",
@@ -1343,6 +1402,10 @@
             "Related": {
                 "SARS-CoV": {
                     "PDB": [
+                        "6lo0",
+                        "6lnq",
+                        "6lny",
+                        "6y7m",
                         "3eaj",
                         "3sne",
                         "2amq",
@@ -1718,6 +1781,7 @@
                         "7bv2",
                         "7bv1",
                         "7btf",
+                        "7aap",
                         "6xez",
                         "6m71"
                     ],
@@ -1954,6 +2018,7 @@
                         "7bv2",
                         "7bv1",
                         "7btf",
+                        "7aap",
                         "6yhu",
                         "6xip",
                         "6xez",
@@ -2035,6 +2100,7 @@
                         "7bv2",
                         "7bv1",
                         "7btf",
+                        "7aap",
                         "6yhu",
                         "6xez",
                         "6xip",
@@ -3183,6 +3249,15 @@
                 "Non-structural protein 8",
                 "ns8"
             ],
+            "PDB": {
+                "7jx6": {"validation": {
+                    "pdb-redo": [
+                        {
+                            "name": "7jx6"
+                        }
+                    ]
+                }}
+            },
             "CompModels": {
                 "swiss-model": [
                     {
