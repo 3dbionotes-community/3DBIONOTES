@@ -1,0 +1,22 @@
+node_modules/
+.idea/
+*.log
+coverage/
+.info
+.coveralls.yml
+.sass-cache/
+.project
+.settings/
+config.rb
+*.iml
+xunit.xml
+reports/
+_includes/
+_posts/
+_sass/
+_site/
+README.conf
+Gemfile.lock
+
+# app
+extendProtVista.bundle.js

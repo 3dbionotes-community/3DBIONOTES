@@ -383,7 +383,7 @@
                     ]
                 },
                 "Ligands": {
-                    "PDB": {
+                    "Misc": {
                         "6zp2": {},
                         "6zp1": {},
                         "6zp0": {},
@@ -1018,7 +1018,7 @@
             },
             "Interactions": {
                 "Ligands": {
-                    "PDB": {
+                    "Misc": {
                         "6yva": {},
                         "6xa9": {},
                         "6xaa": {},
@@ -1257,7 +1257,7 @@
             },
             "Interactions": {
                 "Ligands": {
-                    "PDB": [
+                    "Misc": [
                         "7cbt",
                         "7c8u",
                         "7c8t",
@@ -2221,7 +2221,7 @@
                     ]
                 },
                 "Ligands": {
-                    "PDB": {
+                    "Misc": {
                         "5c8s": {},
                         "5c8t": {}
                     },
@@ -2691,7 +2691,7 @@
             },
             "Interactions": {
                 "Ligands": {
-                    "PDB": {
+                    "Misc": {
                         "6x4i": {}
                     },
                     "BCU-CDR": {
@@ -2789,7 +2789,7 @@
                     ]
                 },
                 "Ligands": {
-                    "PDB": [
+                    "Misc": [
                         "5c8t"
                     ]
                 }
@@ -3081,7 +3081,7 @@
             },
             "Interactions": {
                 "Ligands": {
-                    "PDB": {},
+                    "Misc": {},
                     "BCU-CDR": {
                         "7bv1": {
                             "pockets": [
@@ -3274,7 +3274,7 @@
             },
             "Interactions": {
                 "Ligands": {
-                    "PDB": {},
+                    "Misc": {},
                     "BCU-CDR": {
                         "7bv1": {
                             "pockets": [

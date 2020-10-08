@@ -1,0 +1,37 @@
+{
+    "name": "ExtendProtVista",
+    "description": "Add more functionalities to UniProt-myProtVista",
+    "version": "3.3.0",
+    "homepage": "https://github.com/3dbionotes-community/extendProtVista",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/3dbionotes-community/extendProtVista"
+    },
+    "bugs": {
+        "url": "https://github.com/3dbionotes-community/extendProtVista/issues"
+    },
+    "licenses": [
+        {
+            "type": "Apache 2",
+            "url": "https://github.com/3dbionotes-community/extendProtVista/blob/master/LICENSE"
+        }
+    ],
+    "scripts": {
+        "build": "browserify -r ./extendProtVista.js:extendProtVista -o extendProtVista.bundle.js"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "browserify": "^10.2.6"
+    },
+    "keywords": [
+        "feature viewer",
+        "uniprot",
+        "biojs",
+        "protein features viewer",
+        "protein feature viewer",
+        "variation",
+        "proteomics",
+        "domains",
+        "protein"
+    ]
+}
