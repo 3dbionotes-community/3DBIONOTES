@@ -1081,8 +1081,10 @@
             ],
             "description": "Part of Replicase polyprotein 1a and 1ab. Cleaves the C-terminus of replicase polyprotein at 11 sites. Recognizes substrates containing the core sequence [ILMVF]-Q-|-[SGACN] (PubMed:32198291, PubMed:32272481). Also able to bind an ADP-ribose-1''-phosphate (ADRP).",
             "names": [
-                "3c_like_proteinase",
-                "3CL",
+                "Main Protease",
+                "MPro",
+                "3C-like protease",
+                "3CL-Pro",
                 "NSP5"
             ],
             "PDB": {
