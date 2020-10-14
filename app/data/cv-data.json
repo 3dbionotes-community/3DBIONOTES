@@ -513,7 +513,7 @@
                     ]
                 },
                 "Ligands": {
-                    "PDB": {
+                    "Misc-PDB": {
                         "6zp2": {},
                         "6zp1": {},
                         "6zp0": {},
@@ -1167,7 +1167,7 @@
             },
             "Interactions": {
                 "Ligands": {
-                    "PDB": {
+                    "Misc-PDB": {
                         "7jrn": {},
                         "7jn2": {},
                         "7jme": {},
@@ -1469,7 +1469,7 @@
             },
             "Interactions": {
                 "Ligands": {
-                    "PDB": [
+                    "Misc-PDB": [
                         "7k40",
                         "7jyc",
                         "7ju7",
@@ -1523,7 +1523,7 @@
                         "6lze",
                         "6lu7"
                     ],
-                    "DIAMOND": [
+                    "PanDDA-DIAMOND": [
                         "5rhb",
                         "5rhc",
                         "5rhd",
@@ -2038,7 +2038,7 @@
                     ]
                 },
                 "Ligands": {
-                    "PDB": {
+                    "Misc-PDB": {
                         "7ctt": {}
                     },
                     "BCU-CDR": {
@@ -2287,7 +2287,7 @@
                     ]
                 },
                 "Ligands": {
-                    "PDB": {
+                    "Misc-PDB": {
                         "7ctt": {}
                     }
                 }
@@ -2379,7 +2379,7 @@
                     ]
                 },
                 "Ligands": {
-                    "PDB": {
+                    "Misc-PDB": {
                         "7ctt": {}
                     }
                 }
@@ -2491,7 +2491,7 @@
                     ]
                 },
                 "Ligands": {
-                    "PDB": {
+                    "Misc-PDB": {
                         "7jz0": {},
                         "7jyy": {},
                         "7jpe": {},
@@ -2676,7 +2676,7 @@
                     ]
                 },
                 "Ligands": {
-                    "PDB": {
+                    "Misc-PDB": {
                         "7jz0": {},
                         "7jyy": {},
                         "7jpe": {},
@@ -2996,7 +2996,7 @@
             },
             "Interactions": {
                 "Ligands": {
-                    "PDB": {
+                    "Misc-PDB": {
                         "7k1o": {},
                         "7k1l": {},
                         "6x4i": {}
@@ -3091,7 +3091,7 @@
                     ]
                 },
                 "Ligands": {
-                    "PDB": [
+                    "Misc-PDB": [
                         "5c8t"
                     ]
                 }
@@ -3245,8 +3245,8 @@
                     ]
                 },
                 "Ligands": {
-                    "PDB": [],
-                    "DIAMOND": [
+                    "Misc-PDB": [],
+                    "PanDDA-DIAMOND": [
                         "5rm7",
                         "5rm6",
                         "5rm5",
@@ -3279,26 +3279,7 @@
                 "Accessory Protein 6",
                 "Accessory Factor 6",
                 "NS6_WCPV"
-            ],
-            "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "NWaxq5",
-                        "model": "01",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    },
-                    {
-                        "project": "NWaxq5",
-                        "model": "02",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    },
-                    {
-                        "project": "NWaxq5",
-                        "model": "03",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    }
-                ]
-            }
+            ]
         },
         "NSP2": {
             "uniprotAccession": [
@@ -3311,18 +3292,6 @@
                 "Non-structural protein 2"
             ],
             "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "UrUkRp",
-                        "model": "01",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    },
-                    {
-                        "project": "UrUkRp",
-                        "model": "02",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    }
-                ],
                 "AlphaFold": [
                     {
                         "name": "nsp2",
@@ -3375,7 +3344,7 @@
             },
             "Interactions": {
                 "Ligands": {
-                    "PDB": {},
+                    "Misc-PDB": {},
                     "BCU-CDR": {
                         "7bv1": {
                             "pockets": [
@@ -3476,18 +3445,6 @@
                 "Non-structural protein 6"
             ],
             "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "27R5bK",
-                        "model": "01",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    },
-                    {
-                        "project": "27R5bK",
-                        "model": "02",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    }
-                ],
                 "AlphaFold": [
                     {
                         "name": "nsp6",
@@ -3588,7 +3545,7 @@
             },
             "Interactions": {
                 "Ligands": {
-                    "PDB": {},
+                    "Misc-PDB": {},
                     "BCU-CDR": {
                         "7bv1": {
                             "pockets": [
@@ -3684,7 +3641,7 @@
                 "swiss-model": [
                     {
                         "project": "8Tdwfx",
-                        "model": "01",
+                        "model": "02",
                         "description": "Model quality estimates are low - use with care."
                     }
                 ],
