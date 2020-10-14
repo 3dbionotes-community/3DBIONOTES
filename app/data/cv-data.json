@@ -397,6 +397,15 @@
                         "7jzn": {},
                         "7jzm": {},
                         "7jzl": {},
+                        "7jwb": {},
+                        "7jw0": {},
+                        "7jv6": {},
+                        "7jv4": {},
+                        "7jvc": {},
+                        "7jva": {},
+                        "7jx3": {},
+                        "7jv2": {},
+                        "7jmw": {},
                         "7jmp": {},
                         "7jmo": {},
                         "7chc": {},
@@ -421,6 +430,7 @@
                         "7a5r": {},
                         "6zxn": {},
                         "6zh9": {},
+                        "6xkp": {},
                         "6m0j": {
                             "validation": {
                                 "isolde": [
@@ -484,6 +494,7 @@
                         "6zer": {},
                         "6zfo": {},
                         "6zhd": {},
+                        "6xkq": {},
                         "7bwj": {},
                         "7byr": {},
                         "7bz5": {},
@@ -503,6 +514,13 @@
                         "EMD-22534",
                         "EMD-22533",
                         "EMD-22532",
+                        "EMD-22514",
+                        "EMD-22512",
+                        "EMD-22506",
+                        "EMD-22497",
+                        "EMD-22494",
+                        "EMD-22492",
+                        "EMD-22491",
                         "EMD-22288",
                         "EMD-21864",
                         "EMD-11688",
@@ -926,6 +944,7 @@
                 "Papain-like proteinase"
             ],
             "PDB": {
+                "7kag": {},
                 "7cjd": {
                     "validation": {
                         "pdb-redo": [
@@ -1470,6 +1489,8 @@
             "Interactions": {
                 "Ligands": {
                     "Misc-PDB": [
+                        "7k6e",
+                        "7k6d",
                         "7k40",
                         "7jyc",
                         "7ju7",
@@ -2435,6 +2456,7 @@
                 "Non-structural protein 10"
             ],
             "PDB": {
+                "6zpe": {},
                 "6zct": {
                     "validation": {
                         "pdb-redo": {
@@ -3137,6 +3159,7 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7k5i",
                         "6zp4",
                         "6zon",
                         "6zoj",
@@ -3150,6 +3173,7 @@
                         "6zlw"
                     ],
                     "EMDB": [
+                        "EMD-22681",
                         "EMD-11335",
                         "EMD-11325",
                         "EMD-11321",
