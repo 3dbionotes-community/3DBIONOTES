@@ -2537,6 +2537,16 @@
                         }
                     }
                 }
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7kdt"
+                    ],
+                    "EMDB": [
+                        "EMD-22829"
+                    ]
+                }
             }
         },
         "NSP10": {
@@ -3056,6 +3066,7 @@
                 "NendoU/nsp15"
             ],
             "PDB": {
+                "7k9p": {},
                 "6vww": {
                     "description": "",
                     "validation": {
