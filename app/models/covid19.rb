@@ -14,6 +14,24 @@ class Covid19
         query_url: "/?queryId=EMD-11328&viewer_type=ngl&button=#query",
       },
       {
+        name: "EMD-11336",
+        description: "SARS-CoV-2 spike in prefusion state (flexibility analysis, 1-up closed conformation) (EMD-11336)",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11336/400_11336.gif",
+        query_url: "/?queryId=EMD-11336&viewer_type=ngl&button=#query",
+      },
+      {
+        name: "EMD-11337",
+        description: "SARS-CoV-2 spike in prefusion state (flexibility analysis, 1-up open conformation) (EMD-11337)",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11337/400_11337.gif",
+        query_url: "/?queryId=EMD-11337&viewer_type=ngl&button=#query",
+      },
+      {
+        name: "EMD-11341",
+        description: "SARS-CoV-2 spike in prefusion state (flexibility analysis, 1-up open conformation) (EMD-11341)",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11341/400_11341.gif",
+        query_url: "/?queryId=EMD-11341&viewer_type=ngl&button=#query",
+      },
+      {
         name: "EMD-30210",
         description: "The nsp12-nsp7-nsp8 complex bound to the template-primer RNA and triphosphate form of Remdesivir(RTP) (EMD-30210)",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30210/400_30210.gif",
