@@ -482,6 +482,7 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": {
+                        "7k9z": {},
                         "7k90": {},
                         "7k8z": {},
                         "7k8y": {},
@@ -507,6 +508,7 @@
                         "7jmw": {},
                         "7jmp": {},
                         "7jmo": {},
+                        "7jjc": {},
                         "7chc": {},
                         "7chh": {},
                         "7chf": {},
@@ -1037,6 +1039,7 @@
                 "Papain-like proteinase"
             ],
             "PDB": {
+                "7kg3": {},
                 "7kag": {},
                 "7cjd": {
                     "validation": {
@@ -1383,6 +1386,9 @@
                 "NSP5"
             ],
             "PDB": {
+                "7khp": {},
+                "7kfj": {},
+                "7kfi": {},
                 "7jvz": {
                     "validation": {
                         "pdb-redo": [
@@ -1589,6 +1595,7 @@
                         "7ju7",
                         "7jkv",
                         "7d1o",
+                        "7d1m",
                         "7cx9",
                         "7com",
                         "7cbt",
@@ -1600,9 +1607,9 @@
                         "7c6u",
                         "7c6s",
                         "7buy",
-                        "7brr",
                         "7brp",
                         "7bqy",
+                        "7aku",
                         "6zru",
                         "6zrt",
                         "6z2e",
@@ -1919,6 +1926,7 @@
                         }
                     }
                 },
+                "7act": {},
                 "6zco": {
                     "validation": {
                         "pdb-redo": {
