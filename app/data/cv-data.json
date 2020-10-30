@@ -1039,8 +1039,33 @@
                 "Papain-like proteinase"
             ],
             "PDB": {
-                "7kg3": {},
-                "7kag": {},
+                "7kg3": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7kg3"
+                            }
+                        ]
+                    }
+                },
+                "7kag": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "namze": "7kag"
+                            }
+                        ]
+                    }
+                },
+                "7d47": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7d47"
+                            }
+                        ]
+                    }
+                },
                 "7cjd": {
                     "validation": {
                         "pdb-redo": [
@@ -1594,6 +1619,7 @@
                         "7jyc",
                         "7ju7",
                         "7jkv",
+                        "7d3i",
                         "7d1o",
                         "7d1m",
                         "7cx9",
