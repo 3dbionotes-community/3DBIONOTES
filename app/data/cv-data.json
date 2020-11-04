@@ -23,9 +23,84 @@
                         "EMD-22352"
                     ]
                 },
+                "7keb": {
+                    "emdbs": [
+                        "EMD-22837"
+                    ]
+                },
+                "7kea": {
+                    "emdbs": [
+                        "EMD-22836"
+                    ]
+                },
+                "7ke9": {
+                    "emdbs": [
+                        "EMD-22835"
+                    ]
+                },
+                "7ke8": {
+                    "emdbs": [
+                        "EMD-22834"
+                    ]
+                },
+                "7ke7": {
+                    "emdbs": [
+                        "EMD-22833"
+                    ]
+                },
+                "7ke6": {
+                    "emdbs": [
+                        "EMD-22832"
+                    ]
+                },
+                "7ke4": {
+                    "emdbs": [
+                        "EMD-22831"
+                    ]
+                },
+                "7kdl": {
+                    "emdbs": [
+                        "EMD-22826"
+                    ]
+                },
+                "7kdk": {
+                    "emdbs": [
+                        "EMD-22825"
+                    ]
+                },
+                "7kdj": {
+                    "emdbs": [
+                        "EMD-22824"
+                    ]
+                },
+                "7kdi": {
+                    "emdbs": [
+                        "EMD-22823"
+                    ]
+                },
+                "7kdh": {
+                    "emdbs": [
+                        "EMD-22822"
+                    ]
+                },
+                "7kdg": {
+                    "emdbs": [
+                        "EMD-22821"
+                    ]
+                },
                 "7cn9": {
                     "emdbs": [
                         "EMD-30419"
+                    ]
+                },
+                "7ad1": {
+                    "emdbs": [
+                        "EMD-11719"
+                    ]
+                },
+                "7a4n": {
+                    "emdbs": [
+                        "EMD-11639"
                     ]
                 },
                 "6zwv": {
@@ -253,6 +328,71 @@
                         "7cn9"
                     ]
                 },
+                "EMD-22837": {
+                    "pdb": [
+                        "7keb"
+                    ]
+                },
+                "EMD-22836": {
+                    "pdb": [
+                        "7kea"
+                    ]
+                },
+                "EMD-22835": {
+                    "pdb": [
+                        "7ke9"
+                    ]
+                },
+                "EMD-22834": {
+                    "pdb": [
+                        "7ke8"
+                    ]
+                },
+                "EMD-22833": {
+                    "pdb": [
+                        "7ke7"
+                    ]
+                },
+                "EMD-22832": {
+                    "pdb": [
+                        "7ke6"
+                    ]
+                },
+                "EMD-22831": {
+                    "pdb": [
+                        "7ke4"
+                    ]
+                },
+                "EMD-22826": {
+                    "pdb": [
+                        "7kdl"
+                    ]
+                },
+                "EMD-22825": {
+                    "pdb": [
+                        "7kdk"
+                    ]
+                },
+                "EMD-22824": {
+                    "pdb": [
+                        "7kdj"
+                    ]
+                },
+                "EMD-22823": {
+                    "pdb": [
+                        "7kdi"
+                    ]
+                },
+                "EMD-22822": {
+                    "pdb": [
+                        "7kdh"
+                    ]
+                },
+                "EMD-22821": {
+                    "pdb": [
+                        "7kdg"
+                    ]
+                },
                 "EMD-22256": {
                     "pdb": [
                         "6xm5"
@@ -361,6 +501,16 @@
                 "EMD-21374": {
                     "pdb": [
                         "6zgi"
+                    ]
+                },
+                "EMD-11719": {
+                    "pdb": [
+                        "7ad1"
+                    ]
+                },
+                "EMD-11639": {
+                    "pdb": [
+                        "7a4n"
                     ]
                 },
                 "EMD-11497": {
@@ -1033,7 +1183,6 @@
             ],
             "description": "Part of Replicase polyprotein 1a and 1ab. Responsible for the cleavages located at the N-terminus of the replicase polyprotein. In addition, PL-PRO possesses a deubiquitinating/deISGylating activity and processes both 'Lys-48'- and 'Lys-63'-linked polyubiquitin chains from cellular substrates. Participates together with nsp4 in the assembly of virally-induced cytoplasmic double-membrane vesicles necessary for viral replication. Antagonizes innate immune induction of type I interferon by blocking the phosphorylation, dimerization and subsequent nuclear translocation of host IRF3. Prevents also host NF-kappa-B signaling",
             "names": [
-                "",
                 "Non-structural protein 3",
                 "PL-Pro",
                 "Papain-like proteinase"
@@ -1062,6 +1211,15 @@
                         "pdb-redo": [
                             {
                                 "name": "7d47"
+                            }
+                        ]
+                    }
+                },
+                "7d6h": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7d6h"
                             }
                         ]
                     }
@@ -1315,6 +1473,7 @@
                         "7jiv": {},
                         "7jit": {},
                         "7jir": {},
+                        "7d7t": {},
                         "7cmd": {},
                         "7cjm": {},
                         "6yva": {},
@@ -1953,6 +2112,7 @@
                     }
                 },
                 "7act": {},
+                "7acs": {},
                 "6zco": {
                     "validation": {
                         "pdb-redo": {
@@ -2163,6 +2323,8 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7cxn",
+                        "7cxm",
                         "7ctt",
                         "7c2k",
                         "7bzf",
@@ -2175,6 +2337,8 @@
                         "6m71"
                     ],
                     "EMDB": [
+                        "EMD-30493",
+                        "EMD-30492",
                         "EMD-30469",
                         "EMD-30275",
                         "EMD-30252",
@@ -2408,6 +2572,7 @@
                 "P-P-Interactions": {
                     "PDB": [
                         "7jlt",
+                        "7cxn",
                         "7ctt",
                         "7c2k",
                         "7bzf",
@@ -2424,6 +2589,7 @@
                         "6m71"
                     ],
                     "EMDB": [
+                        "EMD-30493",
                         "EMD-30469",
                         "EMD-30275",
                         "EMD-30252",
@@ -2500,6 +2666,7 @@
                 "P-P-Interactions": {
                     "PDB": [
                         "7jlt",
+                        "7cxn",
                         "7ctt",
                         "7c2k",
                         "7bzf",
@@ -2516,6 +2683,7 @@
                         "6m71"
                     ],
                     "EMDB": [
+                        "EMD-30493",
                         "EMD-30469",
                         "EMD-30275",
                         "EMD-30252",
@@ -3401,9 +3569,11 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7cxn",
                         "6xez"
                     ],
                     "EMDB": [
+                        "EMD-30493",
                         "EMD-22160"
                     ]
                 },
