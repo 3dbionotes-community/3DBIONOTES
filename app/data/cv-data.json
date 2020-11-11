@@ -3268,8 +3268,24 @@
                 "NendoU/nsp15"
             ],
             "PDB": {
-                "7k9p": {},
-                "6xdh": {},
+                "7k9p": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7k9p"
+                            }
+                        ]
+                    }
+                },
+                "6xdh": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xdh"
+                            }
+                        ]
+                    }
+                },
                 "6w01": {
                     "description": "",
                     "validation": {
