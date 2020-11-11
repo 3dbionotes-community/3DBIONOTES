@@ -3326,12 +3326,60 @@
             "Interactions": {
                 "Ligands": {
                     "Misc-PDB": {
-                        "7k1o": {},
-                        "7k1l": {},
-                        "6x4i": {},
-                        "6x1b": {},
-                        "6wxc": {},
-                        "6wlc": {}
+                        "7k1o": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "7k1o"
+                                    }
+                                ]
+                            }
+                        },
+                        "7k1l": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "7k1l"
+                                    }
+                                ]
+                            }
+                        },
+                        "6x4i": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "6x4i"
+                                    }
+                                ]
+                            }
+                        },
+                        "6x1b": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "6x1b"
+                                    }
+                                ]
+                            }
+                        },
+                        "6wxc": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "6wxc"
+                                    }
+                                ]
+                            }
+                        },
+                        "6wlc": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "6wlc"
+                                    }
+                                ]
+                            }
+                        }
                     },
                     "BCU-CDR": {
                         "6w01": {
@@ -3379,11 +3427,35 @@
             },
             "Related": {
                 "SARS-CoV": {
-                    "PDB": [
-                        "2rhb",
-                        "2ozk",
-                        "2h85"
-                    ]
+                    "PDB": {
+                        "2rhb": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "2rhb"
+                                    }
+                                ]
+                            }
+                        },
+                        "2ozk": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "2ozk"
+                                    }
+                                ]
+                            }
+                        },
+                        "2h85": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "2h85"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
