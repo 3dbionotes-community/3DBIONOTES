@@ -3383,6 +3383,13 @@
                     },
                     "BCU-CDR": {
                         "6w01": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "6w01"
+                                    }
+                                ]
+                            },
                             "pockets": [
                                 {
                                     "id": 1,
@@ -3399,6 +3406,21 @@
                             ]
                         },
                         "6vww": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6vww_refine_14"
+                                    },
+                                    {
+                                        "name": "UW8C_final"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6vww"
+                                    }
+                                ]
+                            },
                             "pockets": [
                                 {
                                     "id": 1,
