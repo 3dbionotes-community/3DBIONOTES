@@ -3269,6 +3269,17 @@
             ],
             "PDB": {
                 "7k9p": {},
+                "6xdh": {},
+                "6w01": {
+                    "description": "",
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6w01"
+                            }
+                        ]
+                    }
+                },
                 "6vww": {
                     "description": "",
                     "validation": {
@@ -3283,17 +3294,6 @@
                         "pdb-redo": [
                             {
                                 "name": "6vww"
-                            }
-                        ]
-                    }
-                },
-                "6wlc": {},
-                "6w01": {
-                    "description": "",
-                    "validation": {
-                        "pdb-redo": [
-                            {
-                                "name": "6w01"
                             }
                         ]
                     }
@@ -3328,7 +3328,10 @@
                     "Misc-PDB": {
                         "7k1o": {},
                         "7k1l": {},
-                        "6x4i": {}
+                        "6x4i": {},
+                        "6x1b": {},
+                        "6wxc": {},
+                        "6wlc": {}
                     },
                     "BCU-CDR": {
                         "6w01": {
