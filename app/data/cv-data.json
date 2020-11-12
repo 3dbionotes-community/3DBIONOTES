@@ -13,14 +13,9 @@
                 "SPIKE_WCPV"
             ],
             "PDB": {
-                "7jjj": {
+                "7kj5": {
                     "emdbs": [
-                        "EMD-22354"
-                    ]
-                },
-                "7jji": {
-                    "emdbs": [
-                        "EMD-22352"
+                        "EMD-22894"
                     ]
                 },
                 "7keb": {
@@ -86,6 +81,16 @@
                 "7kdg": {
                     "emdbs": [
                         "EMD-22821"
+                    ]
+                },
+                "7jjj": {
+                    "emdbs": [
+                        "EMD-22354"
+                    ]
+                },
+                "7jji": {
+                    "emdbs": [
+                        "EMD-22352"
                     ]
                 },
                 "7cn9": {
@@ -326,6 +331,11 @@
                 "EMD-30419": {
                     "pdb": [
                         "7cn9"
+                    ]
+                },
+                "EMD-22894": {
+                    "pdb": [
+                        "7kj5"
                     ]
                 },
                 "EMD-22837": {
@@ -632,6 +642,12 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": {
+                        "7kl9": {},
+                        "7kkl": {},
+                        "7kkk": {},
+                        "7kj4": {},
+                        "7kj3": {},
+                        "7kj2": {},
                         "7k9z": {},
                         "7k90": {},
                         "7k8z": {},
@@ -659,6 +675,15 @@
                         "7jmp": {},
                         "7jmo": {},
                         "7jjc": {},
+                        "7cjf": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "7cjf"
+                                    }
+                                ]
+                            }
+                        },
                         "7chc": {},
                         "7chh": {},
                         "7chf": {},
@@ -763,6 +788,12 @@
                         "EMD-30305",
                         "EMD-30247",
                         "EMD-30039",
+                        "EMD-22916",
+                        "EMD-22910",
+                        "EMD-22907",
+                        "EMD-22893",
+                        "EMD-22892",
+                        "EMD-22891",
                         "EMD-22737",
                         "EMD-22736",
                         "EMD-22735",
@@ -1474,6 +1505,24 @@
                         "7jit": {},
                         "7jir": {},
                         "7d7t": {},
+                        "7cz4": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "7cjf"
+                                    }
+                                ]
+                            }
+                        },
+                        "7c33": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "7cjf"
+                                    }
+                                ]
+                            }
+                        },
                         "7cmd": {},
                         "7cjm": {},
                         "6yva": {},
@@ -2323,6 +2372,7 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7d4f",
                         "7cxn",
                         "7cxm",
                         "7ctt",
@@ -2352,6 +2402,7 @@
                 },
                 "Ligands": {
                     "Misc-PDB": {
+                        "7d4f": {},
                         "7ctt": {}
                     },
                     "BCU-CDR": {
@@ -2572,6 +2623,7 @@
                 "P-P-Interactions": {
                     "PDB": [
                         "7jlt",
+                        "7d4f",
                         "7cxn",
                         "7ctt",
                         "7c2k",
@@ -2603,6 +2655,7 @@
                 },
                 "Ligands": {
                     "Misc-PDB": {
+                        "7d4f": {},
                         "7ctt": {}
                     }
                 }
@@ -2666,6 +2719,7 @@
                 "P-P-Interactions": {
                     "PDB": [
                         "7jlt",
+                        "7d4f",
                         "7cxn",
                         "7ctt",
                         "7c2k",
@@ -2697,6 +2751,7 @@
                 },
                 "Ligands": {
                     "Misc-PDB": {
+                        "7d4f": {},
                         "7ctt": {}
                     }
                 }
