@@ -26,6 +26,13 @@
         __cvData = data;
         console.log("->>> HAML getJSON reading __cvData from ", url);
       });
+
+      var url_fm_ppi = "/ws/lrs/features/" + __accession + "/Functional_mapping_PPI/";
+      var __cvData_fm_ppi = {};
+      $j.getJSON(url_fm_ppi, function (data) {
+        __cvData_fm_ppi = data;
+        console.log("->>> HAML getJSON reading __cvData_fm_ppi from ", url);
+      });
       
   :javascript
     #{@log}
