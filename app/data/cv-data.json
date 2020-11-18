@@ -675,6 +675,7 @@
                         "7jmp": {},
                         "7jmo": {},
                         "7jjc": {},
+                        "7ct5": {},
                         "7cjf": {
                             "validation": {
                                 "pdb-redo": [
@@ -691,6 +692,8 @@
                         "7chb": {},
                         "7ch5": {},
                         "7ch4": {},
+                        "7cdj": {},
+                        "7cdi": {},
                         "7cak": {},
                         "7cai": {},
                         "7cah": {},
@@ -783,6 +786,7 @@
                         "7can": {}
                     },
                     "EMDB": [
+                        "EMD-30460",
                         "EMD-30333",
                         "EMD-30332",
                         "EMD-30305",
@@ -1497,6 +1501,9 @@
             "Interactions": {
                 "Ligands": {
                     "Misc-PDB": {
+                        "7kok": {},
+                        "7kol": {},
+                        "7koj": {},
                         "7jrn": {},
                         "7jn2": {},
                         "7jme": {},
@@ -1619,6 +1626,7 @@
                 "NSP5"
             ],
             "PDB": {
+                "7kph": {},
                 "7khp": {},
                 "7kfj": {},
                 "7kfi": {},
@@ -2858,6 +2866,7 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7koa",
                         "7jz0",
                         "7jyy",
                         "7jpe",
@@ -2875,6 +2884,7 @@
                 },
                 "Ligands": {
                     "Misc-PDB": {
+                        "7koa": {},
                         "7jz0": {},
                         "7jyy": {},
                         "7jpe": {},
@@ -3043,6 +3053,7 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7koa",
                         "7jz0",
                         "7jyy",
                         "7jpe",
@@ -3060,6 +3071,7 @@
                 },
                 "Ligands": {
                     "Misc-PDB": {
+                        "7koa": {},
                         "7jz0": {},
                         "7jyy": {},
                         "7jpe": {},
@@ -4035,6 +4047,14 @@
                 "Protein U274",
                 "Protein X1"
             ],
+            "PDB": {
+                "7kjr": {}
+            },
+            "EMD-22898": {
+                "pdb": [
+                    "7kjr"
+                ]
+            },
             "CompModels": {
                 "swiss-model": [
                     {
