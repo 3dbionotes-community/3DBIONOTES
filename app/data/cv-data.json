@@ -4050,10 +4050,12 @@
             "PDB": {
                 "7kjr": {}
             },
-            "EMD-22898": {
-                "pdb": [
-                    "7kjr"
-                ]
+            "EMDB": {
+                "EMD-22898": {
+                    "pdb": [
+                        "7kjr"
+                    ]
+                }
             },
             "CompModels": {
                 "swiss-model": [
