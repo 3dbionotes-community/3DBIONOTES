@@ -3815,7 +3815,12 @@
                 "SARS-CoV": {
                     "PDB": [
                         "6jyt"
-                    ]
+                    ],
+                    "OtherRelated": {
+                        "PDB": [
+                            "5wwp"
+                        ]
+                    }
                 }
             }
         },
