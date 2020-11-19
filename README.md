@@ -80,6 +80,13 @@ To perform an app restart after a change, just run:
 $ touch tmp/restart.txt
 ```
 
+## Delayed Jobs
+
+The network sections run a set of jobs in the background on the server. To work properly, a delayed job daemon needs to be running on the server:
+```
+$ RAILS_ENV=production bin/delayed_job -n 6 restart
+```
+
 ## Sub-modules
 
 The application contains two git sub-modules:
@@ -91,7 +98,7 @@ The application contains two git sub-modules:
    - How to install:
      ```
      $ npm install
-     $ node_modules/.bin/gulp build
+     $ npm run build
      ```
 
 

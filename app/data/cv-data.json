@@ -13,28 +13,259 @@
                 "SPIKE_WCPV"
             ],
             "PDB": {
-                "6vsb": {
+                "7kj5": {
                     "emdbs": [
-                        "EMD-21375"
+                        "EMD-22894"
                     ]
                 },
-                "6x29": {
+                "7keb": {
                     "emdbs": [
-                        "EMD-21997"
+                        "EMD-22837"
+                    ]
+                },
+                "7kea": {
+                    "emdbs": [
+                        "EMD-22836"
+                    ]
+                },
+                "7ke9": {
+                    "emdbs": [
+                        "EMD-22835"
+                    ]
+                },
+                "7ke8": {
+                    "emdbs": [
+                        "EMD-22834"
+                    ]
+                },
+                "7ke7": {
+                    "emdbs": [
+                        "EMD-22833"
+                    ]
+                },
+                "7ke6": {
+                    "emdbs": [
+                        "EMD-22832"
+                    ]
+                },
+                "7ke4": {
+                    "emdbs": [
+                        "EMD-22831"
+                    ]
+                },
+                "7kdl": {
+                    "emdbs": [
+                        "EMD-22826"
+                    ]
+                },
+                "7kdk": {
+                    "emdbs": [
+                        "EMD-22825"
+                    ]
+                },
+                "7kdj": {
+                    "emdbs": [
+                        "EMD-22824"
+                    ]
+                },
+                "7kdi": {
+                    "emdbs": [
+                        "EMD-22823"
+                    ]
+                },
+                "7kdh": {
+                    "emdbs": [
+                        "EMD-22822"
+                    ]
+                },
+                "7kdg": {
+                    "emdbs": [
+                        "EMD-22821"
+                    ]
+                },
+                "7jjj": {
+                    "emdbs": [
+                        "EMD-22354"
+                    ]
+                },
+                "7jji": {
+                    "emdbs": [
+                        "EMD-22352"
+                    ]
+                },
+                "7cn9": {
+                    "emdbs": [
+                        "EMD-30419"
+                    ]
+                },
+                "7ad1": {
+                    "emdbs": [
+                        "EMD-11719"
+                    ]
+                },
+                "7a4n": {
+                    "emdbs": [
+                        "EMD-11639"
+                    ]
+                },
+                "6zwv": {
+                    "emdbs": [
+                        "EMD-11497"
+                    ]
+                },
+                "6zow": {
+                    "emdbs": [
+                        "EMD-11328"
+                    ]
+                },
+                "6zp5": {
+                    "emdbs": [
+                        "EMD-11336"
+                    ]
+                },
+                "6zp7": {
+                    "emdbs": [
+                        "EMD-11337"
+                    ]
+                },
+                "6zp2": {
+                    "emdbs": [
+                        "EMD-11334"
+                    ]
+                },
+                "6zp1": {
+                    "emdbs": [
+                        "EMD-11333"
+                    ]
+                },
+                "6zp0": {
+                    "emdbs": [
+                        "EMD-11332"
+                    ]
+                },
+                "6zoz": {
+                    "emdbs": [
+                        "EMD-11331"
+                    ]
+                },
+                "6zoy": {
+                    "emdbs": [
+                        "EMD-11330"
+                    ]
+                },
+                "6zox": {
+                    "emdbs": [
+                        "EMD-11329"
+                    ]
+                },
+                "6zgi": {
+                    "emdbs": [
+                        "EMD-11207"
+                    ]
+                },
+                "6zgh": {
+                    "emdbs": [
+                        "EMD-11206"
+                    ]
+                },
+                "6zgg": {
+                    "emdbs": [
+                        "EMD-11205"
+                    ]
+                },
+                "6zge": {
+                    "emdbs": [
+                        "EMD-11203"
+                    ]
+                },
+                "6z97": {
+                    "emdbs": [
+                        "EMD-11119"
+                    ]
+                },
+                "6xs6": {
+                    "emdbs": [
+                        "EMD-22301"
+                    ]
+                },
+                "6xra": {
+                    "emdbs": [
+                        "EMD-22293"
+                    ]
+                },
+                "6xr8": {
+                    "emdbs": [
+                        "EMD-22292"
+                    ]
+                },
+                "6xm5": {
+                    "emdbs": [
+                        "EMD-22256"
+                    ]
+                },
+                "6xm4": {
+                    "emdbs": [
+                        "EMD-22255"
+                    ]
+                },
+                "6xm3": {
+                    "emdbs": [
+                        "EMD-22254"
+                    ]
+                },
+                "6xm0": {
+                    "emdbs": [
+                        "EMD-22253"
+                    ]
+                },
+                "6xlu": {
+                    "emdbs": [
+                        "EMD-22251"
+                    ]
+                },
+                "6xkl": {
+                    "emdbs": [
+                        "EMD-22221"
+                    ]
+                },
+                "6xf6": {
+                    "emdbs": [
+                        "EMD-22162"
+                    ]
+                },
+                "6xf5": {
+                    "emdbs": [
+                        "EMD-22161"
+                    ]
+                },
+                "6x79": {
+                    "emdbs": [
+                        "EMD-22083"
+                    ]
+                },
+                "6x6p": {
+                    "emdbs": [
+                        "EMD-22078"
+                    ]
+                },
+                "6x2c": {
+                    "emdbs": [
+                        "EMD-22001"
+                    ]
+                },
+                "6x2b": {
+                    "emdbs": [
+                        "EMD-22000"
                     ]
                 },
                 "6x2a": {
                     "emdbs": [
                         "EMD-21999"
                     ]
-                },"6x2b": {
-                    "emdbs": [
-                        "EMD-22000"
-                    ]
                 },
-                "6x2c": {
+                "6x29": {
                     "emdbs": [
-                        "EMD-22001"
+                        "EMD-21997"
                     ]
                 },
                 "6vxx": {
@@ -47,21 +278,16 @@
                         "EMD-21457"
                     ]
                 },
-                "6lvn": {
+                "6vsb": {
+                    "emdbs": [
+                        "EMD-21375"
+                    ]
+                },
+                "6m1v": {
                     "validation": {
-                        "isolde": [
-                            {
-                                "name": "6lvn_refine_3",
-                                "uuid": "3c7ce463-becb-43c2-a00c-67997fc329e2"
-                            },
-                            {
-                                "name": "Wcwr_final",
-                                "uuid": "5e0317d5-89cb-4528-89d5-6bc02ac3f649"
-                            }
-                        ],
                         "pdb-redo": [
                             {
-                                "name": "6lvn"
+                                "name": "6m1v"
                             }
                         ]
                     }
@@ -70,12 +296,10 @@
                     "validation": {
                         "isolde": [
                             {
-                                "name": "6lxt_refine_6",
-                                "uuid": "bbdddf57-db03-4626-b9b4-0959a4cafda2"
+                                "name": "6lxt_refine_6"
                             },
                             {
-                                "name": "QtRM_final",
-                                "uuid": "22d09d22-4140-4196-8d9b-d2f4719632c6"
+                                "name": "QtRM_final"
                             }
                         ],
                         "pdb-redo": [
@@ -85,33 +309,173 @@
                         ]
                     }
                 },
-                "6m1v":{}
+                "6lvn": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6lvn_refine_3"
+                            },
+                            {
+                                "name": "Wcwr_final"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6lvn"
+                            }
+                        ]
+                    }
+                }
             },
             "EMDB": {
-                "EMD-21374": {},
-                "EMD-21375": {
+                "EMD-30419": {
                     "pdb": [
-                        "6vsb"
+                        "7cn9"
                     ]
                 },
-                "EMD-21452": {
+                "EMD-22894": {
                     "pdb": [
-                        "6vxx"
+                        "7kj5"
                     ]
                 },
-                "EMD-21457": {
+                "EMD-22837": {
                     "pdb": [
-                        "6vyb"
+                        "7keb"
                     ]
                 },
-                "EMD-21997": {
+                "EMD-22836": {
                     "pdb": [
-                        "6x29"
+                        "7kea"
                     ]
                 },
-                "EMD-21999": {
+                "EMD-22835": {
                     "pdb": [
-                        "6x2a"
+                        "7ke9"
+                    ]
+                },
+                "EMD-22834": {
+                    "pdb": [
+                        "7ke8"
+                    ]
+                },
+                "EMD-22833": {
+                    "pdb": [
+                        "7ke7"
+                    ]
+                },
+                "EMD-22832": {
+                    "pdb": [
+                        "7ke6"
+                    ]
+                },
+                "EMD-22831": {
+                    "pdb": [
+                        "7ke4"
+                    ]
+                },
+                "EMD-22826": {
+                    "pdb": [
+                        "7kdl"
+                    ]
+                },
+                "EMD-22825": {
+                    "pdb": [
+                        "7kdk"
+                    ]
+                },
+                "EMD-22824": {
+                    "pdb": [
+                        "7kdj"
+                    ]
+                },
+                "EMD-22823": {
+                    "pdb": [
+                        "7kdi"
+                    ]
+                },
+                "EMD-22822": {
+                    "pdb": [
+                        "7kdh"
+                    ]
+                },
+                "EMD-22821": {
+                    "pdb": [
+                        "7kdg"
+                    ]
+                },
+                "EMD-22256": {
+                    "pdb": [
+                        "6xm5"
+                    ]
+                },
+                "EMD-22354": {
+                    "pdb": [
+                        "7jjj"
+                    ]
+                },
+                "EMD-22352": {
+                    "pdb": [
+                        "7jji"
+                    ]
+                },
+                "EMD-22301": {
+                    "pdb": [
+                        "6xs6"
+                    ]
+                },
+                "EMD-22293": {
+                    "pdb": [
+                        "6xra"
+                    ]
+                },
+                "EMD-22292": {
+                    "pdb": [
+                        "6xr8"
+                    ]
+                },
+                "EMD-22255": {
+                    "pdb": [
+                        "6xm4"
+                    ]
+                },
+                "EMD-22254": {
+                    "pdb": [
+                        "6xm3"
+                    ]
+                },
+                "EMD-22253": {
+                    "pdb": [
+                        "6xm0"
+                    ]
+                },
+                "EMD-22251": {
+                    "pdb": [
+                        "6xlu"
+                    ]
+                },
+                "EMD-22162": {
+                    "pdb": [
+                        "6xf6"
+                    ]
+                },
+                "EMD-22161": {
+                    "pdb": [
+                        "6xf5"
+                    ]
+                },
+                "EMD-22083": {
+                    "pdb": [
+                        "6x79"
+                    ]
+                },
+                "EMD-22078": {
+                    "pdb": [
+                        "6x6p"
+                    ]
+                },
+                "EMD-22001": {
+                    "pdb": [
+                        "6x2c"
                     ]
                 },
                 "EMD-22000": {
@@ -119,9 +483,120 @@
                         "6x2b"
                     ]
                 },
-                "EMD-22001": {
+                "EMD-21999": {
                     "pdb": [
-                        "6x2c"
+                        "6x2a"
+                    ]
+                },
+                "EMD-21997": {
+                    "pdb": [
+                        "6x29"
+                    ]
+                },
+                "EMD-21457": {
+                    "pdb": [
+                        "6vyb"
+                    ]
+                },
+                "EMD-21452": {
+                    "pdb": [
+                        "6vxx"
+                    ]
+                },
+                "EMD-21375": {
+                    "pdb": [
+                        "6vsb"
+                    ]
+                },
+                "EMD-21374": {
+                    "pdb": [
+                        "6zgi"
+                    ]
+                },
+                "EMD-11719": {
+                    "pdb": [
+                        "7ad1"
+                    ]
+                },
+                "EMD-11639": {
+                    "pdb": [
+                        "7a4n"
+                    ]
+                },
+                "EMD-11497": {
+                    "pdb": [
+                        "6zwv"
+                    ]
+                },
+                "EMD-11341": {},
+                "EMD-11337": {
+                    "pdb": [
+                        "6zp7"
+                    ]
+                },
+                "EMD-11336": {
+                    "pdb": [
+                        "6zp5"
+                    ]
+                },
+                "EMD-11334": {
+                    "pdb": [
+                        "6zp2"
+                    ]
+                },
+                "EMD-11333": {
+                    "pdb": [
+                        "6zp1"
+                    ]
+                },
+                "EMD-11332": {
+                    "pdb": [
+                        "6zp0"
+                    ]
+                },
+                "EMD-11331": {
+                    "pdb": [
+                        "6zoz"
+                    ]
+                },
+                "EMD-11330": {
+                    "pdb": [
+                        "6zoy"
+                    ]
+                },
+                "EMD-11329": {
+                    "pdb": [
+                        "6zox"
+                    ]
+                },
+                "EMD-11328": {
+                    "pdb": [
+                        "6zow"
+                    ]
+                },
+                "EMD-11207": {
+                    "pdb": [
+                        "6zgi"
+                    ]
+                },
+                "EMD-11206": {
+                    "pdb": [
+                        "6zgh"
+                    ]
+                },
+                "EMD-11205": {
+                    "pdb": [
+                        "6zgg"
+                    ]
+                },
+                "EMD-11203": {
+                    "pdb": [
+                        "6zge"
+                    ]
+                },
+                "EMD-11119": {
+                    "pdb": [
+                        "6z97"
                     ]
                 }
             },
@@ -142,6 +617,14 @@
                     {
                         "project": "7dVLxC",
                         "model": "04"
+                    },
+                    {
+                        "project": "7dVLxC",
+                        "model": "05"
+                    },
+                    {
+                        "project": "7dVLxC",
+                        "model": "06"
                     }
                 ],
                 "BSM-Arc": [
@@ -158,25 +641,461 @@
             },
             "Interactions": {
                 "P-P-Interactions": {
-                    "PDB": [
-                        "6wps",
-                        "6ym0",
-                        "6wpt",
-                        "7bz5",
-                        "7c01",
-                        "6yor",
-                        "6m17",
-                        "6lzg",
-                        "6w41",
-                        "6yla",
-                        "6vw1",
-                        "6m0j"
-                    ],
+                    "PDB": {
+                        "7kl9": {},
+                        "7kkl": {},
+                        "7kkk": {},
+                        "7kj4": {},
+                        "7kj3": {},
+                        "7kj2": {},
+                        "7k9z": {},
+                        "7k90": {},
+                        "7k8z": {},
+                        "7k8y": {},
+                        "7k8x": {},
+                        "7k8w": {},
+                        "7k8v": {},
+                        "7k8u": {},
+                        "7k8t": {},
+                        "7k8s": {},
+                        "7k8m": {},
+                        "7jzu": {},
+                        "7jzn": {},
+                        "7jzm": {},
+                        "7jzl": {},
+                        "7jwb": {},
+                        "7jw0": {},
+                        "7jv6": {},
+                        "7jv4": {},
+                        "7jvc": {},
+                        "7jva": {},
+                        "7jx3": {},
+                        "7jv2": {},
+                        "7jmw": {},
+                        "7jmp": {},
+                        "7jmo": {},
+                        "7jjc": {},
+                        "7ct5": {},
+                        "7cjf": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "7cjf"
+                                    }
+                                ]
+                            }
+                        },
+                        "7chc": {},
+                        "7chh": {},
+                        "7chf": {},
+                        "7che": {},
+                        "7chb": {},
+                        "7ch5": {},
+                        "7ch4": {},
+                        "7cdj": {},
+                        "7cdi": {},
+                        "7cak": {},
+                        "7cai": {},
+                        "7cah": {},
+                        "7c8d": {},
+                        "7a98": {},
+                        "7a97": {},
+                        "7a96": {},
+                        "7a95": {},
+                        "7a94": {},
+                        "7a93": {},
+                        "7a91": {},
+                        "7a5s": {},
+                        "7a5r": {},
+                        "7a29": {},
+                        "6zxn": {},
+                        "6zh9": {},
+                        "6xkp": {},
+                        "6xey": {},
+                        "6m0j": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "zc1b_final"
+                                    }
+                                ]
+                            }
+                        },
+                        "6m17": {},
+                        "6lzg": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6lzg_final"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6lzg"
+                                    }
+                                ]
+                            }
+                        },
+                        "6w41": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "9gv9_final"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6w41"
+                                    }
+                                ]
+                            }
+                        },
+                        "6vw1": {},
+                        "6wps": {},
+                        "6wpt": {},
+                        "6xc2": {},
+                        "6xc3": {},
+                        "6xc4": {},
+                        "6xc7": {},
+                        "6xcm": {},
+                        "6xcn": {},
+                        "6xdg": {},
+                        "6xe1": {},
+                        "6yla": {},
+                        "6ym0": {},
+                        "6yor": {},
+                        "6yz5": {},
+                        "6yz7": {},
+                        "6z2m": {},
+                        "6z43": {},
+                        "6zbp": {},
+                        "6zcz": {},
+                        "6zdg": {},
+                        "6zdh": {},
+                        "6zer": {},
+                        "6zfo": {},
+                        "6zhd": {},
+                        "6xkq": {},
+                        "7bwj": {},
+                        "7byr": {},
+                        "7bz5": {},
+                        "7c01": {},
+                        "7c2l": {},
+                        "7c8w": {},
+                        "7c8v": {},
+                        "7can": {}
+                    },
                     "EMDB": [
+                        "EMD-30460",
+                        "EMD-30333",
+                        "EMD-30332",
+                        "EMD-30305",
+                        "EMD-30247",
+                        "EMD-30039",
+                        "EMD-22916",
+                        "EMD-22910",
+                        "EMD-22907",
+                        "EMD-22893",
+                        "EMD-22892",
+                        "EMD-22891",
+                        "EMD-22737",
+                        "EMD-22736",
+                        "EMD-22735",
+                        "EMD-22734",
+                        "EMD-22733",
+                        "EMD-22732",
+                        "EMD-22731",
+                        "EMD-22730",
+                        "EMD-22729",
+                        "EMD-22574",
+                        "EMD-22534",
+                        "EMD-22533",
+                        "EMD-22532",
+                        "EMD-22514",
+                        "EMD-22512",
+                        "EMD-22506",
+                        "EMD-22497",
+                        "EMD-22494",
+                        "EMD-22492",
+                        "EMD-22491",
+                        "EMD-22288",
+                        "EMD-22156",
                         "EMD-21864",
-                        "EMD-10863",
-                        "EMD-30039"
+                        "EMD-11688",
+                        "EMD-11617",
+                        "EMD-11526",
+                        "EMD-11218",
+                        "EMD-11173",
+                        "EMD-10863"
                     ]
+                },
+                "Ligands": {
+                    "Misc-PDB": {},
+                    "BCU-CDR": {
+                        "6vsb": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.052
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.035
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.055
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.022
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 1.0390000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 1.025
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.047
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.038
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 1.0659999999999998
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 1.005
+                                }
+                            ]
+                        },
+                        "6vxx": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.0270000000000001
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.093
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.051
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.023
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 1.0290000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 1.083
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.995
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.044
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 1.03
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 1.0270000000000001
+                                }
+                            ]
+                        },
+                        "6vyb": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.06
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.028
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.026
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.11
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 1.058
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 1.011
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.047
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.0090000000000001
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 1.01
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 1.037
+                                }
+                            ]
+                        },
+                        "6lxt": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.053
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.9390000000000001
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.985
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.846
+                                }
+                            ]
+                        },
+                        "6lvn": {
+                            "pockets": []
+                        },
+                        "6m17": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.9990000000000001
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.026
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.062
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.023
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.992
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 1.0490000000000002
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.087
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 0.991
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 1.001
+                                }
+                            ]
+                        },
+                        "6m0j": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.01
+                                }
+                            ]
+                        },
+                        "6lzg": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.003
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.804
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.988
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.993
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.988
+                                }
+                            ]
+                        },
+                        "6w41": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.961
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.903
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.987
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.927
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.888
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.9990000000000001
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.815
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 0.828
+                                }
+                            ]
+                        }
+                    }
                 }
             },
             "Related": {
@@ -299,19 +1218,151 @@
             ],
             "description": "Part of Replicase polyprotein 1a and 1ab. Responsible for the cleavages located at the N-terminus of the replicase polyprotein. In addition, PL-PRO possesses a deubiquitinating/deISGylating activity and processes both 'Lys-48'- and 'Lys-63'-linked polyubiquitin chains from cellular substrates. Participates together with nsp4 in the assembly of virally-induced cytoplasmic double-membrane vesicles necessary for viral replication. Antagonizes innate immune induction of type I interferon by blocking the phosphorylation, dimerization and subsequent nuclear translocation of host IRF3. Prevents also host NF-kappa-B signaling",
             "names": [
-                "",
                 "Non-structural protein 3",
                 "PL-Pro",
                 "Papain-like proteinase"
             ],
             "PDB": {
-                "6wen": {},
+                "7kg3": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7kg3"
+                            }
+                        ]
+                    }
+                },
+                "7kag": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "namze": "7kag"
+                            }
+                        ]
+                    }
+                },
+                "7d47": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7d47"
+                            }
+                        ]
+                    }
+                },
+                "7d6h": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7d6h"
+                            }
+                        ]
+                    }
+                },
+                "7cjd": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7cjd"
+                            }
+                        ]
+                    }
+                },
+                "6ywm": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6ywm"
+                            }
+                        ]
+                    }
+                },
+                "6ywl": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6ywl"
+                            }
+                        ]
+                    }
+                },
+                "6ywk": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6ywk"
+                            }
+                        ]
+                    }
+                },
+                "6xg3": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xg3"
+                            }
+                        ]
+                    }
+                },
+                "6wzu": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wzu"
+                            }
+                        ]
+                    }
+                },
+                "6wrh": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wrh"
+                            }
+                        ]
+                    }
+                },
+                "6woj": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wrh"
+                            }
+                        ]
+                    }
+                },
+                "6wey": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wey"
+                            }
+                        ]
+                    }
+                },
+                "6wen": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wen"
+                            }
+                        ]
+                    }
+                },
+                "6wcf": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wcf"
+                            }
+                        ]
+                    }
+                },
                 "6w9c": {
                     "validation": {
                         "isolde": [
                             {
-                                "name": "6w9c_refine_15",
-                                "uuid": "37ac7edd-da6e-4125-8d14-6c7d3cb2dfbd"
+                                "name": "6w9c_refine_15"
                             }
                         ],
                         "pdb-redo": [
@@ -321,21 +1372,6 @@
                         ]
                     }
                 },
-                "6wrh": {},
-                "6ywm": {},
-                "6w02": {
-                    "validation": {
-                        "pdb-redo": [
-                            {
-                                "name": "6w02"
-                            }
-                        ]
-                    }
-                },
-                "6ywk": {},
-                "6wey": {},
-                "6ywl": {},
-                "6woj": {},
                 "6w6y": {
                     "validation": {
                         "pdb-redo": [
@@ -345,16 +1381,23 @@
                         ]
                     }
                 },
+                "6w02": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6w02"
+                            }
+                        ]
+                    }
+                },
                 "6vxs": {
                     "validation": {
                         "isolde": [
                             {
-                                "name": "6vxs_refine_12",
-                                "uuid": "ca0a1740-0e9f-4647-a59c-c33481339c05"
+                                "name": "6vxs_refine_12"
                             },
                             {
-                                "name": "6dui_final",
-                                "uuid": "a00f60fb-059d-4e71-9987-934b0e36ba0a"
+                                "name": "6dui_final"
                             }
                         ],
                         "pdb-redo": [
@@ -363,8 +1406,7 @@
                             }
                         ]
                     }
-                },
-                "6wcf": {}
+                }
             },
             "CompModels": {
                 "swiss-model": [
@@ -417,12 +1459,21 @@
                         "model": "10",
                         "project": "5hYU6g",
                         "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
+                    },
+                    {
+                        "model": "11",
+                        "project": "5hYU6g",
+                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
+                    },
+                    {
+                        "model": "12",
+                        "project": "5hYU6g",
+                        "description": "Partial coverage by experimental structures (PDB: 6vxs, 6w02, 6w6y, 6w9c, 6wcf, 6wen, 6wey, 6woj, 6wrh, 6ywk, 6ywl, 6ywm) and high quality models are available."
                     }
                 ],
                 "AlphaFold": [
                     {
                         "name": "PL-PRO_C_terminal",
-                        "uuid": "To-be-Determined",
                         "description": "PL-PRO C terminal domain.UniProt R1AB_WCPV, corresponds to residues 2389 - 2743. Included as this region appeared not to be covered by SWISS-MODEL."
                     }
                 ],
@@ -446,6 +1497,87 @@
                         "model": "YP_009725299_6_v01"
                     }
                 ]
+            },
+            "Interactions": {
+                "Ligands": {
+                    "Misc-PDB": {
+                        "7kok": {},
+                        "7kol": {},
+                        "7koj": {},
+                        "7jrn": {},
+                        "7jn2": {},
+                        "7jme": {},
+                        "7jiw": {},
+                        "7jiv": {},
+                        "7jit": {},
+                        "7jir": {},
+                        "7d7t": {},
+                        "7cz4": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "7cjf"
+                                    }
+                                ]
+                            }
+                        },
+                        "7c33": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "7cjf"
+                                    }
+                                ]
+                            }
+                        },
+                        "7cmd": {},
+                        "7cjm": {},
+                        "6yva": {},
+                        "6xa9": {},
+                        "6xaa": {},
+                        "6wx4": {},
+                        "6wuu": {},
+                        "6woj": {}
+                    },
+                    "BCU-CDR": {
+                        "6w6y": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.028
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.993
+                                }
+                            ]
+                        },
+                        "6vxs": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.991
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.018
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.986
+                                }
+                            ]
+                        },
+                        "6w02": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.05
+                                }
+                            ]
+                        }
+                    }
+                }
             },
             "Related": {
                 "SARS-CoV": {
@@ -487,17 +1619,205 @@
             ],
             "description": "Part of Replicase polyprotein 1a and 1ab. Cleaves the C-terminus of replicase polyprotein at 11 sites. Recognizes substrates containing the core sequence [ILMVF]-Q-|-[SGACN] (PubMed:32198291, PubMed:32272481). Also able to bind an ADP-ribose-1''-phosphate (ADRP).",
             "names": [
-                "3c_like_proteinase",
-                "3CL",
+                "Main Protease",
+                "MPro",
+                "3C-like protease",
+                "3CL-Pro",
                 "NSP5"
             ],
             "PDB": {
-                "6y2e": {},
-                "6m2q": {},
-                "6wqf": {},
-                "6m03": {},
-                "6y84": {},
-                "6yb7": {}
+                "7kph": {},
+                "7khp": {},
+                "7kfj": {},
+                "7kfi": {},
+                "7jvz": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7jvz"
+                            }
+                        ]
+                    }
+                },
+                "7jr4": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7jr4"
+                            }
+                        ]
+                    }
+                },
+                "7jr3": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7jr3"
+                            }
+                        ]
+                    }
+                },
+                "7jun": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7jun"
+                            }
+                        ]
+                    }
+                },
+                "7jfq": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7jfq"
+                            }
+                        ]
+                    }
+                },
+                "7c2y": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7c2y"
+                            }
+                        ]
+                    }
+                },
+                "7c2q": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7c2q"
+                            }
+                        ]
+                    }
+                },
+                "7bro": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7bro"
+                            }
+                        ]
+                    }
+                },
+                "6yb7": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6yb7"
+                            }
+                        ]
+                    }
+                },
+                "6y84": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "5y84"
+                            }
+                        ]
+                    }
+                },
+                "6y2e": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6y2e"
+                            }
+                        ]
+                    }
+                },
+                "6xoa": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xoa"
+                            }
+                        ]
+                    }
+                },
+                "6xkh": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xkh"
+                            }
+                        ]
+                    }
+                },
+                "6xkf": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xkf"
+                            }
+                        ]
+                    }
+                },
+                "6xhu": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xhu"
+                            }
+                        ]
+                    }
+                },
+                "6wtm": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wtm"
+                            }
+                        ]
+                    }
+                },
+                "6wqf": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wqf"
+                            }
+                        ]
+                    }
+                },
+                "6m03": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6m03_refine_1"
+                            },
+                            {
+                                "name": "Hts0_final"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6m03"
+                            }
+                        ]
+                    }
+                },
+                "6m2q": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6m2q"
+                            }
+                        ]
+                    }
+                },
+                "5r8t": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "5r8t"
+                            }
+                        ]
+                    }
+                }
             },
             "CompModels": {
                 "BSM-Arc": [
@@ -507,117 +1827,173 @@
                 ]
             },
             "Interactions": {
-                "Ligands": [
-                    "5r7y",
-                    "5r7z",
-                    "5r80",
-                    "5r81",
-                    "5r82",
-                    "5r83",
-                    "5r84",
-                    "5r8t",
-                    "5re4",
-                    "5re5",
-                    "5re6",
-                    "5re7",
-                    "5re8",
-                    "5re9",
-                    "5rea",
-                    "5reb",
-                    "5rec",
-                    "5red",
-                    "5ree",
-                    "5ref",
-                    "5reg",
-                    "5reh",
-                    "5rei",
-                    "5rej",
-                    "5rek",
-                    "5rel",
-                    "5rem",
-                    "5ren",
-                    "5reo",
-                    "5rep",
-                    "5rer",
-                    "5res",
-                    "5ret",
-                    "5reu",
-                    "5rev",
-                    "5rew",
-                    "5rex",
-                    "5rey",
-                    "5rez",
-                    "5rf0",
-                    "5rf1",
-                    "5rf2",
-                    "5rf3",
-                    "5rf4",
-                    "5rf5",
-                    "5rf6",
-                    "5rf7",
-                    "5rf8",
-                    "5rf9",
-                    "5rfa",
-                    "5rfb",
-                    "5rfc",
-                    "5rfd",
-                    "5rfe",
-                    "5rff",
-                    "5rfg",
-                    "5rfh",
-                    "5rfi",
-                    "5rfj",
-                    "5rfk",
-                    "5rfl",
-                    "5rfm",
-                    "5rfn",
-                    "5rfo",
-                    "5rfp",
-                    "5rfq",
-                    "5rfr",
-                    "5rfs",
-                    "5rft",
-                    "5rfu",
-                    "5rfv",
-                    "5rfw",
-                    "5rfx",
-                    "5rfy",
-                    "5rfz",
-                    "5rg0",
-                    "5rg1",
-                    "5rg2",
-                    "5rg3",
-                    "5rgg",
-                    "5rgh",
-                    "5rgi",
-                    "5rgj",
-                    "5rgk",
-                    "5rgl",
-                    "5rgm",
-                    "5rgn",
-                    "5rgo",
-                    "5rgp",
-                    "5rgq",
-                    "5rgr",
-                    "5rgs",
-                    "6lu7",
-                    "6lze",
-                    "6m0k",
-                    "6m2n",
-                    "6w63",
-                    "6wnp",
-                    "6y2f",
-                    "6y2g",
-                    "6ynq",
-                    "6yt8",
-                    "6yz6",
-                    "7bqy",
-                    "7buy"
-                ]
+                "Ligands": {
+                    "Misc-PDB": [
+                        "7k6e",
+                        "7k6d",
+                        "7k40",
+                        "7jyc",
+                        "7ju7",
+                        "7jkv",
+                        "7d3i",
+                        "7d1o",
+                        "7d1m",
+                        "7cx9",
+                        "7com",
+                        "7cbt",
+                        "7c8u",
+                        "7c8t",
+                        "7c8r",
+                        "7c8b",
+                        "7c7p",
+                        "7c6u",
+                        "7c6s",
+                        "7buy",
+                        "7brp",
+                        "7bqy",
+                        "7aku",
+                        "6zru",
+                        "6zrt",
+                        "6z2e",
+                        "6yz6",
+                        "6yvf",
+                        "6yt8",
+                        "6ynq",
+                        "6y2g",
+                        "6y2f",
+                        "6xr3",
+                        "6xqu",
+                        "6xqt",
+                        "6xqs",
+                        "6xmk",
+                        "6xhm",
+                        "6xfn",
+                        "6xch",
+                        "6xbi",
+                        "6xbh",
+                        "6xbg",
+                        "6xb2",
+                        "6xb1",
+                        "6xb0",
+                        "6xa4",
+                        "6wtk",
+                        "6wtj",
+                        "6wtt",
+                        "6wnp",
+                        "6w79",
+                        "6w63",
+                        "6m2n",
+                        "6m0k",
+                        "6lze",
+                        "6lu7"
+                    ],
+                    "PanDDA-DIAMOND": [
+                        "5rhb",
+                        "5rhc",
+                        "5rhd",
+                        "5rhe",
+                        "5rhf",
+                        "5r7y",
+                        "5r7z",
+                        "5r80",
+                        "5r81",
+                        "5r82",
+                        "5r83",
+                        "5r84",
+                        "5re4",
+                        "5re5",
+                        "5re6",
+                        "5re7",
+                        "5re8",
+                        "5re9",
+                        "5rea",
+                        "5reb",
+                        "5rec",
+                        "5red",
+                        "5ree",
+                        "5ref",
+                        "5reg",
+                        "5reh",
+                        "5rei",
+                        "5rej",
+                        "5rek",
+                        "5rel",
+                        "5rem",
+                        "5ren",
+                        "5reo",
+                        "5rep",
+                        "5rer",
+                        "5res",
+                        "5ret",
+                        "5reu",
+                        "5rev",
+                        "5rew",
+                        "5rex",
+                        "5rey",
+                        "5rez",
+                        "5rf0",
+                        "5rf1",
+                        "5rf2",
+                        "5rf3",
+                        "5rf4",
+                        "5rf5",
+                        "5rf6",
+                        "5rf7",
+                        "5rf8",
+                        "5rf9",
+                        "5rfa",
+                        "5rfb",
+                        "5rfc",
+                        "5rfd",
+                        "5rfe",
+                        "5rff",
+                        "5rfg",
+                        "5rfh",
+                        "5rfi",
+                        "5rfj",
+                        "5rfk",
+                        "5rfl",
+                        "5rfm",
+                        "5rfn",
+                        "5rfo",
+                        "5rfp",
+                        "5rfq",
+                        "5rfr",
+                        "5rfs",
+                        "5rft",
+                        "5rfu",
+                        "5rfv",
+                        "5rfw",
+                        "5rfx",
+                        "5rfy",
+                        "5rfz",
+                        "5rg0",
+                        "5rg1",
+                        "5rg2",
+                        "5rg3",
+                        "5rgg",
+                        "5rgh",
+                        "5rgi",
+                        "5rgj",
+                        "5rgk",
+                        "5rgl",
+                        "5rgm",
+                        "5rgn",
+                        "5rgo",
+                        "5rgp",
+                        "5rgq",
+                        "5rgr",
+                        "5rgs"
+                    ]
+                }
             },
             "Related": {
                 "SARS-CoV": {
                     "PDB": [
+                        "6lo0",
+                        "6lnq",
+                        "6lny",
+                        "6y7m",
                         "3eaj",
                         "3sne",
                         "2amq",
@@ -771,45 +2147,55 @@
                 "Nucleocapsid protein"
             ],
             "PDB": {
+                "7cdz": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "7cdz"
+                        }
+                    }
+                },
+                "7ce0": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "7ce0"
+                        }
+                    }
+                },
+                "7c22": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "7c22"
+                        }
+                    }
+                },
+                "7act": {},
+                "7acs": {},
+                "6zco": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6zco"
+                        }
+                    }
+                },
+                "6yun": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6yun"
+                        }
+                    }
+                },
                 "6yi3": {},
-                "6vyo": {
+                "6wzq": {
                     "validation": {
-                        "isolde": [
-                            {
-                                "name": "6vyo_refine_2",
-                                "uuid": "d944115c-4138-4a57-8b92-4d70836fbe2a"
-                            },
-                            {
-                                "name": "5KTy_final",
-                                "uuid": "5149fb70-eadf-416e-bb9d-599c1e1e6204"
-                            }
-                        ],
                         "pdb-redo": {
-                            "name": "6vyo"
+                            "name": "6wzq"
                         }
                     }
                 },
-                "6wji": {
+                "6wzo": {
                     "validation": {
                         "pdb-redo": {
-                            "name": "6wji"
-                        }
-                    }
-                },
-                "6m3m": {
-                    "validation": {
-                        "isolde": [
-                            {
-                                "name": "6m3m_refine_6",
-                                "uuid": "d02cfad3-f89b-46a3-ab45-2f2770e8c9fb"
-                            },
-                            {
-                                "name": "3DZj_final",
-                                "uuid": "fbb89118-0e3e-4739-8820-af0278d9b956"
-                            }
-                        ],
-                        "pdb-redo": {
-                            "name": "6m3m"
+                            "name": "6wzo"
                         }
                     }
                 },
@@ -820,10 +2206,43 @@
                         }
                     }
                 },
-                "6wzq": {},
-                "7c22":{},
-                "6wzo":{},
-                "6yun":{}
+                "6wji": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6wji"
+                        }
+                    }
+                },
+                "6vyo": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6vyo_refine_2"
+                            },
+                            {
+                                "name": "5KTy_final"
+                            }
+                        ],
+                        "pdb-redo": {
+                            "name": "6vyo"
+                        }
+                    }
+                },
+                "6m3m": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6m3m_refine_6"
+                            },
+                            {
+                                "name": "3DZj_final"
+                            }
+                        ],
+                        "pdb-redo": {
+                            "name": "6m3m"
+                        }
+                    }
+                }
             },
             "CompModels": {
                 "swiss-model": [
@@ -856,6 +2275,44 @@
                         "model": "YP_009724397_2_v01"
                     }
                 ]
+            },
+            "Interactions": {
+                "Ligands": {
+                    "BCU-CDR": {
+                        "6vyo": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.9790000000000001
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.021
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.988
+                                }
+                            ]
+                        },
+                        "6m3m": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.011
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.022
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.995
+                                }
+                            ]
+                        }
+                    }
+                }
             },
             "Related": {
                 "SARS-CoV": {
@@ -891,6 +2348,472 @@
                 }
             }
         },
+        "NSP12": {
+            "uniprotAccession": [
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1ab. Responsible for replication and transcription of the viral RNA genome.",
+            "names": [
+                "NSP12",
+                "RNA-directed RNA polymerase",
+                "RNA-dependent RNA polymerase"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "JDUya4",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
+                    },
+                    {
+                        "project": "JDUya4",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
+                    }
+                ],
+                "BMS-Arc": [
+                    {
+                        "model": "YP_009725307_v01"
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7d4f",
+                        "7cxn",
+                        "7cxm",
+                        "7ctt",
+                        "7c2k",
+                        "7bzf",
+                        "7bv2",
+                        "7bv1",
+                        "7btf",
+                        "7aap",
+                        "6xqb",
+                        "6xez",
+                        "6m71"
+                    ],
+                    "EMDB": [
+                        "EMD-30493",
+                        "EMD-30492",
+                        "EMD-30469",
+                        "EMD-30275",
+                        "EMD-30252",
+                        "EMD-30210",
+                        "EMD-30209",
+                        "EMD-30178",
+                        "EMD-30127",
+                        "EMD-22288",
+                        "EMD-22160"
+                    ]
+                },
+                "Ligands": {
+                    "Misc-PDB": {
+                        "7d4f": {},
+                        "7ctt": {}
+                    },
+                    "BCU-CDR": {
+                        "7bv1": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.045
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.041
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.981
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.95
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9440000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.9390000000000001
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.848
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.0
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.988
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.932
+                                }
+                            ]
+                        },
+                        "7bv2": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.014
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.9990000000000001
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.003
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.023
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9620000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.836
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.179
+                                }
+                            ]
+                        },
+                        "7btf": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.024
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.008
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.961
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.046
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.987
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.977
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.963
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.067
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.998
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.992
+                                }
+                            ]
+                        },
+                        "6m71": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.0
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.0290000000000001
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.98
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.002
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.893
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.9
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.85
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.01
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.895
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.9179999999999999
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "6nur",
+                        "6nus"
+                    ],
+                    "EMDB": [
+                        "EMD-0521"
+                    ]
+                }
+            }
+        },
+        "NSP7": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp8 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
+            "names": [
+                "NSP7",
+                "Non-structural protein 7"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "GDvqSz",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
+                    },
+                    {
+                        "project": "GDvqSz",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
+                    },
+                    {
+                        "project": "GDvqSz",
+                        "model": "03",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725303_v01"
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7jlt",
+                        "7d4f",
+                        "7cxn",
+                        "7ctt",
+                        "7c2k",
+                        "7bzf",
+                        "7bv2",
+                        "7bv1",
+                        "7btf",
+                        "7aap",
+                        "6yhu",
+                        "6xqb",
+                        "6xip",
+                        "6xez",
+                        "6wqd",
+                        "6wiq",
+                        "6m71"
+                    ],
+                    "EMDB": [
+                        "EMD-30493",
+                        "EMD-30469",
+                        "EMD-30275",
+                        "EMD-30252",
+                        "EMD-30210",
+                        "EMD-30209",
+                        "EMD-30178",
+                        "EMD-30127",
+                        "EMD-22288",
+                        "EMD-22160"
+                    ]
+                },
+                "Ligands": {
+                    "Misc-PDB": {
+                        "7d4f": {},
+                        "7ctt": {}
+                    }
+                }
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "5f22",
+                        "6nur"
+                    ],
+                    "EMDB": [
+                        "EMD-0520"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "6nus",
+                        "1ysy",
+                        "3ub0",
+                        "2kys",
+                        "2ahm"
+                    ]
+                }
+            }
+        },
+        "NSP8": {
+            "uniprotAccession": [
+                "P0DTC1",
+                "P0DTD1"
+            ],
+            "description": "Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp7 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
+            "names": [
+                "NSP8",
+                "Non-structural protein 8"
+            ],
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "M4qFvm",
+                        "model": "01",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                    },
+                    {
+                        "project": "M4qFvm",
+                        "model": "02",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                    },
+                    {
+                        "project": "M4qFvm",
+                        "model": "03",
+                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                    }
+                ],
+                "BSM-Arc": [
+                    {
+                        "model": "YP_009725304_v01"
+                    }
+                ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7jlt",
+                        "7d4f",
+                        "7cxn",
+                        "7ctt",
+                        "7c2k",
+                        "7bzf",
+                        "7bv2",
+                        "7bv1",
+                        "7btf",
+                        "7aap",
+                        "6yhu",
+                        "6xqb",
+                        "6xip",
+                        "6xez",
+                        "6wqd",
+                        "6wiq",
+                        "6m71"
+                    ],
+                    "EMDB": [
+                        "EMD-30493",
+                        "EMD-30469",
+                        "EMD-30275",
+                        "EMD-30252",
+                        "EMD-30210",
+                        "EMD-30209",
+                        "EMD-30178",
+                        "EMD-30127",
+                        "EMD-22288",
+                        "EMD-22160"
+                    ]
+                },
+                "Ligands": {
+                    "Misc-PDB": {
+                        "7d4f": {},
+                        "7ctt": {}
+                    }
+                }
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": [
+                        "5f22",
+                        "6nur",
+                        "6nus"
+                    ],
+                    "EMDB": [
+                        "EMD-0520",
+                        "EMD-0521"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "3ub0",
+                        "2ahm"
+                    ]
+                }
+            }
+        },
+        "ORF9b": {
+            "uniprotAccession": [
+                "P0DTD2"
+            ],
+            "description": "The gene encoding this protein is included within the N gene (alternative ORF). Forms homotetrameric potassium sensitive ion channels (viroporin) and may modulate virus release. Up-regulates expression of fibrinogen subunits FGA, FGB and FGG in host lung epithelial cells. Induces apoptosis in cell culture. Downregulates the type 1 interferon receptor by inducing serine phosphorylation within the IFN alpha-receptor subunit 1 (IFNAR1) degradation motif and increasing IFNAR1 ubiquitination.",
+            "names": [
+                "ORF9b protein",
+                "Protein 9b",
+                "ORF9B_SARS2"
+            ],
+            "PDB": {
+                "6z4u": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6z4u"
+                        }
+                    }
+                }
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7kdt"
+                    ],
+                    "EMDB": [
+                        "EMD-22829"
+                    ]
+                }
+            }
+        },
         "NSP10": {
             "uniprotAccession": [
                 "P0DTC1",
@@ -901,6 +2824,16 @@
                 "NSP10",
                 "Non-structural protein 10"
             ],
+            "PDB": {
+                "6zpe": {},
+                "6zct": {
+                    "validation": {
+                        "pdb-redo": {
+                            "name": "6zct"
+                        }
+                    }
+                }
+            },
             "CompModels": {
                 "swiss-model": [
                     {
@@ -933,19 +2866,120 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
-                        "6w4h",
-                        "6w61",
-                        "6w75",
-                        "6wjt",
-                        "6wkq",
+                        "7koa",
+                        "7jz0",
+                        "7jyy",
+                        "7jpe",
+                        "7jib",
+                        "7jhe",
+                        "7c2j",
+                        "6wq3",
                         "6wks",
-                        "6wq3"
+                        "6wkq",
+                        "6wjt",
+                        "6w75",
+                        "6w61",
+                        "6w4h"
                     ]
                 },
-                "Ligands": [
-                    "5c8s",
-                    "5c8t"
-                ]
+                "Ligands": {
+                    "Misc-PDB": {
+                        "7koa": {},
+                        "7jz0": {},
+                        "7jyy": {},
+                        "7jpe": {},
+                        "7jib": {},
+                        "7jhe": {},
+                        "5c8s": {},
+                        "5c8t": {}
+                    },
+                    "BCU-CDR": {
+                        "6w75": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.0090000000000001
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.958
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.9740000000000001
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.943
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.89
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.84
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.843
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 0.965
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.929
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.9079999999999999
+                                }
+                            ]
+                        },
+                        "6wjt": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.9309999999999999
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.925
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.012
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.005
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.856
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.917
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.968
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 0.8809999999999999
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.81
+                                }
+                            ]
+                        }
+                    }
+                }
             },
             "Related": {
                 "SARS-CoV": {
@@ -1019,14 +3053,117 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7koa",
+                        "7jz0",
+                        "7jyy",
+                        "7jpe",
+                        "7jib",
+                        "7jhe",
                         "6w4h",
                         "6w61",
                         "6w75",
                         "6wjt",
                         "6wkq",
                         "6wks",
-                        "6wq3"
+                        "6wq3",
+                        "7c2j"
                     ]
+                },
+                "Ligands": {
+                    "Misc-PDB": {
+                        "7koa": {},
+                        "7jz0": {},
+                        "7jyy": {},
+                        "7jpe": {},
+                        "7jib": {},
+                        "7jhe": {}
+                    },
+                    "BCU-CDR": {
+                        "6w75": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.0090000000000001
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.958
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.9740000000000001
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.943
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.89
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.84
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.843
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 0.965
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.929
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.9079999999999999
+                                }
+                            ]
+                        },
+                        "6wjt": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.9309999999999999
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.925
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.012
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.005
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.856
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.917
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.968
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 0.8809999999999999
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.81
+                                }
+                            ]
+                        }
+                    }
                 }
             },
             "Related": {
@@ -1055,153 +3192,6 @@
                 }
             }
         },
-        "NSP7": {
-            "uniprotAccession": [
-                "P0DTC1",
-                "P0DTD1"
-            ],
-            "description": "Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp8 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
-            "names": [
-                "NSP7",
-                "Non-structural protein 7"
-            ],
-            "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "GDvqSz",
-                        "model": "01",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
-                    },
-                    {
-                        "project": "GDvqSz",
-                        "model": "02",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
-                    },
-                    {
-                        "project": "GDvqSz",
-                        "model": "03",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp7 may form a hexadecamer with nsp8 or form a complex with nsp8/Pol"
-                    }
-                ],
-                "BSM-Arc": [
-                    {
-                        "model": "YP_009725303_v01"
-                    }
-                ]
-            },
-            "Interactions": {
-                "P-P-Interactions": {
-                    "PDB": [
-                        "6wiq",
-                        "6yhu",
-                        "6wqd",
-                        "6m71",
-                        "7bv2",
-                        "7bv1",
-                        "7btf"
-                    ],
-                    "EMDB": [
-                        "EMD-30127",
-                        "EMD-30210",
-                        "EMD-30209",
-                        "EMD-30178"
-                    ]
-                }
-            },
-            "Related": {
-                "SARS-CoV": {
-                    "PDB": [
-                        "5f22",
-                        "6nur"
-                    ],
-                    "EMDB": [
-                        "EMD-0520"
-                    ]
-                },
-                "OtherRelated": {
-                    "PDB": [
-                        "6nus",
-                        "1ysy",
-                        "3ub0",
-                        "2kys",
-                        "2ahm"
-                    ]
-                }
-            }
-        },
-        "NSP8": {
-            "uniprotAccession": [
-                "P0DTC1",
-                "P0DTD1"
-            ],
-            "description": "Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp7 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
-            "names": [
-                "NSP8",
-                "Non-structural protein 8"
-            ],
-            "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "M4qFvm",
-                        "model": "01",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
-                    },
-                    {
-                        "project": "M4qFvm",
-                        "model": "02",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
-                    },
-                    {
-                        "project": "M4qFvm",
-                        "model": "03",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
-                    }
-                ],
-                "BSM-Arc": [
-                    {
-                        "model": "YP_009725304_v01"
-                    }
-                ]
-            },
-            "Interactions": {
-                "P-P-Interactions": {
-                    "PDB": [
-                        "6wiq",
-                        "6yhu",
-                        "6wqd",
-                        "6m71",
-                        "7bv2",
-                        "7bv1",
-                        "7btf"
-                    ],
-                    "EMDB": [
-                        "EMD-30127",
-                        "EMD-30210",
-                        "EMD-30209",
-                        "EMD-30178"
-                    ]
-                }
-            },
-            "Related": {
-                "SARS-CoV": {
-                    "PDB": [
-                        "5f22",
-                        "6nur",
-                        "6nus"
-                    ],
-                    "EMDB": [
-                        "EMD-0520",
-                        "EMD-0521"
-                    ]
-                },
-                "OtherRelated": {
-                    "PDB": [
-                        "3ub0",
-                        "2ahm"
-                    ]
-                }
-            }
-        },
         "NSP9": {
             "uniprotAccession": [
                 "P0DTC1",
@@ -1214,17 +3204,25 @@
                 "ssRNA binding protein"
             ],
             "PDB": {
+                "6wc1": {
+                    "description": "",
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6wc1"
+                            }
+                        ]
+                    }
+                },
                 "6w4b": {
                     "description": "",
                     "validation": {
                         "isolde": [
                             {
-                                "name": "6w4b_refine_9",
-                                "uuid": "d26658ad-bb95-4dea-b5c5-5af393c17218"
+                                "name": "6w4b_refine_9"
                             },
                             {
-                                "name": "Mgd7_final",
-                                "uuid": "e0fca713-8c59-498e-be49-d084ff968780"
+                                "name": "Mgd7_final"
                             }
                         ],
                         "pdb-redo": [
@@ -1234,7 +3232,15 @@
                         ]
                     }
                 },
-                "6w9q": {}
+                "6w9q": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6w9q"
+                            }
+                        ]
+                    }
+                }
             },
             "CompModels": {
                 "swiss-model": [
@@ -1259,6 +3265,40 @@
                         "model": "YP_009725305_v01 "
                     }
                 ]
+            },
+            "Interactions": {
+                "Ligands": {
+                    "BCU-CDR": {
+                        "6w9q": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.866
+                                }
+                            ]
+                        },
+                        "6w4b": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 0.835
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.88
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.8540000000000001
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.83
+                                }
+                            ]
+                        }
+                    }
+                }
             },
             "Related": {
                 "SARS-CoV": {
@@ -1289,39 +3329,54 @@
             "names": [
                 "NSP15",
                 "Non-structural protein ",
-                "endoriboonuclease",
+                "endoribonuclease",
                 "Uridylate-specific endoribonuclease",
                 "endornase",
                 "NendoU/nsp15"
             ],
             "PDB": {
-                "6vww": {
-                    "description": "",
+                "7k9p": {
                     "validation": {
-                        "isolde": [
-                            {
-                                "name": "6vww_refine_14",
-                                "uuid": "8bb06f84-3280-464f-93e5-6f8a6d02571d"
-                            },
-                            {
-                                "name": "UW8C_final",
-                                "uuid": "9051cb07-8096-45e2-8017-ff5825e51e86"
-                            }
-                        ],
                         "pdb-redo": [
                             {
-                                "name": "6vww"
+                                "name": "7k9p"
                             }
                         ]
                     }
                 },
-                "6wlc": {},
+                "6xdh": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "6xdh"
+                            }
+                        ]
+                    }
+                },
                 "6w01": {
                     "description": "",
                     "validation": {
                         "pdb-redo": [
                             {
                                 "name": "6w01"
+                            }
+                        ]
+                    }
+                },
+                "6vww": {
+                    "description": "",
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6vww_refine_14"
+                            },
+                            {
+                                "name": "UW8C_final"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6vww"
                             }
                         ]
                     }
@@ -1352,11 +3407,161 @@
                 ]
             },
             "Interactions": {
-                "Ligands": [
-                    "6wlc",
-                    "6w01",
-                    "6x4i"
-                ]
+                "Ligands": {
+                    "Misc-PDB": {
+                        "7k1o": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "7k1o"
+                                    }
+                                ]
+                            }
+                        },
+                        "7k1l": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "7k1l"
+                                    }
+                                ]
+                            }
+                        },
+                        "6x4i": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "6x4i"
+                                    }
+                                ]
+                            }
+                        },
+                        "6x1b": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "6x1b"
+                                    }
+                                ]
+                            }
+                        },
+                        "6wxc": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "6wxc"
+                                    }
+                                ]
+                            }
+                        },
+                        "6wlc": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "6wlc"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "BCU-CDR": {
+                        "6w01": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "6w01"
+                                    }
+                                ]
+                            },
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.061
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.035
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.01
+                                }
+                            ]
+                        },
+                        "6vww": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6vww_refine_14"
+                                    },
+                                    {
+                                        "name": "UW8C_final"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6vww"
+                                    }
+                                ]
+                            },
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.04
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.898
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.0390000000000001
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.867
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.975
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "Related": {
+                "SARS-CoV": {
+                    "PDB": {
+                        "2rhb": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "2rhb"
+                                    }
+                                ]
+                            }
+                        },
+                        "2ozk": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "2ozk"
+                                    }
+                                ]
+                            }
+                        },
+                        "2h85": {
+                            "validation": {
+                                "pdb-redo": [
+                                    {
+                                        "name": "2h85"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
             }
         },
         "NSP14": {
@@ -1387,11 +3592,6 @@
                         "project": "7BgWuu",
                         "model": "03",
                         "description": "High quality models are available."
-                    },
-                    {
-                        "project": "7BgWuu",
-                        "model": "04",
-                        "description": "High quality models are available."
                     }
                 ],
                 "BSM-Arc": [
@@ -1408,9 +3608,11 @@
                         "5c8t"
                     ]
                 },
-                "Ligands": [
-                    "5c8t"
-                ]
+                "Ligands": {
+                    "Misc-PDB": [
+                        "5c8t"
+                    ]
+                }
             },
             "Related": {
                 "SARS-CoV": {
@@ -1442,11 +3644,6 @@
                         "project": "YxJyvF",
                         "model": "01",
                         "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
-                    },
-                    {
-                        "project": "YxJyvF",
-                        "model": "02",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
                     }
                 ],
                 "BMS-Arc": [
@@ -1454,6 +3651,38 @@
                         "model": "YP_009725297_v01"
                     }
                 ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7k5i",
+                        "6zp4",
+                        "6zon",
+                        "6zoj",
+                        "6zok",
+                        "6zn5",
+                        "6zmt",
+                        "6zmo",
+                        "6zmi",
+                        "6zme",
+                        "6zm7",
+                        "6zlw"
+                    ],
+                    "EMDB": [
+                        "EMD-22681",
+                        "EMD-11335",
+                        "EMD-11325",
+                        "EMD-11321",
+                        "EMD-11320",
+                        "EMD-11310",
+                        "EMD-11301",
+                        "EMD-11299",
+                        "EMD-11292",
+                        "EMD-11289",
+                        "EMD-11288",
+                        "EMD-11276"
+                    ]
+                }
             },
             "Related": {
                 "SARS-CoV": {
@@ -1481,32 +3710,9 @@
                 "VME1_WCPV"
             ],
             "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "9LzAZz",
-                        "model": "01",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    },
-                    {
-                        "project": "9LzAZz",
-                        "model": "02",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    },
-                    {
-                        "project": "9LzAZz",
-                        "model": "03",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    },
-                    {
-                        "project": "9LzAZz",
-                        "model": "04",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    }
-                ],
                 "AlphaFold": [
                     {
                         "name": "M_protein",
-                        "uuid": "To-be-Determined",
                         "description": "UniProt VME1_WCPV, includes residues 11 - 203."
                     }
                 ]
@@ -1522,6 +3728,9 @@
                 "Helicase",
                 "Hel"
             ],
+            "PDB": {
+                "6zsl": {}
+            },
             "CompModels": {
                 "swiss-model": [
                     {
@@ -1538,16 +3747,6 @@
                         "project": "N2NgU3",
                         "model": "03",
                         "description": "High quality models are available."
-                    },
-                    {
-                        "project": "N2NgU3",
-                        "model": "04",
-                        "description": "High quality models are available."
-                    },
-                    {
-                        "project": "N2NgU3",
-                        "model": "05",
-                        "description": "High quality models are available."
                     }
                 ],
                 "BSM-Arc": [
@@ -1556,10 +3755,83 @@
                     }
                 ]
             },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7cxn",
+                        "6xez"
+                    ],
+                    "EMDB": [
+                        "EMD-30493",
+                        "EMD-22160"
+                    ]
+                },
+                "Ligands": {
+                    "Misc-PDB": [],
+                    "PanDDA-DIAMOND": [
+                        "5rmm",
+                        "5rml",
+                        "5rmk",
+                        "5rmj",
+                        "5rmi",
+                        "5rmh",
+                        "5rmg",
+                        "5rmf",
+                        "5rme",
+                        "5rmd",
+                        "5rmc",
+                        "5rmb",
+                        "5rma",
+                        "5rm9",
+                        "5rm8",
+                        "5rm7",
+                        "5rm6",
+                        "5rm5",
+                        "5rm4",
+                        "5rm3",
+                        "5rm2",
+                        "5rm1",
+                        "5rm0",
+                        "5rlz",
+                        "5rly",
+                        "5rlw",
+                        "5rlv",
+                        "5rlu",
+                        "5rlt",
+                        "5rls",
+                        "5rlr",
+                        "5rlq",
+                        "5rlp",
+                        "5rlo",
+                        "5rln",
+                        "5rlm",
+                        "5rll",
+                        "5rlk",
+                        "5rlj",
+                        "5rli",
+                        "5rlh",
+                        "5rlg",
+                        "5rlf",
+                        "5rle",
+                        "5rld",
+                        "5rlc",
+                        "5rlb",
+                        "5rl9",
+                        "5rl8",
+                        "5rl7",
+                        "5rl6"
+                    ]
+                }
+            },
             "Related": {
                 "SARS-CoV": {
                     "PDB": [
                         "6jyt"
+                    ]
+                },
+                "OtherRelated": {
+                    "PDB": [
+                        "5wwp"
                     ]
                 }
             }
@@ -1574,26 +3846,7 @@
                 "Accessory Protein 6",
                 "Accessory Factor 6",
                 "NS6_WCPV"
-            ],
-            "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "NWaxq5",
-                        "model": "01",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    },
-                    {
-                        "project": "NWaxq5",
-                        "model": "02",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    },
-                    {
-                        "project": "NWaxq5",
-                        "model": "03",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    }
-                ]
-            }
+            ]
         },
         "NSP2": {
             "uniprotAccession": [
@@ -1606,22 +3859,9 @@
                 "Non-structural protein 2"
             ],
             "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "UrUkRp",
-                        "model": "01",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    },
-                    {
-                        "project": "UrUkRp",
-                        "model": "02",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    }
-                ],
                 "AlphaFold": [
                     {
                         "name": "nsp2",
-                        "uuid": "To-be-Determined",
                         "description": "UniProt R1AB_WCPV, corresponds to residues 181 - 818. Substantial uncertainty in residues 346 - 437 (prediction PDB indexing) so coordinates for these residues are not included in the structure file."
                     }
                 ]
@@ -1669,6 +3909,89 @@
                     }
                 ]
             },
+            "Interactions": {
+                "Ligands": {
+                    "Misc-PDB": {},
+                    "BCU-CDR": {
+                        "7bv1": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.045
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.041
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.981
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.95
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9440000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.9390000000000001
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.848
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.0
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.988
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.932
+                                }
+                            ]
+                        },
+                        "7bv2": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.014
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.9990000000000001
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.003
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.023
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9620000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.836
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.179
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
             "Related": {
                 "SARS-CoV": {
                     "PDB": [
@@ -1689,22 +4012,9 @@
                 "Non-structural protein 6"
             ],
             "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "27R5bK",
-                        "model": "01",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    },
-                    {
-                        "project": "27R5bK",
-                        "model": "02",
-                        "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
-                    }
-                ],
                 "AlphaFold": [
                     {
                         "name": "nsp6",
-                        "uuid": "To-be-Determined",
                         "description": "Nsp6.UniProt R1AB_WCPV, corresponds to residues 3570 - 3859.Uncertainty about positions of residues 84 - 132 and 238 - 278 relative to rest of structure (prediction PDB indexing)."
                     }
                 ],
@@ -1737,6 +4047,16 @@
                 "Protein U274",
                 "Protein X1"
             ],
+            "PDB": {
+                "7kjr": {}
+            },
+            "EMDB": {
+                "EMD-22898": {
+                    "pdb": [
+                        "7kjr"
+                    ]
+                }
+            },
             "CompModels": {
                 "swiss-model": [
                     {
@@ -1745,63 +4065,6 @@
                         "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
                     }
                 ]
-            }
-        },
-        "NSP12": {
-            "uniprotAccession": [
-                "P0DTD1"
-            ],
-            "description": "Part of Replicase polyprotein 1ab. Responsible for replication and transcription of the viral RNA genome.",
-            "names": [
-                "NSP12",
-                "RNA-directed RNA polymerase",
-                "RNA-dependent RNA polymerase"
-            ],
-            "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "JDUya4",
-                        "model": "01",
-                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
-                    },
-                    {
-                        "project": "JDUya4",
-                        "model": "02",
-                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
-                    }
-                ],
-                "BMS-Arc": [
-                    {
-                        "model": "YP_009725307_v01"
-                    }
-                ]
-            },
-            "Interactions": {
-                "P-P-Interactions": {
-                    "PDB": [
-                        "6m71",
-                        "7bv2",
-                        "7bv1",
-                        "7btf"
-                    ],
-                    "EMDB": [
-                        "EMD-30127",
-                        "EMD-30210",
-                        "EMD-30209",
-                        "EMD-30178"
-                    ]
-                }
-            },
-            "Related": {
-                "SARS-CoV": {
-                    "PDB": [
-                        "6nur",
-                        "6nus"
-                    ],
-                    "EMDB": [
-                        "EMD-0521"
-                    ]
-                }
             }
         },
         "ORF8": {
@@ -1814,6 +4077,35 @@
                 "Non-structural protein 8",
                 "ns8"
             ],
+            "PDB": {
+                "7k3t": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7k3t"
+                            }
+                        ]
+                    }
+                },
+                "7jx6": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7jx6"
+                            }
+                        ]
+                    }
+                },
+                "7jtl": {
+                    "validation": {
+                        "pdb-redo": [
+                            {
+                                "name": "7jtl"
+                            }
+                        ]
+                    }
+                }
+            },
             "CompModels": {
                 "swiss-model": [
                     {
@@ -1827,6 +4119,89 @@
                         "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
                     }
                 ]
+            },
+            "Interactions": {
+                "Ligands": {
+                    "Misc-PDB": {},
+                    "BCU-CDR": {
+                        "7bv1": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.045
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 1.041
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 0.981
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 0.95
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9440000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.9390000000000001
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 0.848
+                                },
+                                {
+                                    "id": 8,
+                                    "bindingSiteScore": 1.0
+                                },
+                                {
+                                    "id": 9,
+                                    "bindingSiteScore": 0.988
+                                },
+                                {
+                                    "id": 10,
+                                    "bindingSiteScore": 0.932
+                                }
+                            ]
+                        },
+                        "7bv2": {
+                            "pockets": [
+                                {
+                                    "id": 1,
+                                    "bindingSiteScore": 1.014
+                                },
+                                {
+                                    "id": 2,
+                                    "bindingSiteScore": 0.9990000000000001
+                                },
+                                {
+                                    "id": 3,
+                                    "bindingSiteScore": 1.003
+                                },
+                                {
+                                    "id": 4,
+                                    "bindingSiteScore": 1.023
+                                },
+                                {
+                                    "id": 5,
+                                    "bindingSiteScore": 0.9620000000000001
+                                },
+                                {
+                                    "id": 6,
+                                    "bindingSiteScore": 0.836
+                                },
+                                {
+                                    "id": 7,
+                                    "bindingSiteScore": 1.179
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         },
         "E": {
@@ -1843,7 +4218,7 @@
                 "swiss-model": [
                     {
                         "project": "8Tdwfx",
-                        "model": "01",
+                        "model": "02",
                         "description": "Model quality estimates are low - use with care."
                     }
                 ],
@@ -1884,7 +4259,6 @@
                 "AlphaFold": [
                     {
                         "name": "nsp4",
-                        "uuid": "To-be-Determined",
                         "description": "Nsp4. UniProt R1AB_WCPV, corresponds to residues 2764 - 3252. Uncertainty highest between domains."
                     }
                 ],

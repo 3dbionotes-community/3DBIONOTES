@@ -12,6 +12,10 @@ class MainController < ApplicationController
   LocalScripts = Settings.GS_LocalScripts
   BaseUrl = Settings.GS_BaseUrl
   PDB_REDO = Settings.GS_PDB_REDO
+  IsoldeUrl = Settings.GS_ISOLDE
+  SwissModelUrl = Settings.GS_SWISSMODEL
+  BSMArcUrl = Settings.GS_BSM_ARC
+  AlphaFoldUrl = Settings.GS_ALPHAFOLD
 
   def home
     if params[:queryId].blank? && params[:annotations_url].blank?
@@ -80,16 +84,6 @@ class MainController < ApplicationController
         fetch_pdb_data(identifierName)
       elsif identifierType=="Uniprot"
         fetch_uniprot_data(identifierName)
-      elsif identifierType=="ISOLDE"
-        fetch_isolde_data(identifierName)
-      elsif identifierType=="PDB-REDO"
-        fetch_pdbredo_data(identifierName)
-      elsif identifierType=="SWISSMODEL"
-        fetch_swissmodel_data(identifierName)
-      elsif identifierType=="ALPHAFOLD"
-        fetch_alphafold_data(identifierName)
-      elsif identifierType=="COMPMODEL"
-        fetch_compmodel_data(identifierName)
       end
     end
   end 
@@ -159,11 +153,30 @@ class MainController < ApplicationController
   end
 
   def pdb_redo
-    pdb = params[:name]
-    logger.info("  HTTP Referer: https://pdb-redo.eu/db/"+pdb) 
+    pdb = params[:pdbId]
+    querytype = "PDB-Redo"
+    logger.info("  PDB-Redo quey "+pdb)
     rand_path = "pdb_redo_"+pdb
     file_name = pdb+"_final.pdb"
     url = PDB_REDO+"/"+pdb+"/"+file_name
+
+    validations(querytype, pdb, url, rand_path, file_name)
+  end
+
+  def isolde
+    pdb = params[:pdbId]
+    file = params[:filename]
+    querytype = "ISOLDE"
+    logger.info("  ISOLDE query "+pdb)
+    rand_path = "isolde_"+pdb
+    file_name = file+".pdb"
+    url = BaseUrl+IsoldeUrl+file+"/"
+    url = "http://rinchen-dos/"+IsoldeUrl+file+"/"
+
+    validations(querytype, pdb, url, rand_path, file_name)
+  end
+
+  def validations(querytype, pdb, url, rand_path, file_name)
     file_content, http_code, http_code_name = getUrl(url,verbose=true)
     if http_code.to_i > 399
       return render json: {"error"=>"URL "+url+" was not reachable", "http_error"=>http_code_name}, status: :ok
@@ -173,7 +186,7 @@ class MainController < ApplicationController
       DataFile.save_string(file_content, file_name, rand_path)
     end
 
-    @title = "PDB_REDO entry "+pdb.upcase
+    @title = querytype+" entry "+pdb.upcase+" ("+file_name+")"
     @rand  = rand_path
     @file = file_name 
     @structure_file = LocalPath+'/'+rand_path+'/'+file_name
@@ -191,11 +204,13 @@ class MainController < ApplicationController
       aCC = {}
       pdbData = fetchPDBalignment(pdb)
       @sequences.each do |ch,seq|
+        next if seq.to_s.strip.empty?
         acc = pdbData[ch].keys[0]
         aCC[acc] = true
       end
       aCC = fetchUniprotMultipleSequences(aCC.keys.join(","),fasta_obj_flag=nil,dict_flag=true)
       @sequences.each do |ch,seq|
+        next if seq.to_s.strip.empty?
         acc = pdbData[ch].keys[0]
         @choice[ch] = acc+"__sprot__"+aCC[acc]["definition"]+"__"+aCC[acc]["organism"]+"__"+aCC[acc]["gene_symbol"]
       end
@@ -203,6 +218,61 @@ class MainController < ApplicationController
     end
   end
 
+
+  def models
+    protein = params[:protein]
+    source = params[:source]
+    model = params[:model]
+    logger.debug("  QUERY: " + protein + " " + source + " " + model)
+    rand_path = source+"_"+model
+    file_name = model+".pdb"
+    if source == "swiss-model"
+      file_name = model+".pdb"
+      url = SwissModelUrl+model.split('-')[0]+"/models/"+model.split('-')[1]+".pdb"
+    elsif source == "BSM-Arc"
+      file_name = model+".pdb"
+      url = BSMArcUrl+ model+".pdb"
+    elsif source == "AlphaFold"
+      file_name = model+".pdb"
+      url = BaseUrl + AlphaFoldUrl + model + "/"
+    end
+    file_content, http_code, http_code_name = getUrl(url,verbose=true)
+    if http_code.to_i > 399
+      return render json: {"error"=>"URL "+url+" was not reachable", "http_error"=>http_code_name}, status: :ok
+    elsif http_code.to_i == 0
+      return render json: {"error"=>"ruby exception", "url"=> url, "exception"=>file_content}, status: :ok
+    else
+      DataFile.save_string(file_content, file_name, rand_path)
+    end    
+    @title = source.upcase+" model: "+model.upcase
+
+    @rand  = rand_path
+    @file = file_name 
+    @structure_file = LocalPath+'/'+rand_path+'/'+file_name
+    @http_structure_file = BaseUrl+'/upload/'+rand_path+'/'+file_name
+    @mapping  =  JSON.parse(`#{LocalScripts}/structure_to_fasta_json #{@structure_file}`)
+    @error = nil
+    if @mapping.has_key? "error"
+      @error = @mapping["error"]
+    else 
+      @sequences = @mapping['sequences']
+      @choice = {}
+      do_not_repeat = {}
+      @sequences.each do |ch,seq|
+        if  do_not_repeat.key?(seq)
+          @choice[ch] = do_not_repeat[seq]
+        else
+          blast_results = runBlast(seq)
+          @choice[ch] = ( blast_results.sort_by{ |k| -k['cov'].to_f } )
+          if @choice[ch]!=nil && @choice[ch].length>0
+            do_not_repeat[seq] = @choice[ch]
+          end
+        end
+      end
+      @viewerType = "ngl"
+    end
+  end
+  
   def upload
     rand_path = (0...20).map { ('a'..'z').to_a[rand(26)] }.join.upcase
     if params[:structure_file].original_filename.include? "cif"

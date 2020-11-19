@@ -8,10 +8,40 @@ class Covid19
         query_url: "/?queryId=EMD-21375&viewer_type=ngl&button=#query",
       },
       {
+        name: "EMD-11328",
+        description: "SARS-CoV-2 spike in prefusion state (EMD-11328)",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11328/400_11328.gif",
+        query_url: "/?queryId=EMD-11328&viewer_type=ngl&button=#query",
+      },
+      {
+        name: "EMD-11336",
+        description: "SARS-CoV-2 spike in prefusion state (flexibility analysis, 1-up closed conformation) (EMD-11336)",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11336/400_11336.gif",
+        query_url: "/?queryId=EMD-11336&viewer_type=ngl&button=#query",
+      },
+      {
+        name: "EMD-11337",
+        description: "SARS-CoV-2 spike in prefusion state (flexibility analysis, 1-up open conformation) (EMD-11337)",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11337/400_11337.gif",
+        query_url: "/?queryId=EMD-11337&viewer_type=ngl&button=#query",
+      },
+      {
+        name: "EMD-11341",
+        description: "SARS-CoV-2 spike in prefusion state (flexibility analysis, 1-up open conformation) (EMD-11341)",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11341/400_11341.gif",
+        query_url: "/?queryId=EMD-11341&viewer_type=ngl&button=#query",
+      },
+      {
         name: "EMD-30210",
         description: "The nsp12-nsp7-nsp8 complex bound to the template-primer RNA and triphosphate form of Remdesivir(RTP) (EMD-30210)",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30210/400_30210.gif",
         query_url: "/?queryId=EMD-30210&viewer_type=ngl&button=#query",
+      },
+      {
+        name: "6ZOW",
+        description: "SARS-CoV-2 spike in prefusion state",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6zow_deposited_chain_front_image-200x200.png",
+        query_url: "/?queryId=6zow&viewer_type=ngl&button=#query",
       },
       {
         name: "6LZG",
@@ -45,7 +75,8 @@ class Covid19
         title: title_indexed,
         name: name,
         style: style,
-        query_url: "/?queryId=PDB-REDO-#{pdb_key}&viewer_type=ngl&button=#query",
+        # query_url: "/?queryId=PDB-REDO-#{pdb_key}&viewer_type=ngl&button=#query",
+        query_url: "/pdb_redo/#{pdb_key}",
         external_url: external_url,
         check: external_url,
       }
@@ -67,7 +98,7 @@ class Covid19
         title: title_indexed,
         name: entry_name,
         style: style,
-        query_url: "/?queryId=ISOLDE-#{pdb_key}&uuid=#{uuid}&viewer_type=ngl&button=#query",
+        query_url: "/isolde/#{pdb_key}/#{entry_name}",
       }
     end
   end
@@ -89,8 +120,10 @@ class Covid19
 
   def self.parse_pdb(protein, keys)
     entries = protein.dig(*keys) || []
-    to_hash(entries).map do |pdb_key, pdb_hash|
-      {
+    items = []
+    pockets = {}
+    to_hash(entries).each do |pdb_key, pdb_hash|
+      items.push({
         name: pdb_key,
         description: pdb_hash["description"],
         query_url: "/?queryId=#{pdb_key}&viewer_type=ngl&button=#query",
@@ -99,12 +132,23 @@ class Covid19
         api: "https://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/#{pdb_key}",
         type: 'pdb',
         related: get_related_keys(pdb_hash["emdbs"]),
+        pockets: pdb_hash.key?("pockets") ? pdb_hash["pockets"].map { |pocket| pocket['id']} : [],
+        experiment: keys.last,
         links: [
           *get_pdb_redo_links("PDB-Redo", :turq, pdb_key, pdb_hash, ["validation", "pdb-redo"]),
           *get_isolde_links("Isolde", :cyan, pdb_key, pdb_hash, ["validation", "isolde"]),
         ],
-      }
-    end.compact
+      })
+
+      if pdb_hash.key?("pockets")
+        pdb_hash["pockets"].each do |pocket|
+          id = pocket['id']
+          bindingSiteScore = pocket['bindingSiteScore']
+          pockets[id] = bindingSiteScore
+        end
+      end
+    end
+    return items.compact, pockets
   end
 
   def self.parse_emdb(protein, keys)
@@ -132,7 +176,8 @@ class Covid19
       {
         name: "#{project}-#{model}",
         description: ["project: #{project}", "model: #{model}", description].compact.join(" | "),
-        query_url: "/?queryId=SWISSMODEL-#{protein['uniprotAccession'][0]}-#{project}-#{model}&viewer_type=ngl&button=#query",
+        # query_url: "/?queryId=SWISSMODEL-#{protein['uniprotAccession'][0]}-#{project}-#{model}&viewer_type=ngl&button=#query",
+        query_url: "/models/#{protein['uniprotAccession'][0]}/#{keys[1]}/#{project}-#{model}",
         image_url: "https://swissmodel.expasy.org/interactive/#{project}/models/#{model}.png",
         external: {text: "SWISS-MODEL", url: "https://swissmodel.expasy.org/interactive/#{project}/models/#{model}"},
         links: [],
@@ -147,6 +192,9 @@ class Covid19
       {
         name: name,
         description: description,
+        query_url: "/models/#{protein['uniprotAccession'][0]}/#{keys[1]}/#{name}",
+        image_url: "/AlphaFold_logo.png",
+        external: {text: "AlphaFold", url: "https://deepmind.com/research/open-source/computational-predictions-of-protein-structures-associated-with-COVID-19"},
         links: [],
       }
     end
@@ -158,9 +206,34 @@ class Covid19
       model, = entry.values_at("model")
       {
         name: "#{model}",
+        query_url: "/models/#{protein['uniprotAccession'][0]}/#{keys[1]}/#{model}",
+        external: {text: "BSM-Arc", url: "https://bsma.pdbj.org/entry/15"},
         links: [],
       }
     end
+  end
+
+  def self.parse_db_with_experiments(protein, keys)
+    entries = protein.dig(*keys) || []
+
+    experiments = []
+    items = []
+    pockets = {}
+
+    entries.each do |key,value|
+      if key == 'EMDB'
+        items = items + parse_emdb(protein, [*keys, "EMDB"])
+      else
+        new_items, pdb_pockets = parse_pdb(protein, [*keys, key])
+        if new_items.size > 0 
+          items = items + new_items
+          experiments.push(key)
+          pockets.merge!(pdb_pockets)
+        end
+      end
+    end
+    return items, experiments, pockets
+    
   end
 
   def self.parse_db(protein, keys)
@@ -173,27 +246,33 @@ class Covid19
     get_proteins_data(data["SARS-CoV-2 Proteome"])
   end
 
-  def self.card(name, items)
-    items.present? ? {name: name, items: items, subsections: []} : nil
+  def self.card(name, items, experiments = [], pockets = [])
+    items.present? ? {name: name, items: items, experiments: experiments, pockets: pockets, subsections: []} : nil
   end
 
   def self.card_wrapper(name, subsections)
     subsections2 = subsections.compact.map { |subsection| subsection.merge(parent: name) }
-    subsections2.size > 0 ? {name: name, items: [], subsections: subsections2} : nil
+    subsections2.size > 0 ? {name: name, items: [], experiments: [], pockets: [], subsections: subsections2} : nil
   end
 
   def self.get_relations(proteins)
-    relations_base = proteins.flat_map do |protein|
-      protein[:sections].flat_map do |section|
-        items = section[:items].map { |item| [item[:name], protein[:name]] }
-        subsection_items = section[:subsections].flat_map do |subsection|
-          subsection[:items].map { |item| [item[:name], protein[:name]] }
+    items = {}
+    relations_base = proteins.each do |protein|
+      protein[:sections].each do |section|
+        section[:items].each do |item|
+          key = item[:name] + "-" + protein[:name] + "-" + section[:name].parameterize
+          items[key] = {protein: protein[:name], experiment: item[:experiment], pockets: item[:pockets]}
         end
-        items + subsection_items
+        subsection_items = section[:subsections].flat_map do |subsection|
+          subsection[:items].each do |item|
+            key = item[:name] + "-" + protein[:name] + "-" + subsection[:name].parameterize
+            items[key] = {protein: protein[:name], experiment: item[:experiment], pockets: item[:pockets]}
+          end
+        end
       end
     end
 
-    relations_base.group_by { |k, v| k }.transform_values { |vs| vs.map(&:second).uniq }
+    return items
   end
 
   def self.get_proteins_data(proteins_raw)
@@ -204,21 +283,22 @@ class Covid19
         description: protein["description"],
         polyproteins: protein["uniprotAccession"],
         sections: [
-          card("PDB", parse_pdb(protein, ["PDB"])),
+          card("PDB", *parse_pdb(protein, ["PDB"])),
           card("EMDB", parse_emdb(protein, ["EMDB"])),
           card_wrapper("Interactions", [
-            card("P-P Interactions", parse_db(protein, ["Interactions", "P-P-Interactions"])),
-            card("Ligands", parse_pdb(protein, ["Interactions", "Ligands"])),
+            card("P-P Interactions", *parse_db_with_experiments(protein, ["Interactions", "P-P-Interactions"])),
+            card("Ligands", *parse_db_with_experiments(protein, ["Interactions", "Ligands"])),
           ]),
           card_wrapper("Related", [
-            card("SARS-CoV", parse_db(protein, ["Related", "SARS-CoV"])),
-            card("Other", parse_db(protein, ["Related", "OtherRelated"]))
+            card("SARS-CoV", *parse_db_with_experiments(protein, ["Related", "SARS-CoV"])),
+            card("Other", *parse_db_with_experiments(protein, ["Related", "OtherRelated"]))
           ]),
           card_wrapper("Computational Models", [
             card("Swiss Model", parse_swiss_model(protein, ["CompModels", "swiss-model"])),
             card("AlphaFold", parse_alphafold(protein, ["CompModels", "AlphaFold"])),
             card("BSM-Arc", parse_bsm_arc(protein, ["CompModels", "BSM-Arc"])),
           ]),
+
         ].compact,
       }
     end
