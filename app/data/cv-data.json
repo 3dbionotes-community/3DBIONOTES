@@ -672,6 +672,10 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": {
+                        "7kfy": {},
+                        "7kfx": {},
+                        "7kfw": {},
+                        "7kfv": {},
                         "7kl9": {},
                         "7kkl": {},
                         "7kkk": {},
@@ -695,6 +699,7 @@
                         "7jzl": {},
                         "7jwb": {},
                         "7jw0": {},
+                        "7jvb": {},
                         "7jv6": {},
                         "7jv4": {},
                         "7jvc": {},
@@ -705,6 +710,14 @@
                         "7jmp": {},
                         "7jmo": {},
                         "7jjc": {},
+                        "7dk7": {},
+                        "7dk6": {},
+                        "7dk5": {},
+                        "7dk4": {},
+                        "7dd8": {},
+                        "7dd2": {},
+                        "7dcx": {},
+                        "7dcc": {},
                         "7ct5": {},
                         "7cjf": {
                             "validation": {
@@ -817,6 +830,12 @@
                         "7can": {}
                     },
                     "EMDB": [
+                        "EMD-30705",
+                        "EMD-30702",
+                        "EMD-30649",
+                        "EMD-30642",
+                        "EMD-30641",
+                        "EMD-30635",
                         "EMD-30460",
                         "EMD-30333",
                         "EMD-30332",
@@ -1533,6 +1552,7 @@
             "Interactions": {
                 "Ligands": {
                     "Misc-PDB": {
+                        "7krx": {},
                         "7kok": {},
                         "7kol": {},
                         "7koj": {},
@@ -1883,6 +1903,12 @@
                         "7buy",
                         "7brp",
                         "7bqy",
+                        "7ay7",
+                        "7axo",
+                        "7axm",
+                        "7ax6",
+                        "7aww",
+                        "7awu",
                         "7aku",
                         "6zru",
                         "6zrt",
@@ -3367,6 +3393,9 @@
                 "NendoU/nsp15"
             ],
             "PDB": {
+                "7kf4": {},
+                "7keh": {},
+                "7keg": {},
                 "7k9p": {
                     "validation": {
                         "pdb-redo": [
@@ -3695,6 +3724,8 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7kjqc",
+                        "7kjqb",
                         "7k5i",
                         "6zp4",
                         "6zon",
@@ -3710,6 +3741,8 @@
                     ],
                     "EMDB": [
                         "EMD-22681",
+                        "EMD-22433",
+                        "EMD-22432",
                         "EMD-11335",
                         "EMD-11325",
                         "EMD-11321",
