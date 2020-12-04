@@ -196,7 +196,7 @@ function onSearchInContainer(ev, proteinsData, options, filters) {
                 const itemsCssClasses = items
                     .map((name) => ".item-" + name.split("-")[0])
                     .join(",");
-                $("#pSubBod-" + filters.sectionId)
+                $(`#pSubBod-${filters.sectionId}, #modalContent-${filters.sectionId}`)
                     .find(itemsCssClasses)
                     .addClass("hl");
                 return relations[item].protein;
@@ -324,7 +324,7 @@ function hideProteinsAndRemoveItemHighlights(sectionId = "") {
         $(".protein").addClass("h");
         $(".item").removeClass("hl");
     } else {
-        $(`#pSubBod-${sectionId} .item`).removeClass("hl");
+        $(`#pSubBod-${sectionId}, #modalContent-${sectionId}`).find(".item").removeClass("hl");
     }
 }
 
