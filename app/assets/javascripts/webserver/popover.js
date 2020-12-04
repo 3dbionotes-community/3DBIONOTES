@@ -5,11 +5,18 @@ $(() => {
             trigger: "hover",
             container: $el,
             delay: { show: 750, hide: 150 },
+            // Disable sanitize so we can add data-* attributes within the popover content
+            sanitizeFn: function(content) {
+                return content;
+            }
         });
     });
 
     $('[data-toggle="popover"]').on('shown.bs.popover', function (event) {
-        const el = $(event.currentTarget).find('.no-description');
+        const currentTarget = $(event.currentTarget);
+        showIfUrlExists(currentTarget)
+
+        const el = currentTarget.find('.no-description');
         if (el.length > 0 && event.currentTarget.dataset && event.currentTarget.dataset.api){
             $.ajax({
                 url: event.currentTarget.dataset.api,

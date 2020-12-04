@@ -15,7 +15,7 @@ function initLiveSearch(proteinsData, options) {
     const onSearchThrottled = throttle(onSearchWithArgs, 300);
     $("#search-protein").keyup(onSearchThrottled);
     $(".modal.fade").on("show.bs.modal", onModalOpen);  
-    showIfUrlExists("data-check");
+    showIfUrlExists($(document));
 
     const onSearchExperimentInContainer = (ev) => {
         const currentTarget = $(ev.currentTarget);
@@ -77,18 +77,30 @@ function initLiveSearch(proteinsData, options) {
     $("#search-protein").keyup(onSearchThrottled);
 }
 
-function showIfUrlExists(attributeName) {
-    const promisesFn = $(`[${attributeName}]`)
+function showIfUrlExists(parent) {
+    const promisesFn = parent.find(`[data-check]`)
         .get()
-        .map((el) => () => showIfUrlExistsFromElement(el, attributeName));
+        .map((el) => () => showIfUrlExistsFromElement(el));
     runPromisesSequentially(promisesFn);
 }
 
-async function showIfUrlExistsFromElement(el, attributeName) {
-    const url = el.getAttribute(attributeName);
+var dataCheckCache = {};
+
+async function showIfUrlExistsFromElement(el) {
+    const url = el.getAttribute("data-check");
     if (!url) return;
-    const response = await fetch(url, { method: "HEAD" });
-    if (response.status === 200) {
+
+    const cachedValue = dataCheckCache[url];
+    let status;
+    if (cachedValue) {
+        status = cachedValue;
+    } else {
+        const res = await fetch(url, { method: "HEAD" });
+        status = res.status;
+        dataCheckCache[url] = status;
+    }
+
+    if (status === 200) {
         $(el).removeClass("h");
     }
 }
