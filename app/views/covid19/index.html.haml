@@ -1,6 +1,8 @@
+- max_items = 18
+
 :javascript
   var proteinsData = #{@proteins_data.to_json.html_safe};
-  $(function() { initLiveSearch(proteinsData, {maxItems: 12}) });
+  $(function() { initLiveSearch(proteinsData, {maxItems: #{max_items}}) });
 
 = render partial: "shared/wip"
 
@@ -158,7 +160,7 @@
               %em #{protein[:description]}
               %br/
           - protein[:sections].each do |section|
-            = render partial: "section", locals: {protein: protein, section: section, is_main: true}
+            = render partial: "section", locals: {protein: protein, section: section, is_main: true, max_items: max_items}
     .contentBox
       .contentTitle
         %h4
