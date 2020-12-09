@@ -672,6 +672,10 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": {
+                        "7knb": {},
+                        "7kmz": {},
+                        "7kms": {},
+                        "7kmb": {},
                         "7kfy": {},
                         "7kfx": {},
                         "7kfw": {},
@@ -842,6 +846,10 @@
                         "EMD-30305",
                         "EMD-30247",
                         "EMD-30039",
+                        "EMD-22941",
+                        "EMD-22932",
+                        "EMD-22927",
+                        "EMD-22922",
                         "EMD-22916",
                         "EMD-22910",
                         "EMD-22907",
@@ -1274,6 +1282,10 @@
                 "Papain-like proteinase"
             ],
             "PDB": {
+                "7kr1": {},
+                "7kr0": {},
+                "7kqw": {},
+                "7kqo": {},
                 "7kg3": {
                     "validation": {
                         "pdb-redo": [
@@ -1552,6 +1564,7 @@
             "Interactions": {
                 "Ligands": {
                     "Misc-PDB": {
+                        "7kqp": {},
                         "7krx": {},
                         "7kok": {},
                         "7kol": {},
@@ -1886,6 +1899,10 @@
             "Interactions": {
                 "Ligands": {
                     "Misc-PDB": [
+                        "7kw5",
+                        "7kvr",
+                        "7kvl",
+                        "7ks5",
                         "7k6e",
                         "7k6d",
                         "7k40",
@@ -2470,6 +2487,7 @@
                 "P-P-Interactions": {
                     "PDB": [
                         "7d4f",
+                        "7cyq",
                         "7cxn",
                         "7cxm",
                         "7ctt",
@@ -2484,6 +2502,7 @@
                         "6m71"
                     ],
                     "EMDB": [
+                        "EMD-30504",
                         "EMD-30493",
                         "EMD-30492",
                         "EMD-30469",
@@ -2721,6 +2740,7 @@
                     "PDB": [
                         "7jlt",
                         "7d4f",
+                        "7cyq",
                         "7cxn",
                         "7ctt",
                         "7c2k",
@@ -2738,6 +2758,7 @@
                         "6m71"
                     ],
                     "EMDB": [
+                        "EMD-30504",
                         "EMD-30493",
                         "EMD-30469",
                         "EMD-30275",
@@ -2817,6 +2838,7 @@
                     "PDB": [
                         "7jlt",
                         "7d4f",
+                        "7cyq",
                         "7cxn",
                         "7ctt",
                         "7c2k",
@@ -2834,6 +2856,7 @@
                         "6m71"
                     ],
                     "EMDB": [
+                        "EMD-30504",
                         "EMD-30493",
                         "EMD-30469",
                         "EMD-30275",
@@ -3356,6 +3379,14 @@
                 ]
             },
             "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7cyq"
+                    ],
+                    "EMDB": [
+                        "EMD-30504"
+                    ]
+                },
                 "Ligands": {
                     "BCU-CDR": {
                         "6w9q": {
@@ -3436,6 +3467,11 @@
                         ]
                     }
                 },
+                "7k0r": {
+                    "emdbs": [
+                        "7k0r"
+                    ]
+                },
                 "6xdh": {
                     "validation": {
                         "pdb-redo": [
@@ -3472,6 +3508,13 @@
                             }
                         ]
                     }
+                }
+            },
+            "EMDB": {
+                "EMD-22610": {
+                    "pdb": [
+                        "7k0r"
+                    ]
                 }
             },
             "CompModels": {
@@ -3519,6 +3562,7 @@
                                 ]
                             }
                         },
+                        "7k0r": {},
                         "6x4i": {
                             "validation": {
                                 "pdb-redo": [
@@ -3862,10 +3906,12 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7cyq",
                         "7cxn",
                         "6xez"
                     ],
                     "EMDB": [
+                        "EMD-30504",
                         "EMD-30493",
                         "EMD-22160"
                     ]
