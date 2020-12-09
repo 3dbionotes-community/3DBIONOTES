@@ -10,6 +10,11 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "data-loader": "^3.0.0",
+    "node-sass": "^4.14.1",
+    "protvista-feature-adapter": "^3.1.2",
+    "protvista-pdb": "^2.0.0",
+    "protvista-track": "^3.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
@@ -38,6 +43,11 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "sass": {
+    "includePaths": [
+      "./node_modules"
     ]
   }
 }
