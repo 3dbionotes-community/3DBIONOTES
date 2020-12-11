@@ -9,7 +9,9 @@ export const MolecularStructure: React.FC = () => {
         const el = inputEl.current;
         if (el) {
             const initParams = {
-                moleculeId: "7d6h",
+                //moleculeId: "7d6h",
+                moleculeId: "7kj5",
+                //moleculeId: "5lnk",
                 pdbeUrl: "https://www.ebi.ac.uk/pdbe/",
                 loadMaps: true,
                 validationAnnotation: true,
