@@ -22,7 +22,7 @@ export const ProtVistaTrack: React.FC = () => {
             */}
             <div>
                 <xprotvista-pdb accession="P05067" />
-                <protvista-pdb accession="P0DTC2" /> entry-id=kdjf entity-id=dkjfkd
+                <protvista-pdb accession="P0DTC2" />
             </div>
         </React.Fragment>
     );
