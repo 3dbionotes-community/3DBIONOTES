@@ -60,6 +60,7 @@ ehthumbs.db
 Thumbs.db
 *.swp
 *.swo
+.eslintcache
 
 # Ruby/Rails
 bak/
@@ -72,3 +73,8 @@ app/assets/javascripts/interface_viewer/interface_viewer.bundle.js
 
 # IDE Files
 .idea
+tsconfig.tsbuildinfo
+
+# Custom
+NOTES-*
+app/assets/javascripts/3dbio_viewer/data/
