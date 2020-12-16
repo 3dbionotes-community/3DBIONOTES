@@ -1,0 +1,77 @@
+Enter HTML
+%header
+  %nav#viewerNavbar.navbar.navbar-light.navbar-expand-md.fixed-top.d-xl-flex.align-items-xl-center{:style => "padding: 0;background: #ffffff;width: 100%;"}
+    .container-fluid
+      %a.navbar-brand{:href => "#"}
+        %img#mainLogo{:src => "/assets/3DBionotesLogo-small.jpg", :height => 72}/
+      %button.navbar-toggler{"data-target" => "#navcol-1", "data-toggle" => "collapse"}
+        %span.sr-only Toggle navigation
+        %span.navbar-toggler-icon
+      #navcol-1.collapse.navbar-collapse
+        %ul.nav.navbar-nav
+          %li.nav-item.d-xl-flex.align-items-xl-center
+            #viewerMenuButton.nav-item.dropdown.btn-primary.mr-4{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+              %a.dropdown-toggle.active{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"} MENU
+              .dropdown-menu
+                %a.dropdown-item.active{:href => "#"} First Item
+                %a.dropdown-item{:href => "#"} Second Item
+                %a.dropdown-item{:href => "#"} Third Item
+          %li.nav-item.d-xl-flex.align-items-xl-center
+            %span#viewerSlogan.d-xl-flex.align-items-xl-center
+              An ELIXIR Recommended Interoperability Resource
+              %br>/
+              Developed by 
+              %a.active{:href => "#"} Link
+              %br/
+      %span#partnersLogos.justify-content-xl-end.align-items-xl-center
+        Funded by:
+        %img{:height => "65", :src => "/assets/100_CSIC.jpg"}/
+        %img{:height => "45", :src => "/assets/CNB_logo-30fc3586b103c993eeacd7d1f9a0d02dbd445703f5ab29e8cc9e26a48d35ad0d.jpg"}/
+        %img{:height => "44", :src => "assets/instruct-eric-logo-noline.png", :style => "margin-left: 19px;"}/
+        %img{:height => "53", :src => "assets/inbelixir.png", :style => "margin-left: 24px;"}/
+.modal.fade{:role => "dialog", :style => "margin: -80px;", :tabindex => "-1"}
+  .modal-dialog.modal-lg.modal-dialog-centered{:role => "document"}
+    .modal-content
+      .modal-header
+        %img{:height => "90", :src => "assets/3DBionotesLogo.jpg", :style => "margin: auto;"}/
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body
+        %p
+          %strong> 3DBIONOTES-WS
+          is a web application designed to automatically annotate biochemical and biomedical information onto structural models. Current sources of information include post-translational modifications, genomic
+          variations associated to diseases, short linear motifs, immune epitopes sites, disordered regions and domain families.
+          %br/
+        .alert.alert-warning{:role => "alert"}
+          %span
+            %em Please, note this web site is work in progress.
+            %br/
+            %em Feel free to report any missing or inconsistent data or behaviour.
+            %br/
+      .modal-footer.text-left.d-xl-flex.justify-content-xl-start{:style => "text-align: left;"}
+        %p.text-left{:style => "text-align: left;"}
+          %a.btn.btn-primary.btn-lg{:href => "covid19.html", :role => "button"}
+            %strong CoVid-19 Edition
+            %br/
+          %a.btn.btn-secondary.btn-lg{:role => "button", :style => "margin-left: 10px;"}
+            %strong Example (EMD-21375)
+            %br/
+          %a.btn.btn-secondary.btn-lg{:role => "button", :style => "margin-left: 10px;"}
+            %strong Example (6lzg)
+            %br/
+
+#root
+
+-# Protvista
+= javascript_include_tag('//d3js.org/d3.v4.min.js')
+= javascript_include_tag('3dbio_viewer/build/protvista-pdb/protvista-pdb-2.0.0.js')
+
+-# PDBE Molstar
+= javascript_include_tag('3dbio_viewer/build/pdbe-molstar/pdbe-molstar-plugin-1.1.0.js')
+= stylesheet_link_tag('3dbio_viewer/build/pdbe-molstar/pdbe-molstar-1.1.0.css')
+
+= javascript_include_tag('3dbio_viewer/build/app/2.chunk.js')
+= javascript_include_tag('3dbio_viewer/build/app/main.chunk.js')
+= javascript_include_tag('3dbio_viewer/build/app/runtime-main.js')
+
+= stylesheet_link_tag('3dbio_viewer/build/app/main.chunk.css')

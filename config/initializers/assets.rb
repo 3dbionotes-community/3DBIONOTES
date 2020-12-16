@@ -99,3 +99,6 @@ Rails.application.config.assets.precompile += %w[webserver/collapse.js]
 Rails.application.config.assets.precompile += %w[webserver/ekko-lightbox.min.js]
 Rails.application.config.assets.precompile += %w[webserver/lightbox.js]
 Rails.application.config.assets.precompile += %w[covid19.js]
+
+Rails.application.config.assets.precompile += %w[webserver/viewer.css]
+Rails.application.config.assets.precompile += ['3dbio_viewer/build/*']
