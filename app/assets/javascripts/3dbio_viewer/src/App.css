@@ -11,12 +11,6 @@
   width: 50%
 }
 
-/*
-.msp-plugin .msp-semi-transparent-background {
-  opacity: 1.0;
-}
-*/
-
 .msp-plugin .msp-layout-standard-outside .msp-layout-bottom {
   top: auto;
   bottom: 0px;
