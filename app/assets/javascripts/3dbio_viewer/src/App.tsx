@@ -6,9 +6,7 @@ import { ProtVistaTrack } from "./ProtVistaTrack";
 function App() {
     return (
         <div id="app">
-            <div id="left">
-                <MolecularStructure />*
-            </div>
+            <div id="left">{/*<MolecularStructure />*/}</div>
 
             <div id="right">
                 <ProtVistaTrack />

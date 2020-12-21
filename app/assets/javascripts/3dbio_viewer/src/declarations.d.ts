@@ -3,6 +3,7 @@ declare namespace JSX {
         "protvista-track": any;
         "protvista-feature-adapter": any;
         "data-loader": any;
+        "protvista-pdb-navigation": any;
 
         "protvista-pdb": any;
         "xprotvista-pdb": any;
