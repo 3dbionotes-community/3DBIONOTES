@@ -1,3 +1,139 @@
+import _ from "lodash";
+
+const variantsFilters: Config["variantsFilters"] = [
+    {
+        type: "consequence",
+        items: [{ label: "Disease (reviewed)", color: "#990000" }],
+        properties: {
+            association: function (variant) {
+                /*
+                return _.some(variant.association, function (association) {
+                    return association.disease === true;
+                });
+                */
+                return true;
+            },
+        },
+    },
+    {
+        type: "consequence",
+        items: [
+            { label: "Predicted deleterious", color: "#002594" },
+            { label: "Predicted benign", color: "#8FE3FF" },
+        ],
+    },
+    {
+        type: "consequence",
+        items: [{ label: "Non-disease (reviewed)", color: "#99cc00" }],
+    },
+    {
+        type: "consequence",
+        items: [{ label: "Init, stop loss or gain", color: "#FFCC00" }],
+    },
+
+    {
+        type: "source",
+        items: [{ label: "UniProt reviewed", color: "#808080" }],
+    },
+    {
+        type: "source",
+        items: [{ label: "Large scale studies", color: "#808080" }],
+    },
+    {
+        type: "source",
+        items: [{ label: "CNCB", color: "#808080" }],
+    },
+];
+
+// From ./myProtVista/src/FeatureFactory.js
+// TODO: merge with object
+const shapeByTrackName = {
+    //molecular processing
+    chain: "rectangle",
+    transit: "rectangle",
+    init_met: "arrow",
+    propep: "rectangle",
+    peptide: "rectangle",
+    signal: "rectangle",
+    //structural
+    helix: "rectangle",
+    strand: "rectangle",
+    turn: "rectangle",
+    //domains & sites
+    region: "rectangle",
+    coiled: "rectangle",
+    motif: "rectangle",
+    repeat: "rectangle",
+    ca_bind: "rectangle",
+    dna_bind: "rectangle",
+    domain: "rectangle",
+    zn_fing: "rectangle",
+    np_bind: "rectangle",
+    metal: "diamond",
+    site: "chevron",
+    binding: "catFace",
+    act_site: "circle",
+    //ptms
+    mod_res: "triangle",
+    lipid: "wave",
+    carbohyd: "hexagon",
+    disulfid: "bridge",
+    crosslnk: "bridge",
+    //seqInfo
+    compbias: "rectangle",
+    conflict: "rectangle",
+    non_cons: "doubleBar",
+    non_ter: "doubleBar",
+    unsure: "rectangle",
+    non_std: "pentagon",
+    //mutagenesis
+    mutagen: "rectangle",
+    //topology
+    topo_dom: "rectangle",
+    transmem: "rectangle",
+    intramem: "rectangle",
+    //variants
+    /* TODO
+    var_seq: "variant",
+    variant: "variant",
+    missense: "variant", //CHECK
+    ms_del: "variant", //CHECK
+    insdel: "variant", //CHECK
+    stop_lost: "variant", //CHECK
+    stop_gained: "variant", //CHECK
+    init_codon: "variant", //CHECK
+    */
+    //proteomics
+    unique: "rectangle",
+    non_unique: "rectangle",
+
+    mod_res_pho: "triangle",
+    mod_res_met: "triangle",
+    mod_res_ace: "triangle",
+    mod_res_cro: "triangle",
+    mod_res_cit: "triangle",
+    mod_res_sum: "triangle",
+    mod_res_ubi: "triangle",
+    pfam_domain: "rectangle",
+    interpro_domain: "rectangle",
+    smart_domain: "rectangle",
+    disprot: "rectangle",
+    pdb_xray: "rectangle",
+    pdb_nmr: "rectangle",
+    // crosslnk: "triangle", // Duplicated in ptms
+    linear_motif: "rectangle",
+    linear_epitope: "rectangle",
+    rama: "pentagon",
+    omega: "circle",
+    rota: "diamond",
+    h_bond_flip: "circle",
+    changed_rotamer: "diamond",
+    completed_res: "pentagon",
+    completed_loop: "rectangle",
+} as const;
+
+type Shape = typeof shapeByTrackName[keyof typeof shapeByTrackName];
+
 const config: Config = {
     categories: [
         {
@@ -389,9 +525,11 @@ const config: Config = {
         completed_res: { label: "Completed residues", tooltip: "Completed residues" },
         completed_loop: { label: "Completed loop", tooltip: "Completed loop" },
     },
+    shapeByTrackName,
+    variantsFilters,
 };
 
-interface Config {
+export interface Config {
     categories: Array<{
         name: string;
         label: string;
@@ -406,6 +544,16 @@ interface Config {
             color?: string;
         }
     >;
+    shapeByTrackName: Record<string, Shape>;
+    variantsFilters: Array<{
+        type: VariantFilterType;
+        items: Array<{ label: string; color: string }>;
+        properties?: {
+            association?(variant: unknown): boolean;
+        };
+    }>;
 }
+
+export type VariantFilterType = "source" | "consequence";
 
 export default config;
