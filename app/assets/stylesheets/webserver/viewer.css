@@ -1,4 +1,23 @@
-#viewerNavbar {
+#videoWrapper {
+  width: 536px;
+  overflow: hidden;
+  display: block;
+}
+
+#welcome {
+  padding-top: 40px;
+  padding-bottom: 0px;
+  margin-bottom: -40px;
+}
+
+#welcomeVideo {
+  margin-left: -1px;
+}
+
+#Navbar {
+  background: #ffffff;
+  width: 100%;
+  padding: 0px 10px;
   border-bottom: solid 6px #123546;
 }
 

@@ -9,6 +9,7 @@ class WebserverController < ApplicationController
   end
 
   def viewer
-    render layout: "webserver_bare"
+    @skip_footer = true
+    render layout: "webserver"
   end
 end

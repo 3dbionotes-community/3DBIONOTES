@@ -1,11 +1,26 @@
-%p.footer
-  %a{:href => "http://biocomputingunit.es"}
-    Biocomputing Unit
-  \-
-  %a{:href => "http://www.cnb.csic.es/index.php/en/"}
-    CNB
-  \-
-  %a{:href => "http://www.csic.es/web/guest/home"}
-    CSIC
-%p.footer
-  Please, submit suggestions, comments and bug reports to...
+#mainFooter.bg-primary.footer-dark
+  %footer
+    .container.text-center
+      .row
+        .col
+          %h4
+            %strong
+              3DBIONOTES-<em>WS</em>
+            %br/
+          %p
+            %strong An ELIXIR Recommended Interoperability Resource
+            %br/
+          .footerLinks
+            %p
+              %a{:href => "#"}> Biocomputing Unit
+              &nbsp;@
+              %a{:href => "#"} CNB
+              %span -
+              %a{:href => "#"} CSIC
+          %p
+            %strong 3DBIONOTES web-server was developed and is maintained at the Biocomputing Unit - CNB
+            %br/
+            %strong Citing the web-server 
+            %a{:href => "https://doi.org/10.1093/bioinformatics/btx483", :target => "_blank"}
+              %i.fa.fa-external-link
+            %br/
