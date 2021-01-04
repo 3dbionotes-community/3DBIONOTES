@@ -29,48 +29,16 @@
         .container-fluid.carouselContainer
           #myCarousel.carousel.slide{"data-ride" => "carousel"}
             .carousel-inner.row.w-100.mx-auto
-              .carousel-item.col-md-4.active
-                .card
-                  %img.card-img-top.img-fluid{:alt => "Card image cap", :src => "http://placehold.it/150"}/
-                  .card-body
-                    %h4.card-title Card 1
-                    %p.card-text This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-              .carousel-item.col-md-4
-                .card
-                  %img.card-img-top.img-fluid{:alt => "Card image cap", :src => "http://placehold.it/150"}/
-                  .card-body
-                    %h4.card-title Card 2
-                    %p.card-text This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-              .carousel-item.col-md-4
-                .card
-                  %img.card-img-top.img-fluid{:alt => "Card image cap", :src => "http://placehold.it/150"}/
-                  .card-body
-                    %h4.card-title Card 3
-                    %p.card-text This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-              .carousel-item.col-md-4
-                .card
-                  %img.card-img-top.img-fluid{:alt => "Card image cap", :src => "http://placehold.it/150"}/
-                  .card-body
-                    %h4.card-title Card 4
-                    %p.card-text This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-              .carousel-item.col-md-4
-                .card
-                  %img.card-img-top.img-fluid{:alt => "Card image cap", :src => "http://placehold.it/150"}/
-                  .card-body
-                    %h4.card-title Card 5
-                    %p.card-text This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-              .carousel-item.col-md-4
-                .card
-                  %img.card-img-top.img-fluid{:alt => "Card image cap", :src => "http://placehold.it/150"}/
-                  .card-body
-                    %h4.card-title Card 6
-                    %p.card-text This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-              .carousel-item.col-md-4
-                .card
-                  %img.card-img-top.img-fluid{:alt => "Card image cap", :src => "http://placehold.it/150"}/
-                  .card-body
-                    %h4.card-title Card 7
-                    %p.card-text This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+              - @selected_entries.each_with_index do |entry, idx|
+                %div{:class => ["carousel-item", "col-md-4", idx == 0 ? "active" : nil].compact}
+                  .card
+                    %a{:href => entry[:query_url]}
+                      %img.card-img-top.img-fluid{:alt => entry[:name], :src => entry[:image_url]}/
+                      .card-body
+                        %h4.card-title
+                          = entry[:name]
+                        %p.card-text
+                          = entry[:description]
             %a.carousel-control-prev{"data-slide" => "prev", :href => "#myCarousel", :role => "button"}
               %span.carousel-control-prev-icon{"aria-hidden" => "true"}
               %span.sr-only Previous

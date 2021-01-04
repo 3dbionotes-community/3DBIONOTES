@@ -72,6 +72,7 @@
 .dropdown-toggle.active {
 }
 
+/*
 .modal {
   position: fixed;
   top: 0;
@@ -83,6 +84,7 @@
   overflow: hidden;
   outline: 0;
 }
+*/
 
 .modal-header {
   color: #123546;

@@ -13,9 +13,10 @@
               #viewerMenuButton.nav-item.dropdown.btn-primary.mr-4{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :style => "margin-right: 0px;margin-left: 0px;", :type => "button"}
                 %a.dropdown-toggle.active{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"} MENU
                 .dropdown-menu
-                  %a.dropdown-item.active{:href => "#"} First Item
-                  %a.dropdown-item{:href => "#"} Second Item
-                  %a.dropdown-item{:href => "#"} Third Item
+                  %a.dropdown-item.active{:href => ws_path} HOME
+                  %a.dropdown-item{:href => ws_covid19_path} CoVid-19
+                  %a.dropdown-item{:href => "#TODO"} VIEWER
+                  %a.dropdown-item{:href => "#TODO"} ABOUT US
       #Slogan.text-center.text-sm-center.text-md-center.text-lg-left.text-xl-left.d-sm-block.flex-grow-1
         %span#viewerSlogan
           An ELIXIR Recommended Interoperability Resource
