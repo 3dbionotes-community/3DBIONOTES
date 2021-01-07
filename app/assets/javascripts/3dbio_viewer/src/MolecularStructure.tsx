@@ -17,7 +17,7 @@ export const MolecularStructure: React.FC = () => {
                 validationAnnotation: true,
                 hideControls: false,
                 domainAnnotation: true,
-                expanded: false,
+                expanded: true,
                 //bgColor: { r: 255, g: 255, b: 255 },
                 subscribeEvents: false,
                 assemblyId: "1", //'deposited' | "preferred"
