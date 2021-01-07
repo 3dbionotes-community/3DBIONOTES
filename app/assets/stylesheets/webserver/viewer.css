@@ -28,18 +28,20 @@
   border-radius: 8px;
 }
 
-#viewerMenuButton .dropdown-menu {
+#navcol-1 .dropdown-menu {
   background-color: #123546;
   border-radius: 8px;
+  top: 77%;
+  left: auto;
 }
 
-#viewerMenuButton .dropdown-item.active {
+#navcol-1 .dropdown-item.active {
   color: #fff;
   text-decoration: none;
   background-color: #123546;
 }
 
-#viewerMenuButton .dropdown-item {
+#navcol-1 .dropdown-item {
   color: #A2BECB;
   text-decoration: none;
   background-color: initial;
