@@ -132,7 +132,7 @@ const shapeByTrackName = {
 
 type Shape = typeof shapeByTrackName[keyof typeof shapeByTrackName];
 
-const config: Config = {
+export const config: Config = {
     categories: [
         {
             name: "DOMAINS_AND_SITES",
@@ -554,4 +554,3 @@ export interface Config {
 
 export type VariantFilterType = "source" | "consequence";
 
-export default config;
