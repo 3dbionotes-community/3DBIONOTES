@@ -15,7 +15,7 @@ export const MolecularStructure: React.FC = () => {
                 pdbeUrl: "https://www.ebi.ac.uk/pdbe/",
                 loadMaps: true,
                 validationAnnotation: true,
-                hideControls: false,
+                hideControls: true,
                 domainAnnotation: true,
                 expanded: true,
                 //bgColor: { r: 255, g: 255, b: 255 },
