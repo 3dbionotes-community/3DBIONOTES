@@ -1,5 +1,4 @@
 import { Fragment } from "./Fragment";
-import { Shape } from "./Shape";
 
 export interface Track {
     label: string;
@@ -12,6 +11,22 @@ export interface Track {
         labelTooltip: string; // Label tooltip content. Support text and HTML mark-up
         overlapping?: boolean;
         shape: Shape;
-        locations: Array<{ fragments: Fragment[] }>;
+        locations: Array<{
+            fragments: Fragment[];
+        }>;
     }>;
 }
+
+type Shape =
+    | "rectangle"
+    | "bridge"
+    | "diamond"
+    | "chevron"
+    | "catFace"
+    | "triangle"
+    | "wave"
+    | "hexagon"
+    | "pentagon"
+    | "circle"
+    | "arrow"
+    | "doubleBar";
