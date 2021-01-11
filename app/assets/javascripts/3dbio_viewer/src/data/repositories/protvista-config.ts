@@ -1,5 +1,3 @@
-import { Legend } from "../../domain/entities/Legend";
-
 const variantsFilters: Config["variantsFilters"] = [
     {
         type: "consequence",

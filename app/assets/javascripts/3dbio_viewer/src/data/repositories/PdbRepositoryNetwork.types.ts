@@ -95,3 +95,10 @@ export interface PdbAnnotation {
     algoType: string;
     data: Array<{ begin: string; value: number }>;
 }
+
+export interface Coverage {
+    "Structure coverage": Array<{
+        start: number;
+        end: number;
+    }>;
+}

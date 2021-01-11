@@ -17,6 +17,7 @@ import {
     EbiVariation,
     Cv19Annotations,
     PdbAnnotations,
+    Coverage,
 } from "./PdbRepositoryNetwork.types";
 import { getEmValidationTrack } from "./em-validation";
 import { getName } from "./utils";
@@ -33,40 +34,37 @@ export class PdbRepositoryNetwork implements PdbRepository {
                 `${bionotesUrl}/ws/lrs/pdbAnnotFromMap/all/${pdb}/${chain}/?format=json`
             ),
             ebiVariation: get(`https://www.ebi.ac.uk/proteins/api/variation/${protein}`),
-            bioMuta: get(`${bionotesUrl}/api/annotations/biomuta/Uniprot/${protein}`),
+            coverage: get(`${bionotesUrl}/api/alignments/Coverage/${pdb}${chain}`),
+            // bioMuta: get(`${bionotesUrl}/api/annotations/biomuta/Uniprot/${protein}`),
         };
 
-        const data1$ = Future.join(data$.features, data$.covidAnnotations);
-        const data2$ = Future.join3(data$.ebiVariation, data$.pdbAnnotations, data$.bioMuta);
+        const data1$ = Future.join3(data$.features, data$.covidAnnotations, data$.coverage);
+        const data2$ = Future.join(data$.ebiVariation, data$.pdbAnnotations);
 
         return Future.join(data1$, data2$).map(
-            ([[features, annotations], [ebiVariation, pdbAnnotations, bioMuta]]) => {
+            ([[features, annotations, coverage], [ebiVariation, pdbAnnotations]]) => {
                 return this.getPdb({
                     features,
                     covidAnnotations: annotations,
                     ebiVariation,
                     pdbAnnotations,
-                    bioMuta,
+                    coverage,
                 });
             }
         );
     }
 
     getPdb(data: Data): Pdb {
-        const {
-            features: featuresData,
-            covidAnnotations: annotations,
-            ebiVariation,
-            pdbAnnotations /* bioMuta */,
-        } = data;
+        const { features, covidAnnotations, ebiVariation, pdbAnnotations, coverage } = data;
         debugVariable(data);
 
         const filters: VariantFilter[] = this.getVariantFilters();
         const variants = ebiVariation ? this.getVariants(ebiVariation, filters) : undefined;
-        const groupedFeatures = this.getGroupedFeatures(featuresData);
-        const mapping = annotations ? annotations[0] : undefined;
+        const groupedFeatures = this.getGroupedFeatures(features);
+        const mapping = covidAnnotations ? covidAnnotations[0] : undefined;
         const functionalMappingTrack = this.getFunctionalMappingTrack(mapping);
         const emValidationTrack = getEmValidationTrack(pdbAnnotations);
+        const structureCoverageTrack = this.getStructureCoverageTrack(coverage);
 
         const tracks: Track[] = _.compact([
             functionalMappingTrack,
@@ -74,10 +72,11 @@ export class PdbRepositoryNetwork implements PdbRepository {
                 this.getTrackFromGroupedFeature(groupedFeature)
             ),
             emValidationTrack,
+            structureCoverageTrack,
         ]);
 
         return {
-            sequence: featuresData.sequence,
+            sequence: features.sequence,
             tracks,
             variants,
             length: this.getTotalFeaturesLength(groupedFeatures),
@@ -92,6 +91,40 @@ export class PdbRepositoryNetwork implements PdbRepository {
                 .map(item => parseInt(item.end))
                 .max() || 0
         );
+    }
+
+    private getStructureCoverageTrack(coverage: Coverage): Track {
+        const itemKey = "region";
+        const trackConfig = protvistaConfig.tracks[itemKey];
+        const name = "Region";
+
+        return {
+            label: "Structure coverage",
+            labelType: "text" as const,
+            overlapping: false,
+            data: [
+                {
+                    accession: name,
+                    type: name,
+                    label: name,
+                    labelTooltip: trackConfig.tooltip,
+                    overlapping: false,
+                    shape: protvistaConfig.shapeByTrackName[itemKey] || "circle",
+                    locations: [
+                        {
+                            fragments: coverage["Structure coverage"].map(
+                                (item): Fragment => ({
+                                    start: item.start,
+                                    end: item.end,
+                                    description: "Sequence segment covered by the structure",
+                                    color: trackConfig.color || defaultColor,
+                                })
+                            ),
+                        },
+                    ],
+                },
+            ],
+        };
     }
 
     private getTrackFromGroupedFeature(feature: GroupedFeature): Track {
@@ -117,7 +150,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
                                     start: parseInt(item.begin),
                                     end: parseInt(item.end),
                                     description: item.description,
-                                    color: protvistaConfig.tracks[itemKey]?.color || "#777",
+                                    color: protvistaConfig.tracks[itemKey]?.color || defaultColor,
                                 })
                             ),
                         },
@@ -245,7 +278,8 @@ interface Data {
     covidAnnotations: Cv19Annotations;
     pdbAnnotations: PdbAnnotations;
     ebiVariation: EbiVariation;
-    bioMuta: EbiVariation;
+    coverage: Coverage;
+    //bioMuta: EbiVariation;
 }
 
 type AsyncData = { [K in keyof Data]: Future<RequestError, Data[K]> };
@@ -266,3 +300,5 @@ const builder: AxiosBuilder<RequestError> = {
 function request<Data>(request: AxiosRequestConfig): Future<RequestError, Data> {
     return axiosRequest<RequestError, Data>(builder, request);
 }
+
+const defaultColor = "#777";
