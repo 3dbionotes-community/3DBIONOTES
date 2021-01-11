@@ -109,6 +109,7 @@ interface EmResolution {
 }
 
 /* Color functions from extendProtVista/add_em_res.js */
+
 function getColorFromResolution(resolution: number, emResColors: Color[]) {
     /* Return the color that corresponds to resolution value*/
 

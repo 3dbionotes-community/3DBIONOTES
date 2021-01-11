@@ -1,7 +1,8 @@
 import { Color } from "../../../domain/entities/Color";
 import { Shape } from "../../../domain/entities/Shape";
-import { Variants } from "../../../domain/entities/Variant";
+import { Variant, Variants } from "../../../domain/entities/Variant";
 
+// https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
 export interface PdbView {
     displayNavigation: boolean;
     displaySequence: boolean;
@@ -14,10 +15,17 @@ export interface PdbView {
     };
     sequence: string;
     length: number;
-    // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track#data-array
     tracks: TrackView[];
-    variants?: Variants;
+    variants?: VariantsView;
     sequenceConservation?: unknown;
+}
+
+interface VariantsView extends Variants {
+    variants: VariantView[];
+}
+
+export interface VariantView extends Variant {
+    tooltipContent: string;
 }
 
 export interface TrackView {

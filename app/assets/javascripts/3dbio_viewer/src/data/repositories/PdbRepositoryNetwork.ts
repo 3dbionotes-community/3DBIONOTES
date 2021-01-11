@@ -2,11 +2,10 @@ import _ from "lodash";
 import { AxiosRequestConfig } from "axios";
 import { FutureData } from "../../domain/entities/FutureData";
 import { Pdb } from "../../domain/entities/Pdb";
-import { Variant, VariantFilter, Variants } from "../../domain/entities/Variant";
 import { PdbRepository } from "../../domain/repositories/PdbRepository";
 import { Future } from "../../utils/future";
 import { AxiosBuilder, axiosRequest } from "../../utils/future-axios";
-import { VariantFilterType, config as protvistaConfig } from "./protvista-config";
+import { config as protvistaConfig } from "./protvista-config";
 import { Track } from "../../domain/entities/Track";
 import { Fragment } from "../../domain/entities/Fragment";
 import { debugVariable } from "../../utils/debug";
@@ -21,8 +20,10 @@ import {
 } from "./PdbRepositoryNetwork.types";
 import { getEmValidationTrack } from "./em-validation";
 import { getName } from "./utils";
+import { getVariants } from "./variants";
 
 export class PdbRepositoryNetwork implements PdbRepository {
+    // TODO: Get protein from pdb
     get(options: { protein: string; pdb: string; chain: string }): FutureData<Pdb> {
         const { protein, pdb, chain } = options;
         const bionotesUrl = "http://3dbionotes.cnb.csic.es";
@@ -58,8 +59,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
         const { features, covidAnnotations, ebiVariation, pdbAnnotations, coverage } = data;
         debugVariable(data);
 
-        const filters: VariantFilter[] = this.getVariantFilters();
-        const variants = ebiVariation ? this.getVariants(ebiVariation, filters) : undefined;
+        const variants = ebiVariation ? getVariants(ebiVariation) : undefined;
         const groupedFeatures = this.getGroupedFeatures(features);
         const mapping = covidAnnotations ? covidAnnotations[0] : undefined;
         const functionalMappingTrack = this.getFunctionalMappingTrack(mapping);
@@ -219,58 +219,10 @@ export class PdbRepositoryNetwork implements PdbRepository {
 
         return features;
     }
-
-    private getVariants(
-        ebiVariation: EbiVariation,
-        filters: VariantFilter[]
-    ): Variants | undefined {
-        return {
-            sequence: ebiVariation.sequence,
-            filters,
-            variants: ebiVariation.features.map(
-                (v): Variant => ({
-                    accession: v.genomicLocation,
-                    color: "#800",
-                    start: v.begin,
-                    end: v.end,
-                    //polyphenScore: number,
-                    //siftScore: number,
-                    sourceType: v.sourceType,
-
-                    // TODO
-                    tooltipContent:
-                        "<table>\n            <tr>\n                <td>Variant</td>\n                <td>L > V</td>\n            </tr>\n            \n            \n        <tr>\n            <td>SIFT</td>\n            <td>0.215</td>\n        </tr>\n        \n            \n        <tr>\n            <td>Polyphen</td>\n            <td>0.003</td>\n        </tr>\n        \n            \n            \n        <tr>\n            <td>Consequence</td>\n            <td>missense</td>\n        </tr>\n        \n            \n            \n            \n            <tr>\n                <td>Location</td>\n                <td>NC_000021.9:g.26170608A>C</td>\n            </tr>\n            \n            \n            \n        </table>",
-                    variant: v.alternativeSequence,
-                    xrefNames: (v.xrefs || []).map(xref => xref.name),
-                })
-            ),
-        };
-    }
-
-    private getVariantFilters(): VariantFilter[] {
-        return protvistaConfig.variantsFilters.map(
-            (f, idx): VariantFilter => ({
-                name: "filter-" + idx,
-                type: {
-                    name: f.type === "source" ? ("provenance" as const) : ("consequence" as const),
-                    text: textByVariantFilterType[f.type],
-                },
-                options: {
-                    labels: f.items.map(item => item.label),
-                    colors: f.items.map(item => item.color),
-                },
-            })
-        );
-    }
 }
 
-const textByVariantFilterType: Record<VariantFilterType, string> = {
-    consequence: "Filter consequence",
-    source: "Filter data source",
-};
-
 function get<Data>(url: string): Future<RequestError, Data> {
-    return request<Data>({ method: "GET", url });
+    return request<Data>({ method: "GET", url }); //.flatMapError -> chainRej;
 }
 
 interface Data {

@@ -18,14 +18,11 @@ export const Protvista: React.FC = () => {
         const provistaEl = protvistaElRef.current;
         if (!provistaEl) return;
 
+        //compositionRoot.getPdb({ protein: "Q9BYF1", pdb: "6lzg", chain: "A" }).run(
         compositionRoot.getPdb({ protein: "P0DTC2", pdb: "6zow", chain: "A" }).run(
-            pdb => {
-                //(provistaEl as any).variantFilter = protvistaConfig.variantsFilters;
-                provistaEl.viewerdata = getPdbView(pdb);
-            },
-            error => {
-                alert(error.message);
-            }
+            //(provistaEl as any).variantFilter = protvistaConfig.variantsFilters;
+            pdb => (provistaEl.viewerdata = getPdbView(pdb)),
+            error => console.error(error)
         );
     });
 
@@ -56,6 +53,15 @@ function getPdbView(pdb: Pdb): PdbView {
                 })),
             })),
         })),
+        variants: pdb.variants
+            ? {
+                  ...pdb.variants,
+                  variants: pdb.variants.variants.map(variant => ({
+                      ...variant,
+                      tooltipContent: variant.description,
+                  })),
+              }
+            : undefined,
     };
 }
 

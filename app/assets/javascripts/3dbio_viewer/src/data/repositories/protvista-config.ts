@@ -1,50 +1,5 @@
-const variantsFilters: Config["variantsFilters"] = [
-    {
-        type: "consequence",
-        items: [{ label: "Disease (reviewed)", color: "#990000" }],
-        properties: {
-            association: function (variant) {
-                /*
-                return _.some(variant.association, function (association) {
-                    return association.disease === true;
-                });
-                */
-                return true;
-            },
-        },
-    },
-    {
-        type: "consequence",
-        items: [
-            { label: "Predicted deleterious", color: "#002594" },
-            { label: "Predicted benign", color: "#8FE3FF" },
-        ],
-    },
-    {
-        type: "consequence",
-        items: [{ label: "Non-disease (reviewed)", color: "#99cc00" }],
-    },
-    {
-        type: "consequence",
-        items: [{ label: "Init, stop loss or gain", color: "#FFCC00" }],
-    },
-
-    {
-        type: "source",
-        items: [{ label: "UniProt reviewed", color: "#808080" }],
-    },
-    {
-        type: "source",
-        items: [{ label: "Large scale studies", color: "#808080" }],
-    },
-    {
-        type: "source",
-        items: [{ label: "CNCB", color: "#808080" }],
-    },
-];
-
 // From ./myProtVista/src/FeatureFactory.js
-// TODO: merge with object
+// TODO: merge shapes with object
 const shapeByTrackName = {
     //molecular processing
     chain: "rectangle",
@@ -519,7 +474,6 @@ export const config: Config = {
     categories,
     tracks,
     shapeByTrackName,
-    variantsFilters,
 };
 
 export interface Config {
@@ -531,13 +485,4 @@ export interface Config {
     }>;
     tracks: Record<string, { label: string; tooltip: string; color?: string }>;
     shapeByTrackName: Record<string, Shape>;
-    variantsFilters: Array<{
-        type: VariantFilterType;
-        items: Array<{ label: string; color: string }>;
-        properties?: {
-            association?(variant: unknown): boolean;
-        };
-    }>;
 }
-
-export type VariantFilterType = "source" | "consequence";
