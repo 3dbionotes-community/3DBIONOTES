@@ -8,36 +8,44 @@ import { PdbView, ProtvistaTrackElement } from "./Protvista.types";
 import styles from "./Protvista.module.css";
 import { Tooltip } from "./Tooltip";
 
+type State =
+    | { type: "loading" }
+    | { type: "loaded"; refs: Array<React.RefObject<ProtvistaTrackElement>> };
+
 export const Protvista: React.FC = () => {
-    const protvistaElRef = React.useRef<ProtvistaTrackElement>(null);
+    const protvistaElRef1 = React.useRef<ProtvistaTrackElement>(null);
     const protvistaElRef2 = React.useRef<ProtvistaTrackElement>(null);
     const { compositionRoot } = useAppContext();
+    const [state, setState] = React.useState<State>({ type: "loading" });
 
     React.useEffect(() => {
-        const protvistaEl = protvistaElRef.current;
-        const protvistaEl2 = protvistaElRef2.current;
-        if (!protvistaEl || !protvistaEl2) return;
+        const pdbOptions = {
+            pdb6zow: { protein: "P0DTC2", pdb: "6zow", chain: "A" },
+            pdb6lzg: { protein: "Q9BYF1", pdb: "6lzg", chain: "A" },
+        };
 
-        //const pdbOptions = { protein: "Q9BYF1", pdb: "6lzg", chain: "A" };
-        const pdbOptions = { protein: "P0DTC2", pdb: "6zow", chain: "A" };
-        compositionRoot.getPdb(pdbOptions).run(
+        compositionRoot.getPdb(pdbOptions.pdb6zow).run(
             pdb => {
+                setState({ type: "loading" });
                 debugVariable(pdb);
                 const [tracks1, tracks2] = _.partition(
                     pdb.tracks,
                     track => track.id !== "em-validation"
                 );
 
-                loadPdb(protvistaEl, { ...pdb, tracks: tracks1 });
-                loadPdb(protvistaEl2, { ...pdb, tracks: tracks2, variants: undefined });
+                const refs = [
+                    loadPdb(protvistaElRef1, { ...pdb, tracks: tracks1 }),
+                    loadPdb(protvistaElRef2, { ...pdb, tracks: tracks2, variants: undefined }),
+                ];
+                setState({ type: "loaded", refs: _.compact(refs) });
             },
             error => console.error(error)
         );
-    });
+    }, [compositionRoot, protvistaElRef1, protvistaElRef2, setState]);
 
     return (
         <div>
-            <div className="section">
+            <div className="section" style={getSectionStyle(state, protvistaElRef1)}>
                 <div className={styles.title}>
                     S | Spike protein S | Spike glycoprotein | Surface Glycoprotein | SPIKE_WCPV
                     <div className={styles.actions}>
@@ -56,11 +64,10 @@ export const Protvista: React.FC = () => {
                     viral entry. Proteolysis by cathepsin CTSL may unmask the fusion peptide of S2
                     and activate membranes fusion within endosomes.
                 </div>
+                <protvista-pdb custom-data="true" ref={protvistaElRef1}></protvista-pdb>
             </div>
 
-            <protvista-pdb custom-data="true" ref={protvistaElRef}></protvista-pdb>
-
-            <div className="section">
+            <div className="section" style={getSectionStyle(state, protvistaElRef2)}>
                 <div className={styles.title}>
                     Map Validation<button>?</button>
                 </div>
@@ -71,12 +78,20 @@ export const Protvista: React.FC = () => {
                     an error will be returned. The action here is to take unique rowId entries from
                     each file and merge them to a single file.
                 </div>
+                <protvista-pdb custom-data="true" ref={protvistaElRef2}></protvista-pdb>
             </div>
-
-            <protvista-pdb custom-data="true" ref={protvistaElRef2}></protvista-pdb>
         </div>
     );
 };
+
+function getSectionStyle(
+    state: State,
+    ref: React.RefObject<ProtvistaTrackElement>
+): React.CSSProperties {
+    return {
+        opacity: state.type !== "loaded" || !state.refs.includes(ref) ? 1 : 0,
+    };
+}
 
 function getPdbView(pdb: Pdb): PdbView {
     return {
@@ -110,7 +125,14 @@ function getPdbView(pdb: Pdb): PdbView {
     };
 }
 
-function loadPdb(protvistaEl: ProtvistaTrackElement, pdb: Pdb, options: Partial<PdbView> = {}) {
+function loadPdb(
+    protvistaRef: React.RefObject<ProtvistaTrackElement>,
+    pdb: Pdb,
+    options: Partial<PdbView> = {}
+): React.RefObject<ProtvistaTrackElement> | undefined {
+    const protvistaEl = protvistaRef.current;
+    if (!protvistaEl || _(pdb.tracks).isEmpty()) return;
+
     const pdbView = getPdbView(pdb);
     protvistaEl.viewerdata = { ...pdbView, ...options };
 
@@ -119,4 +141,6 @@ function loadPdb(protvistaEl: ProtvistaTrackElement, pdb: Pdb, options: Partial<
     protvistaEl.querySelectorAll(`.expanded`).forEach(trackSection => {
         trackSection.classList.remove("expanded");
     });
+
+    return protvistaRef;
 }

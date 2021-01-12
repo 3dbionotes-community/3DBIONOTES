@@ -28,10 +28,12 @@ export class PdbRepositoryNetwork implements PdbRepository {
         const { protein, pdb, chain } = options;
         const bionotesUrl = "http://3dbionotes.cnb.csic.es";
 
-        const data$: AsyncData = {
+        const data$: DataRequests = {
             features: get(`https://www.ebi.ac.uk/proteins/api/features/${protein}`),
-            covidAnnotations: get(`${bionotesUrl}/cv19_annotations/${protein}_annotations.json`),
-            pdbAnnotations: get(
+            covidAnnotations: getOrEmpty(
+                `${bionotesUrl}/cv19_annotations/${protein}_annotations.json`
+            ),
+            pdbAnnotations: getOrEmpty(
                 `${bionotesUrl}/ws/lrs/pdbAnnotFromMap/all/${pdb}/${chain}/?format=json`
             ),
             ebiVariation: get(`https://www.ebi.ac.uk/proteins/api/variation/${protein}`),
@@ -60,11 +62,11 @@ export class PdbRepositoryNetwork implements PdbRepository {
         debugVariable(data);
 
         const variants = ebiVariation ? getVariants(ebiVariation) : undefined;
-        const groupedFeatures = this.getGroupedFeatures(features);
+        const groupedFeatures = features ? this.getGroupedFeatures(features) : [];
         const mapping = covidAnnotations ? covidAnnotations[0] : undefined;
         const functionalMappingTrack = this.getFunctionalMappingTrack(mapping);
-        const emValidationTrack = getEmValidationTrack(pdbAnnotations);
-        const structureCoverageTrack = this.getStructureCoverageTrack(coverage);
+        const emValidationTrack = pdbAnnotations ? getEmValidationTrack(pdbAnnotations) : null;
+        const structureCoverageTrack = coverage ? this.getStructureCoverageTrack(coverage) : null;
 
         const tracks: Track[] = _.compact([
             functionalMappingTrack,
@@ -76,9 +78,10 @@ export class PdbRepositoryNetwork implements PdbRepository {
         ]);
 
         return {
-            sequence: features.sequence,
+            sequence: features ? features.sequence : "TODO",
             tracks,
             variants,
+            // TODO: Get from tracks
             length: this.getTotalFeaturesLength(groupedFeatures),
         };
     }
@@ -223,19 +226,28 @@ function getId(name: string): string {
 }
 
 function get<Data>(url: string): Future<RequestError, Data> {
-    return request<Data>({ method: "GET", url }); //.flatMapError -> chainRej;
+    return request<Data>({ method: "GET", url });
+}
+
+function getOrEmpty<Data>(url: string): Future<RequestError, Data | undefined> {
+    const data$ = get<Data>(url) as Future<RequestError, Data | undefined>;
+
+    return data$.flatMapError(_err => {
+        console.log(`Cannot get data: ${url}`);
+        return Future.success(undefined);
+    });
 }
 
 interface Data {
     features: Features;
-    covidAnnotations: Cv19Annotations;
-    pdbAnnotations: PdbAnnotations;
+    covidAnnotations?: Cv19Annotations;
+    pdbAnnotations?: PdbAnnotations;
     ebiVariation: EbiVariation;
     coverage: Coverage;
     //bioMuta: EbiVariation;
 }
 
-type AsyncData = { [K in keyof Data]: Future<RequestError, Data[K]> };
+type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K]> };
 
 type RequestError = { message: string };
 

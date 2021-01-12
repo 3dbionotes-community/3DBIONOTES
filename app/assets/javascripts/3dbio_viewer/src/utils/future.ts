@@ -22,6 +22,11 @@ export class Future<E, D> {
         return new Future(chainMapper(this.instance));
     }
 
+    flatMapError<E2>(mapper: (error: E) => Future<E2, D>): Future<E2, D> {
+        const chainRejMapper = fluture.chainRej<E, E2, D>(error => mapper(error).instance);
+        return new Future(chainRejMapper(this.instance));
+    }
+
     toPromise(): Promise<D> {
         return new Promise((resolve, reject) => {
             this.run(resolve, reject);
