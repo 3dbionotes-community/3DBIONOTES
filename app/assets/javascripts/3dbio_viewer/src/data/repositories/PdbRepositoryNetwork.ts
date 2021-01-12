@@ -99,16 +99,15 @@ export class PdbRepositoryNetwork implements PdbRepository {
         const name = "Region";
 
         return {
+            id: "structure-coverage",
             label: "Structure coverage",
             labelType: "text" as const,
-            overlapping: false,
             data: [
                 {
                     accession: name,
                     type: name,
                     label: name,
                     labelTooltip: trackConfig.tooltip,
-                    overlapping: false,
                     shape: protvistaConfig.shapeByTrackName[itemKey] || "circle",
                     locations: [
                         {
@@ -129,9 +128,9 @@ export class PdbRepositoryNetwork implements PdbRepository {
 
     private getTrackFromGroupedFeature(feature: GroupedFeature): Track {
         return {
+            id: getId(feature.name),
             label: feature.name,
             labelType: "text" as const,
-            overlapping: false,
             data: feature.items.map((item, idx) => {
                 const itemKey = item.name.toLowerCase();
                 const track = protvistaConfig.tracks[itemKey];
@@ -141,7 +140,6 @@ export class PdbRepositoryNetwork implements PdbRepository {
                     type: getName(item.name),
                     label: track?.label || getName(item.name),
                     labelTooltip: track?.tooltip || getName(item.name),
-                    overlapping: false,
                     shape: protvistaConfig.shapeByTrackName[itemKey] || "circle",
                     locations: [
                         {
@@ -170,15 +168,14 @@ export class PdbRepositoryNetwork implements PdbRepository {
 
         const functionalMappingTrack: Track | undefined = mapping
             ? {
+                  id: getId(mapping.track_name),
                   label: getName(mapping.track_name),
                   labelType: "text",
-                  overlapping: false,
                   data: mappingTracks.map(track => ({
                       accession: getName(track.name),
                       type: track.items[0].type,
                       label: getName(track.name),
                       labelTooltip: track.items[0].description,
-                      overlapping: false,
                       shape: "rectangle",
                       locations: [
                           {
@@ -219,6 +216,10 @@ export class PdbRepositoryNetwork implements PdbRepository {
 
         return features;
     }
+}
+
+function getId(name: string): string {
+    return name.replace(/[^\w]/g, "-");
 }
 
 function get<Data>(url: string): Future<RequestError, Data> {

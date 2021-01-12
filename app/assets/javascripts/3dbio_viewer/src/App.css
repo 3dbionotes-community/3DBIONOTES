@@ -1,16 +1,11 @@
 #contents {
   position: absolute;
   left: 0px;
-  top: 100px;
   width: 33%;
   height: 100%;
   border: 1px solid rgb(77, 77, 77);
 }
 
-.msp-plugin {
-  width: 33%;
-  top: 100px;
-}
 
 .msp-plugin .msp-layout-standard-outside .msp-layout-bottom {
   top: auto;
@@ -21,14 +16,18 @@
   position: unset;
 }
 
-#app {
-  display: flex; height: 100px;
+#viewer {
+  display: flex;
+  height: 100vh;
 }
 
 #left {
   width: 33%;
+  position: relative;
 }
+
 
 #right {
   width: 67%;
+  overflow: auto;
 }

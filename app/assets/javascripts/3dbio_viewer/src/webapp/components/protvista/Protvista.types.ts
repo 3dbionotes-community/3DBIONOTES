@@ -2,7 +2,15 @@ import { Color } from "../../../domain/entities/Color";
 import { Shape } from "../../../domain/entities/Shape";
 import { Variant, Variants } from "../../../domain/entities/Variant";
 
+export interface ProtvistaTrackElement extends HTMLDivElement {
+    viewerdata: PdbView;
+    layoutHelper: {
+        hideSubtracks(index: number): void;
+    };
+}
+
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
+
 export interface PdbView {
     displayNavigation: boolean;
     displaySequence: boolean;

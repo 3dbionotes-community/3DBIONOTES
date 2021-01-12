@@ -74,6 +74,7 @@ export function getEmValidationTrack(pdbAnnotations: PdbAnnotations): Track {
     });
 
     return {
+        id: "em-validation",
         label: "em validation",
         labelType: "text",
         overlapping: false,

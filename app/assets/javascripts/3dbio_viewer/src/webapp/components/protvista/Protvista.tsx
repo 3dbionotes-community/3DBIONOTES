@@ -1,34 +1,79 @@
 import React from "react";
+import _ from "lodash";
 import { renderToString } from "react-dom/server";
-import { Fragment } from "../../../domain/entities/Fragment";
 import { Pdb } from "../../../domain/entities/Pdb";
-import i18n from "../../utils/i18n";
+import { debugVariable } from "../../../utils/debug";
 import { useAppContext } from "../AppContext";
-import { PdbView } from "./provista.types";
-
-interface ProvistaTrackElement extends HTMLDivElement {
-    viewerdata: PdbView;
-}
+import { PdbView, ProtvistaTrackElement } from "./Protvista.types";
+import styles from "./Protvista.module.css";
+import { Tooltip } from "./Tooltip";
 
 export const Protvista: React.FC = () => {
-    const protvistaElRef = React.useRef<ProvistaTrackElement>(null);
+    const protvistaElRef = React.useRef<ProtvistaTrackElement>(null);
+    const protvistaElRef2 = React.useRef<ProtvistaTrackElement>(null);
     const { compositionRoot } = useAppContext();
 
     React.useEffect(() => {
-        const provistaEl = protvistaElRef.current;
-        if (!provistaEl) return;
+        const protvistaEl = protvistaElRef.current;
+        const protvistaEl2 = protvistaElRef2.current;
+        if (!protvistaEl || !protvistaEl2) return;
 
-        //compositionRoot.getPdb({ protein: "Q9BYF1", pdb: "6lzg", chain: "A" }).run(
-        compositionRoot.getPdb({ protein: "P0DTC2", pdb: "6zow", chain: "A" }).run(
-            //(provistaEl as any).variantFilter = protvistaConfig.variantsFilters;
-            pdb => (provistaEl.viewerdata = getPdbView(pdb)),
+        //const pdbOptions = { protein: "Q9BYF1", pdb: "6lzg", chain: "A" };
+        const pdbOptions = { protein: "P0DTC2", pdb: "6zow", chain: "A" };
+        compositionRoot.getPdb(pdbOptions).run(
+            pdb => {
+                debugVariable(pdb);
+                const [tracks1, tracks2] = _.partition(
+                    pdb.tracks,
+                    track => track.id !== "em-validation"
+                );
+
+                loadPdb(protvistaEl, { ...pdb, tracks: tracks1 });
+                loadPdb(protvistaEl2, { ...pdb, tracks: tracks2, variants: undefined });
+            },
             error => console.error(error)
         );
     });
 
     return (
         <div>
+            <div className="section">
+                <div className={styles.title}>
+                    S | Spike protein S | Spike glycoprotein | Surface Glycoprotein | SPIKE_WCPV
+                    <div className={styles.actions}>
+                        <button>Tools</button>
+                        <button>Profiles</button>
+                        <button>?</button>
+                    </div>
+                </div>
+
+                <div className="contents">
+                    Spike protein, trimeric complex S1-S2-S2': Attaches the virion to the cell
+                    membrane by interacting with host receptor, initiating the infection. Binding to
+                    human ACE2 receptor and internalization of the virus into the endosomes of the
+                    host cell induces conformational changes in the Spike glycoprotein. Uses also
+                    human TMPRSS2 for priming in human lung cells which is an essential step for
+                    viral entry. Proteolysis by cathepsin CTSL may unmask the fusion peptide of S2
+                    and activate membranes fusion within endosomes.
+                </div>
+            </div>
+
             <protvista-pdb custom-data="true" ref={protvistaElRef}></protvista-pdb>
+
+            <div className="section">
+                <div className={styles.title}>
+                    Map Validation<button>?</button>
+                </div>
+                <div className="contents">
+                    The merge function allows the user to merge multiple .po files into a single
+                    file. During the process of merging that application will validate that the
+                    table, language, and column for the PO files are the same. If they are not then
+                    an error will be returned. The action here is to take unique rowId entries from
+                    each file and merge them to a single file.
+                </div>
+            </div>
+
+            <protvista-pdb custom-data="true" ref={protvistaElRef2}></protvista-pdb>
         </div>
     );
 };
@@ -65,41 +110,13 @@ function getPdbView(pdb: Pdb): PdbView {
     };
 }
 
-const styles = {
-    tooltip: {
-        borderColor: "black",
-        display: "inline-flex",
-        width: 10,
-        borderWidth: 1,
-        height: 10,
-        marginRight: 5,
-    },
-};
+function loadPdb(protvistaEl: ProtvistaTrackElement, pdb: Pdb, options: Partial<PdbView> = {}) {
+    const pdbView = getPdbView(pdb);
+    protvistaEl.viewerdata = { ...pdbView, ...options };
 
-const Tooltip: React.FC<{ fragment: Fragment }> = ({ fragment }) => {
-    return (
-        <table>
-            <tr>
-                <td>{i18n.t("Description")}</td>
-                <td>{fragment.description}</td>
-            </tr>
+    protvistaEl.layoutHelper.hideSubtracks(0);
 
-            {fragment.legend && (
-                <tr>
-                    <td>{i18n.t("Legend")}</td>
-                    <td>
-                        {fragment.legend.map(legendItem => (
-                            <React.Fragment>
-                                <div
-                                    style={{ ...styles.tooltip, backgroundColor: legendItem.color }}
-                                ></div>
-                                <span>{legendItem.text}</span>
-                                <br />
-                            </React.Fragment>
-                        ))}
-                    </td>
-                </tr>
-            )}
-        </table>
-    );
-};
+    protvistaEl.querySelectorAll(`.expanded`).forEach(trackSection => {
+        trackSection.classList.remove("expanded");
+    });
+}

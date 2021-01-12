@@ -2,6 +2,7 @@ import { Fragment } from "./Fragment";
 import { Shape } from "./Shape";
 
 export interface Track {
+    id: string;
     label: string;
     labelType: "text" | "html";
     overlapping?: boolean;
