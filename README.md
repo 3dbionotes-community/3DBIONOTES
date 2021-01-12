@@ -18,6 +18,7 @@
 Use rvm or rbenv to select the Ruby version specified in Gemfile and then run:
 
 ```
+$ git submodule update --recursive --init
 $ rvm install ruby-2.4.1
 $ gem install bundler:1.17.3
 $ sudo apt install libgsl-dev libmysqlclient-dev # Debian/Ubuntu
