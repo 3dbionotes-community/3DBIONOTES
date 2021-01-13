@@ -9476,10 +9476,10 @@ protvista-navigation@2.0.0:
   dependencies:
     lodash-es "^4.17.11"
 
-protvista-pdb@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/protvista-pdb/-/protvista-pdb-2.0.0.tgz#3c335e00d7e393918c22dcaeb9fc6f7eb640a365"
-  integrity sha512-Kb2EKZWQZH/0AN4YHqb1uaqjpwG6D7i9ZxGGH9nfo8F48fxb6fgHryHXqZ8/XEPL2jWikAYGSUp0yZKvpynZ5g==
+protvista-pdb-3dbionotes@2.0.1-beta.1:
+  version "2.0.1-beta.1"
+  resolved "https://registry.npmjs.org/protvista-pdb-3dbionotes/-/protvista-pdb-3dbionotes-2.0.1-beta.1.tgz#cbdf0b757106677f51c0bb17b3ccee8923f36d4c"
+  integrity sha512-515J9XhDwN28epTD8wEQqqimywFnbQtVf597tWBl/63uFw1gUIlmtIoEdIdmeuThdQTQ1pGC7YIK+KophkVeaQ==
   dependencies:
     lodash-es "^4.17.11"
     protvista-filter "2.0.0"

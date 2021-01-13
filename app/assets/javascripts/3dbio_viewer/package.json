@@ -16,7 +16,7 @@
         "node-sass": "^4.14.1",
         "pdbe-molstar": "^1.1.0-dev.4",
         "protvista-feature-adapter": "^3.1.2",
-        "protvista-pdb": "^2.0.0",
+        "protvista-pdb-3dbionotes": "2.0.1-beta.1",
         "protvista-track": "^3.2.0",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
@@ -31,7 +31,7 @@
         "eject": "react-scripts eject",
         "build": "INLINE_RUNTIME_CHUNK=false react-scripts build && yarn create-build-symlinks",
         "create-build-symlinks": "ts-node -O '{\"module\":\"commonjs\"}' src/scripts/create-build-symlinks.ts",
-        "prettify": "prettier *.json \"src/**/*.{js,jsx,json,css,ts,tsx}\" --write"
+        "prettify": "prettier \"./**/*.{js,jsx,json,css,ts,tsx}\" --write"
     },
     "eslintConfig": {
         "extends": [
