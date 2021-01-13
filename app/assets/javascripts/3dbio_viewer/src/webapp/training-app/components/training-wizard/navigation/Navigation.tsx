@@ -2,6 +2,7 @@ import { WizardNavigationProps } from "d2-ui-components";
 import _ from "lodash";
 import React, { useCallback } from "react";
 import styled from "styled-components";
+import { arrayFill } from "../../../utils/array";
 import { MainButton } from "../../main-button/MainButton";
 import { NavigationBullet } from "./NavigationBullet";
 
@@ -75,5 +76,3 @@ const ProgressBar = styled.div`
     margin: 0 auto;
     place-content: space-evenly;
 `;
-
-const arrayFill = (size: number) => [...Array(size).keys()];

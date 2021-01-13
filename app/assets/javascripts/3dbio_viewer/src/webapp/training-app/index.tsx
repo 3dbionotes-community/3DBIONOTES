@@ -1,9 +1,21 @@
 import React, { useCallback } from "react";
-import { useTrainingContext } from "../../contexts/training-context";
-import { ActionButton } from "../action-button/ActionButton";
-import { TrainingWizard } from "../training-wizard/TrainingWizard";
+import {
+    TrainingContextProvider,
+    TrainingContextProviderProps,
+    useTrainingContext,
+} from "./contexts/training-context";
+import { ActionButton } from "./components/action-button/ActionButton";
+import { TrainingWizard } from "./components/training-wizard/TrainingWizard";
 
-export const TrainingApp: React.FC = React.memo(() => {
+export const TrainingApp: React.FC<TrainingContextProviderProps> = React.memo(props => {
+    return (
+        <TrainingContextProvider {...props}>
+            <MainComponent />
+        </TrainingContextProvider>
+    );
+});
+
+const MainComponent: React.FC = React.memo(() => {
     const { appState, setAppState, module } = useTrainingContext();
 
     const exitTutorial = useCallback(() => {

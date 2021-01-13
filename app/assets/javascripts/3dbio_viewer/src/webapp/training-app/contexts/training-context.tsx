@@ -1,23 +1,22 @@
 import _ from "lodash";
 import React, { useContext, useEffect, useState } from "react";
-import {
-    AppState,
-    buildTranslate,
-    TrainingModule,
-    TranslateMethod,
-} from "../../domain/entities/TrainingApp";
-import { modules } from "./training-modules";
+import { AppState, buildTranslate, TrainingModule, TranslateMethod } from "../domain/entities";
 
 const TrainingContext = React.createContext<TrainingContextState | null>(null);
 
-export const TrainingContextProvider: React.FC<TrainingContextProviderProps> = ({
-    children,
-    locale,
-}) => {
-    const [appState, setAppState] = useState<AppState>({ type: "TRAINING", state: "OPEN", minimized: true, module: "test", step: 1, content: 1 });
+export const TrainingContextProvider: React.FC<TrainingContextProviderProps> = props => {
+    const { children, locale, modules } = props;
+    const [appState, setAppState] = useState<AppState>({
+        type: "TRAINING",
+        state: "OPEN",
+        minimized: true,
+        module: "test",
+        step: 1,
+        content: 1,
+    });
     const translate = buildTranslate(locale);
 
-    useEffect(() => cacheImages(JSON.stringify(modules)), []);
+    useEffect(() => cacheImages(JSON.stringify(modules)), [modules]);
 
     return (
         <TrainingContext.Provider
@@ -58,6 +57,7 @@ type AppStateUpdateMethod = (oldState: AppState) => AppState;
 
 export interface TrainingContextProviderProps {
     locale: string;
+    modules: TrainingModule[];
 }
 
 export interface TrainingContextState {

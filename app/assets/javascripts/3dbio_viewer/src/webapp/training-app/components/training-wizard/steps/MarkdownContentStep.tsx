@@ -14,9 +14,7 @@ export const MarkdownContentStep: React.FC<TrainingWizardStepProps> = ({
     minimized,
 }) => {
     const positionText =
-        totalContents > 1
-            ? `Sub step ${contentIndex + 1} of ${totalContents}`
-            : undefined;
+        totalContents > 1 ? `Sub step ${contentIndex + 1} of ${totalContents}` : undefined;
 
     return (
         <ModalContent>

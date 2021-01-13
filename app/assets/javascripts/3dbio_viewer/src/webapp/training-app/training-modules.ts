@@ -1,4 +1,4 @@
-import { TrainingModule } from "../../domain/entities/TrainingApp";
+import { TrainingModule } from "./domain/entities";
 
 export const modules: TrainingModule[] = [
     {

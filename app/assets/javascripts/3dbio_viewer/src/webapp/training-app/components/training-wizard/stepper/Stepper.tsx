@@ -3,6 +3,7 @@ import _ from "lodash";
 import React, { useCallback } from "react";
 import styled from "styled-components";
 import { useTrainingContext } from "../../../contexts/training-context";
+import { arrayFill } from "../../../utils/array";
 import { TrainingWizardStepProps } from "../TrainingWizard";
 import { Bullet } from "./Bullet";
 
@@ -70,5 +71,3 @@ const Step = styled.div`
     width: 20%;
     position: relative;
 `;
-
-const arrayFill = (size: number) => [...Array(size).keys()];

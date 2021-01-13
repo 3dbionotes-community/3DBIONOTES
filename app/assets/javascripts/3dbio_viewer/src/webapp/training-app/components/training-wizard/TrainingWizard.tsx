@@ -2,7 +2,7 @@ import { Wizard } from "d2-ui-components";
 import _ from "lodash";
 import React, { useCallback, useMemo, useRef } from "react";
 import styled from "styled-components";
-import { extractStepFromKey, TrainingModule } from "../../../domain/entities/TrainingApp";
+import { extractStepFromKey, TrainingModule } from "../../domain/entities";
 import { useTrainingContext } from "../../contexts/training-context";
 import { Modal } from "../modal/Modal";
 import { ModalContent } from "../modal/ModalContent";
@@ -70,7 +70,7 @@ export const TrainingWizard: React.FC<TrainingWizardProps> = ({ onClose, module 
 
     const onStepChange = useCallback(
         async (stepKey: string) => {
-            console.log("foo", stepKey)
+            console.log("foo", stepKey);
             if (!module || lastStep.current === stepKey) return;
 
             const currentStep = extractStepFromKey(stepKey);
@@ -84,15 +84,11 @@ export const TrainingWizard: React.FC<TrainingWizardProps> = ({ onClose, module 
         },
         [setAppState, module]
     );
-    
+
     if (!module || wizardSteps.length === 0) return null;
 
     return (
-        <StyledModal
-            onClose={onClose}
-            minimized={minimized}
-            allowDrag={true}
-        >
+        <StyledModal onClose={onClose} minimized={minimized} allowDrag={true}>
             <StyledWizard
                 steps={wizardSteps}
                 stepKey={stepKey}
