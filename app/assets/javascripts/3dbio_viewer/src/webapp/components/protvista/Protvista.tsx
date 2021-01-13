@@ -24,7 +24,7 @@ export const Protvista: React.FC = () => {
             pdb6lzg: { protein: "Q9BYF1", pdb: "6lzg", chain: "A" },
         };
 
-        return compositionRoot.getPdb(pdbOptions.pdb6lzg).run(
+        return compositionRoot.getPdb(pdbOptions.pdb6zow).run(
             pdb => {
                 setState({ type: "loading" });
                 debugVariable(pdb);
@@ -89,7 +89,7 @@ function getSectionStyle(
     ref: React.RefObject<ProtvistaTrackElement>
 ): React.CSSProperties {
     return {
-        opacity: state.type !== "loaded" || !state.refs.includes(ref) ? 0 : 1,
+        //opacity: state.type !== "loaded" || !state.refs.includes(ref) ? 0 : 1,
     };
 }
 
