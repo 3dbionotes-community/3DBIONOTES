@@ -1,4 +1,3 @@
-import { SnackbarProvider } from "d2-ui-components";
 import React from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
@@ -6,30 +5,28 @@ import { MolecularStructure } from "./MolecularStructure";
 import { AppContext } from "./webapp/components/AppContext";
 import { Protvista } from "./webapp/components/protvista/Protvista";
 import { Viewer } from "./webapp/components/Viewer";
-import { modules } from "./webapp/training-app/training-modules";
 import { TrainingApp } from "./webapp/training-app";
+import { modules } from "./webapp/training-app/training-modules";
 
 function App() {
     return (
         <AppContext>
-            <SnackbarProvider>
-                <HashRouter>
-                    <Switch>
-                        <Route path="/molstar">
-                            <MolecularStructure />
-                        </Route>
+            <HashRouter>
+                <Switch>
+                    <Route path="/molstar">
+                        <MolecularStructure />
+                    </Route>
 
-                        <Route path="/protvista">
-                            <Protvista />
-                        </Route>
+                    <Route path="/protvista">
+                        <Protvista />
+                    </Route>
 
-                        <Route path="/">
-                            <Viewer />
-                        </Route>
-                    </Switch>
-                </HashRouter>
-                <TrainingApp locale="en" modules={modules} />
-            </SnackbarProvider>
+                    <Route path="/">
+                        <Viewer />
+                    </Route>
+                </Switch>
+            </HashRouter>
+            <TrainingApp locale="en" modules={modules} />
         </AppContext>
     );
 }
