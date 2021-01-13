@@ -6,7 +6,7 @@ Viewer component for 3dbionotes.
 $ yarn install
 $ git clone https://github.com/PDBeurope/protvista-pdb
 $ (cd protvista-pdb && npm install && npm run build && yarn link)
-$ yarn link provista-pdb
+$ yarn link protvista-pdb
 ```
 
 ## Build

@@ -1,33 +1,31 @@
 #contents {
-  position: absolute;
-  left: 0px;
-  width: 33%;
-  height: 100%;
-  border: 1px solid rgb(77, 77, 77);
+    position: absolute;
+    left: 0px;
+    width: 33%;
+    height: 100%;
+    border: 1px solid rgb(77, 77, 77);
 }
 
-
 .msp-plugin .msp-layout-standard-outside .msp-layout-bottom {
-  top: auto;
-  bottom: 0px;
+    top: auto;
+    bottom: 0px;
 }
 
 .msp-plugin .msp-layout-expanded {
-  position: unset;
+    position: unset;
 }
 
 #viewer {
-  display: flex;
-  height: 100vh;
+    display: flex;
+    height: 100vh;
 }
 
 #left {
-  width: 33%;
-  position: relative;
+    width: 33%;
+    position: relative;
 }
 
-
 #right {
-  width: 67%;
-  overflow: auto;
+    width: 67%;
+    overflow: auto;
 }
