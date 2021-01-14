@@ -22,6 +22,14 @@ import { getEmValidationTrack } from "./em-validation";
 import { getName } from "./utils";
 import { getVariants } from "./variants";
 
+interface Data {
+    features: Features;
+    covidAnnotations?: Cv19Annotations;
+    pdbAnnotations?: PdbAnnotations;
+    ebiVariation: EbiVariation;
+    coverage: Coverage;
+}
+
 export class PdbRepositoryNetwork implements PdbRepository {
     // TODO: Get protein from pdb
     get(options: { protein: string; pdb: string; chain: string }): FutureData<Pdb> {
@@ -38,7 +46,6 @@ export class PdbRepositoryNetwork implements PdbRepository {
             ),
             ebiVariation: get(`https://www.ebi.ac.uk/proteins/api/variation/${protein}`),
             coverage: get(`${bionotesUrl}/api/alignments/Coverage/${pdb}${chain}`),
-            // bioMuta: get(`${bionotesUrl}/api/annotations/biomuta/Uniprot/${protein}`),
         };
 
         const data1$ = Future.join3(data$.features, data$.covidAnnotations, data$.coverage);
@@ -57,12 +64,18 @@ export class PdbRepositoryNetwork implements PdbRepository {
         );
     }
 
+    getTrackFromFeatures(features: Features): Track[] {
+        const groupedFeatures = features ? this.getGroupedFeatures(features) : [];
+        return groupedFeatures.map(groupedFeature =>
+            this.getTrackFromGroupedFeature(groupedFeature)
+        );
+    }
+
     getPdb(data: Data): Pdb {
         const { features, covidAnnotations, ebiVariation, pdbAnnotations, coverage } = data;
         debugVariable(data);
 
         const variants = ebiVariation ? getVariants(ebiVariation) : undefined;
-        const groupedFeatures = features ? this.getGroupedFeatures(features) : [];
         const mapping = covidAnnotations ? covidAnnotations[0] : undefined;
         const functionalMappingTrack = this.getFunctionalMappingTrack(mapping);
         const emValidationTrack = pdbAnnotations ? getEmValidationTrack(pdbAnnotations) : null;
@@ -70,9 +83,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
 
         const tracks: Track[] = _.compact([
             functionalMappingTrack,
-            ...groupedFeatures.map(groupedFeature =>
-                this.getTrackFromGroupedFeature(groupedFeature)
-            ),
+            ...this.getTrackFromFeatures(features),
             emValidationTrack,
             structureCoverageTrack,
         ]);
@@ -81,17 +92,17 @@ export class PdbRepositoryNetwork implements PdbRepository {
             sequence: features ? features.sequence : "TODO",
             tracks,
             variants,
-            // TODO: Get from tracks
-            length: this.getTotalFeaturesLength(groupedFeatures),
+            length: this.getTotalFeaturesLength(tracks),
         };
     }
 
-    private getTotalFeaturesLength(groupedFeatures: GroupedFeature[]): number {
+    private getTotalFeaturesLength(tracks: Track[]): number {
         return (
-            _(groupedFeatures)
-                .flatMap(feature => feature.items)
-                .flatMap(item => item.items)
-                .map(item => parseInt(item.end))
+            _(tracks)
+                .flatMap(track => track.data)
+                .flatMap(dataItem => dataItem.locations)
+                .flatMap(location => location.fragments)
+                .map(fragment => fragment.end)
                 .max() || 0
         );
     }
@@ -236,15 +247,6 @@ function getOrEmpty<Data>(url: string): Future<RequestError, Data | undefined> {
         console.log(`Cannot get data: ${url}`);
         return Future.success(undefined);
     });
-}
-
-interface Data {
-    features: Features;
-    covidAnnotations?: Cv19Annotations;
-    pdbAnnotations?: PdbAnnotations;
-    ebiVariation: EbiVariation;
-    coverage: Coverage;
-    //bioMuta: EbiVariation;
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K]> };
