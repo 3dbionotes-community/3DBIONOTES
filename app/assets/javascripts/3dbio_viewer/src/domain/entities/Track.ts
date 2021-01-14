@@ -4,17 +4,16 @@ import { Shape } from "./Shape";
 export interface Track {
     id: string;
     label: string;
-    labelType: "text" | "html";
     overlapping?: boolean;
-    data: TrackDataItem[];
+    subtracks: Subtrack[];
 }
 
-export interface TrackDataItem {
-    accession: string;
+export interface Subtrack {
     type: string; // Displayed in tooltip title
-    label: string; // Supports: text and html.
-    labelTooltip: string; // Label tooltip content. Support text and HTML mark-up
-    overlapping?: boolean;
+    accession: string;
     shape: Shape;
     locations: Array<{ fragments: Fragment[] }>;
+    label: string; // Supports: text and html.
+    labelTooltip?: string; // Label tooltip content. Support text and HTML mark-up
+    overlapping?: boolean;
 }

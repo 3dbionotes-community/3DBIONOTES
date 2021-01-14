@@ -6,7 +6,7 @@ import { PdbRepository } from "../../domain/repositories/PdbRepository";
 import { Future } from "../../utils/future";
 import { AxiosBuilder, axiosRequest } from "../../utils/future-axios";
 import { config as protvistaConfig } from "./protvista-config";
-import { Track } from "../../domain/entities/Track";
+import { Subtrack, Track } from "../../domain/entities/Track";
 import { Fragment } from "../../domain/entities/Fragment";
 import { debugVariable } from "../../utils/debug";
 import {
@@ -17,6 +17,7 @@ import {
     Cv19Annotations,
     PdbAnnotations,
     Coverage,
+    MobiUniprot,
 } from "./PdbRepositoryNetwork.types";
 import { getEmValidationTrack } from "./em-validation";
 import { getName } from "./utils";
@@ -28,6 +29,7 @@ interface Data {
     pdbAnnotations?: PdbAnnotations;
     ebiVariation: EbiVariation;
     coverage: Coverage;
+    mobiUniprot?: MobiUniprot;
 }
 
 export class PdbRepositoryNetwork implements PdbRepository {
@@ -46,22 +48,62 @@ export class PdbRepositoryNetwork implements PdbRepository {
             ),
             ebiVariation: get(`https://www.ebi.ac.uk/proteins/api/variation/${protein}`),
             coverage: get(`${bionotesUrl}/api/alignments/Coverage/${pdb}${chain}`),
+            mobiUniprot: getOrEmpty(`${bionotesUrl}/api/annotations/mobi/Uniprot/Q9BYF1`),
         };
 
         const data1$ = Future.join3(data$.features, data$.covidAnnotations, data$.coverage);
-        const data2$ = Future.join(data$.ebiVariation, data$.pdbAnnotations);
+        const data2$ = Future.join3(data$.ebiVariation, data$.pdbAnnotations, data$.mobiUniprot);
 
         return Future.join(data1$, data2$).map(
-            ([[features, annotations, coverage], [ebiVariation, pdbAnnotations]]) => {
+            ([[features, annotations, coverage], [ebiVariation, pdbAnnotations, mobiUniprot]]) => {
                 return this.getPdb({
                     features,
                     covidAnnotations: annotations,
                     ebiVariation,
                     pdbAnnotations,
                     coverage,
+                    mobiUniprot,
                 });
             }
         );
+    }
+
+    getPdb(data: Data): Pdb {
+        debugVariable(data);
+        const {
+            features,
+            covidAnnotations,
+            ebiVariation,
+            pdbAnnotations,
+            coverage,
+            mobiUniprot,
+        } = data;
+
+        const variants = ebiVariation ? getVariants(ebiVariation) : undefined;
+        const mapping = covidAnnotations ? covidAnnotations[0] : undefined;
+        const functionalMappingTrack = this.getFunctionalMappingTrack(mapping);
+        const emValidationTrack = pdbAnnotations ? getEmValidationTrack(pdbAnnotations) : null;
+        const structureCoverageTrack = coverage ? this.getStructureCoverageTrack(coverage) : null;
+
+        const baseTracks: Track[] = _.compact([
+            functionalMappingTrack,
+            ...this.getTrackFromFeatures(features),
+            emValidationTrack,
+            structureCoverageTrack,
+        ]);
+
+        const tracks = this.addToTrack({
+            tracks: baseTracks,
+            trackInfo: { id: "domains-and-sites", label: "Domains & sites" },
+            subtracks: this.getMobiUniprotSubtracks(mobiUniprot),
+        });
+
+        return {
+            sequence: features ? features.sequence : "TODO",
+            length: this.getTotalFeaturesLength(tracks),
+            tracks,
+            variants,
+        };
     }
 
     getTrackFromFeatures(features: Features): Track[] {
@@ -71,36 +113,61 @@ export class PdbRepositoryNetwork implements PdbRepository {
         );
     }
 
-    getPdb(data: Data): Pdb {
-        const { features, covidAnnotations, ebiVariation, pdbAnnotations, coverage } = data;
-        debugVariable(data);
+    getMobiUniprotSubtracks(mobiUniprot: MobiUniprot | undefined): Subtrack[] {
+        if (!mobiUniprot) return [];
 
-        const variants = ebiVariation ? getVariants(ebiVariation) : undefined;
-        const mapping = covidAnnotations ? covidAnnotations[0] : undefined;
-        const functionalMappingTrack = this.getFunctionalMappingTrack(mapping);
-        const emValidationTrack = pdbAnnotations ? getEmValidationTrack(pdbAnnotations) : null;
-        const structureCoverageTrack = coverage ? this.getStructureCoverageTrack(coverage) : null;
+        const fragments = _(mobiUniprot.lips)
+            .values()
+            .flatten()
+            .map(
+                (obj): Fragment => ({
+                    start: obj.start,
+                    end: obj.end,
+                    description: "TODO",
+                    color: "#cc2060", // TODO: Missing in config
+                })
+            )
+            .value();
 
-        const tracks: Track[] = _.compact([
-            functionalMappingTrack,
-            ...this.getTrackFromFeatures(features),
-            emValidationTrack,
-            structureCoverageTrack,
-        ]);
-
-        return {
-            sequence: features ? features.sequence : "TODO",
-            tracks,
-            variants,
-            length: this.getTotalFeaturesLength(tracks),
+        const subtrack: Subtrack = {
+            type: "LINEAR_INTERACTING_PEPTIDE",
+            accession: "LIPS",
+            shape: "rectangle",
+            locations: [{ fragments }],
+            label: "Linear interacting peptide",
         };
+
+        return [subtrack];
+    }
+
+    addToTrack(options: {
+        tracks: Track[];
+        trackInfo: Pick<Track, "id" | "label">;
+        subtracks: Subtrack[];
+    }): Track[] {
+        const { tracks, trackInfo, subtracks } = options;
+
+        const trackExists = _.some(tracks, track => track.id === trackInfo.id);
+
+        if (trackExists) {
+            return tracks.map(track => {
+                if (track.id === trackInfo.id) {
+                    return { ...track, subtracks: track.subtracks.concat(subtracks) };
+                } else {
+                    return track;
+                }
+            });
+        } else {
+            const newTrack: Track = { ...trackInfo, subtracks };
+            return [...tracks, newTrack];
+        }
     }
 
     private getTotalFeaturesLength(tracks: Track[]): number {
         return (
             _(tracks)
-                .flatMap(track => track.data)
-                .flatMap(dataItem => dataItem.locations)
+                .flatMap(track => track.subtracks)
+                .flatMap(subtrack => subtrack.locations)
                 .flatMap(location => location.fragments)
                 .map(fragment => fragment.end)
                 .max() || 0
@@ -115,8 +182,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
         return {
             id: "structure-coverage",
             label: "Structure coverage",
-            labelType: "text" as const,
-            data: [
+            subtracks: [
                 {
                     accession: name,
                     type: name,
@@ -144,8 +210,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
         return {
             id: getId(feature.name),
             label: feature.name,
-            labelType: "text" as const,
-            data: feature.items.map((item, idx) => {
+            subtracks: feature.items.map((item, idx) => {
                 const itemKey = item.name.toLowerCase();
                 const track = protvistaConfig.tracks[itemKey];
 
@@ -184,8 +249,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
             ? {
                   id: getId(mapping.track_name),
                   label: getName(mapping.track_name),
-                  labelType: "text",
-                  data: mappingTracks.map(track => ({
+                  subtracks: mappingTracks.map(track => ({
                       accession: getName(track.name),
                       type: track.items[0].type,
                       label: getName(track.name),
@@ -233,7 +297,10 @@ export class PdbRepositoryNetwork implements PdbRepository {
 }
 
 function getId(name: string): string {
-    return name.replace(/[^\w]/g, "-");
+    return name
+        .replace("&", "and")
+        .replace(/[^\w]+/g, "-")
+        .toLowerCase();
 }
 
 function get<Data>(url: string): Future<RequestError, Data> {

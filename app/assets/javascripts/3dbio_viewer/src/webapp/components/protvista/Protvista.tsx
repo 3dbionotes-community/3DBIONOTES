@@ -13,21 +13,23 @@ type State =
     | { type: "loaded"; refs: Array<React.RefObject<ProtvistaTrackElement>> };
 
 export const Protvista: React.FC = () => {
-    const protvistaElRef1 = React.useRef<ProtvistaTrackElement>(null);
-    const protvistaElRef2 = React.useRef<ProtvistaTrackElement>(null);
     const { compositionRoot } = useAppContext();
     const [state, setState] = React.useState<State>({ type: "loading" });
 
+    const protvistaElRef1 = React.useRef<ProtvistaTrackElement>(null);
+    const protvistaElRef2 = React.useRef<ProtvistaTrackElement>(null);
+
     React.useEffect(() => {
         const pdbOptions = {
-            pdb6zow: { protein: "P0DTC2", pdb: "6zow", chain: "A" },
-            pdb6lzg: { protein: "Q9BYF1", pdb: "6lzg", chain: "A" },
+            "6zow": { protein: "P0DTC2", pdb: "6zow", chain: "A" },
+            "6lzg": { protein: "Q9BYF1", pdb: "6lzg", chain: "A" },
+            "6w9c": { protein: "P0DTD1", pdb: "6w9c", chain: "A" },
         };
 
-        return compositionRoot.getPdb(pdbOptions.pdb6zow).run(
+        return compositionRoot.getPdb(pdbOptions["6lzg"]).run(
             pdb => {
-                setState({ type: "loading" });
                 debugVariable(pdb);
+                setState({ type: "loading" });
                 const [tracks1, tracks2] = _.partition(
                     pdb.tracks,
                     track => track.id !== "em-validation"
@@ -89,7 +91,7 @@ function getSectionStyle(
     ref: React.RefObject<ProtvistaTrackElement>
 ): React.CSSProperties {
     return {
-        //opacity: state.type !== "loaded" || !state.refs.includes(ref) ? 0 : 1,
+        opacity: state.type !== "loaded" || !state.refs.includes(ref) ? 0 : 1,
     };
 }
 
@@ -102,9 +104,10 @@ function getPdbView(pdb: Pdb): PdbView {
         displayVariants: true,
         tracks: pdb.tracks.map(track => ({
             ...track,
-            data: track.data.map(dataItem => ({
-                ...dataItem,
-                locations: dataItem.locations.map(location => ({
+            data: track.subtracks.map(subtrack => ({
+                ...subtrack,
+                labelTooltip: subtrack.label,
+                locations: subtrack.locations.map(location => ({
                     ...location,
                     fragments: location.fragments.map(fragment => ({
                         ...fragment,

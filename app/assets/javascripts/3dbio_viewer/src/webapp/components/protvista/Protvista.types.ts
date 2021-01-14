@@ -38,7 +38,7 @@ export interface VariantView extends Variant {
 
 export interface TrackView {
     label: string;
-    labelType: "text" | "html";
+    labelType?: "text" | "html";
     overlapping?: boolean;
     data: Array<{
         accession: string;
