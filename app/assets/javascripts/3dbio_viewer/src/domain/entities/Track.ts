@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { Fragment } from "./Fragment";
 import { Shape } from "./Shape";
 
@@ -16,4 +17,27 @@ export interface Subtrack {
     label: string; // Supports: text and html.
     labelTooltip?: string; // Label tooltip content. Support text and HTML mark-up
     overlapping?: boolean;
+}
+
+export function addToTrack(options: {
+    tracks: Track[];
+    trackInfo: Pick<Track, "id" | "label">;
+    subtracks: Subtrack[];
+}): Track[] {
+    const { tracks, trackInfo, subtracks } = options;
+
+    const trackExists = _.some(tracks, track => track.id === trackInfo.id);
+
+    if (trackExists) {
+        return tracks.map(track => {
+            if (track.id === trackInfo.id) {
+                return { ...track, subtracks: track.subtracks.concat(subtracks) };
+            } else {
+                return track;
+            }
+        });
+    } else {
+        const newTrack: Track = { ...trackInfo, subtracks };
+        return [...tracks, newTrack];
+    }
 }

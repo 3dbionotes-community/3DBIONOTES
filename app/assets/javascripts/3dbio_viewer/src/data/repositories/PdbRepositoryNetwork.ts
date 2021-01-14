@@ -6,7 +6,7 @@ import { PdbRepository } from "../../domain/repositories/PdbRepository";
 import { Future } from "../../utils/future";
 import { AxiosBuilder, axiosRequest } from "../../utils/future-axios";
 import { config as protvistaConfig } from "./protvista-config";
-import { Subtrack, Track } from "../../domain/entities/Track";
+import { addToTrack, Subtrack, Track } from "../../domain/entities/Track";
 import { Fragment } from "../../domain/entities/Fragment";
 import { debugVariable } from "../../utils/debug";
 import {
@@ -22,6 +22,7 @@ import {
 import { getEmValidationTrack } from "./em-validation";
 import { getName } from "./utils";
 import { getVariants } from "./variants";
+import { addPhosphiteSubtracks, PhosphositeUniprot } from "./phosphite";
 
 interface Data {
     features: Features;
@@ -30,11 +31,12 @@ interface Data {
     ebiVariation: EbiVariation;
     coverage: Coverage;
     mobiUniprot?: MobiUniprot;
+    phosphositeUniprot?: PhosphositeUniprot;
 }
 
 export class PdbRepositoryNetwork implements PdbRepository {
-    // TODO: Get protein from pdb
     get(options: { protein: string; pdb: string; chain: string }): FutureData<Pdb> {
+        // TODO: Get protein from pdb
         const { protein, pdb, chain } = options;
         const bionotesUrl = "http://3dbionotes.cnb.csic.es";
 
@@ -48,14 +50,21 @@ export class PdbRepositoryNetwork implements PdbRepository {
             ),
             ebiVariation: get(`https://www.ebi.ac.uk/proteins/api/variation/${protein}`),
             coverage: get(`${bionotesUrl}/api/alignments/Coverage/${pdb}${chain}`),
-            mobiUniprot: getOrEmpty(`${bionotesUrl}/api/annotations/mobi/Uniprot/Q9BYF1`),
+            mobiUniprot: getOrEmpty(`${bionotesUrl}/api/annotations/mobi/Uniprot/${protein}`),
+            phosphositeUniprot: getOrEmpty(
+                `${bionotesUrl}/api/annotations/Phosphosite/Uniprot/${protein}`
+            ),
         };
 
         const data1$ = Future.join3(data$.features, data$.covidAnnotations, data$.coverage);
         const data2$ = Future.join3(data$.ebiVariation, data$.pdbAnnotations, data$.mobiUniprot);
 
-        return Future.join(data1$, data2$).map(
-            ([[features, annotations, coverage], [ebiVariation, pdbAnnotations, mobiUniprot]]) => {
+        return Future.join3(data1$, data2$, data$.phosphositeUniprot).map(
+            ([
+                [features, annotations, coverage],
+                [ebiVariation, pdbAnnotations, mobiUniprot],
+                phosphositeUniprot,
+            ]) => {
                 return this.getPdb({
                     features,
                     covidAnnotations: annotations,
@@ -63,6 +72,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
                     pdbAnnotations,
                     coverage,
                     mobiUniprot,
+                    phosphositeUniprot,
                 });
             }
         );
@@ -77,6 +87,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
             pdbAnnotations,
             coverage,
             mobiUniprot,
+            phosphositeUniprot,
         } = data;
 
         const variants = ebiVariation ? getVariants(ebiVariation) : undefined;
@@ -85,18 +96,20 @@ export class PdbRepositoryNetwork implements PdbRepository {
         const emValidationTrack = pdbAnnotations ? getEmValidationTrack(pdbAnnotations) : null;
         const structureCoverageTrack = coverage ? this.getStructureCoverageTrack(coverage) : null;
 
-        const baseTracks: Track[] = _.compact([
+        const tracks1: Track[] = _.compact([
             functionalMappingTrack,
             ...this.getTrackFromFeatures(features),
             emValidationTrack,
             structureCoverageTrack,
         ]);
 
-        const tracks = this.addToTrack({
-            tracks: baseTracks,
+        const tracks2 = addToTrack({
+            tracks: tracks1,
             trackInfo: { id: "domains-and-sites", label: "Domains & sites" },
             subtracks: this.getMobiUniprotSubtracks(mobiUniprot),
         });
+
+        const tracks = addPhosphiteSubtracks(tracks2, phosphositeUniprot);
 
         return {
             sequence: features ? features.sequence : "TODO",
@@ -104,6 +117,17 @@ export class PdbRepositoryNetwork implements PdbRepository {
             tracks,
             variants,
         };
+    }
+
+    private getTotalFeaturesLength(tracks: Track[]): number {
+        return (
+            _(tracks)
+                .flatMap(track => track.subtracks)
+                .flatMap(subtrack => subtrack.locations)
+                .flatMap(location => location.fragments)
+                .map(fragment => fragment.end)
+                .max() || 0
+        );
     }
 
     getTrackFromFeatures(features: Features): Track[] {
@@ -140,40 +164,6 @@ export class PdbRepositoryNetwork implements PdbRepository {
         return [subtrack];
     }
 
-    addToTrack(options: {
-        tracks: Track[];
-        trackInfo: Pick<Track, "id" | "label">;
-        subtracks: Subtrack[];
-    }): Track[] {
-        const { tracks, trackInfo, subtracks } = options;
-
-        const trackExists = _.some(tracks, track => track.id === trackInfo.id);
-
-        if (trackExists) {
-            return tracks.map(track => {
-                if (track.id === trackInfo.id) {
-                    return { ...track, subtracks: track.subtracks.concat(subtracks) };
-                } else {
-                    return track;
-                }
-            });
-        } else {
-            const newTrack: Track = { ...trackInfo, subtracks };
-            return [...tracks, newTrack];
-        }
-    }
-
-    private getTotalFeaturesLength(tracks: Track[]): number {
-        return (
-            _(tracks)
-                .flatMap(track => track.subtracks)
-                .flatMap(subtrack => subtrack.locations)
-                .flatMap(location => location.fragments)
-                .map(fragment => fragment.end)
-                .max() || 0
-        );
-    }
-
     private getStructureCoverageTrack(coverage: Coverage): Track {
         const itemKey = "region";
         const trackConfig = protvistaConfig.tracks[itemKey];
@@ -196,7 +186,8 @@ export class PdbRepositoryNetwork implements PdbRepository {
                                     start: item.start,
                                     end: item.end,
                                     description: "Sequence segment covered by the structure",
-                                    color: trackConfig.color || defaultColor,
+                                    color:
+                                        protvistaConfig.colorByTrackName[itemKey] || defaultColor,
                                 })
                             ),
                         },
@@ -227,7 +218,8 @@ export class PdbRepositoryNetwork implements PdbRepository {
                                     start: parseInt(item.begin),
                                     end: parseInt(item.end),
                                     description: item.description,
-                                    color: protvistaConfig.tracks[itemKey]?.color || defaultColor,
+                                    color:
+                                        protvistaConfig.colorByTrackName[itemKey] || defaultColor,
                                 })
                             ),
                         },

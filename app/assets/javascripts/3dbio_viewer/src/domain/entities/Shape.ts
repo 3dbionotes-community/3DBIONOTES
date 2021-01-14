@@ -10,4 +10,5 @@ export type Shape =
     | "pentagon"
     | "circle"
     | "arrow"
-    | "doubleBar";
+    | "doubleBar"
+    | "variant";
