@@ -1,14 +1,14 @@
 import _ from "lodash";
 import { AxiosRequestConfig } from "axios";
-import { FutureData } from "../../domain/entities/FutureData";
-import { Pdb } from "../../domain/entities/Pdb";
-import { PdbRepository } from "../../domain/repositories/PdbRepository";
-import { Future } from "../../utils/future";
-import { AxiosBuilder, axiosRequest } from "../../utils/future-axios";
-import { config as protvistaConfig } from "./protvista-config";
-import { addToTrack, Subtrack, Track } from "../../domain/entities/Track";
-import { Fragment } from "../../domain/entities/Fragment";
-import { debugVariable } from "../../utils/debug";
+import { FutureData } from "../../../domain/entities/FutureData";
+import { Pdb } from "../../../domain/entities/Pdb";
+import { PdbRepository } from "../../../domain/repositories/PdbRepository";
+import { Future } from "../../../utils/future";
+import { AxiosBuilder, axiosRequest } from "../../../utils/future-axios";
+import { config as protvistaConfig } from "../protvista-config";
+import { addToTrack, Subtrack, Track } from "../../../domain/entities/Track";
+import { Fragment } from "../../../domain/entities/Fragment";
+import { debugVariable } from "../../../utils/debug";
 import {
     GroupedFeature,
     Cv19Annotation,
@@ -18,11 +18,11 @@ import {
     PdbAnnotations,
     Coverage,
     MobiUniprot,
-} from "./PdbRepositoryNetwork.types";
-import { getEmValidationTrack } from "./em-validation";
-import { getName } from "./utils";
-import { getVariants } from "./variants";
-import { addPhosphiteSubtracks, PhosphositeUniprot } from "./phosphite";
+} from "../PdbRepositoryNetwork.types";
+import { getEmValidationTrack } from "../em-validation";
+import { getId, getName } from "../utils";
+import { getVariants } from "../variants";
+import { addPhosphiteSubtracks, PhosphositeUniprot } from "../phosphite";
 
 interface Data {
     features: Features;
@@ -34,48 +34,16 @@ interface Data {
     phosphositeUniprot?: PhosphositeUniprot;
 }
 
+interface Options {
+    protein: string;
+    pdb: string;
+    chain: string;
+}
+
 export class PdbRepositoryNetwork implements PdbRepository {
-    get(options: { protein: string; pdb: string; chain: string }): FutureData<Pdb> {
+    get(options: Options): FutureData<Pdb> {
         // TODO: Get protein from pdb
-        const { protein, pdb, chain } = options;
-        const bionotesUrl = "http://3dbionotes.cnb.csic.es";
-
-        const data$: DataRequests = {
-            features: get(`https://www.ebi.ac.uk/proteins/api/features/${protein}`),
-            covidAnnotations: getOrEmpty(
-                `${bionotesUrl}/cv19_annotations/${protein}_annotations.json`
-            ),
-            pdbAnnotations: getOrEmpty(
-                `${bionotesUrl}/ws/lrs/pdbAnnotFromMap/all/${pdb}/${chain}/?format=json`
-            ),
-            ebiVariation: get(`https://www.ebi.ac.uk/proteins/api/variation/${protein}`),
-            coverage: get(`${bionotesUrl}/api/alignments/Coverage/${pdb}${chain}`),
-            mobiUniprot: getOrEmpty(`${bionotesUrl}/api/annotations/mobi/Uniprot/${protein}`),
-            phosphositeUniprot: getOrEmpty(
-                `${bionotesUrl}/api/annotations/Phosphosite/Uniprot/${protein}`
-            ),
-        };
-
-        const data1$ = Future.join3(data$.features, data$.covidAnnotations, data$.coverage);
-        const data2$ = Future.join3(data$.ebiVariation, data$.pdbAnnotations, data$.mobiUniprot);
-
-        return Future.join3(data1$, data2$, data$.phosphositeUniprot).map(
-            ([
-                [features, annotations, coverage],
-                [ebiVariation, pdbAnnotations, mobiUniprot],
-                phosphositeUniprot,
-            ]) => {
-                return this.getPdb({
-                    features,
-                    covidAnnotations: annotations,
-                    ebiVariation,
-                    pdbAnnotations,
-                    coverage,
-                    mobiUniprot,
-                    phosphositeUniprot,
-                });
-            }
-        );
+        return getData(options).map(data => this.getPdb(data));
     }
 
     getPdb(data: Data): Pdb {
@@ -186,8 +154,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
                                     start: item.start,
                                     end: item.end,
                                     description: "Sequence segment covered by the structure",
-                                    color:
-                                        protvistaConfig.colorByTrackName[itemKey] || defaultColor,
+                                    color: getColor(itemKey),
                                 })
                             ),
                         },
@@ -218,8 +185,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
                                     start: parseInt(item.begin),
                                     end: parseInt(item.end),
                                     description: item.description,
-                                    color:
-                                        protvistaConfig.colorByTrackName[itemKey] || defaultColor,
+                                    color: getColor(itemKey),
                                 })
                             ),
                         },
@@ -288,17 +254,6 @@ export class PdbRepositoryNetwork implements PdbRepository {
     }
 }
 
-function getId(name: string): string {
-    return name
-        .replace("&", "and")
-        .replace(/[^\w]+/g, "-")
-        .toLowerCase();
-}
-
-function get<Data>(url: string): Future<RequestError, Data> {
-    return request<Data>({ method: "GET", url });
-}
-
 function getOrEmpty<Data>(url: string): Future<RequestError, Data | undefined> {
     const data$ = get<Data>(url) as Future<RequestError, Data | undefined>;
 
@@ -325,6 +280,52 @@ const builder: AxiosBuilder<RequestError> = {
 
 function request<Data>(request: AxiosRequestConfig): Future<RequestError, Data> {
     return axiosRequest<RequestError, Data>(builder, request);
+}
+
+function getColor(key: string) {
+    return protvistaConfig.colorByTrackName[key] || defaultColor;
+}
+
+function getData(options: Options): FutureData<Data> {
+    const bionotesUrl = "http://3dbionotes.cnb.csic.es";
+    const { protein, pdb, chain } = options;
+
+    const data$: DataRequests = {
+        features: get(`https://www.ebi.ac.uk/proteins/api/features/${protein}`),
+        covidAnnotations: getOrEmpty(`${bionotesUrl}/cv19_annotations/${protein}_annotations.json`),
+        pdbAnnotations: getOrEmpty(
+            `${bionotesUrl}/ws/lrs/pdbAnnotFromMap/all/${pdb}/${chain}/?format=json`
+        ),
+        ebiVariation: get(`https://www.ebi.ac.uk/proteins/api/variation/${protein}`),
+        coverage: get(`${bionotesUrl}/api/alignments/Coverage/${pdb}${chain}`),
+        mobiUniprot: getOrEmpty(`${bionotesUrl}/api/annotations/mobi/Uniprot/${protein}`),
+        phosphositeUniprot: getOrEmpty(
+            `${bionotesUrl}/api/annotations/Phosphosite/Uniprot/${protein}`
+        ),
+    };
+
+    const data1$ = Future.join3(data$.features, data$.covidAnnotations, data$.coverage);
+    const data2$ = Future.join3(data$.ebiVariation, data$.pdbAnnotations, data$.mobiUniprot);
+
+    return Future.join3(data1$, data2$, data$.phosphositeUniprot).map(
+        ([
+            [features, covidAnnotations, coverage],
+            [ebiVariation, pdbAnnotations, mobiUniprot],
+            phosphositeUniprot,
+        ]): Data => ({
+            features,
+            covidAnnotations,
+            ebiVariation,
+            pdbAnnotations,
+            coverage,
+            mobiUniprot,
+            phosphositeUniprot,
+        })
+    );
+}
+
+function get<Data>(url: string): Future<RequestError, Data> {
+    return request<Data>({ method: "GET", url });
 }
 
 const defaultColor = "#777";
