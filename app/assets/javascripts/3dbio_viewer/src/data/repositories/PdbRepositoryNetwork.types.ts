@@ -102,3 +102,16 @@ export interface Coverage {
         end: number;
     }>;
 }
+
+export interface MobiUniprot {
+    disorder: MobiUniprotItem;
+    lips: MobiUniprotItem;
+}
+
+export interface MobiUniprotItem {
+    [key: string]: Array<{
+        start: number;
+        end: number;
+        method: string | null;
+    }>;
+}

@@ -1,5 +1,79 @@
 // From ./myProtVista/src/FeatureFactory.js
-// TODO: merge shapes with object
+
+import { Color } from "../../domain/entities/Color";
+
+// Concatenation of myProtVista/style/main.css and extendProtVista/extend_style.css
+const colorByTrackName = {
+    chain: "#CC9933",
+    transit: "#009966",
+    init_met: "#996633",
+    propep: "#99CCCC",
+    peptide: "#006699",
+    signal: "#CC0033",
+    turn: "#0571AF",
+    strand: "#FFCC00",
+    helix: "#FF0066",
+    crosslnk: "#FF6600",
+    disulfid: "#23B14D",
+    region: "#B33E00",
+    coiled: "#006699",
+    motif: "#402060",
+    repeat: "#9900FF",
+    ca_bind: "#FF3399",
+    dna_bind: "#009933",
+    domain: "#9999FF",
+    zn_fing: "#990066",
+    np_bind: "#FF9900",
+    metal: "#009900",
+    site: "#660033",
+    binding: "#006699",
+    act_site: "#FF6666",
+    mod_res: "#000066",
+    lipid: "#99CC33",
+    carbohyd: "#CC3366",
+    compbias: "#FF3366",
+    mutagen: "#FF9900",
+    conflict: "#6633CC",
+    non_cons: "#FF0033",
+    non_ter: "#339933",
+    unsure: "#33FF00",
+    non_std: "#330066",
+    topo_dom: "#CC0000",
+    transmem: "#CC00CC",
+    intramem: "#0000CC",
+    unique: "#fd5a5d",
+    non_unique: "#5a60fb",
+    antigen: "#996699",
+    mod_res_ace: "#660000",
+    mod_res_cro: "#000066",
+    mod_res_cit: "#444400",
+    mod_res_met: "#006600",
+    mod_res_pho: "#1293be",
+    mod_res_sum: "#af0066",
+    mod_res_ubi: "#ff6600",
+    linear_motif: "#402060",
+    linear_interacting_peptide: "#cc2060",
+    linear_epitope: "#83be00",
+    pfam_domain: "#ffa0a0",
+    smart_domain: "#a0ffa0",
+    interpro_domain: "#a0a0ff",
+    disprot: "#a8aff0",
+    database: "#a8aff0",
+    pdb_nmr: "#a8f0af",
+    pdb_xray: "#f0a8af",
+    inferred: "#f0a8af",
+    predictors: "#ffcc66",
+    long: "#ccff66",
+    interacting_residues: "#006699",
+    rama: "#990000",
+    omega: "#992060",
+    rota: "#402060",
+    changed_rotamer: "#402060",
+    h_bond_flip: "#cc0055",
+    completed_res: "#339955",
+    completed_loop: "#3355cc",
+};
+
 const shapeByTrackName = {
     //molecular processing
     chain: "rectangle",
@@ -46,7 +120,6 @@ const shapeByTrackName = {
     transmem: "rectangle",
     intramem: "rectangle",
     //variants
-    /* TODO
     var_seq: "variant",
     variant: "variant",
     missense: "variant", //CHECK
@@ -55,7 +128,6 @@ const shapeByTrackName = {
     stop_lost: "variant", //CHECK
     stop_gained: "variant", //CHECK
     init_codon: "variant", //CHECK
-    */
     //proteomics
     unique: "rectangle",
     non_unique: "rectangle",
@@ -202,202 +274,166 @@ const tracks: Config["tracks"] = {
         label: "Chain",
         tooltip:
             "(aka mature region). This describes the extent of a polypeptide chain in the mature protein following processing",
-        color: "#CC9933",
     },
     transit: {
         label: "Transit peptide",
         tooltip: "This describes the extent of a transit peptide",
-        color: "#009966",
     },
     init_met: {
         label: "Initiator methionine",
         tooltip: "This indicates that the initiator methionine is cleaved from the mature protein",
-        color: "#996633",
     },
     propep: {
         label: "Propeptide",
         tooltip: "Part of a protein that is cleaved during maturation or activation",
-        color: "#99CCCC",
     },
     peptide: {
         label: "Peptide",
         tooltip: "The position and length of an active peptide in the mature protein",
-        color: "#006699",
     },
-    signal: { label: "Signal peptide", tooltip: "N-terminal signal peptide", color: "#CC0033" },
+    signal: { label: "Signal peptide", tooltip: "N-terminal signal peptide" },
     helix: {
         label: "Helix",
         tooltip: "The positions of experimentally determined helical regions",
-        color: "#FF0066",
     },
     strand: {
         label: "Beta strand",
         tooltip: "The positions of experimentally determined beta strands",
-        color: "#FFCC00",
     },
     turn: {
         label: "Turn",
         tooltip: "The positions of experimentally determined hydrogen-bonded turns",
-        color: "#0571AF",
     },
     disulfid: {
         label: "Disulfide bond",
         tooltip: "The positions of cysteine residues participating in disulphide bonds",
-        color: "#23B14D",
     },
     crosslnk: {
         label: "Cross-link",
         tooltip:
             "Covalent linkages of various types formed between two proteins or between two parts of the same protein",
-        color: "#FF6600",
     },
     region: {
         label: "Region",
         tooltip:
             "Regions in multifunctional enzymes or fusion proteins, or characteristics of a region, e.g., protein-protein interactions mediation",
-        color: "#B33E00",
     },
     coiled: {
         label: "Coiled coil",
         tooltip:
             "Coiled coils are built by two or more alpha-helices that wind around each other to form a supercoil",
-        color: "#006699",
     },
     motif: {
         label: "Motif",
         tooltip: "Short conserved sequence motif of biological significance",
-        color: "#402060",
     },
     repeat: {
         label: "Repeat",
         tooltip: "Repeated sequence motifs or repeated domains within the protein",
-        color: "#9900FF",
     },
     ca_bind: {
         label: "Calcium binding",
         tooltip: "Calcium-binding regions, such as the EF-hand motif",
-        color: "#FF3399",
     },
     dna_bind: {
         label: "DNA binding",
         tooltip:
             "DNA-binding domains such as AP2/ERF domain, the ETS domain, the Fork-Head domain, the HMG box and the Myb domain",
-        color: "#009933",
     },
     domain: {
         label: "Domain",
         tooltip:
             "Specific combination of secondary structures organized into a characteristic three-dimensional structure or fold",
-        color: "#9999FF",
     },
     zn_fing: {
         label: "Zinc finger",
         tooltip:
             "Small, functional, independently folded domain that coordinates one or more zinc ions",
-        color: "#990066",
     },
     np_bind: {
         label: "Nucleotide binding",
         tooltip: "(aka flavin-binding). Region in the protein which binds nucleotide phosphates",
-        color: "#FF9900",
     },
     metal: {
         label: "Metal binding",
         tooltip: "Binding site for a metal ion",
-        color: "#009900",
     },
     site: {
         label: "Site",
         tooltip: "Any interesting single amino acid site on the sequence",
-        color: "#660033",
     },
     binding: {
         label: "Binding site",
         tooltip: "Binding site for any chemical group (co-enzyme, prosthetic group, etc.)",
-        color: "#006699",
     },
     act_site: {
         label: "Active site",
         tooltip: "Amino acid(s) directly involved in the activity of an enzyme",
-        color: "#FF6666",
     },
     mod_res: {
         label: "Modified residue",
         tooltip: "Modified residues such as phosphorylation, acetylation, acylation, methylation",
-        color: "#000066",
     },
     lipid: {
         label: "Lipidation",
         tooltip: "Covalently attached lipid group(s)",
-        color: "#99CC33",
     },
     carbohyd: {
         label: "Glycosylation",
         tooltip: "Covalently attached glycan group(s)",
-        color: "#CC3366",
     },
     compbias: {
         label: "Compositional bias",
         tooltip:
             "Position of regions of compositional bias within the protein and the particular amino acids that are over-represented within those regions",
-        color: "#FF3366",
     },
     conflict: {
         label: "Sequence conflict",
         tooltip: "Sequence discrepancies of unknown origin",
-        color: "#6633CC",
     },
     non_cons: {
         label: "Non-adjacent residues",
         tooltip:
             "Indicates that two residues in a sequence are not consecutive and that there is an undetermined number of unsequenced residues between them",
-        color: "#FF0033",
     },
     non_ter: {
         label: "Non-terminal residue",
         tooltip:
             "The sequence is incomplete. The residue is not the terminal residue of the complete protein",
-        color: "#339933",
     },
     unsure: {
         label: "Sequence uncertainty",
         tooltip:
             "Regions of a sequence for which the authors are unsure about the sequence assignment",
-        color: "#33FF00",
     },
     non_std: {
         label: "Non-standard residue",
         tooltip: "Non-standard amino acids (selenocysteine and pyrrolysine)",
-        color: "#330066",
     },
     mutagen: {
         label: "Mutagenesis",
         tooltip: "Site which has been experimentally altered by mutagenesis",
-        color: "#FF9900",
     },
     topo_dom: {
         label: "Topological domain",
         tooltip: "Location of non-membrane regions of membrane-spanning proteins",
-        color: "#CC0000",
     },
     transmem: {
         label: "Transmembrane",
         tooltip: "Extent of a membrane-spanning region",
-        color: "#CC00CC",
     },
     intramem: {
         label: "Intramembrane",
         tooltip: "Extent of a region located in a membrane without crossing it",
-        color: "#0000CC",
     },
     variant: {
         label: "Natural variant",
         tooltip:
             "Natural variant of the protein, including polymorphisms, variations between strains, isolates or cultivars, disease-associated mutations and RNA editing events",
     },
-    unique: { label: "Unique peptide", tooltip: "", color: "#fc3133" },
-    non_unique: { label: "Non-unique peptide", tooltip: "", color: "#8585fc" },
-    antigen: { label: "Antibody binding sequences", tooltip: "", color: "#996699" },
+    unique: { label: "Unique peptide", tooltip: "" },
+    non_unique: { label: "Non-unique peptide", tooltip: "" },
+    antigen: { label: "Antibody binding sequences", tooltip: "" },
     mod_res_pho: {
         label: "Phosphorylation",
         tooltip: "Modified residues: Addition of a phosphoryl group",
@@ -474,15 +510,17 @@ export const config: Config = {
     categories,
     tracks,
     shapeByTrackName,
+    colorByTrackName,
 };
 
-export interface Config {
+interface Config {
     categories: Array<{
         name: string;
         label: string;
         tooltip?: string;
         visualizationType: "basic" | "continuous" | "variant";
     }>;
-    tracks: Record<string, { label: string; tooltip: string; color?: string }>;
+    tracks: Record<string, { label: string; tooltip: string }>;
     shapeByTrackName: Record<string, Shape>;
+    colorByTrackName: Record<string, Color>;
 }

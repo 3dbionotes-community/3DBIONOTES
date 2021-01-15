@@ -1,14 +1,14 @@
 import _ from "lodash";
 import { AxiosRequestConfig } from "axios";
-import { FutureData } from "../../domain/entities/FutureData";
-import { Pdb } from "../../domain/entities/Pdb";
-import { PdbRepository } from "../../domain/repositories/PdbRepository";
-import { Future } from "../../utils/future";
-import { AxiosBuilder, axiosRequest } from "../../utils/future-axios";
-import { config as protvistaConfig } from "./protvista-config";
-import { Track } from "../../domain/entities/Track";
-import { Fragment } from "../../domain/entities/Fragment";
-import { debugVariable } from "../../utils/debug";
+import { FutureData } from "../../../domain/entities/FutureData";
+import { Pdb } from "../../../domain/entities/Pdb";
+import { PdbRepository } from "../../../domain/repositories/PdbRepository";
+import { Future } from "../../../utils/future";
+import { AxiosBuilder, axiosRequest } from "../../../utils/future-axios";
+import { config as protvistaConfig } from "../protvista-config";
+import { addToTrack, Subtrack, Track } from "../../../domain/entities/Track";
+import { Fragment } from "../../../domain/entities/Fragment";
+import { debugVariable } from "../../../utils/debug";
 import {
     GroupedFeature,
     Cv19Annotation,
@@ -17,83 +17,119 @@ import {
     Cv19Annotations,
     PdbAnnotations,
     Coverage,
-} from "./PdbRepositoryNetwork.types";
-import { getEmValidationTrack } from "./em-validation";
-import { getName } from "./utils";
-import { getVariants } from "./variants";
+    MobiUniprot,
+} from "../PdbRepositoryNetwork.types";
+import { getEmValidationTrack } from "../em-validation";
+import { getId, getName } from "../utils";
+import { getVariants } from "../variants";
+import { addPhosphiteSubtracks, PhosphositeUniprot } from "../phosphite";
+
+interface Data {
+    features: Features;
+    covidAnnotations?: Cv19Annotations;
+    pdbAnnotations?: PdbAnnotations;
+    ebiVariation: EbiVariation;
+    coverage: Coverage;
+    mobiUniprot?: MobiUniprot;
+    phosphositeUniprot?: PhosphositeUniprot;
+}
+
+interface Options {
+    protein: string;
+    pdb: string;
+    chain: string;
+}
 
 export class PdbRepositoryNetwork implements PdbRepository {
-    // TODO: Get protein from pdb
-    get(options: { protein: string; pdb: string; chain: string }): FutureData<Pdb> {
-        const { protein, pdb, chain } = options;
-        const bionotesUrl = "http://3dbionotes.cnb.csic.es";
-
-        const data$: DataRequests = {
-            features: get(`https://www.ebi.ac.uk/proteins/api/features/${protein}`),
-            covidAnnotations: getOrEmpty(
-                `${bionotesUrl}/cv19_annotations/${protein}_annotations.json`
-            ),
-            pdbAnnotations: getOrEmpty(
-                `${bionotesUrl}/ws/lrs/pdbAnnotFromMap/all/${pdb}/${chain}/?format=json`
-            ),
-            ebiVariation: get(`https://www.ebi.ac.uk/proteins/api/variation/${protein}`),
-            coverage: get(`${bionotesUrl}/api/alignments/Coverage/${pdb}${chain}`),
-            // bioMuta: get(`${bionotesUrl}/api/annotations/biomuta/Uniprot/${protein}`),
-        };
-
-        const data1$ = Future.join3(data$.features, data$.covidAnnotations, data$.coverage);
-        const data2$ = Future.join(data$.ebiVariation, data$.pdbAnnotations);
-
-        return Future.join(data1$, data2$).map(
-            ([[features, annotations, coverage], [ebiVariation, pdbAnnotations]]) => {
-                return this.getPdb({
-                    features,
-                    covidAnnotations: annotations,
-                    ebiVariation,
-                    pdbAnnotations,
-                    coverage,
-                });
-            }
-        );
+    get(options: Options): FutureData<Pdb> {
+        // TODO: Get protein from pdb
+        return getData(options).map(data => this.getPdb(data));
     }
 
     getPdb(data: Data): Pdb {
-        const { features, covidAnnotations, ebiVariation, pdbAnnotations, coverage } = data;
         debugVariable(data);
+        const {
+            features,
+            covidAnnotations,
+            ebiVariation,
+            pdbAnnotations,
+            coverage,
+            mobiUniprot,
+            phosphositeUniprot,
+        } = data;
 
         const variants = ebiVariation ? getVariants(ebiVariation) : undefined;
-        const groupedFeatures = features ? this.getGroupedFeatures(features) : [];
         const mapping = covidAnnotations ? covidAnnotations[0] : undefined;
         const functionalMappingTrack = this.getFunctionalMappingTrack(mapping);
         const emValidationTrack = pdbAnnotations ? getEmValidationTrack(pdbAnnotations) : null;
         const structureCoverageTrack = coverage ? this.getStructureCoverageTrack(coverage) : null;
 
-        const tracks: Track[] = _.compact([
+        const tracks1: Track[] = _.compact([
             functionalMappingTrack,
-            ...groupedFeatures.map(groupedFeature =>
-                this.getTrackFromGroupedFeature(groupedFeature)
-            ),
+            ...this.getTrackFromFeatures(features),
             emValidationTrack,
             structureCoverageTrack,
         ]);
 
+        const tracks2 = addToTrack({
+            tracks: tracks1,
+            trackInfo: { id: "domains-and-sites", label: "Domains & sites" },
+            subtracks: this.getMobiUniprotSubtracks(mobiUniprot),
+        });
+
+        const tracks = addPhosphiteSubtracks(tracks2, phosphositeUniprot);
+
         return {
             sequence: features ? features.sequence : "TODO",
+            length: this.getTotalFeaturesLength(tracks),
             tracks,
             variants,
-            // TODO: Get from tracks
-            length: this.getTotalFeaturesLength(groupedFeatures),
         };
     }
 
-    private getTotalFeaturesLength(groupedFeatures: GroupedFeature[]): number {
+    private getTotalFeaturesLength(tracks: Track[]): number {
         return (
-            _(groupedFeatures)
-                .flatMap(feature => feature.items)
-                .flatMap(item => item.items)
-                .map(item => parseInt(item.end))
+            _(tracks)
+                .flatMap(track => track.subtracks)
+                .flatMap(subtrack => subtrack.locations)
+                .flatMap(location => location.fragments)
+                .map(fragment => fragment.end)
                 .max() || 0
         );
+    }
+
+    getTrackFromFeatures(features: Features): Track[] {
+        const groupedFeatures = features ? this.getGroupedFeatures(features) : [];
+        return groupedFeatures.map(groupedFeature =>
+            this.getTrackFromGroupedFeature(groupedFeature)
+        );
+    }
+
+    getMobiUniprotSubtracks(mobiUniprot: MobiUniprot | undefined): Subtrack[] {
+        if (!mobiUniprot) return [];
+
+        const fragments = _(mobiUniprot.lips)
+            .values()
+            .flatten()
+            .map(
+                (obj): Fragment => ({
+                    start: obj.start,
+                    end: obj.end,
+                    description: "TODO",
+                    color: "#cc2060", // TODO: Missing in config
+                })
+            )
+            .value();
+
+        const subtrack: Subtrack = {
+            type: "LINEAR_INTERACTING_PEPTIDE",
+            accession: "LIPS",
+            shape: "rectangle",
+            locations: [{ fragments }],
+            label: "Linear interacting peptide",
+        };
+
+        return [subtrack];
     }
 
     private getStructureCoverageTrack(coverage: Coverage): Track {
@@ -104,8 +140,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
         return {
             id: "structure-coverage",
             label: "Structure coverage",
-            labelType: "text" as const,
-            data: [
+            subtracks: [
                 {
                     accession: name,
                     type: name,
@@ -119,7 +154,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
                                     start: item.start,
                                     end: item.end,
                                     description: "Sequence segment covered by the structure",
-                                    color: trackConfig.color || defaultColor,
+                                    color: getColor(itemKey),
                                 })
                             ),
                         },
@@ -133,8 +168,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
         return {
             id: getId(feature.name),
             label: feature.name,
-            labelType: "text" as const,
-            data: feature.items.map((item, idx) => {
+            subtracks: feature.items.map((item, idx) => {
                 const itemKey = item.name.toLowerCase();
                 const track = protvistaConfig.tracks[itemKey];
 
@@ -151,7 +185,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
                                     start: parseInt(item.begin),
                                     end: parseInt(item.end),
                                     description: item.description,
-                                    color: protvistaConfig.tracks[itemKey]?.color || defaultColor,
+                                    color: getColor(itemKey),
                                 })
                             ),
                         },
@@ -173,8 +207,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
             ? {
                   id: getId(mapping.track_name),
                   label: getName(mapping.track_name),
-                  labelType: "text",
-                  data: mappingTracks.map(track => ({
+                  subtracks: mappingTracks.map(track => ({
                       accession: getName(track.name),
                       type: track.items[0].type,
                       label: getName(track.name),
@@ -221,14 +254,6 @@ export class PdbRepositoryNetwork implements PdbRepository {
     }
 }
 
-function getId(name: string): string {
-    return name.replace(/[^\w]/g, "-");
-}
-
-function get<Data>(url: string): Future<RequestError, Data> {
-    return request<Data>({ method: "GET", url });
-}
-
 function getOrEmpty<Data>(url: string): Future<RequestError, Data | undefined> {
     const data$ = get<Data>(url) as Future<RequestError, Data | undefined>;
 
@@ -236,15 +261,6 @@ function getOrEmpty<Data>(url: string): Future<RequestError, Data | undefined> {
         console.log(`Cannot get data: ${url}`);
         return Future.success(undefined);
     });
-}
-
-interface Data {
-    features: Features;
-    covidAnnotations?: Cv19Annotations;
-    pdbAnnotations?: PdbAnnotations;
-    ebiVariation: EbiVariation;
-    coverage: Coverage;
-    //bioMuta: EbiVariation;
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K]> };
@@ -264,6 +280,52 @@ const builder: AxiosBuilder<RequestError> = {
 
 function request<Data>(request: AxiosRequestConfig): Future<RequestError, Data> {
     return axiosRequest<RequestError, Data>(builder, request);
+}
+
+function getColor(key: string) {
+    return protvistaConfig.colorByTrackName[key] || defaultColor;
+}
+
+function getData(options: Options): FutureData<Data> {
+    const bionotesUrl = "http://3dbionotes.cnb.csic.es";
+    const { protein, pdb, chain } = options;
+
+    const data$: DataRequests = {
+        features: get(`https://www.ebi.ac.uk/proteins/api/features/${protein}`),
+        covidAnnotations: getOrEmpty(`${bionotesUrl}/cv19_annotations/${protein}_annotations.json`),
+        pdbAnnotations: getOrEmpty(
+            `${bionotesUrl}/ws/lrs/pdbAnnotFromMap/all/${pdb}/${chain}/?format=json`
+        ),
+        ebiVariation: get(`https://www.ebi.ac.uk/proteins/api/variation/${protein}`),
+        coverage: get(`${bionotesUrl}/api/alignments/Coverage/${pdb}${chain}`),
+        mobiUniprot: getOrEmpty(`${bionotesUrl}/api/annotations/mobi/Uniprot/${protein}`),
+        phosphositeUniprot: getOrEmpty(
+            `${bionotesUrl}/api/annotations/Phosphosite/Uniprot/${protein}`
+        ),
+    };
+
+    const data1$ = Future.join3(data$.features, data$.covidAnnotations, data$.coverage);
+    const data2$ = Future.join3(data$.ebiVariation, data$.pdbAnnotations, data$.mobiUniprot);
+
+    return Future.join3(data1$, data2$, data$.phosphositeUniprot).map(
+        ([
+            [features, covidAnnotations, coverage],
+            [ebiVariation, pdbAnnotations, mobiUniprot],
+            phosphositeUniprot,
+        ]): Data => ({
+            features,
+            covidAnnotations,
+            ebiVariation,
+            pdbAnnotations,
+            coverage,
+            mobiUniprot,
+            phosphositeUniprot,
+        })
+    );
+}
+
+function get<Data>(url: string): Future<RequestError, Data> {
+    return request<Data>({ method: "GET", url });
 }
 
 const defaultColor = "#777";

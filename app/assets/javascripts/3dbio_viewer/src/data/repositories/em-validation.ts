@@ -46,7 +46,7 @@ const config = {
 };
 
 export function getEmValidationTrack(pdbAnnotations: PdbAnnotations): Track {
-    const data: Track["data"] = pdbAnnotations.map((pdbAnnotation: PdbAnnotation) => {
+    const data: Track["subtracks"] = pdbAnnotations.map((pdbAnnotation: PdbAnnotation) => {
         const label = `${pdbAnnotation.algorithm} (${pdbAnnotation.minVal} -> ${pdbAnnotation.maxVal})`;
         const { descriptionPrefix, legend, getColor } = getEmResolution(pdbAnnotation);
 
@@ -73,13 +73,7 @@ export function getEmValidationTrack(pdbAnnotations: PdbAnnotations): Track {
         };
     });
 
-    return {
-        id: "em-validation",
-        label: "em validation",
-        labelType: "text",
-        overlapping: false,
-        data,
-    };
+    return { id: "em-validation", label: "em validation", subtracks: data };
 }
 
 function getEmResolution(pdbAnnotation: PdbAnnotation): EmResolution {
