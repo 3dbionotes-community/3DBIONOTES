@@ -107,3 +107,15 @@
   margin-left: 0px !important;
 }
 
+.btn-primary:hover , .btn-primary:active , .btn-primary:focus {
+    color: #fff;
+    background-color: #268bbe;
+    border-color: #268bbe;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #268bbe;
+    border-color: #268bbe;
+}
+

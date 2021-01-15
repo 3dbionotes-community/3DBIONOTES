@@ -29,3 +29,86 @@
     width: 67%;
     overflow: auto;
 }
+
+.section {
+    padding: 20px;
+}
+
+.contents {
+    margin-bottom: 10px;
+}
+
+.category-label  {
+    background-color: #e2e2e2;
+}
+
+.category-label:hover, .protvistaRow.expanded > .category-label {
+    background-color: #607d8b;
+    color: #fff;
+}
+
+.category-label:hover::before {
+    border-left: 5px solid #fff;
+}
+
+.protvistaRow.expanded > .category-label::before {
+    border-top: 5px solid #fff;
+}
+
+.track-label, .track-content {
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.aggregate-track-content, .track-content-single {
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.track-label {
+    background-color: #f7f7f7;
+    padding: 0.5em 1.2em 0.5em 1.8em;
+    cursor: pointer;
+    position: relative;
+}
+
+.protvista-pdb {
+    border: 0px ;
+}
+
+.hideLabelIcon {
+    position: absolute;
+    right: 10px;
+    top: 40%;
+}
+
+.protvista-pdb {
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+protvista-tooltip .tooltip-header, protvista-tooltip .tooltip-header .tooltip-header-title {
+    background-color: #133546;
+    color: #FFF;
+    line-height: 2em;
+}
+
+protvista-tooltip .tooltip-header .tooltip-header-title {
+    font-weight: 700;
+    white-space: nowrap;
+    letter-spacing: .05em;
+    font-size: 1em;
+    line-height: 2em;
+    padding: 0 .7em;
+    color: #FFF;
+}
+
+protvista-tooltip .tooltip-close {
+    height: 2em;
+}
+
+.protvistaToolbar {
+    text-align: center;
+}
+
+.protvista-pdb {
+    margin-bottom: 0px;
+    padding: 20px 10px 0px 10px;
+}

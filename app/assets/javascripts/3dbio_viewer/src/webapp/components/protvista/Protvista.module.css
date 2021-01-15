@@ -1,8 +1,30 @@
+body {
+  font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
 .title {
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+    color: #123546;
 }
 
 .actions {
     float: right;
 }
+
+button {
+	font-weight: 700;
+	padding: 6px 10px;
+	margin-left: 10px;
+	color: #ffffff;
+	background-color: #123546;
+	border-radius: 8px;
+	border: solid 0px #123546;
+}
+
+button::hover, button::active, button::focus {
+	background-color: #268bbe;
+	border: solid 0px #268bbe;
+}
+
+
