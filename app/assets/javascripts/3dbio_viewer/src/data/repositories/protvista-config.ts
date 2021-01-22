@@ -522,5 +522,15 @@ interface Config {
     }>;
     tracks: Record<string, { label: string; tooltip: string }>;
     shapeByTrackName: Record<string, Shape>;
-    colorByTrackName: Record<string, Color>;
+    colorByTrackName: Record<keyof typeof colorByTrackName, Color>;
+}
+
+const defaultColor = "#777";
+
+export function getColorFromString(trackName: string): Color {
+    if (trackName in config.colorByTrackName) {
+        return config.colorByTrackName[trackName as keyof typeof colorByTrackName];
+    } else {
+        return defaultColor;
+    }
 }

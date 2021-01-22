@@ -2,7 +2,7 @@ import _ from "lodash";
 import { Color } from "../../domain/entities/Color";
 import { Fragment } from "../../domain/entities/Fragment";
 import { addToTrack, Subtrack, Track } from "../../domain/entities/Track";
-import { config } from "./protvista-config";
+import { config, getColorFromString } from "./protvista-config";
 
 export type PhosphositeUniprot = PhosphositeUniprotItem[];
 
@@ -66,7 +66,7 @@ function getColorFromSubType(subtype: string): Color {
     const obj = { type: subtype };
     filter_type(obj);
     const newType = obj.type.toLowerCase();
-    return config.colorByTrackName[newType] || "#777";
+    return getColorFromString(newType) || "#777";
 }
 
 /* From: featureAnalysis/add_analysis_data.js */
