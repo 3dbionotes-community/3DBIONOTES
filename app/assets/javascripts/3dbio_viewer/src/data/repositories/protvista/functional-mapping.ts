@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { Track } from "../../../domain/entities/Track";
-import { Cv19Annotation, Cv19Annotations } from "./PdbRepositoryNetwork.types";
+import { Cv19Annotations } from "./PdbRepositoryNetwork.types";
 import { getId, getName } from "./utils";
 
 export function getFunctionalMappingTrack(cv19Annotations: Cv19Annotations): Track | undefined {

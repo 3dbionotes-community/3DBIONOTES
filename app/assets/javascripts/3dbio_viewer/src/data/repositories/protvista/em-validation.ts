@@ -109,8 +109,8 @@ function getColorFromResolution(resolution: number, emResColors: Color[]) {
     /* Return the color that corresponds to resolution value*/
 
     // Get resolution integer boundaries
-    let highRes = Math.floor(resolution);
-    let lowRes = highRes + 1;
+    const highRes = Math.floor(resolution);
+    const lowRes = highRes + 1;
 
     const highResColor =
         emResColors.length <= highRes ? emResColors[emResColors.length - 1] : emResColors[highRes];

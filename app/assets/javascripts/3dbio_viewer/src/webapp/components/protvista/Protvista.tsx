@@ -58,7 +58,7 @@ export const Protvista: React.FC = () => {
                 </div>
 
                 <div className="contents">
-                    Spike protein, trimeric complex S1-S2-S2': Attaches the virion to the cell
+                    Spike protein, trimeric complex S1-S2-S2: Attaches the virion to the cell
                     membrane by interacting with host receptor, initiating the infection. Binding to
                     human ACE2 receptor and internalization of the virus into the endosomes of the
                     host cell induces conformational changes in the Spike glycoprotein. Uses also

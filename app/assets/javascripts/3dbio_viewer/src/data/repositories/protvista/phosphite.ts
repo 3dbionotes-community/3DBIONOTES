@@ -72,7 +72,7 @@ function getColorFromSubType(subtype: string): Color {
 /* From: featureAnalysis/add_analysis_data.js */
 
 function filter_type(i: { type: string }): void {
-    var i_t = i["type"].toLowerCase();
+    const i_t = i["type"].toLowerCase();
 
     if (i_t.indexOf("methyl") > -1) {
         i["type"] = "MOD_RES_MET";

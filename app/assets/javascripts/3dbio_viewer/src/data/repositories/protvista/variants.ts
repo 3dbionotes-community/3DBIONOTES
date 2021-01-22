@@ -16,7 +16,7 @@ const variantsFiltersConfig: VariantFilterConfig[] = [
         type: "consequence",
         items: [{ label: "Disease (reviewed)", color: "#990000" }],
         properties: {
-            association: variant => {
+            association: _variant => {
                 // TODO
                 /*
                 return _.some(variant.association, function (association) {
