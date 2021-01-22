@@ -16,7 +16,7 @@ import {
 import { getEmValidationTrack } from "./em-validation";
 import { getVariants } from "./variants";
 import { addPhosphiteSubtracks, PhosphositeUniprot } from "./phosphite";
-import { getDomainFamiliesTrack, PfamAnnotations } from "./domain-families";
+import { getDomainFamiliesTrack, PfamAnnotations, SmartAnnotations } from "./domain-families";
 import { Features, getTrackFromFeatures } from "./feature-tracks";
 import { Coverage, getStructureCoverageTrack } from "./structure-coverage";
 import { addMobiSubtracks } from "./mobi";
@@ -31,6 +31,7 @@ interface Data {
     mobiUniprot?: MobiUniprot;
     phosphositeUniprot?: PhosphositeUniprot;
     pfamAnnotations?: PfamAnnotations;
+    smartAnnotations?: SmartAnnotations;
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K]> };
@@ -60,6 +61,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
             mobiUniprot,
             phosphositeUniprot,
             pfamAnnotations,
+            smartAnnotations,
         } = data;
 
         const variants = ebiVariation ? getVariants(ebiVariation) : undefined;
@@ -67,9 +69,7 @@ export class PdbRepositoryNetwork implements PdbRepository {
         const functionalMappingTrack = getFunctionalMappingTrack(mapping);
         const emValidationTrack = pdbAnnotations ? getEmValidationTrack(pdbAnnotations) : null;
         const structureCoverageTrack = coverage ? getStructureCoverageTrack(coverage) : null;
-        const domainFamiliesTrack = pfamAnnotations
-            ? getDomainFamiliesTrack(pfamAnnotations)
-            : null;
+        const domainFamiliesTrack = getDomainFamiliesTrack(pfamAnnotations, smartAnnotations);
 
         const tracks1: Track[] = _.compact([
             functionalMappingTrack,
@@ -108,17 +108,22 @@ function getData(options: Options): FutureData<Data> {
             `${bionotesUrl}/api/annotations/Phosphosite/Uniprot/${protein}`
         ),
         pfamAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/Pfam/Uniprot/${protein}`),
+        smartAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/SMART/Uniprot/${protein}`),
     };
 
     const data1$ = Future.join3(data$.features, data$.covidAnnotations, data$.coverage);
     const data2$ = Future.join3(data$.ebiVariation, data$.pdbAnnotations, data$.mobiUniprot);
-    const data3$ = Future.join(data$.phosphositeUniprot, data$.pfamAnnotations);
+    const data3$ = Future.join3(
+        data$.phosphositeUniprot,
+        data$.pfamAnnotations,
+        data$.smartAnnotations
+    );
 
     return Future.join3(data1$, data2$, data3$).map(
         ([
             [features, covidAnnotations, coverage],
             [ebiVariation, pdbAnnotations, mobiUniprot],
-            [phosphositeUniprot, pfamAnnotations],
+            [phosphositeUniprot, pfamAnnotations, smartAnnotations],
         ]): Data => ({
             features,
             covidAnnotations,
@@ -128,6 +133,7 @@ function getData(options: Options): FutureData<Data> {
             mobiUniprot,
             phosphositeUniprot,
             pfamAnnotations,
+            smartAnnotations,
         })
     );
 }

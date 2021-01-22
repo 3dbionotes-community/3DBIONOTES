@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { getFragment } from "../../../domain/entities/Fragment";
 import { Track } from "../../../domain/entities/Track";
-import { config, getColorFromString } from "./config";
+import { config, getColorFromString, getShapeFromString } from "./config";
 import { getId, getName } from "./utils";
 
 export interface Feature {
@@ -52,7 +52,7 @@ function getTrackFromGroupedFeature(feature: GroupedFeature): Track {
                 type: getName(item.name),
                 label: track?.label || getName(item.name),
                 labelTooltip: track?.tooltip || getName(item.name),
-                shape: config.shapeByTrackName[itemKey] || "circle",
+                shape: getShapeFromString(itemKey) || "circle",
                 locations: [
                     {
                         fragments: _.flatMap(item.items, item =>

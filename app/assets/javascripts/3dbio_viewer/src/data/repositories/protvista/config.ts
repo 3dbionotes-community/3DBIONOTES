@@ -521,7 +521,7 @@ interface Config {
         visualizationType: "basic" | "continuous" | "variant";
     }>;
     tracks: Record<string, { label: string; tooltip: string }>;
-    shapeByTrackName: Record<string, Shape>;
+    shapeByTrackName: Record<keyof typeof shapeByTrackName, Shape>;
     colorByTrackName: Record<keyof typeof colorByTrackName, Color>;
 }
 
@@ -532,5 +532,13 @@ export function getColorFromString(trackName: string): Color {
         return config.colorByTrackName[trackName as keyof typeof colorByTrackName];
     } else {
         return defaultColor;
+    }
+}
+
+export function getShapeFromString(trackName: string): Shape | undefined {
+    if (trackName in config.shapeByTrackName) {
+        return config.shapeByTrackName[trackName as keyof typeof shapeByTrackName];
+    } else {
+        return undefined;
     }
 }

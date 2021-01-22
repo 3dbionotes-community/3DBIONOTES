@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { getFragment } from "../../../domain/entities/Fragment";
 import { Track } from "../../../domain/entities/Track";
+import { getIf } from "../../../utils/misc";
 import { config } from "./config";
 
 // Domain family: Pfam, smart, interpro
@@ -22,32 +23,63 @@ export interface PfamAnnotation {
     };
 }
 
-export function getDomainFamiliesTrack(pfamAnnotations: PfamAnnotations): Track {
-    const itemKey = "pfam_domain";
+export type SmartAnnotations = SmartAnnotation[];
 
+export interface SmartAnnotation {
+    domain: string;
+    start: string;
+    end: string;
+    evalue: string;
+    type: string;
+    status: string;
+}
+
+export function getDomainFamiliesTrack(
+    pfamAnnotations: PfamAnnotations | undefined,
+    smartAnnotations: SmartAnnotations | undefined
+): Track {
     return {
         id: "domain-families",
         label: "Domain families",
-        subtracks: [
-            {
-                accession: "Pfam domain",
+        subtracks: _.compact([
+            getIf(pfamAnnotations, pfamAnnotations => ({
+                accession: "pfam-domain",
                 type: "Pfam domain",
                 label: "Pfam domain",
                 labelTooltip: config.tracks.pfam_domain.tooltip,
-                shape: config.shapeByTrackName[itemKey] || "circle",
+                shape: config.shapeByTrackName.pfam_domain,
                 locations: [
                     {
-                        fragments: _.flatMap(pfamAnnotations, item =>
+                        fragments: _.flatMap(pfamAnnotations, an =>
                             getFragment({
-                                start: item.start,
-                                end: item.end,
+                                start: an.start,
+                                end: an.end,
                                 description: "Imported from Pfam",
-                                color: config.colorByTrackName[itemKey],
+                                color: config.colorByTrackName.pfam_domain,
                             })
                         ),
                     },
                 ],
-            },
-        ],
+            })),
+            getIf(smartAnnotations, smartAnnotations => ({
+                accession: "smart-domain",
+                type: "SMART domain",
+                label: "SMART domain",
+                labelTooltip: config.tracks.pfam_domain.tooltip,
+                shape: config.shapeByTrackName.smart_domain,
+                locations: [
+                    {
+                        fragments: _.flatMap(smartAnnotations, an =>
+                            getFragment({
+                                start: an.start,
+                                end: an.end,
+                                description: "Imported from SMART",
+                                color: config.colorByTrackName.smart_domain,
+                            })
+                        ),
+                    },
+                ],
+            })),
+        ]),
     };
 }
