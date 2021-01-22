@@ -21,6 +21,7 @@ import { Features, getTrackFromFeatures } from "./feature-tracks";
 import { Coverage, getStructureCoverageTrack } from "./structure-coverage";
 import { addMobiSubtracks } from "./mobi";
 import { getFunctionalMappingTrack } from "./functional-mapping";
+import { getIf } from "../../../utils/misc";
 
 interface Data {
     features: Features;
@@ -52,38 +53,29 @@ export class PdbRepositoryNetwork implements PdbRepository {
 
     getPdb(data: Data): Pdb {
         debugVariable(data);
-        const {
-            features,
-            covidAnnotations,
-            ebiVariation,
-            pdbAnnotations,
-            coverage,
-            mobiUniprot,
-            phosphositeUniprot,
-            pfamAnnotations,
-            smartAnnotations,
-        } = data;
-
-        const variants = ebiVariation ? getVariants(ebiVariation) : undefined;
-        const mapping = covidAnnotations ? covidAnnotations[0] : undefined;
-        const functionalMappingTrack = getFunctionalMappingTrack(mapping);
-        const emValidationTrack = pdbAnnotations ? getEmValidationTrack(pdbAnnotations) : null;
-        const structureCoverageTrack = coverage ? getStructureCoverageTrack(coverage) : null;
-        const domainFamiliesTrack = getDomainFamiliesTrack(pfamAnnotations, smartAnnotations);
+        const variants = getIf(data.ebiVariation, getVariants);
+        const functionalMappingTrack = getIf(data.covidAnnotations, getFunctionalMappingTrack);
+        const emValidationTrack = getIf(data.pdbAnnotations, getEmValidationTrack);
+        const structureCoverageTrack = getIf(data.coverage, getStructureCoverageTrack);
+        const domainFamiliesTrack = getDomainFamiliesTrack(
+            data.pfamAnnotations,
+            data.smartAnnotations
+        );
+        const featureTracks = getTrackFromFeatures(data.features);
 
         const tracks1: Track[] = _.compact([
             functionalMappingTrack,
-            ...getTrackFromFeatures(features),
+            ...featureTracks,
             emValidationTrack,
             domainFamiliesTrack,
             structureCoverageTrack,
         ]);
 
-        const tracks2 = addMobiSubtracks(tracks1, mobiUniprot);
-        const tracks3 = addPhosphiteSubtracks(tracks2, phosphositeUniprot);
+        const tracks2 = addMobiSubtracks(tracks1, data.mobiUniprot);
+        const tracks3 = addPhosphiteSubtracks(tracks2, data.phosphositeUniprot);
 
         return {
-            sequence: features ? features.sequence : "TODO",
+            sequence: data.features ? data.features.sequence : "TODO",
             length: getTotalFeaturesLength(tracks3),
             tracks: tracks3,
             variants,
