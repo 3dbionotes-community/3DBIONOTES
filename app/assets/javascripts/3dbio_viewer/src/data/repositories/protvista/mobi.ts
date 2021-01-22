@@ -1,7 +1,19 @@
 import _ from "lodash";
 import { Fragment } from "../../../domain/entities/Fragment";
 import { Track, addToTrack, Subtrack } from "../../../domain/entities/Track";
-import { MobiUniprot } from "./PdbRepositoryNetwork.types";
+
+export interface MobiUniprot {
+    disorder: MobiUniprotItem;
+    lips: MobiUniprotItem;
+}
+
+export interface MobiUniprotItem {
+    [key: string]: Array<{
+        start: number;
+        end: number;
+        method: string | null;
+    }>;
+}
 
 export function addMobiSubtracks(tracks: Track[], mobiUniprot: MobiUniprot | undefined): Track[] {
     if (!mobiUniprot) return tracks;

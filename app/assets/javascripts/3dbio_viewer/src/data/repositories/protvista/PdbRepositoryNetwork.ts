@@ -7,20 +7,14 @@ import { Future } from "../../../utils/future";
 import { AxiosBuilder, axiosRequest } from "../../../utils/future-axios";
 import { getTotalFeaturesLength, Track } from "../../../domain/entities/Track";
 import { debugVariable } from "../../../utils/debug";
-import {
-    EbiVariation,
-    Cv19Annotations,
-    PdbAnnotations,
-    MobiUniprot,
-} from "./PdbRepositoryNetwork.types";
-import { getEmValidationTrack } from "./em-validation";
-import { getVariants } from "./variants";
+import { getEmValidationTrack, PdbAnnotations } from "./em-validation";
+import { EbiVariation, getVariants } from "./variants";
 import { addPhosphiteSubtracks, PhosphositeUniprot } from "./phosphite";
 import { getDomainFamiliesTrack, PfamAnnotations, SmartAnnotations } from "./domain-families";
 import { Features, getTrackFromFeatures } from "./feature-tracks";
 import { Coverage, getStructureCoverageTrack } from "./structure-coverage";
-import { addMobiSubtracks } from "./mobi";
-import { getFunctionalMappingTrack } from "./functional-mapping";
+import { addMobiSubtracks, MobiUniprot } from "./mobi";
+import { Cv19Annotations, getFunctionalMappingTrack } from "./functional-mapping";
 import { getIf } from "../../../utils/misc";
 
 interface Data {
@@ -84,8 +78,8 @@ export class PdbRepositoryNetwork implements PdbRepository {
 }
 
 function getData(options: Options): FutureData<Data> {
-    const bionotesUrl = "http://3dbionotes.cnb.csic.es";
     const { protein, pdb, chain } = options;
+    const bionotesUrl = "http://3dbionotes.cnb.csic.es";
 
     const data$: DataRequests = {
         features: get(`https://www.ebi.ac.uk/proteins/api/features/${protein}`),

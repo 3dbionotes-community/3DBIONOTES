@@ -1,9 +1,19 @@
 import _ from "lodash";
 import { Fragment } from "../../../domain/entities/Fragment";
 import { Legend } from "../../../domain/entities/Legend";
-import { PdbAnnotations, PdbAnnotation } from "./PdbRepositoryNetwork.types";
 import { Track } from "../../../domain/entities/Track";
 import { getName } from "./utils";
+
+export type PdbAnnotations = PdbAnnotation[];
+
+export interface PdbAnnotation {
+    chain: string;
+    minVal: number;
+    maxVal: number;
+    algorithm: string;
+    algoType: string;
+    data: Array<{ begin: string; value: number }>;
+}
 
 const MAXQ_COLOR_UPPPER_THRESHOLD = 0.8;
 

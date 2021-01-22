@@ -1,7 +1,26 @@
 import _ from "lodash";
 import { Track } from "../../../domain/entities/Track";
-import { Cv19Annotations } from "./PdbRepositoryNetwork.types";
 import { getId, getName } from "./utils";
+
+export type Cv19Annotations = Cv19Annotation[];
+
+export interface Cv19Annotation {
+    track_name: string;
+    visualization_type?: "variants"; // This type uses a different Data, implement if necessary
+    acc: string;
+    data: Cv19AnnotationData[];
+    reference: string;
+    fav_icon: string;
+}
+
+export interface Cv19AnnotationData {
+    begin: number;
+    end: number;
+    partner_name: string;
+    color: string;
+    description: string;
+    type: string;
+}
 
 export function getFunctionalMappingTrack(cv19Annotations: Cv19Annotations): Track | undefined {
     const mapping = cv19Annotations[0];
