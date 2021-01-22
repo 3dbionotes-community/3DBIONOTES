@@ -269,7 +269,7 @@ const categories: Config["categories"] = [
     },
 ];
 
-const tracks: Config["tracks"] = {
+const tracks = {
     chain: {
         label: "Chain",
         tooltip:
@@ -506,6 +506,11 @@ const tracks: Config["tracks"] = {
     completed_loop: { label: "Completed loop", tooltip: "Completed loop" },
 };
 
+interface TrackConfig {
+    label: string;
+    tooltip: string;
+}
+
 export const config: Config = {
     categories,
     tracks,
@@ -520,7 +525,7 @@ interface Config {
         tooltip?: string;
         visualizationType: "basic" | "continuous" | "variant";
     }>;
-    tracks: Record<string, { label: string; tooltip: string }>;
+    tracks: Record<keyof typeof tracks, TrackConfig>;
     shapeByTrackName: Record<keyof typeof shapeByTrackName, Shape>;
     colorByTrackName: Record<keyof typeof colorByTrackName, Color>;
 }
@@ -538,7 +543,11 @@ export function getColorFromString(trackName: string): Color {
 export function getShapeFromString(trackName: string): Shape | undefined {
     if (trackName in config.shapeByTrackName) {
         return config.shapeByTrackName[trackName as keyof typeof shapeByTrackName];
-    } else {
-        return undefined;
+    }
+}
+
+export function getTrack(trackName: string): TrackConfig | undefined {
+    if (trackName in config.tracks) {
+        return config.tracks[trackName as keyof typeof tracks];
     }
 }

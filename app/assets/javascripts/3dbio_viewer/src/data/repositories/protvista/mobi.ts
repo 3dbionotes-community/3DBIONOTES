@@ -1,6 +1,8 @@
 import _ from "lodash";
-import { Fragment } from "../../../domain/entities/Fragment";
+import { Fragment, getFragment } from "../../../domain/entities/Fragment";
 import { Track, addToTrack, Subtrack } from "../../../domain/entities/Track";
+import i18n from "../../../webapp/utils/i18n";
+import { config } from "./config";
 
 export interface MobiUniprot {
     disorder: MobiUniprotItem;
@@ -50,4 +52,35 @@ function getMobiUniprotSubtracks(mobiUniprot: MobiUniprot | undefined): Subtrack
     };
 
     return [subtrack];
+}
+
+export function getMobiDisorderTrack(mobiUniprot: MobiUniprot | undefined): Track | undefined {
+    if (!mobiUniprot || !mobiUniprot.disorder) return;
+    const annotations = _.flatten(_.values(mobiUniprot.disorder));
+
+    return {
+        id: "disordered-regions",
+        label: "Disordered regions",
+        subtracks: [
+            {
+                accession: "inferred",
+                type: "Inferred",
+                label: "Inferred",
+                shape: "rectangle",
+                locations: [
+                    {
+                        fragments: _.flatMap(annotations, an =>
+                            getFragment({
+                                start: an.start,
+                                end: an.end,
+                                description:
+                                    i18n.t("Inferred from") + " " + (an.method || "Unknown"),
+                                color: an.method ? config.colorByTrackName.inferred : "#557071",
+                            })
+                        ),
+                    },
+                ],
+            },
+        ],
+    };
 }

@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { getFragment } from "../../../domain/entities/Fragment";
 import { Track } from "../../../domain/entities/Track";
-import { config, getColorFromString, getShapeFromString } from "./config";
+import { config, getColorFromString, getShapeFromString, getTrack } from "./config";
 import { getId, getName } from "./utils";
 
 export interface Feature {
@@ -45,7 +45,7 @@ function getTrackFromGroupedFeature(feature: GroupedFeature): Track {
         label: feature.name,
         subtracks: feature.items.map((item, idx) => {
             const itemKey = item.name.toLowerCase();
-            const track = config.tracks[itemKey];
+            const track = getTrack(itemKey);
 
             return {
                 accession: item.name + "-" + idx,

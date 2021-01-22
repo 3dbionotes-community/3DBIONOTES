@@ -10,6 +10,7 @@ export interface Track {
 }
 
 export interface Subtrack {
+    // TODO: Do we really need type/accesion/label? simplify
     type: string; // Displayed in tooltip title
     accession: string;
     shape: Shape;

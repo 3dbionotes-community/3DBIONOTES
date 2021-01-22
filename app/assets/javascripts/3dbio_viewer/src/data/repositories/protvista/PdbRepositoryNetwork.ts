@@ -13,7 +13,7 @@ import { addPhosphiteSubtracks, PhosphositeUniprot } from "./phosphite";
 import { getDomainFamiliesTrack, PfamAnnotations, SmartAnnotations } from "./domain-families";
 import { Features, getTrackFromFeatures } from "./feature-tracks";
 import { Coverage, getStructureCoverageTrack } from "./structure-coverage";
-import { addMobiSubtracks, MobiUniprot } from "./mobi";
+import { addMobiSubtracks, getMobiDisorderTrack, MobiUniprot } from "./mobi";
 import { Cv19Annotations, getFunctionalMappingTrack } from "./functional-mapping";
 import { getIf } from "../../../utils/misc";
 
@@ -56,12 +56,14 @@ export class PdbRepositoryNetwork implements PdbRepository {
             data.smartAnnotations
         );
         const featureTracks = getTrackFromFeatures(data.features);
+        const mobiDisorderTrack = getIf(data.mobiUniprot, getMobiDisorderTrack);
 
         const tracks1: Track[] = _.compact([
             functionalMappingTrack,
             ...featureTracks,
             emValidationTrack,
             domainFamiliesTrack,
+            mobiDisorderTrack,
             structureCoverageTrack,
         ]);
 
