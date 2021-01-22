@@ -1,4 +1,4 @@
-import { Variant, VariantFilter, Variants } from "../../domain/entities/Variant";
+import { Variant, VariantFilter, Variants } from "../../../domain/entities/Variant";
 import { EbiVariation } from "./PdbRepositoryNetwork.types";
 
 export type VariantFilterType = "source" | "consequence";

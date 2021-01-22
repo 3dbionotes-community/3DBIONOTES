@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { Fragment } from "../../domain/entities/Fragment";
-import { Legend } from "../../domain/entities/Legend";
-import { Track } from "../../domain/entities/Track";
+import { Fragment } from "../../../domain/entities/Fragment";
+import { Legend } from "../../../domain/entities/Legend";
 import { PdbAnnotations, PdbAnnotation } from "./PdbRepositoryNetwork.types";
+import { Track } from "../../../domain/entities/Track";
 import { getName } from "./utils";
 
 const MAXQ_COLOR_UPPPER_THRESHOLD = 0.8;

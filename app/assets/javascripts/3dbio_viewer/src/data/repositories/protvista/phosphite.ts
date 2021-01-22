@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { Color } from "../../domain/entities/Color";
-import { Fragment } from "../../domain/entities/Fragment";
-import { addToTrack, Subtrack, Track } from "../../domain/entities/Track";
-import { config, getColorFromString } from "./protvista-config";
+import { Color } from "../../../domain/entities/Color";
+import { Fragment } from "../../../domain/entities/Fragment";
+import { addToTrack, Subtrack, Track } from "../../../domain/entities/Track";
+import { getColorFromString } from "./config";
 
 export type PhosphositeUniprot = PhosphositeUniprotItem[];
 

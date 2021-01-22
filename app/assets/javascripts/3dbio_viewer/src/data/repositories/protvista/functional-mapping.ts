@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Track } from "../../domain/entities/Track";
+import { Track } from "../../../domain/entities/Track";
 import { Cv19Annotation } from "./PdbRepositoryNetwork.types";
 import { getId, getName } from "./utils";
 

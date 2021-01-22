@@ -1,6 +1,6 @@
-// From ./myProtVista/src/FeatureFactory.js
+import { Color } from "../../../domain/entities/Color";
 
-import { Color } from "../../domain/entities/Color";
+// Contents from ./myProtVista/src/FeatureFactory.js
 
 // Concatenation of myProtVista/style/main.css and extendProtVista/extend_style.css
 const colorByTrackName = {

@@ -35,36 +35,6 @@ export interface EbiVariationFeature {
     sourceType: string; // "large_scale_study";
 }
 
-export interface Features {
-    accession: string;
-    entryName: string;
-    sequence: string;
-    sequenceChecksum: string;
-    taxid: number;
-    features: Feature[];
-}
-
-export interface Feature {
-    type: string;
-    category: string;
-    description: string;
-    begin: string;
-    end: string;
-    molecule: string;
-    evidences: Array<{
-        code: string;
-        source: { name: string; id: string; url: string; alternativeUrl?: string };
-    }>;
-}
-
-export interface GroupedFeature {
-    name: string;
-    items: {
-        name: string;
-        items: Feature[];
-    }[];
-}
-
 export type Cv19Annotations = Cv19Annotation[];
 
 export interface Cv19Annotation {
@@ -94,13 +64,6 @@ export interface PdbAnnotation {
     algorithm: string;
     algoType: string;
     data: Array<{ begin: string; value: number }>;
-}
-
-export interface Coverage {
-    "Structure coverage": Array<{
-        start: number;
-        end: number;
-    }>;
 }
 
 export interface MobiUniprot {

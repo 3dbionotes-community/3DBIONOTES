@@ -41,3 +41,14 @@ export function addToTrack(options: {
         return [...tracks, newTrack];
     }
 }
+
+export function getTotalFeaturesLength(tracks: Track[]): number {
+    return (
+        _(tracks)
+            .flatMap(track => track.subtracks)
+            .flatMap(subtrack => subtrack.locations)
+            .flatMap(location => location.fragments)
+            .map(fragment => fragment.end)
+            .max() || 0
+    );
+}
