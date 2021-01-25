@@ -1,6 +1,6 @@
 import _ from "lodash";
-import { Track } from "../../../domain/entities/Track";
-import { config } from "./config";
+import { Track } from "../../../../domain/entities/Track";
+import { config } from "../config";
 
 export interface Coverage {
     "Structure coverage": Array<{ start: number; end: number }>;

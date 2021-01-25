@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { getFragment } from "../../../domain/entities/Fragment";
-import { Track } from "../../../domain/entities/Track";
-import { config, getColorFromString, getShapeFromString, getTrack } from "./config";
-import { getId, getName } from "./utils";
+import { getFragment } from "../../../../domain/entities/Fragment";
+import { Track } from "../../../../domain/entities/Track";
+import { config, getColorFromString, getShapeFromString, getTrack } from "../config";
+import { getId, getName } from "../utils";
 
 export interface Feature {
     type: string;

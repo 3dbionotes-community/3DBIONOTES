@@ -1,8 +1,8 @@
-import { PdbRepositoryNetwork } from "./data/repositories/protvista/PdbRepositoryNetwork";
+import { ApiPdbRepository } from "./data/repositories/protvista/ApiPdbRepository";
 import { GetPdbUseCase } from "./domain/usecases/GetPdbUseCase";
 
 export function getCompositionRoot() {
-    const pdbRepository = new PdbRepositoryNetwork();
+    const pdbRepository = new ApiPdbRepository();
 
     return getExecute({
         getPdb: new GetPdbUseCase(pdbRepository),

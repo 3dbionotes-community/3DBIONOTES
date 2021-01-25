@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { Fragment, getFragment } from "../../../domain/entities/Fragment";
-import { Track, addToTrack, Subtrack } from "../../../domain/entities/Track";
-import i18n from "../../../webapp/utils/i18n";
-import { config } from "./config";
+import { Fragment, getFragment } from "../../../../domain/entities/Fragment";
+import { Track, addToTrack, Subtrack } from "../../../../domain/entities/Track";
+import i18n from "../../../../webapp/utils/i18n";
+import { config } from "../config";
 
 export interface MobiUniprot {
     disorder: MobiUniprotItem;

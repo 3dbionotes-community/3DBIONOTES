@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { Fragment } from "../../../domain/entities/Fragment";
-import { Legend } from "../../../domain/entities/Legend";
-import { Track } from "../../../domain/entities/Track";
-import { getName } from "./utils";
+import { Fragment } from "../../../../domain/entities/Fragment";
+import { Legend } from "../../../../domain/entities/Legend";
+import { Track } from "../../../../domain/entities/Track";
+import { getName } from "../utils";
 
 export type PdbAnnotations = PdbAnnotation[];
 

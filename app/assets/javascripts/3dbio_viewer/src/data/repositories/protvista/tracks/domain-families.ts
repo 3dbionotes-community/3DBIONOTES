@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { getFragment } from "../../../domain/entities/Fragment";
-import { Track } from "../../../domain/entities/Track";
-import { getIf } from "../../../utils/misc";
-import { config } from "./config";
+import { getFragment } from "../../../../domain/entities/Fragment";
+import { Track } from "../../../../domain/entities/Track";
+import { getIf } from "../../../../utils/misc";
+import { config } from "../config";
 
 // Domain family: Pfam, smart, interpro
 

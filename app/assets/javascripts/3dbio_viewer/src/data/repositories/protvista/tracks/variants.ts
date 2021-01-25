@@ -1,4 +1,4 @@
-import { Variant, VariantFilter, Variants } from "../../../domain/entities/Variant";
+import { Variant, VariantFilter, Variants } from "../../../../domain/entities/Variant";
 
 export interface EbiVariation {
     accession: string; // "P0DTC2";

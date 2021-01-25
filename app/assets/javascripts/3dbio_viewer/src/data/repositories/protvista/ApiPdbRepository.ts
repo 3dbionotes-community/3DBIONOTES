@@ -7,14 +7,18 @@ import { Future } from "../../../utils/future";
 import { AxiosBuilder, axiosRequest } from "../../../utils/future-axios";
 import { getTotalFeaturesLength, Track } from "../../../domain/entities/Track";
 import { debugVariable } from "../../../utils/debug";
-import { getEmValidationTrack, PdbAnnotations } from "./em-validation";
-import { EbiVariation, getVariants } from "./variants";
-import { addPhosphiteSubtracks, PhosphositeUniprot } from "./phosphite";
-import { getDomainFamiliesTrack, PfamAnnotations, SmartAnnotations } from "./domain-families";
-import { Features, getTrackFromFeatures } from "./feature-tracks";
-import { Coverage, getStructureCoverageTrack } from "./structure-coverage";
-import { addMobiSubtracks, getMobiDisorderTrack, MobiUniprot } from "./mobi";
-import { Cv19Annotations, getFunctionalMappingTrack } from "./functional-mapping";
+import { getEmValidationTrack, PdbAnnotations } from "./tracks/em-validation";
+import { EbiVariation, getVariants } from "./tracks/variants";
+import { addPhosphiteSubtracks, PhosphositeUniprot } from "./tracks/phosphite";
+import {
+    getDomainFamiliesTrack,
+    PfamAnnotations,
+    SmartAnnotations,
+} from "./tracks/domain-families";
+import { Features, getTrackFromFeatures } from "./tracks/feature";
+import { Coverage, getStructureCoverageTrack } from "./tracks/structure-coverage";
+import { addMobiSubtracks, getMobiDisorderTrack, MobiUniprot } from "./tracks/mobi";
+import { Cv19Annotations, getFunctionalMappingTrack } from "./tracks/functional-mapping";
 import { getIf } from "../../../utils/misc";
 
 interface Data {
@@ -39,7 +43,7 @@ interface Options {
     chain: string;
 }
 
-export class PdbRepositoryNetwork implements PdbRepository {
+export class ApiPdbRepository implements PdbRepository {
     get(options: Options): FutureData<Pdb> {
         // TODO: Get protein from pdb
         return getData(options).map(data => this.getPdb(data));

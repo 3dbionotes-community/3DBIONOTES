@@ -1,6 +1,6 @@
 import _ from "lodash";
-import { Track } from "../../../domain/entities/Track";
-import { getId, getName } from "./utils";
+import { Track } from "../../../../domain/entities/Track";
+import { getId, getName } from "../utils";
 
 export type Cv19Annotations = Cv19Annotation[];
 
