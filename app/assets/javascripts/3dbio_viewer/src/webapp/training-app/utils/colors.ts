@@ -13,8 +13,8 @@ const theme: Dictionary<Dictionary<string>> = {
         secondary: "#ffc046",
     },
     dark: {
-        primary: "93d2f1",
-        secondary: "fff",
+        primary: "#93d2f1",
+        secondary: "#fff",
     },
 };
 
