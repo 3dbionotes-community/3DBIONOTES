@@ -61,6 +61,16 @@ export class Future<E, D> {
         return future.map(([[d1, d2], d3]) => [d1, d2, d3]);
     }
 
+    static join4<E, D1, D2, D3, D4>(
+        future1: Future<E, D1>,
+        future2: Future<E, D2>,
+        future3: Future<E, D3>,
+        future4: Future<E, D4>
+    ): Future<E, [D1, D2, D3, D4]> {
+        const future = Future.join3(future1, future2, future3);
+        return Future.join(future, future4).map(([[d1, d2, d3], d4]) => [d1, d2, d3, d4]);
+    }
+
     static parallel<E, D>(
         futures: Array<Future<E, D>>,
         options: { maxConcurrency?: number } = {}

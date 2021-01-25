@@ -20,6 +20,7 @@ import { Coverage, getStructureCoverageTrack } from "./tracks/structure-coverage
 import { addMobiSubtracks, getMobiDisorderTrack, MobiUniprot } from "./tracks/mobi";
 import { Cv19Annotations, getFunctionalMappingTrack } from "./tracks/functional-mapping";
 import { getIf } from "../../../utils/misc";
+import { getProteomicsTrack, Proteomics } from "./tracks/proteomics";
 
 interface Data {
     features: Features;
@@ -31,6 +32,7 @@ interface Data {
     phosphositeUniprot?: PhosphositeUniprot;
     pfamAnnotations?: PfamAnnotations;
     smartAnnotations?: SmartAnnotations;
+    proteomics?: Proteomics;
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K]> };
@@ -61,6 +63,7 @@ export class ApiPdbRepository implements PdbRepository {
         );
         const featureTracks = getTrackFromFeatures(data.features);
         const mobiDisorderTrack = getIf(data.mobiUniprot, getMobiDisorderTrack);
+        const proteomicsTrack = getIf(data.proteomics, getProteomicsTrack);
 
         const tracks1: Track[] = _.compact([
             functionalMappingTrack,
@@ -69,6 +72,7 @@ export class ApiPdbRepository implements PdbRepository {
             domainFamiliesTrack,
             mobiDisorderTrack,
             structureCoverageTrack,
+            proteomicsTrack,
         ]);
 
         const tracks2 = addMobiSubtracks(tracks1, data.mobiUniprot);
@@ -101,21 +105,23 @@ function getData(options: Options): FutureData<Data> {
         ),
         pfamAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/Pfam/Uniprot/${protein}`),
         smartAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/SMART/Uniprot/${protein}`),
+        proteomics: getOrEmpty(`https://www.ebi.ac.uk/proteins/api/proteomics/${protein}`),
     };
 
     const data1$ = Future.join3(data$.features, data$.covidAnnotations, data$.coverage);
     const data2$ = Future.join3(data$.ebiVariation, data$.pdbAnnotations, data$.mobiUniprot);
-    const data3$ = Future.join3(
+    const data3$ = Future.join4(
         data$.phosphositeUniprot,
         data$.pfamAnnotations,
-        data$.smartAnnotations
+        data$.smartAnnotations,
+        data$.proteomics
     );
 
     return Future.join3(data1$, data2$, data3$).map(
         ([
             [features, covidAnnotations, coverage],
             [ebiVariation, pdbAnnotations, mobiUniprot],
-            [phosphositeUniprot, pfamAnnotations, smartAnnotations],
+            [phosphositeUniprot, pfamAnnotations, smartAnnotations, proteomics],
         ]): Data => ({
             features,
             covidAnnotations,
@@ -126,6 +132,7 @@ function getData(options: Options): FutureData<Data> {
             phosphositeUniprot,
             pfamAnnotations,
             smartAnnotations,
+            proteomics,
         })
     );
 }
