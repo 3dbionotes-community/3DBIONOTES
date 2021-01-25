@@ -1,3 +1,26 @@
+body {
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+        Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+button {
+    font-weight: 700;
+    padding: 6px 10px;
+    margin-left: 10px;
+    color: #ffffff;
+    background-color: #123546;
+    border-radius: 8px;
+    border: solid 0px #123546;
+}
+
+button::hover,
+button::active,
+button::focus {
+    background-color: #268bbe;
+    border: solid 0px #268bbe;
+}
+
 #contents {
     position: absolute;
     left: 0px;
@@ -38,11 +61,12 @@
     margin-bottom: 10px;
 }
 
-.category-label  {
+.category-label {
     background-color: #e2e2e2;
 }
 
-.category-label:hover, .protvistaRow.expanded > .category-label {
+.category-label:hover,
+.protvistaRow.expanded > .category-label {
     background-color: #607d8b;
     color: #fff;
 }
@@ -55,11 +79,13 @@
     border-top: 5px solid #fff;
 }
 
-.track-label, .track-content {
+.track-label,
+.track-content {
     border-bottom: 1px solid #e2e2e2;
 }
 
-.aggregate-track-content, .track-content-single {
+.aggregate-track-content,
+.track-content-single {
     border-bottom: 1px solid #e2e2e2;
 }
 
@@ -71,7 +97,7 @@
 }
 
 .protvista-pdb {
-    border: 0px ;
+    border: 0px;
 }
 
 .hideLabelIcon {
@@ -81,23 +107,26 @@
 }
 
 .protvista-pdb {
-    font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+        Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
 }
 
-protvista-tooltip .tooltip-header, protvista-tooltip .tooltip-header .tooltip-header-title {
+protvista-tooltip .tooltip-header,
+protvista-tooltip .tooltip-header .tooltip-header-title {
     background-color: #133546;
-    color: #FFF;
+    color: #fff;
     line-height: 2em;
 }
 
 protvista-tooltip .tooltip-header .tooltip-header-title {
     font-weight: 700;
     white-space: nowrap;
-    letter-spacing: .05em;
+    letter-spacing: 0.05em;
     font-size: 1em;
     line-height: 2em;
-    padding: 0 .7em;
-    color: #FFF;
+    padding: 0 0.7em;
+    color: #fff;
 }
 
 protvista-tooltip .tooltip-close {
