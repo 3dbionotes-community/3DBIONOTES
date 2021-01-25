@@ -52,7 +52,7 @@ function getTrackFromGroupedFeature(feature: GroupedFeature): Track {
                 type: getName(item.name),
                 label: track?.label || getName(item.name),
                 labelTooltip: track?.tooltip || getName(item.name),
-                shape: getShapeFromString(itemKey) || "circle",
+                shape: getShapeFromString(itemKey, "circle"),
                 locations: [
                     {
                         fragments: _.flatMap(item.items, item =>

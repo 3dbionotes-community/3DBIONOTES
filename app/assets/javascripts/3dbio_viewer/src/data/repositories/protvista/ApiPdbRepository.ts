@@ -21,6 +21,7 @@ import { addMobiSubtracks, getMobiDisorderTrack, MobiUniprot } from "./tracks/mo
 import { Cv19Annotations, getFunctionalMappingTrack } from "./tracks/functional-mapping";
 import { getIf } from "../../../utils/misc";
 import { getProteomicsTrack, Proteomics } from "./tracks/proteomics";
+import { getPdbRedoTrack, PdbRedo } from "./tracks/pdb-redo";
 
 interface Data {
     features: Features;
@@ -33,6 +34,7 @@ interface Data {
     pfamAnnotations?: PfamAnnotations;
     smartAnnotations?: SmartAnnotations;
     proteomics?: Proteomics;
+    pdbRedo?: PdbRedo;
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K]> };
@@ -48,11 +50,12 @@ interface Options {
 export class ApiPdbRepository implements PdbRepository {
     get(options: Options): FutureData<Pdb> {
         // TODO: Get protein from pdb
-        return getData(options).map(data => this.getPdb(data));
+        return getData(options).map(data => this.getPdb(data, options));
     }
 
-    getPdb(data: Data): Pdb {
+    getPdb(data: Data, options: Options): Pdb {
         debugVariable(data);
+        const { chain } = options;
         const variants = getIf(data.ebiVariation, getVariants);
         const functionalMappingTrack = getIf(data.covidAnnotations, getFunctionalMappingTrack);
         const emValidationTrack = getIf(data.pdbAnnotations, getEmValidationTrack);
@@ -64,6 +67,7 @@ export class ApiPdbRepository implements PdbRepository {
         const featureTracks = getTrackFromFeatures(data.features);
         const mobiDisorderTrack = getIf(data.mobiUniprot, getMobiDisorderTrack);
         const proteomicsTrack = getIf(data.proteomics, getProteomicsTrack);
+        const pdbRedoTrack = getIf(data.pdbRedo, pdbRedo => getPdbRedoTrack(pdbRedo, chain));
 
         const tracks1: Track[] = _.compact([
             functionalMappingTrack,
@@ -73,6 +77,7 @@ export class ApiPdbRepository implements PdbRepository {
             mobiDisorderTrack,
             structureCoverageTrack,
             proteomicsTrack,
+            pdbRedoTrack,
         ]);
 
         const tracks2 = addMobiSubtracks(tracks1, data.mobiUniprot);
@@ -106,10 +111,16 @@ function getData(options: Options): FutureData<Data> {
         pfamAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/Pfam/Uniprot/${protein}`),
         smartAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/SMART/Uniprot/${protein}`),
         proteomics: getOrEmpty(`https://www.ebi.ac.uk/proteins/api/proteomics/${protein}`),
+        pdbRedo: getOrEmpty(`http://3dbionotes.cnb.csic.es/api/annotations/PDB_REDO/${pdb}`),
     };
 
     const data1$ = Future.join3(data$.features, data$.covidAnnotations, data$.coverage);
-    const data2$ = Future.join3(data$.ebiVariation, data$.pdbAnnotations, data$.mobiUniprot);
+    const data2$ = Future.join4(
+        data$.ebiVariation,
+        data$.pdbAnnotations,
+        data$.mobiUniprot,
+        data$.pdbRedo
+    );
     const data3$ = Future.join4(
         data$.phosphositeUniprot,
         data$.pfamAnnotations,
@@ -120,7 +131,7 @@ function getData(options: Options): FutureData<Data> {
     return Future.join3(data1$, data2$, data3$).map(
         ([
             [features, covidAnnotations, coverage],
-            [ebiVariation, pdbAnnotations, mobiUniprot],
+            [ebiVariation, pdbAnnotations, mobiUniprot, pdbRedo],
             [phosphositeUniprot, pfamAnnotations, smartAnnotations, proteomics],
         ]): Data => ({
             features,
@@ -129,6 +140,7 @@ function getData(options: Options): FutureData<Data> {
             pdbAnnotations,
             coverage,
             mobiUniprot,
+            pdbRedo,
             phosphositeUniprot,
             pfamAnnotations,
             smartAnnotations,

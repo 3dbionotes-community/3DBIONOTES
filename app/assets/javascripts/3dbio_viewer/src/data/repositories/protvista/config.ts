@@ -540,9 +540,11 @@ export function getColorFromString(trackName: string): Color {
     }
 }
 
-export function getShapeFromString(trackName: string): Shape | undefined {
+export function getShapeFromString(trackName: string, defaultValue?: Shape): Shape {
     if (trackName in config.shapeByTrackName) {
         return config.shapeByTrackName[trackName as keyof typeof shapeByTrackName];
+    } else {
+        return defaultValue || "rectangle";
     }
 }
 
