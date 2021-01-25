@@ -1,7 +1,6 @@
 import { PdbRepositoryNetwork } from "./data/repositories/protvista/PdbRepositoryNetwork";
 import { GetPdbUseCase } from "./domain/usecases/GetPdbUseCase";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getCompositionRoot() {
     const pdbRepository = new PdbRepositoryNetwork();
 

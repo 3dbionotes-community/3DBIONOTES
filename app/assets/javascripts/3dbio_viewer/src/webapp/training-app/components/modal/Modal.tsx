@@ -72,7 +72,7 @@ const ModalWrapper = styled.div<{ center?: boolean }>`
 `;
 
 export const ModalBody = styled.div`
-    background-color: #276696;
+    background-color: #133546;
     border-radius: 18px;
     padding: 18px;
     font-family: "Roboto", sans-serif;

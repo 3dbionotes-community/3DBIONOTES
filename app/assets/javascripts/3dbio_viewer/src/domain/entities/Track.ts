@@ -10,6 +10,7 @@ export interface Track {
 }
 
 export interface Subtrack {
+    // TODO: Do we really need type/accesion/label? simplify
     type: string; // Displayed in tooltip title
     accession: string;
     shape: Shape;
@@ -40,4 +41,15 @@ export function addToTrack(options: {
         const newTrack: Track = { ...trackInfo, subtracks };
         return [...tracks, newTrack];
     }
+}
+
+export function getTotalFeaturesLength(tracks: Track[]): number {
+    return (
+        _(tracks)
+            .flatMap(track => track.subtracks)
+            .flatMap(subtrack => subtrack.locations)
+            .flatMap(location => location.fragments)
+            .map(fragment => fragment.end)
+            .max() || 0
+    );
 }

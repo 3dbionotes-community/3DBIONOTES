@@ -1,5 +1,41 @@
-import { Variant, VariantFilter, Variants } from "../../domain/entities/Variant";
-import { EbiVariation } from "./PdbRepositoryNetwork.types";
+import { Variant, VariantFilter, Variants } from "../../../domain/entities/Variant";
+
+export interface EbiVariation {
+    accession: string; // "P0DTC2";
+    entryName: string; // "SPIKE_SARS2";
+    proteinName: string; //"Spike glycoprotein";
+    geneName: string; // "S";
+    organismName: string; // "Severe acute respiratory syndrome coronavirus 2";
+    proteinExistence: string; //"Evidence at protein level";
+    sequence: string; //"MFVFL";
+    sequenceChecksum: string; //"12789069390587161140";
+    sequenceVersion: number; // 1
+    taxid: number; // 2697049;
+    features: EbiVariationFeature[];
+}
+
+export interface EbiVariationFeature {
+    type: "VARIANT";
+    alternativeSequence: string; //"L",
+    begin: string; //"2",
+    end: string; // "2",
+    xrefs?: Array<{
+        name: string; // "ENA",
+        id: string; // "MN908947.3:21568:T:A"
+    }>;
+    genomicLocation: string; //"NC_045512.2:g.21568T>A";
+    locations: Array<{
+        loc: string; // "p.Phe2Leu";
+        seqId: string; // "ENSSAST00005000004";
+        source: string; // "EnsemblViruses";
+    }>;
+    codon: string; // "TTT/TTA";
+    consequenceType: "missense" | "stop gained";
+    wildType: string; //"F";
+    mutatedType: string; // "L";
+    somaticStatus: number; // 0;
+    sourceType: string; // "large_scale_study";
+}
 
 export type VariantFilterType = "source" | "consequence";
 
@@ -16,7 +52,7 @@ const variantsFiltersConfig: VariantFilterConfig[] = [
         type: "consequence",
         items: [{ label: "Disease (reviewed)", color: "#990000" }],
         properties: {
-            association: variant => {
+            association: _variant => {
                 // TODO
                 /*
                 return _.some(variant.association, function (association) {

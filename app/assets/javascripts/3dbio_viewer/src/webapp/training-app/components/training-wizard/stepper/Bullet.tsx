@@ -33,8 +33,8 @@ export const Bullet = styled(BaseBullet)`
     user-select: none;
     align-self: center;
 
-    color: #276696;
-    background-color: ${props => (props.current || props.completed ? getColor("primary") : "#fff")};
+    color: #133546;
+    background-color: ${props => (props.current || props.completed ? getColor("primary") : "#276696")};
 
     ::after {
         display: ${props => (props.completed && !props.last ? "inline-block" : "none")};
@@ -50,6 +50,6 @@ export const Bullet = styled(BaseBullet)`
 
 const StyledDoneIcon = styled(DoneIcon)`
     font-size: 18px !important;
-    color: #fff;
+    color: #133546;
     font-weight: bold;
 `;

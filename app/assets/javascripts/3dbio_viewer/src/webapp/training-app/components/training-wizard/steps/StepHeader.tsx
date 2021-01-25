@@ -49,7 +49,7 @@ const Title = styled.span`
 `;
 
 const Subtitle = styled(ReactMarkdown)`
-    color: #ff8f02;
+    color: #fff;
     font-size: 18px;
     line-height: 0;
     text-align: left;

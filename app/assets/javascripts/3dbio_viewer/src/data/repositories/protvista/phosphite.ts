@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { Color } from "../../domain/entities/Color";
-import { Fragment } from "../../domain/entities/Fragment";
-import { addToTrack, Subtrack, Track } from "../../domain/entities/Track";
-import { config } from "./protvista-config";
+import { Color } from "../../../domain/entities/Color";
+import { Fragment } from "../../../domain/entities/Fragment";
+import { addToTrack, Subtrack, Track } from "../../../domain/entities/Track";
+import { getColorFromString } from "./config";
 
 export type PhosphositeUniprot = PhosphositeUniprotItem[];
 
@@ -66,13 +66,13 @@ function getColorFromSubType(subtype: string): Color {
     const obj = { type: subtype };
     filter_type(obj);
     const newType = obj.type.toLowerCase();
-    return config.colorByTrackName[newType] || "#777";
+    return getColorFromString(newType) || "#777";
 }
 
 /* From: featureAnalysis/add_analysis_data.js */
 
 function filter_type(i: { type: string }): void {
-    var i_t = i["type"].toLowerCase();
+    const i_t = i["type"].toLowerCase();
 
     if (i_t.indexOf("methyl") > -1) {
         i["type"] = "MOD_RES_MET";

@@ -26,12 +26,12 @@ const StyledFab = styled(Fab)`
     align-items: center;
     padding: 0px 20px;
     color: #fff;
-    background-color: #276696;
-    border-color: #367fa9;
+    background-color: #133546;
+    border-color: #133546;
     border-radius: 100px;
 
     :hover {
-        background-color: #3c8dbc;
+        background-color: #607d8b;
     }
 
     svg {

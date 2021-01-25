@@ -1,6 +1,6 @@
-// From ./myProtVista/src/FeatureFactory.js
+import { Color } from "../../../domain/entities/Color";
 
-import { Color } from "../../domain/entities/Color";
+// Contents from ./myProtVista/src/FeatureFactory.js
 
 // Concatenation of myProtVista/style/main.css and extendProtVista/extend_style.css
 const colorByTrackName = {
@@ -269,7 +269,7 @@ const categories: Config["categories"] = [
     },
 ];
 
-const tracks: Config["tracks"] = {
+const tracks = {
     chain: {
         label: "Chain",
         tooltip:
@@ -506,6 +506,11 @@ const tracks: Config["tracks"] = {
     completed_loop: { label: "Completed loop", tooltip: "Completed loop" },
 };
 
+interface TrackConfig {
+    label: string;
+    tooltip: string;
+}
+
 export const config: Config = {
     categories,
     tracks,
@@ -520,7 +525,29 @@ interface Config {
         tooltip?: string;
         visualizationType: "basic" | "continuous" | "variant";
     }>;
-    tracks: Record<string, { label: string; tooltip: string }>;
-    shapeByTrackName: Record<string, Shape>;
-    colorByTrackName: Record<string, Color>;
+    tracks: Record<keyof typeof tracks, TrackConfig>;
+    shapeByTrackName: Record<keyof typeof shapeByTrackName, Shape>;
+    colorByTrackName: Record<keyof typeof colorByTrackName, Color>;
+}
+
+const defaultColor = "#777";
+
+export function getColorFromString(trackName: string): Color {
+    if (trackName in config.colorByTrackName) {
+        return config.colorByTrackName[trackName as keyof typeof colorByTrackName];
+    } else {
+        return defaultColor;
+    }
+}
+
+export function getShapeFromString(trackName: string): Shape | undefined {
+    if (trackName in config.shapeByTrackName) {
+        return config.shapeByTrackName[trackName as keyof typeof shapeByTrackName];
+    }
+}
+
+export function getTrack(trackName: string): TrackConfig | undefined {
+    if (trackName in config.tracks) {
+        return config.tracks[trackName as keyof typeof tracks];
+    }
 }

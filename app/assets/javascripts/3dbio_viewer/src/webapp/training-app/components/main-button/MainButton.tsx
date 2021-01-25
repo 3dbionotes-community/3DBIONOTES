@@ -4,7 +4,7 @@ import { getColor } from "../../utils/colors";
 
 export const MainButton = styled(Button)`
     font-size: 18px;
-    color: #fff;
+    color: #133546;
     margin: 0px 20px 0 20px;
     padding: 15px 36px;
     border-radius: 100px;
@@ -16,6 +16,6 @@ export const MainButton = styled(Button)`
     line-height: inherit;
 
     :hover {
-        background-color: ${props => getColor(props?.color ?? "primary", "dark")};
+        background-color: #fff;
     }
 `;
