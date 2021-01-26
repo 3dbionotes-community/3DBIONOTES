@@ -163,7 +163,13 @@ function getMaxQColor(maxQValue: number, emMaxQColor: Color[]) {
     return getColorBetween(emMaxQColor[0], emMaxQColor[1], colorValue);
 }
 
-function getColorBetween(bottomColor: string, topColor: string, distanceFromBottom: number) {
+function getColorBetween(
+    bottomColor: string | undefined,
+    topColor: string | undefined,
+    distanceFromBottom: number
+): string {
+    if (!bottomColor || !topColor) return "#777";
+
     // Returns the color between the 2 passed color at a certain distance (decimal value)
     let c = "#";
     if (distanceFromBottom < 0) return bottomColor;

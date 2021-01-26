@@ -35,23 +35,30 @@ export function getFunctionalMappingTrack(cv19Annotations: Cv19Annotations): Tra
         return {
             id: getId(mapping.track_name),
             label: getName(mapping.track_name),
-            subtracks: mappingTracks.map(track => ({
-                accession: getName(track.name),
-                type: track.items[0].type,
-                label: getName(track.name),
-                labelTooltip: track.items[0].description,
-                shape: "rectangle",
-                locations: [
-                    {
-                        fragments: track.items.map(item => ({
-                            start: item.begin,
-                            end: item.end,
-                            description: item.description,
-                            color: item.color,
-                        })),
-                    },
-                ],
-            })),
+            subtracks: _.compact(
+                mappingTracks.map(track => {
+                    const item = track.items[0];
+                    if (!item) return;
+
+                    return {
+                        accession: getName(track.name),
+                        type: item.type,
+                        label: getName(track.name),
+                        labelTooltip: item.description,
+                        shape: "rectangle",
+                        locations: [
+                            {
+                                fragments: track.items.map(item => ({
+                                    start: item.begin,
+                                    end: item.end,
+                                    description: item.description,
+                                    color: item.color,
+                                })),
+                            },
+                        ],
+                    };
+                })
+            ),
         };
     });
 }
