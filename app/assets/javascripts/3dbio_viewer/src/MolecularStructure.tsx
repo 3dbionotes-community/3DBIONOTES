@@ -1,6 +1,7 @@
 import React from "react";
 import { InitParams } from "pdbe-molstar/lib/spec";
 import "molstar/lib/mol-plugin-ui/skin/light.scss";
+import { debugVariable } from "./utils/debug";
 
 declare const PDBeMolstarPlugin: any;
 
@@ -11,7 +12,8 @@ export const MolecularStructure: React.FC = () => {
         const el = inputEl.current;
         if (el) {
             const initParams: InitParams = {
-                moleculeId: "7kj5",
+                moleculeId: "6w9c",
+                //moleculeId: "7kj5",
                 //moleculeId: "7d6h",
                 //moleculeId: "5lnk",
                 pdbeUrl: "https://www.ebi.ac.uk/pdbe/",
@@ -22,12 +24,14 @@ export const MolecularStructure: React.FC = () => {
                 domainAnnotation: true,
                 expanded: false,
                 bgColor: colors.white,
-                subscribeEvents: false,
+                subscribeEvents: true,
+                // selectInteractions: true,
                 assemblyId: "1",
                 mapSettings: {},
             };
 
             const pdbeMolstar = new PDBeMolstarPlugin();
+            debugVariable("pdbeMolstar", pdbeMolstar);
             pdbeMolstar.render(el, initParams);
         }
     });

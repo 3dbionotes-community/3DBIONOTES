@@ -54,7 +54,7 @@ export class ApiPdbRepository implements PdbRepository {
     }
 
     getPdb(data: Data, options: Options): Pdb {
-        debugVariable(data);
+        debugVariable("pdb-data", data);
         const { chain } = options;
         const variants = getIf(data.ebiVariation, getVariants);
         const functionalMappingTracks =
