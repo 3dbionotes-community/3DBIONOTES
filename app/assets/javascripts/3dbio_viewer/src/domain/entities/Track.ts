@@ -53,3 +53,7 @@ export function getTotalFeaturesLength(tracks: Track[]): number {
             .max() || 0
     );
 }
+
+export function hasFragments(subtrack: Subtrack): boolean {
+    return _.some(subtrack.locations, location => !_.isEmpty(location.fragments));
+}

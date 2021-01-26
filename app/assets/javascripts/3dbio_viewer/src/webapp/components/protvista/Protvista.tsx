@@ -1,14 +1,12 @@
-import React from "react";
 import _ from "lodash";
-import { renderToString } from "react-dom/server";
-import { Pdb } from "../../../domain/entities/Pdb";
+import React from "react";
 import { debugVariable } from "../../../utils/debug";
 import { useAppContext } from "../AppContext";
-import { PdbView, ProtvistaTrackElement } from "./Protvista.types";
+import { getSectionStyle, loadPdb } from "./Protvista.helpers";
 import styles from "./Protvista.module.css";
-import { Tooltip } from "./Tooltip";
+import { ProtvistaTrackElement } from "./Protvista.types";
 
-type State =
+export type State =
     | { type: "loading" }
     | { type: "loaded"; refs: Array<React.RefObject<ProtvistaTrackElement>> };
 
@@ -26,7 +24,7 @@ export const Protvista: React.FC = () => {
             "6w9c": { protein: "P0DTD1", pdb: "6w9c", chain: "A" },
         };
 
-        return compositionRoot.getPdb(pdbOptions["6lzg"]).run(
+        return compositionRoot.getPdb(pdbOptions["6zow"]).run(
             pdb => {
                 debugVariable(pdb);
                 setState({ type: "loading" });
@@ -85,65 +83,3 @@ export const Protvista: React.FC = () => {
         </div>
     );
 };
-
-function getSectionStyle(
-    state: State,
-    ref: React.RefObject<ProtvistaTrackElement>
-): React.CSSProperties {
-    return {
-        opacity: state.type !== "loaded" || !state.refs.includes(ref) ? 0 : 1,
-    };
-}
-
-function getPdbView(pdb: Pdb): PdbView {
-    return {
-        ...pdb,
-        displayNavigation: true,
-        displaySequence: true,
-        displayConservation: false,
-        displayVariants: true,
-        tracks: pdb.tracks.map(track => ({
-            ...track,
-            data: track.subtracks.map(subtrack => ({
-                ...subtrack,
-                labelTooltip: subtrack.label,
-                locations: subtrack.locations.map(location => ({
-                    ...location,
-                    fragments: location.fragments.map(fragment => ({
-                        ...fragment,
-                        tooltipContent: renderToString(<Tooltip fragment={fragment} />),
-                    })),
-                })),
-            })),
-        })),
-        variants: pdb.variants
-            ? {
-                  ...pdb.variants,
-                  variants: pdb.variants.variants.map(variant => ({
-                      ...variant,
-                      tooltipContent: variant.description,
-                  })),
-              }
-            : undefined,
-    };
-}
-
-function loadPdb(
-    protvistaRef: React.RefObject<ProtvistaTrackElement>,
-    pdb: Pdb,
-    options: Partial<PdbView> = {}
-): React.RefObject<ProtvistaTrackElement> | undefined {
-    const protvistaEl = protvistaRef.current;
-    if (!protvistaEl || _(pdb.tracks).isEmpty()) return;
-
-    const pdbView = getPdbView(pdb);
-    protvistaEl.viewerdata = { ...pdbView, ...options };
-
-    protvistaEl.layoutHelper.hideSubtracks(0);
-
-    protvistaEl.querySelectorAll(`.expanded`).forEach(trackSection => {
-        trackSection.classList.remove("expanded");
-    });
-
-    return protvistaRef;
-}

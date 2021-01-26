@@ -42,11 +42,13 @@ function getPdbView(pdb: Pdb): PdbView {
         displayNavigation: true,
         displaySequence: true,
         displayConservation: false,
-        displayVariants: true,
-        tracks: pdb.tracks.map(track => ({
-            ...track,
-            data: getTrackData(track),
-        })),
+        displayVariants: !!pdb.variants,
+        tracks: _.compact(
+            pdb.tracks.map(track => {
+                const trackData = getTrackData(track);
+                return _.isEmpty(trackData) ? null : { ...track, data: trackData };
+            })
+        ),
         variants: pdb.variants
             ? {
                   ...pdb.variants,
