@@ -57,7 +57,8 @@ export class ApiPdbRepository implements PdbRepository {
         debugVariable(data);
         const { chain } = options;
         const variants = getIf(data.ebiVariation, getVariants);
-        const functionalMappingTrack = getIf(data.covidAnnotations, getFunctionalMappingTrack);
+        const functionalMappingTracks =
+            getIf(data.covidAnnotations, getFunctionalMappingTrack) || [];
         const emValidationTrack = getIf(data.pdbAnnotations, getEmValidationTrack);
         const structureCoverageTrack = getIf(data.coverage, getStructureCoverageTrack);
         const domainFamiliesTrack = getDomainFamiliesTrack(
@@ -70,7 +71,7 @@ export class ApiPdbRepository implements PdbRepository {
         const pdbRedoTrack = getIf(data.pdbRedo, pdbRedo => getPdbRedoTrack(pdbRedo, chain));
 
         const tracks1: Track[] = _.compact([
-            functionalMappingTrack,
+            ...functionalMappingTracks,
             ...featureTracks,
             emValidationTrack,
             domainFamiliesTrack,

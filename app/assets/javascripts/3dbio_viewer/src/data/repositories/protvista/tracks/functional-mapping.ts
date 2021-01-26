@@ -6,14 +6,14 @@ export type Cv19Annotations = Cv19Annotation[];
 
 export interface Cv19Annotation {
     track_name: string;
-    visualization_type?: "variants"; // This type uses a different Data, implement if necessary
+    visualization_type?: "variants";
     acc: string;
-    data: Cv19AnnotationData[];
+    data: Cv19AnnotationItem[];
     reference: string;
     fav_icon: string;
 }
 
-export interface Cv19AnnotationData {
+export interface Cv19AnnotationItem {
     begin: number;
     end: number;
     partner_name: string;
@@ -22,34 +22,36 @@ export interface Cv19AnnotationData {
     type: string;
 }
 
-export function getFunctionalMappingTrack(cv19Annotations: Cv19Annotations): Track | undefined {
-    const mapping = cv19Annotations[0];
-    if (!mapping) return;
+export function getFunctionalMappingTrack(cv19Annotations: Cv19Annotations): Track[] {
+    // TODO: item with visualization_type = "variant" should be used in variants track
+    const annotations = cv19Annotations.filter(an => an.visualization_type !== "variants");
 
-    const mappingTracks = _(mapping.data)
-        .groupBy(data => data.partner_name)
-        .map((values, key) => ({ name: key, items: values }))
-        .value();
+    return annotations.map(mapping => {
+        const mappingTracks = _(mapping.data)
+            .groupBy(data => data.partner_name)
+            .map((values, key) => ({ name: key, items: values }))
+            .value();
 
-    return {
-        id: getId(mapping.track_name),
-        label: getName(mapping.track_name),
-        subtracks: mappingTracks.map(track => ({
-            accession: getName(track.name),
-            type: track.items[0].type,
-            label: getName(track.name),
-            labelTooltip: track.items[0].description,
-            shape: "rectangle",
-            locations: [
-                {
-                    fragments: track.items.map(item => ({
-                        start: item.begin,
-                        end: item.end,
-                        description: item.description,
-                        color: item.color,
-                    })),
-                },
-            ],
-        })),
-    };
+        return {
+            id: getId(mapping.track_name),
+            label: getName(mapping.track_name),
+            subtracks: mappingTracks.map(track => ({
+                accession: getName(track.name),
+                type: track.items[0].type,
+                label: getName(track.name),
+                labelTooltip: track.items[0].description,
+                shape: "rectangle",
+                locations: [
+                    {
+                        fragments: track.items.map(item => ({
+                            start: item.begin,
+                            end: item.end,
+                            description: item.description,
+                            color: item.color,
+                        })),
+                    },
+                ],
+            })),
+        };
+    });
 }
