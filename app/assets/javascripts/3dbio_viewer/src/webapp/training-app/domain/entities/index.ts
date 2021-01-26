@@ -28,7 +28,7 @@ export interface TrainingModuleBuilder {
 
 export const extractStepFromKey = (key: string): { step: number; content: number } | null => {
     const match = /^.*-(\d*)-(\d*)$/.exec(key);
-    if (!match) return null;
+    if (!match || !match[1] || !match[2]) return null;
 
     return { step: parseInt(match[1]), content: parseInt(match[2]) };
 };
@@ -124,24 +124,27 @@ export interface ReactRouterMatch {
 
 export const buildStateFromPath = (matches: ReactRouterMatch[]): AppState => {
     for (const match of matches) {
+        const { key: module_, step, content } = match.params;
+        if (!module_ || !step || !content) continue;
+
         switch (match.route.path) {
             case "/":
                 return { type: "HOME" };
             case "/tutorial/:key":
             case "/tutorial/:key/welcome":
-                return { type: "TRAINING_DIALOG", dialog: "welcome", module: match.params.key };
+                return { type: "TRAINING_DIALOG", dialog: "welcome", module: module_ };
             case "/tutorial/:key/contents":
-                return { type: "TRAINING_DIALOG", dialog: "contents", module: match.params.key };
+                return { type: "TRAINING_DIALOG", dialog: "contents", module: module_ };
             case "/tutorial/:key/summary":
-                return { type: "TRAINING_DIALOG", dialog: "summary", module: match.params.key };
+                return { type: "TRAINING_DIALOG", dialog: "summary", module: module_ };
             case "/tutorial/:key/final":
-                return { type: "TRAINING_DIALOG", dialog: "final", module: match.params.key };
+                return { type: "TRAINING_DIALOG", dialog: "final", module: module_ };
             case "/tutorial/:key/:step/:content":
                 return {
                     type: "TRAINING",
-                    module: match.params.key,
-                    step: parseInt(match.params.step),
-                    content: parseInt(match.params.content),
+                    module: module_,
+                    step: parseInt(step),
+                    content: parseInt(content),
                     state: "OPEN",
                 };
             case "/settings":

@@ -19,5 +19,5 @@ const theme: Dictionary<Dictionary<string>> = {
 };
 
 export const getColor = (color: Color, palette: ColorPalette = "main") => {
-    return theme[palette][color] ?? theme.main.primary;
+    return theme[palette]?.[color] ?? theme.main?.primary;
 };

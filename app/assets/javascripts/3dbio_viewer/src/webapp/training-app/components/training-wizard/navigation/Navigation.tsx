@@ -25,6 +25,8 @@ export const Navigation: React.FC<WizardNavigationProps> = ({
     }, [onNext, currentStepIndex, steps]);
 
     if (steps.length === 0) return null;
+
+    if (!currentStep) return null;
     const { contentIndex = 0, totalContents = 0 } = (currentStep.props as unknown) as any;
 
     return (

@@ -93,7 +93,7 @@ export const TrainingWizard: React.FC<TrainingWizardProps> = ({ onClose, module 
                 steps={wizardSteps}
                 stepKey={stepKey}
                 onStepChange={onStepChange}
-                initialStepKey={wizardSteps[0].key}
+                initialStepKey={wizardSteps[0]?.key}
                 StepperComponent={minimized ? EmptyComponent : Stepper}
                 NavigationComponent={minimized ? EmptyComponent : Navigation}
             />

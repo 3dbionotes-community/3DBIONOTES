@@ -30,7 +30,9 @@ export const Stepper = ({
     const index = _(steps).findIndex(step => step.key === currentStepKey);
     const currentStepIndex = index >= 0 ? index : 0;
 
-    const { props } = steps[currentStepIndex];
+    const currentStep = steps[currentStepIndex];
+    if (!currentStep) return null;
+    const { props } = currentStep;
     const { stepIndex = currentStepIndex, totalSteps = steps.length } = props ?? {};
 
     return (
