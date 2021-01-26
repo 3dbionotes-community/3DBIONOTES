@@ -115,39 +115,7 @@ function getData(options: Options): FutureData<Data> {
         pdbRedo: getOrEmpty(`http://3dbionotes.cnb.csic.es/api/annotations/PDB_REDO/${pdb}`),
     };
 
-    const data1$ = Future.join3(data$.features, data$.covidAnnotations, data$.coverage);
-    const data2$ = Future.join4(
-        data$.ebiVariation,
-        data$.pdbAnnotations,
-        data$.mobiUniprot,
-        data$.pdbRedo
-    );
-    const data3$ = Future.join4(
-        data$.phosphositeUniprot,
-        data$.pfamAnnotations,
-        data$.smartAnnotations,
-        data$.proteomics
-    );
-
-    return Future.join3(data1$, data2$, data3$).map(
-        ([
-            [features, covidAnnotations, coverage],
-            [ebiVariation, pdbAnnotations, mobiUniprot, pdbRedo],
-            [phosphositeUniprot, pfamAnnotations, smartAnnotations, proteomics],
-        ]): Data => ({
-            features,
-            covidAnnotations,
-            ebiVariation,
-            pdbAnnotations,
-            coverage,
-            mobiUniprot,
-            pdbRedo,
-            phosphositeUniprot,
-            pfamAnnotations,
-            smartAnnotations,
-            proteomics,
-        })
-    );
+    return Future.joinObj(data$);
 }
 
 function get<Data>(url: string): Future<RequestError, Data> {
