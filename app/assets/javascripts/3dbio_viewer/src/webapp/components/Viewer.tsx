@@ -4,7 +4,7 @@ import { Protvista } from "./protvista/Protvista";
 
 export const Viewer: React.FC = () => {
     return (
-        <div id="app">
+        <div id="viewer">
             <div id="left">
                 <MolecularStructure />
             </div>

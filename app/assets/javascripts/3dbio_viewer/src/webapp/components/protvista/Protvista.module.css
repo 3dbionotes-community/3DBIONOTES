@@ -1,0 +1,9 @@
+.title {
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #123546;
+}
+
+.actions {
+    float: right;
+}

@@ -1,9 +1,8 @@
-import { PdbRepositoryNetwork } from "./data/repositories/PdbRepositoryNetwork";
+import { ApiPdbRepository } from "./data/repositories/protvista/ApiPdbRepository";
 import { GetPdbUseCase } from "./domain/usecases/GetPdbUseCase";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getCompositionRoot() {
-    const pdbRepository = new PdbRepositoryNetwork();
+    const pdbRepository = new ApiPdbRepository();
 
     return getExecute({
         getPdb: new GetPdbUseCase(pdbRepository),

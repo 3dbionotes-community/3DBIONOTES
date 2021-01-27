@@ -5,6 +5,8 @@ import { MolecularStructure } from "./MolecularStructure";
 import { AppContext } from "./webapp/components/AppContext";
 import { Protvista } from "./webapp/components/protvista/Protvista";
 import { Viewer } from "./webapp/components/Viewer";
+import { TrainingApp } from "./webapp/training-app";
+import { modules } from "./webapp/training-app/training-modules";
 
 function App() {
     return (
@@ -24,6 +26,7 @@ function App() {
                     </Route>
                 </Switch>
             </HashRouter>
+            <TrainingApp locale="en" modules={modules} />
         </AppContext>
     );
 }
