@@ -1,0 +1,109 @@
+#videoWrapper {
+  width: 536px;
+  overflow: hidden;
+  display: block;
+}
+
+#welcome {
+  padding-top: 40px;
+  padding-bottom: 0px;
+  margin-bottom: -40px;
+}
+
+#welcomeVideo {
+  margin-left: -1px;
+}
+
+#Navbar {
+  background: #ffffff;
+  width: 100%;
+  padding: 0px 10px;
+  border-bottom: solid 6px #123546;
+}
+
+#viewerMenuButton {
+  padding: 10px 20px;
+  margin: 0px 10px;
+  /*color: #ffffff;*/
+  border-radius: 8px;
+}
+
+#navcol-1 .dropdown-menu {
+  background-color: #123546;
+  border-radius: 8px;
+  top: 77%;
+  left: auto;
+}
+
+#navcol-1 .dropdown-item.active {
+  color: #fff;
+  text-decoration: none;
+  background-color: #123546;
+}
+
+#navcol-1 .dropdown-item {
+  color: #A2BECB;
+  text-decoration: none;
+  background-color: initial;
+}
+
+#viewerSlogan {
+  color: #268BBE;
+  font-weight: 600;
+}
+
+#viewerSlogan a {
+  display: contents;
+  color: #123546;
+}
+
+#partnersLogos {
+  float: right;
+  color: #268BBE;
+}
+
+.dropdown-toggle.active {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.dropdown-toggle.active:after {
+  display: none;
+}
+
+.dropdown-toggle.active {
+}
+
+/*
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  outline: 0;
+}
+*/
+
+.modal-header {
+  color: #123546;
+  background: #fff;
+}
+
+.modal-footer {
+  border-top: none;
+  margin-top: -30px;
+  padding-bottom: 30px;
+}
+
+.modal-header {
+  margin-bottom: -20px;
+}
+
+.modal-header button {
+  margin-left: 0px !important;
+}
+
