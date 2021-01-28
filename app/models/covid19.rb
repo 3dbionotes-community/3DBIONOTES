@@ -286,7 +286,7 @@ class Covid19
           card("PDB", *parse_pdb(protein, ["PDB"])),
           card("EMDB", parse_emdb(protein, ["EMDB"])),
           card_wrapper("Interactions", [
-            card("P-P Interactions", *parse_db_with_experiments(protein, ["Interactions", "P-P-Interactions"])),
+            card("Protein-Protein Interactions", *parse_db_with_experiments(protein, ["Interactions", "P-P-Interactions"])),
             card("Ligands", *parse_db_with_experiments(protein, ["Interactions", "Ligands"])),
           ]),
           card_wrapper("Related", [
