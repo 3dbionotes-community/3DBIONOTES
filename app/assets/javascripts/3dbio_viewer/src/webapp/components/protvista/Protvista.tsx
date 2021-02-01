@@ -43,9 +43,9 @@ export const Protvista: React.FC = () => {
                 <div>
                     <div className={styles.section}>
                         <div className={styles.actions}>
-                            <button>Tools</button>
-                            <button>Profiles</button>
-                            <button>?</button>
+                            <button>{i18n.t("Tools")}</button>
+                            <button>{i18n.t("Profiles")}</button>
+                            <button>{i18n.t("Jump to")}</button>
                         </div>
                     </div>
 
