@@ -41,10 +41,12 @@ export const Protvista: React.FC = () => {
                 </div>
             ) : (
                 <div>
-                    <div className={styles.actions}>
-                        <button>Tools</button>
-                        <button>Profiles</button>
-                        <button>?</button>
+                    <div className={styles.section}>
+                        <div className={styles.actions}>
+                            <button>Tools</button>
+                            <button>Profiles</button>
+                            <button>?</button>
+                        </div>
                     </div>
 
                     {state.blocks.map(block => (

@@ -53,10 +53,6 @@ button::focus {
     overflow: auto;
 }
 
-.section {
-    padding: 20px;
-}
-
 .contents {
     margin-bottom: 10px;
 }

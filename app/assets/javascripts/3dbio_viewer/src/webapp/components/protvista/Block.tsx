@@ -16,7 +16,7 @@ export const Block: React.FC<BlockProps> = React.memo(props => {
     React.useEffect(() => loadPdbView(elementRef, block.pdbView), [block.pdbView, elementRef]);
 
     return (
-        <div className="section">
+        <div className={styles.section}>
             <div className={styles.title}>
                 {title}
                 <button>?</button>
