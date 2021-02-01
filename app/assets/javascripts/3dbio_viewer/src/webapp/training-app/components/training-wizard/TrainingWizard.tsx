@@ -70,7 +70,6 @@ export const TrainingWizard: React.FC<TrainingWizardProps> = ({ onClose, module 
 
     const onStepChange = useCallback(
         async (stepKey: string) => {
-            console.log("foo", stepKey);
             if (!module || lastStep.current === stepKey) return;
 
             const currentStep = extractStepFromKey(stepKey);
