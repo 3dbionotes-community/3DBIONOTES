@@ -4,7 +4,7 @@ import "./App.css";
 import { MolecularStructure } from "./MolecularStructure";
 import { AppContext } from "./webapp/components/AppContext";
 import { Protvista } from "./webapp/components/protvista/Protvista";
-import { Viewer } from "./webapp/components/Viewer";
+import { RootViewer } from "./webapp/components/RootViewer";
 import { TrainingApp } from "./webapp/training-app";
 import { modules } from "./webapp/training-app/training-modules";
 
@@ -22,7 +22,7 @@ function App() {
                     </Route>
 
                     <Route path="/">
-                        <Viewer />
+                        <RootViewer />
                     </Route>
                 </Switch>
             </HashRouter>
