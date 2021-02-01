@@ -34,7 +34,8 @@ export const Bullet = styled(BaseBullet)`
     align-self: center;
 
     color: #133546;
-    background-color: ${props => (props.current || props.completed ? getColor("primary") : "#276696")};
+    background-color: ${props =>
+        props.current || props.completed ? getColor("primary") : "#276696"};
 
     ::after {
         display: ${props => (props.completed && !props.last ? "inline-block" : "none")};

@@ -24,9 +24,9 @@ export const Protvista: React.FC = () => {
             "6w9c": { protein: "P0DTD1", pdb: "6w9c", chain: "A" },
         };
 
-        return compositionRoot.getPdb(pdbOptions["6zow"]).run(
+        return compositionRoot.getPdb(pdbOptions["6w9c"]).run(
             pdb => {
-                debugVariable(pdb);
+                debugVariable("pdb", pdb);
                 setState({ type: "loading" });
                 const [tracks1, tracks2] = _.partition(
                     pdb.tracks,
