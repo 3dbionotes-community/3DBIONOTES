@@ -1,5 +1,5 @@
 import React from "react";
-import { InitParams } from "pdbe-molstar/lib/spec";
+import { InitParams } from "pdbe-molstar-3dbionotes/lib/spec";
 import "molstar/lib/mol-plugin-ui/skin/light.scss";
 import { debugVariable } from "./utils/debug";
 

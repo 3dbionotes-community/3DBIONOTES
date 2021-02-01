@@ -9654,10 +9654,10 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-pdbe-molstar@^1.1.0-dev.4:
-  version "1.1.0-dev.4"
-  resolved "https://registry.npmjs.org/pdbe-molstar/-/pdbe-molstar-1.1.0-dev.4.tgz#94208441884f189102f15a42ee7b72f789b46f5e"
-  integrity sha512-0pbq02t8fjYTHbtcpXgNrN3OpjesbqcuqSbGJ2R66cys7fAvMt/G/hcpLFrSln/CbHYvBLut59UTz05J/06+6w==
+pdbe-molstar-3dbionotes@1.1.0-beta.1:
+  version "1.1.0-beta.1"
+  resolved "https://registry.npmjs.org/pdbe-molstar-3dbionotes/-/pdbe-molstar-3dbionotes-1.1.0-beta.1.tgz#02541bbba0cccc7a6c040dae5523b589023c3f4e"
+  integrity sha512-SIWWVpVyoFr/tyU5Dd9N/XNb2nEUKuQ5h3Vh4WdU0EkNn703/TJf/aa+Ju8bfm/nkyqv1DHX+JCP27rt9XwXSQ==
   dependencies:
     lit-element "^2.2.1"
     molstar "^1.1.1"
@@ -10585,10 +10585,10 @@ protvista-navigation@2.0.0:
   dependencies:
     lodash-es "^4.17.11"
 
-protvista-pdb-3dbionotes@2.0.1-beta.1:
-  version "2.0.1-beta.1"
-  resolved "https://registry.npmjs.org/protvista-pdb-3dbionotes/-/protvista-pdb-3dbionotes-2.0.1-beta.1.tgz#cbdf0b757106677f51c0bb17b3ccee8923f36d4c"
-  integrity sha512-515J9XhDwN28epTD8wEQqqimywFnbQtVf597tWBl/63uFw1gUIlmtIoEdIdmeuThdQTQ1pGC7YIK+KophkVeaQ==
+protvista-pdb-3dbionotes@2.0.1-beta.2:
+  version "2.0.1-beta.2"
+  resolved "https://registry.npmjs.org/protvista-pdb-3dbionotes/-/protvista-pdb-3dbionotes-2.0.1-beta.2.tgz#f2e907f106e377f246260c12a6063516bba4008c"
+  integrity sha512-MVw23aOIncxK/kmDrYRrT5VdpWJ5KX/s1oJnDf1FVAQYGWCeVoqeAJD47vhK2kyalZoZ3nUuZ09970aWoEDBiA==
   dependencies:
     lodash-es "^4.17.11"
     protvista-filter "2.0.0"
