@@ -1,6 +1,6 @@
 import React from "react";
+import { Viewers } from "../pages/viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
-import { Protvista } from "./protvista/Protvista";
 
 export const RootViewer: React.FC = () => {
     return (
@@ -10,7 +10,7 @@ export const RootViewer: React.FC = () => {
             </div>
 
             <div id="right">
-                <Protvista />
+                <Viewers />
             </div>
         </div>
     );
