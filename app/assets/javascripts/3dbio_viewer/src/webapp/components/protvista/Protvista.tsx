@@ -34,21 +34,13 @@ export const Protvista: React.FC = () => {
     return (
         <div>
             {state.type === "loading" ? (
-                i18n.t("Loading...")
+                <div className={styles.section}>{i18n.t("Loading Protvista...")}</div>
             ) : state.type === "error" ? (
-                <div>
+                <div className={styles.section}>
                     {i18n.t("Error")}: {state.message}
                 </div>
             ) : (
                 <div>
-                    <div className={styles.section}>
-                        <div className={styles.actions}>
-                            <button>{i18n.t("Tools")}</button>
-                            <button>{i18n.t("Profiles")}</button>
-                            <button>{i18n.t("Jump to")}</button>
-                        </div>
-                    </div>
-
                     {state.blocks.map(block => (
                         <Block key={block.title} block={block} />
                     ))}
