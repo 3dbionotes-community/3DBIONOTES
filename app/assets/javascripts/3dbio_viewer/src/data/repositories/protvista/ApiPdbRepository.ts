@@ -95,7 +95,7 @@ export class ApiPdbRepository implements PdbRepository {
 
 function getData(options: Options): FutureData<Data> {
     const { protein, pdb, chain } = options;
-    const bionotesUrl = "http://3dbionotes.cnb.csic.es";
+    const bionotesUrl = ""; // proxied to 3dbionotes on development (src/setupProxy.js)
 
     const data$: DataRequests = {
         features: get(`https://www.ebi.ac.uk/proteins/api/features/${protein}`),
@@ -112,7 +112,7 @@ function getData(options: Options): FutureData<Data> {
         pfamAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/Pfam/Uniprot/${protein}`),
         smartAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/SMART/Uniprot/${protein}`),
         proteomics: getOrEmpty(`https://www.ebi.ac.uk/proteins/api/proteomics/${protein}`),
-        pdbRedo: getOrEmpty(`http://3dbionotes.cnb.csic.es/api/annotations/PDB_REDO/${pdb}`),
+        pdbRedo: getOrEmpty(`${bionotesUrl}/api/annotations/PDB_REDO/${pdb}`),
     };
 
     return Future.joinObj(data$);
