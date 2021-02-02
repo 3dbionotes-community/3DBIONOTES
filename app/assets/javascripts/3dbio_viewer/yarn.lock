@@ -2,6 +2,27 @@
 # yarn lockfile v1
 
 
+"@3dbionotes/pdbe-molstar@1.1.0-beta.1":
+  version "1.1.0-beta.1"
+  resolved "https://registry.npmjs.org/@3dbionotes/pdbe-molstar/-/pdbe-molstar-1.1.0-beta.1.tgz#9e6e8e774646679a089bd99561eec9cdca064702"
+  integrity sha512-9BLipZIeIksbubRKcabQwnCMafFshgHdDCMNLXUqRD0Lrlkdp+6DIs2wf4hqYZSarfnjp04xvdNaL4Z46akiVw==
+  dependencies:
+    lit-element "^2.2.1"
+    molstar "^1.1.1"
+
+"@3dbionotes/protvista-pdb@2.0.1-beta.2":
+  version "2.0.1-beta.2"
+  resolved "https://registry.npmjs.org/@3dbionotes/protvista-pdb/-/protvista-pdb-2.0.1-beta.2.tgz#c6d46402ccb7f277166d0d2af01d633c3608621b"
+  integrity sha512-9YdUrKX/g92ppN6kfI23CvnO29aZTK5ZvLabs+GUMFuMvSeEL0rWDnyGJ+VTnsXQBWsDhPspD2g1GMQI2iZItw==
+  dependencies:
+    lodash-es "^4.17.11"
+    protvista-filter "2.0.0"
+    protvista-manager "2.0.0"
+    protvista-navigation "2.0.0"
+    protvista-sequence "2.0.0"
+    protvista-track "2.0.0"
+    protvista-zoomable "2.0.0"
+
 "@babel/code-frame@7.10.4", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.5.5":
   version "7.10.4"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.10.4.tgz#168da1a36e90da68ae8d49c0f1b48c7c6249213a"
@@ -9672,14 +9693,6 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-pdbe-molstar-3dbionotes@1.1.0-beta.1:
-  version "1.1.0-beta.1"
-  resolved "https://registry.npmjs.org/pdbe-molstar-3dbionotes/-/pdbe-molstar-3dbionotes-1.1.0-beta.1.tgz#02541bbba0cccc7a6c040dae5523b589023c3f4e"
-  integrity sha512-SIWWVpVyoFr/tyU5Dd9N/XNb2nEUKuQ5h3Vh4WdU0EkNn703/TJf/aa+Ju8bfm/nkyqv1DHX+JCP27rt9XwXSQ==
-  dependencies:
-    lit-element "^2.2.1"
-    molstar "^1.1.1"
-
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
@@ -10602,19 +10615,6 @@ protvista-navigation@2.0.0:
   integrity sha512-Hq0UwIyVO2rim+yffgEELwTE5boLtfdgn5H/X2EZMYo6949JZOG/x/llOkS4qmWdRS2F7HCbCXeflDfWgEFXfQ==
   dependencies:
     lodash-es "^4.17.11"
-
-protvista-pdb-3dbionotes@2.0.1-beta.2:
-  version "2.0.1-beta.2"
-  resolved "https://registry.npmjs.org/protvista-pdb-3dbionotes/-/protvista-pdb-3dbionotes-2.0.1-beta.2.tgz#f2e907f106e377f246260c12a6063516bba4008c"
-  integrity sha512-MVw23aOIncxK/kmDrYRrT5VdpWJ5KX/s1oJnDf1FVAQYGWCeVoqeAJD47vhK2kyalZoZ3nUuZ09970aWoEDBiA==
-  dependencies:
-    lodash-es "^4.17.11"
-    protvista-filter "2.0.0"
-    protvista-manager "2.0.0"
-    protvista-navigation "2.0.0"
-    protvista-sequence "2.0.0"
-    protvista-track "2.0.0"
-    protvista-zoomable "2.0.0"
 
 protvista-sequence@2.0.0:
   version "2.0.0"
