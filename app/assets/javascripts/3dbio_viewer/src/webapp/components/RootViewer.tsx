@@ -1,5 +1,5 @@
 import React from "react";
-import { MolecularStructure } from "../../MolecularStructure";
+import { MolecularStructure } from "./molecular-structure/MolecularStructure";
 import { Protvista } from "./protvista/Protvista";
 
 export const RootViewer: React.FC = () => {

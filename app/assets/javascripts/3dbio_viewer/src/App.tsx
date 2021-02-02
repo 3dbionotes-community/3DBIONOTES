@@ -1,7 +1,7 @@
 import React from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
-import { MolecularStructure } from "./MolecularStructure";
+import { MolecularStructure } from "./webapp/components/molecular-structure/MolecularStructure";
 import { AppContext } from "./webapp/components/AppContext";
 import { Protvista } from "./webapp/components/protvista/Protvista";
 import { RootViewer } from "./webapp/components/RootViewer";
