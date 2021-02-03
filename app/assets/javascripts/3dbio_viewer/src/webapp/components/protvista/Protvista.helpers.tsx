@@ -11,7 +11,7 @@ export type BlockDef = Omit<ProtvistaBlock, "pdbView">;
 
 const blockDefs = recordOf<BlockDef>()({
     main: {
-        id: "structural-information",
+        id: "structural-info",
         title: "Structural information",
         description:
             "Spike protein, trimeric complex S1-S2-S2: Attaches the virion to the cell membrane  by interacting with host receptor, initiating the infection. Binding to human ACE2 receptor and internalization of the virus into the endosomes of the host cell induces conformational changes in the Spike glycoprotein. Uses also human TMPRSS2 for priming in human lung cells which is an essential step for viral entry.",

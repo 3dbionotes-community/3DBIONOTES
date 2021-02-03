@@ -11,7 +11,7 @@ export const PPIViewer: React.FC<PPiViewerProps> = props => {
     const src = `/ppiIFrame?pdb=${pdb || "6w9c"}`;
 
     return (
-        <div className={styles.section}>
+        <div id="ppi" className={styles.section}>
             <div className={styles.title}>
                 {i18n.t("PPI: Protein–protein interactions")}
                 <button>?</button>

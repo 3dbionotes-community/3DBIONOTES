@@ -42,7 +42,7 @@ export const Protvista: React.FC = () => {
             ) : (
                 <div>
                     {state.blocks.map(block => (
-                        <Block key={block.title} block={block} />
+                        <Block key={block.id} block={block} />
                     ))}
                 </div>
             )}
