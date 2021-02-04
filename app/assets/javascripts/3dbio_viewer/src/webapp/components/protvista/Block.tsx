@@ -9,17 +9,21 @@ export interface BlockProps {
 
 export const Block: React.FC<BlockProps> = React.memo(props => {
     const { block } = props;
-    const { title, description } = block;
+    const { title, description, help } = block;
 
     const elementRef = React.useRef<ProtvistaTrackElement>(null);
 
-    React.useEffect(() => loadPdbView(elementRef, block.pdbView), [block.pdbView, elementRef]);
+    React.useEffect(() => {
+        if (block.pdbView) {
+            return loadPdbView(elementRef, block.pdbView);
+        }
+    }, [block.pdbView, elementRef]);
 
     return (
         <div className={styles.section} id={block.id}>
             <div className={styles.title}>
                 {title}
-                <button>?</button>
+                <button title={help}>?</button>
             </div>
 
             <div className="contents">{description}</div>

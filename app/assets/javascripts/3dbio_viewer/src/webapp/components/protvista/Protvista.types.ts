@@ -14,7 +14,7 @@ export interface ProtvistaBlock {
     title: string;
     description: string;
     help: string;
-    pdbView: PdbView;
+    pdbView?: PdbView;
 }
 
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
