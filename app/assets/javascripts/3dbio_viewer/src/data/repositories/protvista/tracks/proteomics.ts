@@ -19,27 +19,53 @@ interface ProteomicsFeature {
     xrefs: Array<{ name: string; id: string; url: string }>;
     evidences: Array<{ code: string; source: { name: string; id: string; url: string } }>;
     peptide: string;
-    unique: true;
+    unique: boolean;
 }
 
 export function getProteomicsTrack(proteomics: Proteomics): Track {
+    const uniqueLabel = config.tracks.unique.label;
+    const nonUniqueLabel = config.tracks.non_unique.label;
+
+    const [uniqueFeatures, nonUniqueFeatures] = _.partition(
+        proteomics.features,
+        feature => feature.unique
+    );
+
     return {
         id: "proteomics",
         label: "Proteomics",
         subtracks: [
             {
                 accession: "unique-peptide",
-                type: "Unique peptide",
-                label: "Unique peptide",
-                shape: "rectangle",
+                type: uniqueLabel,
+                label: uniqueLabel,
+                shape: config.shapeByTrackName.unique,
                 locations: [
                     {
-                        fragments: _.flatMap(proteomics.features, feature =>
+                        fragments: _.flatMap(uniqueFeatures, feature =>
                             getFragment({
                                 start: feature.begin,
                                 end: feature.end,
                                 description: getDescription(feature),
                                 color: config.colorByTrackName.unique,
+                            })
+                        ),
+                    },
+                ],
+            },
+            {
+                accession: "non-unique-peptide",
+                type: nonUniqueLabel,
+                label: nonUniqueLabel,
+                shape: config.shapeByTrackName.non_unique,
+                locations: [
+                    {
+                        fragments: _.flatMap(nonUniqueFeatures, feature =>
+                            getFragment({
+                                start: feature.begin,
+                                end: feature.end,
+                                description: getDescription(feature),
+                                color: config.colorByTrackName.non_unique,
                             })
                         ),
                     },
