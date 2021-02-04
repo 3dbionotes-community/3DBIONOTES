@@ -10587,13 +10587,6 @@ prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.2, 
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
-protvista-feature-adapter@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.npmjs.org/protvista-feature-adapter/-/protvista-feature-adapter-3.1.2.tgz#cd513916d138d53fce48527db6a8cb2e351a51c1"
-  integrity sha512-6BLaeWiy/V0cHVBZpPtNzZsxsGq4rkPODFfOhC4M0Xwl0Cf5h5C+/607idogehq5o5o8UnBEjSwzqY3Vcodagg==
-  dependencies:
-    uuid "^8.3.1"
-
 protvista-filter@2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/protvista-filter/-/protvista-filter-2.0.0.tgz#bf27d7d8d4ea1020c7fd851379efbd0003d6e309"
@@ -10632,48 +10625,12 @@ protvista-track@2.0.0:
     lodash-es "^4.17.11"
     protvista-zoomable "^2.0.0"
 
-protvista-track@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.npmjs.org/protvista-track/-/protvista-track-3.2.0.tgz#9d89621d39e08bc5a9ac588e2989e84538a0db37"
-  integrity sha512-3YOLnoZnzWMr5yCyfd44Nca9DDqo8feTYRfkkVQyNVpM/NWPGS5PFFGo5UM1v/23/sskU8rInDXmxsGgTKeX+g==
-  dependencies:
-    lodash-es "^4.17.11"
-    protvista-zoomable "^3.0.0"
-
-protvista-utils@^2.18.0:
-  version "2.18.0"
-  resolved "https://registry.npmjs.org/protvista-utils/-/protvista-utils-2.18.0.tgz#51d464917d2d790ed523966a7b512e71fcdcdd85"
-  integrity sha512-kD75nDjmzqbcejKFjyG8BwXQvEvm49ybsQul3e6ng67Y1QWTYmZyYylaUNzRTgbwYYAIHs7VxVZLw4bgkw0dNQ==
-
-protvista-utils@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/protvista-utils/-/protvista-utils-3.0.0.tgz#50374a102c6f91c3d618d364a731407a77cb6684"
-  integrity sha512-aFrOnFuSxyV9G5Gg6riTOtVVcIPMMI24d0Um1lMdOIx2WaLhFw3CCzY2ZG9P/kwxn4ejM+eDJrf4RN4ut6Kwcw==
-
-protvista-zoomable@2.0.0:
+protvista-zoomable@2.0.0, protvista-zoomable@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/protvista-zoomable/-/protvista-zoomable-2.0.0.tgz#e037087847a21ff61211e04d7da9135687456915"
   integrity sha512-HchE0CJtog6LKDrnTNFyYRy5JWcvmqQ5U8mH6L9pgHdz8+x/hgL20rD+Bx3CzcP75WIf3wft6wgMmY68jPb5Cw==
   dependencies:
     lodash-es "^4.17.11"
-    resize-observer-polyfill "^1.5.0"
-
-protvista-zoomable@^2.0.0:
-  version "2.18.0"
-  resolved "https://registry.npmjs.org/protvista-zoomable/-/protvista-zoomable-2.18.0.tgz#33f03ce82b77c51c35ab5bfa84a89448b58e8b56"
-  integrity sha512-x8HLEfSIcY8nBrJYXD7avce9U09iCAqlJP1fYDSpjOJchCyj4tq/rqCUp2dm3wg0vXowDUdpAxlkrEN0CqOBow==
-  dependencies:
-    lodash-es "^4.17.11"
-    protvista-utils "^2.18.0"
-    resize-observer-polyfill "^1.5.0"
-
-protvista-zoomable@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/protvista-zoomable/-/protvista-zoomable-3.0.0.tgz#5b945b47b34e69e70147aa7d329dec15897b375d"
-  integrity sha512-fW8n0+oHRFIo4cmrd6FZwF6r9TifcnU7D72KNDHT+IxlR+X44eHQQp8h7/tNxXg94Js2GhVR2MO3Azu45u2U0g==
-  dependencies:
-    lodash-es "^4.17.11"
-    protvista-utils "^3.0.0"
     resize-observer-polyfill "^1.5.0"
 
 proxy-addr@~2.0.5:
