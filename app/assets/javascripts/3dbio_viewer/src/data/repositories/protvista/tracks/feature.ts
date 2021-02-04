@@ -1,21 +1,10 @@
 import _ from "lodash";
 import { getFragment } from "../../../../domain/entities/Fragment";
+import { Evidence as DomainEvidence } from "../../../../domain/entities/Evidence";
 import { Track } from "../../../../domain/entities/Track";
 import { config, getColorFromString, getShapeFromString, getTrack } from "../config";
 import { getId, getName } from "../utils";
-
-export interface Feature {
-    type: string;
-    category: string;
-    description: string;
-    begin: string;
-    end: string;
-    molecule: string;
-    evidences: Array<{
-        code: string;
-        source: { name: string; id: string; url: string; alternativeUrl?: string };
-    }>;
-}
+import { getEvidenceText } from "./Evidence";
 
 export interface Features {
     accession: string;
@@ -24,6 +13,26 @@ export interface Features {
     sequenceChecksum: string;
     taxid: number;
     features: Feature[];
+}
+
+export interface Feature {
+    type: string;
+    category: string;
+    description: string;
+    begin: string;
+    end: string;
+    molecule: string;
+    evidences?: Evidence[];
+}
+
+interface Evidence {
+    code: string;
+    source: {
+        name: string;
+        id: string;
+        url: string;
+        alternativeUrl?: string;
+    };
 }
 
 export interface GroupedFeature {
@@ -36,10 +45,12 @@ export interface GroupedFeature {
 
 export function getTrackFromFeatures(features: Features): Track[] {
     const groupedFeatures = features ? getGroupedFeatures(features) : [];
-    return groupedFeatures.map(groupedFeature => getTrackFromGroupedFeature(groupedFeature));
+    return groupedFeatures.map(groupedFeature =>
+        getTrackFromGroupedFeature(features.accession, groupedFeature)
+    );
 }
 
-function getTrackFromGroupedFeature(feature: GroupedFeature): Track {
+function getTrackFromGroupedFeature(accession: string, feature: GroupedFeature): Track {
     return {
         id: getId(feature.name),
         label: feature.name,
@@ -53,6 +64,7 @@ function getTrackFromGroupedFeature(feature: GroupedFeature): Track {
                 label: track?.label || getName(item.name),
                 labelTooltip: track?.tooltip || getName(item.name),
                 shape: getShapeFromString(itemKey, "circle"),
+                tools: "BLAST", // TODO: Is it always blast?
                 locations: [
                     {
                         fragments: _.flatMap(item.items, item =>
@@ -60,6 +72,7 @@ function getTrackFromGroupedFeature(feature: GroupedFeature): Track {
                                 start: parseInt(item.begin),
                                 end: parseInt(item.end),
                                 description: item.description,
+                                evidences: getEvidences(accession, item.evidences),
                                 color: getColorFromString(itemKey),
                             })
                         ),
@@ -68,6 +81,27 @@ function getTrackFromGroupedFeature(feature: GroupedFeature): Track {
             };
         }),
     };
+}
+
+function getEvidences(accession: string, apiEvidences: Evidence[] | undefined): DomainEvidence[] {
+    return (apiEvidences || []).map(
+        (apiEvidence): DomainEvidence => {
+            const { source, code } = apiEvidence;
+            const evidenceText = getEvidenceText({ accession }, code, [source]);
+
+            return {
+                title: evidenceText,
+                source: source,
+                alternativeSource: source.alternativeUrl
+                    ? {
+                          ...source,
+                          name: source.name === "PubMed" ? "EuropePMC" : source.name,
+                          url: source.alternativeUrl,
+                      }
+                    : undefined,
+            };
+        }
+    );
 }
 
 function getGroupedFeatures(featuresData: Features): GroupedFeature[] {

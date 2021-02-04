@@ -26,7 +26,7 @@ function App() {
                     </Route>
                 </Switch>
             </HashRouter>
-            <TrainingApp locale="en" modules={modules} />
+            {false && <TrainingApp locale="en" modules={modules} />}
         </AppContext>
     );
 }

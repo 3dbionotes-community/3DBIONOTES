@@ -18,6 +18,7 @@ export interface Subtrack {
     label: string; // Supports: text and html.
     labelTooltip?: string; // Label tooltip content. Support text and HTML mark-up
     overlapping?: boolean;
+    tools?: "BLAST";
 }
 
 export function addToTrack(options: {

@@ -7,6 +7,7 @@ import { renderToString } from "react-dom/server";
 import { Tooltip } from "./Tooltip";
 import { recordOf } from "../../../utils/ts-utils";
 import i18n from "../../utils/i18n";
+import { debugVariable } from "../../../utils/debug";
 
 export type BlockDef = Omit<ProtvistaBlock, "pdbView">;
 
@@ -14,7 +15,7 @@ const blockDefs = recordOf<BlockDef>()({
     // TODO: Move to viewes/BasicInformationViewer.tsx
     basicInformation: {
         id: "basic-information",
-        title: "Basic information",
+        title: "Basic information6",
         description: i18n.t(`
             "This section contains the basic information about the protein structure model that is being visualized, such as the name of the protein, the name of the gene, the organism in which it is expressed, its biological function, the experimental (or computational) method that has allowed knowing the structure and its resolution. Also, if there is a cryo-EM map associated with the model, it will be shown. The IDs of PDB, EMDB (in case of cryo-EM map availability) and Uniprot will be displayed.
 
@@ -156,6 +157,7 @@ const blockDefs = recordOf<BlockDef>()({
 
 export function getBlocks(pdb: Pdb): ProtvistaBlock[] {
     const [tracks1, tracks2] = _.partition(pdb.tracks, track => track.id !== "em-validation");
+    debugVariable({ pdb });
 
     const pdbs = recordOf<Pdb>()({
         main: { ...pdb, tracks: tracks1 },
@@ -177,7 +179,9 @@ export function loadPdbView(elementRef: React.RefObject<ProtvistaTrackElement>, 
 
     protvistaEl.viewerdata = pdbView;
 
-    protvistaEl.layoutHelper.hideSubtracks(0);
+    if (protvistaEl.layoutHelper) {
+        protvistaEl.layoutHelper.hideSubtracks(0);
+    }
 
     // Collapse first track, which is expanded by default
     protvistaEl.querySelectorAll(`.expanded`).forEach(trackSection => {
@@ -227,7 +231,9 @@ function getTrackData(track: Track): TrackView["data"] {
                           ...location,
                           fragments: location.fragments.map(fragment => ({
                               ...fragment,
-                              tooltipContent: renderToString(<Tooltip fragment={fragment} />),
+                              tooltipContent: renderToString(
+                                  <Tooltip subtrack={subtrack} fragment={fragment} />
+                              ),
                           })),
                       })),
                   },

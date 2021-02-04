@@ -1,10 +1,12 @@
 import { Color } from "./Color";
+import { Evidence } from "./Evidence";
 import { Legend } from "./Legend";
 
 export interface Fragment {
     start: number;
     end: number;
     description: string;
+    evidences?: Evidence[];
     color: Color;
     legend?: Legend;
 }
@@ -14,12 +16,11 @@ interface LooseFragment extends Omit<Fragment, "start" | "end"> {
     end: number | string;
 }
 
-export function getFragment(fragmentWithLooseStartEnd: LooseFragment): Fragment[] {
-    const { start, end } = fragmentWithLooseStartEnd;
-    const start2 = Number(start);
-    const end2 = Number(end);
+export function getFragment(looseFragment: LooseFragment): Fragment[] {
+    const { start, end } = looseFragment;
+    const startNum = Number(start);
+    const endNum = Number(end);
+    const fragment = { ...looseFragment, start: startNum, end: endNum };
 
-    const fragment = { ...fragmentWithLooseStartEnd, start: start2, end: end2 };
-
-    return isNaN(start2) || isNaN(end2) ? [] : [fragment];
+    return isNaN(startNum) || isNaN(endNum) ? [] : [fragment];
 }
