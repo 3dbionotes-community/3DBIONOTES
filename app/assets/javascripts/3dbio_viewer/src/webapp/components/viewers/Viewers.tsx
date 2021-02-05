@@ -17,10 +17,9 @@ export const blocks = {
 };
 
 export const Viewers: React.FC<ViewersProps> = () => {
-    const items: JumpToButtonProps["items"] = React.useMemo(
-        () => _.map(blocks, (attrs, id) => ({ id, ...attrs })),
-        [blocks]
-    );
+    const items: JumpToButtonProps["items"] = React.useMemo(() => {
+        return _.map(blocks, (attrs, id) => ({ id, ...attrs }));
+    }, []);
 
     return (
         <React.Fragment>
