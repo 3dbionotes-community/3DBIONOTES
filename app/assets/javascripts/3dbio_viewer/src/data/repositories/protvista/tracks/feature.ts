@@ -4,7 +4,7 @@ import { Evidence as DomainEvidence } from "../../../../domain/entities/Evidence
 import { Track } from "../../../../domain/entities/Track";
 import { config, getColorFromString, getShapeFromString, getTrack } from "../config";
 import { getId, getName } from "../utils";
-import { getEvidenceText } from "./Evidence";
+import { getEvidenceText } from "./legacy/TooltipFactory";
 
 export interface Features {
     accession: string;
