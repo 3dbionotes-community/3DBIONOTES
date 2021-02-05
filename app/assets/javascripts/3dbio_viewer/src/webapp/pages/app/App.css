@@ -100,24 +100,47 @@ button::focus {
 .hideLabelIcon {
     position: absolute;
     right: 10px;
-    top: 40%;
+    top: 36%;
+    font-size: 12px;
 }
 
 .labelZoomIconRight {
+    color: #848a86;
     position: absolute;
     right: 48px;
-    top: 25%;
+    top: 34%;
+}
+
+.subtrack-help,
+.track-help {
+    padding: 1px 0px 0px 0px;
+    width: 20px;
+    border-radius: 10px;
+    height: 20px;
+    font-weight: 600;
 }
 
 .track-help {
-    padding: 5px;
+    color: #fff;
+    border: solid 1px #fff;
+    background-color: #848a86;
 }
 
 .subtrack-help {
     position: absolute;
     right: 26px;
-    top: 15%;
-    padding: 3px;
+    top: 35%;
+    background-color: rgba(0, 0, 0, 0);
+    color: #848a86;
+    border: solid 1px #848a86;
+}
+
+div[class^="pvSubtrackLabel_"] {
+    width: 60%;
+}
+
+div[class^="protvistaCol"] {
+    line-height: 22px;
 }
 
 .protvista-pdb {
@@ -154,4 +177,19 @@ protvista-tooltip .tooltip-close {
 .protvista-pdb {
     margin-bottom: 0px;
     padding: 20px 10px 0px 10px;
+}
+
+.protvistaResetSectionIcon {
+    border: 1px solid #ffffff;
+    background-color: #828181;
+    border-radius: 50%;
+    cursor: pointer;
+    text-align: center;
+    text-align: center;
+    width: 18px;
+    height: 18px;
+    line-height: 16px;
+    right: 10px;
+    display: none;
+    padding: 0px 0px 0px 0px;
 }
