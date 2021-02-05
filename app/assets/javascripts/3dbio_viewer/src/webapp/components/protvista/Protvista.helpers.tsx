@@ -12,8 +12,8 @@ import { debugVariable } from "../../../utils/debug";
 export type BlockDef = Omit<ProtvistaBlock, "pdbView">;
 
 const blockDefs = recordOf<BlockDef>()({
-    main: {
-        id: "structural-info",
+    structuralInfo: {
+        id: "structuralInfo",
         title: "Structural information",
         description: i18n.t(`
             "The protein <name> has a secondary structure consisting of  <number> alpha helices,  <number> beta sheets and  <number> turns.
@@ -35,7 +35,7 @@ const blockDefs = recordOf<BlockDef>()({
         ],
     },
     relevantSites: {
-        id: "relevant-sites",
+        id: "relevantSites",
         title: "Relevant sites",
         description: i18n.t(`
             This section shows the amino acids that are relevant to the function of the protein or in its processing.
@@ -59,8 +59,8 @@ const blockDefs = recordOf<BlockDef>()({
             "PTM" /* All from Phosphite/uniprot PTM */,
         ],
     },
-    validations: {
-        id: "map-validation",
+    mapValidations: {
+        id: "mapValidation",
         title: "Validation",
         description: i18n.t(`
             This section offers a complete validation of the atomic models obtained by different methods. Also, where possible, a validation of the Cryo-EM maps and the map-model fit will be carried out. For this, methods based on biophysical characteristics of structure (molprobity), refinement methods, showing the residues affected by said processes, and methods, when it is a structure obtained by cryo-EM, of validation of maps and models will be used.
@@ -82,21 +82,21 @@ const blockDefs = recordOf<BlockDef>()({
         ],
     },
     residueAccessibility: {
-        id: "residue-accessibility",
+        id: "residueAccessibility",
         title: "Residue Accessibility",
         description: i18n.t(`Number of pockets`),
         help: "TODO",
         tracks: ["structure-coverage", "pockets", "residue-accessibility"],
     },
     proteinInteraction: {
-        id: "protein-interaction",
+        id: "proteinInteraction",
         title: "Protein Interaction",
         description: i18n.t(`Number of pockets`),
         help: "TODO",
         tracks: ["structure-coverage", "functional-mapping-ppi" /* separate: ppi-viewer */],
     },
     ligandInteraction: {
-        id: "ligand-interaction",
+        id: "ligandInteraction",
         title: "Ligand interaction",
         description: i18n.t(`
             This protein interacts with <name> and it could be interact with <number> protein more.`),
@@ -145,8 +145,8 @@ export function getBlocks(pdb: Pdb): ProtvistaBlock[] {
     });
 
     return [
-        { ...blockDefs.main, pdbView: getPdbView(pdbs.main) },
-        { ...blockDefs.validations, pdbView: getPdbView(pdbs.validations) },
+        { ...blockDefs.structuralInfo, pdbView: getPdbView(pdbs.main) },
+        { ...blockDefs.mapValidations, pdbView: getPdbView(pdbs.validations) },
     ];
 }
 
