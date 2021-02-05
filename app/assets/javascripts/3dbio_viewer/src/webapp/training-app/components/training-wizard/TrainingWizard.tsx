@@ -70,7 +70,6 @@ export const TrainingWizard: React.FC<TrainingWizardProps> = ({ onClose, module 
 
     const onStepChange = useCallback(
         async (stepKey: string) => {
-            console.log("foo", stepKey);
             if (!module || lastStep.current === stepKey) return;
 
             const currentStep = extractStepFromKey(stepKey);
@@ -117,11 +116,11 @@ const StyledModal = styled(Modal)`
     margin: 6px;
     bottom: 20px;
     right: 40px;
-    height: ${({ minimized }) => (minimized ? "inherit" : "75%")};
+    height: ${({ minimized }) => (minimized ? "inherit" : "648px")};
 
     ${ModalContent} {
         padding: 0px 15px;
-        max-height: 75%;
+        max-height: 460px;
     }
 
     ${StyledWizard} .MuiPaper-root {

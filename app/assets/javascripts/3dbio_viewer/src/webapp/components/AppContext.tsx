@@ -5,9 +5,11 @@ const appContextValue = {
     compositionRoot: getCompositionRoot(),
 };
 
+type AppContextValue = typeof appContextValue;
+
 const AppReactContext = React.createContext(appContextValue);
 
-export function useAppContext(): typeof appContextValue {
+export function useAppContext(): AppContextValue {
     return React.useContext(AppReactContext);
 }
 
@@ -19,4 +21,10 @@ export const AppContext: React.FC = React.memo(props => {
     );
 });
 
-Object.assign(window as any, { app: appContextValue });
+declare global {
+    interface Window {
+        app: AppContextValue;
+    }
+}
+
+window.app = appContextValue;

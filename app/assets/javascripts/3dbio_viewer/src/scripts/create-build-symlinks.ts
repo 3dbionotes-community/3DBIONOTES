@@ -22,7 +22,7 @@ function createBuildSymblinks() {
         const buildAppPath = path.join(buildPath, "app");
         const newEntrypoint = path.join(buildAppPath, newFilename);
 
-        console.log(`${path.basename(newEntrypoint)} -> ${entrypoint}`);
+        console.debug(`${path.basename(newEntrypoint)} -> ${entrypoint}`);
         fs.mkdirSync(buildAppPath, { recursive: true });
         lnf(path.join("..", entrypoint), newEntrypoint);
     });

@@ -1,11 +1,10 @@
 declare namespace JSX {
     interface IntrinsicElements {
-        "protvista-track": any;
-        "protvista-feature-adapter": any;
-        "data-loader": any;
-        "protvista-pdb-navigation": any;
-
-        "protvista-pdb": any;
-        "xprotvista-pdb": any;
+        "protvista-pdb": ProtvistaPdbWebComponent;
     }
+}
+
+declare interface ProtvistaPdbWebComponent {
+    "custom-data"?: "true";
+    ref: React.RefObject<ProtvistaTrackElement>;
 }
