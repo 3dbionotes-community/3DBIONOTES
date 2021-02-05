@@ -85,7 +85,8 @@ export class ApiPdbRepository implements PdbRepository {
         const tracks3 = addPhosphiteSubtracks(tracks2, data.phosphositeUniprot);
 
         return {
-            sequence: data.features ? data.features.sequence : "TODO",
+            protein: options.protein,
+            sequence: data.features ? data.features.sequence : "",
             length: getTotalFeaturesLength(tracks3),
             tracks: tracks3,
             variants,
@@ -96,14 +97,15 @@ export class ApiPdbRepository implements PdbRepository {
 function getData(options: Options): FutureData<Data> {
     const { protein, pdb, chain } = options;
     const bionotesUrl = ""; // proxied to 3dbionotes on development (src/setupProxy.js)
+    const ebiUrl = "https://www.ebi.ac.uk/proteins/api";
 
     const data$: DataRequests = {
-        features: get(`https://www.ebi.ac.uk/proteins/api/features/${protein}`),
+        features: get(`${ebiUrl}/features/${protein}`),
         covidAnnotations: getOrEmpty(`${bionotesUrl}/cv19_annotations/${protein}_annotations.json`),
         pdbAnnotations: getOrEmpty(
             `${bionotesUrl}/ws/lrs/pdbAnnotFromMap/all/${pdb}/${chain}/?format=json`
         ),
-        ebiVariation: getOrEmpty(`https://www.ebi.ac.uk/proteins/api/variation/${protein}`),
+        ebiVariation: getOrEmpty(`${ebiUrl}/variation/${protein}`),
         coverage: getOrEmpty(`${bionotesUrl}/api/alignments/Coverage/${pdb}${chain}`),
         mobiUniprot: getOrEmpty(`${bionotesUrl}/api/annotations/mobi/Uniprot/${protein}`),
         phosphositeUniprot: getOrEmpty(
@@ -111,7 +113,7 @@ function getData(options: Options): FutureData<Data> {
         ),
         pfamAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/Pfam/Uniprot/${protein}`),
         smartAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/SMART/Uniprot/${protein}`),
-        proteomics: getOrEmpty(`https://www.ebi.ac.uk/proteins/api/proteomics/${protein}`),
+        proteomics: getOrEmpty(`${ebiUrl}/api/proteomics/${protein}`),
         pdbRedo: getOrEmpty(`${bionotesUrl}/api/annotations/PDB_REDO/${pdb}`),
     };
 

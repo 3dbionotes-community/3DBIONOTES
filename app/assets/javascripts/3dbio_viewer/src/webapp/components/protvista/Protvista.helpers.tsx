@@ -179,7 +179,7 @@ export function loadPdbView(elementRef: React.RefObject<ProtvistaTrackElement>, 
 
     protvistaEl.viewerdata = pdbView;
 
-    if (protvistaEl.layoutHelper) {
+    if (protvistaEl.layoutHelper && !_.isEmpty(pdbView.tracks)) {
         protvistaEl.layoutHelper.hideSubtracks(0);
     }
 
@@ -198,7 +198,7 @@ function getPdbView(pdb: Pdb): PdbView {
         displayVariants: !!pdb.variants,
         tracks: _.compact(
             pdb.tracks.map(track => {
-                const subtracks = getTrackData(track);
+                const subtracks = getTrackData(pdb.protein, track);
                 if (_.isEmpty(subtracks)) return null;
                 return {
                     ...track,
@@ -219,7 +219,7 @@ function getPdbView(pdb: Pdb): PdbView {
     };
 }
 
-function getTrackData(track: Track): TrackView["data"] {
+function getTrackData(protein: string, track: Track): TrackView["data"] {
     return _.flatMap(track.subtracks, subtrack =>
         hasFragments(subtrack)
             ? [
@@ -232,7 +232,7 @@ function getTrackData(track: Track): TrackView["data"] {
                           fragments: location.fragments.map(fragment => ({
                               ...fragment,
                               tooltipContent: renderToString(
-                                  <Tooltip subtrack={subtrack} fragment={fragment} />
+                                  <Tooltip protein={protein} fragment={fragment} />
                               ),
                           })),
                       })),

@@ -1,11 +1,12 @@
+import { Link } from "./Link";
+
 export interface Evidence {
     title: string;
-    source?: Source;
-    alternativeSource?: Source;
+    source?: EvidenceSource;
+    alternativeSource?: EvidenceSource;
 }
 
-interface Source {
-    id: string;
+export interface EvidenceSource {
     name: string;
-    url: string;
+    links: Link[];
 }
