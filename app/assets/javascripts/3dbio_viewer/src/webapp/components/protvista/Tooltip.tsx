@@ -2,6 +2,7 @@ import React from "react";
 import { Evidence } from "../../../domain/entities/Evidence";
 import { Fragment, getFragmentToolsLink } from "../../../domain/entities/Fragment";
 import i18n from "../../utils/i18n";
+import { renderJoin } from "../../utils/react";
 import { Link } from "../Link";
 
 interface TooltipProps {
@@ -88,12 +89,14 @@ const EvidenceSourceRow: React.FC<{ evidence: Evidence; alternative?: boolean }>
             <td></td>
             <td>
                 {source.name}&nbsp;
-                {source.links.map(link => (
-                    <React.Fragment key={link.name}>
-                        <Link name={link.name} url={link.url} />
-                        &nbsp;
-                    </React.Fragment>
-                ))}
+                {renderJoin(
+                    source.links.map(link => (
+                        <React.Fragment key={link.name}>
+                            <Link name={link.name} url={link.url} />
+                        </React.Fragment>
+                    )),
+                    <span>|</span>
+                )}
             </td>
         </tr>
     );
