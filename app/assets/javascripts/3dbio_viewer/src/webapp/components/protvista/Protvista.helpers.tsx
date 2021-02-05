@@ -11,12 +11,14 @@ export type BlockDef = Omit<ProtvistaBlock, "pdbView">;
 
 const blockDefs = recordOf<BlockDef>()({
     main: {
-        title: "Structural",
+        id: "structural-info",
+        title: "Structural information",
         description:
             "Spike protein, trimeric complex S1-S2-S2: Attaches the virion to the cell membrane  by interacting with host receptor, initiating the infection. Binding to human ACE2 receptor and internalization of the virus into the endosomes of the host cell induces conformational changes in the Spike glycoprotein. Uses also human TMPRSS2 for priming in human lung cells which is an essential step for viral entry.",
         help: "Some help",
     },
     validations: {
+        id: "map-validation",
         title: "Map Validation",
         description:
             "The merge function allows the user to merge multiple .po files into a single file. During the process of merging that application will validate that the table, language, and column for the PO files are the same. If they are not then an error will be returned. The action here is to take unique rowId entries from each file and merge them to a single file.",

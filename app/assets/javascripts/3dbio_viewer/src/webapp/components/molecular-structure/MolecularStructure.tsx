@@ -1,7 +1,8 @@
 import React from "react";
-import { InitParams } from "pdbe-molstar-3dbionotes/lib/spec";
-import "molstar/lib/mol-plugin-ui/skin/light.scss";
-import { debugVariable } from "./utils/debug";
+import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
+import { debugVariable } from "../../../utils/debug";
+
+import "./molstar.scss";
 
 declare const PDBeMolstarPlugin: any;
 

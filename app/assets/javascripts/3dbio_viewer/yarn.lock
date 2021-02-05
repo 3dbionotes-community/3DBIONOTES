@@ -2,6 +2,27 @@
 # yarn lockfile v1
 
 
+"@3dbionotes/pdbe-molstar@1.1.0-beta.1":
+  version "1.1.0-beta.1"
+  resolved "https://registry.npmjs.org/@3dbionotes/pdbe-molstar/-/pdbe-molstar-1.1.0-beta.1.tgz#9e6e8e774646679a089bd99561eec9cdca064702"
+  integrity sha512-9BLipZIeIksbubRKcabQwnCMafFshgHdDCMNLXUqRD0Lrlkdp+6DIs2wf4hqYZSarfnjp04xvdNaL4Z46akiVw==
+  dependencies:
+    lit-element "^2.2.1"
+    molstar "^1.1.1"
+
+"@3dbionotes/protvista-pdb@2.0.1-beta.2":
+  version "2.0.1-beta.2"
+  resolved "https://registry.npmjs.org/@3dbionotes/protvista-pdb/-/protvista-pdb-2.0.1-beta.2.tgz#c6d46402ccb7f277166d0d2af01d633c3608621b"
+  integrity sha512-9YdUrKX/g92ppN6kfI23CvnO29aZTK5ZvLabs+GUMFuMvSeEL0rWDnyGJ+VTnsXQBWsDhPspD2g1GMQI2iZItw==
+  dependencies:
+    lodash-es "^4.17.11"
+    protvista-filter "2.0.0"
+    protvista-manager "2.0.0"
+    protvista-navigation "2.0.0"
+    protvista-sequence "2.0.0"
+    protvista-track "2.0.0"
+    protvista-zoomable "2.0.0"
+
 "@babel/code-frame@7.10.4", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.5.5":
   version "7.10.4"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.10.4.tgz#168da1a36e90da68ae8d49c0f1b48c7c6249213a"
@@ -2006,6 +2027,13 @@
   version "5.1.1"
   resolved "https://registry.npmjs.org/@types/html-minifier-terser/-/html-minifier-terser-5.1.1.tgz#3c9ee980f1a10d6021ae6632ca3e79ca2ec4fb50"
   integrity sha512-giAlZwstKbmvMk1OO7WXSj4OZ0keXAcl2TQq4LWHiiPH2ByaH7WeUzng+Qej8UPxxv+8lRTuouo0iaNDBuzIBA==
+
+"@types/http-proxy@^1.17.4":
+  version "1.17.5"
+  resolved "https://registry.npmjs.org/@types/http-proxy/-/http-proxy-1.17.5.tgz#c203c5e6e9dc6820d27a40eb1e511c70a220423d"
+  integrity sha512-GNkDE7bTv6Sf8JbV2GksknKOsk7OznNYHSdrtvPJXO0qJ9odZig6IZKUi5RFGi6d1bf6dgIAe4uXi3DBc7069Q==
+  dependencies:
+    "@types/node" "*"
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.3"
@@ -6715,7 +6743,18 @@ http-proxy-middleware@0.19.1:
     lodash "^4.17.11"
     micromatch "^3.1.10"
 
-http-proxy@^1.17.0:
+http-proxy-middleware@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/http-proxy-middleware/-/http-proxy-middleware-1.0.6.tgz#0618557722f450375d3796d701a8ac5407b3b94e"
+  integrity sha512-NyL6ZB6cVni7pl+/IT2W0ni5ME00xR0sN27AQZZrpKn1b+qRh+mLbBxIq9Cq1oGfmTc7BUq4HB77mxwCaxAYNg==
+  dependencies:
+    "@types/http-proxy" "^1.17.4"
+    http-proxy "^1.18.1"
+    is-glob "^4.0.1"
+    lodash "^4.17.20"
+    micromatch "^4.0.2"
+
+http-proxy@^1.17.0, http-proxy@^1.18.1:
   version "1.18.1"
   resolved "https://registry.npmjs.org/http-proxy/-/http-proxy-1.18.1.tgz#401541f0534884bbf95260334e72f88ee3976549"
   integrity sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==
@@ -9654,14 +9693,6 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-pdbe-molstar-3dbionotes@1.1.0-beta.1:
-  version "1.1.0-beta.1"
-  resolved "https://registry.npmjs.org/pdbe-molstar-3dbionotes/-/pdbe-molstar-3dbionotes-1.1.0-beta.1.tgz#02541bbba0cccc7a6c040dae5523b589023c3f4e"
-  integrity sha512-SIWWVpVyoFr/tyU5Dd9N/XNb2nEUKuQ5h3Vh4WdU0EkNn703/TJf/aa+Ju8bfm/nkyqv1DHX+JCP27rt9XwXSQ==
-  dependencies:
-    lit-element "^2.2.1"
-    molstar "^1.1.1"
-
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
@@ -10584,19 +10615,6 @@ protvista-navigation@2.0.0:
   integrity sha512-Hq0UwIyVO2rim+yffgEELwTE5boLtfdgn5H/X2EZMYo6949JZOG/x/llOkS4qmWdRS2F7HCbCXeflDfWgEFXfQ==
   dependencies:
     lodash-es "^4.17.11"
-
-protvista-pdb-3dbionotes@2.0.1-beta.2:
-  version "2.0.1-beta.2"
-  resolved "https://registry.npmjs.org/protvista-pdb-3dbionotes/-/protvista-pdb-3dbionotes-2.0.1-beta.2.tgz#f2e907f106e377f246260c12a6063516bba4008c"
-  integrity sha512-MVw23aOIncxK/kmDrYRrT5VdpWJ5KX/s1oJnDf1FVAQYGWCeVoqeAJD47vhK2kyalZoZ3nUuZ09970aWoEDBiA==
-  dependencies:
-    lodash-es "^4.17.11"
-    protvista-filter "2.0.0"
-    protvista-manager "2.0.0"
-    protvista-navigation "2.0.0"
-    protvista-sequence "2.0.0"
-    protvista-track "2.0.0"
-    protvista-zoomable "2.0.0"
 
 protvista-sequence@2.0.0:
   version "2.0.0"

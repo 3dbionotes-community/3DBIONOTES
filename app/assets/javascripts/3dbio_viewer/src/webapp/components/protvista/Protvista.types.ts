@@ -10,6 +10,7 @@ export interface ProtvistaTrackElement extends HTMLDivElement {
 }
 
 export interface ProtvistaBlock {
+    id: string;
     title: string;
     description: string;
     help: string;
