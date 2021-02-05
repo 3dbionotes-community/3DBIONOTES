@@ -12,26 +12,6 @@ import { debugVariable } from "../../../utils/debug";
 export type BlockDef = Omit<ProtvistaBlock, "pdbView">;
 
 const blockDefs = recordOf<BlockDef>()({
-    // TODO: Move to viewes/BasicInformationViewer.tsx
-    basicInformation: {
-        id: "basic-information",
-        title: "Basic information6",
-        description: i18n.t(`
-            "This section contains the basic information about the protein structure model that is being visualized, such as the name of the protein, the name of the gene, the organism in which it is expressed, its biological function, the experimental (or computational) method that has allowed knowing the structure and its resolution. Also, if there is a cryo-EM map associated with the model, it will be shown. The IDs of PDB, EMDB (in case of cryo-EM map availability) and Uniprot will be displayed.
-
-            Protein Name
-            Gen Name
-            Organism
-            Biological function
-            Obtaining method
-            Uniprot ID
-            PDB ID
-            EMDB ID
-            Resolution
-        `),
-        help: "TODO",
-        // profiles: [...]
-    },
     main: {
         id: "structural-info",
         title: "Structural information",
@@ -164,13 +144,10 @@ export function getBlocks(pdb: Pdb): ProtvistaBlock[] {
         validations: { ...pdb, tracks: tracks2, variants: undefined },
     });
 
-    const blocks = [
-        blockDefs.basicInformation,
+    return [
         { ...blockDefs.main, pdbView: getPdbView(pdbs.main) },
         { ...blockDefs.validations, pdbView: getPdbView(pdbs.validations) },
     ];
-
-    return _.compact(blocks);
 }
 
 export function loadPdbView(elementRef: React.RefObject<ProtvistaTrackElement>, pdbView: PdbView) {

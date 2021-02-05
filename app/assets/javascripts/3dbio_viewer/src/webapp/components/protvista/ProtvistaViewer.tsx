@@ -1,17 +1,16 @@
 import React from "react";
 import i18n from "../../utils/i18n";
 import { useAppContext } from "../AppContext";
-import { Block } from "./Block";
+import { ProtvistaBlock } from "./ProtvistaBlock";
 import { getBlocks } from "./Protvista.helpers";
-import { ProtvistaBlock } from "./Protvista.types";
-import styles from "./Protvista.module.css";
+import { ProtvistaBlock as ProtvistaBlockM } from "./Protvista.types";
 
 export type State =
     | { type: "loading" }
-    | { type: "loaded"; blocks: ProtvistaBlock[] }
+    | { type: "loaded"; blocks: ProtvistaBlockM[] }
     | { type: "error"; message: String };
 
-export const Protvista: React.FC = () => {
+export const ProtvistaViewer: React.FC = () => {
     const { compositionRoot } = useAppContext();
     const [state, setState] = React.useState<State>({ type: "loading" });
 
@@ -34,18 +33,22 @@ export const Protvista: React.FC = () => {
     return (
         <div>
             {state.type === "loading" ? (
-                <div className={styles.section}>{i18n.t("Loading Protvista...")}</div>
+                <div style={styles.section}>{i18n.t("Loading Protvista...")}</div>
             ) : state.type === "error" ? (
-                <div className={styles.section}>
+                <div style={styles.section}>
                     {i18n.t("Error")}: {state.message}
                 </div>
             ) : (
                 <div>
                     {state.blocks.map(block => (
-                        <Block key={block.id} block={block} />
+                        <ProtvistaBlock key={block.id} block={block} />
                     ))}
                 </div>
             )}
         </div>
     );
+};
+
+const styles = {
+    section: { padding: 20 },
 };

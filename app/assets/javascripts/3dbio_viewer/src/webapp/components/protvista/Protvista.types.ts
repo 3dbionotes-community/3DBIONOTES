@@ -1,6 +1,7 @@
 import { Color } from "../../../domain/entities/Color";
 import { Shape } from "../../../domain/entities/Shape";
 import { Variant, Variants } from "../../../domain/entities/Variant";
+import { ViewerBlockModel } from "../ViewerBlock";
 
 export interface ProtvistaTrackElement extends HTMLDivElement {
     viewerdata: PdbView;
@@ -9,13 +10,9 @@ export interface ProtvistaTrackElement extends HTMLDivElement {
     };
 }
 
-export interface ProtvistaBlock {
-    id: string;
-    title: string;
-    description: string;
-    help: string;
-    pdbView?: PdbView;
-    tracks?: string[];
+export interface ProtvistaBlock extends ViewerBlockModel {
+    pdbView: PdbView;
+    tracks: string[];
 }
 
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track

@@ -1,5 +1,5 @@
 import React from "react";
-import { Viewers } from "../pages/viewers/Viewers";
+import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
 
 export const RootViewer: React.FC = () => {

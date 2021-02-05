@@ -1,9 +1,10 @@
 import React from "react";
-import { PPIViewer } from "../../components/ppi/PPIViewer";
-import { Protvista } from "../../components/protvista/Protvista";
+import { ProtvistaViewer } from "../protvista/ProtvistaViewer";
+import { PPIViewer } from "../ppi/PPIViewer";
 import i18n from "../../utils/i18n";
-import styles from "../../components/protvista/Protvista.module.css";
-import { JumpToButton, JumpToButtonProps } from "../../components/protvista/JumpToButton";
+import styles from "./Viewers.module.css";
+import { JumpToButton, JumpToButtonProps } from "../protvista/JumpToButton";
+import { GeneralInformationViewer } from "../GeneralInformationViewer";
 
 interface ViewersProps {}
 
@@ -25,7 +26,8 @@ export const Viewers: React.FC<ViewersProps> = () => {
             </div>
 
             <div>
-                <Protvista />
+                <GeneralInformationViewer />
+                <ProtvistaViewer />
                 <PPIViewer />
             </div>
         </React.Fragment>
