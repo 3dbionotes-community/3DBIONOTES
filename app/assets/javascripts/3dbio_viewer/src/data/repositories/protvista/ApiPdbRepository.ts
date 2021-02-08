@@ -22,6 +22,7 @@ import { Cv19Annotations, getFunctionalMappingTrack } from "./tracks/functional-
 import { getIf } from "../../../utils/misc";
 import { getProteomicsTrack, Proteomics } from "./tracks/proteomics";
 import { getPdbRedoTrack, PdbRedo } from "./tracks/pdb-redo";
+import { getEpitomesTrack, Iedb } from "./tracks/epitomes";
 
 interface Data {
     features: Features;
@@ -35,6 +36,7 @@ interface Data {
     smartAnnotations?: SmartAnnotations;
     proteomics?: Proteomics;
     pdbRedo?: PdbRedo;
+    iedb?: Iedb;
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K]> };
@@ -69,6 +71,7 @@ export class ApiPdbRepository implements PdbRepository {
         const mobiDisorderTrack = getIf(data.mobiUniprot, getMobiDisorderTrack);
         const proteomicsTrack = getIf(data.proteomics, getProteomicsTrack);
         const pdbRedoTrack = getIf(data.pdbRedo, pdbRedo => getPdbRedoTrack(pdbRedo, chain));
+        const epitomesTrack = getIf(data.iedb, getEpitomesTrack);
 
         const tracks1: Track[] = _.compact([
             ...functionalMappingTracks,
@@ -77,6 +80,7 @@ export class ApiPdbRepository implements PdbRepository {
             domainFamiliesTrack,
             mobiDisorderTrack,
             structureCoverageTrack,
+            epitomesTrack,
             proteomicsTrack,
             pdbRedoTrack,
         ]);
@@ -115,6 +119,7 @@ function getData(options: Options): FutureData<Data> {
         smartAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/SMART/Uniprot/${protein}`),
         proteomics: getOrEmpty(`${ebiUrl}/api/proteomics/${protein}`),
         pdbRedo: getOrEmpty(`${bionotesUrl}/api/annotations/PDB_REDO/${pdb}`),
+        iedb: getOrEmpty(`${bionotesUrl}/api/annotations/IEDB/Uniprot/${protein}`),
     };
 
     return Future.joinObj(data$);

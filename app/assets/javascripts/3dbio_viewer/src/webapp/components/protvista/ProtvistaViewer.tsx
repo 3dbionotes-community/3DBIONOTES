@@ -24,7 +24,7 @@ export const ProtvistaViewer: React.FC = () => {
 
         setState({ type: "loading" });
 
-        return compositionRoot.getPdb(pdbOptions["6zow"]).run(
+        return compositionRoot.getPdb(pdbOptions["1iyj"]).run(
             pdb => setState({ type: "loaded", blocks: getBlocks(pdb) }),
             error => setState({ type: "error", message: error.message })
         );
