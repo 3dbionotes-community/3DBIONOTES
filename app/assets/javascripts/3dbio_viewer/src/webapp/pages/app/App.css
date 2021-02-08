@@ -211,3 +211,15 @@ protvista-tooltip .tooltip-close {
     color: #fff;
     background-color: #133546 !important;
 }
+
+protvista-tooltip .tooltip-body {
+    padding: 0.2em;
+}
+
+protvista-tooltip .tooltip-close:hover {
+    background-color: #133546;
+}
+
+protvista-tooltip {
+    max-width: 400px;
+}
