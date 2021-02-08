@@ -22,6 +22,7 @@ import { Cv19Annotations, getFunctionalMappingTrack } from "./tracks/functional-
 import { getIf } from "../../../utils/misc";
 import { getProteomicsTrack, Proteomics } from "./tracks/proteomics";
 import { getPdbRedoTrack, PdbRedo } from "./tracks/pdb-redo";
+import { getEpitomesTrack, Iedb } from "./tracks/epitomes";
 
 interface Data {
     features: Features;
@@ -35,6 +36,7 @@ interface Data {
     smartAnnotations?: SmartAnnotations;
     proteomics?: Proteomics;
     pdbRedo?: PdbRedo;
+    iedb?: Iedb;
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K]> };
@@ -54,7 +56,7 @@ export class ApiPdbRepository implements PdbRepository {
     }
 
     getPdb(data: Data, options: Options): Pdb {
-        debugVariable("pdb-data", data);
+        debugVariable({ apiData: data });
         const { chain } = options;
         const variants = getIf(data.ebiVariation, getVariants);
         const functionalMappingTracks =
@@ -69,6 +71,7 @@ export class ApiPdbRepository implements PdbRepository {
         const mobiDisorderTrack = getIf(data.mobiUniprot, getMobiDisorderTrack);
         const proteomicsTrack = getIf(data.proteomics, getProteomicsTrack);
         const pdbRedoTrack = getIf(data.pdbRedo, pdbRedo => getPdbRedoTrack(pdbRedo, chain));
+        const epitomesTrack = getIf(data.iedb, getEpitomesTrack);
 
         const tracks1: Track[] = _.compact([
             ...functionalMappingTracks,
@@ -77,6 +80,7 @@ export class ApiPdbRepository implements PdbRepository {
             domainFamiliesTrack,
             mobiDisorderTrack,
             structureCoverageTrack,
+            epitomesTrack,
             proteomicsTrack,
             pdbRedoTrack,
         ]);
@@ -85,7 +89,8 @@ export class ApiPdbRepository implements PdbRepository {
         const tracks3 = addPhosphiteSubtracks(tracks2, data.phosphositeUniprot);
 
         return {
-            sequence: data.features ? data.features.sequence : "TODO",
+            protein: options.protein,
+            sequence: data.features ? data.features.sequence : "",
             length: getTotalFeaturesLength(tracks3),
             tracks: tracks3,
             variants,
@@ -96,14 +101,15 @@ export class ApiPdbRepository implements PdbRepository {
 function getData(options: Options): FutureData<Data> {
     const { protein, pdb, chain } = options;
     const bionotesUrl = ""; // proxied to 3dbionotes on development (src/setupProxy.js)
+    const ebiUrl = "https://www.ebi.ac.uk/proteins/api";
 
     const data$: DataRequests = {
-        features: get(`https://www.ebi.ac.uk/proteins/api/features/${protein}`),
+        features: get(`${ebiUrl}/features/${protein}`),
         covidAnnotations: getOrEmpty(`${bionotesUrl}/cv19_annotations/${protein}_annotations.json`),
         pdbAnnotations: getOrEmpty(
             `${bionotesUrl}/ws/lrs/pdbAnnotFromMap/all/${pdb}/${chain}/?format=json`
         ),
-        ebiVariation: getOrEmpty(`https://www.ebi.ac.uk/proteins/api/variation/${protein}`),
+        ebiVariation: getOrEmpty(`${ebiUrl}/variation/${protein}`),
         coverage: getOrEmpty(`${bionotesUrl}/api/alignments/Coverage/${pdb}${chain}`),
         mobiUniprot: getOrEmpty(`${bionotesUrl}/api/annotations/mobi/Uniprot/${protein}`),
         phosphositeUniprot: getOrEmpty(
@@ -111,8 +117,9 @@ function getData(options: Options): FutureData<Data> {
         ),
         pfamAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/Pfam/Uniprot/${protein}`),
         smartAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/SMART/Uniprot/${protein}`),
-        proteomics: getOrEmpty(`https://www.ebi.ac.uk/proteins/api/proteomics/${protein}`),
+        proteomics: getOrEmpty(`${ebiUrl}/api/proteomics/${protein}`),
         pdbRedo: getOrEmpty(`${bionotesUrl}/api/annotations/PDB_REDO/${pdb}`),
+        iedb: getOrEmpty(`${bionotesUrl}/api/annotations/IEDB/Uniprot/${protein}`),
     };
 
     return Future.joinObj(data$);

@@ -32,7 +32,7 @@ export const MolecularStructure: React.FC = () => {
             };
 
             const pdbeMolstar = new PDBeMolstarPlugin();
-            debugVariable("pdbeMolstar", pdbeMolstar);
+            debugVariable({ pdbeMolstar });
             pdbeMolstar.render(el, initParams);
         }
     });
