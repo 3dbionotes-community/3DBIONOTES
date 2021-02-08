@@ -57,7 +57,7 @@ const PopperMenu: React.FC<PropperMenuProps> = props => {
         <Popper
             open={isOpen}
             anchorEl={buttonRef.current}
-            className="jump-to-menu"
+            className="menu"
             transition
             disablePortal
         >

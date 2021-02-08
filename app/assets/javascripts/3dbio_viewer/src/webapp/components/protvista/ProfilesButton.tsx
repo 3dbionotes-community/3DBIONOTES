@@ -2,13 +2,14 @@ import React from "react";
 import { ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from "@material-ui/core";
 import { useBooleanState } from "../../hooks/use-boolean";
 import i18n from "../../utils/i18n";
+import Done from "@material-ui/icons/Done";
 
 export interface ProfilesButtonProps {
     text?: string;
-    items: AnchorItem[];
+    items: Item[];
 }
 
-interface AnchorItem {
+interface Item {
     id: string;
     text: string;
 }
@@ -18,14 +19,6 @@ export const ProfilesButton: React.FC<ProfilesButtonProps> = props => {
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
 
-    const goToAnchor = React.useCallback(
-        (id: string) => {
-            goToElement(id);
-            closeMenu();
-        },
-        [closeMenu]
-    );
-
     return (
         <React.Fragment>
             <button ref={buttonRef} onClick={openMenu} className={isMenuOpen ? "open" : "close"}>
@@ -33,10 +26,8 @@ export const ProfilesButton: React.FC<ProfilesButtonProps> = props => {
             </button>
 
             <PopperMenu isOpen={isMenuOpen} close={closeMenu} buttonRef={buttonRef}>
-                {items.map(item => (
-                    <AnchorItem key={item.id} goToAnchor={goToAnchor} item={item}>
-                        {item.text}
-                    </AnchorItem>
+                {items.map((item, index) => (
+                    <ProfileMenuItem key={item.id} item={item} isSelected={index === 0} />
                 ))}
             </PopperMenu>
         </React.Fragment>
@@ -57,7 +48,7 @@ const PopperMenu: React.FC<PropperMenuProps> = props => {
         <Popper
             open={isOpen}
             anchorEl={buttonRef.current}
-            className="jump-to-menu"
+            className="menu"
             style={{ zIndex: 10000 }}
             transition
             disablePortal
@@ -81,19 +72,21 @@ const PopperMenu: React.FC<PropperMenuProps> = props => {
 };
 
 interface AnchorItemProps {
-    item: AnchorItem;
-    goToAnchor(id: string): void;
+    item: Item;
+    isSelected: boolean;
+    onClick?(id: string): void;
 }
 
-const AnchorItem: React.FC<AnchorItemProps> = props => {
-    const { item, goToAnchor } = props;
-    const goToAnchorItem = React.useCallback(() => {
-        return goToAnchor(item.id);
-    }, [item, goToAnchor]);
+const ProfileMenuItem: React.FC<AnchorItemProps> = props => {
+    const { item, onClick, isSelected } = props;
+    const notify = React.useCallback(() => {
+        if (onClick) onClick(item.id);
+    }, [item, onClick]);
 
     return (
-        <MenuItem onClick={goToAnchorItem} className="menu-item">
-            {item.text}
+        <MenuItem onClick={notify} className="menu-item">
+            {isSelected && <Done />}
+            <span style={isSelected ? undefined : styles.menuItemSelected}>{item.text}</span>
         </MenuItem>
     );
 };
@@ -105,11 +98,7 @@ const styles = {
             other: { transformOrigin: "center bottom" },
         },
     },
+    menuItemSelected: {
+        marginLeft: 24,
+    },
 };
-
-function goToElement(elDomId: string) {
-    // Use document.getElementById for simplicity. The alternative would be to setup refs in the
-    // parent component and pass them here and to all components that have an anchor.
-    const el = document.getElementById(elDomId);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-}
