@@ -4,6 +4,8 @@ import { useAppContext } from "../AppContext";
 import { ProtvistaBlock } from "./ProtvistaBlock";
 import { getBlocks } from "./Protvista.helpers";
 import { ProtvistaBlock as ProtvistaBlockM } from "./Protvista.types";
+import "./protvista-pdb.css";
+import "./ProtvistaViewer.css";
 
 export type State =
     | { type: "loading" }
