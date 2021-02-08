@@ -47,9 +47,10 @@ export function isBlastFragment(fragment: Fragment): boolean {
 export function getBlastUrl(protein: string, fragment: Fragment): string {
     // Example: https://www.uniprot.org/blast/?about=P0DTC2[816-1273]&key=Chain&id=PRO_0000449649
     const baseUrl = "https://www.uniprot.org/blast";
+    const trackInfo: { label: string } | undefined = Constants.getTrackInfo(fragment.type);
     const params = [
         `about=${protein}[${fragment.start}-${fragment.end}]`,
-        `key=${Constants.getTrackInfo(fragment.type).label}`,
+        trackInfo ? `key=${trackInfo.label}` : null,
         fragment.id ? `id=${fragment.id}` : null,
     ];
     const paramsString = params.filter(param => !!param).join("&");

@@ -182,7 +182,7 @@ const uniprotLink: Record<FeatureType, string> = {
 
 function getDefaultEvidences(protein: string, feature: Feature): Evidence[] {
     const type = uniprotLink[feature.type];
-    const url = `http://www.uniprot.org/uniprot/${protein}#${type}`;
+    const url = `http://www.uniprot.org/uniprot/${protein}#${type || ""}`;
     const evidence: Evidence = {
         code: "Imported information",
         source: { name: "Imported from UniProt", id: protein, url },
