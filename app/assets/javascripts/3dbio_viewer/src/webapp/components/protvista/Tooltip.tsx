@@ -1,19 +1,22 @@
 import React from "react";
 import { Evidence } from "../../../domain/entities/Evidence";
 import { Fragment, getFragmentToolsLink } from "../../../domain/entities/Fragment";
+import { Subtrack } from "../../../domain/entities/Track";
 import i18n from "../../utils/i18n";
 import { renderJoin } from "../../utils/react";
 import { Link } from "../Link";
 
 interface TooltipProps {
     protein: string;
+    subtrack: Subtrack;
     fragment: Fragment;
 }
 
-export const Tooltip: React.FC<TooltipProps> = React.memo(({ protein, fragment }) => {
+export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
+    const { protein, subtrack, fragment } = props;
     return (
         <EvidenceTable>
-            <EvidenceRow title={i18n.t("Feature ID")} value={fragment.id} />
+            <EvidenceRow title={i18n.t("Feature ID")} value={fragment.id} className="description" />
             <EvidenceRow title={i18n.t("Description")} value={fragment.description} />
 
             {(fragment.evidences || []).map((evidence, idx) => (
@@ -24,7 +27,10 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(({ protein, fragment }
                 </React.Fragment>
             ))}
 
-            <EvidenceRow title={i18n.t("Tools")} object={getFragmentToolsLink(protein, fragment)}>
+            <EvidenceRow
+                title={i18n.t("Tools")}
+                object={getFragmentToolsLink({ protein, subtrack, fragment })}
+            >
                 {link => <Link name={link.name} url={link.url} />}
             </EvidenceRow>
 
@@ -64,17 +70,21 @@ function EvidenceRow<Obj>(props: {
     title: string;
     value?: string;
     object?: Obj;
+    className?: string;
     children?: (obj: Obj) => React.ReactNode;
 }) {
-    const { title, value, object, children } = props;
+    const { title, value, object, children, className } = props;
 
-    const valueCell = value || (object && children && children(object));
-    if (!valueCell) return null;
+    const childrenContent = object && children && children(object);
+    if (!value && !childrenContent) return null;
 
     return (
-        <tr>
+        <tr className={className}>
             <td>{title}</td>
-            <td>{valueCell}</td>
+            <td>
+                {value && <span dangerouslySetInnerHTML={{ __html: value }}></span>}
+                {childrenContent}
+            </td>
         </tr>
     );
 }

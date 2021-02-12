@@ -57,7 +57,7 @@ export class ApiPdbRepository implements PdbRepository {
 
     getPdb(data: Data, options: Options): Pdb {
         debugVariable({ apiData: data });
-        const { chain } = options;
+        const { protein, chain } = options;
         const variants = getIf(data.ebiVariation, getVariants);
         const functionalMappingTracks =
             getIf(data.covidAnnotations, getFunctionalMappingTrack) || [];
@@ -67,7 +67,7 @@ export class ApiPdbRepository implements PdbRepository {
             data.pfamAnnotations,
             data.smartAnnotations
         );
-        const featureTracks = getTrackFromFeatures(data.features);
+        const featureTracks = getTrackFromFeatures(data.features, data.phosphositeUniprot);
         const mobiDisorderTrack = getIf(data.mobiUniprot, getMobiDisorderTrack);
         const proteomicsTrack = getIf(data.proteomics, getProteomicsTrack);
         const pdbRedoTrack = getIf(data.pdbRedo, pdbRedo => getPdbRedoTrack(pdbRedo, chain));
@@ -86,14 +86,15 @@ export class ApiPdbRepository implements PdbRepository {
         ]);
 
         const tracks2 = addMobiSubtracks(tracks1, data.mobiUniprot);
-        const tracks3 = addPhosphiteSubtracks(tracks2, data.phosphositeUniprot);
+        const tracks3 = addPhosphiteSubtracks(tracks2, protein, data.phosphositeUniprot);
+        console.debug("TODO: variants-removed", variants);
 
         return {
             protein: options.protein,
             sequence: data.features ? data.features.sequence : "",
             length: getTotalFeaturesLength(tracks3),
             tracks: tracks3,
-            variants,
+            variants: undefined,
         };
     }
 }

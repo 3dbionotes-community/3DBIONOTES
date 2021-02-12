@@ -5,6 +5,11 @@ import { Subtrack, Track } from "../../../../domain/entities/Track";
 import { config, getColorFromString, getShapeFromString, getTrack } from "../config";
 import { getId, getName } from "../utils";
 import { getEvidenceText } from "./legacy/TooltipFactory";
+import {
+    getPhosphiteEvidencesFromFeature,
+    PhosphositeUniprot,
+    PhosphositeUniprotItem,
+} from "./phosphite";
 
 export interface Features {
     accession: string;
@@ -30,7 +35,7 @@ type FeatureType = string;
 
 interface Evidence {
     code: string;
-    source: {
+    source?: {
         name: string;
         id: string;
         url: string;
@@ -46,14 +51,24 @@ export interface GroupedFeature {
     }[];
 }
 
-export function getTrackFromFeatures(features: Features): Track[] {
+type PhosphositeByInterval = _.Dictionary<PhosphositeUniprotItem[]>;
+
+export function getTrackFromFeatures(
+    features: Features,
+    phosphosite: PhosphositeUniprot | undefined
+): Track[] {
     const groupedFeatures = features ? getGroupedFeatures(features) : [];
+    const phosphositeByInterval = _.groupBy(phosphosite, item => [item.start, item.end].join("-"));
     return groupedFeatures.map(groupedFeature =>
-        getTrackFromGroupedFeature(features.accession, groupedFeature)
+        getTrackFromGroupedFeature(features.accession, groupedFeature, phosphositeByInterval)
     );
 }
 
-function getTrackFromGroupedFeature(protein: string, feature: GroupedFeature): Track {
+function getTrackFromGroupedFeature(
+    protein: string,
+    feature: GroupedFeature,
+    phosphositeByInterval: PhosphositeByInterval
+): Track {
     return {
         id: getId(feature.name),
         label: feature.name,
@@ -64,7 +79,7 @@ function getTrackFromGroupedFeature(protein: string, feature: GroupedFeature): T
 
                 return {
                     accession: item.name + "-" + idx,
-                    type: getName(item.name),
+                    type: item.name,
                     label: track?.label || getName(item.name),
                     labelTooltip: track?.tooltip || getName(item.name),
                     shape: getShapeFromString(itemKey, "circle"),
@@ -77,7 +92,11 @@ function getTrackFromGroupedFeature(protein: string, feature: GroupedFeature): T
                                     start: feature.begin,
                                     end: feature.end,
                                     description: feature.description,
-                                    evidences: getEvidences(protein, feature),
+                                    evidences: getEvidences(
+                                        protein,
+                                        feature,
+                                        phosphositeByInterval
+                                    ),
                                     color: getColorFromString(itemKey),
                                 })
                             ),
@@ -89,12 +108,17 @@ function getTrackFromGroupedFeature(protein: string, feature: GroupedFeature): T
     };
 }
 
-function getEvidences(protein: string, feature: Feature): DomainEvidence[] {
+function getEvidences(
+    protein: string,
+    feature: Feature,
+    phosphositeByInterval: PhosphositeByInterval
+): DomainEvidence[] {
     return _(feature.evidences || getDefaultEvidences(protein, feature))
         .groupBy(apiEvidence => apiEvidence.code)
         .toPairs()
         .map(([code, apiEvidencesForCode]) => getEvidence(protein, code, apiEvidencesForCode))
         .compact()
+        .concat(getPhosphiteEvidencesFromFeature({ protein, feature, phosphositeByInterval }))
         .value();
 }
 
@@ -103,20 +127,18 @@ function getEvidence(
     code: string,
     apiEvidences: Evidence[]
 ): DomainEvidence | undefined {
-    const apiSources = apiEvidences.map(apiEvidence => apiEvidence.source);
+    const apiSources = _.compact(apiEvidences.map(apiEvidence => apiEvidence.source));
     const evidenceText = getEvidenceText({ accession: protein }, code, apiSources);
     const apiSource = apiSources[0];
     if (!apiSource) return;
 
     const source: EvidenceSource = {
         name: apiSource.name,
-        links: apiSources.map(apiSource => ({ name: apiSource.id, url: apiSource.url })),
+        links: apiSources.map(src => ({ name: src.id, url: src.url })),
     };
 
     const alternativeSourceLinks = _(apiSources)
-        .map(apiSource =>
-            apiSource.alternativeUrl ? { name: apiSource.id, url: apiSource.alternativeUrl } : null
-        )
+        .map(src => (src.alternativeUrl ? { name: src.id, url: src.alternativeUrl } : null))
         .compact()
         .value();
 

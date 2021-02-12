@@ -209,7 +209,11 @@ function getTrackData(protein: string, track: Track): TrackView["data"] {
                           fragments: location.fragments.map(fragment => ({
                               ...fragment,
                               tooltipContent: renderToString(
-                                  <Tooltip protein={protein} fragment={fragment} />
+                                  <Tooltip
+                                      protein={protein}
+                                      subtrack={subtrack}
+                                      fragment={fragment}
+                                  />
                               ),
                           })),
                       })),

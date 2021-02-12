@@ -111,6 +111,10 @@ protvista-tooltip .tooltip-close {
     height: 2em;
 }
 
+protvista-tooltip .description {
+    color: rgb(192, 192, 192);
+}
+
 .protvistaToolbar {
     text-align: center;
 }
