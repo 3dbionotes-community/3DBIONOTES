@@ -1,0 +1,11 @@
+.results .models {
+    display: flex;
+}
+
+.results img {
+    width: 11vw;
+}
+
+.model-search .params {
+    display: flex;
+}

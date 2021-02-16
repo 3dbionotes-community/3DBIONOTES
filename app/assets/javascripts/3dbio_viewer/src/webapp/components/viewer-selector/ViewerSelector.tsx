@@ -4,7 +4,7 @@ import React from "react";
 import { useBooleanState } from "../../hooks/use-boolean";
 import i18n from "../../utils/i18n";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
-import { ModelSearch } from "../ModelSearch";
+import { ModelSearch } from "../model-search/ModelSearch";
 import "./ViewerSelector.css";
 
 export const ViewerSelector: React.FC = () => {

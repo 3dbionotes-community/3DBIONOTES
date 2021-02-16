@@ -1,12 +1,15 @@
 import React from "react";
+import _ from "lodash";
 import classnames from "classnames";
 import { Dialog, DialogTitle, DialogContent, IconButton } from "@material-ui/core";
-import _ from "lodash";
-import i18n from "../utils/i18n";
-import { Dropdown, DropdownProps } from "./dropdown/Dropdown";
+
+import i18n from "../../utils/i18n";
+import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import { Close, Search } from "@material-ui/icons";
-import { useBooleanState } from "../hooks/use-boolean";
-import { useDebounce } from "../hooks/use-debounce";
+import { useBooleanState } from "../../hooks/use-boolean";
+import { useDebounce } from "../../hooks/use-debounce";
+
+import "./ModelSearch.css";
 
 export interface ModelSearchProps {
     title: string;
