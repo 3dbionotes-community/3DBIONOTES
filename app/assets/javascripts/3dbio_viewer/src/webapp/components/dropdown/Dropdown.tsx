@@ -4,12 +4,14 @@ import { MenuItem } from "@material-ui/core";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { PopperMenu } from "./PopperMenu";
 import Done from "@material-ui/icons/Done";
+import { ExpandMore } from "@material-ui/icons";
 
 export interface DropdownProps {
     text: string;
     items: DropdownItemModel[];
     onClick(id: string): void;
     showSelection?: boolean;
+    showExpandIcon?: boolean;
 }
 
 export interface DropdownItemModel {
@@ -19,7 +21,7 @@ export interface DropdownItemModel {
 }
 
 export const Dropdown: React.FC<DropdownProps> = props => {
-    const { items, text, onClick } = props;
+    const { items, text, onClick, showExpandIcon = false } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
     const showSelection = props.showSelection ?? _(items).some(item => item.selected !== undefined);
@@ -36,6 +38,7 @@ export const Dropdown: React.FC<DropdownProps> = props => {
         <React.Fragment>
             <button ref={buttonRef} onClick={openMenu} className={isMenuOpen ? "open" : "close"}>
                 {text}
+                {showExpandIcon && <ExpandMore />}
             </button>
 
             <PopperMenu isOpen={isMenuOpen} close={closeMenu} buttonRef={buttonRef}>

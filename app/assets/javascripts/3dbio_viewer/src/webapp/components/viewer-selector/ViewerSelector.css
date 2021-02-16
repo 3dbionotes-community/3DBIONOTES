@@ -1,0 +1,35 @@
+#viewer-selector {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    z-index: 1000;
+    display: flex;
+}
+
+.status {
+    display: flex;
+}
+
+.selection {
+    display: flex;
+}
+
+.selection .unselected {
+    background-color: #eee;
+}
+
+.selection .selected {
+    background-color: #ccc;
+}
+
+.results .models {
+    display: flex;
+}
+
+.results img {
+    width: 11vw;
+}
+
+.model-search .params {
+    display: flex;
+}
