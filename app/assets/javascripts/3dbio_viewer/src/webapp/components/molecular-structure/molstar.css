@@ -1,0 +1,8 @@
+.msp-plugin .msp-layout-standard-outside .msp-layout-bottom {
+    top: auto;
+    bottom: 0px;
+}
+
+.msp-plugin .msp-layout-expanded {
+    position: unset;
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
 import { debugVariable } from "../../../utils/debug";
 
+import "./molstar.css";
 import "./molstar.scss";
 
 declare const PDBeMolstarPlugin: any;
@@ -32,7 +33,7 @@ export const MolecularStructure: React.FC = () => {
             };
 
             const pdbeMolstar = new PDBeMolstarPlugin();
-            debugVariable("pdbeMolstar", pdbeMolstar);
+            debugVariable({ pdbeMolstar });
             pdbeMolstar.render(el, initParams);
         }
     });

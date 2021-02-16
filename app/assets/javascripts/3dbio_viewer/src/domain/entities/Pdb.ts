@@ -3,6 +3,7 @@ import { Track } from "./Track";
 import { Variants } from "./Variant";
 
 export interface Pdb {
+    protein: string;
     sequence: string;
     length: number;
     // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track#data-array

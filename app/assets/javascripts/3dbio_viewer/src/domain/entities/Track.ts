@@ -26,13 +26,21 @@ export function addToTrack(options: {
     subtracks: Subtrack[];
 }): Track[] {
     const { tracks, trackInfo, subtracks } = options;
-
     const trackExists = _.some(tracks, track => track.id === trackInfo.id);
 
     if (trackExists) {
         return tracks.map(track => {
             if (track.id === trackInfo.id) {
-                return { ...track, subtracks: track.subtracks.concat(subtracks) };
+                const newSubtracks = _(track.subtracks)
+                    .concat(subtracks)
+                    .groupBy(subtrack => subtrack.type)
+                    .map(subtracks => {
+                        const subtrack = subtracks[0];
+                        if (!subtrack) throw "internal";
+                        return { ...subtrack, locations: _.flatMap(subtracks, st => st.locations) };
+                    })
+                    .value();
+                return { ...track, subtracks: newSubtracks };
             } else {
                 return track;
             }
