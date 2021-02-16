@@ -40,10 +40,12 @@ module Covid19Helper
 
         item[:links].map do |link|
           content_tag(:p) do
-            safe_join([
-              content_tag(:span, link[:title] + ": ") + link_to(link[:name], link[:query_url]),
-              link[:external_url] ? link_to(content_tag(:span, "External ") + link_icon, link[:external_url], target: "_blank") : nil,
-            ].compact, " | ")
+            content_tag(:span, link[:title] + ": ") + link_to(link[:name], link[:query_url]) +
+
+            (content_tag(:span, class: "h", "data-check": link[:external_url]) do
+              content_tag(:span, " | ") +
+              (link[:external_url] ? link_to(content_tag(:span, "External ") + link_icon, link[:external_url], target: "_blank") : "")
+            end)
           end
         end.join,
 
@@ -51,7 +53,7 @@ module Covid19Helper
           content_tag(:p, "Related: #{item[:related].join(', ')}") : "",
         (item[:external] ?
           link_to(content_tag(:span, item[:external][:text]) + " " + link_icon, item[:external][:url], target: "_blank")
-          : "")
+          : ""),
       ])
     end
   end

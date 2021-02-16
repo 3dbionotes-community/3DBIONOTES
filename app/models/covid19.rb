@@ -70,13 +70,15 @@ class Covid19
 
     with_indexes(entries, title).map do |entry, title_indexed|
       name, = entry.values_at("name")
+      external_url = "https://pdb-redo.eu/db/#{name}"
       {
         title: title_indexed,
         name: name,
         style: style,
         # query_url: "/?queryId=PDB-REDO-#{pdb_key}&viewer_type=ngl&button=#query",
         query_url: "/pdb_redo/#{pdb_key}",
-        external_url: "https://pdb-redo.eu/db/#{name}",
+        external_url: external_url,
+        check: external_url,
       }
     end
   end
