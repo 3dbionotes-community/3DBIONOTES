@@ -732,6 +732,11 @@
                                     {
                                         "name": "6m0j_refine_14"
                                     }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6m0j"
+                                    }
                                 ]
                             }
                         },
@@ -768,6 +773,11 @@
                                 "isolde": [
                                     {
                                         "name": "6vw1_refine_7"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6vw1"
                                     }
                                 ]
                             }
@@ -1143,6 +1153,18 @@
                             ]
                         },
                         "6lxt": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6lxt_refine_6"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6lxt"
+                                    }
+                                ]
+                            },
                             "pockets": [
                                 {
                                     "id": 1,
@@ -1163,6 +1185,18 @@
                             ]
                         },
                         "6lvn": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6lvn_refine_3"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6lvn"
+                                    }
+                                ]
+                            },
                             "pockets": []
                         },
                         "6m17": {
@@ -1206,6 +1240,18 @@
                             ]
                         },
                         "6m0j": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6m0j_refine_14"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6m0j"
+                                    }
+                                ]
+                            },
                             "pockets": [
                                 {
                                     "id": 1,
@@ -1238,6 +1284,18 @@
                             ]
                         },
                         "6w41": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6w41_refine_5"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6w41"
+                                    }
+                                ]
+                            },
                             "pockets": [
                                 {
                                     "id": 1,
@@ -1747,6 +1805,18 @@
                             ]
                         },
                         "6vxs": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6vxs_refine_12"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6vxs"
+                                    }
+                                ]
+                            },
                             "pockets": [
                                 {
                                     "id": 1,
@@ -2442,7 +2512,7 @@
                             "validation": {
                                 "isolde": [
                                     {
-                                        "name": "6y7m_refine_2.pdb"
+                                        "name": "6y7m_refine_2"
                                     }
                                 ]
                             }
@@ -3387,6 +3457,20 @@
                 },
                 "Ligands": {
                     "Misc-PDB": {
+                        "5c8t": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "5c8t_refine_2"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "5c8t"
+                                    }
+                                ]
+                            }
+                        },
                         "7l6t": {},
                         "7l6r": {},
                         "7koa": {},
@@ -3395,8 +3479,7 @@
                         "7jpe": {},
                         "7jib": {},
                         "7jhe": {},
-                        "5c8s": {},
-                        "5c8t": {}
+                        "5c8s": {}
                     },
                     "BCU-CDR": {
                         "6w75": {
@@ -3488,14 +3571,27 @@
             },
             "Related": {
                 "SARS-CoV": {
-                    "PDB": [
-                        "2fyg",
-                        "2g9t",
-                        "2ga6",
-                        "5c8s",
-                        "5c8t",
-                        "5c8u"
-                    ]
+                    "PDB": {
+                        "2fyg": {},
+                        "2g9t": {},
+                        "2ga6": {},
+                        "5c8s": {},
+                        "5c8t": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "5c8t_refine_2"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "5c8t"
+                                    }
+                                ]
+                            }
+                        },
+                        "5c8u": {}
+                    }
                 },
                 "OtherRelated": {
                     "PDB": {
@@ -3592,6 +3688,20 @@
                 },
                 "Ligands": {
                     "Misc-PDB": {
+                        "5c8t": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "5c8t_refine_2"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "5c8t"
+                                    }
+                                ]
+                            }
+                        },
                         "7l6t": {},
                         "7l6r": {},
                         "7koa": {},
@@ -3692,6 +3802,20 @@
             "Related": {
                 "OtherRelated": {
                     "PDB": {
+                        "5c8t": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "5c8t_refine_2"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "5c8t"
+                                    }
+                                ]
+                            }
+                        },
                         "5ynm": {},
                         "5yni": {},
                         "5nfy": {},
@@ -3700,15 +3824,6 @@
                         "5yn6": {},
                         "5ynq": {},
                         "2ga6": {},
-                        "5c8t": {
-                            "validation": {
-                                "isolde": [
-                                    {
-                                        "name": "5c8t_refine_2"
-                                    }
-                                ]
-                            }
-                        },
                         "5yn5": {},
                         "5ynb": {},
                         "5ynp": {},
@@ -4163,14 +4278,11 @@
                 "P-P-Interactions": {
                     "PDB": [
                         "5c8s",
-                        "5c8u",
-                        "5c8t"
+                        "5c8u"
                     ]
                 },
                 "Ligands": {
-                    "Misc-PDB": [
-                        "5c8t"
-                    ]
+                    "Misc-PDB": []
                 }
             },
             "Related": {
@@ -4179,8 +4291,6 @@
                         "5nfy",
                         "5c8s",
                         "5c8u",
-                        "5c8t",
-                        "5c8t",
                         "5c8u"
                     ]
                 }
@@ -4397,6 +4507,11 @@
                                 "isolde": [
                                     {
                                         "name": "6jyt_refine_12"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6jyt"
                                     }
                                 ]
                             }
