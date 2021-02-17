@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post '/' => 'main#home'
   get '/pdb_redo/:pdbId' => 'main#pdb_redo'
   get '/isolde/:pdbId/:filename' => 'main#isolde'
+  get '/refmac/:pdbId/:filename' => 'main#refmac'
   get '/models/:protein/:source/:model' => 'main#models'
   post '/upload' => 'main#upload'
   get '/network' => 'main#network'

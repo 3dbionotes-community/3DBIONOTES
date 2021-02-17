@@ -71,6 +71,10 @@
             %a.nostyle.menu{href: '#', onclick: 'my_function(); return false;',:style=>"font-family: Verdana, Arial, Helvetica, sans-serif;color:#074987;font-size:18px;"}
               =@identifierName.upcase
 
+          -elsif @identifierType=="REFMAC"
+            %a.nostyle.menu{href: '#', onclick: 'my_function(); return false;',:style=>"font-family: Verdana, Arial, Helvetica, sans-serif;color:#074987;font-size:18px;"}
+              =@identifierName.upcase
+
           -elsif @identifierType=="Uniprot"
             %a.nostyle.menu{:href=>"http://www.uniprot.org/uniprot/#{@identifierName}",:target=>"_blank",:style=>"font-family: Verdana, Arial, Helvetica, sans-serif;color:#074987;font-size:18px;"}
               =@identifierName.upcase
