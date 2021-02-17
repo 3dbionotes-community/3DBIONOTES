@@ -13,6 +13,34 @@
                 "SPIKE_WCPV"
             ],
             "PDB": {
+                "6lxt": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6lxt_refine_6"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6lxt"
+                            }
+                        ]
+                    }
+                },
+                "6lvn": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6lvn_refine_3"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6lvn"
+                            }
+                        ]
+                    }
+                },
                 "7kj5": {
                     "emdbs": [
                         "EMD-22894"
@@ -333,40 +361,6 @@
                         "pdb-redo": [
                             {
                                 "name": "6m1v"
-                            }
-                        ]
-                    }
-                },
-                "6lxt": {
-                    "validation": {
-                        "isolde": [
-                            {
-                                "name": "6lxt_refine_6"
-                            },
-                            {
-                                "name": "QtRM_final"
-                            }
-                        ],
-                        "pdb-redo": [
-                            {
-                                "name": "6lxt"
-                            }
-                        ]
-                    }
-                },
-                "6lvn": {
-                    "validation": {
-                        "isolde": [
-                            {
-                                "name": "6lvn_refine_3"
-                            },
-                            {
-                                "name": "Wcwr_final"
-                            }
-                        ],
-                        "pdb-redo": [
-                            {
-                                "name": "6lvn"
                             }
                         ]
                     }
@@ -732,6 +726,52 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": {
+                        "6m0j": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6m0j_refine_14"
+                                    }
+                                ]
+                            }
+                        },
+                        "6lzg": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6lzg_final"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6lzg"
+                                    }
+                                ]
+                            }
+                        },
+                        "6w41": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6w41_refine_5"
+                                    }
+                                ],
+                                "pdb-redo": [
+                                    {
+                                        "name": "6w41"
+                                    }
+                                ]
+                            }
+                        },
+                        "6vw1": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6vw1_refine_7"
+                                    }
+                                ]
+                            }
+                        },
                         "7ld1": {},
                         "7lcn": {},
                         "7l5b": {},
@@ -854,45 +894,7 @@
                         "6xkp": {},
                         "6zh9": {},
                         "6xey": {},
-                        "6m0j": {
-                            "validation": {
-                                "isolde": [
-                                    {
-                                        "name": "zc1b_final"
-                                    }
-                                ]
-                            }
-                        },
                         "6m17": {},
-                        "6lzg": {
-                            "validation": {
-                                "isolde": [
-                                    {
-                                        "name": "6lzg_final"
-                                    }
-                                ],
-                                "pdb-redo": [
-                                    {
-                                        "name": "6lzg"
-                                    }
-                                ]
-                            }
-                        },
-                        "6w41": {
-                            "validation": {
-                                "isolde": [
-                                    {
-                                        "name": "9gv9_final"
-                                    }
-                                ],
-                                "pdb-redo": [
-                                    {
-                                        "name": "6w41"
-                                    }
-                                ]
-                            }
-                        },
-                        "6vw1": {},
                         "6wps": {},
                         "6wpt": {},
                         "6xc2": {},
@@ -1399,11 +1401,34 @@
                 "Papain-like proteinase"
             ],
             "PDB": {
-                "7lgo": {},
-                "7kr1": {},
-                "7kr0": {},
-                "7kqw": {},
-                "7kqo": {},
+                "6w9c": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6w9c_refine_15"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6w9c"
+                            }
+                        ]
+                    }
+                },
+                "6vxs": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6vxs_refine_12"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6vxs"
+                            }
+                        ]
+                    }
+                },
                 "7kg3": {
                     "validation": {
                         "pdb-redo": [
@@ -1539,20 +1564,6 @@
                         ]
                     }
                 },
-                "6w9c": {
-                    "validation": {
-                        "isolde": [
-                            {
-                                "name": "6w9c_refine_15"
-                            }
-                        ],
-                        "pdb-redo": [
-                            {
-                                "name": "6w9c"
-                            }
-                        ]
-                    }
-                },
                 "6w6y": {
                     "validation": {
                         "pdb-redo": [
@@ -1571,23 +1582,11 @@
                         ]
                     }
                 },
-                "6vxs": {
-                    "validation": {
-                        "isolde": [
-                            {
-                                "name": "6vxs_refine_12"
-                            },
-                            {
-                                "name": "6dui_final"
-                            }
-                        ],
-                        "pdb-redo": [
-                            {
-                                "name": "6vxs"
-                            }
-                        ]
-                    }
-                }
+                "7lgo": {},
+                "7kr1": {},
+                "7kr0": {},
+                "7kqw": {},
+                "7kqo": {}
             },
             "CompModels": {
                 "swiss-model": [
@@ -2186,9 +2185,6 @@
                         "isolde": [
                             {
                                 "name": "6m03_refine_1"
-                            },
-                            {
-                                "name": "Hts0_final"
                             }
                         ],
                         "pdb-redo": [
@@ -2438,107 +2434,115 @@
             },
             "Related": {
                 "SARS-CoV": {
-                    "PDB": [
-                        "6lo0",
-                        "6lnq",
-                        "6lny",
-                        "6y7m",
-                        "3eaj",
-                        "3sne",
-                        "2amq",
-                        "2qc2",
-                        "2pwx",
-                        "1uk2",
-                        "1z1j",
-                        "3aw1",
-                        "3f9e",
-                        "2z9g",
-                        "3ea9",
-                        "3d62",
-                        "2gtb",
-                        "3ebn",
-                        "3tiu",
-                        "2z3e",
-                        "3m3s",
-                        "2z94",
-                        "5n5o",
-                        "4hi3",
-                        "2v6n",
-                        "2vj1",
-                        "3ea7",
-                        "1wof",
-                        "2bx3",
-                        "4mds",
-                        "2d2d",
-                        "2z3c",
-                        "2c3s",
-                        "4twy",
-                        "2bx4",
-                        "5c5o",
-                        "2z9l",
-                        "1uk3",
-                        "5n19",
-                        "3szn",
-                        "2qiq",
-                        "3ea8",
-                        "5b6o",
-                        "3e91",
-                        "2duc",
-                        "3aw0",
-                        "2zu5",
-                        "3v3m",
-                        "3m3t",
-                        "3snb",
-                        "1uj1",
-                        "3tns",
-                        "2gx4",
-                        "3iwm",
-                        "1z1i",
-                        "3vb4",
-                        "3vb5",
-                        "3tit",
-                        "3f9f",
-                        "3avz",
-                        "1uk4",
-                        "2gz8",
-                        "3vb6",
-                        "3vb7",
-                        "3fzd",
-                        "2k7x",
-                        "2zu4",
-                        "3snc",
-                        "3atw",
-                        "3m3v",
-                        "2liz",
-                        "3snd",
-                        "2a5a",
-                        "2h2z",
-                        "2gt8",
-                        "2z9k",
-                        "2z9j",
-                        "3sna",
-                        "2alv",
-                        "3tnt",
-                        "2hob",
-                        "5c5n",
-                        "1q2w",
-                        "2gt7",
-                        "2op9",
-                        "3f9h",
-                        "2gz7",
-                        "2z3d",
-                        "4wy3",
-                        "2a5i",
-                        "2amd",
-                        "3sn8",
-                        "2gz9",
-                        "2a5k",
-                        "3f9g",
-                        "4tww",
-                        "3vb3",
-                        "2q6g",
-                        "2qcy"
-                    ]
+                    "PDB": {
+                        "6lo0": {},
+                        "6lnq": {},
+                        "6lny": {},
+                        "6y7m": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6y7m_refine_2.pdb"
+                                    }
+                                ]
+                            }
+                        },
+                        "3eaj": {},
+                        "3sne": {},
+                        "2amq": {},
+                        "2qc2": {},
+                        "2pwx": {},
+                        "1uk2": {},
+                        "1z1j": {},
+                        "3aw1": {},
+                        "3f9e": {},
+                        "2z9g": {},
+                        "3ea9": {},
+                        "3d62": {},
+                        "2gtb": {},
+                        "3ebn": {},
+                        "3tiu": {},
+                        "2z3e": {},
+                        "3m3s": {},
+                        "2z94": {},
+                        "5n5o": {},
+                        "4hi3": {},
+                        "2v6n": {},
+                        "2vj1": {},
+                        "3ea7": {},
+                        "1wof": {},
+                        "2bx3": {},
+                        "4mds": {},
+                        "2d2d": {},
+                        "2z3c": {},
+                        "2c3s": {},
+                        "4twy": {},
+                        "2bx4": {},
+                        "5c5o": {},
+                        "2z9l": {},
+                        "1uk3": {},
+                        "5n19": {},
+                        "3szn": {},
+                        "2qiq": {},
+                        "3ea8": {},
+                        "5b6o": {},
+                        "3e91": {},
+                        "2duc": {},
+                        "3aw0": {},
+                        "2zu5": {},
+                        "3v3m": {},
+                        "3m3t": {},
+                        "3snb": {},
+                        "1uj1": {},
+                        "3tns": {},
+                        "2gx4": {},
+                        "3iwm": {},
+                        "1z1i": {},
+                        "3vb4": {},
+                        "3vb5": {},
+                        "3tit": {},
+                        "3f9f": {},
+                        "3avz": {},
+                        "1uk4": {},
+                        "2gz8": {},
+                        "3vb6": {},
+                        "3vb7": {},
+                        "3fzd": {},
+                        "2k7x": {},
+                        "2zu4": {},
+                        "3snc": {},
+                        "3atw": {},
+                        "3m3v": {},
+                        "2liz": {},
+                        "3snd": {},
+                        "2a5a": {},
+                        "2h2z": {},
+                        "2gt8": {},
+                        "2z9k": {},
+                        "2z9j": {},
+                        "3sna": {},
+                        "2alv": {},
+                        "3tnt": {},
+                        "2hob": {},
+                        "5c5n": {},
+                        "1q2w": {},
+                        "2gt7": {},
+                        "2op9": {},
+                        "3f9h": {},
+                        "2gz7": {},
+                        "2z3d": {},
+                        "4wy3": {},
+                        "2a5i": {},
+                        "2amd": {},
+                        "3sn8": {},
+                        "2gz9": {},
+                        "2a5k": {},
+                        "3f9g": {},
+                        "4tww": {},
+                        "3vb3": {},
+                        "2q6g": {},
+                        "2qcy": {}
+                    }
                 },
                 "OtherRelated": {
                     "PDB": [
@@ -2668,9 +2672,6 @@
                         "isolde": [
                             {
                                 "name": "6vyo_refine_2"
-                            },
-                            {
-                                "name": "5KTy_final"
                             }
                         ],
                         "pdb-redo": {
@@ -2683,9 +2684,6 @@
                         "isolde": [
                             {
                                 "name": "6m3m_refine_6"
-                            },
-                            {
-                                "name": "3DZj_final"
                             }
                         ],
                         "pdb-redo": {
@@ -3500,25 +3498,41 @@
                     ]
                 },
                 "OtherRelated": {
-                    "PDB": [
-                        "3r24",
-                        "5ynn",
-                        "2xyv",
-                        "5nfy",
-                        "2xyr",
-                        "5ynj",
-                        "5yn6",
-                        "5yn8",
-                        "5yno",
-                        "5ynm",
-                        "5ynq",
-                        "5ynf",
-                        "2xyq",
-                        "5yn5",
-                        "5ynp",
-                        "5ynb",
-                        "5yni"
-                    ]
+                    "PDB": {
+                        "3r24": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "3r24_refine_2"
+                                    }
+                                ]
+                            }
+                        },
+                        "5ynn": {},
+                        "2xyv": {},
+                        "5nfy": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "5nfy_refine_4"
+                                    }
+                                ]
+                            }
+                        },
+                        "2xyr": {},
+                        "5ynj": {},
+                        "5yn6": {},
+                        "5yn8": {},
+                        "5yno": {},
+                        "5ynm": {},
+                        "5ynq": {},
+                        "5ynf": {},
+                        "2xyq": {},
+                        "5yn5": {},
+                        "5ynp": {},
+                        "5ynb": {},
+                        "5yni": {}
+                    }
                 }
             }
         },
@@ -3677,27 +3691,35 @@
             },
             "Related": {
                 "OtherRelated": {
-                    "PDB": [
-                        "5ynm",
-                        "5yni",
-                        "5nfy",
-                        "5c8s",
-                        "5ynj",
-                        "5yn6",
-                        "5ynq",
-                        "2ga6",
-                        "5c8t",
-                        "5yn5",
-                        "5ynb",
-                        "5ynp",
-                        "2fyg",
-                        "5c8u",
-                        "5yn8",
-                        "5ynf",
-                        "5ynn",
-                        "2g9t",
-                        "5yno"
-                    ]
+                    "PDB": {
+                        "5ynm": {},
+                        "5yni": {},
+                        "5nfy": {},
+                        "5c8s": {},
+                        "5ynj": {},
+                        "5yn6": {},
+                        "5ynq": {},
+                        "2ga6": {},
+                        "5c8t": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "5c8t_refine_2"
+                                    }
+                                ]
+                            }
+                        },
+                        "5yn5": {},
+                        "5ynb": {},
+                        "5ynp": {},
+                        "2fyg": {},
+                        "5c8u": {},
+                        "5yn8": {},
+                        "5ynf": {},
+                        "5ynn": {},
+                        "2g9t": {},
+                        "5yno": {}
+                    }
                 }
             }
         },
@@ -3729,9 +3751,6 @@
                         "isolde": [
                             {
                                 "name": "6w4b_refine_9"
-                            },
-                            {
-                                "name": "Mgd7_final"
                             }
                         ],
                         "pdb-redo": [
@@ -3852,9 +3871,36 @@
                 "NendoU/nsp15"
             ],
             "PDB": {
-                "7kf4": {},
-                "7keh": {},
-                "7keg": {},
+                "6vww": {
+                    "description": "",
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6vww_refine_14"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6vww"
+                            }
+                        ]
+                    }
+                },
+                "6w01": {
+                    "description": "",
+                    "validation": {
+                        "refmac": [
+                            {
+                                "name": "6w01_refmac"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6w01"
+                            }
+                        ]
+                    }
+                },
                 "7k9p": {
                     "validation": {
                         "pdb-redo": [
@@ -3878,34 +3924,9 @@
                         ]
                     }
                 },
-                "6w01": {
-                    "description": "",
-                    "validation": {
-                        "pdb-redo": [
-                            {
-                                "name": "6w01"
-                            }
-                        ]
-                    }
-                },
-                "6vww": {
-                    "description": "",
-                    "validation": {
-                        "isolde": [
-                            {
-                                "name": "6vww_refine_14"
-                            },
-                            {
-                                "name": "UW8C_final"
-                            }
-                        ],
-                        "pdb-redo": [
-                            {
-                                "name": "6vww"
-                            }
-                        ]
-                    }
-                }
+                "7kf4": {},
+                "7keh": {},
+                "7keg": {}
             },
             "EMDB": {
                 "EMD-22610": {
@@ -4026,9 +4047,6 @@
                                 "isolde": [
                                     {
                                         "name": "6vww_refine_14"
-                                    },
-                                    {
-                                        "name": "UW8C_final"
                                     }
                                 ],
                                 "pdb-redo": [
@@ -4373,9 +4391,17 @@
             },
             "Related": {
                 "SARS-CoV": {
-                    "PDB": [
-                        "6jyt"
-                    ]
+                    "PDB": {
+                        "6jyt": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "6jyt_refine_12"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "OtherRelated": {
                     "PDB": [
@@ -4542,10 +4568,18 @@
             },
             "Related": {
                 "SARS-CoV": {
-                    "PDB": [
-                        "1yo4",
-                        "1xak"
-                    ]
+                    "PDB": {
+                        "1yo4": {},
+                        "1xak": {
+                            "validation": {
+                                "isolde": [
+                                    {
+                                        "name": "1xak_refine_8"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
