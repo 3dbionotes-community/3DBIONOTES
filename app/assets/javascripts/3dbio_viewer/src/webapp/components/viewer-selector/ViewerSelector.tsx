@@ -70,7 +70,9 @@ const DbItem: React.FC<{ label: string; id: string }> = props => {
         <div className="db-item">
             <div className="label">{label}</div>
             <div className="content">
-                <Visibility />
+                <IconButton>
+                    <Visibility />
+                </IconButton>
                 <span className="id">{id}</span>
             </div>
         </div>
