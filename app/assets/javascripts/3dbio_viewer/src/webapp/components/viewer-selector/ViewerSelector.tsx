@@ -3,11 +3,18 @@ import { Close, Search, Visibility, VisibilityOff } from "@material-ui/icons";
 import React from "react";
 import { useBooleanState } from "../../hooks/use-boolean";
 import i18n from "../../utils/i18n";
+import { SelectionState } from "../../view-models/SelectionState";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import { ModelSearch } from "../model-search/ModelSearch";
 import "./ViewerSelector.css";
 
-export const ViewerSelector: React.FC = () => {
+interface ViewerSelectorProps {
+    selection: SelectionState;
+}
+
+export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
+    const { selection } = props;
+
     const chainItems: DropdownProps["items"] = [
         { id: "A", text: "Chain A" },
         { id: "B", text: "Chain B" },
@@ -24,8 +31,9 @@ export const ViewerSelector: React.FC = () => {
         <div id="viewer-selector">
             <div className="db">
                 <div className="status">
-                    <DbItem label={i18n.t("PDB")} id="6XQB" />
-                    <DbItem label={i18n.t("EMDB")} id="EMD-13577" />
+                    <DbItem label={i18n.t("PDB")} id={selection.main.pdbId} />
+                    <DbItem label={i18n.t("EMDB")} id={selection.main.emdbId} />
+
                     <button onClick={openSearch}>
                         <Search /> {i18n.t("Search")}
                     </button>
@@ -39,9 +47,9 @@ export const ViewerSelector: React.FC = () => {
                 </div>
 
                 <div className="selection">
-                    <SelectionItem id="5ER3" selected={false} />
-                    <SelectionItem id="5ER4" selected={true} />
-                    <SelectionItem id="5ER5" selected={true} />
+                    {selection.overlay.map(item => (
+                        <SelectionItem key={item.id} id={item.id} visible={item.visible} />
+                    ))}
                 </div>
             </div>
 
@@ -63,8 +71,9 @@ export const ViewerSelector: React.FC = () => {
     );
 };
 
-const DbItem: React.FC<{ label: string; id: string }> = props => {
+const DbItem: React.FC<{ label: string; id: string | undefined }> = props => {
     const { label, id } = props;
+    if (!id) return null;
 
     return (
         <div className="db-item">
@@ -79,11 +88,12 @@ const DbItem: React.FC<{ label: string; id: string }> = props => {
     );
 };
 
-const SelectionItem: React.FC<{ id: string; selected?: boolean }> = props => {
-    const { id, selected } = props;
+const SelectionItem: React.FC<{ id: string; visible?: boolean }> = props => {
+    const { id, visible: visible } = props;
+
     return (
-        <div className={selected ? "selected" : "unselected"}>
-            <IconButton>{selected ? <Visibility /> : <VisibilityOff />}</IconButton>
+        <div className={visible ? "selected" : "unselected"}>
+            <IconButton>{visible ? <Visibility /> : <VisibilityOff />}</IconButton>
             <span className="id">{id}</span>
             <IconButton>
                 <Close />

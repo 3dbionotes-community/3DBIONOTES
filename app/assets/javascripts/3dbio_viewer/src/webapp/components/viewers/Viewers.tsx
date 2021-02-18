@@ -7,8 +7,11 @@ import styles from "./Viewers.module.css";
 import { JumpToButton } from "../protvista/JumpToButton";
 import { BasicInfoViewer } from "../BasicInfoViewer";
 import { ProfilesButton } from "../protvista/ProfilesButton";
+import { SelectionState } from "../../view-models/SelectionState";
 
-export interface ViewersProps {}
+export interface ViewersProps {
+    selection: SelectionState;
+}
 
 export const Viewers: React.FC<ViewersProps> = () => {
     return (
