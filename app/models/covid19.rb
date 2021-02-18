@@ -152,7 +152,7 @@ class Covid19
         links: [
           *get_pdb_redo_links("PDB-Redo", :turq, pdb_key, pdb_hash, ["validation", "pdb-redo"]),
           *get_isolde_links("Isolde", :cyan, pdb_key, pdb_hash, ["validation", "isolde"]),
-          *get_refmac_links("Refmac", :cyan, pdb_key, pdb_hash, ["validation", "refmac"]),
+          *get_refmac_links("Refmac", :blue_gray, pdb_key, pdb_hash, ["validation", "refmac"]),
         ],
       })
 
