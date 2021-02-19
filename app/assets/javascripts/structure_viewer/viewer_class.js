@@ -117,6 +117,7 @@ class viewer_class {
 
     list.forEach(function(i) {
       color = i.color;
+      if (color === "rgb(128, 128, 128)") { color = "rgb(153, 153, 255)"};
 
       // Add the color element if missing
       if (schemeData[color] === undefined) {
@@ -125,11 +126,12 @@ class viewer_class {
         schemeData[color][1] = schemeData[color][1] + " or "
       }
 
-      schemeData[color][1] = schemeData[color][1] + i.begin + "-" + i.end;
+      // schemeData[color][1] = schemeData[color][1] + i.begin + "-" + i.end;
 
       var pdbPosList = top.getRangesFromTranslation(i.begin, i.end, top.alignmentTranslation);
       pdbPosList.forEach(function(j){
         selection[j]=true;
+        schemeData[color][1] = schemeData[color][1] + j + "-" + j + " or ";
       });
     });
 

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post '/' => 'main#home'
   get '/pdb_redo/:pdbId' => 'main#pdb_redo'
   get '/isolde/:pdbId/:filename' => 'main#isolde'
+  get '/refmac/:pdbId/:filename' => 'main#refmac'
   get '/models/:protein/:source/:model' => 'main#models'
   post '/upload' => 'main#upload'
   get '/network' => 'main#network'
@@ -136,6 +137,13 @@ Rails.application.routes.draw do
         scope '/PDB' do
           scope '/:name' do
             get '/' => 'mappings#getPDBsFromEMDB'
+          end
+        end
+      end
+      scope '/PDB' do
+        scope '/EMDB' do
+          scope '/:name' do
+            get '/' => 'mappings#getEMDBFromPDBs'
           end
         end
       end

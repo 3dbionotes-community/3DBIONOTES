@@ -13,6 +13,7 @@ class MainController < ApplicationController
   BaseUrl = Settings.GS_BaseUrl
   PDB_REDO = Settings.GS_PDB_REDO
   IsoldeUrl = Settings.GS_ISOLDE
+  RefMacUrl = Settings.GS_REFMAC
   SwissModelUrl = Settings.GS_SWISSMODEL
   BSMArcUrl = Settings.GS_BSM_ARC
   AlphaFoldUrl = Settings.GS_ALPHAFOLD
@@ -171,7 +172,20 @@ class MainController < ApplicationController
     rand_path = "isolde_"+pdb
     file_name = file+".pdb"
     url = BaseUrl+IsoldeUrl+file+"/"
-    # url = "http://rinchen-dos/"+IsoldeUrl+file+"/"
+    url = "http://rinchen-dos/"+IsoldeUrl+file+"/"
+
+    validations(querytype, pdb, url, rand_path, file_name)
+  end
+
+  def refmac
+    pdb = params[:pdbId]
+    file = params[:filename]
+    querytype = "REFMAC"
+    logger.info("  REFMAC query "+pdb)
+    rand_path = "REFMAC_"+pdb
+    file_name = file+".pdb"
+    url = BaseUrl+RefMacUrl+file+"/"
+    url = "http://rinchen-dos/"+RefMacUrl+file+"/"
 
     validations(querytype, pdb, url, rand_path, file_name)
   end
@@ -204,11 +218,13 @@ class MainController < ApplicationController
       aCC = {}
       pdbData = fetchPDBalignment(pdb)
       @sequences.each do |ch,seq|
+        next if seq.to_s.strip.empty?
         acc = pdbData[ch].keys[0]
         aCC[acc] = true
       end
       aCC = fetchUniprotMultipleSequences(aCC.keys.join(","),fasta_obj_flag=nil,dict_flag=true)
       @sequences.each do |ch,seq|
+        next if seq.to_s.strip.empty?
         acc = pdbData[ch].keys[0]
         @choice[ch] = acc+"__sprot__"+aCC[acc]["definition"]+"__"+aCC[acc]["organism"]+"__"+aCC[acc]["gene_symbol"]
       end

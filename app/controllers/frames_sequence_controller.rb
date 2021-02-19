@@ -19,6 +19,10 @@ class FramesSequenceController < ApplicationController
             pdb = @alignment["path"].split(//).last(4).join
             json = fetchPDBalignment(pdb)
             @alignmentData = json[@alignment["chain"]][@alignment["uniprot"]]
+          elsif @alignment["path"].include? "refmac"
+              pdb = @alignment["path"].split(//).last(4).join
+              json = fetchPDBalignment(pdb)
+              @alignmentData = json[@alignment["chain"]][@alignment["uniprot"]]
           elsif @alignment["path"].include? "swiss-model" or
                 @alignment["path"].include? "AlphaFold" or
                 @alignment["path"].include? "BSM-Arc"

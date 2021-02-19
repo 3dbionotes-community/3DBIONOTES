@@ -1,6 +1,8 @@
+- max_items = 18
+
 :javascript
   var proteinsData = #{@proteins_data.to_json.html_safe};
-  $(function() { initLiveSearch(proteinsData, {maxItems: 12}) });
+  $(function() { initLiveSearch(proteinsData, {maxItems: #{max_items}}) });
 
 = render partial: "shared/wip"
 
@@ -49,49 +51,6 @@
             %em
               Please note this is an on-going effort to collect all possible relevant information from many diverse sources in a semi-automatic way, sometimes manually. If you spot something missing, misplaced, incorrect or misbehaving, please feel free to contact us (3dbionotes@cnb.csic.es).
             %br/
-        %div{:style => "margin-bottom:20px;", :width => "100%"}
-          %figure.figure
-            %img{:border => "0", :src => "/assets/nejmcibr2007042_f1.jpeg", :usemap => "#image-map", :width => "100%"}/
-            %map{:name => "image-map"}
-              %area{:alt => "Envelope Protein", :coords => "1082,142,1351,92", :href => "#E", :shape => "rect", :target => "", :title => "Envelope Protein"}/
-              %area{:alt => "Membrane Protein", :coords => "1327,184,1648,231", :href => "#M", :shape => "rect", :target => "", :title => "Membrane Protein"}/
-              %area{:alt => "ORF7a", :coords => "1761,670,1500,587", :href => "#ORF7a", :shape => "rect", :target => "", :title => "ORF7a"}/
-              %area{:alt => "Nucleocapsid", :coords => "1484,1018,1734,1075", :href => "#N", :shape => "rect", :target => "", :title => "Nucleocapsid"}/
-              %area{:alt => "NSP13", :coords => "1386,1258,1627,1303", :href => "#NSP13", :shape => "rect", :target => "", :title => "NSP13"}/
-              %area{:alt => "NSP9", :coords => "1305,1369,1602,1419", :href => "#NSP9", :shape => "rect", :target => "", :title => "NSP9"}/
-              %area{:alt => "NSP9", :coords => "1162,1248,1182,1236,1176,1204,1136,1198,1100,1209,1090,1233,1125,1255,1147,1258", :href => "#NSP9", :shape => "poly", :target => "", :title => "NSP9"}/
-              %area{:alt => "NSP15", :coords => "1212,1465,1468,1520", :href => "#NSP15", :shape => "rect", :target => "", :title => "NSP15"}/
-              %area{:alt => "NSP15", :coords => "953,1070,899,1101,890,1147,917,1178,966,1191,1015,1172,1030,1120,1007,1072", :href => "#NSP15", :shape => "poly", :target => "", :title => "NSP15"}/
-              %area{:alt => "Glycan groups", :coords => "1080,1557,1290,1613", :href => "#Glycan", :shape => "rect", :target => "", :title => "Glycan groups"}/
-              %area{:alt => "Glycan groups", :coords => "876,1474,858,1490,890,1528,879,1568,856,1606,844,1660,883,1647,930,1620,953,1574,923,1501,950,1418,974,1348,950,1297,922,1294,911,1316,938,1405,914,1485", :href => "#Glycan", :shape => "poly", :target => "", :title => "Glycan groups"}/
-              %area{:alt => "ACE2", :coords => "1001,1668,1185,1710", :href => "#ACE2", :shape => "rect", :target => "", :title => "ACE2"}/
-              %area{:alt => "ACE2", :coords => "912,1640,885,1654,864,1670,864,1697,885,1748,886,1802,918,1749,933,1706,942,1681,937,1649", :href => "#ACE2", :shape => "poly", :target => "", :title => "ACE2"}/
-              %area{:alt => "Spike Glycoprotein", :coords => "336,1551,627,1598", :href => "#S", :shape => "rect", :target => "", :title => "Spike Glycoprotein"}/
-              %area{:alt => "Spike Glycoprotein", :coords => "840,1489,858,1462,874,1470,856,1493,885,1528,874,1573,850,1617,826,1613,812,1574,831,1533", :href => "#S", :shape => "poly", :target => "", :title => "Spike Glycoprotein"}/
-              %area{:alt => "NSP5", :coords => "312,1439,683,1487", :href => "#NSP5", :shape => "rect", :target => "", :title => "NSP5"}/
-              %area{:alt => "NSP5", :coords => "675,1199,646,1236,654,1268,694,1282,735,1268,748,1242,734,1207,707,1183", :href => "#NSP5", :shape => "poly", :target => "", :title => "NSP5"}/
-              %area{:alt => "NSP16", :coords => "55,1182,382,1260", :href => "#NSP16", :shape => "rect", :target => "", :title => "NSP16"}/
-              %area{:alt => "NSP16", :coords => "712,1058,748,1054,756,1032,748,1005,740,992,721,994,708,1007,700,1034,699,1048", :href => "#NSP16", :shape => "poly", :target => "", :title => "NSP16"}/
-              %area{:alt => "NSP10", :coords => "58,1031,163,1078", :href => "#NSP10", :shape => "rect", :target => "", :title => "NSP10"}/
-              %area{:alt => "NSP10", :coords => "673,1007,661,1023,670,1040,691,1050,700,1031,704,1011,694,999", :href => "#NSP10", :shape => "poly", :target => "", :title => "NSP10"}/
-              %area{:alt => "NSP3", :coords => "58,744,220,857", :href => "#NSP3", :shape => "rect", :target => "", :title => "NSP3"}/
-              %area{:alt => "NSP3", :coords => "435,770,411,784,417,838,424,868,468,881,498,879,530,868,532,817,538,773,519,746,489,752", :href => "#NSP3", :shape => "poly", :target => "", :title => "NSP3"}/
-              %area{:alt => "NSP7", :coords => "619,735,710,736,710,760,748,786,774,779,786,792,777,813,751,811,737,789,710,786,623,779", :href => "#NSP7", :shape => "poly", :target => "", :title => "NSP7"}/
-              %area{:alt => "NSP12", :coords => "686,660,886,657,888,705,789,706,791,755,805,784,788,786,775,776,750,775,747,751,767,736,764,703,689,706", :href => "#NSP12", :shape => "poly", :target => "", :title => "NSP12"}/
-              %area{:alt => "NSP8", :coords => "853,720,940,720,942,763,864,761,850,758,827,769,838,798,807,823,780,817,787,793,811,785,795,757", :href => "#NSP8", :shape => "poly", :target => "", :title => "NSP8"}/
-              %area{:alt => "Envelope Protein", :coords => "1020,297,998,312,998,356,1031,379,1068,359,1080,337,1079,313,1049,294", :href => "#E", :shape => "poly", :target => "", :title => "Envelope Protein"}/
-              %area{:alt => "Membrane Protein", :coords => "1184,396,1144,436,1146,464,1166,488,1193,469,1206,437,1220,409,1222,386,1208,379", :href => "#M", :shape => "poly", :target => "", :title => "Membrane Protein"}/
-              %area{:alt => "ORF7a", :coords => "1392,631,1344,662,1356,687,1398,684,1430,670,1462,652,1468,628,1459,614,1427,611", :href => "#ORF7a", :shape => "poly", :target => "", :title => "ORF7a"}/
-              %area{:alt => "Single-Strand RNA", :coords => "1125,829,1088,833,1042,838,1025,872,1044,899,1074,910,1108,883,1112,911,1139,910,1189,924,1212,914,1219,889,1220,857,1174,833", :href => "#SSRNA", :shape => "poly", :target => "", :title => "Single-Strand RNA"}/
-              %area{:alt => "Nucleocapsid", :coords => "1034,918,1021,960,1053,974,1087,963,1107,944,1099,918,1095,907,1079,915,1053,911", :href => "#N", :shape => "poly", :target => "", :title => "Nucleocapsid"}/
-              %area{:alt => "NSP13", :coords => "1146,1096,1122,1136,1135,1169,1185,1190,1211,1169,1224,1145,1190,1115,1174,1099", :href => "#NSP13", :shape => "poly", :target => "", :title => "NSP13"}/
-              %area{:alt => "Single-Strand RNA", :coords => "1505,730,1756,778", :href => "#SSRNA", :shape => "rect", :target => "", :title => "Single-Strand RNA"}/
-            %figcaption.figure-caption{:style => "text-align: center;"}
-              Image: Jerry M. Parks, Ph.D., and Jeremy C. Smith, Ph.D.
-              %i How to Discover Antiviral Drugs Quickly
-              %a{:href => "https://www.nejm.org/doi/full/10.1056/NEJMcibr2007042", :target => "_new"}
-                %i.fa.fa-external-link
-
         = render partial: "proteome_table"
         %p
           %span.badge.badge-primary.proteomeBadge.w3-gradient Non-structural protein (NSXx)
@@ -158,7 +117,7 @@
               %em #{protein[:description]}
               %br/
           - protein[:sections].each do |section|
-            = render partial: "section", locals: {protein: protein, section: section, is_main: true}
+            = render partial: "section", locals: {protein: protein, section: section, is_main: true, max_items: max_items}
     .contentBox
       .contentTitle
         %h4
