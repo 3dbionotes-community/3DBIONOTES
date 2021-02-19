@@ -7,6 +7,12 @@ class MappingsController < ApplicationController
     toReturn = fetchPDBfromEMDB( emdbId )
     return render json: toReturn, status: :ok
   end
+
+  def getEMDBFromPDBs
+    pdbId = params[:name]
+    toReturn = fetchEmdbfromPDB( pdbId )
+    return render json: toReturn, status: :ok
+  end
   
   def getPDBFromUniprot
     uniprotAc = params[:name].upcase

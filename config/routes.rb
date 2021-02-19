@@ -140,6 +140,13 @@ Rails.application.routes.draw do
           end
         end
       end
+      scope '/PDB' do
+        scope '/EMDB' do
+          scope '/:name' do
+            get '/' => 'mappings#getEMDBFromPDBs'
+          end
+        end
+      end
       scope '/Uniprot' do
         scope '/PDB' do
           scope '/:name' do
