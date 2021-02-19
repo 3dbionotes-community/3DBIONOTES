@@ -1,19 +1,29 @@
-import { IconButton } from "@material-ui/core";
-import { Close, Search, Visibility, VisibilityOff } from "@material-ui/icons";
 import React from "react";
+import { IconButton } from "@material-ui/core";
+import _ from "lodash";
+import { Close, Search, Visibility, VisibilityOff } from "@material-ui/icons";
+
 import { useBooleanState } from "../../hooks/use-boolean";
 import i18n from "../../utils/i18n";
-import { SelectionState } from "../../view-models/SelectionState";
+import {
+    DbItem,
+    removeOverlayItem,
+    SelectionState,
+    setOverlayItemVisibility,
+    updateMainItemVisibility,
+} from "../../view-models/SelectionState";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import { ModelSearch } from "../model-search/ModelSearch";
+
 import "./ViewerSelector.css";
 
 interface ViewerSelectorProps {
     selection: SelectionState;
+    onSelectionChange(newSelection: SelectionState): void;
 }
 
 export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
-    const { selection } = props;
+    const { selection, onSelectionChange } = props;
 
     const chainItems: DropdownProps["items"] = [
         { id: "A", text: "Chain A" },
@@ -27,12 +37,44 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
 
     const [isSearchOpen, { enable: openSearch, disable: closeSearch }] = useBooleanState(false);
 
+    const notifyOverlayItemVisibilityChange = React.useCallback(
+        (id: string, visible: boolean) =>
+            onSelectionChange(setOverlayItemVisibility(selection, id, visible)),
+        [onSelectionChange, selection]
+    );
+
+    const notifyOverlayItemRemoval = React.useCallback(
+        (id: string) => onSelectionChange(removeOverlayItem(selection, id)),
+        [onSelectionChange, selection]
+    );
+
+    const notifyMainItemVisibilityChange = React.useCallback(
+        (id: string, visible: boolean) =>
+            onSelectionChange(updateMainItemVisibility(selection, id, visible)),
+        [onSelectionChange, selection]
+    );
+
     return (
         <div id="viewer-selector">
             <div className="db">
                 <div className="status">
-                    <DbItem label={i18n.t("PDB")} id={selection.main.pdbId} />
-                    <DbItem label={i18n.t("EMDB")} id={selection.main.emdbId} />
+                    {selection.main && (
+                        <MainItemBox label={i18n.t("PDB")}>
+                            <SelectionItem
+                                item={selection.main.pdb}
+                                onVisibilityChange={notifyMainItemVisibilityChange}
+                            />
+                        </MainItemBox>
+                    )}
+
+                    {selection.main && selection.main.emdb && (
+                        <MainItemBox label={i18n.t("EMDB")}>
+                            <SelectionItem
+                                item={selection.main.emdb}
+                                onVisibilityChange={notifyMainItemVisibilityChange}
+                            />
+                        </MainItemBox>
+                    )}
 
                     <button onClick={openSearch}>
                         <Search /> {i18n.t("Search")}
@@ -48,7 +90,12 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
 
                 <div className="selection">
                     {selection.overlay.map(item => (
-                        <SelectionItem key={item.id} id={item.id} visible={item.visible} />
+                        <SelectionItem
+                            key={item.id}
+                            item={item}
+                            onVisibilityChange={notifyOverlayItemVisibilityChange}
+                            onRemove={notifyOverlayItemRemoval}
+                        />
                     ))}
                 </div>
             </div>
@@ -71,33 +118,45 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     );
 };
 
-const DbItem: React.FC<{ label: string; id: string | undefined }> = props => {
-    const { label, id } = props;
-    if (!id) return null;
+const MainItemBox: React.FC<{ label: string }> = props => {
+    const { label, children } = props;
 
     return (
         <div className="db-item">
             <div className="label">{label}</div>
-            <div className="content">
-                <IconButton>
-                    <Visibility />
-                </IconButton>
-                <span className="id">{id}</span>
-            </div>
+            <div className="content">{children}</div>
         </div>
     );
 };
 
-const SelectionItem: React.FC<{ id: string; visible?: boolean }> = props => {
-    const { id, visible: visible } = props;
+const SelectionItem: React.FC<{
+    item: DbItem;
+    onVisibilityChange(id: DbItem["id"], visible: boolean): void;
+    onRemove?(id: DbItem["id"]): void;
+}> = props => {
+    const { item, onVisibilityChange, onRemove } = props;
+
+    const notifyClick = React.useCallback(() => {
+        onVisibilityChange(item.id, !item.visible);
+    }, [item, onVisibilityChange]);
+
+    const notifyRemove = React.useCallback(() => {
+        if (onRemove) onRemove(item.id);
+    }, [item.id, onRemove]);
 
     return (
-        <div className={visible ? "selected" : "unselected"}>
-            <IconButton>{visible ? <Visibility /> : <VisibilityOff />}</IconButton>
-            <span className="id">{id}</span>
-            <IconButton>
-                <Close />
+        <div className={item.visible ? "selected" : "unselected"}>
+            <IconButton onClick={notifyClick}>
+                {item.visible ? <Visibility /> : <VisibilityOff />}
             </IconButton>
+
+            <span className="id">{item.id}</span>
+
+            {onRemove && (
+                <IconButton onClick={notifyRemove}>
+                    <Close />
+                </IconButton>
+            )}
         </div>
     );
 };

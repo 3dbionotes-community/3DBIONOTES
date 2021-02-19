@@ -1,186 +1,117 @@
 import React from "react";
+import _ from "lodash";
 import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
+import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
+
 import { debugVariable } from "../../../utils/debug";
-import { LoadParams } from "@3dbionotes/pdbe-molstar/lib/helpers";
+import i18n from "../../utils/i18n";
+import { DbItem, diffDbItems, getItems, SelectionState } from "../../view-models/SelectionState";
 
 import "./molstar.css";
 import "./molstar.scss";
-import i18n from "../../utils/i18n";
-import { SelectionState } from "../../view-models/SelectionState";
+import { useReference } from "../../hooks/use-reference";
 
-import { StateTransform } from "molstar/lib/mol-state";
-import { StateSelection } from "molstar/lib/mol-state";
-import { PluginCommands } from "molstar/lib/mol-plugin/commands";
-//import { PluginContext } from "molstar/lib/mol-plugin/context";
-//import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
-
-/*
 declare global {
     interface Window {
-        PDBeMolstarPlugin: PDBeMolstarPlugin;
+        PDBeMolstarPlugin: typeof PDBeMolstarPlugin;
     }
 }
-*/
-
-declare const PDBeMolstarPlugin: {
-    new (): PDBeMolstarPluginInstance;
-};
-
-//declare class PDBeMolstarPlugin;
-
-type PDBeMolstarPluginInstance = any;
-
-/*
-declare class PDBeMolstarPlugin {
-    render(el: HTMLElement, initParams: InitParams): void;
-    load(loadParams: LoadParams, fullLoad: boolean): void;
-    plugin: PluginContext;
-    state: any;
-}
-*/
 
 interface MolecularStructureProps {
     selection: SelectionState;
 }
 
 export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
-    const { selection } = props;
-    //const inputEl = React.useRef<HTMLDivElement>(null);
-    const [plugin, setPlugin] = React.useState<PDBeMolstarPluginInstance>();
-
-    const inputEl = React.useCallback(
-        (el: HTMLDivElement) => {
-            if (!el) return;
-
-            const initParams: InitParams = {
-                moleculeId: selection.main.pdbId,
-                pdbeUrl: "https://www.ebi.ac.uk/pdbe/",
-                encoding: "cif",
-                loadMaps: false,
-                validationAnnotation: true,
-                hideControls: false,
-                superposition: false,
-                domainAnnotation: true,
-                expanded: false,
-                bgColor: colors.white,
-                subscribeEvents: true,
-                assemblyId: "1",
-                mapSettings: {},
-            };
-
-            const plugin = new PDBeMolstarPlugin();
-            plugin.render(el, initParams);
-            setPlugin(plugin);
-
-            debugVariable({ pdbeMolstar: plugin });
-        },
-        [selection.main.pdbId]
-    );
-
-    /*
-    React.useEffect(() => {
-        const el = inputEl.current;
-        if (!el) return;
-
-        const initParams: InitParams = {
-            //moleculeId: selection.main.pdbId,
-            //pdbeUrl: "https://www.ebi.ac.uk/pdbe/",
-            encoding: "cif",
-            loadMaps: false,
-            validationAnnotation: true,
-            hideControls: false,
-            superposition: false,
-            domainAnnotation: true,
-            expanded: false,
-            bgColor: colors.white,
-            subscribeEvents: true,
-            assemblyId: "1",
-            mapSettings: {},
-        };
-
-        plugin.render(el, initParams);
-        debugVariable({ pdbeMolstar: plugin });
-    }, []);
-    */
-
-    React.useEffect(() => {
-        if (!plugin) return;
-
-        selection.overlay
-            .filter(item => item.type === "pdb")
-            .forEach(item => {
-                console.log("load plugin", item);
-
-                plugin.load(
-                    {
-                        url: `https://www.ebi.ac.uk/pdbe/model-server/v1/${item.id.toString()}/full?encoding=cif`,
-                        format: "mmcif",
-                        isBinary: false,
-                        assemblyId: "1", // TODO
-                    },
-                    false
-                );
-                console.log("load plugin-post");
-            });
-    }, [plugin, selection.overlay]);
+    const { pluginRef } = usePdbePlugin(props.selection);
 
     return (
-        <div ref={inputEl} className="molecular-structure">
+        <div ref={pluginRef} className="molecular-structure">
             {i18n.t("Loading...")}
         </div>
     );
 };
 
-const colors = {
-    black: { r: 0, g: 0, b: 0 },
-    white: { r: 255, g: 255, b: 255 },
-};
+function usePdbePlugin(newSelection: SelectionState) {
+    const [pdbePlugin, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
+    const [selection, setSelection] = useReference<SelectionState>();
 
-function visibility(
-    pdbePlugin: PDBeMolstarPluginInstance,
-    data: {
-        polymer?: boolean;
-        het?: boolean;
-        water?: boolean;
-        carbs?: boolean;
-        maps?: boolean;
-        [key: string]: any;
-    }
-) {
-    if (!data) return;
-    const plugin = pdbePlugin.plugin;
+    const pluginRef = React.useCallback(
+        (element: HTMLDivElement | null) => {
+            const pluginAlreadyRendered = Boolean(pdbePlugin);
+            if (!element || pluginAlreadyRendered || !newSelection || !newSelection.main) return;
 
-    const refMap: any = {
-        polymer: "structure-component-static-polymer",
-        het: "structure-component-static-ligand",
-        water: "structure-component-static-water",
-        carbs: "structure-component-static-branched",
-        maps: "volume-streaming-info",
-    };
+            const initParams = getPdbePluginInitParams(newSelection.main.pdb.id);
+            const plugin = new window.PDBeMolstarPlugin();
+            debugVariable({ pdbeMolstar: plugin });
 
-    for (const visual in data) {
-        const tagName = refMap[visual];
-        console.log({ data, tagName });
-        const componentRef = StateSelection.findTagInSubtree(
-            plugin.state.data.tree,
-            StateTransform.RootRef,
-            tagName
-        );
-        if (componentRef) {
-            const compVisual = plugin.state.data.select(componentRef)[0];
-            if (compVisual && compVisual.obj) {
-                const currentlyVisible =
-                    compVisual.state && compVisual.state.isHidden ? false : true;
-                if (data[visual] !== currentlyVisible) {
-                    console.log("visilbity", { ref: componentRef, state: plugin.state });
-                    PluginCommands.State.ToggleVisibility(plugin, {
-                        state: plugin.state,
-                        ref: componentRef,
-                    });
-                }
+            plugin.render(element, initParams);
+            setPdbePlugin(plugin);
+            setSelection({ ...newSelection, overlay: [] });
+        },
+        [pdbePlugin, newSelection, setSelection]
+    );
+
+    React.useEffect(() => {
+        async function load(plugin: PDBeMolstarPlugin, oldItems: DbItem[], newItems: DbItem[]) {
+            const { added, removed, updated } = diffDbItems(newItems, oldItems);
+
+            for (const item of added) {
+                if (item.type !== "pdb") continue;
+                const itemId: string = item.id;
+
+                const url = `https://www.ebi.ac.uk/pdbe/model-server/v1/${itemId}/full?encoding=cif`;
+                const reload = false;
+                await plugin.load(
+                    {
+                        url,
+                        format: "mmcif",
+                        isBinary: false,
+                        assemblyId: "1", // TODO
+                    },
+                    reload
+                );
+
+                plugin.visual.setVisibility(item.id.toUpperCase(), item.visible);
             }
+
+            for (const item of removed) {
+                plugin.visual.remove(item.id.toUpperCase());
+            }
+
+            for (const item of updated) {
+                plugin.visual.setVisibility(item.id.toUpperCase(), item.visible);
+            }
+
+            setSelection(newSelection);
         }
-    }
+
+        if (pdbePlugin) {
+            load(pdbePlugin, getItems(selection), getItems(newSelection));
+        }
+    }, [pdbePlugin, newSelection, selection, setSelection]);
+
+    return { pluginRef };
 }
 
-// debugVariable({ visibility });
+function getPdbePluginInitParams(pdbId: string): InitParams {
+    const colors = {
+        black: { r: 0, g: 0, b: 0 },
+        white: { r: 255, g: 255, b: 255 },
+    };
+
+    return {
+        moleculeId: pdbId,
+        pdbeUrl: "https://www.ebi.ac.uk/pdbe/",
+        encoding: "cif",
+        loadMaps: false,
+        validationAnnotation: true,
+        hideControls: false,
+        superposition: false,
+        domainAnnotation: true,
+        expanded: false,
+        bgColor: colors.white,
+        subscribeEvents: true,
+        assemblyId: "1",
+        mapSettings: {},
+    };
+}
