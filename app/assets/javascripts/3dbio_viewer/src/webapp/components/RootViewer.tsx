@@ -1,7 +1,6 @@
 import React from "react";
 import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
-import { ViewerSelector } from "./viewer-selector/ViewerSelector";
 import { SelectionState } from "../view-models/SelectionState";
 
 interface RootViewerProps {
@@ -13,8 +12,6 @@ export const RootViewer: React.FC<RootViewerProps> = props => {
 
     return (
         <div id="viewer">
-            <ViewerSelector selection={selection} />
-
             <div id="left">
                 <MolecularStructure selection={selection} />
             </div>
