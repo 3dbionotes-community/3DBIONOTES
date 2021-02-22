@@ -29,7 +29,7 @@ export function setOverlayItemVisibility(
     return { ...selection, overlay: newOverlay };
 }
 
-export function updateMainItemVisibility(
+export function setMainItemVisibility(
     selection: SelectionState,
     id: string,
     visible: boolean

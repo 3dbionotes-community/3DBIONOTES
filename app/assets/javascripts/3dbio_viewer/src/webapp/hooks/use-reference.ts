@@ -1,6 +1,6 @@
 import React from "react";
 
-/* React.useRef with the same interface than React.useState, so updates do not issue a re-render */
+/* Functionality of React.useRef with the signature of React.useState */
 
 export function useReference<T>(initialValue?: T): [T | undefined, (newValue: T) => void] {
     const ref = React.useRef<T>();
