@@ -15,11 +15,14 @@ import { ModelSearch } from "../model-search/ModelSearch";
 
 import "./ViewerSelector.css";
 import { SelectionItem } from "./SelectionItem";
+import { useUpdateActions } from "../../hooks/use-update-actions";
 
 interface ViewerSelectorProps {
     selection: SelectionState;
     onSelectionChange(newSelection: SelectionState): void;
 }
+
+const actions = { setOverlayItemVisibility, removeOverlayItem, setMainItemVisibility };
 
 export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     const { selection, onSelectionChange } = props;
@@ -36,23 +39,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
 
     const [isSearchOpen, { enable: openSearch, disable: closeSearch }] = useBooleanState(false);
 
-    const notifyOverlayItemVisibilityChange = React.useCallback(
-        (selection: SelectionState, id: string, visible: boolean) =>
-            onSelectionChange(setOverlayItemVisibility(selection, id, visible)),
-        [onSelectionChange]
-    );
-
-    const notifyOverlayItemRemoval = React.useCallback(
-        (selection: SelectionState, id: string) =>
-            onSelectionChange(removeOverlayItem(selection, id)),
-        [onSelectionChange]
-    );
-
-    const notifyMainItemVisibilityChange = React.useCallback(
-        (selection: SelectionState, id: string, visible: boolean) =>
-            onSelectionChange(setMainItemVisibility(selection, id, visible)),
-        [onSelectionChange]
-    );
+    const update = useUpdateActions(onSelectionChange, actions);
 
     return (
         <div id="viewer-selector">
@@ -63,7 +50,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                             <SelectionItem
                                 selection={selection}
                                 item={selection.main.pdb}
-                                onVisibilityChange={notifyMainItemVisibilityChange}
+                                onVisibilityChange={update.setMainItemVisibility}
                             />
                         </MainItemBox>
                     )}
@@ -73,7 +60,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                             <SelectionItem
                                 selection={selection}
                                 item={selection.main.emdb}
-                                onVisibilityChange={notifyMainItemVisibilityChange}
+                                onVisibilityChange={update.setMainItemVisibility}
                             />
                         </MainItemBox>
                     )}
@@ -96,8 +83,8 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                             key={item.id}
                             selection={selection}
                             item={item}
-                            onVisibilityChange={notifyOverlayItemVisibilityChange}
-                            onRemove={notifyOverlayItemRemoval}
+                            onVisibilityChange={update.setOverlayItemVisibility}
+                            onRemove={update.removeOverlayItem}
                         />
                     ))}
                 </div>
