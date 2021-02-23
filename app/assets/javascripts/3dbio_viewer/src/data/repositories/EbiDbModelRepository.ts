@@ -6,6 +6,8 @@ import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbMo
 import { Future } from "../../utils/future";
 import { axiosRequest, defaultBuilder, DefaultError } from "../../utils/future-axios";
 
+const searchPageSize = 10;
+
 const config = {
     pdb: {
         type: "pdb" as const,
@@ -34,19 +36,14 @@ export class EbiDbModelRepository implements DbModelRepository {
         const searchAllTypes = !options.type;
         const searchPdb = searchAllTypes || options.type === "pdb";
         const searchEmdb = searchAllTypes || options.type === "emdb";
-
-        const pdbModels: FutureData<DbModelCollection> = searchPdb
-            ? getPdbModels(config.pdb, options.query)
-            : Future.success([]);
-
-        const emdbModels: FutureData<DbModelCollection> = searchEmdb
-            ? getPdbModels(config.emdb, options.query)
-            : Future.success([]);
+        const pdbModels = getPdbModels(searchPdb, config.pdb, options.query);
+        const emdbModels = getPdbModels(searchEmdb, config.emdb, options.query);
 
         return Future.join2(emdbModels, pdbModels).map(collections =>
             _(collections)
                 .flatten()
                 .sortBy(model => -model.score)
+                .take(searchPageSize)
                 .value()
         );
     }
@@ -90,12 +87,17 @@ function request<Data>(url: string, params: ApiSearchParams): Future<DefaultErro
     return axiosRequest<DefaultError, Data>(defaultBuilder, request);
 }
 
-function getPdbModels(config: ItemConfig, query: string): FutureData<DbModel[]> {
-    if (!query.trim()) return Future.success([]);
+function getPdbModels(
+    performSearch: boolean,
+    config: ItemConfig,
+    query: string
+): FutureData<DbModel[]> {
+    if (!performSearch || !query.trim()) return Future.success([]);
 
     const pdbResults = request<ApiSearchResponse<"name" | "description">>(config.searchUrl, {
         format: "JSON",
-        size: 10,
+        // Get more records so we can sort by score on the grouped models
+        size: searchPageSize * 10,
         fields: "name,description",
         query: query,
         entryattrs: "score",

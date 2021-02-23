@@ -1,5 +1,6 @@
-.results .models {
+.results {
     display: flex;
+    height: 250px;
 }
 
 .results img {
@@ -8,8 +9,4 @@
 
 .model-search .params {
     display: flex;
-}
-
-.results {
-    height: 250px;
 }

@@ -93,12 +93,17 @@ export const ModelSearch: React.FC<ModelSearchProps> = props => {
                 </div>
 
                 <div className="results">
-                    <div className="models">
-                        {searchState.type === "results" &&
-                            searchState.data.map((item, idx) => (
-                                <ModelItem key={idx} item={item} onSelect={onSelect} />
-                            ))}
-                    </div>
+                    {searchState.type === "results" && (
+                        <React.Fragment>
+                            {_.isEmpty(searchState.data) ? (
+                                <div className="feedback">{i18n.t("No results")}</div>
+                            ) : (
+                                searchState.data.map((item, idx) => (
+                                    <ModelItem key={idx} item={item} onSelect={onSelect} />
+                                ))
+                            )}
+                        </React.Fragment>
+                    )}
                 </div>
             </DialogContent>
         </Dialog>
@@ -153,6 +158,15 @@ const ModelItem: React.FC<{
     const className = classnames("item", isMouseOver ? "hover" : null);
     const selectModel = React.useCallback(() => onSelect("select", item), [onSelect, item]);
     const appendModel = React.useCallback(() => onSelect("append", item), [onSelect, item]);
+
+    // Add rich HTML tooltip
+    // name,author,method,resolution,specimenstate
+    // fieldurl=true
+
+    // We cannot use *.*. On empty, try to get by relevance (mapReleaseDate?)
+
+    // Img src may not exist, show pretty
+
     const title = `[${item.score.toFixed(3)}] ${item.description}`;
 
     return (
