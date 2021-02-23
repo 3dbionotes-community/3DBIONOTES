@@ -10,7 +10,6 @@ export interface AxiosBuilder<E, D = unknown> {
 
 export function axiosRequest<E, D>(builder: AxiosBuilder<E>, request: AxiosRequest): Future<E, D> {
     return Future.fromComputation<E, D>((resolve, reject) => {
-        if (debug) console.debug("->", request.method, request.url);
         const source = axios.CancelToken.source();
 
         const fullRequest: AxiosRequest = {
@@ -22,7 +21,6 @@ export function axiosRequest<E, D>(builder: AxiosBuilder<E>, request: AxiosReque
         axios
             .request(fullRequest)
             .then(res => {
-                if (debug) console.debug("<-", fullRequest.method, fullRequest.url, res.status);
                 const result = builder.mapResponse(res);
                 if (result[0] === "success") {
                     resolve(result[1] as D);
@@ -31,7 +29,6 @@ export function axiosRequest<E, D>(builder: AxiosBuilder<E>, request: AxiosReque
                 }
             })
             .catch(err => {
-                if (debug) console.debug("<-", fullRequest.method, fullRequest.url, err.message);
                 const message = (err && err.message) || "Unknown error";
                 reject(builder.mapNetworkError(fullRequest, message));
             });
@@ -40,9 +37,15 @@ export function axiosRequest<E, D>(builder: AxiosBuilder<E>, request: AxiosReque
     });
 }
 
-// TODO: https://www.npmjs.com/package/debug
-let debug = false;
+export type DefaultError = { message: string };
 
-export function setDebug(value: boolean): void {
-    debug = value;
-}
+export const defaultBuilder: AxiosBuilder<DefaultError> = {
+    mapResponse: res => {
+        if (res.status >= 200 && res.status < 300) {
+            return ["success", res.data];
+        } else {
+            return ["error", { message: JSON.stringify(res.data) }];
+        }
+    },
+    mapNetworkError: (_req, message) => ({ message }),
+};
