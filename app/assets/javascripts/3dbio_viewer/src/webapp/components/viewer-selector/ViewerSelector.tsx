@@ -37,7 +37,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
         { id: "L2", text: "Ligand 2" },
     ];
 
-    const [isSearchOpen, { enable: openSearch, disable: closeSearch }] = useBooleanState(false);
+    const [isSearchOpen, { enable: openSearch, disable: closeSearch }] = useBooleanState(true);
 
     const update = useUpdateActions(onSelectionChange, actions);
 

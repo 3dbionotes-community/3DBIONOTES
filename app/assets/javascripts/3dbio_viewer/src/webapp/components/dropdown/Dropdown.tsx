@@ -6,44 +6,47 @@ import { PopperMenu } from "./PopperMenu";
 import Done from "@material-ui/icons/Done";
 import { ExpandMore } from "@material-ui/icons";
 
-export interface DropdownProps {
+export interface DropdownProps<Id extends string = string> {
     text: string;
-    items: DropdownItemModel[];
-    onClick(id: string): void;
+    value?: Id;
+    items: DropdownItemModel<Id>[];
+    onClick(id: Id): void;
     showSelection?: boolean;
     showExpandIcon?: boolean;
 }
 
-export interface DropdownItemModel {
-    id: string;
+export interface DropdownItemModel<Id extends string> {
+    id: Id;
     text: string;
     selected?: boolean;
 }
 
-export const Dropdown: React.FC<DropdownProps> = props => {
-    const { items, text, onClick, showExpandIcon = false } = props;
+export function Dropdown<Id extends string = string>(props: DropdownProps<Id>): React.ReactElement {
+    const { items, text, onClick, showExpandIcon = false, value } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
     const showSelection = props.showSelection ?? _(items).some(item => item.selected !== undefined);
 
     const runOnClickAndCloseMenu = React.useCallback(
         (id: string) => {
-            onClick(id);
+            onClick(id as Id);
             closeMenu();
         },
         [onClick, closeMenu]
     );
 
+    const buttonText = value !== undefined ? items.find(item => item.id === value)?.text : text;
+
     return (
         <React.Fragment>
             <button ref={buttonRef} onClick={openMenu} className={isMenuOpen ? "open" : "close"}>
-                {text}
+                {buttonText}
                 {showExpandIcon && <ExpandMore />}
             </button>
 
             <PopperMenu isOpen={isMenuOpen} close={closeMenu} buttonRef={buttonRef}>
                 {items.map(item => (
-                    <DropdownItem
+                    <DropdownItem<Id>
                         key={item.id}
                         onClick={runOnClickAndCloseMenu}
                         item={item}
@@ -56,16 +59,18 @@ export const Dropdown: React.FC<DropdownProps> = props => {
             </PopperMenu>
         </React.Fragment>
     );
-};
+}
 
-interface MenuItemProps {
+interface MenuItemProps<Id extends string> {
     isSelected: boolean;
-    item: DropdownItemModel;
-    onClick(id: string): void;
+    item: DropdownItemModel<Id>;
+    onClick(id: Id): void;
     showSelection: boolean;
 }
 
-const DropdownItem: React.FC<MenuItemProps> = props => {
+function DropdownItem<Id extends string>(
+    props: React.PropsWithChildren<MenuItemProps<Id>>
+): React.ReactElement {
     const { item, onClick, isSelected, showSelection } = props;
     const runOnClick = React.useCallback(() => onClick(item.id), [item.id, onClick]);
 
@@ -84,7 +89,7 @@ const DropdownItem: React.FC<MenuItemProps> = props => {
             )}
         </MenuItem>
     );
-};
+}
 
 const styles = {
     menuItemSelected: {

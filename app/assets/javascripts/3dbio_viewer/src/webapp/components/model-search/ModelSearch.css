@@ -9,3 +9,7 @@
 .model-search .params {
     display: flex;
 }
+
+.results {
+    height: 250px;
+}
