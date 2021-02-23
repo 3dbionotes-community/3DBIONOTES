@@ -43,7 +43,12 @@ export class EbiDbModelRepository implements DbModelRepository {
             ? getPdbModels(config.emdb, options.query)
             : Future.success([]);
 
-        return Future.join2(pdbModels, emdbModels).map(_.flatten);
+        return Future.join2(emdbModels, pdbModels).map(collections =>
+            _(collections)
+                .flatten()
+                .sortBy(model => -model.score)
+                .value()
+        );
     }
 }
 
@@ -58,29 +63,26 @@ interface ApiSearchParams {
     entryattrs?: "score";
 }
 
-interface ApiSearchResponse {
+interface ApiSearchResponse<Field_ extends Field> {
     hitCount: number;
-    entries: ApiEntryResponse[];
+    entries: ApiEntryResponse<Field_>[];
     facets: unknown[];
 }
 
-interface ApiEntryResponse {
+type Field = "name" | "description";
+
+interface ApiEntryResponse<Field_ extends Field> {
     acc: string;
     id: string;
     source: "pdbe";
     score: number;
-    fields: Array<{
-        name: string[];
-        description: string[];
-    }>;
-    fieldURLs: Array<{
-        name: string;
-        value: string;
-    }>;
-    viewURLs: Array<{
-        name: string;
-        value: string;
-    }>;
+    fields: Pick<
+        {
+            name: string[];
+            description: string[];
+        },
+        Field_
+    >;
 }
 
 function request<Data>(url: string, params: ApiSearchParams): Future<DefaultError, Data> {
@@ -91,7 +93,7 @@ function request<Data>(url: string, params: ApiSearchParams): Future<DefaultErro
 function getPdbModels(config: ItemConfig, query: string): FutureData<DbModel[]> {
     if (!query.trim()) return Future.success([]);
 
-    const pdbResults = request<ApiSearchResponse>(config.searchUrl, {
+    const pdbResults = request<ApiSearchResponse<"name" | "description">>(config.searchUrl, {
         format: "JSON",
         size: 10,
         fields: "name,description",
@@ -103,7 +105,9 @@ function getPdbModels(config: ItemConfig, query: string): FutureData<DbModel[]> 
         return res.entries.map(entry => ({
             type: config.type,
             id: entry.id,
+            description: entry.fields.description[0] || "No description",
             imageUrl: config.imageUrl(entry.id),
+            score: entry.score,
         }));
     });
 }
