@@ -9,6 +9,7 @@ import {
     SelectionState,
     setOverlayItemVisibility,
     setMainItemVisibility,
+    runAction,
 } from "../../view-models/SelectionState";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import { ModelSearch, ModelSearchProps } from "../model-search/ModelSearch";
@@ -43,22 +44,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
 
     const runModelSearchAction = React.useCallback<ModelSearchProps["onSelect"]>(
         (action, model) => {
-            let newSelection: SelectionState;
-
-            if (action === "select") {
-                newSelection = {
-                    main: { pdb: { type: "pdb", id: model.id, visible: true } },
-                    overlay: [],
-                };
-            } else if (action === "append") {
-                newSelection = {
-                    ...selection,
-                    overlay: [...selection.overlay, { type: "pdb", id: model.id, visible: true }],
-                };
-            } else {
-                newSelection = selection;
-            }
-
+            const newSelection = runAction(selection, action, model);
             onSelectionChange(newSelection);
             closeSearch();
         },

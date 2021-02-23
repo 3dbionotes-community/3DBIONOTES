@@ -21,14 +21,13 @@ import { useCallbackEffect } from "../../hooks/use-callback-effect";
 
 import "./ModelSearch.css";
 import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value";
+import { ActionType } from "../../view-models/SelectionState";
 
 export interface ModelSearchProps {
     title: string;
     onClose(): void;
     onSelect(actionType: ActionType, selected: DbModel): void;
 }
-
-type ActionType = "select" | "append";
 
 type ModelSearchType = DbModel["type"] | "all";
 

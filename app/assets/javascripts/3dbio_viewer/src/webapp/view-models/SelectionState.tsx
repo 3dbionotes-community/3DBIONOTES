@@ -1,6 +1,9 @@
 import _ from "lodash";
+import { DbModel } from "../../domain/entities/DbModel";
 
 export type Type = "pdb" | "emdb";
+
+export type ActionType = "select" | "append";
 
 export interface SelectionState {
     main: { pdb: DbItem; emdb?: DbItem } | undefined;
@@ -41,17 +44,22 @@ export function setMainItemVisibility(
     return { ...selection, main: { pdb: newMainPdb, emdb: newMainEmdb } };
 }
 
+function getId(item: DbItem) {
+    return item.id;
+}
+
 export function diffDbItems(newItems: DbItem[], oldItems: DbItem[]) {
-    const added = _.differenceBy(newItems, oldItems, item => item.id);
-    const removed = _.differenceBy(oldItems, newItems, item => item.id);
-    const commonIds = _.intersectionBy(oldItems, newItems, item => item.id).map(item => item.id);
-    const oldItemsById = _.keyBy(oldItems, item => item.id);
-    const newItemsById = _.keyBy(newItems, item => item.id);
+    const added = _.differenceBy(newItems, oldItems, getId);
+    const removed = _.differenceBy(oldItems, newItems, getId);
+    const commonIds = _.intersectionBy(oldItems, newItems, getId).map(getId);
+    const oldItemsById = _.keyBy(oldItems, getId);
+    const newItemsById = _.keyBy(newItems, getId);
     const updated = _(commonIds)
         .filter(id => !_.isEqual(oldItemsById[id], newItemsById[id]))
         .map(id => newItemsById[id])
         .compact()
         .value();
+
     return { added, removed, updated };
 }
 
@@ -83,4 +91,24 @@ export function buildDbItem(richId: string | undefined): DbItem | undefined {
 
 export function getItemParam(item: DbItem | undefined): string | undefined {
     return item ? [item.visible ? "" : "!", item.id].join("") : undefined;
+}
+
+export function runAction(
+    selection: SelectionState,
+    action: ActionType,
+    model: DbModel
+): SelectionState {
+    if (action === "select") {
+        return {
+            main: { pdb: { type: "pdb", id: model.id, visible: true } },
+            overlay: [],
+        };
+    } else if (action === "append") {
+        return {
+            ...selection,
+            overlay: [...selection.overlay, { type: "pdb", id: model.id, visible: true }],
+        };
+    } else {
+        return selection;
+    }
 }
