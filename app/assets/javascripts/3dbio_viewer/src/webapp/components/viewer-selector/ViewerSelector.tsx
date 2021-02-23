@@ -11,7 +11,7 @@ import {
     setMainItemVisibility,
 } from "../../view-models/SelectionState";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
-import { ModelSearch } from "../model-search/ModelSearch";
+import { ModelSearch, ModelSearchProps } from "../model-search/ModelSearch";
 
 import "./ViewerSelector.css";
 import { SelectionItem } from "./SelectionItem";
@@ -40,6 +40,30 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     const [isSearchOpen, { enable: openSearch, disable: closeSearch }] = useBooleanState(true);
 
     const update = useUpdateActions(onSelectionChange, actions);
+
+    const runModelSearchAction = React.useCallback<ModelSearchProps["onSelect"]>(
+        (action, model) => {
+            let newSelection: SelectionState;
+
+            if (action === "select") {
+                newSelection = {
+                    main: { pdb: { type: "pdb", id: model.id, visible: true } },
+                    overlay: [],
+                };
+            } else if (action === "append") {
+                newSelection = {
+                    ...selection,
+                    overlay: [...selection.overlay, { type: "pdb", id: model.id, visible: true }],
+                };
+            } else {
+                newSelection = selection;
+            }
+
+            onSelectionChange(newSelection);
+            closeSearch();
+        },
+        [selection, closeSearch, onSelectionChange]
+    );
 
     return (
         <div id="viewer-selector">
@@ -73,6 +97,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                         <ModelSearch
                             title={i18n.t("Select or append a new model")}
                             onClose={closeSearch}
+                            onSelect={runModelSearchAction}
                         />
                     )}
                 </div>

@@ -25,12 +25,15 @@ import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value"
 export interface ModelSearchProps {
     title: string;
     onClose(): void;
+    onSelect(actionType: ActionType, selected: DbModel): void;
 }
+
+type ActionType = "select" | "append";
 
 type ModelSearchType = DbModel["type"] | "all";
 
 export const ModelSearch: React.FC<ModelSearchProps> = props => {
-    const { title, onClose } = props;
+    const { title, onClose, onSelect } = props;
 
     const modelTypes = React.useMemo<DropdownProps<ModelSearchType>["items"]>(() => {
         return [
@@ -94,7 +97,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = props => {
                     <div className="models">
                         {searchState.type === "results" &&
                             searchState.data.map((item, idx) => (
-                                <ModelItem key={idx} item={item} />
+                                <ModelItem key={idx} item={item} onSelect={onSelect} />
                             ))}
                     </div>
                 </div>
@@ -139,18 +142,24 @@ function useDbModelSearch(modelType: ModelSearchType) {
     return [searchState, startSearch] as const;
 }
 
-const ModelItem: React.FC<{ item: DbModel }> = props => {
-    const { item } = props;
+const ModelItem: React.FC<{
+    item: DbModel;
+    onSelect: ModelSearchProps["onSelect"];
+}> = props => {
+    const { item, onSelect } = props;
     const [isMouseOver, { enable: setOver, disable: unsetOver }] = useBooleanState(false);
     const debounceMs = 50;
     const setMouseOverD = useDebounce(setOver, debounceMs);
     const unsetMouseOverD = useDebounce(unsetOver, debounceMs);
     const className = classnames("item", isMouseOver ? "hover" : null);
+    const selectModel = React.useCallback(() => onSelect("select", item), [onSelect, item]);
+    const appendModel = React.useCallback(() => onSelect("append", item), [onSelect, item]);
+    const title = `[${item.score.toFixed(3)}] ${item.description}`;
 
     return (
         <div className={className} onMouseEnter={setMouseOverD} onMouseLeave={unsetMouseOverD}>
             <div className="image">
-                <img src={item.imageUrl} />
+                <img src={item.imageUrl} title={title} />
             </div>
 
             <div className="name">{item.id}</div>
@@ -158,8 +167,12 @@ const ModelItem: React.FC<{ item: DbModel }> = props => {
             <div className="actions">
                 {isMouseOver && (
                     <div>
-                        <button className="action">{i18n.t("Select")}</button>
-                        <button className="action">{i18n.t("Append")}</button>
+                        <button className="action" onClick={selectModel}>
+                            {i18n.t("Select")}
+                        </button>
+                        <button className="action" onClick={appendModel}>
+                            {i18n.t("Append")}
+                        </button>
                     </div>
                 )}
             </div>

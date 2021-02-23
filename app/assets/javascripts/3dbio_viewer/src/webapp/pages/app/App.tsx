@@ -20,6 +20,7 @@ function App() {
                     <MolecularStructureRoute path="/molstar/:selector" />
                     <Route path="/protvista" render={() => <ProtvistaViewer />} />
                     <RootViewerRoute path="/:selector" />
+                    <RootViewerRoute path="/" />
                 </Switch>
             </HashRouter>
 
