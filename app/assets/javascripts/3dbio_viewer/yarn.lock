@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@3dbionotes/pdbe-molstar@1.1.0-beta.1":
-  version "1.1.0-beta.1"
-  resolved "https://registry.npmjs.org/@3dbionotes/pdbe-molstar/-/pdbe-molstar-1.1.0-beta.1.tgz#9e6e8e774646679a089bd99561eec9cdca064702"
-  integrity sha512-9BLipZIeIksbubRKcabQwnCMafFshgHdDCMNLXUqRD0Lrlkdp+6DIs2wf4hqYZSarfnjp04xvdNaL4Z46akiVw==
+"@3dbionotes/pdbe-molstar@1.1.0-beta.2":
+  version "1.1.0-beta.2"
+  resolved "https://registry.npmjs.org/@3dbionotes/pdbe-molstar/-/pdbe-molstar-1.1.0-beta.2.tgz#602a63b86f6d9e0ffb72e7db9c8db6abc2f2c7b7"
+  integrity sha512-Mx2ouPoIBmpsreDikF6BSs9muYQOjH4l4xNPa/3RaNvPsvERzacqNE72vzuJBGCPxsJjnf7WVuAuSjHfu24sBA==
   dependencies:
     lit-element "^2.2.1"
     molstar "^1.1.1"
