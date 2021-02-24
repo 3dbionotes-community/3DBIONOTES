@@ -1,4 +1,5 @@
 import { withStyles, Tooltip } from "@material-ui/core";
+import { Info } from "@material-ui/icons";
 import classnames from "classnames";
 import React from "react";
 import ReactImageFallback from "react-image-fallback";
@@ -47,18 +48,22 @@ export const ModelSearchItem: React.FC<{
 
     return (
         <div className={className} onMouseEnter={setMouseOverD} onMouseLeave={unsetMouseOverD}>
-            <HtmlTooltip className="tooltip" title={description} placement="top">
-                <div className="image">
-                    <ReactImageFallback
-                        className="image"
-                        src={item.imageUrl}
-                        fallbackImage="/images/no-image.png"
-                        initialImage="/images/loading.gif"
-                    />
-                </div>
-            </HtmlTooltip>
+            <div className="image">
+                <ReactImageFallback
+                    className="image"
+                    src={item.imageUrl}
+                    fallbackImage="/images/no-image.png"
+                    initialImage="/images/loading.gif"
+                />
+            </div>
 
-            <div className="name">{item.id}</div>
+            <div className="id">
+                {item.id}
+
+                <HtmlTooltip className="tooltip" title={description} placement="right-end">
+                    <Info />
+                </HtmlTooltip>
+            </div>
 
             <div className="actions">
                 {isMouseOver && (
@@ -66,6 +71,7 @@ export const ModelSearchItem: React.FC<{
                         <button className="action" onClick={selectModel}>
                             {i18n.t("Select")}
                         </button>
+
                         <button className="action" onClick={appendModel}>
                             {i18n.t("Append")}
                         </button>
