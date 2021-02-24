@@ -1,13 +1,12 @@
 import { AxiosRequestConfig } from "axios";
 import _ from "lodash";
 import { DbModel, DbModelCollection } from "../../domain/entities/DbModel";
-import { getBlastUrl } from "../../domain/entities/Fragment";
 import { FutureData } from "../../domain/entities/FutureData";
 import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
 import { Future } from "../../utils/future";
 import { axiosRequest, defaultBuilder, DefaultError } from "../../utils/future-axios";
 
-const searchPageSize = 10;
+const searchPageSize = 30;
 
 const config = {
     pdb: {
