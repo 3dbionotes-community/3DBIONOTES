@@ -13,6 +13,11 @@
                 "SPIKE_WCPV"
             ],
             "PDB": {
+                "7l7k": {
+                    "emdbs": [
+                        "EMD-23215"
+                    ]
+                },
                 "6lxt": {
                     "validation": {
                         "isolde": [
@@ -367,6 +372,11 @@
                 }
             },
             "EMDB": {
+                "EMD-23215": {
+                    "pdb": [
+                        "7l7k"
+                    ]
+                },
                 "EMD-30701": {
                     "pdb": [
                         "7dk3"
@@ -784,6 +794,7 @@
                         },
                         "7ld1": {},
                         "7lcn": {},
+                        "7l7f": {},
                         "7l5b": {},
                         "7l3n": {},
                         "7l2c": {},
@@ -888,6 +899,7 @@
                         "7cak": {},
                         "7cai": {},
                         "7cah": {},
+                        "7cac": {},
                         "7c8j": {},
                         "7c8d": {},
                         "7bh9": {},
@@ -961,11 +973,13 @@
                         "EMD-30460",
                         "EMD-30333",
                         "EMD-30332",
+                        "EMD-30326",
                         "EMD-30305",
                         "EMD-30247",
                         "EMD-30039",
                         "EMD-23279",
                         "EMD-23277",
+                        "EMD-23211",
                         "EMD-23156",
                         "EMD-23097",
                         "EMD-23095",
@@ -1465,6 +1479,7 @@
                 "Papain-like proteinase"
             ],
             "PDB": {
+                "7nfv": {},
                 "6w9c": {
                     "validation": {
                         "isolde": [
@@ -1750,7 +1765,12 @@
                 },
                 "Ligands": {
                     "Misc-PDB": {
+                        "7los": {},
+                        "7llz": {},
+                        "7llf": {},
                         "7lg7": {},
+                        "7lbs": {},
+                        "7lbr": {},
                         "7kxb": {},
                         "7kqp": {},
                         "7krx": {},
@@ -1765,24 +1785,8 @@
                         "7jit": {},
                         "7jir": {},
                         "7d7t": {},
-                        "7cz4": {
-                            "validation": {
-                                "pdb-redo": [
-                                    {
-                                        "name": "7cjf"
-                                    }
-                                ]
-                            }
-                        },
-                        "7c33": {
-                            "validation": {
-                                "pdb-redo": [
-                                    {
-                                        "name": "7cjf"
-                                    }
-                                ]
-                            }
-                        },
+                        "7cz4": {},
+                        "7c33": {},
                         "7cmd": {},
                         "7cjm": {},
                         "7bf6": {},
@@ -2310,6 +2314,7 @@
                         "7lkr",
                         "7lfe",
                         "7ldx",
+                        "7lbn",
                         "7lb7",
                         "7l5d",
                         "7l0d",
@@ -2778,28 +2783,6 @@
                 }
             },
             "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "UfqxZJ",
-                        "model": "01",
-                        "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
-                    },
-                    {
-                        "project": "UfqxZJ",
-                        "model": "02",
-                        "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
-                    },
-                    {
-                        "project": "UfqxZJ",
-                        "model": "03",
-                        "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
-                    },
-                    {
-                        "project": "UfqxZJ",
-                        "model": "04",
-                        "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
-                    }
-                ],
                 "BSM-Arc": [
                     {
                         "model": "YP_009724397_1_v01"
