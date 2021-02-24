@@ -6,6 +6,7 @@ import { DbModel } from "../../../domain/entities/DbModel";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { useDebounce } from "../../hooks/use-debounce";
 import i18n from "../../utils/i18n";
+import { Link } from "../Link";
 import { ModelSearchProps } from "./ModelSearch";
 
 export const ModelSearchItem: React.FC<{
@@ -30,12 +31,17 @@ export const ModelSearchItem: React.FC<{
             <div className="name">
                 {item.id} - {item.name}
             </div>
+
             <ul>
                 <DescriptionItem field={i18n.t("Authors")} value={item.authors} />
                 <DescriptionItem field={i18n.t("Method")} value={item.method} />
                 <DescriptionItem field={i18n.t("Resolution")} value={item.resolution} />
                 <DescriptionItem field={i18n.t("Speciment state")} value={item.specimenState} />
             </ul>
+
+            <div className="external-link">
+                <Link name={i18n.t("External link")} url={item.url} />
+            </div>
         </React.Fragment>
     );
 
