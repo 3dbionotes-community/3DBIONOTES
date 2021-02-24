@@ -6,7 +6,6 @@ import { DbModel } from "../../../domain/entities/DbModel";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { useDebounce } from "../../hooks/use-debounce";
 import i18n from "../../utils/i18n";
-import { Link } from "../Link";
 import { ModelSearchProps } from "./ModelSearch";
 
 export const ModelSearchItem: React.FC<{
@@ -28,7 +27,9 @@ export const ModelSearchItem: React.FC<{
 
     const description = (
         <React.Fragment>
-            <div className="name">{item.name}</div>
+            <div className="name">
+                {item.id} - {item.name}
+            </div>
             <ul>
                 <DescriptionItem field={i18n.t("Authors")} value={item.authors} />
                 <DescriptionItem field={i18n.t("Method")} value={item.method} />
@@ -40,7 +41,7 @@ export const ModelSearchItem: React.FC<{
 
     return (
         <div className={className} onMouseEnter={setMouseOverD} onMouseLeave={unsetMouseOverD}>
-            <HtmlTooltip className="toolip" title={description} placement="top">
+            <HtmlTooltip className="tooltip" title={description} placement="top">
                 <div className="image">
                     <ReactImageFallback
                         className="image"
@@ -51,9 +52,7 @@ export const ModelSearchItem: React.FC<{
                 </div>
             </HtmlTooltip>
 
-            <div className="name">
-                <Link name={item.id} url={item.url} />
-            </div>
+            <div className="name">{item.id}</div>
 
             <div className="actions">
                 {isMouseOver && (
