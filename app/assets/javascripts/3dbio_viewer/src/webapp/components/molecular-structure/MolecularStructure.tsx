@@ -1,11 +1,17 @@
 import React from "react";
 import _ from "lodash";
 import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
-import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
+import { PDBeMolstarPlugin, Selector } from "@3dbionotes/pdbe-molstar/lib";
 
 import { debugVariable } from "../../../utils/debug";
 import i18n from "../../utils/i18n";
-import { DbItem, diffDbItems, getItems, SelectionState } from "../../view-models/SelectionState";
+import {
+    DbItem,
+    diffDbItems,
+    getItems,
+    SelectionState,
+    setMainEmdb,
+} from "../../view-models/SelectionState";
 
 import "./molstar.css";
 import "./molstar.scss";
@@ -19,10 +25,11 @@ declare global {
 
 interface MolecularStructureProps {
     selection: SelectionState;
+    onSelectionChange(newSelection: SelectionState): void;
 }
 
 export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
-    const { pluginRef } = usePdbePlugin(props.selection);
+    const { pluginRef } = usePdbePlugin(props.selection, props.onSelectionChange);
 
     return (
         <div ref={pluginRef} className="molecular-structure">
@@ -31,9 +38,15 @@ export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
     );
 };
 
-function usePdbePlugin(newSelection: SelectionState) {
+function usePdbePlugin(
+    newSelection: SelectionState,
+    onSelectionChange: (newSelection: SelectionState) => void
+) {
     const [pdbePlugin, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
-    const [selection, setSelection] = useReference<SelectionState>();
+
+    // Keep a reference with the previous value of selection, so we can diff with a new
+    // state and perform the imperative add/remove/update operations.
+    const [prevSelection, setPrevSelection] = useReference<SelectionState>();
 
     const pluginRef = React.useCallback(
         (element: HTMLDivElement | null) => {
@@ -44,11 +57,19 @@ function usePdbePlugin(newSelection: SelectionState) {
             const plugin = new window.PDBeMolstarPlugin();
             debugVariable({ pdbeMolstar: plugin });
 
+            plugin.events.loadComplete.subscribe(loaded => {
+                const emdbId = plugin.visual.getMapVolume();
+                if (!loaded || !emdbId) return;
+                const newEmdbSelection = setMainEmdb(newSelection, emdbId);
+                setPrevSelection(newEmdbSelection);
+                onSelectionChange(newEmdbSelection);
+            });
+
             plugin.render(element, initParams);
             setPdbePlugin(plugin);
-            setSelection({ ...newSelection, overlay: [] });
+            setPrevSelection({ ...newSelection, overlay: [] });
         },
-        [pdbePlugin, newSelection, setSelection]
+        [pdbePlugin, newSelection, setPrevSelection, onSelectionChange]
     );
 
     React.useEffect(() => {
@@ -60,7 +81,6 @@ function usePdbePlugin(newSelection: SelectionState) {
                 const itemId: string = item.id;
 
                 const url = `https://www.ebi.ac.uk/pdbe/model-server/v1/${itemId}/full?encoding=cif`;
-                const reload = false;
                 await plugin.load(
                     {
                         url,
@@ -68,29 +88,38 @@ function usePdbePlugin(newSelection: SelectionState) {
                         isBinary: false,
                         assemblyId: "1", // TODO
                     },
-                    reload
+                    false
                 );
 
-                plugin.visual.setVisibility(item.id.toUpperCase(), item.visible);
+                plugin.visual.setVisibility(getItemSelector(item), item.visible);
             }
 
             for (const item of removed) {
-                plugin.visual.remove(item.id.toUpperCase());
+                plugin.visual.remove(getItemSelector(item));
             }
 
             for (const item of updated) {
-                plugin.visual.setVisibility(item.id.toUpperCase(), item.visible);
+                plugin.visual.setVisibility(getItemSelector(item), item.visible);
             }
 
-            setSelection(newSelection);
+            setPrevSelection(newSelection);
         }
 
         if (pdbePlugin) {
-            load(pdbePlugin, getItems(selection), getItems(newSelection));
+            load(pdbePlugin, getItems(prevSelection), getItems(newSelection));
         }
-    }, [pdbePlugin, newSelection, selection, setSelection]);
+    }, [pdbePlugin, newSelection, prevSelection, setPrevSelection]);
 
     return { pluginRef };
+}
+
+function getItemSelector(item: DbItem): Selector {
+    switch (item.type) {
+        case "pdb":
+            return { label: item.id.toUpperCase() };
+        case "emdb":
+            return { description: item.id.toUpperCase() };
+    }
 }
 
 function getPdbePluginInitParams(pdbId: string): InitParams {
@@ -103,7 +132,7 @@ function getPdbePluginInitParams(pdbId: string): InitParams {
         moleculeId: pdbId,
         pdbeUrl: "https://www.ebi.ac.uk/pdbe/",
         encoding: "cif",
-        loadMaps: false,
+        loadMaps: true,
         validationAnnotation: true,
         hideControls: false,
         superposition: false,

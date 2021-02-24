@@ -10,7 +10,7 @@ export const MolecularStructurePage: React.FC<{ selector: string }> = React.memo
     return (
         <React.Fragment>
             <ViewerSelector selection={selection} onSelectionChange={setSelection} />
-            <MolecularStructure selection={selection} />
+            <MolecularStructure selection={selection} onSelectionChange={setSelection} />
         </React.Fragment>
     );
 });

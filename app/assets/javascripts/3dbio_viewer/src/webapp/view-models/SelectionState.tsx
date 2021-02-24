@@ -16,6 +16,15 @@ export interface DbItem {
     visible: boolean;
 }
 
+export function setMainEmdb(selection: SelectionState, emdbId: string): SelectionState {
+    if (!selection.main) return selection;
+
+    return {
+        ...selection,
+        main: { ...selection.main, emdb: { type: "emdb", id: emdbId, visible: true } },
+    };
+}
+
 export function removeOverlayItem(selection: SelectionState, id: string): SelectionState {
     const newOverlay = selection.overlay.map(item => (item.id === id ? null : item));
     return { ...selection, overlay: _.compact(newOverlay) };
