@@ -1,27 +1,23 @@
 import React from "react";
-import _ from "lodash";
-import { Close, Search } from "@material-ui/icons";
 import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    IconButton,
     CircularProgress,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    IconButton,
 } from "@material-ui/core";
-import classnames from "classnames";
-
-import i18n from "../../utils/i18n";
-import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
-import { useBooleanState } from "../../hooks/use-boolean";
-import { useDebounce } from "../../hooks/use-debounce";
-
+import { Close, Search } from "@material-ui/icons";
+import _ from "lodash";
 import { DbModel, DbModelCollection } from "../../../domain/entities/DbModel";
-import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
-
-import "./ModelSearch.css";
 import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value";
+import { useDebounce } from "../../hooks/use-debounce";
+import i18n from "../../utils/i18n";
 import { ActionType } from "../../view-models/SelectionState";
+import { useAppContext } from "../AppContext";
+import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
+import "./ModelSearch.css";
+import { ModelSearchItem } from "./ModelSearchItem";
 
 export interface ModelSearchProps {
     title: string;
@@ -99,7 +95,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = props => {
                                 <div className="feedback">{i18n.t("No results")}</div>
                             ) : (
                                 searchState.data.map((item, idx) => (
-                                    <ModelItem key={idx} item={item} onSelect={onSelect} />
+                                    <ModelSearchItem key={idx} item={item} onSelect={onSelect} />
                                 ))
                             )}
                         </React.Fragment>
@@ -145,50 +141,3 @@ function useDbModelSearch(modelType: ModelSearchType) {
 
     return [searchState, startSearch] as const;
 }
-
-const ModelItem: React.FC<{
-    item: DbModel;
-    onSelect: ModelSearchProps["onSelect"];
-}> = props => {
-    const { item, onSelect } = props;
-    const [isMouseOver, { enable: setOver, disable: unsetOver }] = useBooleanState(false);
-    const debounceMs = 50;
-    const setMouseOverD = useDebounce(setOver, debounceMs);
-    const unsetMouseOverD = useDebounce(unsetOver, debounceMs);
-    const className = classnames("item", isMouseOver ? "hover" : null);
-    const selectModel = React.useCallback(() => onSelect("select", item), [onSelect, item]);
-    const appendModel = React.useCallback(() => onSelect("append", item), [onSelect, item]);
-
-    // Add rich HTML tooltip
-    // name,author,method,resolution,specimenstate
-    // fieldurl=true
-
-    // We cannot use *.*. On empty, try to get by relevance (mapReleaseDate?)
-
-    // Img src may not exist, show pretty
-
-    const title = `[${item.score.toFixed(3)}] ${item.description}`;
-
-    return (
-        <div className={className} onMouseEnter={setMouseOverD} onMouseLeave={unsetMouseOverD}>
-            <div className="image">
-                <img src={item.imageUrl} title={title} />
-            </div>
-
-            <div className="name">{item.id}</div>
-
-            <div className="actions">
-                {isMouseOver && (
-                    <div>
-                        <button className="action" onClick={selectModel}>
-                            {i18n.t("Select")}
-                        </button>
-                        <button className="action" onClick={appendModel}>
-                            {i18n.t("Append")}
-                        </button>
-                    </div>
-                )}
-            </div>
-        </div>
-    );
-};

@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import _ from "lodash";
 import { DbModel, DbModelCollection } from "../../domain/entities/DbModel";
+import { getBlastUrl } from "../../domain/entities/Fragment";
 import { FutureData } from "../../domain/entities/FutureData";
 import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
 import { Future } from "../../utils/future";
@@ -49,37 +50,33 @@ export class EbiDbModelRepository implements DbModelRepository {
     }
 }
 
+const apiFields = ["name", "author", "method", "resolution", "specimenstate"] as const;
+
+type ApiField = typeof apiFields[number];
+
 interface ApiSearchParams {
     format: "JSON";
     size?: number;
     requestFrom?: "queryBuilder";
     fieldurl?: boolean;
-    viewurl?: boolean;
     fields?: string;
     query?: string;
     entryattrs?: "score";
 }
 
-interface ApiSearchResponse<Field_ extends Field> {
+interface ApiSearchResponse {
     hitCount: number;
-    entries: ApiEntryResponse<Field_>[];
+    entries: ApiEntryResponse[];
     facets: unknown[];
 }
 
-type Field = "name" | "description";
-
-interface ApiEntryResponse<Field_ extends Field> {
+interface ApiEntryResponse {
     acc: string;
     id: string;
     source: "pdbe";
     score: number;
-    fields: Pick<
-        {
-            name: string[];
-            description: string[];
-        },
-        Field_
-    >;
+    fields: Record<ApiField, string[] | undefined>;
+    fieldURLs: Array<{ name: string; value: string }>;
 }
 
 function request<Data>(url: string, params: ApiSearchParams): Future<DefaultError, Data> {
@@ -94,22 +91,39 @@ function getPdbModels(
 ): FutureData<DbModel[]> {
     if (!performSearch || !query.trim()) return Future.success([]);
 
-    const pdbResults = request<ApiSearchResponse<"name" | "description">>(config.searchUrl, {
+    const pdbResults = request<ApiSearchResponse>(config.searchUrl, {
         format: "JSON",
         // Get more records so we can sort by score on the grouped models
         size: searchPageSize * 10,
-        fields: "name,description",
+        fields: apiFields.join(","),
         query: query,
         entryattrs: "score",
+        fieldurl: true,
     });
 
     return pdbResults.map((res): DbModel[] => {
         return res.entries.map(entry => ({
             type: config.type,
             id: entry.id,
-            description: entry.fields.description[0] || "No description",
+            url: getUrl(entry),
+            name: fromArray(entry.fields.name),
+            authors: fromArray(entry.fields.author),
+            method: fromArray(entry.fields.method),
+            resolution: fromArray(entry.fields.resolution),
+            specimenState: fromArray(entry.fields.specimenstate),
             imageUrl: config.imageUrl(entry.id),
             score: entry.score,
         }));
     });
+}
+
+function fromArray(values: string[] | undefined): string | undefined {
+    return values ? values[0] : undefined;
+}
+
+function getUrl(entry: ApiEntryResponse): string | undefined {
+    const mainFieldUrl = entry.fieldURLs.find(field => field.name === "main");
+    if (!mainFieldUrl) return;
+    const path = mainFieldUrl.value.replace(/^\//, "");
+    return `https://www.ebi.ac.uk/${path}`;
 }
