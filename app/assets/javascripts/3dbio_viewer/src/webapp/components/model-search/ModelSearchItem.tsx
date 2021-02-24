@@ -23,10 +23,6 @@ export const ModelSearchItem: React.FC<{
     const selectModel = React.useCallback(() => onSelect("select", item), [onSelect, item]);
     const appendModel = React.useCallback(() => onSelect("append", item), [onSelect, item]);
 
-    // Img src may not exist, show it pretty
-    // Can we filter by score? to make smarted requests
-    // query=*.* returns irrelevant models. Can we sort by some relevance (mapReleaseDate?)
-
     const description = (
         <React.Fragment>
             <div className="name">

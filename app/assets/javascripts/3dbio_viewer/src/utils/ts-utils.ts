@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
 
 /* Define only the value type of an object and infer the keys:
@@ -12,4 +14,9 @@ export function recordOf<T>() {
     return function <Obj>(obj: { [K in keyof Obj]: T }) {
         return obj;
     };
+}
+
+export function assert<T>(value: T | undefined): T {
+    if (value === undefined) throw new Error("Assert error");
+    return value;
 }
