@@ -1,12 +1,87 @@
 .results {
     display: flex;
-    height: 250px;
+    flex-wrap: wrap;
+    margin-top: 22px;
 }
 
 .results img {
-    width: 11vw;
+    width: 10vw;
 }
 
-.model-search .params {
+.results .item,
+.results .image {
     display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.results .item .name {
+    text-align: center;
+}
+
+.item .actions {
+    text-align: center;
+    margin-top: 14px;
+}
+
+.model-search .params,
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.MuiDialogTitle-root {
+    background: #607d8b;
+    color: #fff;
+    padding: 8px 24px;
+    font-weight: 700;
+}
+
+.MuiDialogTitle-root .MuiIconButton-root {
+    color: #fff;
+}
+
+.MuiDialogTitle-root button {
+    float: right;
+}
+
+.MuiTypography-h6 {
+    line-height: 2.3 !important;
+}
+
+.MuiDialogContent-root {
+    padding: 24px 24px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.params {
+    justify-content: center;
+}
+
+.search input,
+.search input:focus {
+    outline: none;
+    border: solid 3px #607d8b;
+    border-radius: 10px;
+    padding: 12px 34px 12px 12px;
+    font-size: 1.2rem;
+}
+
+.search .MuiSvgIcon-root {
+    font-size: 1.8rem;
+    color: #575757;
+    margin-left: -38px;
+    margin-right: 18px;
+}
+
+.close,
+.open {
+    height: fit-content;
+    display: inline-flex;
+    align-items: center;
+}
+
+.upload-model {
+    padding: 10px 12px;
 }
