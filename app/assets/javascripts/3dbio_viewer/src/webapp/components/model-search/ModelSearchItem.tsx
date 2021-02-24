@@ -48,7 +48,7 @@ export const ModelSearchItem: React.FC<{
 
     return (
         <div className={className} onMouseEnter={setMouseOverD} onMouseLeave={unsetMouseOverD}>
-            <div className="image">
+            <div className="image-container">
                 <ReactImageFallback
                     className="image"
                     src={item.imageUrl}

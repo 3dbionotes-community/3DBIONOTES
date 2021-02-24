@@ -76,7 +76,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                     )}
 
                     <button onClick={openSearch}>
-                        <Search /> {i18n.t("Search")}
+                        <Search />
                     </button>
 
                     {isSearchOpen && (
