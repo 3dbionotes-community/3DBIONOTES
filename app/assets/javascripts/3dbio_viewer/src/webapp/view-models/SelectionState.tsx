@@ -105,17 +105,17 @@ export function getItemParam(item: DbItem | undefined): string | undefined {
 export function runAction(
     selection: SelectionState,
     action: ActionType,
-    model: DbModel
+    item: DbItem
 ): SelectionState {
     if (action === "select") {
         return {
-            main: { pdb: { type: "pdb", id: model.id, visible: true } },
+            main: { pdb: { type: "pdb", id: item.id, visible: true } },
             overlay: [],
         };
     } else if (action === "append") {
         return {
             ...selection,
-            overlay: [...selection.overlay, { type: "pdb", id: model.id, visible: true }],
+            overlay: [...selection.overlay, { type: "pdb", id: item.id, visible: true }],
         };
     } else {
         return selection;

@@ -20,8 +20,9 @@ export const ModelSearchItem: React.FC<{
     const setMouseOverD = useDebounce(setOver, debounceMs);
     const unsetMouseOverD = useDebounce(unsetOver, debounceMs);
     const className = classnames("item", isMouseOver ? "hover" : null);
-    const selectModel = React.useCallback(() => onSelect("select", item), [onSelect, item]);
-    const appendModel = React.useCallback(() => onSelect("append", item), [onSelect, item]);
+    const itemV = React.useMemo(() => ({ ...item, visible: true }), [item]);
+    const selectModel = React.useCallback(() => onSelect("select", itemV), [onSelect, itemV]);
+    const appendModel = React.useCallback(() => onSelect("append", itemV), [onSelect, itemV]);
     const isPdb = item.type === "pdb" || undefined;
 
     const description = (
