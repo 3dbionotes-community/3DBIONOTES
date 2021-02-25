@@ -27,7 +27,7 @@ export interface ModelSearchProps {
 
 type ModelSearchType = DbModel["type"] | "all";
 
-export const ModelSearch: React.FC<ModelSearchProps> = props => {
+export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const { title, onClose, onSelect } = props;
 
     const modelTypes = React.useMemo<DropdownProps<ModelSearchType>["items"]>(() => {
@@ -104,7 +104,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = props => {
             </DialogContent>
         </Dialog>
     );
-};
+});
 
 type SearchDataState<Data> =
     | { type: "empty" }
