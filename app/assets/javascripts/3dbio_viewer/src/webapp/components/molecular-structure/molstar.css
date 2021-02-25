@@ -6,3 +6,11 @@
 .msp-plugin .msp-layout-expanded {
     position: unset;
 }
+
+.msp-viewport-top-left-controls {
+    display: none;
+}
+
+.msp-pdbe-link {
+    display: none !important;
+}

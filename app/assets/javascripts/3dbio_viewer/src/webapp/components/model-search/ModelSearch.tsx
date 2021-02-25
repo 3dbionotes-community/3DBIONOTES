@@ -1,0 +1,143 @@
+import React from "react";
+import {
+    CircularProgress,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+} from "@material-ui/core";
+import { Close, Search } from "@material-ui/icons";
+import _ from "lodash";
+import { DbModel, DbModelCollection } from "../../../domain/entities/DbModel";
+import { useCallbackEffect } from "../../hooks/use-callback-effect";
+import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value";
+import { useDebounce } from "../../hooks/use-debounce";
+import i18n from "../../utils/i18n";
+import { ActionType } from "../../view-models/SelectionState";
+import { useAppContext } from "../AppContext";
+import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
+import "./ModelSearch.css";
+import { ModelSearchItem } from "./ModelSearchItem";
+
+export interface ModelSearchProps {
+    title: string;
+    onClose(): void;
+    onSelect(actionType: ActionType, selected: DbModel): void;
+}
+
+type ModelSearchType = DbModel["type"] | "all";
+
+export const ModelSearch: React.FC<ModelSearchProps> = props => {
+    const { title, onClose, onSelect } = props;
+
+    const modelTypes = React.useMemo<DropdownProps<ModelSearchType>["items"]>(() => {
+        return [
+            { id: "all", text: i18n.t("EMDB/PDB") },
+            { id: "emdb", text: i18n.t("EMDB") },
+            { id: "pdb", text: i18n.t("PDB") },
+        ];
+    }, []);
+
+    const placeholders = React.useMemo<Record<ModelSearchType, string>>(() => {
+        return {
+            all: i18n.t("Search EMDB or PDB"),
+            pdb: i18n.t("Search PDB"),
+            emdb: i18n.t("Search EMDB "),
+        };
+    }, []);
+
+    const [modelType, setModelType] = React.useState<ModelSearchType>("all");
+    const [searchState, startSearch] = useDbModelSearch(modelType);
+
+    return (
+        <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
+            <DialogTitle>
+                {title}
+                <IconButton onClick={onClose}>
+                    <Close />
+                </IconButton>
+            </DialogTitle>
+
+            <DialogContent>
+                <div className="params">
+                    <div className="search">
+                        <input
+                            aria-label={i18n.t("Search")}
+                            className="form-control"
+                            placeholder={placeholders[modelType]}
+                            type="text"
+                            onChange={startSearch}
+                        />
+                        <Search />
+                    </div>
+
+                    <Dropdown<ModelSearchType>
+                        text={i18n.t("Model type")}
+                        value={modelType}
+                        items={modelTypes}
+                        onClick={setModelType}
+                        showExpandIcon
+                    />
+
+                    <button className="upload-model">{i18n.t("Upload model")}</button>
+
+                    {searchState.type === "searching" && (
+                        <div className="spinner">
+                            <CircularProgress />
+                        </div>
+                    )}
+                </div>
+
+                <div className="results">
+                    {searchState.type === "results" && (
+                        <React.Fragment>
+                            {_.isEmpty(searchState.data) ? (
+                                <div className="feedback">{i18n.t("No results")}</div>
+                            ) : (
+                                searchState.data.map((item, idx) => (
+                                    <ModelSearchItem key={idx} item={item} onSelect={onSelect} />
+                                ))
+                            )}
+                        </React.Fragment>
+                    )}
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+};
+
+type SearchDataState<Data> =
+    | { type: "empty" }
+    | { type: "searching" }
+    | { type: "results"; data: Data };
+
+type SearchState = SearchDataState<DbModelCollection>;
+
+function useDbModelSearch(modelType: ModelSearchType) {
+    const { compositionRoot } = useAppContext();
+    const [searchState, setSearchState] = React.useState<SearchState>({ type: "empty" });
+
+    const search = React.useCallback(
+        (query: string) => {
+            setSearchState({ type: "searching" });
+            const searchType = modelType === "all" ? undefined : modelType;
+
+            return compositionRoot
+                .searchDbModels({ query, type: searchType })
+                .run(dbModelCollection => {
+                    const newState: SearchState =
+                        _.isEmpty(dbModelCollection) && !query
+                            ? { type: "empty" }
+                            : { type: "results", data: dbModelCollection };
+                    setSearchState(newState);
+                }, console.error);
+        },
+        [compositionRoot, modelType]
+    );
+
+    const searchFromString = useCallbackEffect(search);
+    const searchFromEv = useCallbackFromEventValue(searchFromString);
+    const startSearch = useDebounce(searchFromEv, 200);
+
+    return [searchState, startSearch] as const;
+}

@@ -1,11 +1,15 @@
+import { EbiDbModelRepository } from "./data/repositories/EbiDbModelRepository";
 import { ApiPdbRepository } from "./data/repositories/protvista/ApiPdbRepository";
 import { GetPdbUseCase } from "./domain/usecases/GetPdbUseCase";
+import { SearchDbModelsUseCase } from "./domain/usecases/SearchDbModelsUseCase";
 
 export function getCompositionRoot() {
     const pdbRepository = new ApiPdbRepository();
+    const dbModelRepository = new EbiDbModelRepository();
 
     return getExecute({
         getPdb: new GetPdbUseCase(pdbRepository),
+        searchDbModels: new SearchDbModelsUseCase(dbModelRepository),
     });
 }
 

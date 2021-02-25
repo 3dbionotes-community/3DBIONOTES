@@ -1,32 +1,30 @@
 import React from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
-import "./App.css";
-import { MolecularStructure } from "../../../webapp/components/molecular-structure/MolecularStructure";
+
 import { AppContext } from "../../../webapp/components/AppContext";
-import { ProtvistaViewer } from "../../components/protvista/ProtvistaViewer";
-import { RootViewer } from "../../../webapp/components/RootViewer";
 import { TrainingApp } from "../../../webapp/training-app";
 import { modules } from "../../../webapp/training-app/training-modules";
+import { ProtvistaViewer } from "../../components/protvista/ProtvistaViewer";
+import { MolecularStructureRoute } from "../MolecularStructurePage";
+import { RootViewerRoute } from "../RootViewerPage";
+
+import "./App.css";
+
+const showTraining = false;
 
 function App() {
     return (
         <AppContext>
             <HashRouter>
                 <Switch>
-                    <Route path="/molstar">
-                        <MolecularStructure />
-                    </Route>
-
-                    <Route path="/protvista">
-                        <ProtvistaViewer />
-                    </Route>
-
-                    <Route path="/">
-                        <RootViewer />
-                    </Route>
+                    <MolecularStructureRoute path="/molstar/:selector" />
+                    <Route path="/protvista" render={() => <ProtvistaViewer />} />
+                    <RootViewerRoute path="/:selector" />
+                    <RootViewerRoute path="/" />
                 </Switch>
             </HashRouter>
-            {false && <TrainingApp locale="en" modules={modules} />}
+
+            {showTraining && <TrainingApp locale="en" modules={modules} />}
         </AppContext>
     );
 }

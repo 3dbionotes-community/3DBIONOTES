@@ -4,7 +4,7 @@ import { FutureData } from "../../../domain/entities/FutureData";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { PdbRepository } from "../../../domain/repositories/PdbRepository";
 import { Future } from "../../../utils/future";
-import { AxiosBuilder, axiosRequest } from "../../../utils/future-axios";
+import { axiosRequest, defaultBuilder } from "../../../utils/future-axios";
 import { getTotalFeaturesLength, Track } from "../../../domain/entities/Track";
 import { debugVariable } from "../../../utils/debug";
 import { getEmValidationTrack, PdbAnnotations } from "./tracks/em-validation";
@@ -139,17 +139,6 @@ function getOrEmpty<Data>(url: string): Future<RequestError, Data | undefined> {
     });
 }
 
-const builder: AxiosBuilder<RequestError> = {
-    mapResponse: res => {
-        if (res.status >= 200 && res.status < 300) {
-            return ["success", res.data];
-        } else {
-            return ["error", { message: JSON.stringify(res.data) }];
-        }
-    },
-    mapNetworkError: (_req, message) => ({ status: 0, message }),
-};
-
 function request<Data>(request: AxiosRequestConfig): Future<RequestError, Data> {
-    return axiosRequest<RequestError, Data>(builder, request);
+    return axiosRequest<RequestError, Data>(defaultBuilder, request);
 }

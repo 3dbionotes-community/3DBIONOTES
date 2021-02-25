@@ -1,0 +1,98 @@
+#viewer-selector {
+    width: 45%;
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+}
+
+.selection {
+    display: flex;
+    margin-top: 4px;
+}
+
+.selection .unselected {
+    background-color: #eee;
+}
+
+.selection .selected {
+    background-color: #ccc;
+}
+
+.db-item .MuiIconButton-root {
+    background: #8d8d8d !important;
+    color: #fff !important;
+    height: fit-content;
+    padding: 6px;
+    margin-bottom: 8px;
+    margin-right: 4px;
+}
+
+.db-item .label {
+    margin-left: 42px;
+    color: #123546;
+    font-weight: 700;
+}
+
+.db-item .id {
+    color: #123546;
+    font-weight: 700;
+    font-size: 1.5em;
+}
+
+#viewer-selector .status button,
+.selectors button {
+    height: fit-content;
+    display: inline-flex;
+    align-items: center;
+}
+
+.selectors {
+    position: absolute;
+    right: 70px;
+}
+
+.selectors .close {
+    background-color: #747474;
+}
+
+.selection .selected,
+.selection .unselected {
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    margin-right: 4px;
+}
+
+.selection .unselected {
+    background-color: #dcdcdc;
+    border: solid 1px #979797;
+    color: #979797;
+}
+
+.selection .selected {
+    background-color: #d8d8d8;
+    border: solid 1px #575757;
+    color: #575757;
+}
+
+.selection .selected .MuiIconButton-root,
+.selection .unselected .MuiIconButton-root {
+    padding: 4px;
+}
+
+.selection .selected .MuiSvgIcon-root,
+.selection .unselected .MuiSvgIcon-root {
+    font-size: 1.2rem;
+}
+
+.selection .unselected .MuiSvgIcon-root {
+    color: #979797;
+}

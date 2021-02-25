@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@3dbionotes/pdbe-molstar@1.1.0-beta.1":
-  version "1.1.0-beta.1"
-  resolved "https://registry.npmjs.org/@3dbionotes/pdbe-molstar/-/pdbe-molstar-1.1.0-beta.1.tgz#9e6e8e774646679a089bd99561eec9cdca064702"
-  integrity sha512-9BLipZIeIksbubRKcabQwnCMafFshgHdDCMNLXUqRD0Lrlkdp+6DIs2wf4hqYZSarfnjp04xvdNaL4Z46akiVw==
+"@3dbionotes/pdbe-molstar@1.1.0-beta.2":
+  version "1.1.0-beta.2"
+  resolved "https://registry.npmjs.org/@3dbionotes/pdbe-molstar/-/pdbe-molstar-1.1.0-beta.2.tgz#602a63b86f6d9e0ffb72e7db9c8db6abc2f2c7b7"
+  integrity sha512-Mx2ouPoIBmpsreDikF6BSs9muYQOjH4l4xNPa/3RaNvPsvERzacqNE72vzuJBGCPxsJjnf7WVuAuSjHfu24sBA==
   dependencies:
     lit-element "^2.2.1"
     molstar "^1.1.1"
@@ -1944,6 +1944,11 @@
     "@types/connect" "*"
     "@types/node" "*"
 
+"@types/classnames@^2.2.11":
+  version "2.2.11"
+  resolved "https://registry.npmjs.org/@types/classnames/-/classnames-2.2.11.tgz#2521cc86f69d15c5b90664e4829d84566052c1cf"
+  integrity sha512-2koNhpWm3DgWRp5tpkiJ8JGc1xTn2q0l+jUNUE7oMKXUf5NpI9AIdC4kbjGNFBdHtcxBD18LAksoudAVhFKCjw==
+
 "@types/compression@1.7.0":
   version "1.7.0"
   resolved "https://registry.npmjs.org/@types/compression/-/compression-1.7.0.tgz#8dc2a56604873cf0dd4e746d9ae4d31ae77b2390"
@@ -2022,6 +2027,14 @@
   dependencies:
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
+
+"@types/hookrouter@^2.2.5":
+  version "2.2.5"
+  resolved "https://registry.npmjs.org/@types/hookrouter/-/hookrouter-2.2.5.tgz#f04dafd1e073da01ba85f79100c41de530969cea"
+  integrity sha512-uesCRVHgugHtpfdtXWcNH60gCvn7qwQVap6s2KtHRZ8uhDJear8osTmgImATc5aOUC6iNWJzeYMSvGUc/lFf2A==
+  dependencies:
+    "@types/react" "*"
+    csstype "^3.0.2"
 
 "@types/html-minifier-terser@^5.0.0":
   version "5.1.1"
@@ -2178,6 +2191,13 @@
   version "17.0.0"
   resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-17.0.0.tgz#b3b691eb956c4b3401777ee67b900cb28415d95a"
   integrity sha512-lUqY7OlkF/RbNtD5nIq7ot8NquXrdFrjSOR6+w9a9RFQevGi1oZO1dcJbXMeONAPKtZ2UrZOEJ5UOCVsxbLk/g==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-image-fallback@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.npmjs.org/@types/react-image-fallback/-/react-image-fallback-8.0.1.tgz#28e4ccdbf0ea4ba9f196af20d798c07a587bd373"
+  integrity sha512-DJTk1xtl6o4JUBZu3hskvWjii8CDn/VBFHYZ3IcibnQ4U/MCGLftlYIsCDkat3BA1S+/vh4jL+11Qt+Zbt899w==
   dependencies:
     "@types/react" "*"
 
@@ -3904,7 +3924,7 @@ class-utils@^0.3.5:
 
 classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
+  resolved "https://registry.npmjs.org/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
 
 clean-css@^4.2.3:
@@ -5908,6 +5928,13 @@ fill-range@^7.0.1:
   dependencies:
     to-regex-range "^5.0.1"
 
+filter-invalid-dom-props@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/filter-invalid-dom-props/-/filter-invalid-dom-props-1.0.0.tgz#44d0d0306657b2584e04f71d428229ebb9867ca1"
+  integrity sha1-RNDQMGZXslhOBPcdQoIp67mGfKE=
+  dependencies:
+    html-attributes "1.1.0"
+
 finalhandler@~1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/finalhandler/-/finalhandler-1.1.2.tgz#b7e7d000ffd11938d0fdb053506f6ebabe9f587d"
@@ -6513,6 +6540,11 @@ hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.1.0, hoist-non-react-
   dependencies:
     react-is "^16.7.0"
 
+hookrouter@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.npmjs.org/hookrouter/-/hookrouter-1.2.5.tgz#ea1b88fd9f6a48816b17145bfb2b38dfc93df21e"
+  integrity sha512-9OLve2u+JZDCOgPnxJu5dvg/mU1w2ZWWlSOFxCKcGQKRSH1MXI8tMwEgm64mQfjZLET/7yFRTUrZ4hUYoK0ezw==
+
 hoopy@^0.1.4:
   version "0.1.4"
   resolved "https://registry.npmjs.org/hoopy/-/hoopy-0.1.4.tgz#609207d661100033a9a9402ad3dea677381c1b1d"
@@ -6542,6 +6574,11 @@ hsla-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/hsla-regex/-/hsla-regex-1.0.0.tgz#c1ce7a3168c8c6614033a4b5f7877f3b225f9c38"
   integrity sha1-wc56MWjIxmFAM6S194d/OyJfnDg=
+
+html-attributes@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/html-attributes/-/html-attributes-1.1.0.tgz#82027a4fac7a6070ea6c18cc3886aea18d6dea09"
+  integrity sha1-ggJ6T6x6YHDqbBjMOIauoY1t6gk=
 
 html-comment-regex@^1.1.0:
   version "1.1.2"
@@ -10431,7 +10468,7 @@ prompts@2.4.0, prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -10713,6 +10750,14 @@ react-event-listener@^0.6.2:
     "@babel/runtime" "^7.2.0"
     prop-types "^15.6.0"
     warning "^4.0.1"
+
+react-image-fallback@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.npmjs.org/react-image-fallback/-/react-image-fallback-8.0.0.tgz#18a88c3e011ee683f35fab1dd6e88eb5152b18ec"
+  integrity sha512-vvlxApJU7/mVl/1PYZTYROHZsG8cBxhHWj4JqkjN/ZAyf5srdAdIW0fg25jz5CYhGbKRJyv1WRrkNiy5FOA7kw==
+  dependencies:
+    filter-invalid-dom-props "1.0.0"
+    prop-types "^15.5.10"
 
 react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.6:
   version "16.13.1"
