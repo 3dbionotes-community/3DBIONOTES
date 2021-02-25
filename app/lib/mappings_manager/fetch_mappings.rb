@@ -6,6 +6,11 @@ module MappingsManager
       return queryPDBfromEMDB(emdbId)
     end
 
+    include SourceMappings::FetchEmdbFromPdb
+    def  fetchEmdbfromPDB(pdbId)
+      return queryEmdbfromPDB(pdbId)
+    end
+
     include SourceMappings::FetchPdbFromUniprot
     def  fetchPDBfromUniprot(acc)
       return queryPDBfromUniprot(acc)
