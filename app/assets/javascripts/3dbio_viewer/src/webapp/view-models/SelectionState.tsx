@@ -17,7 +17,7 @@ export interface DbItem {
 }
 
 export function setMainEmdb(selection: SelectionState, emdbId: string): SelectionState {
-    if (!selection.main) return selection;
+    if (!selection.main || selection.main?.emdb?.id === emdbId) return selection;
 
     return {
         ...selection,

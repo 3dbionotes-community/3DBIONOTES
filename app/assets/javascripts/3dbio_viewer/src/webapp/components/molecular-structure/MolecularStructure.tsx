@@ -48,6 +48,19 @@ function usePdbePlugin(
     // state and perform the imperative add/remove/update operations.
     const [prevSelection, setPrevSelection] = useReference<SelectionState>();
 
+    const setEmdbFromLoadEvent = React.useCallback(
+        (plugin: PDBeMolstarPlugin, loaded) => {
+            const emdbId = plugin.visual.getMapVolume();
+            if (!loaded || !emdbId) return;
+            const newEmdbSelection = setMainEmdb(newSelection, emdbId);
+            setPrevSelection(newEmdbSelection);
+            onSelectionChange(newEmdbSelection);
+            const emdbItem = newEmdbSelection.main?.emdb;
+            if (emdbItem) plugin.visual.setVisibility(getItemSelector(emdbItem), emdbItem.visible);
+        },
+        [pdbePlugin, setPrevSelection, onSelectionChange]
+    );
+
     const pluginRef = React.useCallback(
         (element: HTMLDivElement | null) => {
             const pluginAlreadyRendered = Boolean(pdbePlugin);
@@ -57,15 +70,9 @@ function usePdbePlugin(
             const plugin = new window.PDBeMolstarPlugin();
             debugVariable({ pdbeMolstar: plugin });
 
-            plugin.events.loadComplete.subscribe(loaded => {
-                const emdbId = plugin.visual.getMapVolume();
-                if (!loaded || !emdbId) return;
-                const newEmdbSelection = setMainEmdb(newSelection, emdbId);
-                setPrevSelection(newEmdbSelection);
-                onSelectionChange(newEmdbSelection);
-            });
-
+            plugin.events.loadComplete.subscribe(loaded => setEmdbFromLoadEvent(plugin, loaded));
             plugin.render(element, initParams);
+
             setPdbePlugin(plugin);
             setPrevSelection({ ...newSelection, overlay: [] });
         },
