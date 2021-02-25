@@ -4,7 +4,7 @@ import { RootViewer } from "../components/RootViewer";
 import { useViewerSelector } from "../components/viewer-selector/viewer-selector.hooks";
 
 export const RootViewerPage: React.FC<{ selector?: string }> = React.memo(props => {
-    const [selection, setSelection] = useViewerSelector(props.selector || "6w9c");
+    const [selection, setSelection] = useViewerSelector(props.selector || "6vsb");
 
     return <RootViewer selection={selection} onSelectionChange={setSelection} />;
 });

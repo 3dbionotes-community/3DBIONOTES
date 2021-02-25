@@ -2,7 +2,9 @@ import React from "react";
 
 /* Functionality of React.useRef with the signature of React.useState */
 
-export function useReference<T>(initialValue?: T): [T | undefined, (newValue: T) => void] {
+export function useReference<T>(
+    initialValue?: T
+): [React.MutableRefObject<T | undefined>, (newValue: T) => void] {
     const ref = React.useRef<T>();
     if (ref.current === undefined) ref.current = initialValue;
 
@@ -13,5 +15,5 @@ export function useReference<T>(initialValue?: T): [T | undefined, (newValue: T)
         [ref]
     );
 
-    return [ref.current, setNewValue];
+    return [ref, setNewValue];
 }

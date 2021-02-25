@@ -46,19 +46,20 @@ function usePdbePlugin(
 
     // Keep a reference with the previous value of selection, so we can diff with a new
     // state and perform the imperative add/remove/update operations.
-    const [prevSelection, setPrevSelection] = useReference<SelectionState>();
+    const [prevSelectionRef, setPrevSelection] = useReference<SelectionState>();
 
     const setEmdbFromLoadEvent = React.useCallback(
         (plugin: PDBeMolstarPlugin, loaded) => {
+            const selection = prevSelectionRef.current;
             const emdbId = plugin.visual.getMapVolume();
-            if (!loaded || !emdbId) return;
-            const newEmdbSelection = setMainEmdb(newSelection, emdbId);
+            if (!loaded || !emdbId || !selection || selection.main?.emdb?.id === emdbId) return;
+            const newEmdbSelection = setMainEmdb(selection, emdbId);
             setPrevSelection(newEmdbSelection);
             onSelectionChange(newEmdbSelection);
             const emdbItem = newEmdbSelection.main?.emdb;
             if (emdbItem) plugin.visual.setVisibility(getItemSelector(emdbItem), emdbItem.visible);
         },
-        [pdbePlugin, setPrevSelection, onSelectionChange]
+        [prevSelectionRef, setPrevSelection, onSelectionChange]
     );
 
     const pluginRef = React.useCallback(
@@ -76,7 +77,7 @@ function usePdbePlugin(
             setPdbePlugin(plugin);
             setPrevSelection({ ...newSelection, overlay: [] });
         },
-        [pdbePlugin, newSelection, setPrevSelection, onSelectionChange]
+        [pdbePlugin, newSelection, setPrevSelection, setEmdbFromLoadEvent]
     );
 
     React.useEffect(() => {
@@ -109,13 +110,15 @@ function usePdbePlugin(
                 plugin.visual.setVisibility(getItemSelector(item), item.visible);
             }
 
+            plugin.visual.reset({ camera: true });
+
             setPrevSelection(newSelection);
         }
 
         if (pdbePlugin) {
-            load(pdbePlugin, getItems(prevSelection), getItems(newSelection));
+            load(pdbePlugin, getItems(prevSelectionRef.current), getItems(newSelection));
         }
-    }, [pdbePlugin, newSelection, prevSelection, setPrevSelection]);
+    }, [pdbePlugin, newSelection, prevSelectionRef, setPrevSelection]);
 
     return { pluginRef };
 }
