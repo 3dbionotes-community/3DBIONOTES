@@ -17,7 +17,7 @@ export const RootViewer: React.FC<RootViewerProps> = props => {
             <ViewerSelector selection={selection} onSelectionChange={onSelectionChange} />
 
             <div id="left">
-                <MolecularStructure selection={selection} />
+                <MolecularStructure selection={selection} onSelectionChange={onSelectionChange} />
             </div>
 
             <div id="right">

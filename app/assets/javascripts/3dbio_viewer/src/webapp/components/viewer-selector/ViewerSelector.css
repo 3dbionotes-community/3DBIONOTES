@@ -47,6 +47,10 @@
     font-size: 1.5em;
 }
 
+.db-item.emdb {
+    margin-left: 15px;
+}
+
 #viewer-selector .status button,
 .selectors button {
     height: fit-content;

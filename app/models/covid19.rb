@@ -103,6 +103,21 @@ class Covid19
     end
   end
 
+  def self.get_refmac_links(title, style, pdb_key, hash, keys)
+    return [] unless hash && keys
+    entries = hash.dig(*keys) || []
+
+    with_indexes(entries, title).map do |entry, title_indexed|
+      entry_name, uuid = entry.values_at("name", "uuid")
+      {
+        title: title_indexed,
+        name: entry_name,
+        style: style,
+        query_url: "/refmac/#{pdb_key}/#{entry_name}",
+      }
+    end
+  end
+
   def self.get_related_keys(data)
     case
     when data.is_a?(Array)
@@ -137,6 +152,7 @@ class Covid19
         links: [
           *get_pdb_redo_links("PDB-Redo", :turq, pdb_key, pdb_hash, ["validation", "pdb-redo"]),
           *get_isolde_links("Isolde", :cyan, pdb_key, pdb_hash, ["validation", "isolde"]),
+          *get_refmac_links("Refmac", :blue_gray, pdb_key, pdb_hash, ["validation", "refmac"]),
         ],
       })
 
@@ -286,7 +302,7 @@ class Covid19
           card("PDB", *parse_pdb(protein, ["PDB"])),
           card("EMDB", parse_emdb(protein, ["EMDB"])),
           card_wrapper("Interactions", [
-            card("P-P Interactions", *parse_db_with_experiments(protein, ["Interactions", "P-P-Interactions"])),
+            card("Protein-Protein Interactions", *parse_db_with_experiments(protein, ["Interactions", "P-P-Interactions"])),
             card("Ligands", *parse_db_with_experiments(protein, ["Interactions", "Ligands"])),
           ]),
           card_wrapper("Related", [

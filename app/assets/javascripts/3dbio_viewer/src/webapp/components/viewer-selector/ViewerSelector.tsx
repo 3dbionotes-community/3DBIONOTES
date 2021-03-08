@@ -17,6 +17,7 @@ import { ModelSearch, ModelSearchProps } from "../model-search/ModelSearch";
 import "./ViewerSelector.css";
 import { SelectionItem } from "./SelectionItem";
 import { useUpdateActions } from "../../hooks/use-update-actions";
+import classnames from "classnames";
 
 interface ViewerSelectorProps {
     selection: SelectionState;
@@ -38,13 +39,13 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
         { id: "L2", text: "Ligand 2" },
     ];
 
-    const [isSearchOpen, { enable: openSearch, disable: closeSearch }] = useBooleanState(true);
+    const [isSearchOpen, { enable: openSearch, disable: closeSearch }] = useBooleanState(false);
 
     const update = useUpdateActions(onSelectionChange, actions);
 
     const runModelSearchAction = React.useCallback<ModelSearchProps["onSelect"]>(
-        (action, model) => {
-            const newSelection = runAction(selection, action, model);
+        (action, item) => {
+            const newSelection = runAction(selection, action, item);
             onSelectionChange(newSelection);
             closeSearch();
         },
@@ -66,7 +67,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                     )}
 
                     {selection.main && selection.main.emdb && (
-                        <MainItemBox label={i18n.t("EMDB")}>
+                        <MainItemBox label={i18n.t("EMDB")} className="emdb">
                             <SelectionItem
                                 selection={selection}
                                 item={selection.main.emdb}
@@ -120,11 +121,11 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     );
 };
 
-const MainItemBox: React.FC<{ label: string }> = props => {
-    const { label, children } = props;
+const MainItemBox: React.FC<{ label: string; className?: string }> = props => {
+    const { label, className, children } = props;
 
     return (
-        <div className="db-item">
+        <div className={classnames("db-item", className)}>
             <div className="label">{label}</div>
             <div className="content">{children}</div>
         </div>

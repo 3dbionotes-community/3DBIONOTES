@@ -2,6 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     margin-top: 22px;
+    min-height: 30px;
 }
 
 .results img {

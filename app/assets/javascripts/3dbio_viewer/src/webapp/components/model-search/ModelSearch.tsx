@@ -13,7 +13,7 @@ import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value";
 import { useDebounce } from "../../hooks/use-debounce";
 import i18n from "../../utils/i18n";
-import { ActionType } from "../../view-models/SelectionState";
+import { ActionType, DbItem } from "../../view-models/SelectionState";
 import { useAppContext } from "../AppContext";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import "./ModelSearch.css";
@@ -22,12 +22,12 @@ import { ModelSearchItem } from "./ModelSearchItem";
 export interface ModelSearchProps {
     title: string;
     onClose(): void;
-    onSelect(actionType: ActionType, selected: DbModel): void;
+    onSelect(actionType: ActionType, selected: DbItem): void;
 }
 
 type ModelSearchType = DbModel["type"] | "all";
 
-export const ModelSearch: React.FC<ModelSearchProps> = props => {
+export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const { title, onClose, onSelect } = props;
 
     const modelTypes = React.useMemo<DropdownProps<ModelSearchType>["items"]>(() => {
@@ -104,7 +104,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = props => {
             </DialogContent>
         </Dialog>
     );
-};
+});
 
 type SearchDataState<Data> =
     | { type: "empty" }

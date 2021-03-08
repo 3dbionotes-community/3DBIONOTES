@@ -5,6 +5,7 @@ import { FutureData } from "../../domain/entities/FutureData";
 import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
 import { Future } from "../../utils/future";
 import { axiosRequest, defaultBuilder, DefaultError } from "../../utils/future-axios";
+import { assert } from "../../utils/ts-utils";
 
 const searchPageSize = 30;
 
@@ -83,19 +84,37 @@ function request<Data>(url: string, params: ApiSearchParams): Future<DefaultErro
     return axiosRequest<DefaultError, Data>(defaultBuilder, request);
 }
 
+function getStringDate(options: { yearsOffset?: number } = {}): string {
+    const { yearsOffset = 0 } = options;
+    const date = new Date();
+    date.setFullYear(date.getFullYear() - yearsOffset);
+    const stringDate = date.toISOString().split("T")[0];
+    return assert(stringDate);
+}
+
+const startDate = getStringDate({ yearsOffset: -1 });
+const endDate = getStringDate();
+
+const emptySearchesByType: Record<DbModel["type"], string> = {
+    pdb: `last_modification_date:[${startDate} TO ${endDate}]`,
+    emdb: `headerReleaseDate_date:[${startDate} TO ${endDate}]`,
+};
+
 function getPdbModels(
     performSearch: boolean,
     config: ItemConfig,
     query: string
 ): FutureData<DbModel[]> {
-    if (!performSearch || !query.trim()) return Future.success([]);
+    if (!performSearch) return Future.success([]);
+
+    const searchQuery = query.trim() ? query : emptySearchesByType[config.type];
 
     const pdbResults = request<ApiSearchResponse>(config.searchUrl, {
         format: "JSON",
-        // Get more records so we can sort by score on the grouped models
+        // Get more records so we can do a more meaningful sorting by score on the grouped collection
         size: searchPageSize * 10,
         fields: apiFields.join(","),
-        query: query,
+        query: searchQuery,
         entryattrs: "score",
         fieldurl: true,
     });
@@ -104,14 +123,14 @@ function getPdbModels(
         return res.entries.map(entry => ({
             type: config.type,
             id: entry.id,
+            score: entry.score,
             url: getUrl(entry),
+            imageUrl: config.imageUrl(entry.id),
             name: fromArray(entry.fields.name),
             authors: fromArray(entry.fields.author),
             method: fromArray(entry.fields.method),
             resolution: fromArray(entry.fields.resolution),
             specimenState: fromArray(entry.fields.specimenstate),
-            imageUrl: config.imageUrl(entry.id),
-            score: entry.score,
         }));
     });
 }
@@ -123,6 +142,7 @@ function fromArray(values: string[] | undefined): string | undefined {
 function getUrl(entry: ApiEntryResponse): string | undefined {
     const mainFieldUrl = entry.fieldURLs.find(field => field.name === "main");
     if (!mainFieldUrl) return;
+
     const path = mainFieldUrl.value.replace(/^\//, "");
     return `https://www.ebi.ac.uk/${path}`;
 }

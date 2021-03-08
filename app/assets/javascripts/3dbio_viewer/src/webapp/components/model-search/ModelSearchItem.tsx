@@ -20,12 +20,10 @@ export const ModelSearchItem: React.FC<{
     const setMouseOverD = useDebounce(setOver, debounceMs);
     const unsetMouseOverD = useDebounce(unsetOver, debounceMs);
     const className = classnames("item", isMouseOver ? "hover" : null);
-    const selectModel = React.useCallback(() => onSelect("select", item), [onSelect, item]);
-    const appendModel = React.useCallback(() => onSelect("append", item), [onSelect, item]);
-
-    // Img src may not exist, show it pretty
-    // Can we filter by score? to make smarted requests
-    // query=*.* returns irrelevant models. Can we sort by some relevance (mapReleaseDate?)
+    const itemV = React.useMemo(() => ({ ...item, visible: true }), [item]);
+    const selectModel = React.useCallback(() => onSelect("select", itemV), [onSelect, itemV]);
+    const appendModel = React.useCallback(() => onSelect("append", itemV), [onSelect, itemV]);
+    const isPdb = item.type === "pdb" || undefined;
 
     const description = (
         <React.Fragment>
@@ -68,11 +66,11 @@ export const ModelSearchItem: React.FC<{
             <div className="actions">
                 {isMouseOver && (
                     <div>
-                        <button className="action" onClick={selectModel}>
+                        <button className="action" onClick={isPdb && selectModel}>
                             {i18n.t("Select")}
                         </button>
 
-                        <button className="action" onClick={appendModel}>
+                        <button className="action" onClick={isPdb && appendModel}>
                             {i18n.t("Append")}
                         </button>
                     </div>
@@ -82,7 +80,12 @@ export const ModelSearchItem: React.FC<{
     );
 });
 
-const DescriptionItem: React.FC<{ field: string; value: string | undefined }> = props => {
+interface DescriptionItemProps {
+    field: string;
+    value: string | undefined;
+}
+
+const DescriptionItem: React.FC<DescriptionItemProps> = React.memo(props => {
     const { field, value } = props;
     if (!value) return null;
 
@@ -92,7 +95,7 @@ const DescriptionItem: React.FC<{ field: string; value: string | undefined }> = 
             <span className="value">{value}</span>
         </li>
     );
-};
+});
 
 const HtmlTooltip = withStyles(theme => ({
     tooltip: {
