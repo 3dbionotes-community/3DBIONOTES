@@ -2335,6 +2335,38 @@
                 "7bb2": {}
             },
             "CompModels": {
+                "swiss-model": [
+                    {
+                        "model": "01",
+                        "project": "4dt6Sh",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "model": "02",
+                        "project": "4dt6Sh",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "model": "03",
+                        "project": "4dt6Sh",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "model": "04",
+                        "project": "4dt6Sh",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "model": "05",
+                        "project": "4dt6Sh",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "model": "06",
+                        "project": "4dt6Sh",
+                        "description": "High quality models are available."
+                    }
+                ],
                 "BSM-Arc": [
                     {
                         "model": "YP_009725301_v01"
@@ -2830,6 +2862,23 @@
                 }
             },
             "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "UfqxZJ",
+                        "model": "01",
+                        "description": "High quality models are available.Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6wzo, 6wzq, 6yi3, 6yun, 6zco, 7acs, 7act, 7c22, 7cdz, 7ce0, 7de1) is available. Partial coverage by experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
+                    },
+                    {
+                        "project": "UfqxZJ",
+                        "model": "02",
+                        "description": "High quality models are available.Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6wzo, 6wzq, 6yi3, 6yun, 6zco, 7acs, 7act, 7c22, 7cdz, 7ce0, 7de1) is available. Partial coverage by experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
+                    },
+                    {
+                        "project": "UfqxZJ",
+                        "model": "03",
+                        "description": "High quality models are available.Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6wzo, 6wzq, 6yi3, 6yun, 6zco, 7acs, 7act, 7c22, 7cdz, 7ce0, 7de1) is available. Partial coverage by experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
+                    }
+                ],
                 "BSM-Arc": [
                     {
                         "model": "YP_009724397_1_v01"
@@ -2937,12 +2986,17 @@
                     {
                         "project": "JDUya4",
                         "model": "01",
-                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     },
                     {
                         "project": "JDUya4",
                         "model": "02",
-                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
+                    },
+                    {
+                        "project": "JDUya4",
+                        "model": "03",
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     }
                 ],
                 "BMS-Arc": [
@@ -3307,17 +3361,27 @@
                     {
                         "project": "M4qFvm",
                         "model": "01",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     },
                     {
                         "project": "M4qFvm",
                         "model": "02",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     },
                     {
                         "project": "M4qFvm",
                         "model": "03",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
+                    },
+                    {
+                        "project": "M4qFvm",
+                        "model": "04",
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
+                    },
+                    {
+                        "project": "M4qFvm",
+                        "model": "05",
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     }
                 ],
                 "BSM-Arc": [
@@ -3421,6 +3485,20 @@
                     }
                 }
             },
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "1SagwD",
+                        "model": "01",
+                        "description": "High quality models are available which are predicted to form homo-dimers. An experimental structure (PDB: 6z4u) is available. An experimental hetero-oligomeric complex (PDB: 7kdt) exists and a high quality model can be extracted but should be used with care."
+                    },
+                    {
+                        "project": "1SagwD",
+                        "model": "02",
+                        "description": "High quality models are available which are predicted to form homo-dimers. An experimental structure (PDB: 6z4u) is available. An experimental hetero-oligomeric complex (PDB: 7kdt) exists and a high quality model can be extracted but should be used with care."
+                    }
+                ]
+            },
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
@@ -3431,6 +3509,18 @@
                     ]
                 }
             }
+        },
+        "ORF9C": {
+            "uniprotAccession": [
+                "P0DTD3"
+            ],
+            "description": "May play a role in host-virus interaction, contains a putative transmembrane domain, interacts with membrane proteins in multiple cellular compartments",
+            "names": [
+                "ORF9c protein",
+                "ORF14",
+                "Uncharacterized protein 14",
+                "ORF9C_SARS2"
+            ]
         },
         "NSP10": {
             "uniprotAccession": [
@@ -3455,24 +3545,24 @@
             "CompModels": {
                 "swiss-model": [
                     {
-                        "project": "X6zRCV",
+                        "project": "3xFkkB",
                         "model": "01",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                        "description": "High quality models are available which are predicted to form homo-dodecamers."
                     },
                     {
-                        "project": "X6zRCV",
+                        "project": "3xFkkB",
                         "model": "02",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                        "description": "High quality models are available which are predicted to form homo-dodecamers."
                     },
                     {
-                        "project": "X6zRCV",
-                        "model": "03",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                        "project": "3xFkkB",
+                        "model": "01",
+                        "description": "High quality models are available which are predicted to form homo-dodecamers."
                     },
                     {
-                        "project": "X6zRCV",
-                        "model": "04",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                        "project": "3xFkkB",
+                        "model": "02",
+                        "description": "High quality models are available which are predicted to form homo-dodecamers."
                     }
                 ],
                 "BMS-Arc": [
@@ -4100,17 +4190,22 @@
                     {
                         "project": "H9prKX",
                         "model": "01",
-                        "description": "Experimental structures (PDB: 6vww, 6w01, 6wlc) and high quality models are available."
+                        "description": "Experimental structures and high quality models are available."
                     },
                     {
                         "project": "H9prKX",
                         "model": "02",
-                        "description": "Experimental structures (PDB: 6vww, 6w01, 6wlc) and high quality models are available."
+                        "description": "Experimental structures and high quality models are available."
                     },
                     {
                         "project": "H9prKX",
                         "model": "03",
-                        "description": "Experimental structures (PDB: 6vww, 6w01, 6wlc) and high quality models are available."
+                        "description": "Experimental structures and high quality models are available."
+                    },
+                    {
+                        "project": "H9prKX",
+                        "model": "04",
+                        "description": "Experimental structures and high quality models are available."
                     }
                 ],
                 "BSM-Arc": [
@@ -4464,11 +4559,6 @@
                     {
                         "project": "N2NgU3",
                         "model": "02",
-                        "description": "High quality models are available."
-                    },
-                    {
-                        "project": "N2NgU3",
-                        "model": "03",
                         "description": "High quality models are available."
                     }
                 ],
