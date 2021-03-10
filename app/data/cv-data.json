@@ -4886,15 +4886,9 @@
                 "Protein X1"
             ],
             "PDB": {
-                "7kjr": {}
+                "6xdc": {}
             },
-            "EMDB": {
-                "EMD-22898": {
-                    "pdb": [
-                        "7kjr"
-                    ]
-                }
-            },
+            "EMDB": {},
             "CompModels": {
                 "swiss-model": [
                     {
@@ -4903,6 +4897,16 @@
                         "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
                     }
                 ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7kjr"
+                    ],
+                    "EMDB": [
+                        "EMD-22898"
+                    ]
+                }
             }
         },
         "ORF8": {
