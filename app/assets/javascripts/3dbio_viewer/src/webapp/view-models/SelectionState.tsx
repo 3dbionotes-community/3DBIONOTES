@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { DbModel } from "../../domain/entities/DbModel";
 
 export type Type = "pdb" | "emdb";
 

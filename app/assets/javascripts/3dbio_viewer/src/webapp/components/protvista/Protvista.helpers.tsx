@@ -175,7 +175,7 @@ function getPdbView(pdb: Pdb): PdbView {
         displayVariants: !!pdb.variants,
         tracks: _.compact(
             pdb.tracks.map(track => {
-                const subtracks = getTrackData(pdb.protein, track);
+                const subtracks = getTrackData(pdb.protein.id, track);
                 if (_.isEmpty(subtracks)) return null;
                 return {
                     ...track,
