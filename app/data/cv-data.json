@@ -807,6 +807,7 @@
                         "7lop": {},
                         "7ld1": {},
                         "7lcn": {},
+                        "7lab": {},
                         "7l7f": {},
                         "7l5b": {},
                         "7l3n": {},
@@ -891,6 +892,22 @@
                         "7dcc": {},
                         "7d30": {},
                         "7d2z": {},
+                        "7d0d": {},
+                        "7d0c": {},
+                        "7d0b": {},
+                        "7d03": {},
+                        "7d00": {},
+                        "7czz": {},
+                        "7czy": {},
+                        "7czx": {},
+                        "7czw": {},
+                        "7czv": {},
+                        "7czu": {},
+                        "7czt": {},
+                        "7czs": {},
+                        "7czr": {},
+                        "7czq": {},
+                        "7czp": {},
                         "7cwu": {},
                         "7cws": {},
                         "7cwo": {},
@@ -2401,8 +2418,11 @@
                         "7k6d",
                         "7k40",
                         "7k0f",
+                        "7jw8",
                         "7jyc",
                         "7ju7",
+                        "7jt0",
+                        "7jsu",
                         "7jq5",
                         "7jq4",
                         "7jq3",
@@ -3778,30 +3798,7 @@
                 "2'-O-methyltransferase",
                 "2'-O-ribose methyltransferase"
             ],
-            "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "X6zRCV",
-                        "model": "01",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available."
-                    },
-                    {
-                        "project": "X6zRCV",
-                        "model": "02",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available."
-                    },
-                    {
-                        "project": "X6zRCV",
-                        "model": "03",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available."
-                    },
-                    {
-                        "project": "X6zRCV",
-                        "model": "04",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available."
-                    }
-                ]
-            },
+            "CompModels": {},
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
@@ -4547,7 +4544,8 @@
                 "Hel"
             ],
             "PDB": {
-                "6zsl": {}
+                "6zsl": {},
+                "5rob": {}
             },
             "CompModels": {
                 "swiss-model": [
@@ -4846,7 +4844,7 @@
             ],
             "description": "Part of Replicase polyprotein 1a and 1ab. Plays a role in the initial induction of autophagosomes from host reticulum endoplasmic. Later, limits the expansion of these phagosomes that are no longer able to deliver viral components to lysosomes.",
             "names": [
-                "NSP16",
+                "NSP6",
                 "Non-structural protein 6"
             ],
             "CompModels": {
