@@ -118,25 +118,30 @@ export class ApiPdbRepository implements PdbRepository {
 
 function getData(options: Options): FutureData<Partial<Data>> {
     const { protein, pdb, chain } = options;
-    const bioUrl = ""; // proxied to 3dbionotes on development (see src/setupProxy.js)
-    const ebiUrl = "https://www.ebi.ac.uk/proteins/api";
+    const isDev = process.env.NODE_ENV === "development";
+    // On DEV, proxy requests (to circumvent CORS) and cache them (see src/setupProxy.js)
+    const bioUrl = isDev ? "/3dbionotes" : ""; // Use relative requests on 3dbionotes PRO
+    const ebiBaseUrl = isDev ? "/ebi" : "https://www.ebi.ac.uk";
+
+    const ebiProteinsApiUrl = `${ebiBaseUrl}/proteins/api`;
+    const ebiPdbeApiUrl = `${ebiBaseUrl}/proteins/api`;
     const pdbAnnotUrl = `${bioUrl}/ws/lrs/pdbAnnotFromMap`;
 
     const data$: DataRequests = {
         uniprot: getFromXml(`https://www.uniprot.org/uniprot/${protein}.xml`),
-        features: getJson(`${ebiUrl}/features/${protein}`),
+        features: getJson(`${ebiProteinsApiUrl}/features/${protein}`),
         covidAnnotations: getJson(`${bioUrl}/cv19_annotations/${protein}_annotations.json`),
         pdbAnnotations: getJson(`${pdbAnnotUrl}/all/${pdb}/${chain}/?format=json`),
-        ebiVariation: getJson(`${ebiUrl}/variation/${protein}`),
+        ebiVariation: getJson(`${ebiProteinsApiUrl}/variation/${protein}`),
         coverage: getJson(`${bioUrl}/api/alignments/Coverage/${pdb}${chain}`),
         mobiUniprot: getJson(`${bioUrl}/api/annotations/mobi/Uniprot/${protein}`),
         phosphositeUniprot: getJson(`${bioUrl}/api/annotations/Phosphosite/Uniprot/${protein}`),
         pfamAnnotations: getJson(`${bioUrl}/api/annotations/Pfam/Uniprot/${protein}`),
         smartAnnotations: getJson(`${bioUrl}/api/annotations/SMART/Uniprot/${protein}`),
-        proteomics: getJson(`${ebiUrl}/api/proteomics/${protein}`),
+        proteomics: getJson(`${ebiProteinsApiUrl}/api/proteomics/${protein}`),
         pdbRedo: getJson(`${bioUrl}/api/annotations/PDB_REDO/${pdb}`),
         iedb: getJson(`${bioUrl}/api/annotations/IEDB/Uniprot/${protein}`),
-        pdbExperiment: getJson(`https://www.ebi.ac.uk/pdbe/api/pdb/entry/experiment/${pdb}`),
+        pdbExperiment: getJson(`${ebiPdbeApiUrl}/pdb/entry/experiment/${pdb}`),
     };
 
     return Future.joinObj(data$);
