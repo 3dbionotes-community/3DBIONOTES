@@ -9,7 +9,12 @@ module.exports = function (app) {
         target: "https://3dbionotes.cnb.csic.es",
         changeOrigin: true,
         agent: proxyServer ? new HttpsProxyAgent(proxyServer) : undefined,
+        onProxyReq,
     });
 
     app.use(routes, proxy);
 };
+
+function onProxyReq(proxyReq, req, res) {
+    console.log(proxyReq, req, res);
+}

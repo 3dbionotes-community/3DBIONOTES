@@ -1,5 +1,7 @@
 import _ from "lodash";
 
+export type Maybe<T> = T | undefined;
+
 export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
 
 /* Define only the value type of an object and infer the keys:

@@ -21,4 +21,3 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         </div>
     );
 };
-

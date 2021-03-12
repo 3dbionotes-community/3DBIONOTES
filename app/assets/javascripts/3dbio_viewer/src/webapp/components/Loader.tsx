@@ -10,12 +10,18 @@ export function useLoader<Data>() {
     return React.useState<LoaderState<Data>>({ type: "loading" });
 }
 
-export function Loader<Data>(props: { state: LoaderState<Data> }) {
-    const { state } = props;
+export interface LoaderProps<Data> {
+    state: LoaderState<Data>;
+    loadingMsg?: string;
+}
+
+export function Loader<Data>(props: LoaderProps<Data>) {
+    const { state, loadingMsg } = props;
+
     return (
         <div>
             {state.type === "loading" ? (
-                <div style={styles.section}>{i18n.t("Loading Protvista...")}</div>
+                <div style={styles.section}>{loadingMsg || i18n.t("Loading...")}</div>
             ) : state.type === "error" ? (
                 <div style={styles.section}>
                     {i18n.t("Error")}: {state.message}

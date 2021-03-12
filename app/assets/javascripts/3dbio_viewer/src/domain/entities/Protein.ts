@@ -1,4 +1,6 @@
 export interface Protein {
     id: string;
-    name: string;
+    name?: string;
+    gene?: string;
+    organism?: string;
 }

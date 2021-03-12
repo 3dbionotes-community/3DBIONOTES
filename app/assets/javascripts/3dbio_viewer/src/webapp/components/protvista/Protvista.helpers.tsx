@@ -15,12 +15,13 @@ const blockDefs = recordOf<BlockDef>()({
     structuralInfo: {
         id: "structuralInfo",
         title: "Structural information",
-        description: i18n.t(`
-            "The protein <name> has a secondary structure consisting of  <number> alpha helices,  <number> beta sheets and  <number> turns.
+        description: i18n.t(`The protein <name> has a secondary structure consisting of  <number> alpha helices,  <number> beta sheets and  <number> turns.
 
-            It contains  <number> domains known and annotated by the different databases used (PFAM, SMART, Interpro, CATH and Prosite). The consensus domains are:
+        It contains  <number> domains known and annotated by the different databases used (PFAM, SMART, Interpro, CATH and Prosite). The consensus domains are:
 
-            Furthermore, this protein contains a transmembrane region, formed by  <number> alpha helices, and <1-2> external regions, a larger cytosolic and a smaller external one ( <number> residues.
+        Furthermore, this protein contains a transmembrane region, formed by  <number> alpha helices, and <1-2> external regions, a larger cytosolic and a smaller external one ( <number> residues.
+
+        It contains a disordered region <range> and various motifs and regions that are relevant to it functio
         `),
         help: "Some help",
         tracks: [

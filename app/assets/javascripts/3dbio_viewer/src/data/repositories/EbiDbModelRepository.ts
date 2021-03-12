@@ -1,11 +1,10 @@
-import { AxiosRequestConfig } from "axios";
 import _ from "lodash";
 import { DbModel, DbModelCollection } from "../../domain/entities/DbModel";
 import { FutureData } from "../../domain/entities/FutureData";
 import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
 import { Future } from "../../utils/future";
-import { axiosRequest, defaultBuilder, DefaultError } from "../../utils/future-axios";
 import { assert } from "../../utils/ts-utils";
+import { request } from "../utils";
 
 const searchPageSize = 30;
 
@@ -79,11 +78,6 @@ interface ApiEntryResponse {
     fieldURLs: Array<{ name: string; value: string }>;
 }
 
-function request<Data>(url: string, params: ApiSearchParams): Future<DefaultError, Data> {
-    const request: AxiosRequestConfig = { url, params };
-    return axiosRequest<DefaultError, Data>(defaultBuilder, request);
-}
-
 function getStringDate(options: { yearsOffset?: number } = {}): string {
     const { yearsOffset = 0 } = options;
     const date = new Date();
@@ -109,7 +103,7 @@ function getPdbModels(
 
     const searchQuery = query.trim() ? query : emptySearchesByType[config.type];
 
-    const pdbResults = request<ApiSearchResponse>(config.searchUrl, {
+    const pdbResults = request<ApiSearchParams, ApiSearchResponse>(config.searchUrl, {
         format: "JSON",
         // Get more records so we can do a more meaningful sorting by score on the grouped collection
         size: searchPageSize * 10,

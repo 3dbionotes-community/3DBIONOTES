@@ -16,7 +16,8 @@ export interface ViewersProps {
     selection: SelectionState;
 }
 
-export const Viewers: React.FC<ViewersProps> = () => {
+export const Viewers: React.FC<ViewersProps> = props => {
+    const { selection } = props;
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
 
@@ -47,11 +48,11 @@ export const Viewers: React.FC<ViewersProps> = () => {
                 </div>
             </div>
 
-            <Loader state={loader} />
+            <Loader state={loader} loadingMsg={i18n.t("Loading data...")} />
 
             {loader.type === "loaded" && (
                 <React.Fragment>
-                    <BasicInfoViewer pdb={loader.data} />
+                    <BasicInfoViewer pdb={loader.data} emdbId={selection.main?.emdb?.id} />
                     <ProtvistaViewer pdb={loader.data} />
                     <PPIViewer />
                 </React.Fragment>
