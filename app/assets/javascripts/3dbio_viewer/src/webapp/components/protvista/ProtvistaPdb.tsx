@@ -12,30 +12,12 @@ export interface BlockProps {
 }
 
 export const ProtvistaPdb: React.FC<BlockProps> = React.memo(props => {
-    const { pdb, block, selection } = props;
+    const { pdb, block } = props;
     const elementRef = React.useRef<ProtvistaTrackElement>(null);
 
     React.useEffect(() => {
         return loadPdbView(elementRef, getPdbView(pdb, block));
     }, [pdb, block, elementRef]);
 
-    return (
-        <div>
-            <protvista-pdb custom-data="true" ref={elementRef}></protvista-pdb>
-
-            {block.tracks.map((trackDef, idx) => {
-                const CustomTrackComponent = trackDef.component;
-                return (
-                    CustomTrackComponent && (
-                        <CustomTrackComponent
-                            key={idx}
-                            trackDef={trackDef}
-                            pdb={pdb}
-                            selection={selection}
-                        />
-                    )
-                );
-            })}
-        </div>
-    );
+    return <protvista-pdb custom-data="true" ref={elementRef}></protvista-pdb>;
 });

@@ -25,6 +25,20 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                 return (
                     <ViewerBlock key={block.id} block={block}>
                         <BlockComponent block={block} pdb={pdb} selection={selection} />
+
+                        {block.tracks.map((trackDef, idx) => {
+                            const CustomTrackComponent = trackDef.component;
+                            return (
+                                CustomTrackComponent && (
+                                    <CustomTrackComponent
+                                        key={idx}
+                                        trackDef={trackDef}
+                                        pdb={pdb}
+                                        selection={selection}
+                                    />
+                                )
+                            );
+                        })}
                     </ViewerBlock>
                 );
             })}
