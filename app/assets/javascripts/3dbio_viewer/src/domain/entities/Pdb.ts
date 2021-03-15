@@ -1,14 +1,13 @@
 import { Maybe } from "../../utils/ts-utils";
 import { Color } from "./Color";
+import { Experiment } from "./Experiment";
 import { Protein } from "./Protein";
 import { Track } from "./Track";
 import { Variants } from "./Variant";
 
 export interface Pdb {
     id: string;
-    experiment: Maybe<{
-        resolution: number;
-    }>;
+    experiment: Maybe<Experiment>;
     emdb: { id: string } | undefined;
     protein: Protein;
     sequence: string;

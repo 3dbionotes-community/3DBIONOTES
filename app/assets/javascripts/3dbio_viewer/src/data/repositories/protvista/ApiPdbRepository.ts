@@ -122,7 +122,6 @@ function getData(options: Options): FutureData<Partial<Data>> {
     const { bionotes: bioUrl, ebi: ebiBaseUrl } = routes;
 
     const ebiProteinsApiUrl = `${ebiBaseUrl}/proteins/api`;
-    const ebiPdbeApiUrl = `${ebiBaseUrl}/proteins/api`;
     const pdbAnnotUrl = `${bioUrl}/ws/lrs/pdbAnnotFromMap`;
 
     const data$: DataRequests = {
@@ -139,7 +138,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         proteomics: getJSON(`${ebiProteinsApiUrl}/api/proteomics/${protein}`),
         pdbRedo: getJSON(`${bioUrl}/api/annotations/PDB_REDO/${pdb}`),
         iedb: getJSON(`${bioUrl}/api/annotations/IEDB/Uniprot/${protein}`),
-        pdbExperiment: getJSON(`${ebiPdbeApiUrl}/pdb/entry/experiment/${pdb}`),
+        pdbExperiment: getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/experiment/${pdb}`),
     };
 
     return Future.joinObj(data$);
