@@ -1,27 +1,37 @@
 const proxy = require("http-proxy-middleware");
 const apicache = require("apicache");
+const _ = require("lodash");
 
 module.exports = function (app) {
     proxyRoutes(app, {
-        prefix: "/3dbionotes",
+        routes: ["/3dbionotes"],
         target: "https://3dbionotes.cnb.csic.es",
+        rewritePath: true,
     });
 
     proxyRoutes(app, {
-        prefix: "/ebi",
+        routes: ["/assets"],
+        target: "https://3dbionotes.cnb.csic.es",
+        rewritePath: false,
+    });
+
+    proxyRoutes(app, {
+        routes: ["/ebi"],
         target: "https://www.ebi.ac.uk",
+        rewritePath: true,
     });
 };
 
 function proxyRoutes(app, options) {
-    const { prefix, target } = options;
-    const routes = [prefix];
-    const path = `^${prefix}/`;
+    const { routes, target, rewritePath } = options;
+    const pathRewrite = rewritePath
+        ? _.fromPairs(routes.map(route => [`^${route}/`, "/"]))
+        : undefined;
 
     const proxyOptions = {
         target,
         changeOrigin: true,
-        pathRewrite: { [path]: "/" },
+        pathRewrite,
     };
 
     const apiProxy = proxy.createProxyMiddleware(proxyOptions);
