@@ -26,6 +26,7 @@ import { getPdbRedoTrack, PdbRedo } from "./tracks/pdb-redo";
 import { getEpitomesTrack, Iedb } from "./tracks/epitomes";
 import { getProtein, UniprotResponse } from "./uniprot";
 import { getExperiment, PdbExperiment } from "./ebi-pdbe-api";
+import { routes } from "../../../routes";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -118,30 +119,27 @@ export class ApiPdbRepository implements PdbRepository {
 
 function getData(options: Options): FutureData<Partial<Data>> {
     const { protein, pdb, chain } = options;
-    const isDev = process.env.NODE_ENV === "development";
-    // On DEV, proxy requests (to circumvent CORS) and cache them (see src/setupProxy.js)
-    const bioUrl = isDev ? "/3dbionotes" : ""; // Use relative requests on 3dbionotes PRO
-    const ebiBaseUrl = isDev ? "/ebi" : "https://www.ebi.ac.uk";
+    const { bionotes: bioUrl, ebi: ebiBaseUrl } = routes;
 
     const ebiProteinsApiUrl = `${ebiBaseUrl}/proteins/api`;
     const ebiPdbeApiUrl = `${ebiBaseUrl}/proteins/api`;
     const pdbAnnotUrl = `${bioUrl}/ws/lrs/pdbAnnotFromMap`;
 
     const data$: DataRequests = {
-        uniprot: getFromXml(`https://www.uniprot.org/uniprot/${protein}.xml`),
-        features: getJson(`${ebiProteinsApiUrl}/features/${protein}`),
-        covidAnnotations: getJson(`${bioUrl}/cv19_annotations/${protein}_annotations.json`),
-        pdbAnnotations: getJson(`${pdbAnnotUrl}/all/${pdb}/${chain}/?format=json`),
-        ebiVariation: getJson(`${ebiProteinsApiUrl}/variation/${protein}`),
-        coverage: getJson(`${bioUrl}/api/alignments/Coverage/${pdb}${chain}`),
-        mobiUniprot: getJson(`${bioUrl}/api/annotations/mobi/Uniprot/${protein}`),
-        phosphositeUniprot: getJson(`${bioUrl}/api/annotations/Phosphosite/Uniprot/${protein}`),
-        pfamAnnotations: getJson(`${bioUrl}/api/annotations/Pfam/Uniprot/${protein}`),
-        smartAnnotations: getJson(`${bioUrl}/api/annotations/SMART/Uniprot/${protein}`),
-        proteomics: getJson(`${ebiProteinsApiUrl}/api/proteomics/${protein}`),
-        pdbRedo: getJson(`${bioUrl}/api/annotations/PDB_REDO/${pdb}`),
-        iedb: getJson(`${bioUrl}/api/annotations/IEDB/Uniprot/${protein}`),
-        pdbExperiment: getJson(`${ebiPdbeApiUrl}/pdb/entry/experiment/${pdb}`),
+        uniprot: getXML(`https://www.uniprot.org/uniprot/${protein}.xml`),
+        features: getJSON(`${ebiProteinsApiUrl}/features/${protein}`),
+        covidAnnotations: getJSON(`${bioUrl}/cv19_annotations/${protein}_annotations.json`),
+        pdbAnnotations: getJSON(`${pdbAnnotUrl}/all/${pdb}/${chain}/?format=json`),
+        ebiVariation: getJSON(`${ebiProteinsApiUrl}/variation/${protein}`),
+        coverage: getJSON(`${bioUrl}/api/alignments/Coverage/${pdb}${chain}`),
+        mobiUniprot: getJSON(`${bioUrl}/api/annotations/mobi/Uniprot/${protein}`),
+        phosphositeUniprot: getJSON(`${bioUrl}/api/annotations/Phosphosite/Uniprot/${protein}`),
+        pfamAnnotations: getJSON(`${bioUrl}/api/annotations/Pfam/Uniprot/${protein}`),
+        smartAnnotations: getJSON(`${bioUrl}/api/annotations/SMART/Uniprot/${protein}`),
+        proteomics: getJSON(`${ebiProteinsApiUrl}/api/proteomics/${protein}`),
+        pdbRedo: getJSON(`${bioUrl}/api/annotations/PDB_REDO/${pdb}`),
+        iedb: getJSON(`${bioUrl}/api/annotations/IEDB/Uniprot/${protein}`),
+        pdbExperiment: getJSON(`${ebiPdbeApiUrl}/pdb/entry/experiment/${pdb}`),
     };
 
     return Future.joinObj(data$);
@@ -151,7 +149,7 @@ function getFromUrl<Data>(url: string): Future<RequestError, Data> {
     return request<Data>({ method: "GET", url });
 }
 
-function getJson<Data>(url: string): Future<RequestError, Data | undefined> {
+function getJSON<Data>(url: string): Future<RequestError, Data | undefined> {
     const data$ = getFromUrl<Data>(url) as Future<RequestError, Data | undefined>;
 
     return data$.flatMapError(_err => {
@@ -160,8 +158,8 @@ function getJson<Data>(url: string): Future<RequestError, Data | undefined> {
     });
 }
 
-function getFromXml<Data>(url: string): Future<RequestError, Data | undefined> {
-    const data$ = getJson<string>(url);
+function getXML<Data>(url: string): Future<RequestError, Data | undefined> {
+    const data$ = getJSON<string>(url);
 
     return data$.flatMap(xml => {
         return xml ? xmlToJs<Data>(xml) : Future.success(undefined);
