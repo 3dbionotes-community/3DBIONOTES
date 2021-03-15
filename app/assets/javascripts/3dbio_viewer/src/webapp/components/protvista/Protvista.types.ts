@@ -10,9 +10,28 @@ export interface ProtvistaTrackElement extends HTMLDivElement {
     };
 }
 
+export interface BlockDef extends ViewerBlockModel {
+    isProtvista: boolean;
+    tracks: TrackDef[];
+}
+
 export interface ProtvistaBlock extends ViewerBlockModel {
     pdbView: PdbView;
-    tracks: string[];
+    tracks: TrackDef[];
+}
+
+export interface TrackDef {
+    id: string;
+    name: string;
+    description?: string;
+    subtracks: SubtrackDef[];
+}
+
+export interface SubtrackDef {
+    id: string;
+    name: string;
+    source: string;
+    description?: string;
 }
 
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
