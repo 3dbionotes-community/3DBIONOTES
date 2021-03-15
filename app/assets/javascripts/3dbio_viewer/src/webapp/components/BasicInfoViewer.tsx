@@ -2,8 +2,6 @@ import React from "react";
 import { Pdb } from "../../domain/entities/Pdb";
 import i18n from "../utils/i18n";
 import { SelectionState } from "../view-models/SelectionState";
-import { blockDefsById } from "./protvista/protvista-blocks";
-import { ViewerBlock } from "./ViewerBlock";
 
 export interface BasicInfoProps {
     pdb: Pdb;
@@ -45,18 +43,16 @@ export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
     ];
 
     return (
-        <ViewerBlock block={blockDefsById.basicInfo}>
-            <Parent>
-                {subtracks.map(subtrack => (
-                    <Child
-                        key={subtrack.name}
-                        name={subtrack.name}
-                        value={subtrack.value}
-                        help={subtrack.help}
-                    />
-                ))}
-            </Parent>
-        </ViewerBlock>
+        <Parent>
+            {subtracks.map(subtrack => (
+                <Child
+                    key={subtrack.name}
+                    name={subtrack.name}
+                    value={subtrack.value}
+                    help={subtrack.help}
+                />
+            ))}
+        </Parent>
     );
 });
 
@@ -77,10 +73,14 @@ const Child: React.FC<ChildProps> = props => {
         <ul>
             {name}: {value ?? "-"}
             {help && (
-                <span style={{ marginLeft: 10 }} title={help}>
+                <span style={styles.help} title={help}>
                     [?]
                 </span>
             )}
         </ul>
     );
+};
+
+const styles = {
+    help: { marginLeft: 10 },
 };

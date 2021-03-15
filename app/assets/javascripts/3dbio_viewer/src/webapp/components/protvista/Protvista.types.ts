@@ -13,19 +13,23 @@ export interface ProtvistaTrackElement extends HTMLDivElement {
     };
 }
 
-export interface ComponentProps {
+export interface BlockComponentProps {
     pdb: Pdb;
     selection: SelectionState;
 }
 
+export interface TrackComponentProps extends BlockComponentProps {
+    trackDef: TrackDef;
+}
+
 export interface BlockDef extends ViewerBlockModel {
     tracks: TrackDef[];
-    component?: React.FC<ComponentProps>;
+    component?: React.FC<BlockComponentProps>;
 }
 
 export interface ProtvistaBlock extends ViewerBlockModel {
     tracks: TrackDef[];
-    component?: React.FC<ComponentProps>;
+    component?: React.FC<BlockComponentProps>;
 }
 
 export interface TrackDef {
@@ -33,7 +37,7 @@ export interface TrackDef {
     name: string;
     description?: string;
     subtracks: SubtrackDef[];
-    component?: React.FC<ComponentProps>;
+    component?: React.FC<TrackComponentProps>;
 }
 
 export interface SubtrackDef {

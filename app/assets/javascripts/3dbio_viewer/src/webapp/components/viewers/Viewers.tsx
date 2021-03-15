@@ -1,7 +1,6 @@
 import React from "react";
 import _ from "lodash";
 import { ProtvistaViewer } from "../protvista/ProtvistaViewer";
-import { PPIViewer } from "../ppi/PPIViewer";
 import i18n from "../../utils/i18n";
 import styles from "./Viewers.module.css";
 import { JumpToButton } from "../protvista/JumpToButton";
@@ -52,7 +51,6 @@ export const Viewers: React.FC<ViewersProps> = props => {
             {loader.type === "loaded" && (
                 <React.Fragment>
                     <ProtvistaViewer pdb={loader.data} selection={selection} />
-                    <PPIViewer pdb={loader.data} selection={selection} />
                 </React.Fragment>
             )}
         </React.Fragment>

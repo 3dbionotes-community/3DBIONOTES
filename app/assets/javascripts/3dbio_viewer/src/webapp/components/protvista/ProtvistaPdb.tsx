@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { SelectionState } from "../../view-models/SelectionState";
 import { getPdbView, loadPdbView } from "./Protvista.helpers";
@@ -11,7 +12,7 @@ export interface BlockProps {
 }
 
 export const ProtvistaPdb: React.FC<BlockProps> = React.memo(props => {
-    const { pdb, block } = props;
+    const { pdb, block, selection } = props;
     const elementRef = React.useRef<ProtvistaTrackElement>(null);
 
     React.useEffect(() => {
@@ -20,7 +21,21 @@ export const ProtvistaPdb: React.FC<BlockProps> = React.memo(props => {
 
     return (
         <div>
-            <protvista-pdb custom-data="true" ref={elementRef}></protvista-pdb>;
+            <protvista-pdb custom-data="true" ref={elementRef}></protvista-pdb>
+
+            {block.tracks.map((trackDef, idx) => {
+                const CustomTrackComponent = trackDef.component;
+                return (
+                    CustomTrackComponent && (
+                        <CustomTrackComponent
+                            key={idx}
+                            trackDef={trackDef}
+                            pdb={pdb}
+                            selection={selection}
+                        />
+                    )
+                );
+            })}
         </div>
     );
 });
