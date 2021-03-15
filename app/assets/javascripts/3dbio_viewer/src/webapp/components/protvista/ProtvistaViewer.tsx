@@ -1,23 +1,33 @@
 import React from "react";
+
 import { Pdb } from "../../../domain/entities/Pdb";
+import { SelectionState } from "../../view-models/SelectionState";
+import { ViewerBlock } from "../ViewerBlock";
+import { blockDefs } from "./protvista-blocks";
+import { ProtvistaPdb } from "./ProtvistaPdb";
+
 import "./protvista-pdb.css";
-import { getBlocks } from "./Protvista.helpers";
-import { ProtvistaBlock } from "./ProtvistaBlock";
 import "./ProtvistaViewer.css";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
+    selection: SelectionState;
 }
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
-    const { pdb } = props;
-    const blocks = React.useMemo(() => getBlocks(pdb), [pdb]);
+    const { pdb, selection } = props;
 
     return (
         <div>
-            {blocks.map(block => (
-                <ProtvistaBlock key={block.id} block={block} />
-            ))}
+            {blockDefs.map(block => {
+                const BlockComponent = block.component || ProtvistaPdb;
+
+                return (
+                    <ViewerBlock key={block.id} block={block}>
+                        <BlockComponent block={block} pdb={pdb} selection={selection} />
+                    </ViewerBlock>
+                );
+            })}
         </div>
     );
 };

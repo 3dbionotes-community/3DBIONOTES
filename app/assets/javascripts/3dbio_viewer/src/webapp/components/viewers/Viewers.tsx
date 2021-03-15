@@ -5,7 +5,6 @@ import { PPIViewer } from "../ppi/PPIViewer";
 import i18n from "../../utils/i18n";
 import styles from "./Viewers.module.css";
 import { JumpToButton } from "../protvista/JumpToButton";
-import { BasicInfoViewer } from "../BasicInfoViewer";
 import { ProfilesButton } from "../protvista/ProfilesButton";
 import { SelectionState } from "../../view-models/SelectionState";
 import { useAppContext } from "../AppContext";
@@ -52,9 +51,8 @@ export const Viewers: React.FC<ViewersProps> = props => {
 
             {loader.type === "loaded" && (
                 <React.Fragment>
-                    <BasicInfoViewer pdb={loader.data} emdbId={selection.main?.emdb?.id} />
-                    <ProtvistaViewer pdb={loader.data} />
-                    <PPIViewer />
+                    <ProtvistaViewer pdb={loader.data} selection={selection} />
+                    <PPIViewer pdb={loader.data} selection={selection} />
                 </React.Fragment>
             )}
         </React.Fragment>

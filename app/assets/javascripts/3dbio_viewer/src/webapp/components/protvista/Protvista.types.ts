@@ -1,6 +1,9 @@
+import React from "react";
 import { Color } from "../../../domain/entities/Color";
+import { Pdb } from "../../../domain/entities/Pdb";
 import { Shape } from "../../../domain/entities/Shape";
 import { Variant, Variants } from "../../../domain/entities/Variant";
+import { SelectionState } from "../../view-models/SelectionState";
 import { ViewerBlockModel } from "../ViewerBlock";
 
 export interface ProtvistaTrackElement extends HTMLDivElement {
@@ -10,14 +13,19 @@ export interface ProtvistaTrackElement extends HTMLDivElement {
     };
 }
 
+export interface ComponentProps {
+    pdb: Pdb;
+    selection: SelectionState;
+}
+
 export interface BlockDef extends ViewerBlockModel {
-    isProtvista: boolean;
     tracks: TrackDef[];
+    component?: React.FC<ComponentProps>;
 }
 
 export interface ProtvistaBlock extends ViewerBlockModel {
-    pdbView: PdbView;
     tracks: TrackDef[];
+    component?: React.FC<ComponentProps>;
 }
 
 export interface TrackDef {
@@ -25,6 +33,7 @@ export interface TrackDef {
     name: string;
     description?: string;
     subtracks: SubtrackDef[];
+    component?: React.FC<ComponentProps>;
 }
 
 export interface SubtrackDef {

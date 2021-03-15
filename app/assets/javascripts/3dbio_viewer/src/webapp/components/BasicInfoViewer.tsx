@@ -1,16 +1,18 @@
 import React from "react";
 import { Pdb } from "../../domain/entities/Pdb";
 import i18n from "../utils/i18n";
+import { SelectionState } from "../view-models/SelectionState";
 import { blockDefsById } from "./protvista/protvista-blocks";
-import { ViewerBlock, ViewerBlockModel } from "./ViewerBlock";
+import { ViewerBlock } from "./ViewerBlock";
 
 export interface BasicInfoProps {
     pdb: Pdb;
-    emdbId?: string;
+    selection: SelectionState;
 }
 
 export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
-    const { pdb, emdbId } = props;
+    const { pdb, selection } = props;
+    const emdbId = selection.main?.emdb?.id;
 
     const subtracks = [
         { name: i18n.t("Protein Name"), value: pdb.protein.name },

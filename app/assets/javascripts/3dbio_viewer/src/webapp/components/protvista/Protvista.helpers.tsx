@@ -1,35 +1,10 @@
 import React from "react";
 import _ from "lodash";
 import { Pdb } from "../../../domain/entities/Pdb";
-import {
-    PdbView,
-    ProtvistaBlock,
-    ProtvistaTrackElement,
-    TrackDef,
-    TrackView,
-} from "./Protvista.types";
+import { BlockDef, PdbView, ProtvistaTrackElement, TrackView } from "./Protvista.types";
 import { hasFragments, Track } from "../../../domain/entities/Track";
 import { renderToString } from "react-dom/server";
 import { Tooltip } from "./Tooltip";
-import { debugVariable } from "../../../utils/debug";
-import { blockDefs } from "./protvista-blocks";
-
-export function getBlocks(pdb: Pdb): ProtvistaBlock[] {
-    const pdbTracksById = _.keyBy(pdb.tracks, track => track.id);
-    debugVariable({ pdb });
-
-    return blockDefs
-        .filter(block => block.isProtvista)
-        .map(blockDef => {
-            const tracks = _(pdbTracksById)
-                .at(blockDef.tracks.map(t => t.id))
-                .compact()
-                .value();
-            const blockPdb = { ...pdb, tracks, variants: undefined };
-            const protvistaBlock: ProtvistaBlock = { ...blockDef, pdbView: getPdbView(blockPdb) };
-            return protvistaBlock;
-        });
-}
 
 export function loadPdbView(elementRef: React.RefObject<ProtvistaTrackElement>, pdbView: PdbView) {
     const protvistaEl = elementRef.current;
@@ -47,7 +22,14 @@ export function loadPdbView(elementRef: React.RefObject<ProtvistaTrackElement>, 
     });
 }
 
-function getPdbView(pdb: Pdb): PdbView {
+export function getPdbView(pdb: Pdb, block: BlockDef): PdbView {
+    const trackIds = block.tracks.map(t => t.id);
+    const pdbTracks = _(pdb.tracks)
+        .keyBy(t => t.id)
+        .at(...trackIds)
+        .compact()
+        .value();
+
     return {
         ...pdb,
         displayNavigation: true,
@@ -55,7 +37,7 @@ function getPdbView(pdb: Pdb): PdbView {
         displayConservation: false,
         displayVariants: !!pdb.variants,
         tracks: _.compact(
-            pdb.tracks.map(track => {
+            pdbTracks.map(track => {
                 const subtracks = getTrackData(pdb.protein.id, track);
                 if (_.isEmpty(subtracks)) return null;
                 return {
