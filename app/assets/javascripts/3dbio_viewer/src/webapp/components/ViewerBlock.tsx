@@ -6,19 +6,7 @@ export interface BlockProps {
 }
 
 export interface ViewerBlockModel {
-    id:
-        | "basicInfo"
-        | "structuralInfo"
-        | "relevantSites"
-        | "processing"
-        | "mapValidation"
-        | "residueAccessibility"
-        | "proteinInteraction"
-        | "ligandInteraction"
-        | "variants"
-        | "ppiViewer"
-        | "proteomics"
-        | "inmunology";
+    id: string;
     title: string;
     description: string;
     help: string;

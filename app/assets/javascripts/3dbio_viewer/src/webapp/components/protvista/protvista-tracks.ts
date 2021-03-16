@@ -1,16 +1,24 @@
-import { recordOf } from "../../../utils/ts-utils";
+import { recordOf, withOptionalProperties } from "../../../utils/ts-utils";
 import i18n from "../../utils/i18n";
 import { PPIViewer } from "../ppi/PPIViewer";
-import { TrackDef } from "./Protvista.types";
+import { TrackDefBase } from "./Protvista.types";
 
-export const tracksDef = recordOf<TrackDef>()({
+type TracksDef = typeof tracksDef;
+
+export type TrackDef = TracksDef[keyof TracksDef];
+
+export type TrackId = TrackDef["id"];
+
+export type SubtrackId = TrackDef["subtracks"][number]["id"];
+
+export const tracksDef = withOptionalProperties<TrackDefBase>()({
     structureCoverage: {
-        id: "structure-coverage",
+        id: "structure-coverage" as const,
         name: i18n.t("Structure Coverage"),
         description: i18n.t("Coverage of the sequence shown with the primary protein sequence"),
         subtracks: [
             {
-                id: "structure-coverage",
+                id: "structure-coverage" as const,
                 name: i18n.t("Structure Coverage"),
                 source: "",
                 description: i18n.t(
@@ -20,14 +28,14 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     domains: {
-        id: "domains",
+        id: "domains" as const,
         name: i18n.t("Domains"),
         description: i18n.t(
             "Specific combination of secondary structures origanized intro a characteristic 3D structure"
         ),
         subtracks: [
             {
-                id: "prosite-domain",
+                id: "prosite-domain" as const,
                 source: "Prosite db",
                 name: i18n.t("Prosite domain (domain in domain & sites)"),
                 description: i18n.t(
@@ -35,7 +43,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "pfam-domain",
+                id: "pfam-domain" as const,
                 name: i18n.t("Pfam domains (domain families)"),
                 source: "Pfam db",
                 description: i18n.t(
@@ -43,7 +51,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "smart-domains",
+                id: "smart-domains" as const,
                 name: i18n.t("Smart domains (domain families)"),
                 source: "Smart db",
                 description: i18n.t(
@@ -51,7 +59,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "interpro-domains",
+                id: "interpro-domains" as const,
                 name: i18n.t("Interpro domains (domain families)"),
                 source: "Interpro db",
                 description: i18n.t(
@@ -59,7 +67,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "",
+                id: "cath-domains" as const,
                 name: i18n.t("CATH domains"),
                 source: "Cath db",
                 description: i18n.t(
@@ -69,17 +77,17 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     celullarRegions: {
-        id: "topology",
+        id: "topology" as const,
         name: i18n.t("Cellular regions"),
         description: i18n.t("Cell space in which the protein is located"),
         subtracks: [
             {
-                id: "cytolosic",
+                id: "cytolosic" as const,
                 name: i18n.t("Cytolosic /Extracellular region"),
                 source: "Uniprot",
             },
             {
-                id: "transmembrane-region",
+                id: "transmembrane-region" as const,
                 name: i18n.t("Transmembrane region"),
                 source: "Uniprot",
                 description: i18n.t("Region of the protein embedded in cell membranes"),
@@ -87,26 +95,26 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     secondaryStructure: {
-        id: "secondary-structure",
+        id: "secondary-structure" as const,
         name: i18n.t("Secondary Structure (structural features)"),
         description: i18n.t(
             "The secondary structure of proteins is the local regular folding between nearby amino acid residues of the polypeptide chain. The most common structures are alpha helix, beta sheet and turns connecting them"
         ),
         subtracks: [
-            { id: "helix", name: i18n.t("Helix"), source: "Uniprot" },
-            { id: "beta-strand", name: i18n.t("Beta strand"), source: "Uniprot" },
-            { id: "turn", name: i18n.t("Turn"), source: "Uniprot" },
+            { id: "helix" as const, name: i18n.t("Helix"), source: "Uniprot" },
+            { id: "beta-strand" as const, name: i18n.t("Beta strand"), source: "Uniprot" },
+            { id: "turn" as const, name: i18n.t("Turn"), source: "Uniprot" },
         ],
     },
     disorderedRegions: {
-        id: "disordered-regions",
+        id: "disordered-regions" as const,
         name: i18n.t("Disordered regions"),
         description: i18n.t(
             "Intrinsically disordered regions are region that do not have a fixed or ordered three-dimensional structure. They can possess many functions. They can, e.g., bind other proteins, interact with nucleic acids, or serve as scaffold proteins. Commonly, they are also involved in signaling pathways and have important roles in protein regulation"
         ),
         subtracks: [
             {
-                id: "prediction",
+                id: "prediction" as const,
                 name: i18n.t("Prediction"),
                 source: "DIBS",
                 description: i18n.t(
@@ -116,30 +124,35 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     motifs: {
-        id: "motifs",
+        id: "motifs" as const,
         name: i18n.t("Motifs"),
         description: i18n.t(
             "Short (usually not more than 20 amino acids) conserved sequence motif of biological significance"
         ),
         subtracks: [
-            { id: "motifs", name: i18n.t("Motifs"), source: "Uniprot", description: i18n.t("") },
+            {
+                id: "motifs" as const,
+                name: i18n.t("Motifs"),
+                source: "Uniprot",
+                description: i18n.t(""),
+            },
         ],
     },
     regions: {
-        id: "regions",
+        id: "regions" as const,
         name: i18n.t("Regions"),
         description: i18n.t("Regions in the protein with biological relevance"),
-        subtracks: [{ id: "regions", name: i18n.t("Regions"), source: "Uniprot" }],
+        subtracks: [{ id: "regions" as const, name: i18n.t("Regions"), source: "Uniprot" }],
     },
     otherRegions: {
-        id: "other-regions",
+        id: "other-regions" as const,
         name: i18n.t("Other structural regions"),
         description: i18n.t(
             "This are regions that interactiing with other peptides. Protein-protein interactions are often mediated by short linear motifs (SLiMs) that are  normall+P38:AA39y located in intrinsically disordered regions (IDRs) of proteins"
         ),
         subtracks: [
             {
-                id: "coiled-coils",
+                id: "coiled-coils" as const,
                 name: i18n.t("Coiled coils"),
                 source: "Uniprot",
                 description: i18n.t(
@@ -147,7 +160,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "lip",
+                id: "lip" as const,
                 name: i18n.t("Linear interacting peptide"),
                 source: "Uniprot/MobyDB",
                 description: i18n.t(
@@ -155,7 +168,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "repeats",
+                id: "repeats" as const,
                 name: i18n.t("Repeats"),
                 source: "Uniprot",
                 description: i18n.t(
@@ -163,7 +176,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "zinc-finger",
+                id: "zinc-finger" as const,
                 name: i18n.t("Zinc finger"),
                 source: "Uniprot",
                 description: i18n.t(
@@ -173,20 +186,20 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     sites: {
-        id: "sites",
+        id: "sites" as const,
         name: i18n.t("Sites"),
         description: i18n.t(
             "Amino acids that have a relevant biological function, such as the union of different chemical groups or being part of the active center of an enzyme"
         ),
         subtracks: [
             {
-                id: "active-site",
+                id: "active-site" as const,
                 name: i18n.t("Active site"),
                 source: "Uniprot",
                 description: i18n.t("Amino acid(s) directly involved in the activity of an enzyme"),
             },
             {
-                id: "binding-site",
+                id: "binding-site" as const,
                 name: i18n.t("Binding site"),
                 source: "Uniprot",
                 description: i18n.t(
@@ -194,19 +207,19 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "nucleotides-binding",
+                id: "nucleotides-binding" as const,
                 name: i18n.t("Nucleotides binding"),
                 source: "Uniprot",
                 description: i18n.t("Binding site for a nucleotides or nucleic acids"),
             },
             {
-                id: "metal-binding",
+                id: "metal-binding" as const,
                 name: i18n.t("Metal binding"),
                 source: "Uniprot",
                 description: i18n.t("Binding site for a metal ion"),
             },
             {
-                id: "other-sites",
+                id: "other-sites" as const,
                 name: i18n.t("Others structural relevant sites"),
                 source: "Uniprot, PhosphoSitePlus",
                 description: i18n.t("Binding site for others chemical group"),
@@ -214,20 +227,20 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     molecularProcessing: {
-        id: "molecular-processing",
+        id: "molecular-processing" as const,
         name: i18n.t("Molecular processing"),
         description: i18n.t(
             "Molecular protein processing involves processing the protein to its active form, such as signal peptide removal, residue modification (glycosylation, phosphorylation, etc.), and cleavage of the original chain into several smaller chains"
         ),
         subtracks: [
             {
-                id: "signal-peptide",
+                id: "signal-peptide" as const,
                 name: i18n.t("Signal peptide"),
                 source: "Uniprot",
                 description: i18n.t("N-terminal signal peptide"),
             },
             {
-                id: "chain",
+                id: "chain" as const,
                 name: i18n.t("Chain"),
                 source: "Uniprot",
                 description: i18n.t(
@@ -237,12 +250,12 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     ptm: {
-        id: "ptm",
+        id: "ptm" as const,
         name: i18n.t("PTM"),
         description: i18n.t("Post-translational modifications of protein residues"),
         subtracks: [
             {
-                id: "acetylation",
+                id: "acetylation" as const,
                 name: i18n.t("Acetylation"),
                 source: "Uniprot",
                 description: i18n.t(
@@ -250,7 +263,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "disulfide-bond",
+                id: "disulfide-bond" as const,
                 name: i18n.t("Disulfide Bond"),
                 source: "Uniprot",
                 description: i18n.t(
@@ -258,31 +271,31 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "glycosylation",
+                id: "glycosylation" as const,
                 name: i18n.t("Glycosylation"),
                 source: "Uniprot",
                 description: i18n.t("Residues with covalently attached glycan group(s)."),
             },
             {
-                id: "methylation",
+                id: "methylation" as const,
                 name: i18n.t("Methylation"),
                 source: "PhosphoSitePlus, Uniprot",
                 description: i18n.t("Residues with covalently attached methyl group (s)."),
             },
             {
-                id: "modified-residue",
+                id: "modified-residue" as const,
                 name: i18n.t("Modified residue"),
                 source: "Uniprot",
                 description: i18n.t("Modified residues with others chemical groups bounded"),
             },
             {
-                id: "phosphorylation",
+                id: "phosphorylation" as const,
                 name: i18n.t("Phosphorylation"),
                 source: "PhosphoSitePlus, Uniprot",
                 description: i18n.t("Residues with covalently attached phosphoryl groups."),
             },
             {
-                id: "ubiquitination",
+                id: "ubiquitination" as const,
                 name: i18n.t("Ubiquitination"),
                 source: "PhosphoSitePlus, Uniprot",
                 description: i18n.t(
@@ -292,14 +305,14 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     sequenceInformation: {
-        id: "sequence-information",
+        id: "sequence-information" as const,
         name: i18n.t("Sequence information"),
         description: i18n.t(
             "Information regarding the protein sequence and the possible mutations that may be included in the structure compared to the reference sequence"
         ),
         subtracks: [
             {
-                id: "compositional-bias",
+                id: "compositional-bias" as const,
                 name: i18n.t("Compositional bias"),
                 source: "PhosphoSitePlus, Uniprot",
                 description: i18n.t(
@@ -307,7 +320,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "sequence-conflict",
+                id: "sequence-conflict" as const,
                 name: i18n.t("Sequence conflict"),
                 source: "Uniprot",
                 description: i18n.t("Sequence discrepancies of unknown origin"),
@@ -315,57 +328,57 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     pdbRedo: {
-        id: "pdb-redo",
+        id: "pdb-redo" as const,
         name: i18n.t("PDB-REDO"),
         description: i18n.t(
             "DB-REDO is a procedure to optimise crystallographic structure models, providing algorithms that make a fully automated decision making system for refinement, rebuilding and validation. It combines popular crystallographic software from CCP4, e.g. REFMAC and COOT, with  specially developed rebuilding tools Centrifuge, Pepflip & SideAide and structure analysis tools like WHAT IF and PDB-care. PDB-REDO optimises refinement settings (e.g. geometric and B-factor restraint weights, B-factor model, TLS groups, NCS and homology restraints), refines with REFMAC, partially rebuilds the structure (rejects waters, refines side chains, checks peptide planes), refines some more, and then validates the results.\nWe show the modified and refined residues by PDB-REDO"
         ),
         subtracks: [
             {
-                id: "changed-rotamers",
+                id: "changed-rotamers" as const,
                 name: i18n.t("Changed rotamers"),
                 source: "PDB-REDO",
             },
             {
-                id: "h-bond-flip",
+                id: "h-bond-flip" as const,
                 name: i18n.t("H bond flip"),
                 source: "PDB-REDO",
             },
             {
-                id: "completed-residues",
+                id: "completed-residues" as const,
                 name: i18n.t("Completed residues"),
                 source: "PDB-REDO",
             },
         ],
     },
     molprobity: {
-        id: "molprobity",
+        id: "molprobity" as const,
         name: i18n.t("Molprobity"),
         description: i18n.t(
             "MolProbity is a structure validation web service that provides a robust, broad-spectrum assessment of model quality at both global and local protein levels. It relies heavily on the power and sensitivity provided by optimized hydrogen placement and contact analysis of all atoms, complemented by analysis of the covalent geometry and torsion angle criteria. MolProbity detects less credible or impossible rotamers and torsion angles."
         ),
         subtracks: [
             {
-                id: "rotamer-outlier",
+                id: "rotamer-outlier" as const,
                 name: i18n.t("Rotamer outlier"),
                 source: "Molprobity",
             },
             {
-                id: "phi-psi-outliers",
+                id: "phi-psi-outliers" as const,
                 name: i18n.t("Phi/Psi outliers"),
                 source: "Molprobity",
             },
         ],
     },
     emValidation: {
-        id: "em-validation",
+        id: "em-validation" as const,
         name: i18n.t("EM - Validation"),
         description: i18n.t(
             "Different validation methods and local quality of models and maps in cryo-EM"
         ),
         subtracks: [
             {
-                id: "deep-res",
+                id: "deep-res" as const,
                 name: i18n.t("DeepRes"),
                 source: "Local server",
                 description: i18n.t(
@@ -373,7 +386,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "map-q",
+                id: "map-q" as const,
                 name: i18n.t("MapQ"),
                 source: "Local server",
                 description: i18n.t(
@@ -381,7 +394,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "fsc-q",
+                id: "fsc-q" as const,
                 name: i18n.t("FscQ"),
                 source: "Local server",
                 description: i18n.t(
@@ -389,7 +402,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "mono-res",
+                id: "mono-res" as const,
                 name: i18n.t("MonoRes"),
                 source: "Local server",
                 description: i18n.t(
@@ -399,14 +412,14 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     pockets: {
-        id: "pockets",
+        id: "pockets" as const,
         name: i18n.t("Pockets"),
         description: i18n.t(
             "A pocket is a cavity on the surface or in the interior of a protein that possesses suitable properties for binding a ligand or interacting with a protein. The set of amino acid residues around a binding pocket determines its physicochemical characteristics and, together with its shape and location in a protein, defines its functionality"
         ),
         subtracks: [
             {
-                id: "pockets",
+                id: "pockets" as const,
                 name: i18n.t("Pockets"),
                 source: "P2Rank or Kalasanty",
                 description: i18n.t(
@@ -416,14 +429,14 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     residueAccessibility: {
-        id: "residue-accessibility",
+        id: "residue-accessibility" as const,
         name: i18n.t("Residue accesibility"),
         description: i18n.t(
             "The accessibility of residues in a protein is defined as the extent of the solvent-accessible surface of a given residue and is related to the spatial arrangement and packaging of the residue. It reveals the folding state of proteins and has been considered a significant quantitative measure for the three-dimensional structures of proteins. It  is closely involved in structural domains identification, fold recognition, binding region identification, protein-protein  and protein-ligand interactions"
         ),
         subtracks: [
             {
-                id: "residue-accessibility",
+                id: "residue-accessibility" as const,
                 name: i18n.t("Residue accesibility"),
                 source: "",
                 description: i18n.t(
@@ -433,13 +446,13 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     ppiViewer: {
-        id: "ppi-viewer",
+        id: "ppi-viewer" as const,
         name: i18n.t("PPI Viewer"),
         description: "",
         component: PPIViewer,
         subtracks: [
             {
-                id: "protein-network",
+                id: "protein-network" as const,
                 name: i18n.t("Protein Network"),
                 source: "Interactome 3D, String",
                 description: i18n.t(
@@ -447,7 +460,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "pdb-list",
+                id: "pdb-list" as const,
                 name: i18n.t(
                     "Extensible List of pdbs with interactions or name of differents proteins with the interactions"
                 ),
@@ -456,12 +469,12 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     functionalMappingPpi: {
-        id: "functional-mapping-ppi",
+        id: "functional-mapping-ppi" as const,
         name: i18n.t("Functional mapping ppi"),
-        description: i18n.t(""),
+        description: i18n.t("Functional mapping description (TODO)"),
         subtracks: [
             {
-                id: "functional-mapping",
+                id: "functional-mapping" as const,
                 name: i18n.t("Functional mapping ppi"),
                 description: i18n.t(
                     "Residues that participate in the interaction between the different proteins. Only available for covid 19 related proteins"
@@ -471,12 +484,12 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     ligands: {
-        id: "ligands",
+        id: "ligands" as const,
         name: i18n.t("Ligands"),
         description: i18n.t(""),
         subtracks: [
             {
-                id: "ligands",
+                id: "ligands" as const,
                 name: i18n.t("Extensible List of ligands with interactions with the protein"),
                 source: "PDB, Publications",
                 description: i18n.t(""),
@@ -484,31 +497,31 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     functionalMappingLigands: {
-        id: "functional-mapping-ligands",
+        id: "functional-mapping-ligands" as const,
         name: i18n.t("Functional mapping ligands"),
         description: i18n.t(
             "Residues that participate in the interaction between the protein and the ligand. Only available for covid 19 related proteins"
         ),
         subtracks: [
             {
-                id: "functional-mapping-ligands",
+                id: "functional-mapping-ligands" as const,
                 name: i18n.t("Functional mapping ligands"),
                 source: "http://draco.cs.wpi.edu/wuhan/",
                 description: i18n.t("Combined with the following one. Common names or both tags"),
             },
             {
-                id: "pandda-drug-screening-diamond",
+                id: "pandda-drug-screening-diamond" as const,
                 name: i18n.t("Pandda drug screening diamond"),
                 source: "https://www.diamond.ac.uk/covid-19/for-scientists/",
             },
         ],
     },
     geneView: {
-        id: "gene-view",
+        id: "gene-view" as const,
         name: i18n.t("Gene view"),
         subtracks: [
             {
-                id: "gene",
+                id: "gene" as const,
                 name: i18n.t("Gene"),
                 source: "Ensembl",
                 description: i18n.t(
@@ -518,11 +531,11 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     mutagenesisExperiments: {
-        id: "mutagenesis",
+        id: "mutagenesis" as const,
         name: i18n.t("Mutagenesis experiments"),
         subtracks: [
             {
-                id: "mutagenesis",
+                id: "mutagenesis" as const,
                 name: i18n.t("Mutagenesis"),
                 source: "Uniprot",
                 description: i18n.t(
@@ -532,25 +545,25 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     variants: {
-        id: "variants",
+        id: "variants" as const,
         name: i18n.t("Variants"),
         subtracks: [
             {
-                id: "variants",
+                id: "variants" as const,
                 name: i18n.t("Variants"),
                 source: "Uniprot, BioMutaDB, Ensembl, CNCB, Large scale studies",
             },
         ],
     },
     peptides: {
-        id: "peptides",
+        id: "peptides" as const,
         name: i18n.t("Peptides"),
         description: i18n.t(
             "Peptides generated in silico by Uniprot using rules based on mass spectrometry experiments and comparing with peptides already identified in proteomics repositories. Only those that have already been identified are shown on the track"
         ),
         subtracks: [
             {
-                id: "unique-peptide",
+                id: "unique-peptide" as const,
                 name: i18n.t("Unique peptide"),
                 source: "Uniprot",
                 description: i18n.t(
@@ -558,7 +571,7 @@ export const tracksDef = recordOf<TrackDef>()({
                 ),
             },
             {
-                id: "non-unique-peptide",
+                id: "non-unique-peptide" as const,
                 name: i18n.t("Non unique peptide"),
                 source: "Uniprot",
                 description: i18n.t(
@@ -568,37 +581,38 @@ export const tracksDef = recordOf<TrackDef>()({
         ],
     },
     epitomes: {
-        id: "epitomes",
+        id: "epitomes" as const,
         name: i18n.t("Epitomes"),
         description: i18n.t(
             "An epitope is the portion of a macromolecule that is recognized by the immune system, specifically the sequence to which antibodies or B-cell and T-cell receptors bind"
         ),
         subtracks: [
             {
-                id: "linear-epitope-1-2-3-4-5",
+                id: "linear-epitope-1-2-3-4-5" as const,
                 name: i18n.t("Linear epitope 1, 2, 3, 4 , 5"),
                 source: "",
                 description: i18n.t("Different entries from IEDB"),
             },
             {
-                id: "linear-epitope",
+                id: "linear-epitope" as const,
                 name: i18n.t("Linear epitope"),
                 source: "IEDB",
             },
         ],
     },
     antigenicSequence: {
-        id: "antigenic-sequence",
+        id: "antigenic-sequence" as const,
         name: i18n.t("Antigenic sequence"),
         description: i18n.t(
             "An antigenic sequence is a region of the protein that triggers the formation of antibodies and can cause an immune response"
         ),
         subtracks: [
             {
-                id: "ab-binding-sequence",
+                id: "ab-binding-sequence" as const,
                 name: i18n.t("Ab binding sequence"),
                 source: "Uniprot - HPA",
             },
         ],
     },
 });
+

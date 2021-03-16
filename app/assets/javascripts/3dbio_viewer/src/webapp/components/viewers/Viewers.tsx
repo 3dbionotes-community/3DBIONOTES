@@ -8,6 +8,7 @@ import { ProfilesButton } from "../protvista/ProfilesButton";
 import { SelectionState } from "../../view-models/SelectionState";
 import { Loader } from "../Loader";
 import { usePdbLoader } from "../../hooks/use-pdb";
+import { blockDefs } from "../protvista/protvista-blocks";
 
 export interface ViewersProps {
     selection: SelectionState;
@@ -31,7 +32,7 @@ export const Viewers: React.FC<ViewersProps> = props => {
 
             {loader.type === "loaded" && (
                 <React.Fragment>
-                    <ProtvistaViewer pdb={loader.data} selection={selection} />
+                    <ProtvistaViewer blocks={blockDefs} pdb={loader.data} selection={selection} />
                 </React.Fragment>
             )}
         </React.Fragment>

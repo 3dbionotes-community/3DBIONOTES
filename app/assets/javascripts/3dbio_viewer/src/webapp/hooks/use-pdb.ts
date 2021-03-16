@@ -1,5 +1,6 @@
 import React from "react";
 import { Pdb } from "../../domain/entities/Pdb";
+import { debugVariable } from "../../utils/debug";
 import { useAppContext } from "../components/AppContext";
 import { useLoader } from "../components/Loader";
 
@@ -23,6 +24,10 @@ export function usePdbLoader() {
             error => setLoader({ type: "error", message: error.message })
         );
     }, [compositionRoot, setLoader]);
+
+    React.useEffect(() => {
+        if (loader.type === "loaded") debugVariable({ pdbData: loader.data });
+    }, [loader]);
 
     return loader;
 }

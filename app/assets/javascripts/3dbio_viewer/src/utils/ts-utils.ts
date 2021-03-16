@@ -22,3 +22,17 @@ export function assert<T>(value: T | undefined): T {
     if (value === undefined) throw new Error("Assert error");
     return value;
 }
+
+//
+
+export type OptionalKeys<T> = { [K in keyof T]-?: {} extends Pick<T, K> ? K : never }[keyof T];
+
+type ObjWithOptionalKeys<Obj, T> = {
+    [K in keyof Obj]: Obj[K] & Pick<T, OptionalKeys<T>>;
+};
+
+export function withOptionalProperties<T>() {
+    return function <Obj>(obj: Obj): ObjWithOptionalKeys<Obj, T> {
+        return obj as ObjWithOptionalKeys<Obj, T>;
+    };
+}

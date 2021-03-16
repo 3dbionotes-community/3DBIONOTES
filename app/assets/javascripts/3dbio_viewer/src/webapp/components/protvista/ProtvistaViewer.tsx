@@ -3,8 +3,8 @@ import React from "react";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { SelectionState } from "../../view-models/SelectionState";
 import { ViewerBlock } from "../ViewerBlock";
-import { blockDefs } from "./protvista-blocks";
 import { ProtvistaPdb } from "./ProtvistaPdb";
+import { BlockDef } from "./Protvista.types";
 
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
@@ -12,20 +12,20 @@ import "./ProtvistaViewer.css";
 export interface ProtvistaViewerProps {
     pdb: Pdb;
     selection: SelectionState;
+    blocks: BlockDef[];
 }
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
-    const { pdb, selection } = props;
+    const { pdb, selection, blocks } = props;
 
     return (
         <div>
-            {blockDefs.map(block => {
+            {blocks.map(block => {
                 const BlockComponent = block.component || ProtvistaPdb;
-                const trackIds = block.tracks.map(track => track.id);
 
                 return (
                     <ViewerBlock key={block.id} block={block}>
-                        <BlockComponent pdb={pdb} selection={selection} trackIds={trackIds} />
+                        <BlockComponent pdb={pdb} selection={selection} block={block} />
 
                         {block.tracks.map((trackDef, idx) => {
                             const CustomTrackComponent = trackDef.component;

@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { Pdb } from "../../../domain/entities/Pdb";
-import {  PdbView, ProtvistaTrackElement, TrackView } from "./Protvista.types";
+import { BlockDef, PdbView, ProtvistaTrackElement, TrackView } from "./Protvista.types";
 import { hasFragments, Track } from "../../../domain/entities/Track";
 import { renderToString } from "react-dom/server";
 import { Tooltip } from "./Tooltip";
@@ -22,15 +22,38 @@ export function loadPdbView(elementRef: React.RefObject<ProtvistaTrackElement>, 
     });
 }
 
-export function getPdbView(pdb: Pdb, options: { trackIds?: string[] } = {}): PdbView {
-    const { trackIds } = options;
-    const pdbTracks = trackIds
-        ? _(pdb.tracks)
-              .keyBy(t => t.id)
-              .at(...trackIds)
-              .compact()
-              .value()
-        : pdb.tracks;
+export function getPdbView(
+    pdb: Pdb,
+    options: { block: BlockDef; showAllTracks?: boolean }
+): PdbView {
+    const { block, showAllTracks = false } = options;
+    const pdbTracksById = _.keyBy(pdb.tracks, t => t.id);
+    const trackDefsById = _.keyBy(block.tracks, bt => bt.id);
+
+    const data = showAllTracks
+        ? pdb.tracks.map(pdbTrack => {
+              const trackDef = trackDefsById[pdbTrack.id];
+              return { pdbTrack, trackDef };
+          })
+        : _.compact(
+              block.tracks.map(trackDef => {
+                  const pdbTrack = pdbTracksById[trackDef.id];
+                  return pdbTrack ? { pdbTrack, trackDef } : null;
+              })
+          );
+
+    const tracks = _(data)
+        .map(({ pdbTrack, trackDef }): TrackView | undefined => {
+            const subtracks = getTrackData(pdb.protein.id, pdbTrack);
+            if (_.isEmpty(subtracks)) return undefined;
+            return {
+                ...pdbTrack,
+                data: subtracks,
+                help: trackDef ? trackDef.description || "-" : "",
+            };
+        })
+        .compact()
+        .value();
 
     return {
         ...pdb,
@@ -38,17 +61,7 @@ export function getPdbView(pdb: Pdb, options: { trackIds?: string[] } = {}): Pdb
         displaySequence: true,
         displayConservation: false,
         displayVariants: !!pdb.variants,
-        tracks: _.compact(
-            pdbTracks.map(track => {
-                const subtracks = getTrackData(pdb.protein.id, track);
-                if (_.isEmpty(subtracks)) return null;
-                return {
-                    ...track,
-                    data: subtracks,
-                    help: "getPdbView-TODO",
-                };
-            })
-        ),
+        tracks,
         variants: pdb.variants
             ? {
                   ...pdb.variants,
