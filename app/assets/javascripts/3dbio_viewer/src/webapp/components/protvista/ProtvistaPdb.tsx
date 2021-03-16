@@ -1,23 +1,21 @@
 import React from "react";
 import _ from "lodash";
 import { Pdb } from "../../../domain/entities/Pdb";
-import { SelectionState } from "../../view-models/SelectionState";
 import { getPdbView, loadPdbView } from "./Protvista.helpers";
-import { ProtvistaBlock as ProtvistaBlockM, ProtvistaTrackElement } from "./Protvista.types";
+import { ProtvistaTrackElement } from "./Protvista.types";
 
-export interface BlockProps {
-    block: ProtvistaBlockM;
+export interface ProtvistaPdbProps {
     pdb: Pdb;
-    selection: SelectionState;
+    trackIds?: string[];
 }
 
-export const ProtvistaPdb: React.FC<BlockProps> = React.memo(props => {
-    const { pdb, block } = props;
+export const ProtvistaPdb: React.FC<ProtvistaPdbProps> = React.memo(props => {
+    const { pdb, trackIds } = props;
     const elementRef = React.useRef<ProtvistaTrackElement>(null);
 
     React.useEffect(() => {
-        return loadPdbView(elementRef, getPdbView(pdb, block));
-    }, [pdb, block, elementRef]);
+        return loadPdbView(elementRef, getPdbView(pdb, { trackIds }));
+    }, [pdb, trackIds, elementRef]);
 
     return <protvista-pdb custom-data="true" ref={elementRef}></protvista-pdb>;
 });

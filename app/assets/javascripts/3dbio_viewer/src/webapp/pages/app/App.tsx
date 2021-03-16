@@ -4,6 +4,7 @@ import { HashRouter, Route, Switch } from "react-router-dom";
 import { AppContext } from "../../../webapp/components/AppContext";
 import { TrainingApp } from "../../../webapp/training-app";
 import { modules } from "../../../webapp/training-app/training-modules";
+import { ProtvistaGrouped } from "../../components/protvista/ProvistaGrouped";
 import { Viewers } from "../../components/viewers/Viewers";
 import { SelectionState } from "../../view-models/SelectionState";
 import { MolecularStructureRoute } from "../MolecularStructurePage";
@@ -22,6 +23,10 @@ function App() {
                     <Route
                         path="/protvista"
                         render={() => <Viewers selection={protvistaSelection} />}
+                    />
+                    <Route
+                        path="/protvista-all"
+                        render={() => <ProtvistaGrouped selection={protvistaSelection} />}
                     />
                     <RootViewerRoute path="/:selector" />
                     <RootViewerRoute path="/" />

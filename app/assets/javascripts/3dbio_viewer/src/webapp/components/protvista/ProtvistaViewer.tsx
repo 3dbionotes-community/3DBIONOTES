@@ -21,10 +21,11 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         <div>
             {blockDefs.map(block => {
                 const BlockComponent = block.component || ProtvistaPdb;
+                const trackIds = block.tracks.map(track => track.id);
 
                 return (
                     <ViewerBlock key={block.id} block={block}>
-                        <BlockComponent block={block} pdb={pdb} selection={selection} />
+                        <BlockComponent pdb={pdb} selection={selection} trackIds={trackIds} />
 
                         {block.tracks.map((trackDef, idx) => {
                             const CustomTrackComponent = trackDef.component;

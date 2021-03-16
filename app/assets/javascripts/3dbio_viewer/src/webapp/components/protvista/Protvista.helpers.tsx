@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { Pdb } from "../../../domain/entities/Pdb";
-import { BlockDef, PdbView, ProtvistaTrackElement, TrackView } from "./Protvista.types";
+import {  PdbView, ProtvistaTrackElement, TrackView } from "./Protvista.types";
 import { hasFragments, Track } from "../../../domain/entities/Track";
 import { renderToString } from "react-dom/server";
 import { Tooltip } from "./Tooltip";
@@ -22,13 +22,15 @@ export function loadPdbView(elementRef: React.RefObject<ProtvistaTrackElement>, 
     });
 }
 
-export function getPdbView(pdb: Pdb, block: BlockDef): PdbView {
-    const trackIds = block.tracks.map(t => t.id);
-    const pdbTracks = _(pdb.tracks)
-        .keyBy(t => t.id)
-        .at(...trackIds)
-        .compact()
-        .value();
+export function getPdbView(pdb: Pdb, options: { trackIds?: string[] } = {}): PdbView {
+    const { trackIds } = options;
+    const pdbTracks = trackIds
+        ? _(pdb.tracks)
+              .keyBy(t => t.id)
+              .at(...trackIds)
+              .compact()
+              .value()
+        : pdb.tracks;
 
     return {
         ...pdb,
