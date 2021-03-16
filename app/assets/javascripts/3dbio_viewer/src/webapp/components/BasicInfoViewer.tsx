@@ -18,6 +18,7 @@ interface SubtrackItem {
 export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
     const { pdb, selection } = props;
     const emdbId = selection.main?.emdb?.id;
+    const resolution = pdb.experiment?.resolution;
 
     const subtracks: SubtrackItem[] = [
         { name: i18n.t("Protein Name"), value: pdb.protein.name },
@@ -43,7 +44,7 @@ export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
         },
         {
             name: i18n.t("Resolution"),
-            value: pdb.experiment?.resolution.toString(),
+            value: resolution ? `${resolution.toString()} Å` : undefined,
             help: i18n.t(
                 "This determines the possible use given to the structure of the protein (Å). Depending on the global resolution range and the local resolution of the relevant sites, we can introduce the possible uses depending on the tables that are usually used (ex. https://science.sciencemag.org/content/294/5540/93)"
             ),
