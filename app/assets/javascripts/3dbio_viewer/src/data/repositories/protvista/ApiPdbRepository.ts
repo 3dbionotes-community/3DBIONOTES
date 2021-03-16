@@ -135,7 +135,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         phosphositeUniprot: getJSON(`${bioUrl}/api/annotations/Phosphosite/Uniprot/${protein}`),
         pfamAnnotations: getJSON(`${bioUrl}/api/annotations/Pfam/Uniprot/${protein}`),
         smartAnnotations: getJSON(`${bioUrl}/api/annotations/SMART/Uniprot/${protein}`),
-        proteomics: getJSON(`${ebiProteinsApiUrl}/api/proteomics/${protein}`),
+        proteomics: getJSON(`${ebiProteinsApiUrl}/proteomics/${protein}`),
         pdbRedo: getJSON(`${bioUrl}/api/annotations/PDB_REDO/${pdb}`),
         iedb: getJSON(`${bioUrl}/api/annotations/IEDB/Uniprot/${protein}`),
         pdbExperiment: getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/experiment/${pdb}`),
