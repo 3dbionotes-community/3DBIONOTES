@@ -125,7 +125,7 @@ export const blockDefs: BlockDef[] = [
         tracks: [
             tracks.structureCoverage,
             tracks.geneView /* viewer */,
-            tracks.mutagenesisExperiments,
+            tracks.mutagenesis,
             tracks.variants,
         ],
     },
@@ -173,7 +173,7 @@ export const allTracksBlock: BlockDef = {
         tracks.ligands,
         tracks.functionalMappingLigands,
         tracks.geneView,
-        tracks.mutagenesisExperiments,
+        tracks.mutagenesis,
         tracks.variants,
         tracks.peptides,
         tracks.epitomes,

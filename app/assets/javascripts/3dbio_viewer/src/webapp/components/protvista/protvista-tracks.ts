@@ -145,7 +145,7 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
         subtracks: [{ id: "regions" as const, name: i18n.t("Regions"), source: "Uniprot" }],
     },
     otherRegions: {
-        id: "other-regions" as const,
+        id: "other-structural-regions" as const,
         name: i18n.t("Other structural regions"),
         description: i18n.t(
             "This are regions that interactiing with other peptides. Protein-protein interactions are often mediated by short linear motifs (SLiMs) that are  normall+P38:AA39y located in intrinsically disordered regions (IDRs) of proteins"
@@ -219,7 +219,7 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
                 description: i18n.t("Binding site for a metal ion"),
             },
             {
-                id: "other-sites" as const,
+                id: "other-structural-relevant-sites" as const,
                 name: i18n.t("Others structural relevant sites"),
                 source: "Uniprot, PhosphoSitePlus",
                 description: i18n.t("Binding site for others chemical group"),
@@ -530,7 +530,7 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
             },
         ],
     },
-    mutagenesisExperiments: {
+    mutagenesis: {
         id: "mutagenesis" as const,
         name: i18n.t("Mutagenesis experiments"),
         subtracks: [
@@ -615,4 +615,3 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
         ],
     },
 });
-
