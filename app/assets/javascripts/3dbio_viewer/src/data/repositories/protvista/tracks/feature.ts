@@ -177,7 +177,7 @@ function getGroupedFeatures(featuresData: Features): GroupedFeature[] {
     return features;
 }
 
-const mapping: Record<string, { trackId: TrackId; subtrackId: SubtrackId }> = {
+const _mapping: Record<string, { trackId: TrackId; subtrackId: SubtrackId }> = {
     REGION: { trackId: "regions", subtrackId: "regions" },
     COILED: { trackId: "other-structural-regions", subtrackId: "coiled-coils" },
     CARBOHYD: { trackId: "ptm", subtrackId: "glycosylation" },

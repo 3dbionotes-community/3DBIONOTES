@@ -1,5 +1,6 @@
-import { recordOf, withOptionalProperties } from "../../../utils/ts-utils";
+import {  withOptionalProperties } from "../../../utils/ts-utils";
 import i18n from "../../utils/i18n";
+import { GeneViewer } from "../gene-viewer/GeneViewer";
 import { PPIViewer } from "../ppi/PPIViewer";
 import { TrackDefBase } from "./Protvista.types";
 
@@ -519,6 +520,7 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
     geneView: {
         id: "gene-view" as const,
         name: i18n.t("Gene view"),
+        component: GeneViewer,
         subtracks: [
             {
                 id: "gene" as const,
