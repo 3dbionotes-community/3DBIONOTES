@@ -29,6 +29,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "pfam-domain" as const,
         name: i18n.t("Pfam domains"), // (domain families)
         source: "Pfam db",
+        color: colors.pfam_domain,
         description: i18n.t(
             "Information collected from the Pfam database. The Pfam database is a large collection of protein families, each represented by multiple sequence alignments and hidden Markov models (HMMs)"
         ),
@@ -37,6 +38,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "smart-domains" as const,
         name: i18n.t("Smart domains"), // (domain families)
         source: "Smart db",
+        color: colors.smart_domain,
         description: i18n.t(
             "Information collected from the SMART database. The SMART (Simple Modular Architecture Research Tool) compiles genetically mobile domains and domain architectures"
         ),

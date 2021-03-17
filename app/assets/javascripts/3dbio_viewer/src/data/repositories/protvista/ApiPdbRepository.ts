@@ -12,7 +12,7 @@ import { getEmValidationTrack, PdbAnnotations } from "./tracks/em-validation";
 import { EbiVariation, getVariants } from "./tracks/variants";
 import { addPhosphiteSubtracks, PhosphositeUniprot } from "./tracks/phosphite";
 import {
-    getDomainFamiliesTrack,
+    getDomainFamiliesFragments,
     PfamAnnotations,
     SmartAnnotations,
 } from "./tracks/domain-families";
@@ -58,28 +58,26 @@ interface Options {
 
 export class ApiPdbRepository implements PdbRepository {
     get(options: Options): FutureData<Pdb> {
-        // TODO: Get protein from pdb
         return getData(options).map(data => this.getPdb(data, options));
     }
 
     getPdb(data: Partial<Data>, options: Options): Pdb {
         debugVariable({ apiData: data });
-        // if (!data.uniprot)
 
         const featureFragments =
             getIf(data.features, features =>
                 getFeatureFragments(options.protein, features, data.phosphositeUniprot)
             ) || [];
+        const domainFamiliesFragments = getDomainFamiliesFragments(
+            data.pfamAnnotations,
+            data.smartAnnotations
+        );
 
         const _variants = getIf(data.ebiVariation, getVariants);
         const functionalMappingTracks =
             getIf(data.covidAnnotations, getFunctionalMappingTrack) || [];
         const emValidationTrack = getIf(data.pdbAnnotations, getEmValidationTrack);
         const structureCoverageTrack = getIf(data.coverage, getStructureCoverageTrack);
-        const domainFamiliesTrack = getDomainFamiliesTrack(
-            data.pfamAnnotations,
-            data.smartAnnotations
-        );
         const mobiDisorderTrack = getIf(data.mobiUniprot, getMobiDisorderTrack);
         const proteomicsTrack = getIf(data.proteomics, getProteomicsTrack);
         const pdbRedoTrack = getIf(data.pdbRedo, pdbRedo =>
@@ -89,9 +87,7 @@ export class ApiPdbRepository implements PdbRepository {
 
         const tracks1: Track[] = _.compact([
             ...functionalMappingTracks,
-            //...featureTracks,
             emValidationTrack,
-            domainFamiliesTrack,
             mobiDisorderTrack,
             structureCoverageTrack,
             epitomesTrack,
@@ -106,7 +102,9 @@ export class ApiPdbRepository implements PdbRepository {
             getExperiment(options.pdb, pdbExperiment)
         );
 
-        const tracks = getTracksFromFragments(_.flatten([featureFragments]));
+        const tracks = getTracksFromFragments(
+            _.flatten([featureFragments, domainFamiliesFragments])
+        );
         debugVariable({ oldTracks: tracks3, newTracks: tracks });
 
         return {

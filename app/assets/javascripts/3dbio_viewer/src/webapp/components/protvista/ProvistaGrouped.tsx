@@ -16,6 +16,7 @@ export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(() =
 
     return loader.type === "loaded" ? (
         <ViewerBlock block={block}>
+            PDB: {loader.data.id}
             <ProtvistaPdb pdb={loader.data} block={block} showAllTracks={true} />
         </ViewerBlock>
     ) : (

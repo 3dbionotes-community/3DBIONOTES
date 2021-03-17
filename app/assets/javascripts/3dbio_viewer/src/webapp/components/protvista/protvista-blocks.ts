@@ -148,7 +148,7 @@ export const blockDefs: BlockDef[] = [
 export const allTracksBlock: BlockDef = {
     id: "allTracksBlock",
     title: "All Tracks Block",
-    description: "Show all tracks in single protvista viewer",
+    description: "",
     help: "Help message",
     tracks: [
         tracks.structureCoverage,

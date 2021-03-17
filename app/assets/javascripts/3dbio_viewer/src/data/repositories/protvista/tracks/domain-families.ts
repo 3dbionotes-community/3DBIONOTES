@@ -1,8 +1,11 @@
 import _ from "lodash";
+import { subtracks } from "../../../../domain/definitions/subtracks";
 import { getFragment } from "../../../../domain/entities/Fragment";
+import { Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import { Track } from "../../../../domain/entities/Track";
 import { getIf } from "../../../../utils/misc";
 import { config } from "../config";
+import { getFeatureFragments } from "./feature";
 
 // Domain family: Pfam, smart, interpro
 
@@ -34,52 +37,27 @@ export interface SmartAnnotation {
     status: string;
 }
 
-export function getDomainFamiliesTrack(
+export function getDomainFamiliesFragments(
     pfamAnnotations: PfamAnnotations | undefined,
     smartAnnotations: SmartAnnotations | undefined
-): Track {
-    return {
-        id: "domain-families",
-        label: "Domain families",
-        subtracks: _.compact([
-            getIf(pfamAnnotations, pfamAnnotations => ({
-                accession: "pfam-domain",
-                type: "Pfam domain",
-                label: "Pfam domain",
-                labelTooltip: config.tracks.pfam_domain.tooltip,
-                shape: config.shapeByTrackName.pfam_domain,
-                locations: [
-                    {
-                        fragments: _.flatMap(pfamAnnotations, an =>
-                            getFragment({
-                                start: an.start,
-                                end: an.end,
-                                description: "Imported from Pfam",
-                                color: config.colorByTrackName.pfam_domain,
-                            })
-                        ),
-                    },
-                ],
-            })),
-            getIf(smartAnnotations, smartAnnotations => ({
-                accession: "smart-domain",
-                type: "SMART domain",
-                label: "SMART domain",
-                labelTooltip: config.tracks.pfam_domain.tooltip,
-                shape: config.shapeByTrackName.smart_domain,
-                locations: [
-                    {
-                        fragments: _.flatMap(smartAnnotations, an =>
-                            getFragment({
-                                start: an.start,
-                                end: an.end,
-                                description: "Imported from SMART",
-                                color: config.colorByTrackName.smart_domain,
-                            })
-                        ),
-                    },
-                ],
-            })),
-        ]),
-    };
+): Fragments {
+    const pfamFragments = getFragments(pfamAnnotations, annotation => {
+        return {
+            subtrack: subtracks.pfamDomain,
+            start: annotation.start,
+            end: annotation.end,
+            description: "Imported from Pfam",
+        };
+    });
+
+    const smartFragments = getFragments(smartAnnotations, annotation => {
+        return {
+            subtrack: subtracks.smartDomains,
+            start: annotation.start,
+            end: annotation.end,
+            description: "Imported from SMART",
+        };
+    });
+
+    return _.concat(pfamFragments, smartFragments);
 }

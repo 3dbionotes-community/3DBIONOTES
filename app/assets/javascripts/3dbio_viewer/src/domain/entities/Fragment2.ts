@@ -69,10 +69,10 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
 }
 
 export function getFragments<Feature>(
-    features: Feature[],
+    features: Feature[] | undefined,
     mapper: (feature: Feature) => LooseFragment2 | undefined
 ): Fragment2[] {
-    return features
+    return (features || [])
         .map(feature => {
             const looseFragment = mapper(feature);
             return looseFragment ? getFragment(looseFragment) : undefined;
