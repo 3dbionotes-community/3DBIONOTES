@@ -28,24 +28,16 @@ export function getPdbView(
 ): PdbView {
     const { block, showAllTracks = false } = options;
     const pdbTracksById = _.keyBy(pdb.tracks, t => t.id);
-    const trackDefsById = _.keyBy(block.tracks, bt => bt.id);
 
     const data = showAllTracks
-        ? pdb.tracks.map(pdbTrack => {
-              const trackDef = trackDefsById[pdbTrack.id];
-              return { pdbTrack, trackDef };
-          })
-        : _.compact(
-              block.tracks.map(trackDef => {
-                  const pdbTrack = pdbTracksById[trackDef.id];
-                  return pdbTrack ? { pdbTrack, trackDef } : null;
-              })
-          );
+        ? pdb.tracks
+        : _.compact(block.tracks.map(trackDef => pdbTracksById[trackDef.id]));
 
     const tracks = _(data)
-        .map(({ pdbTrack, trackDef }): TrackView | undefined => {
+        .map((pdbTrack): TrackView | undefined => {
             const subtracks = getTrackData(pdb.protein.id, pdbTrack);
             if (_.isEmpty(subtracks)) return undefined;
+
             return {
                 ...pdbTrack,
                 data: subtracks,

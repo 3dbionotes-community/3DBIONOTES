@@ -2,10 +2,10 @@ import React from "react";
 import { Color } from "../../../domain/entities/Color";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { Shape } from "../../../domain/entities/Shape";
+import { TrackDefinition } from "../../../domain/entities/TrackDefinition";
 import { Variant, Variants } from "../../../domain/entities/Variant";
 import { SelectionState } from "../../view-models/SelectionState";
 import { ViewerBlockModel } from "../ViewerBlock";
-import { TrackDef as TrackDefFromValue } from "../../../domain/definitions/tracks";
 
 export interface ProtvistaTrackElement extends HTMLDivElement {
     viewerdata: PdbView;
@@ -19,8 +19,7 @@ export interface BlockComponentProps {
     selection: SelectionState;
 }
 
-export type TrackDef = TrackDefFromValue;
-
+export type TrackDef = TrackDefinition;
 
 export interface TrackComponentProps extends BlockComponentProps {
     trackDef: TrackDef;
@@ -35,7 +34,6 @@ export interface ProtvistaBlock extends ViewerBlockModel {
     tracks: TrackDef[];
     component?: React.FC<BlockComponentProps>;
 }
-
 
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
 

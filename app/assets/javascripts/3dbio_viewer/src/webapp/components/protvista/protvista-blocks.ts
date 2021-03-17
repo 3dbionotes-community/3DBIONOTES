@@ -1,7 +1,7 @@
 import _ from "lodash";
 import i18n from "../../utils/i18n";
 import { BasicInfoViewer } from "../BasicInfoViewer";
-import { tracksDef as tracks } from "../../../domain/definitions/tracks";
+import { trackDefinitions as tracks } from "../../../domain/definitions/tracks";
 import { BlockDef } from "./Protvista.types";
 
 export const blockDefs: BlockDef[] = [

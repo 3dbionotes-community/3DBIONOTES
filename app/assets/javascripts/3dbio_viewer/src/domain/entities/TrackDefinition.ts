@@ -4,15 +4,14 @@ export interface TrackDefinition {
     id: string;
     name: string;
     description?: string;
-    subtracks: SubtrackDef[];
-    //component?: React.FC<TrackComponentProps>;
+    subtracks: SubtrackDefinition[];
 }
 
-interface SubtrackDef {
+export interface SubtrackDefinition {
     id: string;
     name: string;
     source: string;
     description?: string;
-    color: string;
-    shape: Shape;
+    color?: string;
+    shape?: Shape;
 }

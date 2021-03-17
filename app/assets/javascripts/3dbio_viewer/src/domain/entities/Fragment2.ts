@@ -1,13 +1,14 @@
 import _ from "lodash";
-import { notNil } from "../../utils/ts-utils";
-import { getSubtrackFromId, getTrackFromSubtrack, SubtrackId } from "../definitions/tracks";
+import { groupedPairsBy, notNil } from "../../utils/ts-utils";
+import { getTracksFromSubtrack } from "../definitions/tracks";
 import { Evidence } from "./Evidence";
 import { Subtrack, Track } from "./Track";
+import { SubtrackDefinition } from "./TrackDefinition";
 
 export type Fragments = Fragment2[];
 
 export interface Fragment2 {
-    subtrackId: SubtrackId;
+    subtrack: SubtrackDefinition;
     start: number;
     end: number;
     description: string;
@@ -15,53 +16,56 @@ export interface Fragment2 {
 }
 
 export function getTracksFromFragments(fragments: Fragments): Track[] {
-    return _(fragments)
-        .map(fragment => ({ trackDef: getTrackFromSubtrack(fragment.subtrackId), fragment }))
-        .groupBy(obj => obj.trackDef?.id)
-        .map((objs, trackId) => {
-            const trackDef = objs[0]!.trackDef!;
+    const trackDefinitions = _(fragments)
+        .flatMap(fragment => getTracksFromSubtrack(fragment.subtrack))
+        .compact()
+        .uniq()
+        .value();
 
-            const track: Track = {
-                id: trackId,
+    const groupedFragments = groupedPairsBy(fragments, fragment => fragment.subtrack);
+
+    const subtracksById = _(groupedFragments)
+        .map(
+            ([subtrackDef, fragmentsForSubtrack]): Subtrack => {
+                return {
+                    accession: subtrackDef.id,
+                    type: subtrackDef.id,
+                    label: subtrackDef.name,
+                    labelTooltip: subtrackDef.description,
+                    shape: subtrackDef.shape || "rectangle",
+                    locations: [
+                        {
+                            fragments: fragmentsForSubtrack.map(fragment => {
+                                return {
+                                    start: fragment.start,
+                                    end: fragment.end,
+                                    description: fragment.description,
+                                    evidences: fragment.evidences,
+                                    color: subtrackDef.color || "#200",
+                                };
+                            }),
+                        },
+                    ],
+                };
+            }
+        )
+        .keyBy(subtrack => subtrack.accession)
+        .value();
+
+    return trackDefinitions.map(
+        (trackDef): Track => {
+            return {
+                id: trackDef.id,
                 label: trackDef.name,
                 description: trackDef.description,
                 overlapping: false,
-                subtracks: _(objs)
-                    .groupBy(obj => obj.fragment.subtrackId)
-                    .map((objs, subtrackId) => {
-                        const subtrackDef = getSubtrackFromId(subtrackId);
-                        if (!subtrackDef) return;
-
-                        const subtrack: Subtrack = {
-                            accession: subtrackId,
-                            type: subtrackId,
-                            label: subtrackDef.name,
-                            labelTooltip: subtrackDef.description,
-                            shape: "rectangle", // TODO
-                            locations: [
-                                {
-                                    fragments: objs.map(({ fragment }) => {
-                                        return {
-                                            start: fragment.start,
-                                            end: fragment.end,
-                                            description: fragment.description,
-                                            evidences: fragment.evidences,
-                                            color: "black", // TODO
-                                        };
-                                    }),
-                                },
-                            ],
-                        };
-
-                        return subtrack;
-                    })
+                subtracks: _(subtracksById)
+                    .at(...trackDef.subtracks.map(subtrack => subtrack.id))
                     .compact()
                     .value(),
             };
-
-            return track;
-        })
-        .value();
+        }
+    );
 }
 
 export function getFragments<Feature>(

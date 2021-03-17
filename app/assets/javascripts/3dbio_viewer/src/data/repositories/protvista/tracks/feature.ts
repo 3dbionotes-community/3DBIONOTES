@@ -1,7 +1,8 @@
 import _ from "lodash";
-import { SubtrackId } from "../../../../domain/definitions/tracks";
+import { subtracks } from "../../../../domain/definitions/subtracks";
 import { Evidence as DomainEvidence, EvidenceSource } from "../../../../domain/entities/Evidence";
 import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
+import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition";
 import { getEvidenceText } from "./legacy/TooltipFactory";
 import {
     getPhosphiteEvidencesFromFeature,
@@ -9,22 +10,22 @@ import {
     PhosphositeUniprotItem,
 } from "./phosphite";
 
-const mapping: Record<string, SubtrackId> = {
-    REGION: "regions",
-    COILED: "coiled-coils",
-    CARBOHYD: "glycosylation",
-    CHAIN: "chain",
-    DISULFID: "disulfide-bond",
-    DOMAIN: "prosite-domain",
-    HELIX: "helix",
-    MOTIF: "motifs",
-    MUTAGEN: "mutagenesis",
-    SIGNAL: "signal-peptide",
-    SITE: "other-structural-relevant-sites",
-    STRAND: "beta-strand",
-    TOPO_DOM: "cytolosic",
-    TRANSMEM: "transmembrane-region",
-    TURN: "turn",
+const mapping: Record<string, SubtrackDefinition> = {
+    REGION: subtracks.regions,
+    COILED: subtracks.coiledCoils,
+    CARBOHYD: subtracks.glycosylation,
+    CHAIN: subtracks.chain,
+    DISULFID: subtracks.disulfideBond,
+    DOMAIN: subtracks.prositeDomain,
+    HELIX: subtracks.helix,
+    MOTIF: subtracks.motifs,
+    MUTAGEN: subtracks.mutagenesis,
+    SIGNAL: subtracks.signalPeptide,
+    SITE: subtracks.otherStructuralRelevantSites,
+    STRAND: subtracks.betaStrand,
+    TOPO_DOM: subtracks.cytolosic,
+    TRANSMEM: subtracks.transmembraneRegion,
+    TURN: subtracks.turn,
     // VARIANT: {trackId: "",  ""},
 };
 
@@ -72,14 +73,14 @@ export function getFeatureFragments(
     return getFragments(
         features.features,
         (feature): FragmentResult => {
-            const subtrackId = mapping[feature.type];
-            if (!subtrackId) {
+            const subtrack = mapping[feature.type];
+            if (!subtrack) {
                 console.debug(`Unprocessed type: ${feature.type}`);
                 return;
             }
 
             return {
-                subtrackId,
+                subtrack,
                 start: feature.begin,
                 end: feature.end,
                 description: feature.description,

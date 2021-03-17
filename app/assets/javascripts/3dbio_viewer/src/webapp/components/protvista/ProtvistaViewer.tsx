@@ -9,7 +9,6 @@ import { BlockDef, TrackComponentProps } from "./Protvista.types";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
 import { PPIViewer } from "../ppi/PPIViewer";
-import { TrackId } from "../../../domain/definitions/tracks";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
@@ -17,7 +16,7 @@ export interface ProtvistaViewerProps {
     blocks: BlockDef[];
 }
 
-const mapping: Partial<Record<TrackId, React.FC<TrackComponentProps>>> = {
+const mapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
     "ppi-viewer": PPIViewer,
 };
 

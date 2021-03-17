@@ -518,6 +518,7 @@ export const config: Config = {
     colorByTrackName,
 };
 
+
 interface Config {
     categories: Array<{
         name: string;

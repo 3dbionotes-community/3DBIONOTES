@@ -38,3 +38,23 @@ export function withOptionalProperties<T>() {
         return obj as ObjWithOptionalKeys<Obj, T>;
     };
 }
+
+export function groupedPairsBy<Obj, Key>(
+    objs: Obj[],
+    mapper: (obj: Obj) => Key
+): Array<[Key, Obj[]]> {
+    const result = new Map<Key, Obj[]>();
+
+    objs.forEach(obj => {
+        const key = mapper(obj);
+        const objs = result.get(key);
+
+        if (objs) {
+            objs.push(obj);
+        } else {
+            result.set(key, [obj]);
+        }
+    });
+
+    return Array.from(result);
+}
