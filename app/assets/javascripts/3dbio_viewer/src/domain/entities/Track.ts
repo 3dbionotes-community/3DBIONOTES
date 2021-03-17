@@ -7,6 +7,7 @@ export interface Track {
     label: string;
     overlapping?: boolean;
     subtracks: Subtrack[];
+    description?: string;
 }
 
 export interface Subtrack {

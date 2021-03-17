@@ -4,16 +4,22 @@ import { Pdb } from "../../../domain/entities/Pdb";
 import { SelectionState } from "../../view-models/SelectionState";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
-import { BlockDef } from "./Protvista.types";
+import { BlockDef, TrackComponentProps } from "./Protvista.types";
 
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
+import { PPIViewer } from "../ppi/PPIViewer";
+import { TrackId } from "../../../domain/definitions/tracks";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
     selection: SelectionState;
     blocks: BlockDef[];
 }
+
+const mapping: Partial<Record<TrackId, React.FC<TrackComponentProps>>> = {
+    "ppi-viewer": PPIViewer,
+};
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks } = props;
@@ -28,7 +34,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                         <BlockComponent pdb={pdb} selection={selection} block={block} />
 
                         {block.tracks.map((trackDef, idx) => {
-                            const CustomTrackComponent = trackDef.component;
+                            const CustomTrackComponent = mapping[trackDef.id];
                             return (
                                 CustomTrackComponent && (
                                     <CustomTrackComponent

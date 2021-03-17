@@ -1,16 +1,32 @@
 import _ from "lodash";
-import { getFragment } from "../../../../domain/entities/Fragment";
+import { SubtrackId } from "../../../../domain/definitions/tracks";
 import { Evidence as DomainEvidence, EvidenceSource } from "../../../../domain/entities/Evidence";
-import { Subtrack, Track } from "../../../../domain/entities/Track";
-import { config, getColorFromString, getShapeFromString, getTrack } from "../config";
-import { getId, getName } from "../utils";
+import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import { getEvidenceText } from "./legacy/TooltipFactory";
 import {
     getPhosphiteEvidencesFromFeature,
     PhosphositeUniprot,
     PhosphositeUniprotItem,
 } from "./phosphite";
-import { SubtrackId, TrackId } from "../../../../webapp/components/protvista/protvista-tracks";
+
+const mapping: Record<string, SubtrackId> = {
+    REGION: "regions",
+    COILED: "coiled-coils",
+    CARBOHYD: "glycosylation",
+    CHAIN: "chain",
+    DISULFID: "disulfide-bond",
+    DOMAIN: "prosite-domain",
+    HELIX: "helix",
+    MOTIF: "motifs",
+    MUTAGEN: "mutagenesis",
+    SIGNAL: "signal-peptide",
+    SITE: "other-structural-relevant-sites",
+    STRAND: "beta-strand",
+    TOPO_DOM: "cytolosic",
+    TRANSMEM: "transmembrane-region",
+    TURN: "turn",
+    // VARIANT: {trackId: "",  ""},
+};
 
 export interface Features {
     accession: string;
@@ -44,69 +60,33 @@ interface Evidence {
     };
 }
 
-export interface GroupedFeature {
-    name: string;
-    items: {
-        name: string;
-        items: Feature[];
-    }[];
-}
-
 type PhosphositeByInterval = _.Dictionary<PhosphositeUniprotItem[]>;
 
-export function getTrackFromFeatures(
+export function getFeatureFragments(
+    protein: string,
     features: Features,
     phosphosite: PhosphositeUniprot | undefined
-): Track[] {
-    const groupedFeatures = features ? getGroupedFeatures(features) : [];
+): Fragments {
     const phosphositeByInterval = _.groupBy(phosphosite, item => [item.start, item.end].join("-"));
-    return groupedFeatures.map(groupedFeature =>
-        getTrackFromGroupedFeature(features.accession, groupedFeature, phosphositeByInterval)
-    );
-}
 
-function getTrackFromGroupedFeature(
-    protein: string,
-    feature: GroupedFeature,
-    phosphositeByInterval: PhosphositeByInterval
-): Track {
-    return {
-        id: getId(feature.name),
-        label: feature.name,
-        subtracks: feature.items.map(
-            (item, idx): Subtrack => {
-                const itemKey = item.name.toLowerCase();
-                const track = getTrack(itemKey);
-
-                return {
-                    accession: item.name + "-" + idx,
-                    type: item.name,
-                    label: track?.label || getName(item.name),
-                    labelTooltip: track?.tooltip || getName(item.name),
-                    shape: getShapeFromString(itemKey, "circle"),
-                    locations: [
-                        {
-                            fragments: _.flatMap(item.items, feature =>
-                                getFragment({
-                                    id: feature.ftId,
-                                    type: feature.type,
-                                    start: feature.begin,
-                                    end: feature.end,
-                                    description: feature.description,
-                                    evidences: getEvidences(
-                                        protein,
-                                        feature,
-                                        phosphositeByInterval
-                                    ),
-                                    color: getColorFromString(itemKey),
-                                })
-                            ),
-                        },
-                    ],
-                };
+    return getFragments(
+        features.features,
+        (feature): FragmentResult => {
+            const subtrackId = mapping[feature.type];
+            if (!subtrackId) {
+                console.debug(`Unprocessed type: ${feature.type}`);
+                return;
             }
-        ),
-    };
+
+            return {
+                subtrackId,
+                start: feature.begin,
+                end: feature.end,
+                description: feature.description,
+                evidences: getEvidences(protein, feature, phosphositeByInterval),
+            };
+        }
+    );
 }
 
 function getEvidences(
@@ -152,49 +132,6 @@ function getEvidence(
 
     return { title: evidenceText, source: source, alternativeSource };
 }
-
-function getGroupedFeatures(featuresData: Features): GroupedFeature[] {
-    const featuresByCategory = featuresData
-        ? _(featuresData.features)
-              .groupBy(data => data.category)
-              .mapValues(values =>
-                  _(values)
-                      .groupBy(value => value.type)
-                      .map((values, key) => ({ name: key, items: values }))
-                      .value()
-              )
-              .value()
-        : {};
-
-    const features = _(config.categories)
-        .map(category => {
-            const items = featuresByCategory[category.name];
-            return items ? { name: category.label, items } : null;
-        })
-        .compact()
-        .value();
-
-    return features;
-}
-
-const mapping: Record<string, { trackId: TrackId; subtrackId: SubtrackId }> = {
-    REGION: { trackId: "regions", subtrackId: "regions" },
-    COILED: { trackId: "other-structural-regions", subtrackId: "coiled-coils" },
-    CARBOHYD: { trackId: "ptm", subtrackId: "glycosylation" },
-    CHAIN: { trackId: "molecular-processing", subtrackId: "chain" },
-    DISULFID: { trackId: "ptm", subtrackId: "disulfide-bond" },
-    DOMAIN: { trackId: "domains", subtrackId: "prosite-domain" },
-    HELIX: { trackId: "secondary-structure", subtrackId: "helix" },
-    MOTIF: { trackId: "motifs", subtrackId: "motifs" },
-    MUTAGEN: { trackId: "mutagenesis", subtrackId: "mutagenesis" },
-    SIGNAL: { trackId: "molecular-processing", subtrackId: "signal-peptide" },
-    SITE: { trackId: "sites", subtrackId: "other-structural-relevant-sites" },
-    STRAND: { trackId: "secondary-structure", subtrackId: "beta-strand" },
-    TOPO_DOM: {trackId: "topology", subtrackId: "cytolosic"},
-    TRANSMEM: { trackId: "topology", subtrackId: "transmembrane-region" },
-    TURN: { trackId: "secondary-structure", subtrackId: "turn" },
-    // VARIANT: {trackId: "", subtrackId: ""},
-};
 
 /* From extendProtVista/add_evidences.js */
 

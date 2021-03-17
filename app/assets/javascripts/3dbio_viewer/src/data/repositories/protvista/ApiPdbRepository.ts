@@ -16,7 +16,7 @@ import {
     PfamAnnotations,
     SmartAnnotations,
 } from "./tracks/domain-families";
-import { Features, getTrackFromFeatures } from "./tracks/feature";
+import { Features, getFeatureFragments } from "./tracks/feature";
 import { Coverage, getStructureCoverageTrack } from "./tracks/structure-coverage";
 import { addMobiSubtracks, getMobiDisorderTrack, MobiUniprot } from "./tracks/mobi";
 import { Cv19Annotations, getFunctionalMappingTrack } from "./tracks/functional-mapping";
@@ -27,6 +27,7 @@ import { getEpitomesTrack, Iedb } from "./tracks/epitomes";
 import { getProtein, UniprotResponse } from "./uniprot";
 import { getExperiment, PdbExperiment } from "./ebi-pdbe-api";
 import { routes } from "../../../routes";
+import { getTracksFromFragments } from "../../../domain/entities/Fragment2";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -65,6 +66,11 @@ export class ApiPdbRepository implements PdbRepository {
         debugVariable({ apiData: data });
         // if (!data.uniprot)
 
+        const featureFragments =
+            getIf(data.features, features =>
+                getFeatureFragments(options.protein, features, data.phosphositeUniprot)
+            ) || [];
+
         const _variants = getIf(data.ebiVariation, getVariants);
         const functionalMappingTracks =
             getIf(data.covidAnnotations, getFunctionalMappingTrack) || [];
@@ -74,10 +80,6 @@ export class ApiPdbRepository implements PdbRepository {
             data.pfamAnnotations,
             data.smartAnnotations
         );
-        const featureTracks =
-            getIf(data.features, features =>
-                getTrackFromFeatures(features, data.phosphositeUniprot)
-            ) || [];
         const mobiDisorderTrack = getIf(data.mobiUniprot, getMobiDisorderTrack);
         const proteomicsTrack = getIf(data.proteomics, getProteomicsTrack);
         const pdbRedoTrack = getIf(data.pdbRedo, pdbRedo =>
@@ -87,7 +89,7 @@ export class ApiPdbRepository implements PdbRepository {
 
         const tracks1: Track[] = _.compact([
             ...functionalMappingTracks,
-            ...featureTracks,
+            //...featureTracks,
             emValidationTrack,
             domainFamiliesTrack,
             mobiDisorderTrack,
@@ -104,13 +106,17 @@ export class ApiPdbRepository implements PdbRepository {
             getExperiment(options.pdb, pdbExperiment)
         );
 
+        const tracks = getTracksFromFragments(_.flatten([featureFragments]));
+        debugVariable({ oldTracks: tracks3, newTracks: tracks });
+
         return {
             id: options.pdb,
             emdb: undefined,
             protein,
             sequence: data.features ? data.features.sequence : "",
             length: getTotalFeaturesLength(tracks3),
-            tracks: tracks3,
+            //tracks: tracks3,
+            tracks,
             variants: undefined,
             experiment,
         };

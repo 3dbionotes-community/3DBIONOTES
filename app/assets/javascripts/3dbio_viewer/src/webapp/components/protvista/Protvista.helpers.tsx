@@ -49,7 +49,7 @@ export function getPdbView(
             return {
                 ...pdbTrack,
                 data: subtracks,
-                help: trackDef ? trackDef.description || "-" : "",
+                help: pdbTrack.description || "",
             };
         })
         .compact()
@@ -80,7 +80,7 @@ function getTrackData(protein: string, track: Track): TrackView["data"] {
             ? [
                   {
                       ...subtrack,
-                      help: "getTrackData-TODO",
+                      help: subtrack.labelTooltip || "",
                       labelTooltip: subtrack.label,
                       locations: subtrack.locations.map(location => ({
                           ...location,

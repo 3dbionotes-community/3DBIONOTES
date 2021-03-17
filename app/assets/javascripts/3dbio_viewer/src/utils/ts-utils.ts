@@ -23,7 +23,9 @@ export function assert<T>(value: T | undefined): T {
     return value;
 }
 
-//
+export function notNil<T>(x: T | undefined | null): x is T {
+    return x !== undefined && x !== null;
+}
 
 export type OptionalKeys<T> = { [K in keyof T]-?: {} extends Pick<T, K> ? K : never }[keyof T];
 

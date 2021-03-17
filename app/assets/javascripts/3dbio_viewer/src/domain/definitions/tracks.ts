@@ -1,7 +1,7 @@
-import { recordOf, withOptionalProperties } from "../../../utils/ts-utils";
-import i18n from "../../utils/i18n";
-import { PPIViewer } from "../ppi/PPIViewer";
-import { TrackDefBase } from "./Protvista.types";
+import _ from "lodash";
+import { withOptionalProperties } from "../../utils/ts-utils";
+import { TrackDefinition } from "../entities/TrackDefinition";
+import i18n from "../utils/i18n";
 
 type TracksDef = typeof tracksDef;
 
@@ -11,7 +11,7 @@ export type TrackId = TrackDef["id"];
 
 export type SubtrackId = TrackDef["subtracks"][number]["id"];
 
-export const tracksDef = withOptionalProperties<TrackDefBase>()({
+export const tracksDef = withOptionalProperties<TrackDefinition>()({
     structureCoverage: {
         id: "structure-coverage" as const,
         name: i18n.t("Structure Coverage"),
@@ -242,6 +242,8 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
             {
                 id: "chain" as const,
                 name: i18n.t("Chain"),
+                color: "#CC9933",
+                shape: "hexagon2",
                 source: "Uniprot",
                 description: i18n.t(
                     "Mature region of the protein. This describes the extension of a polypeptide chain in the mature protein after processing"
@@ -449,7 +451,6 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
         id: "ppi-viewer" as const,
         name: i18n.t("PPI Viewer"),
         description: "",
-        component: PPIViewer,
         subtracks: [
             {
                 id: "protein-network" as const,
@@ -615,3 +616,33 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
         ],
     },
 });
+
+const trackBySubtrackId = _(tracksDef)
+    .values()
+    .flatMap(track =>
+        (track.subtracks as Array<{ id: TrackId }>).map(
+            subtrack => [subtrack.id, track] as [string, TrackDefinition]
+        )
+    )
+    .fromPairs()
+    .value();
+
+type SubtrackDef = TrackDefinition["subtracks"][0];
+
+const subtrackById = _(tracksDef)
+    .values()
+    .flatMap(track =>
+        (track.subtracks as Array<{ id: TrackId }>).map(
+            subtrack => [subtrack.id, subtrack] as [string, SubtrackDef]
+        )
+    )
+    .fromPairs()
+    .value();
+
+export function getTrackFromSubtrack(subtrackId: SubtrackId): TrackDefinition | undefined {
+    return trackBySubtrackId[subtrackId];
+}
+
+export function getSubtrackFromId(subtrackId: string): SubtrackDef | undefined {
+    return subtrackById[subtrackId];
+}

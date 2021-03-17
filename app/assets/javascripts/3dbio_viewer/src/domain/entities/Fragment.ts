@@ -5,6 +5,9 @@ import { Legend } from "./Legend";
 import { Link } from "./Link";
 import { Subtrack } from "./Track";
 
+/**
+ * @deprecated Use Fragment2 instead
+ */
 export interface Fragment {
     id?: string;
     type?: string;
