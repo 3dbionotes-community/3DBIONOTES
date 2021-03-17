@@ -449,7 +449,7 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
     ppiViewer: {
         id: "ppi-viewer" as const,
         name: i18n.t("PPI Viewer"),
-        description: "",
+        description: i18n.t("Protein-protein interaction networks graph"),
         component: PPIViewer,
         subtracks: [
             {
@@ -517,9 +517,10 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
             },
         ],
     },
-    geneView: {
-        id: "gene-view" as const,
-        name: i18n.t("Gene view"),
+    geneViewer: {
+        id: "gene-viewer" as const,
+        name: i18n.t("Gene viewer"),
+        description: i18n.t("ENSEMBL database viewer"),
         component: GeneViewer,
         subtracks: [
             {

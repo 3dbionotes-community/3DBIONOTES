@@ -11,9 +11,9 @@ export const FrameViewer: React.FC<FrameViewerProps> = props => {
 
     return (
         <div className="frame-viewer">
-            <div className="title">{title}</div>
+            <div className="title">{"> " + title}</div>
 
-            <iframe src={src} width="100%" height="800" />
+            <iframe src={src} width="95%" height="600" />
         </div>
     );
 };
