@@ -28,7 +28,7 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
         ],
     },
     domains: {
-        id: "domains" as const,
+        id: "domains-and-sites" as const,
         name: i18n.t("Domains"),
         description: i18n.t(
             "Specific combination of secondary structures origanized intro a characteristic 3D structure"
@@ -95,7 +95,7 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
         ],
     },
     secondaryStructure: {
-        id: "secondary-structure" as const,
+        id: "structural-features" as const,
         name: i18n.t("Secondary Structure (structural features)"),
         description: i18n.t(
             "The secondary structure of proteins is the local regular folding between nearby amino acid residues of the polypeptide chain. The most common structures are alpha helix, beta sheet and turns connecting them"
