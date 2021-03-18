@@ -5,8 +5,24 @@ import { BlockDef, PdbView, ProtvistaTrackElement, TrackView } from "./Protvista
 import { hasFragments, Track } from "../../../domain/entities/Track";
 import { renderToString } from "react-dom/server";
 import { Tooltip } from "./Tooltip";
+import i18n from "../../utils/i18n";
 
-export function loadPdbView(elementRef: React.RefObject<ProtvistaTrackElement>, pdbView: PdbView) {
+interface AddAction {
+    type: "add";
+    trackId: string;
+}
+
+export type ProtvistaAction = AddAction;
+
+interface Options {
+    onAction?(action: ProtvistaAction): void;
+}
+
+export function loadPdbView(
+    elementRef: React.RefObject<ProtvistaTrackElement>,
+    pdbView: PdbView,
+    options: Options
+) {
     const protvistaEl = elementRef.current;
     if (!protvistaEl) return;
 
@@ -20,6 +36,14 @@ export function loadPdbView(elementRef: React.RefObject<ProtvistaTrackElement>, 
     protvistaEl.querySelectorAll(`.expanded`).forEach(trackSection => {
         trackSection.classList.remove("expanded");
     });
+
+    if (options.onAction) {
+        protvistaEl.addEventListener("protvista-pdb.action", (ev: any) => {
+            if (isProtvistaPdbActionEvent(ev) && options.onAction) {
+                options.onAction(ev.detail);
+            }
+        });
+    }
 }
 
 export function getPdbView(
@@ -50,6 +74,7 @@ export function getPdbView(
                 ...pdbTrack,
                 data: subtracks,
                 help: trackDef ? trackDef.description || "-" : "",
+                actions: { add: { title: i18n.t("Upload custom annotations") } },
             };
         })
         .compact()
@@ -99,4 +124,12 @@ function getTrackData(protein: string, track: Track): TrackView["data"] {
               ]
             : []
     );
+}
+
+interface ProtvistaPdbActionEvent {
+    detail: ProtvistaAction;
+}
+
+function isProtvistaPdbActionEvent(ev: any): ev is ProtvistaPdbActionEvent {
+    return ev.detail && ev.detail.type === "add" && ev.detail.trackId;
 }
