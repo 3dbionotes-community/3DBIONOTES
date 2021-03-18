@@ -1,0 +1,26 @@
+/*.model-upload .params,
+.jobTitle {
+    display: flex;
+    align-items: flex-start;
+}*/
+
+/*.uploadParams {
+    justify-content: flex-start;
+}*/
+
+.jobTitle input,
+.jobTitle input:focus {
+    outline: none;
+    border: solid 1px #607d8b;
+    border-radius: 10px;
+    padding: 12px 34px 12px 12px;
+    font-size: 1.2rem;
+}
+
+.MuiCircularProgress-colorPrimary {
+    color: #4aa3df !important;
+}
+
+.spinner {
+    margin-left: 12px;
+}
