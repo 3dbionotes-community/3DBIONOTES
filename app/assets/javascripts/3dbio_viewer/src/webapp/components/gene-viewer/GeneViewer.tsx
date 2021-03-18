@@ -5,15 +5,15 @@ import { SelectionState } from "../../view-models/SelectionState";
 import { FrameViewer } from "../frame-viewer/FrameViewer";
 import { TrackDef } from "../protvista/Protvista.types";
 
-interface PPiViewerProps {
+interface GeneViewerProps {
     trackDef: TrackDef;
     pdb: Pdb;
     selection: SelectionState;
 }
 
-export const PPIViewer: React.FC<PPiViewerProps> = props => {
-    const { pdb, trackDef } = props;
-    const src = routes.bionotes + `/ppiIFrame?pdb=${pdb.id}`;
+export const GeneViewer: React.FC<GeneViewerProps> = props => {
+    const { trackDef } = props;
+    const src = routes.bionotes + `/genomicIFrame?uniprot_acc=Q9BYF1`;
     const title = `${trackDef.name}: ${trackDef.description || "-"}`;
 
     return <FrameViewer title={title} src={src} />;

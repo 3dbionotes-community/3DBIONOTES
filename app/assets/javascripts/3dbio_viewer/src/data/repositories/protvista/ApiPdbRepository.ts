@@ -85,7 +85,7 @@ export class ApiPdbRepository implements PdbRepository {
         );
         const epitomesTrack = getIf(data.iedb, getEpitomesTrack);
 
-        const tracks1: Track[] = _.compact([
+        const tracks0: Track[] = _.compact([
             ...functionalMappingTracks,
             emValidationTrack,
             mobiDisorderTrack,
@@ -94,6 +94,15 @@ export class ApiPdbRepository implements PdbRepository {
             proteomicsTrack,
             pdbRedoTrack,
         ]);
+
+        const tracks1 = tracks0
+            .map(track => ({
+                ...track,
+                subtracks: track.subtracks.filter(
+                    subtrack => (subtrack.locations[0]?.fragments.length || 0) > 0
+                ),
+            }))
+            .filter(tracks => tracks.subtracks.length > 0);
 
         const tracks2 = addMobiSubtracks(tracks1, data.mobiUniprot);
         const tracks3 = addPhosphiteSubtracks(tracks2, options.protein, data.phosphositeUniprot);
