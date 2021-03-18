@@ -161,7 +161,7 @@ export const trackDefinitions = recordOf<TrackDefinition>()({
     ppiViewer: {
         id: "ppi-viewer" as const,
         name: i18n.t("PPI Viewer"),
-        description: "",
+        description: i18n.t("Protein-protein interaction networks graph"),
         subtracks: [subtracks.proteinNetwork, subtracks.pdbList],
     },
     functionalMappingPpi: {
@@ -184,10 +184,11 @@ export const trackDefinitions = recordOf<TrackDefinition>()({
         ),
         subtracks: [subtracks.functionalMappingLigands, subtracks.panddaDrugScreeningDiamong],
     },
-    geneView: {
-        id: "gene-view" as const,
-        name: i18n.t("Gene view"),
-        subtracks: [subtracks.geneView],
+    geneViewer: {
+        id: "gene-viewer" as const,
+        name: i18n.t("Gene viewer"),
+        description: i18n.t("ENSEMBL database viewer"),
+        subtracks: [subtracks.geneViewer],
     },
     mutagenesis: {
         id: "mutagenesis" as const,

@@ -416,7 +416,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     },
 
     // Gene view
-    geneView: {
+    geneViewer: {
         id: "gene" as const,
         name: i18n.t("Gene"),
         source: "Ensembl",
