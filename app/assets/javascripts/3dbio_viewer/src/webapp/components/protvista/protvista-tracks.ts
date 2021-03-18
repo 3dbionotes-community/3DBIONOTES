@@ -1,4 +1,4 @@
-import {  withOptionalProperties } from "../../../utils/ts-utils";
+import { withOptionalProperties } from "../../../utils/ts-utils";
 import i18n from "../../utils/i18n";
 import { GeneViewer } from "../gene-viewer/GeneViewer";
 import { PPIViewer } from "../ppi/PPIViewer";
@@ -228,7 +228,7 @@ export const tracksDef = withOptionalProperties<TrackDefBase>()({
         ],
     },
     molecularProcessing: {
-        id: "molecular-processing" as const,
+        id: "molecule-processing" as const,
         name: i18n.t("Molecular processing"),
         description: i18n.t(
             "Molecular protein processing involves processing the protein to its active form, such as signal peptide removal, residue modification (glycosylation, phosphorylation, etc.), and cleavage of the original chain into several smaller chains"
