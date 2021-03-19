@@ -10,6 +10,7 @@ import {
     PhosphositeUniprot,
     PhosphositeUniprotItem,
 } from "./phosphite";
+import { SubtrackId, TrackId } from "../../../../webapp/components/protvista/protvista-tracks";
 
 export interface Features {
     accession: string;
@@ -175,6 +176,25 @@ function getGroupedFeatures(featuresData: Features): GroupedFeature[] {
 
     return features;
 }
+
+const _mapping: Record<string, { trackId: TrackId; subtrackId: SubtrackId }> = {
+    REGION: { trackId: "regions", subtrackId: "regions" },
+    COILED: { trackId: "other-structural-regions", subtrackId: "coiled-coils" },
+    CARBOHYD: { trackId: "ptm", subtrackId: "glycosylation" },
+    CHAIN: { trackId: "molecule-processing", subtrackId: "chain" },
+    DISULFID: { trackId: "ptm", subtrackId: "disulfide-bond" },
+    DOMAIN: { trackId: "domains-and-sites", subtrackId: "prosite-domain" },
+    HELIX: { trackId: "structural-features", subtrackId: "helix" },
+    MOTIF: { trackId: "motifs", subtrackId: "motifs" },
+    MUTAGEN: { trackId: "mutagenesis", subtrackId: "mutagenesis" },
+    SIGNAL: { trackId: "molecule-processing", subtrackId: "signal-peptide" },
+    SITE: { trackId: "sites", subtrackId: "other-structural-relevant-sites" },
+    STRAND: { trackId: "structural-features", subtrackId: "beta-strand" },
+    TOPO_DOM: { trackId: "topology", subtrackId: "cytolosic" },
+    TRANSMEM: { trackId: "topology", subtrackId: "transmembrane-region" },
+    TURN: { trackId: "structural-features", subtrackId: "turn" },
+    // VARIANT: {trackId: "", subtrackId: ""},
+};
 
 /* From extendProtVista/add_evidences.js */
 

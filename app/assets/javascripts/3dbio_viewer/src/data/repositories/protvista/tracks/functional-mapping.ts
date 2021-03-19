@@ -22,6 +22,10 @@ export interface Cv19AnnotationItem {
     type: string;
 }
 
+const knownTracks: Record<string, string> = {
+    Functional_mapping_PPI: "functional-mapping-ppi",
+};
+
 export function getFunctionalMappingTrack(cv19Annotations: Cv19Annotations): Track[] {
     // TODO: item with visualization_type = "variant" should be used in variants track
     const annotations = cv19Annotations.filter(an => an.visualization_type !== "variants");
@@ -33,7 +37,7 @@ export function getFunctionalMappingTrack(cv19Annotations: Cv19Annotations): Tra
             .value();
 
         return {
-            id: getId(mapping.track_name),
+            id: knownTracks[mapping.track_name] || getId(mapping.track_name),
             label: getName(mapping.track_name),
             subtracks: _.compact(
                 mappingTracks.map(track => {

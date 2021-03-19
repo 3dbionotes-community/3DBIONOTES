@@ -1,4 +1,5 @@
 import _ from "lodash";
+import xml2js from "xml2js";
 import { AxiosRequestConfig } from "axios";
 import { FutureData } from "../../../domain/entities/FutureData";
 import { Pdb } from "../../../domain/entities/Pdb";
@@ -23,23 +24,28 @@ import { getIf } from "../../../utils/misc";
 import { getProteomicsTrack, Proteomics } from "./tracks/proteomics";
 import { getPdbRedoTrack, PdbRedo } from "./tracks/pdb-redo";
 import { getEpitomesTrack, Iedb } from "./tracks/epitomes";
+import { getProtein, UniprotResponse } from "./uniprot";
+import { getExperiment, PdbExperiment } from "./ebi-pdbe-api";
+import { routes } from "../../../routes";
 
 interface Data {
+    uniprot: UniprotResponse;
     features: Features;
-    covidAnnotations?: Cv19Annotations;
-    pdbAnnotations?: PdbAnnotations;
-    ebiVariation?: EbiVariation;
-    coverage?: Coverage;
-    mobiUniprot?: MobiUniprot;
-    phosphositeUniprot?: PhosphositeUniprot;
-    pfamAnnotations?: PfamAnnotations;
-    smartAnnotations?: SmartAnnotations;
-    proteomics?: Proteomics;
-    pdbRedo?: PdbRedo;
-    iedb?: Iedb;
+    covidAnnotations: Cv19Annotations;
+    pdbAnnotations: PdbAnnotations;
+    ebiVariation: EbiVariation;
+    coverage: Coverage;
+    mobiUniprot: MobiUniprot;
+    phosphositeUniprot: PhosphositeUniprot;
+    pfamAnnotations: PfamAnnotations;
+    smartAnnotations: SmartAnnotations;
+    proteomics: Proteomics;
+    pdbRedo: PdbRedo;
+    iedb: Iedb;
+    pdbExperiment: PdbExperiment;
 }
 
-type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K]> };
+type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K] | undefined> };
 
 type RequestError = { message: string };
 
@@ -55,10 +61,11 @@ export class ApiPdbRepository implements PdbRepository {
         return getData(options).map(data => this.getPdb(data, options));
     }
 
-    getPdb(data: Data, options: Options): Pdb {
+    getPdb(data: Partial<Data>, options: Options): Pdb {
         debugVariable({ apiData: data });
-        const { protein, chain } = options;
-        const variants = getIf(data.ebiVariation, getVariants);
+        // if (!data.uniprot)
+
+        const _variants = getIf(data.ebiVariation, getVariants);
         const functionalMappingTracks =
             getIf(data.covidAnnotations, getFunctionalMappingTrack) || [];
         const emValidationTrack = getIf(data.pdbAnnotations, getEmValidationTrack);
@@ -67,13 +74,18 @@ export class ApiPdbRepository implements PdbRepository {
             data.pfamAnnotations,
             data.smartAnnotations
         );
-        const featureTracks = getTrackFromFeatures(data.features, data.phosphositeUniprot);
+        const featureTracks =
+            getIf(data.features, features =>
+                getTrackFromFeatures(features, data.phosphositeUniprot)
+            ) || [];
         const mobiDisorderTrack = getIf(data.mobiUniprot, getMobiDisorderTrack);
         const proteomicsTrack = getIf(data.proteomics, getProteomicsTrack);
-        const pdbRedoTrack = getIf(data.pdbRedo, pdbRedo => getPdbRedoTrack(pdbRedo, chain));
+        const pdbRedoTrack = getIf(data.pdbRedo, pdbRedo =>
+            getPdbRedoTrack(pdbRedo, options.chain)
+        );
         const epitomesTrack = getIf(data.iedb, getEpitomesTrack);
 
-        const tracks1: Track[] = _.compact([
+        const tracks0: Track[] = _.compact([
             ...functionalMappingTracks,
             ...featureTracks,
             emValidationTrack,
@@ -85,57 +97,95 @@ export class ApiPdbRepository implements PdbRepository {
             pdbRedoTrack,
         ]);
 
+        const tracks1 = tracks0
+            .map(track => ({
+                ...track,
+                subtracks: track.subtracks.filter(
+                    subtrack => (subtrack.locations[0]?.fragments.length || 0) > 0
+                ),
+            }))
+            .filter(tracks => tracks.subtracks.length > 0);
+
         const tracks2 = addMobiSubtracks(tracks1, data.mobiUniprot);
-        const tracks3 = addPhosphiteSubtracks(tracks2, protein, data.phosphositeUniprot);
-        console.debug("TODO: variants-removed", variants);
+        const tracks3 = addPhosphiteSubtracks(tracks2, options.protein, data.phosphositeUniprot);
+        const protein = getProtein(options.protein, data.uniprot);
+        const experiment = getIf(data.pdbExperiment, pdbExperiment =>
+            getExperiment(options.pdb, pdbExperiment)
+        );
 
         return {
-            protein: options.protein,
+            id: options.pdb,
+            emdb: undefined,
+            protein,
             sequence: data.features ? data.features.sequence : "",
             length: getTotalFeaturesLength(tracks3),
             tracks: tracks3,
             variants: undefined,
+            experiment,
         };
     }
 }
 
-function getData(options: Options): FutureData<Data> {
+function getData(options: Options): FutureData<Partial<Data>> {
     const { protein, pdb, chain } = options;
-    const bionotesUrl = ""; // proxied to 3dbionotes on development (src/setupProxy.js)
-    const ebiUrl = "https://www.ebi.ac.uk/proteins/api";
+    const { bionotes: bioUrl, ebi: ebiBaseUrl } = routes;
+
+    const ebiProteinsApiUrl = `${ebiBaseUrl}/proteins/api`;
+    const pdbAnnotUrl = `${bioUrl}/ws/lrs/pdbAnnotFromMap`;
 
     const data$: DataRequests = {
-        features: get(`${ebiUrl}/features/${protein}`),
-        covidAnnotations: getOrEmpty(`${bionotesUrl}/cv19_annotations/${protein}_annotations.json`),
-        pdbAnnotations: getOrEmpty(
-            `${bionotesUrl}/ws/lrs/pdbAnnotFromMap/all/${pdb}/${chain}/?format=json`
-        ),
-        ebiVariation: getOrEmpty(`${ebiUrl}/variation/${protein}`),
-        coverage: getOrEmpty(`${bionotesUrl}/api/alignments/Coverage/${pdb}${chain}`),
-        mobiUniprot: getOrEmpty(`${bionotesUrl}/api/annotations/mobi/Uniprot/${protein}`),
-        phosphositeUniprot: getOrEmpty(
-            `${bionotesUrl}/api/annotations/Phosphosite/Uniprot/${protein}`
-        ),
-        pfamAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/Pfam/Uniprot/${protein}`),
-        smartAnnotations: getOrEmpty(`${bionotesUrl}/api/annotations/SMART/Uniprot/${protein}`),
-        proteomics: getOrEmpty(`${ebiUrl}/api/proteomics/${protein}`),
-        pdbRedo: getOrEmpty(`${bionotesUrl}/api/annotations/PDB_REDO/${pdb}`),
-        iedb: getOrEmpty(`${bionotesUrl}/api/annotations/IEDB/Uniprot/${protein}`),
+        uniprot: getXML(`https://www.uniprot.org/uniprot/${protein}.xml`),
+        features: getJSON(`${ebiProteinsApiUrl}/features/${protein}`),
+        covidAnnotations: getJSON(`${bioUrl}/cv19_annotations/${protein}_annotations.json`),
+        pdbAnnotations: getJSON(`${pdbAnnotUrl}/all/${pdb}/${chain}/?format=json`),
+        ebiVariation: getJSON(`${ebiProteinsApiUrl}/variation/${protein}`),
+        coverage: getJSON(`${bioUrl}/api/alignments/Coverage/${pdb}${chain}`),
+        mobiUniprot: getJSON(`${bioUrl}/api/annotations/mobi/Uniprot/${protein}`),
+        phosphositeUniprot: getJSON(`${bioUrl}/api/annotations/Phosphosite/Uniprot/${protein}`),
+        pfamAnnotations: getJSON(`${bioUrl}/api/annotations/Pfam/Uniprot/${protein}`),
+        smartAnnotations: getJSON(`${bioUrl}/api/annotations/SMART/Uniprot/${protein}`),
+        proteomics: getJSON(`${ebiProteinsApiUrl}/proteomics/${protein}`),
+        pdbRedo: getJSON(`${bioUrl}/api/annotations/PDB_REDO/${pdb}`),
+        iedb: getJSON(`${bioUrl}/api/annotations/IEDB/Uniprot/${protein}`),
+        pdbExperiment: getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/experiment/${pdb}`),
     };
 
     return Future.joinObj(data$);
 }
 
-function get<Data>(url: string): Future<RequestError, Data> {
+function getFromUrl<Data>(url: string): Future<RequestError, Data> {
     return request<Data>({ method: "GET", url });
 }
 
-function getOrEmpty<Data>(url: string): Future<RequestError, Data | undefined> {
-    const data$ = get<Data>(url) as Future<RequestError, Data | undefined>;
+function getJSON<Data>(url: string): Future<RequestError, Data | undefined> {
+    const data$ = getFromUrl<Data>(url) as Future<RequestError, Data | undefined>;
 
     return data$.flatMapError(_err => {
         console.debug(`Cannot get data: ${url}`);
         return Future.success(undefined);
+    });
+}
+
+function getXML<Data>(url: string): Future<RequestError, Data | undefined> {
+    const data$ = getJSON<string>(url);
+
+    return data$.flatMap(xml => {
+        return xml ? xmlToJs<Data>(xml) : Future.success(undefined);
+    });
+}
+
+function xmlToJs<Data>(xml: string): Future<RequestError, Data> {
+    const parser = new xml2js.Parser();
+
+    return Future.fromComputation((resolve, reject) => {
+        parser.parseString(xml, (err: any, result: Data) => {
+            if (err) {
+                reject({ message: err ? err.toString() : "Unknown error" });
+            } else {
+                resolve(result);
+            }
+        });
+        return () => {};
     });
 }
 

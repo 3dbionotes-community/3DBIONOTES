@@ -1,15 +1,39 @@
-const HttpsProxyAgent = require("https-proxy-agent");
-const { createProxyMiddleware } = require("http-proxy-middleware");
+const proxy = require("http-proxy-middleware");
+const apicache = require("apicache");
+const _ = require("lodash");
 
 module.exports = function (app) {
-    const proxyServer = process.env.REACT_APP_HTTP_PROXY;
-
-    const routes = ["/ppiIFrame", "/assets", "/cv19_annotations", "/ws", "/api"];
-    const proxy = createProxyMiddleware({
+    proxyRoutes(app, {
+        routes: ["/3dbionotes"],
         target: "https://3dbionotes.cnb.csic.es",
-        changeOrigin: true,
-        agent: proxyServer ? new HttpsProxyAgent(proxyServer) : undefined,
+        rewritePath: true,
     });
 
-    app.use(routes, proxy);
+    proxyRoutes(app, {
+        routes: ["/assets"],
+        target: "https://3dbionotes.cnb.csic.es",
+        rewritePath: false,
+    });
+
+    proxyRoutes(app, {
+        routes: ["/ebi"],
+        target: "https://www.ebi.ac.uk",
+        rewritePath: true,
+    });
 };
+
+function proxyRoutes(app, options) {
+    const { routes, target, rewritePath } = options;
+    const pathRewrite = rewritePath
+        ? _.fromPairs(routes.map(route => [`^${route}/`, "/"]))
+        : undefined;
+
+    const proxyOptions = {
+        target,
+        changeOrigin: true,
+        pathRewrite,
+    };
+
+    const apiProxy = proxy.createProxyMiddleware(proxyOptions);
+    app.use(routes, apicache.middleware("1 day"), apiProxy);
+}

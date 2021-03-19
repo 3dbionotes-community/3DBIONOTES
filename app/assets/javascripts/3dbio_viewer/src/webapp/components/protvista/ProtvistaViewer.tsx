@@ -1,57 +1,73 @@
 import React from "react";
-import i18n from "../../utils/i18n";
-import { useAppContext } from "../AppContext";
-import { ProtvistaBlock } from "./ProtvistaBlock";
-import { getBlocks } from "./Protvista.helpers";
-import { ProtvistaBlock as ProtvistaBlockM } from "./Protvista.types";
+import _ from "lodash";
+
+import { Pdb } from "../../../domain/entities/Pdb";
+import { SelectionState } from "../../view-models/SelectionState";
+import { ViewerBlock } from "../ViewerBlock";
+import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
+import { BlockDef } from "./Protvista.types";
+
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
 
-export type State =
-    | { type: "loading" }
-    | { type: "loaded"; blocks: ProtvistaBlockM[] }
-    | { type: "error"; message: String };
+export interface ProtvistaViewerProps {
+    pdb: Pdb;
+    selection: SelectionState;
+    blocks: BlockDef[];
+}
 
-export const ProtvistaViewer: React.FC = () => {
-    const { compositionRoot } = useAppContext();
-    const [state, setState] = React.useState<State>({ type: "loading" });
+type OnActionCb = NonNullable<ProtvistaPdbProps["onAction"]>;
 
-    React.useEffect(() => {
-        const pdbOptions = {
-            "6zow": { protein: "P0DTC2", pdb: "6zow", chain: "A" },
-            "6lzg": { protein: "O00141", pdb: "6lzg", chain: "A" },
-            "6w9c": { protein: "P0DTD1", pdb: "6w9c", chain: "A" },
-            "1iyj": { protein: "P60896", pdb: "1iyj", chain: "A" },
-            "2R5T": { protein: "O00141", pdb: "2R5T", chain: "A" }, // Kinenasa
-        };
+export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
+    const { pdb, selection, blocks } = props;
 
-        setState({ type: "loading" });
-
-        return compositionRoot.getPdb(pdbOptions["6zow"]).run(
-            pdb => setState({ type: "loaded", blocks: getBlocks(pdb) }),
-            error => setState({ type: "error", message: error.message })
-        );
-    }, [compositionRoot, setState]);
+    const onAction = React.useCallback<OnActionCb>(action => {
+        console.debug("TODO", "action", action);
+    }, []);
 
     return (
         <div>
-            {state.type === "loading" ? (
-                <div style={styles.section}>{i18n.t("Loading Protvista...")}</div>
-            ) : state.type === "error" ? (
-                <div style={styles.section}>
-                    {i18n.t("Error")}: {state.message}
-                </div>
-            ) : (
-                <div>
-                    {state.blocks.map(block => (
-                        <ProtvistaBlock key={block.id} block={block} />
-                    ))}
-                </div>
-            )}
+            {blocks.map(block => {
+                if (!blockHasRelevantData(block, pdb)) return null;
+                const CustomComponent = block.component;
+
+                return (
+                    <ViewerBlock key={block.id} block={block}>
+                        {CustomComponent ? (
+                            <CustomComponent pdb={pdb} selection={selection} />
+                        ) : (
+                            <ProtvistaPdb pdb={pdb} block={block} onAction={onAction} />
+                        )}
+
+                        {block.tracks.map((trackDef, idx) => {
+                            const CustomTrackComponent = trackDef.component;
+                            return (
+                                CustomTrackComponent && (
+                                    <CustomTrackComponent
+                                        key={idx}
+                                        trackDef={trackDef}
+                                        pdb={pdb}
+                                        selection={selection}
+                                    />
+                                )
+                            );
+                        })}
+                    </ViewerBlock>
+                );
+            })}
         </div>
     );
 };
 
-const styles = {
-    section: { padding: 20 },
-};
+function blockHasRelevantData(block: BlockDef, pdb: Pdb): boolean {
+    const tracks = _(pdb.tracks)
+        .keyBy(track => track.id)
+        .at(...block.tracks.map(trackDef => trackDef.id))
+        .compact()
+        .value();
+    const trackIds = tracks.map(track => track.id);
+    const hasCustomComponent = Boolean(block.component);
+    const hasRelevantTracks = !_(tracks).isEmpty() && !_.isEqual(trackIds, ["structure-coverage"]);
+
+    return hasCustomComponent || hasRelevantTracks;
+}

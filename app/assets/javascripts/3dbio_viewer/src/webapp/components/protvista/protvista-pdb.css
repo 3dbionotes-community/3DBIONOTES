@@ -52,6 +52,7 @@
 }
 
 .subtrack-help,
+.track-action-add,
 .track-help {
     padding: 1px 0px 0px 0px;
     width: 20px;
@@ -60,11 +61,14 @@
     font-weight: 600;
 }
 
+.track-action-add,
 .track-help {
     color: #fff;
     border: solid 1px #fff;
     background-color: #828181;
-    margin-left: 0px;
+    float: right;
+    cursor: pointer;
+    margin: 0px 0px 0px 5px;
 }
 
 .subtrack-help {
@@ -74,6 +78,7 @@
     background-color: rgba(0, 0, 0, 0);
     color: #848a86;
     border: solid 1px #848a86;
+    cursor: pointer;
 }
 
 div[class^="pvSubtrackLabel_"] {

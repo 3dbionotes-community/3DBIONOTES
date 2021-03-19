@@ -1,7 +1,11 @@
+import React from "react";
 import { Color } from "../../../domain/entities/Color";
+import { Pdb } from "../../../domain/entities/Pdb";
 import { Shape } from "../../../domain/entities/Shape";
 import { Variant, Variants } from "../../../domain/entities/Variant";
+import { SelectionState } from "../../view-models/SelectionState";
 import { ViewerBlockModel } from "../ViewerBlock";
+import { TrackDef as TrackDefFromValue } from "./protvista-tracks";
 
 export interface ProtvistaTrackElement extends HTMLDivElement {
     viewerdata: PdbView;
@@ -10,9 +14,40 @@ export interface ProtvistaTrackElement extends HTMLDivElement {
     };
 }
 
+export interface BlockComponentProps {
+    pdb: Pdb;
+    selection: SelectionState;
+}
+
+export type TrackDef = TrackDefFromValue;
+
+export interface TrackDefBase {
+    id: string;
+    name: string;
+    description?: string;
+    subtracks: SubtrackDef[];
+    component?: React.FC<TrackComponentProps>;
+}
+
+export interface TrackComponentProps extends BlockComponentProps {
+    trackDef: TrackDef;
+}
+
+export interface BlockDef extends ViewerBlockModel {
+    tracks: TrackDef[];
+    component?: React.FC<BlockComponentProps>;
+}
+
 export interface ProtvistaBlock extends ViewerBlockModel {
-    pdbView: PdbView;
-    tracks: string[];
+    tracks: TrackDef[];
+    component?: React.FC<BlockComponentProps>;
+}
+
+export interface SubtrackDef {
+    id: string;
+    name: string;
+    source: string;
+    description?: string;
 }
 
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
@@ -48,6 +83,7 @@ export interface TrackView {
     labelType?: "text" | "html";
     overlapping?: boolean;
     data: SubtrackView[];
+    actions: Record<"add", { title: string }>;
 }
 
 interface SubtrackView {
