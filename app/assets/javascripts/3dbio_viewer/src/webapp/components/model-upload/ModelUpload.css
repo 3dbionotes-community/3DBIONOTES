@@ -1,22 +1,50 @@
-/*.model-upload .params,
-.jobTitle {
-    display: flex;
-    align-items: flex-start;
-}*/
-
-/*.uploadParams {
-    justify-content: flex-start;
-}*/
-
-.jobTitle input,
-.jobTitle input:focus {
-    outline: none;
-    border: solid 1px #607d8b;
-    border-radius: 10px;
-    padding: 12px 34px 12px 12px;
-    font-size: 1.2rem;
+small,
+.small {
+    margin-left: 10px;
+    color: #8e8e8e;
+}
+.form-control {
+    display: block;
+    width: 50%;
+    margin-top: 0.5em;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+label {
+    margin-top: 18px;
+    margin-bottom: 0.5rem;
+}
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+}
+
+.fileFormat {
+    display: block !important;
+}
+
+.uploadSubmit {
+    border-radius: 0.25rem;
+    margin-top: 0.5em;
+    margin-bottom: 0;
+    margin-left: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0.375rem 0.75rem;
+    cursor: pointer;
+}
 .MuiCircularProgress-colorPrimary {
     color: #4aa3df !important;
 }

@@ -28,13 +28,14 @@ const Shade = styled.div<DropzoneRootProps>`
     background-color: #fafafa;
     outline: none;
     transition: border 0.24s ease-in-out;
-    height: 100%;
+    height: 10px;
     background-color: rgba(10, 10, 10, 0.5);
+    cursor: pointer;
 `;
 
 const Text = styled.p`
     text-align: center;
-    font-size: 30px;
+    font-size: 18px;
     color: white;
 `;
 
@@ -49,33 +50,31 @@ export interface DropzoneRef {
 export const Dropzone = React.forwardRef((props: DropzoneProps, ref: React.ForwardedRef<DropzoneRef>) => {
     const childrenRef = useRef<HTMLDivElement>(null);
 
-    const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
+    const { getRootProps, getInputProps, isDragActive, acceptedFiles, open } = useDropzone({
         noClick: true,
+        maxFiles:1,
         ...props,
     });
+    const files = acceptedFiles.map(file => (
+       <p key={file.name}> {file.name}</p>
+      ));
 
     useImperativeHandle(ref, () => ({
         openDialog() {
             open();
         },
     }));
-
     return (
         <div {...getRootProps()} style={{ outline: "none" }}>
-            <div
-                style={{
-                    position: "absolute",
-                    height: childrenRef.current?.clientHeight,
-                    width: childrenRef.current?.clientWidth,
-                    visibility: isDragActive ? "visible" : "hidden",
-                }}
-            >
-                <Shade>
+            <div>
+                <Shade onClick={open}>
                     <input {...getInputProps()} />
-                    <Text>Drag and drop some files here, or click to select files</Text>
+
+                    <Text>{acceptedFiles.length !== 0 ? files : "Drag and drop some files here, or click to select files"}</Text>
                 </Shade>
             </div>
             <div ref={childrenRef}>{props.children}</div>
+           
         </div>
     );
 });

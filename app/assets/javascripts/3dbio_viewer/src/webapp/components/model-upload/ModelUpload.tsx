@@ -1,4 +1,4 @@
-import React , { useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef }from "react";
 import {
     Dialog,
     DialogContent,
@@ -11,6 +11,7 @@ import { FileRejection } from "react-dropzone";
 import i18n from "../../utils/i18n";
 import "./ModelUpload.css";
 import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
+
 export interface ModelUploadProps {
     title: string;
     onClose(): void;
@@ -20,7 +21,11 @@ export interface ModelUploadProps {
 
 export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const { title, onClose } = props;
-    const fileRef = useRef<DropzoneRef>(null);
+    const [jobTitle, setJobTitle] = useState("");
+    
+    const structureFileRef = useRef<DropzoneRef>(null);
+    const annotationFileRef = useRef<DropzoneRef>(null);
+
     const handleFileUpload = useCallback(
         async (files: File[], rejections: FileRejection[]) => {
             if (files.length === 0 && rejections.length > 0) {
@@ -31,7 +36,6 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
         },
         []
     );
-
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-upload">
             <DialogTitle>
@@ -43,22 +47,30 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
 
             <DialogContent>
                 <p>Models under study and not deposited to PDB yet can be analysed too. Annotations from similar entries based on BLAST sequence match will be displayed, but also customised annotations can be provided by the user. Job title (if provided) will be used to identify the model, otherwise the file name will be used.</p>
-                <div className="uploadParams">
-                    <div className="jobTitle">
+                    <label htmlFor="jobTitle"><strong>Job Title</strong></label>
+                    <small>Optional</small>
                         <input
                             aria-label={i18n.t("Job Title")}
+                            value={jobTitle}
                             placeholder="Job Title"
+                            onChange={(e) => setJobTitle(e.target.value)}
+                            id="jobTitle"
                             type="text"
+                            className="form-control"
                         />
-                    </div>
+            <label htmlFor="myFile" className="fileFormat">Structure file in <a href="#">PDB</a> or <a href="#">mmCIF</a> format</label>
                     <Dropzone
-                ref={fileRef}
-                accept={"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}
-                onDrop={handleFileUpload}
+            ref={structureFileRef}
+            accept=".pdb,.cif"
             >
-                
             </Dropzone>
-                </div>
+            <label htmlFor="myFile" className="fileFormat">Upload your annotations</label>
+            <Dropzone
+            ref={annotationFileRef}
+            accept={"application/json"}
+            >
+            </Dropzone>
+            <button type="submit" className="uploadSubmit">Submit</button>
             </DialogContent>
         </Dialog>
     );
