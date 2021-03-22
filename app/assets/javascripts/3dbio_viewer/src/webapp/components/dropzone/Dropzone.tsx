@@ -51,7 +51,7 @@ export const Dropzone = React.forwardRef(
             maxFiles: 1,
             ...props,
         });
-        const files = acceptedFiles.map(file => <p key={file.name}> {file.name}</p>);
+        const files = acceptedFiles.map(file => <p key={file.name}>{file.name}</p>);
 
         useImperativeHandle(ref, () => ({
             openDialog() {
@@ -64,7 +64,6 @@ export const Dropzone = React.forwardRef(
                 <div>
                     <Shade onClick={open}>
                         <input {...getInputProps()} />
-
                         <Text>
                             {acceptedFiles.length !== 0
                                 ? files
