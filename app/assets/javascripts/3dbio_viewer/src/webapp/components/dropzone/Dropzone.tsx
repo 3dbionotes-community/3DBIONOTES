@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useRef } from "react";
+import React, { useImperativeHandle } from "react";
 import { DropzoneOptions, DropzoneRootProps, useDropzone } from "react-dropzone";
 import styled from "styled-components";
 
@@ -39,19 +39,13 @@ const Text = styled.p`
     color: white;
 `;
 
-export interface DropzoneProps extends DropzoneOptions {
-    children: React.ReactNode;
-}
-
 export interface DropzoneRef {
     openDialog: () => void;
     files: File[];
 }
 
 export const Dropzone = React.forwardRef(
-    (props: DropzoneProps, ref: React.ForwardedRef<DropzoneRef>) => {
-        const childrenRef = useRef<HTMLDivElement>(null);
-
+    (props: DropzoneOptions, ref: React.ForwardedRef<DropzoneRef>) => {
         const { getRootProps, getInputProps, acceptedFiles, open } = useDropzone({
             noClick: true,
             maxFiles: 1,
@@ -78,7 +72,6 @@ export const Dropzone = React.forwardRef(
                         </Text>
                     </Shade>
                 </div>
-                <div ref={childrenRef}>{props.children}</div>
             </div>
         );
     }
