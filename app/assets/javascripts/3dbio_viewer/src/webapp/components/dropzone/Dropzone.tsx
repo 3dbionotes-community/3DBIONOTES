@@ -45,36 +45,41 @@ export interface DropzoneProps extends DropzoneOptions {
 
 export interface DropzoneRef {
     openDialog: () => void;
+    files: File[];
 }
 
-export const Dropzone = React.forwardRef((props: DropzoneProps, ref: React.ForwardedRef<DropzoneRef>) => {
-    const childrenRef = useRef<HTMLDivElement>(null);
+export const Dropzone = React.forwardRef(
+    (props: DropzoneProps, ref: React.ForwardedRef<DropzoneRef>) => {
+        const childrenRef = useRef<HTMLDivElement>(null);
 
-    const { getRootProps, getInputProps, isDragActive, acceptedFiles, open } = useDropzone({
-        noClick: true,
-        maxFiles:1,
-        ...props,
-    });
-    const files = acceptedFiles.map(file => (
-       <p key={file.name}> {file.name}</p>
-      ));
+        const { getRootProps, getInputProps, acceptedFiles, open } = useDropzone({
+            noClick: true,
+            maxFiles: 1,
+            ...props,
+        });
+        const files = acceptedFiles.map(file => <p key={file.name}> {file.name}</p>);
 
-    useImperativeHandle(ref, () => ({
-        openDialog() {
-            open();
-        },
-    }));
-    return (
-        <div {...getRootProps()} style={{ outline: "none" }}>
-            <div>
-                <Shade onClick={open}>
-                    <input {...getInputProps()} />
+        useImperativeHandle(ref, () => ({
+            openDialog() {
+                open();
+            },
+            files: acceptedFiles,
+        }));
+        return (
+            <div {...getRootProps()} style={{ outline: "none" }}>
+                <div>
+                    <Shade onClick={open}>
+                        <input {...getInputProps()} />
 
-                    <Text>{acceptedFiles.length !== 0 ? files : "Drag and drop some files here, or click to select files"}</Text>
-                </Shade>
+                        <Text>
+                            {acceptedFiles.length !== 0
+                                ? files
+                                : "Drag and drop some files here, or click to select files"}
+                        </Text>
+                    </Shade>
+                </div>
+                <div ref={childrenRef}>{props.children}</div>
             </div>
-            <div ref={childrenRef}>{props.children}</div>
-           
-        </div>
-    );
-});
+        );
+    }
+);

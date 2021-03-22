@@ -83,14 +83,14 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         showExpandIcon
                     />
                     <button className="upload-model" onClick={openUpload}>
-                    {i18n.t("Upload model")}
+                        {i18n.t("Upload model")}
                     </button>
-                    {isUploadOpen && 
-                        <ModelUpload 
-                        title={i18n.t("Upload your Atomic Structure")}
-                        onClose={closeUpload}
+                    {isUploadOpen && (
+                        <ModelUpload
+                            title={i18n.t("Upload your Atomic Structure")}
+                            onClose={closeUpload}
                         />
-                    }
+                    )}
 
                     {searchState.type === "searching" && (
                         <div className="spinner">

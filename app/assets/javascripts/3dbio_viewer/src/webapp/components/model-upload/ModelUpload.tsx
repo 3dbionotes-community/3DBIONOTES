@@ -1,41 +1,40 @@
-import React, { useState, useCallback, useRef }from "react";
-import {
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-} from "@material-ui/core";
+import React, { useState, useRef } from "react";
+import { Dialog, DialogContent, DialogTitle, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import _ from "lodash";
-import { FileRejection } from "react-dropzone";
 import i18n from "../../utils/i18n";
-import "./ModelUpload.css";
 import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
+import { useAppContext } from "../AppContext";
+import "./ModelUpload.css";
 
 export interface ModelUploadProps {
     title: string;
     onClose(): void;
-    //onSelect(actionType: ActionType, selected: DbItem): void;
 }
-
 
 export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const { title, onClose } = props;
-    const [jobTitle, setJobTitle] = useState("");
-    
+    const { compositionRoot } = useAppContext();
+
+    const [jobTitle, setJobTitle] = useState<string>("");
     const structureFileRef = useRef<DropzoneRef>(null);
     const annotationFileRef = useRef<DropzoneRef>(null);
+    const [error, setError] = useState<string>();
 
-    const handleFileUpload = useCallback(
-        async (files: File[], rejections: FileRejection[]) => {
-            if (files.length === 0 && rejections.length > 0) {
-                return;
-            }
-            return true;
-            //@ts-ignore TODO FIXME: Add validation
-        },
-        []
-    );
+    const onSubmitHandler = () => {
+        setError("");
+        if (structureFileRef?.current?.files.length === 0) {
+            setError("Error: No file selected. Please select a structure file.");
+            return;
+        }
+        const uploadParams = {
+            jobTitle,
+            structureFile: structureFileRef?.current?.files[0],
+            annotationsFile: annotationFileRef?.current?.files[0],
+        };
+        return compositionRoot.uploadAtomicStructure(uploadParams);
+    };
+
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-upload">
             <DialogTitle>
@@ -46,31 +45,37 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
             </DialogTitle>
 
             <DialogContent>
-                <p>Models under study and not deposited to PDB yet can be analysed too. Annotations from similar entries based on BLAST sequence match will be displayed, but also customised annotations can be provided by the user. Job title (if provided) will be used to identify the model, otherwise the file name will be used.</p>
-                    <label htmlFor="jobTitle"><strong>Job Title</strong></label>
-                    <small>Optional</small>
-                        <input
-                            aria-label={i18n.t("Job Title")}
-                            value={jobTitle}
-                            placeholder="Job Title"
-                            onChange={(e) => setJobTitle(e.target.value)}
-                            id="jobTitle"
-                            type="text"
-                            className="form-control"
-                        />
-            <label htmlFor="myFile" className="fileFormat">Structure file in <a href="#">PDB</a> or <a href="#">mmCIF</a> format</label>
-                    <Dropzone
-            ref={structureFileRef}
-            accept=".pdb,.cif"
-            >
-            </Dropzone>
-            <label htmlFor="myFile" className="fileFormat">Upload your annotations</label>
-            <Dropzone
-            ref={annotationFileRef}
-            accept={"application/json"}
-            >
-            </Dropzone>
-            <button type="submit" className="uploadSubmit">Submit</button>
+                {error && <h3>{error}</h3>}
+                <p>
+                    Models under study and not deposited to PDB yet can be analysed too. Annotations
+                    from similar entries based on BLAST sequence match will be displayed, but also
+                    customised annotations can be provided by the user. Job title (if provided) will
+                    be used to identify the model, otherwise the file name will be used.
+                </p>
+                <label htmlFor="jobTitle">
+                    <strong>Job Title</strong>
+                </label>
+                <small>Optional</small>
+                <input
+                    aria-label={i18n.t("Job Title")}
+                    value={jobTitle}
+                    placeholder="Job Title"
+                    onChange={e => setJobTitle(e.target.value)}
+                    id="jobTitle"
+                    type="text"
+                    className="form-control"
+                />
+                <label className="fileFormat">
+                    Structure file in{" "}
+                    <a href="http://www.wwpdb.org/documentation/file-format">PDB</a> or{" "}
+                    <a href="http://mmcif.wwpdb.org/">mmCIF</a> format
+                </label>
+                <Dropzone ref={structureFileRef} accept=".pdb,.cif"></Dropzone>
+                <label className="fileFormat">Upload your annotations</label>
+                <Dropzone ref={annotationFileRef} accept={"application/json"}></Dropzone>
+                <button className="uploadSubmit" onClick={onSubmitHandler}>
+                    Submit
+                </button>
             </DialogContent>
         </Dialog>
     );
