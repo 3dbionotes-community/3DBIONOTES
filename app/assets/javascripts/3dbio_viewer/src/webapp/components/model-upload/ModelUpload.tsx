@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogTitle, IconButton } from "@material-ui/cor
 import { Close } from "@material-ui/icons";
 import _ from "lodash";
 import i18n from "../../utils/i18n";
-import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
+import { Dropzone, DropzoneRef, getFile } from "../dropzone/Dropzone";
 import { useAppContext } from "../AppContext";
 import "./ModelUpload.css";
 
@@ -11,6 +11,7 @@ export interface ModelUploadProps {
     title: string;
     onClose(): void;
 }
+
 
 export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const { title, onClose } = props;
@@ -23,18 +24,17 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
 
     const onSubmitHandler = () => {
         setError("");
-        if(structureFileRef && structureFileRef.current && structureFileRef.current.files[0])
-        {
+        const structureFile = getFile(structureFileRef);
+
+        if (structureFile) {
             const uploadParams = {
                 jobTitle,
-                structureFile: structureFileRef.current.files[0],
-                annotationsFile: annotationFileRef?.current?.files[0],
+                structureFile,
+                annotationsFile: getFile(annotationFileRef),
             };
             return compositionRoot.uploadAtomicStructure(uploadParams);
-        }
-        else {
+        } else {
             setError("Error: No file selected. Please select a structure file.");
-            return;
         }
     };
 
@@ -55,6 +55,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                     customised annotations can be provided by the user. Job title (if provided) will
                     be used to identify the model, otherwise the file name will be used.
                 </p>
+
                 <label htmlFor="jobTitle">
                     <strong>Job Title</strong>
                 </label>
@@ -68,14 +69,17 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                     type="text"
                     className="form-control"
                 />
+
                 <label className="fileFormat">
                     Structure file in{" "}
                     <a href="http://www.wwpdb.org/documentation/file-format">PDB</a> or{" "}
                     <a href="http://mmcif.wwpdb.org/">mmCIF</a> format
                 </label>
                 <Dropzone ref={structureFileRef} accept=".pdb,.cif"></Dropzone>
+
                 <label className="fileFormat">Upload your annotations</label>
                 <Dropzone ref={annotationFileRef} accept={"application/json"}></Dropzone>
+
                 <button className="uploadSubmit" onClick={onSubmitHandler}>
                     Submit
                 </button>

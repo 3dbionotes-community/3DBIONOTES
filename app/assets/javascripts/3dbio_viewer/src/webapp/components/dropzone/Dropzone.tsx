@@ -75,3 +75,7 @@ export const Dropzone = React.forwardRef(
         );
     }
 );
+
+export function getFile(fileRef: React.RefObject<DropzoneRef>): File | undefined {
+    return fileRef.current?.files[0];
+}
