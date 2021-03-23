@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
+import _ from "lodash";
 import { Dialog, DialogContent, DialogTitle, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
-import _ from "lodash";
+import i18n from "../../utils/i18n";
 import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
 import { ProtvistaAction } from "../protvista/Protvista.helpers";
 import "./AnnotationsTool.css";
-import i18n from "../../utils/i18n";
 
 export interface ModelUploadProps {
     title: string;
@@ -52,11 +52,11 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                     <a href="http://3dbionotes.cnb.csic.es/upload_annotations.txt">JSON</a> format
                 </label>
                 <Dropzone ref={annotationFileRef} accept="application/json"></Dropzone>
-                <button className="uploadSubmit">Upload</button>
+                <button className="submitButton">Upload</button>
                 <h3>OR</h3>
                 <button
                     onClick={() => setShowManualAnnotation(!showManualAnnotation)}
-                    className="uploadSubmit"
+                    className="submitButton"
                 >
                     Add your annotations manually
                 </button>
@@ -124,7 +124,7 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                         <input
                             aria-label={i18n.t("Starting value")}
                             id="startingValue"
-                            type="text"
+                            type="number"
                             value={startingValue}
                             onChange={e => setStartingValue(Number(e.target.value))}
                             className="form-control"
@@ -135,13 +135,13 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                         <input
                             aria-label={i18n.t("Ending value")}
                             id="endingValue"
-                            type="text"
+                            type="number"
                             value={endingValue}
                             onChange={e => setEndingValue(Number(e.target.value))}
                             className="form-control"
                         />
                         <button
-                            className="uploadSubmit"
+                            className="submitButton"
                             type="submit"
                             onClick={addManualAnnotation}
                         >
