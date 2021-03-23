@@ -39,8 +39,6 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
         if(!endingValue) {
             setEndingValue(startingValue);
         }
-        const trackName = action.trackId.replace("-","_").toUpperCase();
-
     }
 
     return (
@@ -58,7 +56,7 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                     Annotation file in{" "}
                     <a href="http://3dbionotes.cnb.csic.es/upload_annotations.txt">JSON</a> format
                 </label>
-                <Dropzone ref={annotationFileRef} accept=".pdb,.cif"></Dropzone>
+                <Dropzone ref={annotationFileRef} accept="application/json"></Dropzone>
                 <button className="uploadSubmit">
                     Upload
                 </button>
