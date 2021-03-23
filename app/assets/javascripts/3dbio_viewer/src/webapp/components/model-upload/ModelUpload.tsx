@@ -39,7 +39,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     };
 
     return (
-        <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-upload">
+        <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth>
             <DialogTitle>
                 {title}
                 <IconButton onClick={onClose}>
