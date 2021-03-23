@@ -23,16 +23,19 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
 
     const onSubmitHandler = () => {
         setError("");
-        if (structureFileRef?.current?.files.length === 0) {
+        if(structureFileRef && structureFileRef.current && structureFileRef.current.files[0])
+        {
+            const uploadParams = {
+                jobTitle,
+                structureFile: structureFileRef.current.files[0],
+                annotationsFile: annotationFileRef?.current?.files[0],
+            };
+            return compositionRoot.uploadAtomicStructure(uploadParams);
+        }
+        else {
             setError("Error: No file selected. Please select a structure file.");
             return;
         }
-        const uploadParams = {
-            jobTitle,
-            structureFile: structureFileRef?.current?.files[0],
-            annotationsFile: annotationFileRef?.current?.files[0],
-        };
-        return compositionRoot.uploadAtomicStructure(uploadParams);
     };
 
     return (

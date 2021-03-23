@@ -12,6 +12,6 @@ export interface SearchOptions {
 }
 export interface UploadOptions {
     jobTitle?: string;
-    structureFile: File | undefined;
-    annotationsFile?: File | undefined;
+    structureFile: File;
+    annotationsFile?: File;
 }
