@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import _ from "lodash";
-
+import i18n from "../../utils/i18n";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { SelectionState } from "../../view-models/SelectionState";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
 import { BlockDef } from "./Protvista.types";
-
+import { useBooleanState } from "../../hooks/use-boolean";
+import { AnnotationsTool } from "../annotations-tool/AnnotationsTool";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
 
@@ -20,11 +21,22 @@ type OnActionCb = NonNullable<ProtvistaPdbProps["onAction"]>;
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks } = props;
-
+    const [isAnnotationToolOpen, { enable: openAnnotationTool, disable: closeAnnotationTool }] = useBooleanState(false);
+    const [actionName, setAction] = useState<AddAction>();
     const onAction = React.useCallback<OnActionCb>(action => {
+        setAction(action);
+         openAnnotationTool();
         console.debug("TODO", "action", action);
     }, []);
-
+        /*
+        {isAnnotationToolOpen && (
+                        <AnnotationsTool
+                            
+                            title={i18n.t("Upload your annotations in JSON format")}
+                            onClose={closeAnnotationTool}
+                        />
+                    )}
+        */
     return (
         <div>
             {blocks.map(block => {
@@ -38,7 +50,13 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                         ) : (
                             <ProtvistaPdb pdb={pdb} block={block} onAction={onAction} />
                         )}
-
+                        {isAnnotationToolOpen && (
+                        <AnnotationsTool
+                            action={actionName}
+                            title={i18n.t("Upload your annotations in JSON format")}
+                            onClose={closeAnnotationTool}
+                        />
+                    )}
                         {block.tracks.map((trackDef, idx) => {
                             const CustomTrackComponent = trackDef.component;
                             return (
