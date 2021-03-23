@@ -22,14 +22,20 @@ type OnActionCb = NonNullable<ProtvistaPdbProps["onAction"]>;
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks } = props;
-    const [isAnnotationToolOpen, { enable: openAnnotationTool, disable: closeAnnotationTool }] = useBooleanState(false);
-    const [actionName, setAction] = useState<ProtvistaAction>({type: "add", trackId: "sampleID"});
+    const [
+        isAnnotationToolOpen,
+        { enable: openAnnotationTool, disable: closeAnnotationTool },
+    ] = useBooleanState(false);
+    const [actionName, setAction] = useState<ProtvistaAction>({ type: "add", trackId: "sampleID" });
 
-    const onAction = React.useCallback<OnActionCb>(action => {
-        setAction(action);
-         openAnnotationTool();
-        console.debug("TODO", "action", action);
-    }, [openAnnotationTool]);
+    const onAction = React.useCallback<OnActionCb>(
+        action => {
+            setAction(action);
+            openAnnotationTool();
+            console.debug("TODO", "action", action);
+        },
+        [openAnnotationTool]
+    );
 
     return (
         <div>
@@ -58,14 +64,13 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                             );
                         })}
                         {isAnnotationToolOpen && (
-                        <AnnotationsTool
-                            action={actionName}
-                            title={i18n.t("Upload your annotations in JSON format")}
-                            onClose={closeAnnotationTool}
-                        />
-                    )}
+                            <AnnotationsTool
+                                action={actionName}
+                                title={i18n.t("Upload your annotations in JSON format")}
+                                onClose={closeAnnotationTool}
+                            />
+                        )}
                     </ViewerBlock>
-                    
                 );
             })}
         </div>

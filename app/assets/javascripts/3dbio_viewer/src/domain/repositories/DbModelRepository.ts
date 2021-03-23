@@ -7,5 +7,5 @@ export interface DbModelRepository {
 
 export interface SearchOptions {
     query: string;
-    type?: DbModelType,
+    type?: DbModelType;
 }
