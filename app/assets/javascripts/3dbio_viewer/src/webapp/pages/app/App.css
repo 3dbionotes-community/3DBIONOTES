@@ -10,7 +10,7 @@ button {
     margin-left: 10px;
     color: #ffffff;
     background-color: #123546;
-    border-radius: 8px; /* 8px */
+    border-radius: 8px;
     border: solid 0px #123546;
     outline: none;
 }

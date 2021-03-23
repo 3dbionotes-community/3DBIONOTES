@@ -10,6 +10,7 @@ export interface SearchOptions {
     query: string;
     type?: DbModelType;
 }
+
 export interface UploadOptions {
     jobTitle?: string;
     structureFile: File;
