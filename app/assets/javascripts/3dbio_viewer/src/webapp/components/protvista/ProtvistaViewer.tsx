@@ -8,6 +8,7 @@ import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
 import { BlockDef } from "./Protvista.types";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { AnnotationsTool } from "../annotations-tool/AnnotationsTool";
+import { ProtvistaAction } from "./Protvista.helpers";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
 
@@ -22,21 +23,14 @@ type OnActionCb = NonNullable<ProtvistaPdbProps["onAction"]>;
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks } = props;
     const [isAnnotationToolOpen, { enable: openAnnotationTool, disable: closeAnnotationTool }] = useBooleanState(false);
-    const [actionName, setAction] = useState<AddAction>();
+    const [actionName, setAction] = useState<ProtvistaAction>({type: "add", trackId: "sampleID"});
+
     const onAction = React.useCallback<OnActionCb>(action => {
         setAction(action);
          openAnnotationTool();
         console.debug("TODO", "action", action);
-    }, []);
-        /*
-        {isAnnotationToolOpen && (
-                        <AnnotationsTool
-                            
-                            title={i18n.t("Upload your annotations in JSON format")}
-                            onClose={closeAnnotationTool}
-                        />
-                    )}
-        */
+    }, [openAnnotationTool]);
+
     return (
         <div>
             {blocks.map(block => {
@@ -50,13 +44,6 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                         ) : (
                             <ProtvistaPdb pdb={pdb} block={block} onAction={onAction} />
                         )}
-                        {isAnnotationToolOpen && (
-                        <AnnotationsTool
-                            action={actionName}
-                            title={i18n.t("Upload your annotations in JSON format")}
-                            onClose={closeAnnotationTool}
-                        />
-                    )}
                         {block.tracks.map((trackDef, idx) => {
                             const CustomTrackComponent = trackDef.component;
                             return (
@@ -70,7 +57,15 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                                 )
                             );
                         })}
+                        {isAnnotationToolOpen && (
+                        <AnnotationsTool
+                            action={actionName}
+                            title={i18n.t("Upload your annotations in JSON format")}
+                            onClose={closeAnnotationTool}
+                        />
+                    )}
                     </ViewerBlock>
+                    
                 );
             })}
         </div>
