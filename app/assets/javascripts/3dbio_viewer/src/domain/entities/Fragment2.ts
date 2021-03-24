@@ -11,7 +11,7 @@ export interface Fragment2 {
     subtrack: SubtrackDefinition;
     start: number;
     end: number;
-    description: string;
+    description?: string;
     evidences?: Evidence[];
 }
 
@@ -24,43 +24,47 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
 
     const groupedFragments = groupedPairsBy(fragments, fragment => fragment.subtrack);
 
-    const subtracksById = _(groupedFragments)
-        .map(
-            ([subtrackDef, fragmentsForSubtrack]): Subtrack => {
-                return {
-                    accession: subtrackDef.id,
-                    type: subtrackDef.id,
-                    label: subtrackDef.name,
-                    labelTooltip: subtrackDef.description,
-                    shape: subtrackDef.shape || "rectangle",
-                    locations: [
-                        {
-                            fragments: fragmentsForSubtrack.map(fragment => {
-                                return {
-                                    start: fragment.start,
-                                    end: fragment.end,
-                                    description: fragment.description,
-                                    evidences: fragment.evidences,
-                                    color: subtrackDef.color || "#200",
-                                };
-                            }),
-                        },
-                    ],
-                };
-            }
-        )
-        .keyBy(subtrack => subtrack.accession)
-        .value();
+    const subtracks = groupedFragments.map(
+        ([subtrackDef, fragmentsForSubtrack]): Subtrack => {
+            return {
+                accession: subtrackDef.dynamicSubtrack
+                    ? subtrackDef.dynamicSubtrack.id
+                    : subtrackDef.id,
+                type: subtrackDef.id,
+                label: subtrackDef.name,
+                labelTooltip: subtrackDef.description,
+                shape: subtrackDef.shape || "rectangle",
+                locations: [
+                    {
+                        fragments: fragmentsForSubtrack.map(fragment => {
+                            return {
+                                start: fragment.start,
+                                end: fragment.end,
+                                description: fragment.description || "",
+                                evidences: fragment.evidences,
+                                color: subtrackDef.color || "#200",
+                            };
+                        }),
+                    },
+                ],
+            };
+        }
+    );
+
+    const subtracksById = _.groupBy(subtracks, subtrack => subtrack.accession);
 
     return trackDefinitions.map(
         (trackDef): Track => {
+            const subtrackIds = trackDef.subtracks.map(subtrack => subtrack.id);
+
             return {
                 id: trackDef.id,
                 label: trackDef.name,
                 description: trackDef.description,
                 overlapping: false,
                 subtracks: _(subtracksById)
-                    .at(...trackDef.subtracks.map(subtrack => subtrack.id))
+                    .at(...subtrackIds)
+                    .flatten()
                     .compact()
                     .value(),
             };

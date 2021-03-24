@@ -19,7 +19,7 @@ import {
 import { Features, getFeatureFragments } from "./tracks/feature";
 import { Coverage, getStructureCoverageTrack } from "./tracks/structure-coverage";
 import { addMobiSubtracks, getMobiDisorderTrack, MobiUniprot } from "./tracks/mobi";
-import { Cv19Annotations, getFunctionalMappingTrack } from "./tracks/functional-mapping";
+import { Cv19Tracks, getFunctionalMappingFragments } from "./tracks/functional-mapping";
 import { getIf } from "../../../utils/misc";
 import { getProteomicsTrack, Proteomics } from "./tracks/proteomics";
 import { getPdbRedoTrack, PdbRedo } from "./tracks/pdb-redo";
@@ -32,7 +32,7 @@ import { getTracksFromFragments } from "../../../domain/entities/Fragment2";
 interface Data {
     uniprot: UniprotResponse;
     features: Features;
-    covidAnnotations: Cv19Annotations;
+    cv19Tracks: Cv19Tracks;
     pdbAnnotations: PdbAnnotations;
     ebiVariation: EbiVariation;
     coverage: Coverage;
@@ -74,8 +74,8 @@ export class ApiPdbRepository implements PdbRepository {
         );
 
         const _variants = getIf(data.ebiVariation, getVariants);
-        const functionalMappingTracks =
-            getIf(data.covidAnnotations, getFunctionalMappingTrack) || [];
+        const functionalMappingFragments =
+            getIf(data.cv19Tracks, getFunctionalMappingFragments) || [];
         const emValidationTrack = getIf(data.pdbAnnotations, getEmValidationTrack);
         const structureCoverageTrack = getIf(data.coverage, getStructureCoverageTrack);
         const mobiDisorderTrack = getIf(data.mobiUniprot, getMobiDisorderTrack);
@@ -86,7 +86,6 @@ export class ApiPdbRepository implements PdbRepository {
         const epitomesTrack = getIf(data.iedb, getEpitomesTrack);
 
         const tracks0: Track[] = _.compact([
-            ...functionalMappingTracks,
             emValidationTrack,
             mobiDisorderTrack,
             structureCoverageTrack,
@@ -112,7 +111,7 @@ export class ApiPdbRepository implements PdbRepository {
         );
 
         const tracks = getTracksFromFragments(
-            _.flatten([featureFragments, domainFamiliesFragments])
+            _.flatten([featureFragments, domainFamiliesFragments, functionalMappingFragments])
         );
         debugVariable({ oldTracks: tracks3, newTracks: tracks });
 
@@ -140,7 +139,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
     const data$: DataRequests = {
         uniprot: getXML(`https://www.uniprot.org/uniprot/${protein}.xml`),
         features: getJSON(`${ebiProteinsApiUrl}/features/${protein}`),
-        covidAnnotations: getJSON(`${bioUrl}/cv19_annotations/${protein}_annotations.json`),
+        cv19Tracks: getJSON(`${bioUrl}/cv19_annotations/${protein}_annotations.json`),
         pdbAnnotations: getJSON(`${pdbAnnotUrl}/all/${pdb}/${chain}/?format=json`),
         ebiVariation: getJSON(`${ebiProteinsApiUrl}/variation/${protein}`),
         coverage: getJSON(`${bioUrl}/api/alignments/Coverage/${pdb}${chain}`),

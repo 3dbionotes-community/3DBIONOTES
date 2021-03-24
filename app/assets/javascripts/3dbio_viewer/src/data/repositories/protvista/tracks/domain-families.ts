@@ -1,11 +1,6 @@
 import _ from "lodash";
 import { subtracks } from "../../../../domain/definitions/subtracks";
-import { getFragment } from "../../../../domain/entities/Fragment";
 import { Fragments, getFragments } from "../../../../domain/entities/Fragment2";
-import { Track } from "../../../../domain/entities/Track";
-import { getIf } from "../../../../utils/misc";
-import { config } from "../config";
-import { getFeatureFragments } from "./feature";
 
 // Domain family: Pfam, smart, interpro
 

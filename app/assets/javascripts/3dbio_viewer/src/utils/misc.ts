@@ -4,3 +4,7 @@ export function getIf<Value, Result>(
 ): Result | undefined {
     return value === undefined ? undefined : mapper(value);
 }
+
+export function throwError(): never {
+    throw new Error("Internal error");
+}

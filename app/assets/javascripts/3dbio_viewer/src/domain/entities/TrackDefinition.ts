@@ -14,4 +14,9 @@ export interface SubtrackDefinition {
     description?: string;
     color?: string;
     shape?: Shape;
+    dynamicSubtrack?: SubtrackDefinition;
+}
+
+export function getDynamicSubtrackId(subtrackDef: SubtrackDefinition, name: string) {
+    return subtrackDef.id + "-" + name;
 }

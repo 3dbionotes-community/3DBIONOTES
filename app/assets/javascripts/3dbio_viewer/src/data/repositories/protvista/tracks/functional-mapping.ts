@@ -1,19 +1,26 @@
 import _ from "lodash";
-import { Track } from "../../../../domain/entities/Track";
-import { getId, getName } from "../utils";
+import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
+import {
+    getDynamicSubtrackId,
+    SubtrackDefinition,
+} from "../../../../domain/entities/TrackDefinition";
+import { groupedPairsBy } from "../../../../utils/ts-utils";
+import { subtracks } from "../definitions";
 
-export type Cv19Annotations = Cv19Annotation[];
+// http://localhost:3001/3dbionotes/cv19_annotations/P0DTC2_annotations.json
 
-export interface Cv19Annotation {
+export type Cv19Tracks = Cv19Track[];
+
+export interface Cv19Track {
     track_name: string;
     visualization_type?: "variants";
     acc: string;
-    data: Cv19AnnotationItem[];
+    data: Cv19Annotation[];
     reference: string;
     fav_icon: string;
 }
 
-export interface Cv19AnnotationItem {
+export interface Cv19Annotation {
     begin: number;
     end: number;
     partner_name: string;
@@ -22,47 +29,33 @@ export interface Cv19AnnotationItem {
     type: string;
 }
 
-const knownTracks: Record<string, string> = {
-    Functional_mapping_PPI: "functional-mapping-ppi",
-};
+export function getFunctionalMappingFragments(cv19Tracks: Cv19Tracks): Fragments {
+    const tracksByName = _.keyBy(cv19Tracks, cv19Track => cv19Track.track_name);
+    const ppiTrack = tracksByName["Functional_mapping_PPI"];
+    if (!ppiTrack) return [];
 
-export function getFunctionalMappingTrack(cv19Annotations: Cv19Annotations): Track[] {
-    // TODO: item with visualization_type = "variant" should be used in variants track
-    const annotations = cv19Annotations.filter(an => an.visualization_type !== "variants");
+    const annotationsByPartner = groupedPairsBy(ppiTrack.data, an => an.partner_name);
 
-    return annotations.map(mapping => {
-        const mappingTracks = _(mapping.data)
-            .groupBy(data => data.partner_name)
-            .map((values, key) => ({ name: key, items: values }))
-            .value();
+    return _.flatMap(annotationsByPartner, ([partnerName, ppiAnnotations]) => {
+        const referenceAnnotation = _.first(ppiAnnotations);
+        if (!referenceAnnotation) return [];
+        const subtrackDef = subtracks.functionalMappingPPI;
 
-        return {
-            id: knownTracks[mapping.track_name] || getId(mapping.track_name),
-            label: getName(mapping.track_name),
-            subtracks: _.compact(
-                mappingTracks.map(track => {
-                    const item = track.items[0];
-                    if (!item) return;
-
-                    return {
-                        accession: getName(track.name),
-                        type: item.type,
-                        label: getName(track.name),
-                        labelTooltip: item.description,
-                        shape: "rectangle",
-                        locations: [
-                            {
-                                fragments: track.items.map(item => ({
-                                    start: item.begin,
-                                    end: item.end,
-                                    description: item.description,
-                                    color: item.color,
-                                })),
-                            },
-                        ],
-                    };
-                })
-            ),
+        const subtrack: SubtrackDefinition = {
+            dynamicSubtrack: subtracks.functionalMappingPPI,
+            id: getDynamicSubtrackId(subtrackDef, partnerName),
+            name: partnerName,
+            source: subtrackDef.source,
+            description: subtrackDef.description,
+            color: referenceAnnotation.color,
+            shape: "rectangle",
         };
+
+        return getFragments(
+            ppiAnnotations,
+            (annotation): FragmentResult => {
+                return { subtrack, start: annotation.begin, end: annotation.end };
+            }
+        );
     });
 }

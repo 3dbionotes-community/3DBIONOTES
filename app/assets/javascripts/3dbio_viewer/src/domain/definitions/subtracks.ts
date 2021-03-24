@@ -386,7 +386,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
 
     // Functional mapping PPI
     functionalMappingPPI: {
-        id: "functional-mapping" as const,
+        id: "functional-mapping-ppi" as const,
         name: i18n.t("Functional mapping ppi"),
         description: i18n.t(
             "Residues that participate in the interaction between the different proteins. Only available for covid 19 related proteins"

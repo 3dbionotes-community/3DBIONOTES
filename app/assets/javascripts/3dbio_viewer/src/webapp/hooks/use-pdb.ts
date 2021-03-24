@@ -19,7 +19,7 @@ export function usePdbLoader() {
 
         setLoader({ type: "loading" });
 
-        return compositionRoot.getPdb(pdbOptions["6lzg"]).run(
+        return compositionRoot.getPdb(pdbOptions["6zow"]).run(
             pdb => setLoader({ type: "loaded", data: pdb }),
             error => setLoader({ type: "error", message: error.message })
         );

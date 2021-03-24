@@ -235,6 +235,6 @@ export const trackDefinitions = recordOf<TrackDefinition>()({
 export function getTracksFromSubtrack(subtrack: SubtrackDefinition): TrackDefinition[] {
     return _(trackDefinitions)
         .values()
-        .filter(track => track.subtracks.includes(subtrack))
+        .filter(track => track.subtracks.includes(subtrack.dynamicSubtrack || subtrack))
         .value();
 }
