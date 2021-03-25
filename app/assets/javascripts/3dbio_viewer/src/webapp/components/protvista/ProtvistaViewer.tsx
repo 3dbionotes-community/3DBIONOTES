@@ -42,7 +42,6 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
             {blocks.map(block => {
                 if (!blockHasRelevantData(block, pdb)) return null;
                 const CustomComponent = block.component;
-
                 return (
                     <ViewerBlock key={block.id} block={block}>
                         {CustomComponent ? (

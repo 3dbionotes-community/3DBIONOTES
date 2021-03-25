@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import _ from "lodash";
-import { Dialog, DialogContent, DialogTitle, IconButton } from "@material-ui/core";
+import { Dialog, DialogContent, DialogTitle, IconButton, Switch } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import i18n from "../../utils/i18n";
 import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
@@ -18,18 +18,17 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
 
     const annotationFileRef = useRef<DropzoneRef>(null);
     const [error, setError] = useState<string>();
+    const [isManual, setIsManual] = useState<boolean>(false);
     const [type, setType] = useState<string>("Region");
     const [description, setDescription] = useState<string>("");
     const [color, setColor] = useState<string>("");
     const [startingValue, setStartingValue] = useState<number>();
     const [endingValue, setEndingValue] = useState<number>();
-    const [showManualAnnotation, setShowManualAnnotation] = useState<boolean>(false);
 
     const addManualAnnotation = () => {
         setError("");
         if (!startingValue) {
             setError("Missing starting value: please fill in a starting value.");
-            return;
         }
         if (!endingValue) {
             setEndingValue(startingValue);
@@ -47,23 +46,20 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
 
             <DialogContent>
                 {error && <h3>{error}</h3>}
-                <label className="fileFormat">
-                    Annotation file in{" "}
-                    <a href="http://3dbionotes.cnb.csic.es/upload_annotations.txt">JSON</a> format
+                <label>
+                    {isManual
+                        ? i18n.t("Add annotation manually")
+                        : i18n.t("Annotation file in JSON format")}
                 </label>
-                <Dropzone ref={annotationFileRef} accept="application/json"></Dropzone>
-                <button className="submitButton">Upload</button>
-                <h3>OR</h3>
-                <button
-                    onClick={() => setShowManualAnnotation(!showManualAnnotation)}
-                    className="submitButton"
-                >
-                    Add your annotations manually
-                </button>
-                {showManualAnnotation && (
+                <Switch
+                    value={isManual}
+                    onChange={() => setIsManual(isManual ? false : true)}
+                    color="primary"
+                />
+                {isManual ? (
                     <form>
                         <label htmlFor="trackName">
-                            <strong>Track Name</strong>
+                            <strong>{i18n.t("Track Name")}</strong>
                         </label>
                         <input
                             aria-label={i18n.t("Track Name")}
@@ -74,7 +70,7 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                             className="form-control"
                         />
                         <label htmlFor="type">
-                            <strong>Type</strong>
+                            <strong>{i18n.t("Type")}</strong>
                         </label>
                         <input
                             aria-label={i18n.t("Type")}
@@ -86,7 +82,7 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                             className="form-control"
                         />
                         <label htmlFor="description">
-                            <strong>Description</strong>
+                            <strong>{i18n.t("Description")}</strong>
                         </label>
                         <input
                             aria-label={i18n.t("Description")}
@@ -98,10 +94,12 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                             className="form-control"
                         />
                         <label htmlFor="color">
-                            <strong>Color</strong>
+                            <strong>{i18n.t("Color")}</strong>
                         </label>
                         <small>
-                            You can put a color name (ie. red) or color hex value (ie. #ffffff)
+                            {i18n.t(
+                                "You can put a color name (ie. red) or color hex value (ie. #ffffff)"
+                            )}{" "}
                         </small>
                         <input
                             aria-label={i18n.t("Color")}
@@ -112,14 +110,14 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                             className="form-control"
                         />
                         <label htmlFor="index">
-                            <strong>Index</strong>
+                            <strong>{i18n.t("Index")}</strong>
                         </label>
                         <select className="form-control">
-                            <option value="sequence">Sequence</option>
-                            <option value="structure">Structure</option>
+                            <option value="sequence">{i18n.t("Sequence")}</option>
+                            <option value="structure">{i18n.t("Structure")}</option>
                         </select>
                         <label htmlFor="startingValue">
-                            <strong>Starting value</strong>
+                            <strong>{i18n.t("Starting value")}</strong>
                         </label>
                         <input
                             aria-label={i18n.t("Starting value")}
@@ -130,7 +128,7 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                             className="form-control"
                         />
                         <label htmlFor="endingValue">
-                            <strong>Ending value</strong>
+                            <strong>{i18n.t("Ending value")}</strong>
                         </label>
                         <input
                             aria-label={i18n.t("Ending value")}
@@ -145,9 +143,14 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                             type="submit"
                             onClick={addManualAnnotation}
                         >
-                            Add
+                            {i18n.t("Add")}
                         </button>
                     </form>
+                ) : (
+                    <>
+                        <Dropzone ref={annotationFileRef} accept="application/json"></Dropzone>
+                        <button className="submitButton">{i18n.t("Upload")}</button>
+                    </>
                 )}
             </DialogContent>
         </Dialog>
