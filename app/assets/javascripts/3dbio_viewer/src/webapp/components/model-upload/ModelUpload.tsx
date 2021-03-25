@@ -23,7 +23,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const structureFileRef = useRef<DropzoneRef>(null);
     const annotationFileRef = useRef<DropzoneRef>(null);
 
-    const onSubmitHandler = useCallback(() => {
+    const submitCb = useCallback(() => {
         setError("");
         const structureFile = getFile(structureFileRef);
         if (structureFile) {
@@ -40,6 +40,8 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
             return _.noop;
         }
     }, [compositionRoot, jobTitle]);
+
+    const submit = useCallbackEffect(submitCb);
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth>
@@ -83,7 +85,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                 <label className="fileFormat">{i18n.t("Upload your annotations")}</label>
                 <Dropzone ref={annotationFileRef} accept={"application/json"}></Dropzone>
 
-                <button className="uploadSubmit" onClick={useCallbackEffect(onSubmitHandler)}>
+                <button className="uploadSubmit" onClick={submit}>
                     {i18n.t("Submit")}
                 </button>
             </DialogContent>
