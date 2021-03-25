@@ -68,8 +68,8 @@ export class ApiPdbRepository implements PdbRepository {
             getFeatureFragments(options.protein, features, data.phosphositeUniprot)
         );
         const domainFamiliesFragments = getDomainFamiliesFragments(
-            data.pfamAnnotations,
-            data.smartAnnotations
+            { pfam: data.pfamAnnotations, smart: data.smartAnnotations },
+            options.protein
         );
 
         const _variants = getIf(data.ebiVariation, getVariants);
