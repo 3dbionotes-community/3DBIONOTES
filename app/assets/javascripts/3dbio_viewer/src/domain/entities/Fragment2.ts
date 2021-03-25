@@ -1,7 +1,10 @@
 import _ from "lodash";
+import { from } from "../../utils/misc";
 import { groupedPairsBy, notNil } from "../../utils/ts-utils";
-import { getTracksFromSubtrack } from "../definitions/tracks";
+import { getTracksFromSubtrack, trackDefinitions } from "../definitions/tracks";
+import { Color } from "./Color";
 import { Evidence } from "./Evidence";
+import { Legend } from "./Legend";
 import { Subtrack, Track } from "./Track";
 import { SubtrackDefinition } from "./TrackDefinition";
 
@@ -13,13 +16,22 @@ export interface Fragment2 {
     end: number;
     description?: string;
     evidences?: Evidence[];
+    color?: Color;
+    legend?: Legend;
 }
 
 export function getTracksFromFragments(fragments: Fragments): Track[] {
-    const trackDefinitions = _(fragments)
+    const indexes = _(trackDefinitions)
+        .values()
+        .map((trackDef, idx) => [trackDef.id, idx] as [string, number])
+        .fromPairs()
+        .value();
+
+    const trackDefinitionsFromFragments = _(fragments)
         .flatMap(fragment => getTracksFromSubtrack(fragment.subtrack))
         .compact()
         .uniq()
+        .sortBy(trackDefinition => indexes[trackDefinition.id])
         .value();
 
     const groupedFragments = groupedPairsBy(fragments, fragment => fragment.subtrack);
@@ -42,8 +54,11 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                                 start: fragment.start,
                                 end: fragment.end,
                                 description: fragment.description || "",
-                                ...(fragment.evidences ? { evidences: fragment.evidences } : {}),
-                                color: subtrackDef.color || "#200",
+                                color: fragment.color || subtrackDef.color || "#200",
+                                ...from({
+                                    evidences: fragment.evidences,
+                                    legend: fragment.legend,
+                                }),
                             };
                         }),
                     },
@@ -54,7 +69,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
 
     const subtracksById = _.groupBy(subtracks, subtrack => subtrack.accession);
 
-    return trackDefinitions.map(
+    return trackDefinitionsFromFragments.map(
         (trackDef): Track => {
             const subtrackIds = trackDef.subtracks.map(subtrack => subtrack.id);
 
