@@ -10,7 +10,7 @@ export interface TrackDefinition {
 export interface SubtrackDefinition {
     id: string;
     name: string;
-    source: string;
+    source?: string | { url: string; icon: string };
     description?: string;
     color?: string;
     shape?: Shape;

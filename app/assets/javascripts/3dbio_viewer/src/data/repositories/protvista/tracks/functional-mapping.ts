@@ -54,7 +54,12 @@ export function getFunctionalMappingFragments(cv19Tracks: Cv19Tracks): Fragments
         return getFragments(
             ppiAnnotations,
             (annotation): FragmentResult => {
-                return { subtrack, start: annotation.begin, end: annotation.end };
+                return {
+                    subtrack,
+                    start: annotation.begin,
+                    end: annotation.end,
+                    description: annotation.description,
+                };
             }
         );
     });

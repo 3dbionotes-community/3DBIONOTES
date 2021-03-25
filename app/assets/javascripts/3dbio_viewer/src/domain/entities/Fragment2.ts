@@ -30,10 +30,11 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 accession: subtrackDef.dynamicSubtrack
                     ? subtrackDef.dynamicSubtrack.id
                     : subtrackDef.id,
-                type: subtrackDef.id,
+                type: subtrackDef.name,
                 label: subtrackDef.name,
                 labelTooltip: subtrackDef.description,
                 shape: subtrackDef.shape || "rectangle",
+                source: subtrackDef.source,
                 locations: [
                     {
                         fragments: fragmentsForSubtrack.map(fragment => {
@@ -41,7 +42,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                                 start: fragment.start,
                                 end: fragment.end,
                                 description: fragment.description || "",
-                                evidences: fragment.evidences,
+                                ...(fragment.evidences ? { evidences: fragment.evidences } : {}),
                                 color: subtrackDef.color || "#200",
                             };
                         }),

@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { Fragment } from "./Fragment";
 import { Shape } from "./Shape";
+import { SubtrackDefinition } from "./TrackDefinition";
 
 export interface Track {
     id: string;
@@ -19,6 +20,7 @@ export interface Subtrack {
     label: string; // Supports: text and html.
     labelTooltip?: string; // Label tooltip content. Support text and HTML mark-up
     overlapping?: boolean;
+    source?: SubtrackDefinition["source"];
 }
 
 export function addToTrack(options: {

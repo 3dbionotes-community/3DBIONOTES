@@ -19,6 +19,16 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
             <EvidenceRow title={i18n.t("Feature ID")} value={fragment.id} className="description" />
             <EvidenceRow title={i18n.t("Description")} value={fragment.description} />
 
+            <EvidenceRow title={i18n.t("Source")} object={subtrack.source}>
+                {source =>
+                    typeof source === "string" ? null : (
+                        <div>
+                            <img src={source.icon} /> <Link name={source.url} url={source.url} />
+                        </div>
+                    )
+                }
+            </EvidenceRow>
+
             {(fragment.evidences || []).map((evidence, idx) => (
                 <React.Fragment key={idx}>
                     <EvidenceRow title={i18n.t("Evidence")} value={evidence.title} />

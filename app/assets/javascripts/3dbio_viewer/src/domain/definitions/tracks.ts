@@ -167,7 +167,6 @@ export const trackDefinitions = recordOf<TrackDefinition>()({
     functionalMappingPpi: {
         id: "functional-mapping-ppi" as const,
         name: i18n.t("Functional mapping ppi"),
-        description: i18n.t("Functional mapping description (TODO)"),
         subtracks: [subtracks.functionalMappingPPI],
     },
     ligands: {

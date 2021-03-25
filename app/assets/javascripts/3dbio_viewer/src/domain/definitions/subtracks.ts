@@ -11,7 +11,6 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     structureCoverage: {
         id: "structure-coverage" as const,
         name: i18n.t("Structure Coverage"),
-        source: "",
         description: i18n.t("Coverage of the sequence shown with the primary protein sequence"),
     },
 
@@ -361,7 +360,6 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     residueAccessibility: {
         id: "residue-accessibility" as const,
         name: i18n.t("Residue accesibility"),
-        source: "",
         description: i18n.t(
             "Graph, range of colors in the residues and show the surface of the protein (display mode). Allow download"
         ),
@@ -391,7 +389,10 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         description: i18n.t(
             "Residues that participate in the interaction between the different proteins. Only available for covid 19 related proteins"
         ),
-        source: "http://draco.cs.wpi.edu/wuhan/",
+        source: {
+            icon: "http://draco.cs.wpi.edu/wuhan/favicon.ico",
+            url: "http://draco.cs.wpi.edu/wuhan/",
+        },
     },
 
     // Ligands
@@ -406,7 +407,10 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     functionalMappingLigands: {
         id: "functional-mapping-ligands" as const,
         name: i18n.t("Functional mapping ligands"),
-        source: "http://draco.cs.wpi.edu/wuhan/",
+        source: {
+            url: "http://draco.cs.wpi.edu/wuhan/",
+            icon: "http://draco.cs.wpi.edu/wuhan/favicon.icon",
+        },
         description: i18n.t("Combined with the following one. Common names or both tags"),
     },
     panddaDrugScreeningDiamong: {
@@ -457,7 +461,6 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     linearEpitomesN: {
         id: "linear-epitope-n" as const,
         name: i18n.t("Linear epitope 1, 2, 3, 4, 5"),
-        source: "",
         description: i18n.t("Different entries from IEDB"),
     },
     linearEpitomes: {
