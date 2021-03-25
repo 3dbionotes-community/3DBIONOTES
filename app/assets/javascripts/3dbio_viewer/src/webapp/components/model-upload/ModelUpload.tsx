@@ -1,10 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import { Dialog, DialogContent, DialogTitle, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import _ from "lodash";
 import i18n from "../../utils/i18n";
 import { Dropzone, DropzoneRef, getFile } from "../dropzone/Dropzone";
+import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { useAppContext } from "../AppContext";
+//import { Future } from "../../../data/utils/future";
 import "./ModelUpload.css";
 
 export interface ModelUploadProps {
@@ -22,21 +24,21 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const annotationFileRef = useRef<DropzoneRef>(null);
     const [error, setError] = useState<string>();
 
-    const onSubmitHandler = () => {
+    const onSubmitHandler = useCallback(() => {
         setError("");
         const structureFile = getFile(structureFileRef);
-
         if (structureFile) {
             const uploadParams = {
                 jobTitle,
                 structureFile,
                 annotationsFile: getFile(annotationFileRef),
             };
-            return compositionRoot.uploadAtomicStructure(uploadParams);
+            return compositionRoot.uploadAtomicStructure(uploadParams).run(result => result, console.error);
         } else {
-            setError("Error: No file selected. Please select a structure file.");
+            setError(i18n.t("Error: No file selected. Please select a structure file."));
+            return _.noop;
         }
-    };
+    },[compositionRoot, jobTitle]);
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth>
@@ -50,20 +52,17 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
             <DialogContent>
                 {error && <h3>{error}</h3>}
                 <p>
-                    Models under study and not deposited to PDB yet can be analysed too. Annotations
-                    from similar entries based on BLAST sequence match will be displayed, but also
-                    customised annotations can be provided by the user. Job title (if provided) will
-                    be used to identify the model, otherwise the file name will be used.
+                    {i18n.t("Models under study and not deposited to PDB yet can be analysed too. Annotations from similar entries based on BLAST sequence match will be displayed, but also customised annotations can be provided by the user. Job title (if provided) will be used to identify the model, otherwise the file name will be used.")}
                 </p>
 
                 <label htmlFor="jobTitle">
-                    <strong>Job Title</strong>
+                    <strong>{i18n.t("Job Title")}</strong>
                 </label>
-                <small>Optional</small>
+                <small>{i18n.t("Optional")}</small>
                 <input
                     aria-label={i18n.t("Job Title")}
                     value={jobTitle}
-                    placeholder="Job Title"
+                    placeholder={i18n.t("Job Title")}
                     onChange={e => setJobTitle(e.target.value)}
                     id="jobTitle"
                     type="text"
@@ -77,11 +76,11 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                 </label>
                 <Dropzone ref={structureFileRef} accept=".pdb,.cif"></Dropzone>
 
-                <label className="fileFormat">Upload your annotations</label>
+                <label className="fileFormat">{i18n.t("Upload your annotations")}</label>
                 <Dropzone ref={annotationFileRef} accept={"application/json"}></Dropzone>
 
-                <button className="uploadSubmit" onClick={onSubmitHandler}>
-                    Submit
+                <button className="uploadSubmit" onClick={useCallbackEffect(onSubmitHandler)}>
+                    {i18n.t("Submit")}
                 </button>
             </DialogContent>
         </Dialog>

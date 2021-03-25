@@ -3,7 +3,7 @@ import { FutureData } from "../entities/FutureData";
 
 export interface DbModelRepository {
     search(options: SearchOptions): FutureData<DbModelCollection>;
-    upload(options: UploadOptions): Boolean;
+    upload(options: UploadOptions): FutureData<unknown>;
 }
 
 export interface SearchOptions {
@@ -12,7 +12,7 @@ export interface SearchOptions {
 }
 
 export interface UploadOptions {
-    jobTitle?: string;
     structureFile: File;
+    jobTitle?: string;
     annotationsFile?: File;
 }

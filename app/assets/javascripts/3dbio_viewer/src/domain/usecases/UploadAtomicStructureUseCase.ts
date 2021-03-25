@@ -1,9 +1,8 @@
 import { UseCase } from "../../compositionRoot";
-import { EbiDbModelRepository } from "../../data/repositories/EbiDbModelRepository";
-import { UploadOptions } from "../repositories/DbModelRepository";
+import { DbModelRepository, UploadOptions } from "../repositories/DbModelRepository";
 
 export class UploadAtomicStructureUseCase implements UseCase {
-    constructor(private dbModelRepository: EbiDbModelRepository) {}
+    constructor(private dbModelRepository: DbModelRepository) {}
 
     execute(options: UploadOptions) {
         return this.dbModelRepository.upload(options);

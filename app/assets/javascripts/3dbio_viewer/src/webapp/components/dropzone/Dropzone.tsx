@@ -1,6 +1,7 @@
 import React, { useImperativeHandle } from "react";
 import { DropzoneOptions, DropzoneRootProps, useDropzone } from "react-dropzone";
 import styled from "styled-components";
+import i18n from "../../utils/i18n";
 
 const getColor = (props: DropzoneRootProps) => {
     if (props.isDragAccept) {
@@ -51,7 +52,7 @@ export const Dropzone = React.forwardRef(
             maxFiles: 1,
             ...props,
         });
-        const files = acceptedFiles.map(file => <p key={file.name}>{file.name}</p>);
+        const files = acceptedFiles.map(file => file.name);
 
         useImperativeHandle(ref, () => ({
             openDialog() {
@@ -67,7 +68,7 @@ export const Dropzone = React.forwardRef(
                         <Text>
                             {acceptedFiles.length !== 0
                                 ? files
-                                : "Drag and drop some files here, or click to select files"}
+                                : i18n.t("Drag and drop some files here, or click to select files")}
                         </Text>
                     </Shade>
                 </div>

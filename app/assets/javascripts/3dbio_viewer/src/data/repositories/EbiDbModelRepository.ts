@@ -54,9 +54,9 @@ export class EbiDbModelRepository implements DbModelRepository {
                 .value()
         );
     }
-    upload(options: UploadOptions): Boolean {
+    upload(options: UploadOptions): FutureData<unknown> {
         const uploadResults = request(config.upload.searchUrl, options);
-        return true;
+        return Future.success([]);
     }
 }
 
