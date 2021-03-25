@@ -51,6 +51,7 @@ export function isBlastFragment(subtrack: Subtrack, fragment: Fragment): boolean
     const type = subtrack.type;
     return type !== undefined && fragment.end - fragment.start >= 3 && !noBlastTypes.includes(type);
 }
+
 export function getBlastUrl(protein: string, subtrack: Subtrack, fragment: Fragment): string {
     // Example: https://www.uniprot.org/blast/?about=P0DTC2[816-1273]&key=Chain&id=PRO_0000449649
     const baseUrl = "https://www.uniprot.org/blast";

@@ -1,17 +1,18 @@
 import React from "react";
 import _ from "lodash";
-import { SelectionState } from "../../view-models/SelectionState";
 import { usePdbLoader } from "../../hooks/use-pdb";
 import { allTracksBlock } from "./protvista-blocks";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
+import { useViewerSelector } from "../viewer-selector/viewer-selector.hooks";
 
 export interface ProtvistaGroupedProps {
-    selection: SelectionState;
+    selector: string;
 }
 
-export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(() => {
-    const loader = usePdbLoader();
+export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo((props) => {
+    const [selection] = useViewerSelector(props.selector);
+    const loader = usePdbLoader(selection);
     const block = allTracksBlock;
 
     return loader.type === "loaded" ? (

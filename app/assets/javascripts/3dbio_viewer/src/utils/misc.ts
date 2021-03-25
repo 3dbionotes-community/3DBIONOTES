@@ -7,8 +7,8 @@ export function getIf<Value, Result>(
     return value === undefined ? undefined : mapper(value);
 }
 
-export function throwError(): never {
-    throw new Error("Internal error");
+export function throwError(msg?: string): never {
+    throw new Error(msg || "Internal error");
 }
 
 export function props<Prop extends string, Value>(

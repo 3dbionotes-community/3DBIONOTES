@@ -25,8 +25,10 @@ function App() {
                         render={() => <Viewers selection={protvistaSelection} />}
                     />
                     <Route
-                        path="/protvista-all"
-                        render={() => <ProtvistaGrouped selection={protvistaSelection} />}
+                        path="/protvista-all/:selector"
+                        render={props => (
+                            <ProtvistaGrouped selector={props.match.params.selector} />
+                        )}
                     />
                     <RootViewerRoute path="/:selector" />
                     <RootViewerRoute path="/" />
