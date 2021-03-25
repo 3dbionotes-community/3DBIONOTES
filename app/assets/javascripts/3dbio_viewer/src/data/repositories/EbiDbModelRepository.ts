@@ -28,7 +28,7 @@ const config = {
         },
     },
     upload: {
-        searchUrl: "http://3dbionotes.cnb.csic.es/upload",
+        url: "http://3dbionotes.cnb.csic.es/upload",
     },
 };
 
@@ -54,9 +54,9 @@ export class EbiDbModelRepository implements DbModelRepository {
                 .value()
         );
     }
+
     upload(options: UploadOptions): FutureData<unknown> {
-        const uploadResults = request(config.upload.searchUrl, options);
-        return Future.success([]);
+        return request(config.upload.url, options).map(_res => null);
     }
 }
 
