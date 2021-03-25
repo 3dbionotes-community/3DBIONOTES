@@ -1,6 +1,5 @@
 import { UseCase } from "../../compositionRoot";
-import { DbModelRepository } from "../repositories/DbModelRepository";
-import { SearchOptions } from "../repositories/DbModelRepository";
+import { DbModelRepository, SearchOptions } from "../repositories/DbModelRepository";
 
 export class SearchDbModelsUseCase implements UseCase {
     constructor(private dbModelRepository: DbModelRepository) {}
