@@ -11,11 +11,6 @@ import { debugVariable } from "../../../utils/debug";
 import { getEmValidationTrack, PdbAnnotations } from "./tracks/em-validation";
 import { EbiVariation, getVariants } from "./tracks/variants";
 import { addPhosphiteSubtracks, PhosphositeUniprot } from "./tracks/phosphite";
-import {
-    getDomainFamiliesFragments,
-    PfamAnnotations,
-    SmartAnnotations,
-} from "./tracks/domain-families";
 import { Features, getFeatureFragments } from "./tracks/feature";
 import { Coverage, getStructureCoverageFragments } from "./tracks/structure-coverage";
 import { addMobiSubtracks, getMobiDisorderTrack, MobiUniprot } from "./tracks/mobi";
@@ -28,6 +23,8 @@ import { getProtein, UniprotResponse } from "./uniprot";
 import { getExperiment, PdbExperiment } from "./ebi-pdbe-api";
 import { routes } from "../../../routes";
 import { getTracksFromFragments } from "../../../domain/entities/Fragment2";
+import { getPfamDomainFragments, PfamAnnotations } from "./tracks/pfam-domain";
+import { getSmartDomainFragments, SmartAnnotations } from "./tracks/smart-domain";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -67,8 +64,9 @@ export class ApiPdbRepository implements PdbRepository {
         const featureFragments = getIf(data.features, features =>
             getFeatureFragments(options.protein, features, data.phosphositeUniprot)
         );
-        const domainFamiliesFragments = getDomainFamiliesFragments(
-            { pfam: data.pfamAnnotations, smart: data.smartAnnotations },
+        const pfamDomainFragments = getPfamDomainFragments(data.pfamAnnotations, options.protein);
+        const smartDomainFragments = getSmartDomainFragments(
+            data.smartAnnotations,
             options.protein
         );
 
@@ -111,7 +109,8 @@ export class ApiPdbRepository implements PdbRepository {
         const tracks = getTracksFromFragments(
             _([
                 featureFragments,
-                domainFamiliesFragments,
+                pfamDomainFragments,
+                smartDomainFragments,
                 functionalMappingFragments,
                 structureCoverageFragments,
             ])
