@@ -49,7 +49,7 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                 <label>
                     {isManual
                         ? i18n.t("Add annotation manually")
-                        : i18n.t("Annotation file in JSON format")}
+                        : i18n.t("Upload annotation file in JSON format")}
                 </label>
                 <Switch
                     value={isManual}
