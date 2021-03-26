@@ -13,11 +13,13 @@ button {
     border-radius: 8px;
     border: solid 0px #123546;
     outline: none;
+    cursor: pointer;
 }
 
 button::hover,
 button::active,
 button::focus {
+    cursor: pointer;
     background-color: #268bbe;
     border: solid 0px #268bbe;
 }
