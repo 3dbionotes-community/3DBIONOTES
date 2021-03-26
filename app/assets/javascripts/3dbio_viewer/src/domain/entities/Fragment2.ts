@@ -47,6 +47,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 labelTooltip: subtrackDef.description,
                 shape: subtrackDef.shape || "rectangle",
                 source: subtrackDef.source,
+                isBlast: subtrackDef.isBlast,
                 locations: [
                     {
                         fragments: fragmentsForSubtrack.map(fragment => {

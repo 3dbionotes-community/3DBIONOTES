@@ -41,15 +41,15 @@ export function getFragmentToolsLink(options: {
     const { protein, subtrack, fragment } = options;
 
     if (isBlastFragment(subtrack, fragment)) {
-        return { name: "BLAST", url: getBlastUrl(protein, subtrack, fragment) };
+        return {
+            name: "BLAST",
+            url: getBlastUrl(protein, subtrack, fragment),
+        };
     }
 }
 
-const noBlastTypes = Constants.getNoBlastTypes();
-
 export function isBlastFragment(subtrack: Subtrack, fragment: Fragment): boolean {
-    const type = subtrack.type;
-    return type !== undefined && fragment.end - fragment.start >= 3 && !noBlastTypes.includes(type);
+    return subtrack.isBlast !== false && fragment.end - fragment.start >= 3;
 }
 
 export function getBlastUrl(protein: string, subtrack: Subtrack, fragment: Fragment): string {

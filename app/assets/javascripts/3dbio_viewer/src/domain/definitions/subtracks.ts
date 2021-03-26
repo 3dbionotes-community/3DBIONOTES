@@ -81,18 +81,21 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Helix"),
         source: "Uniprot",
         color: colors.helix,
+        isBlast: false,
     },
     betaStrand: {
         id: "beta-strand" as const,
         name: i18n.t("Beta strand"),
         source: "Uniprot",
         color: colors.strand,
+        isBlast: false,
     },
     turn: {
         id: "turn" as const,
         name: i18n.t("Turn"),
         source: "Uniprot",
         color: colors.turn,
+        isBlast: false,
     },
 
     // Disordered regions
@@ -231,6 +234,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         ),
         color: colors.disulfid,
         shape: shapes.disulfid,
+        isBlast: false,
     },
     glycosylation: {
         id: "glycosylation" as const,

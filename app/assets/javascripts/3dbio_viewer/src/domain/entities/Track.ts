@@ -21,6 +21,7 @@ export interface Subtrack {
     labelTooltip?: string; // Label tooltip content. Support text and HTML mark-up
     overlapping?: boolean;
     source?: SubtrackDefinition["source"];
+    isBlast?: SubtrackDefinition["isBlast"];
 }
 
 export function addToTrack(options: {

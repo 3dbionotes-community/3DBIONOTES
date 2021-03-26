@@ -33,7 +33,7 @@ export const trackDefinitions = recordOf<TrackDefinition>()({
     },
     secondaryStructure: {
         id: "secondary-structure" as const,
-        name: i18n.t("Secondary Structure (structural features)"),
+        name: i18n.t("Secondary Structure"),
         description: i18n.t(
             "The secondary structure of proteins is the local regular folding between nearby amino acid residues of the polypeptide chain. The most common structures are alpha helix, beta sheet and turns connecting them"
         ),

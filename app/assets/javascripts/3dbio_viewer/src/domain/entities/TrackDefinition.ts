@@ -15,6 +15,7 @@ export interface SubtrackDefinition {
     color?: string;
     shape?: Shape;
     dynamicSubtrack?: SubtrackDefinition;
+    isBlast?: boolean;
 }
 
 export function getDynamicSubtrackId(subtrackDef: SubtrackDefinition, name: string) {
