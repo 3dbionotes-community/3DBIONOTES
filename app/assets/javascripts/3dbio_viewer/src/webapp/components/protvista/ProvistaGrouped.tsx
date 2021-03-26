@@ -10,14 +10,14 @@ export interface ProtvistaGroupedProps {
     selector: string;
 }
 
-export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo((props) => {
+export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(props => {
     const [selection] = useViewerSelector(props.selector);
     const loader = usePdbLoader(selection);
     const block = allTracksBlock;
 
     return loader.type === "loaded" ? (
         <ViewerBlock block={block}>
-            PDB: {loader.data.id}
+            PDB: {loader.data.id} | Protein: {loader.data.protein.id}
             <ProtvistaPdb pdb={loader.data} block={block} showAllTracks={true} />
         </ViewerBlock>
     ) : (
