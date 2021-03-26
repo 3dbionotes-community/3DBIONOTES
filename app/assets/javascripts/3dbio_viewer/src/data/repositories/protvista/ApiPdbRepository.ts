@@ -26,6 +26,7 @@ import { getTracksFromFragments } from "../../../domain/entities/Fragment2";
 import { getPfamDomainFragments, PfamAnnotations } from "./tracks/pfam-domain";
 import { getSmartDomainFragments, SmartAnnotations } from "./tracks/smart-domain";
 import { getInterproDomainFragments, InterproAnnotations } from "./tracks/interpro-domain";
+import { ElmdbUniprot, getElmdbUniprotFragments } from "./tracks/elmdb";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -43,6 +44,7 @@ interface Data {
     pdbRedo: PdbRedo;
     iedb: Iedb;
     pdbExperiment: PdbExperiment;
+    elmdbUniprot: ElmdbUniprot;
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K] | undefined> };
@@ -74,6 +76,10 @@ export class ApiPdbRepository implements PdbRepository {
         const interproFragments = getInterproDomainFragments(
             data.interproAnnotations,
             options.protein
+        );
+
+        const elmdbFragments = getIf(data.elmdbUniprot, elmdbUniprot =>
+            getElmdbUniprotFragments(elmdbUniprot, options.protein)
         );
 
         const _variants = getIf(data.ebiVariation, getVariants);
@@ -110,20 +116,18 @@ export class ApiPdbRepository implements PdbRepository {
             getExperiment(options.pdb, pdbExperiment)
         );
 
-        const tracks = getTracksFromFragments(
-            _([
-                featureFragments,
-                pfamDomainFragments,
-                smartDomainFragments,
-                interproFragments,
-                functionalMappingFragments,
-                structureCoverageFragments,
-                mobiFragments,
-            ])
-                .compact()
-                .flatten()
-                .value()
-        );
+        const fragmentsList = [
+            featureFragments,
+            pfamDomainFragments,
+            smartDomainFragments,
+            interproFragments,
+            functionalMappingFragments,
+            structureCoverageFragments,
+            mobiFragments,
+            elmdbFragments,
+        ];
+
+        const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
         debugVariable({ oldTracks: tracks3, newTracks: tracks });
 
         return {
@@ -162,6 +166,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         pdbRedo: getJSON(`${bioUrl}/api/annotations/PDB_REDO/${pdb}`),
         iedb: getJSON(`${bioUrl}/api/annotations/IEDB/Uniprot/${protein}`),
         pdbExperiment: getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/experiment/${pdb}`),
+        elmdbUniprot: getJSON(`${bioUrl}/api/annotations/elmdb/Uniprot/${protein}`),
     };
 
     return Future.joinObj(data$);
