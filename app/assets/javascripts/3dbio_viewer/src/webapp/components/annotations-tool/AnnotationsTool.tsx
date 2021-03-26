@@ -7,21 +7,30 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
 import { ProtvistaAction } from "../protvista/Protvista.helpers";
 import "./AnnotationsTool.css";
+import { isElementOfUnion } from "../../../utils/ts-utils";
 
 export interface AnnotationsToolProps {
     onClose(): void;
     action: ProtvistaAction;
 }
 
+const indexValues = ["sequence", "structure"] as const;
+type AnnotationIndex = typeof indexValues[number];
+
 interface AnnotationForm {
     trackName: string;
     type: string;
     description: string;
     color: string;
-    index: string;
+    index: AnnotationIndex;
     startingValue: number;
     endingValue: number;
 }
+
+const indexTranslations: Record<AnnotationIndex, string> = {
+    sequence: i18n.t("Sequence"),
+    structure: i18n.t("Structure"),
+};
 
 export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props => {
     const { onClose, action } = props;
@@ -29,15 +38,9 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
     const annotationFileRef = useRef<DropzoneRef>(null);
     const [error, setError] = useState<string>();
     const [isManual, { toggle: toggleIsManual }] = useBooleanState(false);
-    const [annotationForm, setAnnotationForm] = useState<AnnotationForm>({
-        trackName: action.trackId,
-        type: "",
-        description: "",
-        color: "",
-        index: "sequence",
-        startingValue: 0,
-        endingValue: 0,
-    });
+    const [annotationForm, setAnnotationForm] = useState<AnnotationForm>(() =>
+        getInitialAnnotationForm(action)
+    );
 
     const addManualAnnotation = useCallback(() => {
         setError("");
@@ -99,6 +102,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             }
                             className="form-control"
                         />
+
                         <label htmlFor="description">
                             <strong>{i18n.t("Description")}</strong>
                         </label>
@@ -141,15 +145,23 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             className="form-control"
                             value={annotationForm.index}
                             onChange={e =>
-                                setAnnotationForm({ ...annotationForm, index: e.target.value })
+                                setAnnotationForm({
+                                    ...annotationForm,
+                                    index: getAnnotationIndexFromEv(e),
+                                })
                             }
                         >
-                            <option value="sequence">{i18n.t("Sequence")}</option>
-                            <option value="structure">{i18n.t("Structure")}</option>
+                            {indexValues.map(value => (
+                                <option key={value} value={value}>
+                                    {indexTranslations[value]}
+                                </option>
+                            ))}
                         </select>
+
                         <label htmlFor="startingValue">
                             <strong>{i18n.t("Starting value")}</strong>
                         </label>
+
                         <input
                             aria-label={i18n.t("Starting value")}
                             id="startingValue"
@@ -205,3 +217,20 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
         </Dialog>
     );
 });
+
+function getInitialAnnotationForm(action: ProtvistaAction): AnnotationForm {
+    return {
+        trackName: action.trackId,
+        type: "",
+        description: "",
+        color: "",
+        index: "sequence",
+        startingValue: 0,
+        endingValue: 0,
+    };
+}
+
+function getAnnotationIndexFromEv(ev: React.ChangeEvent<HTMLSelectElement>): AnnotationIndex {
+    const { value } = ev.target;
+    return isElementOfUnion(value, indexValues) ? value : indexValues[0];
+}
