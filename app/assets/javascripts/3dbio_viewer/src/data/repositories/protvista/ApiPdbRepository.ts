@@ -25,6 +25,7 @@ import { routes } from "../../../routes";
 import { getTracksFromFragments } from "../../../domain/entities/Fragment2";
 import { getPfamDomainFragments, PfamAnnotations } from "./tracks/pfam-domain";
 import { getSmartDomainFragments, SmartAnnotations } from "./tracks/smart-domain";
+import { getInterproDomainFragments, InterproAnnotations } from "./tracks/interpro-domain";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -37,6 +38,7 @@ interface Data {
     phosphositeUniprot: PhosphositeUniprot;
     pfamAnnotations: PfamAnnotations;
     smartAnnotations: SmartAnnotations;
+    interproAnnotations: InterproAnnotations;
     proteomics: Proteomics;
     pdbRedo: PdbRedo;
     iedb: Iedb;
@@ -67,6 +69,10 @@ export class ApiPdbRepository implements PdbRepository {
         const pfamDomainFragments = getPfamDomainFragments(data.pfamAnnotations, options.protein);
         const smartDomainFragments = getSmartDomainFragments(
             data.smartAnnotations,
+            options.protein
+        );
+        const interproFragments = getInterproDomainFragments(
+            data.interproAnnotations,
             options.protein
         );
 
@@ -111,6 +117,7 @@ export class ApiPdbRepository implements PdbRepository {
                 featureFragments,
                 pfamDomainFragments,
                 smartDomainFragments,
+                interproFragments,
                 functionalMappingFragments,
                 structureCoverageFragments,
             ])
@@ -151,6 +158,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         phosphositeUniprot: getJSON(`${bioUrl}/api/annotations/Phosphosite/Uniprot/${protein}`),
         pfamAnnotations: getJSON(`${bioUrl}/api/annotations/Pfam/Uniprot/${protein}`),
         smartAnnotations: getJSON(`${bioUrl}/api/annotations/SMART/Uniprot/${protein}`),
+        interproAnnotations: getJSON(`${bioUrl}/api/annotations/interpro/Uniprot/${protein}`),
         proteomics: getJSON(`${ebiProteinsApiUrl}/proteomics/${protein}`),
         pdbRedo: getJSON(`${bioUrl}/api/annotations/PDB_REDO/${pdb}`),
         iedb: getJSON(`${bioUrl}/api/annotations/IEDB/Uniprot/${protein}`),

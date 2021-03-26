@@ -46,6 +46,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "interpro-domains" as const,
         name: i18n.t("Interpro domains"), // (domain families)
         source: "Interpro db",
+        color: "#A0A0FF",
         description: i18n.t(
             "Information collected from the InterPro database. The InterPro database is a large collection of protein families, each represented by multiple sequence alignments and hidden Markov models"
         ),
