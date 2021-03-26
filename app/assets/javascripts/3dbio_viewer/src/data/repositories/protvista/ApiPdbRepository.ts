@@ -13,7 +13,7 @@ import { EbiVariation, getVariants } from "./tracks/variants";
 import { addPhosphiteSubtracks, PhosphositeUniprot } from "./tracks/phosphite";
 import { Features, getFeatureFragments } from "./tracks/feature";
 import { Coverage, getStructureCoverageFragments } from "./tracks/structure-coverage";
-import { addMobiSubtracks, getMobiDisorderTrack, MobiUniprot } from "./tracks/mobi";
+import { getMobiUniprotFragments, MobiUniprot } from "./tracks/mobi";
 import { Cv19Tracks, getFunctionalMappingFragments } from "./tracks/functional-mapping";
 import { getIf } from "../../../utils/misc";
 import { getProteomicsTrack, Proteomics } from "./tracks/proteomics";
@@ -81,7 +81,7 @@ export class ApiPdbRepository implements PdbRepository {
         const structureCoverageFragments = getIf(data.coverage, getStructureCoverageFragments);
 
         const emValidationTrack = getIf(data.pdbAnnotations, getEmValidationTrack);
-        const mobiDisorderTrack = getIf(data.mobiUniprot, getMobiDisorderTrack);
+        const mobiFragments = getMobiUniprotFragments(data.mobiUniprot, options.protein);
         const proteomicsTrack = getIf(data.proteomics, getProteomicsTrack);
         const pdbRedoTrack = getIf(data.pdbRedo, pdbRedo =>
             getPdbRedoTrack(pdbRedo, options.chain)
@@ -90,7 +90,6 @@ export class ApiPdbRepository implements PdbRepository {
 
         const tracks0: Track[] = _.compact([
             emValidationTrack,
-            mobiDisorderTrack,
             epitomesTrack,
             proteomicsTrack,
             pdbRedoTrack,
@@ -105,8 +104,7 @@ export class ApiPdbRepository implements PdbRepository {
             }))
             .filter(tracks => tracks.subtracks.length > 0);
 
-        const tracks2 = addMobiSubtracks(tracks1, data.mobiUniprot);
-        const tracks3 = addPhosphiteSubtracks(tracks2, options.protein, data.phosphositeUniprot);
+        const tracks3 = addPhosphiteSubtracks(tracks1, options.protein, data.phosphositeUniprot);
         const protein = getProtein(options.protein, data.uniprot);
         const experiment = getIf(data.pdbExperiment, pdbExperiment =>
             getExperiment(options.pdb, pdbExperiment)
@@ -120,6 +118,7 @@ export class ApiPdbRepository implements PdbRepository {
                 interproFragments,
                 functionalMappingFragments,
                 structureCoverageFragments,
+                mobiFragments,
             ])
                 .compact()
                 .flatten()

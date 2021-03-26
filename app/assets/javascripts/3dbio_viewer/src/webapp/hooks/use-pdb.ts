@@ -9,7 +9,7 @@ import { SelectionState } from "../view-models/SelectionState";
 
 const examples: Record<string, PdbOptions> = {
     "6zow": { protein: "P0DTC2", pdb: "6zow", chain: "A" },
-    "6lzg": { protein: "Q9BYF1", pdb: "6lzg", chain: "A" }, // Smart
+    "6lzg": { protein: "Q9BYF1", pdb: "6lzg", chain: "A" }, // Smart, Disordered regions
     "6w9c": { protein: "P0DTD1", pdb: "6w9c", chain: "A" },
     "1iyj": { protein: "P60896", pdb: "1iyj", chain: "A" },
     "2R5T": { protein: "O00141", pdb: "2R5T", chain: "A" }, // Kinenasa

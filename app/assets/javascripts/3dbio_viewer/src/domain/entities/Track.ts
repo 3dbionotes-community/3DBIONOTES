@@ -11,6 +11,7 @@ export interface Track {
     description?: string;
 }
 
+// TODO: extend SubtrackDefinition or have a prop for it
 export interface Subtrack {
     // TODO: Do we really need type/accesion/label? simplify
     type: string; // Displayed in tooltip title
