@@ -9,13 +9,16 @@ import { Maybe } from "../../../../utils/ts-utils";
 Example: http://3dbionotes.cnb.csic.es/api/annotations/interpro/Uniprot/O00206
 */
 
-export type InterproAnnotations = InteporoAnnotation[];
+export type InterproAnnotations = InterproAnnotation[];
 
-export interface InteporoAnnotation {
+export interface InterproAnnotation {
     id: string;
     start: string;
     end: string;
-    description?: { name?: string };
+    description?: {
+        name?: string;
+        go: string[];
+    };
 }
 
 export function getInterproDomainFragments(
@@ -29,10 +32,25 @@ export function getInterproDomainFragments(
             subtrack: subtracks.interproDomains,
             start: annotation.start,
             end: annotation.end,
-            description: annotation.description?.name,
+            description: getDescription(annotation),
             evidences: evidences,
         };
     });
+}
+
+function getDescription(annotation: InterproAnnotation): string {
+    const name = annotation.description?.name;
+    return _.compact([
+        name ? `<b>${name}</b>` : null,
+        ...(annotation.description?.go || []).map(goString => {
+            const [goName = "", goId = ""] = goString.split(" ; ", 2);
+            const url = `http://amigo.geneontology.org/amigo/term/${goId}`;
+            const goNameClean = _.upperFirst(goName.replace(/^GO:/, ""));
+            return goNameClean && url
+                ? `<a target="_blank" href="${url}">${goNameClean}</a>`
+                : null;
+        }),
+    ]).join("<br />");
 }
 
 function getEvidences(protein: string): Evidence[] {
