@@ -1,63 +1,79 @@
-import React, { useState, useRef } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import _ from "lodash";
 import { Dialog, DialogContent, DialogTitle, IconButton, Switch } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import i18n from "../../utils/i18n";
+import { useBooleanState } from "../../hooks/use-boolean";
 import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
 import { ProtvistaAction } from "../protvista/Protvista.helpers";
 import "./AnnotationsTool.css";
 
-export interface ModelUploadProps {
-    title: string;
+export interface AnnotationsToolProps {
     onClose(): void;
     action: ProtvistaAction;
 }
 
-export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
-    const { title, onClose, action } = props;
+interface AnnotationForm {
+    trackName: string;
+    type: string;
+    description: string;
+    color: string;
+    index: string;
+    startingValue: number;
+    endingValue: number;
+}
+
+export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props => {
+    const { onClose, action } = props;
 
     const annotationFileRef = useRef<DropzoneRef>(null);
     const [error, setError] = useState<string>();
-    const [isManual, setIsManual] = useState<boolean>(false);
-    const [type, setType] = useState<string>("Region");
-    const [description, setDescription] = useState<string>("");
-    const [color, setColor] = useState<string>("");
-    const [startingValue, setStartingValue] = useState<number>();
-    const [endingValue, setEndingValue] = useState<number>();
+    const [isManual, { toggle: toggleIsManual }] = useBooleanState(false);
+    const [annotationForm, setAnnotationForm] = useState<AnnotationForm>({
+        trackName: action.trackId,
+        type: "",
+        description: "",
+        color: "",
+        index: "sequence",
+        startingValue: 0,
+        endingValue: 0,
+    });
 
-    const addManualAnnotation = () => {
+    const addManualAnnotation = useCallback(() => {
         setError("");
-        if (!startingValue) {
+        if (!annotationForm.startingValue) {
             setError("Missing starting value: please fill in a starting value.");
         }
-        if (!endingValue) {
-            setEndingValue(startingValue);
+        if (!annotationForm.endingValue) {
+            setAnnotationForm({ ...annotationForm, endingValue: annotationForm.startingValue });
         }
-    };
+    }, [annotationForm]);
+
+    const uploadAnnotationFile = useCallback(() => {
+        setError("");
+        if (annotationFileRef && annotationFileRef.current?.files.length === 0) {
+            setError("Missing file: please upload an annotations file in JSON format.");
+        }
+    }, []);
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth>
             <DialogTitle>
-                {title}
+                {i18n.t("Add Annotation")}
                 <IconButton onClick={onClose}>
                     <Close />
                 </IconButton>
             </DialogTitle>
 
             <DialogContent>
-                {error && <h3>{error}</h3>}
                 <label>
                     {isManual
                         ? i18n.t("Add annotation manually")
                         : i18n.t("Upload annotation file in JSON format")}
                 </label>
-                <Switch
-                    value={isManual}
-                    onChange={() => setIsManual(isManual ? false : true)}
-                    color="primary"
-                />
+                <Switch value={isManual} onChange={() => toggleIsManual()} color="primary" />
                 {isManual ? (
-                    <form>
+                    <form className="annotationForm">
                         <label htmlFor="trackName">
                             <strong>{i18n.t("Track Name")}</strong>
                         </label>
@@ -65,7 +81,7 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                             aria-label={i18n.t("Track Name")}
                             id="trackName"
                             type="text"
-                            value={action.trackId}
+                            value={annotationForm.trackName}
                             readOnly
                             className="form-control"
                         />
@@ -76,9 +92,11 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                             aria-label={i18n.t("Type")}
                             id="type"
                             type="text"
-                            value={type}
+                            value={annotationForm.type}
                             placeholder="Region"
-                            onChange={e => setType(e.target.value)}
+                            onChange={e =>
+                                setAnnotationForm({ ...annotationForm, type: e.target.value })
+                            }
                             className="form-control"
                         />
                         <label htmlFor="description">
@@ -89,8 +107,13 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                             id="description"
                             type="text"
                             placeholder="Manually annotated region"
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
+                            value={annotationForm.description}
+                            onChange={e =>
+                                setAnnotationForm({
+                                    ...annotationForm,
+                                    description: e.target.value,
+                                })
+                            }
                             className="form-control"
                         />
                         <label htmlFor="color">
@@ -105,14 +128,22 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                             aria-label={i18n.t("Color")}
                             id="color"
                             type="text"
-                            value={color}
-                            onChange={e => setColor(e.target.value)}
+                            value={annotationForm.color}
+                            onChange={e =>
+                                setAnnotationForm({ ...annotationForm, color: e.target.value })
+                            }
                             className="form-control"
                         />
                         <label htmlFor="index">
                             <strong>{i18n.t("Index")}</strong>
                         </label>
-                        <select className="form-control">
+                        <select
+                            className="form-control"
+                            value={annotationForm.index}
+                            onChange={e =>
+                                setAnnotationForm({ ...annotationForm, index: e.target.value })
+                            }
+                        >
                             <option value="sequence">{i18n.t("Sequence")}</option>
                             <option value="structure">{i18n.t("Structure")}</option>
                         </select>
@@ -123,8 +154,13 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                             aria-label={i18n.t("Starting value")}
                             id="startingValue"
                             type="number"
-                            value={startingValue}
-                            onChange={e => setStartingValue(Number(e.target.value))}
+                            value={annotationForm.startingValue}
+                            onChange={e =>
+                                setAnnotationForm({
+                                    ...annotationForm,
+                                    startingValue: Number(e.target.value),
+                                })
+                            }
                             className="form-control"
                         />
                         <label htmlFor="endingValue">
@@ -134,10 +170,16 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                             aria-label={i18n.t("Ending value")}
                             id="endingValue"
                             type="number"
-                            value={endingValue}
-                            onChange={e => setEndingValue(Number(e.target.value))}
+                            value={annotationForm.endingValue}
+                            onChange={e =>
+                                setAnnotationForm({
+                                    ...annotationForm,
+                                    endingValue: Number(e.target.value),
+                                })
+                            }
                             className="form-control"
                         />
+                        {error && <h3>{error}</h3>}
                         <button
                             className="submitButton"
                             type="submit"
@@ -148,8 +190,15 @@ export const AnnotationsTool: React.FC<ModelUploadProps> = React.memo(props => {
                     </form>
                 ) : (
                     <>
+                        {error && <h3>{error}</h3>}
                         <Dropzone ref={annotationFileRef} accept="application/json"></Dropzone>
-                        <button className="submitButton">{i18n.t("Upload")}</button>
+                        <button
+                            className="submitButton"
+                            type="submit"
+                            onClick={uploadAnnotationFile}
+                        >
+                            {i18n.t("Upload")}
+                        </button>
                     </>
                 )}
             </DialogContent>

@@ -1,21 +1,20 @@
-a {
-    color: #268bbe;
-    text-decoration: none;
-    background-color: transparent;
-}
-a:hover {
-    text-decoration: underline;
-}
-form {
-    margin-top: 1rem;
-}
 label {
     margin-bottom: 0.5rem;
 }
+
 small {
     margin-left: 0.625rem;
     color: #8e8e8e;
 }
+
+.annotationForm {
+    margin-top: 1rem;
+}
+
+.fileFormat {
+    display: block;
+}
+
 .form-control {
     display: block;
     width: 50%;
@@ -38,10 +37,6 @@ small {
     border-color: #80bdff;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
-}
-
-.fileFormat {
-    display: block;
 }
 
 .submitButton {

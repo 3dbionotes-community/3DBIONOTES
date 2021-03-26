@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import _ from "lodash";
-import i18n from "../../utils/i18n";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { SelectionState } from "../../view-models/SelectionState";
 import { ViewerBlock } from "../ViewerBlock";
@@ -26,7 +25,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         isAnnotationToolOpen,
         { enable: openAnnotationTool, disable: closeAnnotationTool },
     ] = useBooleanState(false);
-    const [actionName, setAction] = useState<ProtvistaAction>({ type: "add", trackId: "sampleID" });
+    const [action, setAction] = useState<ProtvistaAction>();
 
     const onAction = React.useCallback<OnActionCb>(
         action => {
@@ -62,12 +61,8 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                                 )
                             );
                         })}
-                        {isAnnotationToolOpen && (
-                            <AnnotationsTool
-                                action={actionName}
-                                title={i18n.t("Upload your annotations in JSON format")}
-                                onClose={closeAnnotationTool}
-                            />
+                        {isAnnotationToolOpen && action && (
+                            <AnnotationsTool onClose={closeAnnotationTool} action={action} />
                         )}
                     </ViewerBlock>
                 );
