@@ -3,6 +3,10 @@ label {
     margin-bottom: 0.5rem;
 }
 
+textarea {
+    font-family: inherit;
+}
+
 small {
     margin-left: 0.625rem;
     color: #8e8e8e;
@@ -12,15 +16,11 @@ small {
     cursor: pointer;
 }
 
-textarea {
-    font-family: inherit;
-}
-
 .network-form {
     margin-top: 1rem;
 }
 
-.form-check {
+.include-neighbors-checkbox {
     position: relative;
     display: block;
     margin-bottom: 1rem;
