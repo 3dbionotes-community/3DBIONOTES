@@ -287,22 +287,6 @@ class MainController < ApplicationController
   end
 
   def upload
-    @rand = "1234"
-    @choice = { obj: "tracks" }
-
-    respond_to do |format|
-      format.json do
-        data = {
-          dataUrl: request.base_url + "/#{@rand}/",
-          tracks: @choice,
-        }
-        render :json => data
-      end
-      format.html
-    end
-
-    return
-
     rand_path = (0...20).map { ("a".."z").to_a[rand(26)] }.join.upcase
     if params[:structure_file].original_filename.include? "cif"
       file_name = "structure_file.cif"
@@ -351,6 +335,18 @@ class MainController < ApplicationController
         logger.info("ERROR PARSING JSON FILE " + annotations)
         @external_annotations = nil
       end
+    end
+
+    respond_to do |format|
+      format.json do
+        data = {
+          dataUrl: request.base_url + "/upload/#{@rand}/",
+          tracks: @choice,
+          mapping: @mapping,
+        }
+        render :json => data
+      end
+      format.html
     end
   end
 
