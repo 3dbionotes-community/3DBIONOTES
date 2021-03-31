@@ -31,91 +31,91 @@ export interface ShortLongName {
 }
 
 export const uploadMockData = {
-    "dataUrl": "http://rinchen-dos.cnb.csic.es:8882/upload/UKLIJFJFWOCPUYUIGMVA/",
-    "chains": {
-        "A": [
+    dataUrl: "http://rinchen-dos.cnb.csic.es:8882/upload/UKLIJFJFWOCPUYUIGMVA/",
+    chains: {
+        A: [
             {
-                "acc": "Q64FG1",
-                "title": {
-                    "name": { "short": "S2 protein ( ...", "long": "S2 protein (Fragment)" },
-                    "org": { "short": "SARS coronav ...", "long": "SARS coronavirus GD322" },
-                    "gene": "S2"
+                acc: "Q64FG1",
+                title: {
+                    name: { short: "S2 protein ( ...", long: "S2 protein (Fragment)" },
+                    org: { short: "SARS coronav ...", long: "SARS coronavirus GD322" },
+                    gene: "S2",
                 },
-                "evalue": "0.0",
-                "cov": "88.971",
-                "start": "1",
-                "end": "408",
-                "db": "trembl"
+                evalue: "0.0",
+                cov: "88.971",
+                start: "1",
+                end: "408",
+                db: "trembl",
             },
             {
-                "acc": "Q5GDJ5",
-                "title": {
-                    "name": { "short": "Spike glycop ...", "long": "Spike glycoprotein" },
-                    "org": { "short": "SARS coronav ...", "long": "SARS coronavirus GZ0403" },
-                    "gene": "N/A"
+                acc: "Q5GDJ5",
+                title: {
+                    name: { short: "Spike glycop ...", long: "Spike glycoprotein" },
+                    org: { short: "SARS coronav ...", long: "SARS coronavirus GZ0403" },
+                    gene: "N/A",
                 },
-                "evalue": "0.0",
-                "cov": "82.371",
-                "start": "489",
-                "end": "1129",
-                "db": "trembl"
-            }
+                evalue: "0.0",
+                cov: "82.371",
+                start: "489",
+                end: "1129",
+                db: "trembl",
+            },
         ],
-        "B": [
+        B: [
             {
-                "acc": "Q64FG1",
-                "title": {
-                    "name": { "short": "S2 protein ( ...", "long": "S2 protein (Fragment)" },
-                    "org": { "short": "SARS coronav ...", "long": "SARS coronavirus GD322" },
-                    "gene": "S2"
+                acc: "Q64FG1",
+                title: {
+                    name: { short: "S2 protein ( ...", long: "S2 protein (Fragment)" },
+                    org: { short: "SARS coronav ...", long: "SARS coronavirus GD322" },
+                    gene: "S2",
                 },
-                "evalue": "0.0",
-                "cov": "88.971",
-                "start": "1",
-                "end": "408",
-                "db": "trembl"
+                evalue: "0.0",
+                cov: "88.971",
+                start: "1",
+                end: "408",
+                db: "trembl",
             },
             {
-                "acc": "Q5GDJ5",
-                "title": {
-                    "name": { "short": "Spike glycop ...", "long": "Spike glycoprotein" },
-                    "org": { "short": "SARS coronav ...", "long": "SARS coronavirus GZ0403" },
-                    "gene": "N/A"
+                acc: "Q5GDJ5",
+                title: {
+                    name: { short: "Spike glycop ...", long: "Spike glycoprotein" },
+                    org: { short: "SARS coronav ...", long: "SARS coronavirus GZ0403" },
+                    gene: "N/A",
                 },
-                "evalue": "0.0",
-                "cov": "82.371",
-                "start": "489",
-                "end": "1129",
-                "db": "trembl"
-            }
+                evalue: "0.0",
+                cov: "82.371",
+                start: "489",
+                end: "1129",
+                db: "trembl",
+            },
         ],
-        "C": [
+        C: [
             {
-                "acc": "Q64FG1",
-                "title": {
-                    "name": { "short": "S2 protein ( ...", "long": "S2 protein (Fragment)" },
-                    "org": { "short": "SARS coronav ...", "long": "SARS coronavirus GD322" },
-                    "gene": "S2"
+                acc: "Q64FG1",
+                title: {
+                    name: { short: "S2 protein ( ...", long: "S2 protein (Fragment)" },
+                    org: { short: "SARS coronav ...", long: "SARS coronavirus GD322" },
+                    gene: "S2",
                 },
-                "evalue": "0.0",
-                "cov": "88.971",
-                "start": "1",
-                "end": "408",
-                "db": "trembl"
+                evalue: "0.0",
+                cov: "88.971",
+                start: "1",
+                end: "408",
+                db: "trembl",
             },
             {
-                "acc": "Q5GDJ5",
-                "title": {
-                    "name": { "short": "Spike glycop ...", "long": "Spike glycoprotein" },
-                    "org": { "short": "SARS coronav ...", "long": "SARS coronavirus GZ0403" },
-                    "gene": "N/A"
+                acc: "Q5GDJ5",
+                title: {
+                    name: { short: "Spike glycop ...", long: "Spike glycoprotein" },
+                    org: { short: "SARS coronav ...", long: "SARS coronavirus GZ0403" },
+                    gene: "N/A",
                 },
-                "evalue": "0.0",
-                "cov": "82.371",
-                "start": "489",
-                "end": "1129",
-                "db": "trembl"
-            }
-        ]
-    }
+                evalue: "0.0",
+                cov: "82.371",
+                start: "489",
+                end: "1129",
+                db: "trembl",
+            },
+        ],
+    },
 };

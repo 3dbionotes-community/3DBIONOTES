@@ -18,7 +18,10 @@ export interface ModelUploadProps {
 export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const { title, onClose } = props;
     const { compositionRoot } = useAppContext();
-    const [isUploadConfirmationOpen, { enable: openUploadConfirmation, disable: closeUploadConfirmation }] = useBooleanState(false);
+    const [
+        isUploadConfirmationOpen,
+        { enable: openUploadConfirmation, disable: closeUploadConfirmation },
+    ] = useBooleanState(false);
 
     const [jobTitle, setJobTitle] = useState<string>("");
     const [error, setError] = useState<string>();
@@ -35,12 +38,10 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                 structureFile,
                 annotationsFile: getFile(annotationFileRef),
             };
-            return compositionRoot
-                .uploadAtomicStructure(uploadParams)
-                .run(result => {
-                    setUploadData(result);
-                    openUploadConfirmation();
-                }, console.error);
+            return compositionRoot.uploadAtomicStructure(uploadParams).run(result => {
+                setUploadData(result);
+                openUploadConfirmation();
+            }, console.error);
         } else {
             setError(i18n.t("Error: No file selected. Please select a structure file."));
             return _.noop;
@@ -50,54 +51,55 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const submit = useCallbackEffect(submitCb);
     return (
         <>
-        <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth>
-            <DialogTitle>
-                {title}
-                <IconButton onClick={onClose}>
-                    <Close />
-                </IconButton>
-            </DialogTitle>
+            <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth>
+                <DialogTitle>
+                    {title}
+                    <IconButton onClick={onClose}>
+                        <Close />
+                    </IconButton>
+                </DialogTitle>
 
-            <DialogContent>
-                {error && <h3>{error}</h3>}
-                <p>
-                    {i18n.t(
-                        "Models under study and not deposited to PDB yet can be analysed too. Annotations from similar entries based on BLAST sequence match will be displayed, but also customised annotations can be provided by the user. Job title (if provided) will be used to identify the model, otherwise the file name will be used."
-                    )}
-                </p>
+                <DialogContent>
+                    {error && <h3>{error}</h3>}
+                    <p>
+                        {i18n.t(
+                            "Models under study and not deposited to PDB yet can be analysed too. Annotations from similar entries based on BLAST sequence match will be displayed, but also customised annotations can be provided by the user. Job title (if provided) will be used to identify the model, otherwise the file name will be used."
+                        )}
+                    </p>
 
-                <label htmlFor="jobTitle">
-                    <strong>{i18n.t("Job Title")}</strong>
-                </label>
-                <small>{i18n.t("Optional")}</small>
-                <input
-                    aria-label={i18n.t("Job Title")}
-                    value={jobTitle}
-                    placeholder={i18n.t("Job Title")}
-                    onChange={e => setJobTitle(e.target.value)}
-                    id="jobTitle"
-                    type="text"
-                    className="form-control"
-                />
+                    <label htmlFor="jobTitle">
+                        <strong>{i18n.t("Job Title")}</strong>
+                    </label>
+                    <small>{i18n.t("Optional")}</small>
+                    <input
+                        aria-label={i18n.t("Job Title")}
+                        value={jobTitle}
+                        placeholder={i18n.t("Job Title")}
+                        onChange={e => setJobTitle(e.target.value)}
+                        id="jobTitle"
+                        type="text"
+                        className="form-control"
+                    />
 
-                <label className="fileFormat">
-                    {i18n.t("Structure file in")}
-                    <a href="http://www.wwpdb.org/documentation/file-format"> PDB </a>
-                    {i18n.t("or")}
-                    <a href="http://mmcif.wwpdb.org/"> mmCIF </a> {i18n.t("format")}
-                </label>
-                <Dropzone ref={structureFileRef} accept=".pdb,.cif"></Dropzone>
+                    <label className="fileFormat">
+                        {i18n.t("Structure file in")}
+                        <a href="http://www.wwpdb.org/documentation/file-format"> PDB </a>
+                        {i18n.t("or")}
+                        <a href="http://mmcif.wwpdb.org/"> mmCIF </a> {i18n.t("format")}
+                    </label>
+                    <Dropzone ref={structureFileRef} accept=".pdb,.cif"></Dropzone>
 
-                <label className="fileFormat">{i18n.t("Upload your annotations")}</label>
-                <Dropzone ref={annotationFileRef} accept={"application/json"}></Dropzone>
+                    <label className="fileFormat">{i18n.t("Upload your annotations")}</label>
+                    <Dropzone ref={annotationFileRef} accept={"application/json"}></Dropzone>
 
-                <button className="uploadSubmit" onClick={submit}>
-                    {i18n.t("Submit")}
-                </button>
-            </DialogContent>
-        </Dialog>
-         {isUploadConfirmationOpen && uploadData ? <UploadConfirmation uploadData={uploadData} onClose={closeUploadConfirmation}/> : null} 
+                    <button className="uploadSubmit" onClick={submit}>
+                        {i18n.t("Submit")}
+                    </button>
+                </DialogContent>
+            </Dialog>
+            {isUploadConfirmationOpen && uploadData ? (
+                <UploadConfirmation uploadData={uploadData} onClose={closeUploadConfirmation} />
+            ) : null}
         </>
-
     );
 });

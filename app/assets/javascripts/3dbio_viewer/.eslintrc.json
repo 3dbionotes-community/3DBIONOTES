@@ -39,7 +39,6 @@
         "@typescript-eslint/restrict-template-expressions": "error",
         "react/prop-types": "off",
         "react/display-name": "off"
-
     },
     "parserOptions": {
         "project": "./tsconfig.json"
