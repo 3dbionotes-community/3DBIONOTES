@@ -5,7 +5,7 @@ import { Close } from "@material-ui/icons";
 import i18n from "../../utils/i18n";
 import { Dropzone, DropzoneRef, getFile } from "../dropzone/Dropzone";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
-import { UploadData } from "../../../domain/entities/UploadData";
+import { AtomicStructure } from "../../../domain/entities/AtomicStructure";
 import { useAppContext } from "../AppContext";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { UploadConfirmation } from "./UploadConfirmation";
@@ -25,7 +25,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
 
     const [jobTitle, setJobTitle] = useState<string>("");
     const [error, setError] = useState<string>();
-    const [uploadData, setUploadData] = useState<UploadData>();
+    const [atomicStructure, setAtomicStructure] = useState<AtomicStructure>();
     const structureFileRef = useRef<DropzoneRef>(null);
     const annotationFileRef = useRef<DropzoneRef>(null);
 
@@ -39,7 +39,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                 annotationsFile: getFile(annotationFileRef),
             };
             return compositionRoot.uploadAtomicStructure(uploadParams).run(result => {
-                setUploadData(result);
+                setAtomicStructure(result);
                 openUploadConfirmation();
             }, console.error);
         } else {
@@ -97,8 +97,11 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                     </button>
                 </DialogContent>
             </Dialog>
-            {isUploadConfirmationOpen && uploadData ? (
-                <UploadConfirmation uploadData={uploadData} onClose={closeUploadConfirmation} />
+            {isUploadConfirmationOpen && atomicStructure ? (
+                <UploadConfirmation
+                    atomicStructure={atomicStructure}
+                    onClose={closeUploadConfirmation}
+                />
             ) : null}
         </>
     );

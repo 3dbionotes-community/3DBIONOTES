@@ -1,13 +1,9 @@
-export interface UploadData {
+export interface BionotesAnnotationResponse {
     dataUrl: string;
     chains: Chains;
 }
 
-export interface Chains {
-    A: ChainObject[];
-    B: ChainObject[];
-    C: ChainObject[];
-}
+export type Chains = Record<string, ChainObject[]>;
 
 export interface ChainObject {
     acc: string;
@@ -30,7 +26,7 @@ export interface ShortLongName {
     long: string;
 }
 
-export const uploadMockData = {
+export const annotationResponseExample: BionotesAnnotationResponse = {
     dataUrl: "http://rinchen-dos.cnb.csic.es:8882/upload/UKLIJFJFWOCPUYUIGMVA/",
     chains: {
         A: [

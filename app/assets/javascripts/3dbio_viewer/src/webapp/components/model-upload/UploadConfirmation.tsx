@@ -4,16 +4,16 @@ import { Dialog, DialogContent, DialogTitle, IconButton } from "@material-ui/cor
 import { DataGrid } from "@material-ui/data-grid";
 import { Close } from "@material-ui/icons";
 import i18n from "../../utils/i18n";
-import { UploadData, ChainObject } from "../../../domain/entities/UploadData";
+import { AtomicStructure } from "../../../domain/entities/AtomicStructure";
 import "./ModelUpload.css";
 
 export interface UploadConfirmationProps {
-    uploadData: UploadData;
+    atomicStructure: AtomicStructure;
     onClose(): void;
 }
 
 export const UploadConfirmation: React.FC<UploadConfirmationProps> = React.memo(props => {
-    const { uploadData, onClose } = props;
+    const { atomicStructure, onClose } = props;
     const [selectedRows, setSelectedRows] = useState<ReactText[]>([]);
 
     const columns = [
@@ -29,24 +29,15 @@ export const UploadConfirmation: React.FC<UploadConfirmationProps> = React.memo(
         { field: "end", headerName: i18n.t("End Value"), width: 120 },
     ];
 
-    let chainId = 0;
-    const rows = _.flatMap(Object.entries(uploadData.chains), ([key, value]) => {
-        const mappedRows = value.map((entry: ChainObject) => {
-            chainId++;
-            return {
-                id: chainId,
-                chainName: key,
-                name: entry.title.name.long,
-                org: entry.title.org.long,
-                ...entry,
-            };
-        });
-        return mappedRows;
-    });
+    const rows = React.useMemo(() => _(atomicStructure.chains).values().flatten().value(), [
+        atomicStructure.chains,
+    ]);
+
     const submitSelectedRows = useCallback(() => {
         const rowsToSend = _.flatMap(selectedRows, selectedRow =>
-            rows.filter(row => row.id === Number(selectedRow))
+            rows.filter(row => row.id === String(selectedRow))
         );
+        console.debug("TODO: ", rowsToSend);
     }, [rows, selectedRows]);
 
     return (
