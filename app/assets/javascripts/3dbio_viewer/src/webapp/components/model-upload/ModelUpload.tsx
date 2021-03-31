@@ -1,12 +1,14 @@
 import React, { useCallback, useState, useRef } from "react";
+import _ from "lodash";
 import { Dialog, DialogContent, DialogTitle, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
-import _ from "lodash";
 import i18n from "../../utils/i18n";
 import { Dropzone, DropzoneRef, getFile } from "../dropzone/Dropzone";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
+import { UploadData } from "../../../domain/entities/UploadData";
 import { useAppContext } from "../AppContext";
-import "./ModelUpload.css";
+import { useBooleanState } from "../../hooks/use-boolean";
+import { UploadConfirmation } from "./UploadConfirmation";
 
 export interface ModelUploadProps {
     title: string;
@@ -16,10 +18,11 @@ export interface ModelUploadProps {
 export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const { title, onClose } = props;
     const { compositionRoot } = useAppContext();
+    const [isUploadConfirmationOpen, { enable: openUploadConfirmation, disable: closeUploadConfirmation }] = useBooleanState(false);
 
     const [jobTitle, setJobTitle] = useState<string>("");
     const [error, setError] = useState<string>();
-
+    const [uploadData, setUploadData] = useState<UploadData>();
     const structureFileRef = useRef<DropzoneRef>(null);
     const annotationFileRef = useRef<DropzoneRef>(null);
 
@@ -34,16 +37,19 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
             };
             return compositionRoot
                 .uploadAtomicStructure(uploadParams)
-                .run(result => result, console.error);
+                .run(result => {
+                    setUploadData(result);
+                    openUploadConfirmation();
+                }, console.error);
         } else {
             setError(i18n.t("Error: No file selected. Please select a structure file."));
             return _.noop;
         }
-    }, [compositionRoot, jobTitle]);
+    }, [compositionRoot, jobTitle, openUploadConfirmation]);
 
     const submit = useCallbackEffect(submitCb);
-
     return (
+        <>
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth>
             <DialogTitle>
                 {title}
@@ -90,5 +96,8 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                 </button>
             </DialogContent>
         </Dialog>
+         {isUploadConfirmationOpen && uploadData ? <UploadConfirmation uploadData={uploadData} onClose={closeUploadConfirmation}/> : null} 
+        </>
+
     );
 });

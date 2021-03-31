@@ -1,6 +1,8 @@
 import _ from "lodash";
 import { DbModel, DbModelCollection } from "../../domain/entities/DbModel";
 import { FutureData } from "../../domain/entities/FutureData";
+import { UploadData, uploadMockData } from "../../domain/entities/UploadData";
+
 import {
     DbModelRepository,
     SearchOptions,
@@ -54,9 +56,9 @@ export class EbiDbModelRepository implements DbModelRepository {
                 .value()
         );
     }
-
-    upload(options: UploadOptions): FutureData<unknown> {
-        return request(config.upload.url, options).map(_res => null);
+    upload(options: UploadOptions): FutureData<UploadData> {
+        return Future.success(uploadMockData);
+        //return request(config.upload.url, options).map(_res => uploadMockData);
     }
 }
 
