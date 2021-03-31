@@ -2,7 +2,6 @@ import _ from "lodash";
 import { DbModel, DbModelCollection } from "../../domain/entities/DbModel";
 import { FutureData } from "../../domain/entities/FutureData";
 import { UploadData, uploadMockData } from "../../domain/entities/UploadData";
-
 import {
     DbModelRepository,
     SearchOptions,

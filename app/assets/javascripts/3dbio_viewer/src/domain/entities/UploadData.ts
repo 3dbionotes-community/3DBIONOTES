@@ -1,8 +1,14 @@
+export interface UploadData {
+    dataUrl: string;
+    chains: Chains;
+}
+
 export interface Chains {
     A: ChainObject[];
     B: ChainObject[];
     C: ChainObject[];
 }
+
 export interface ChainObject {
     acc: string;
     title: Title;
@@ -12,19 +18,18 @@ export interface ChainObject {
     end: string;
     db: string;
 }
+
 export interface Title {
     name: ShortLongName;
     org: ShortLongName;
     gene: string;
 }
+
 export interface ShortLongName {
     short: string;
     long: string;
 }
-export interface UploadData {
-    dataUrl: string;
-    chains: Chains;
-}
+
 export const uploadMockData = {
     "dataUrl": "http://rinchen-dos.cnb.csic.es:8882/upload/UKLIJFJFWOCPUYUIGMVA/",
     "chains": {
