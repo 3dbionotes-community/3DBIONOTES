@@ -32,14 +32,15 @@ const NetworkForm = React.memo(() => {
         if (networkForm.uniProtAccession === "") {
             setError("Error: Please write down the UniProt accession");
         }
+        console.debug("TODO: upload form", networkForm);
     }, [networkForm]);
 
     return (
-        <form className="network-form">
+        <div className="network-form">
             <Label forText="species" labelText="Select species" />
             <SpeciesSelect
                 value={networkForm.species}
-                onSpecieChange={e =>
+                onSpeciesChange={e =>
                     setNetworkForm({
                         ...networkForm,
                         species: e,
@@ -76,7 +77,7 @@ const NetworkForm = React.memo(() => {
             <button className="submit-button" type="submit" onClick={addNetwork}>
                 {i18n.t("Submit")}
             </button>
-        </form>
+        </div>
     );
 });
 
