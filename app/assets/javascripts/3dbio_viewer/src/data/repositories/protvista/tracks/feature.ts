@@ -1,9 +1,9 @@
 import _ from "lodash";
 import { subtracks } from "../../../../domain/definitions/subtracks";
-import { Evidence as DomainEvidence, EvidenceSource } from "../../../../domain/entities/Evidence";
+import { Evidence as DomainEvidence } from "../../../../domain/entities/Evidence";
 import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition";
-import { getEvidenceText } from "./legacy/TooltipFactory";
+import { getEvidenceFromSources, ApiEvidenceSource } from "../entities/ApiEvidenceSource";
 import {
     getPhosphiteEvidencesFromFeature,
     PhosphositeUniprot,
@@ -26,7 +26,7 @@ const mapping: Record<string, SubtrackDefinition> = {
     TOPO_DOM: subtracks.cytolosic,
     TRANSMEM: subtracks.transmembraneRegion,
     TURN: subtracks.turn,
-    // VARIANT: {trackId: "",  ""},
+    // VARIANT
 };
 
 export interface Features {
@@ -53,12 +53,7 @@ type FeatureType = string;
 
 interface Evidence {
     code: string;
-    source?: {
-        name: string;
-        id: string;
-        url: string;
-        alternativeUrl?: string;
-    };
+    source?: ApiEvidenceSource;
 }
 
 type PhosphositeByInterval = _.Dictionary<PhosphositeUniprotItem[]>;
@@ -98,40 +93,18 @@ function getEvidences(
     return _(feature.evidences || getDefaultEvidences(protein, feature))
         .groupBy(apiEvidence => apiEvidence.code)
         .toPairs()
-        .map(([code, apiEvidencesForCode]) => getEvidence(protein, code, apiEvidencesForCode))
+        .map(([code, apiEvidencesForCode]) =>
+            getEvidenceFromSources({
+                accession: protein,
+                code,
+                sourceEvidences: _.compact(
+                    apiEvidencesForCode.map(apiEvidence => apiEvidence.source)
+                ),
+            })
+        )
         .compact()
         .concat(getPhosphiteEvidencesFromFeature({ protein, feature, phosphositeByInterval }))
         .value();
-}
-
-function getEvidence(
-    protein: string,
-    code: string,
-    apiEvidences: Evidence[]
-): DomainEvidence | undefined {
-    const apiSources = _.compact(apiEvidences.map(apiEvidence => apiEvidence.source));
-    const evidenceText = getEvidenceText({ accession: protein }, code, apiSources);
-    const apiSource = apiSources[0];
-    if (!apiSource) return;
-
-    const source: EvidenceSource = {
-        name: apiSource.name,
-        links: apiSources.map(src => ({ name: src.id, url: src.url })),
-    };
-
-    const alternativeSourceLinks = _(apiSources)
-        .map(src => (src.alternativeUrl ? { name: src.id, url: src.alternativeUrl } : null))
-        .compact()
-        .value();
-
-    const alternativeSource: EvidenceSource | undefined = _.isEmpty(alternativeSourceLinks)
-        ? undefined
-        : {
-              name: apiSource.name === "PubMed" ? "EuropePMC" : source.name,
-              links: alternativeSourceLinks,
-          };
-
-    return { title: evidenceText, source: source, alternativeSource };
 }
 
 /* From extendProtVista/add_evidences.js */
