@@ -176,6 +176,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "binding-site" as const,
         name: i18n.t("Binding site"),
         source: "Uniprot",
+        color: colors.binding,
+        shape: shapes.binding,
         description: i18n.t(
             "Binding site for any chemical group (co-enzyme, prothetic groups, etc)"
         ),
