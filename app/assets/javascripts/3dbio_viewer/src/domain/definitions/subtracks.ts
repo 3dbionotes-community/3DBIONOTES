@@ -218,6 +218,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     chain: {
         id: "chain" as const,
         name: i18n.t("Chain"),
+        shape: shapes.chain,
         color: colors.chain,
         source: "Uniprot",
         description: i18n.t(

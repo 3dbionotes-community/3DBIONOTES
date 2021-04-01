@@ -81,6 +81,7 @@ export function getFeatureFragments(
             }
 
             return {
+                id: feature.ftId,
                 subtrack,
                 start: feature.begin,
                 end: feature.end,

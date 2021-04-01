@@ -11,6 +11,7 @@ import { SubtrackDefinition } from "./TrackDefinition";
 export type Fragments = Fragment2[];
 
 export interface Fragment2 {
+    id?: string;
     subtrack: SubtrackDefinition;
     start: number;
     end: number;
@@ -47,7 +48,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 labelTooltip: subtrackDef.description,
                 shape: subtrackDef.shape || "rectangle",
                 source: subtrackDef.source,
-                isBlast: subtrackDef.isBlast,
+                isBlast: subtrackDef.isBlast ?? true,
                 locations: [
                     {
                         fragments: fragmentsForSubtrack.map(fragment => {
@@ -57,6 +58,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                                 description: fragment.description || "",
                                 color: fragment.color || subtrackDef.color || "#200",
                                 ...from({
+                                    id: fragment.id,
                                     evidences: fragment.evidences,
                                     legend: fragment.legend,
                                 }),
