@@ -27,6 +27,7 @@ const mapping: Record<string, SubtrackDefinition> = {
     TRANSMEM: subtracks.transmembraneRegion,
     TURN: subtracks.turn,
     REPEAT: subtracks.repeats,
+    ZN_FING: subtracks.zincFinger,
     // VARIANT
 };
 

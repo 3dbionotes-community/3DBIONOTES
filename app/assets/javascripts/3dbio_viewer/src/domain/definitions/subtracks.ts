@@ -139,6 +139,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "lip" as const,
         name: i18n.t("Linear interacting peptide"),
         source: "Uniprot/MobyDB",
+        color: colors.linear_interacting_peptide,
         description: i18n.t(
             "This are regions that interact with other peptides. Protein-protein interactions are often mediated by short linear motifs (SLiMs) that are  normally located in intrinsically disordered regions (IDRs) of proteins"
         ),
@@ -147,6 +148,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "repeats" as const,
         name: i18n.t("Repeats"),
         source: "Uniprot",
+        color: colors.repeat,
         description: i18n.t(
             "A repeat is any sequence block that appear more than one time in the sequence, either in an identical or a highly similar form"
         ),
@@ -155,6 +157,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "zinc-finger" as const,
         name: i18n.t("Zinc finger"),
         source: "Uniprot",
+        color: colors.zn_fing,
         description: i18n.t(
             "Small, functional, independently folded domain that coordinates one or more zinc ions.  It is a structural motifs and hence, it should be inside of motifs annotations. Apply differents colours to represent the differents type of motifs"
         ),
