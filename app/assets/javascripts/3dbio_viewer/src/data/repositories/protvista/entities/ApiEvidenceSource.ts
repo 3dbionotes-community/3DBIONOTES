@@ -16,9 +16,9 @@ export function getEvidenceFromSources(options: {
 }): Evidence | undefined {
     const { accession, code, sourceEvidences } = options;
     const mainSourceEvidence = sourceEvidences[0];
-    if (!mainSourceEvidence) return;
-
     const evidenceText = getEvidenceText({ accession: accession }, code, sourceEvidences);
+
+    if (!mainSourceEvidence) return { title: evidenceText };
 
     const source: EvidenceSource = {
         name: mainSourceEvidence.name,

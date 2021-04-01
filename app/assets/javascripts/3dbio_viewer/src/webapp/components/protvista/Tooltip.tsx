@@ -115,7 +115,7 @@ const EvidenceSourceRow: React.FC<{ evidence: Evidence; alternative?: boolean }>
                             <Link name={link.name} url={link.url} />
                         </React.Fragment>
                     )),
-                    <span>|</span>
+                    <span> | </span>
                 )}
             </td>
         </tr>

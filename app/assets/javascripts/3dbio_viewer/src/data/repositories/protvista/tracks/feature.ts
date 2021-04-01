@@ -26,6 +26,7 @@ const mapping: Record<string, SubtrackDefinition> = {
     TOPO_DOM: subtracks.cytolosic,
     TRANSMEM: subtracks.transmembraneRegion,
     TURN: subtracks.turn,
+    REPEAT: subtracks.repeats,
     // VARIANT
 };
 
@@ -46,12 +47,12 @@ export interface Feature {
     begin: string;
     end: string;
     molecule: string;
-    evidences?: Evidence[];
+    evidences?: ApiEvidence[];
 }
 
 type FeatureType = string;
 
-interface Evidence {
+interface ApiEvidence {
     code: string;
     source?: ApiEvidenceSource;
 }
@@ -90,21 +91,31 @@ function getEvidences(
     feature: Feature,
     phosphositeByInterval: PhosphositeByInterval
 ): DomainEvidence[] {
-    return _(feature.evidences || getDefaultEvidences(protein, feature))
+    return _(feature.evidences || [getDefaultEvidence(protein, feature)])
         .groupBy(apiEvidence => apiEvidence.code)
         .toPairs()
         .map(([code, apiEvidencesForCode]) =>
-            getEvidenceFromSources({
-                accession: protein,
-                code,
-                sourceEvidences: _.compact(
-                    apiEvidencesForCode.map(apiEvidence => apiEvidence.source)
-                ),
-            })
+            getEvidence(feature, protein, code, apiEvidencesForCode)
         )
         .compact()
         .concat(getPhosphiteEvidencesFromFeature({ protein, feature, phosphositeByInterval }))
         .value();
+}
+
+function getEvidence(
+    feature: Feature,
+    protein: string,
+    code: string,
+    apiEvidencesForCode: ApiEvidence[]
+) {
+    const defaultEvidence = getDefaultEvidence(protein, feature);
+
+    const sourceEvidences = _(apiEvidencesForCode)
+        .map(apiEvidence => ({ ...defaultEvidence, ...apiEvidence }.source))
+        .compact()
+        .value();
+
+    return getEvidenceFromSources({ accession: protein, code, sourceEvidences });
 }
 
 /* From extendProtVista/add_evidences.js */
@@ -133,13 +144,12 @@ const uniprotLink: Record<FeatureType, string> = {
     ACT_SITE: "sitesAnno_section",
 };
 
-function getDefaultEvidences(protein: string, feature: Feature): Evidence[] {
+function getDefaultEvidence(protein: string, feature: Feature): ApiEvidence {
     const type = uniprotLink[feature.type];
     const url = `http://www.uniprot.org/uniprot/${protein}#${type || ""}`;
-    const evidence: Evidence = {
+
+    return {
         code: "Imported information",
         source: { name: "Imported from UniProt", id: protein, url },
     };
-
-    return [evidence];
 }
