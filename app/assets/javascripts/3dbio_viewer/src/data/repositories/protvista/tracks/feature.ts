@@ -28,6 +28,7 @@ const mapping: Record<string, SubtrackDefinition> = {
     TURN: subtracks.turn,
     REPEAT: subtracks.repeats,
     ZN_FING: subtracks.zincFinger,
+    ACT_SITE: subtracks.activeSite,
     // VARIANT
 };
 

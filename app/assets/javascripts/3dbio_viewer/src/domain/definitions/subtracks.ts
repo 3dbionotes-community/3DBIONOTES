@@ -168,6 +168,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "active-site" as const,
         name: i18n.t("Active site"),
         source: "Uniprot",
+        color: colors.act_site,
+        shape: "circle",
         description: i18n.t("Amino acid(s) directly involved in the activity of an enzyme"),
     },
     bindingSite: {
