@@ -186,6 +186,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "nucleotides-binding" as const,
         name: i18n.t("Nucleotides binding"),
         source: "Uniprot",
+        color: colors.np_bind,
+        shape: shapes.np_bind,
         description: i18n.t("Binding site for a nucleotides or nucleic acids"),
     },
     metalBinding: {

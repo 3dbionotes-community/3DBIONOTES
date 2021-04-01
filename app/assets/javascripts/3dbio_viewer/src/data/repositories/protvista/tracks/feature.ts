@@ -30,6 +30,7 @@ const mapping: Record<string, SubtrackDefinition> = {
     ZN_FING: subtracks.zincFinger,
     ACT_SITE: subtracks.activeSite,
     BINDING: subtracks.bindingSite,
+    NP_BIND: subtracks.nucleotidesBinding,
     // VARIANT
 };
 
