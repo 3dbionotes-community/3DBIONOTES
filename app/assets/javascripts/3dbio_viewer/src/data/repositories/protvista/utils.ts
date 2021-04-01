@@ -29,3 +29,9 @@ export function getStringFromItems(items: Item[]): string {
         .compact()
         .join("<br/>");
 }
+
+export function bold(s: string) {
+    return `<b>${s}</b>`;
+}
+
+export const lineBreak = `<br>`;
