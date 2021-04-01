@@ -31,6 +31,7 @@ const mapping: Record<string, SubtrackDefinition> = {
     ACT_SITE: subtracks.activeSite,
     BINDING: subtracks.bindingSite,
     NP_BIND: subtracks.nucleotidesBinding,
+    METAL: subtracks.metalBinding,
     // VARIANT
 };
 
