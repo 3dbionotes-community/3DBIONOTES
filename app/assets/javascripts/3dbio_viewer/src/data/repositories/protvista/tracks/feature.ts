@@ -11,28 +11,43 @@ import {
 } from "./phosphite";
 
 const mapping: Record<string, SubtrackDefinition> = {
-    REGION: subtracks.regions,
-    COILED: subtracks.coiledCoils,
+    ACT_SITE: subtracks.activeSite,
+    BINDING: subtracks.bindingSite,
     CARBOHYD: subtracks.glycosylation,
     CHAIN: subtracks.chain,
+    COILED: subtracks.coiledCoils,
+    COMPBIAS: subtracks.compositionalBias,
+    CONFLICT: subtracks.sequenceConflict,
     DISULFID: subtracks.disulfideBond,
     DOMAIN: subtracks.prositeDomain,
     HELIX: subtracks.helix,
+    METAL: subtracks.metalBinding,
+    // MOD_RES -> PTM subtracks, use ptmMappingFromDescription
     MOTIF: subtracks.motifs,
     MUTAGEN: subtracks.mutagenesis,
+    NP_BIND: subtracks.nucleotidesBinding,
+    REGION: subtracks.regions,
+    REPEAT: subtracks.repeats,
     SIGNAL: subtracks.signalPeptide,
     SITE: subtracks.otherStructuralRelevantSites,
     STRAND: subtracks.betaStrand,
     TOPO_DOM: subtracks.cytolosic,
     TRANSMEM: subtracks.transmembraneRegion,
     TURN: subtracks.turn,
-    REPEAT: subtracks.repeats,
     ZN_FING: subtracks.zincFinger,
-    ACT_SITE: subtracks.activeSite,
-    BINDING: subtracks.bindingSite,
-    NP_BIND: subtracks.nucleotidesBinding,
-    METAL: subtracks.metalBinding,
     // VARIANT
+};
+
+// From extendProtVista/rebuild_ptm.js
+const ptmMappingFromDescription = {
+    methyl: subtracks.methylation,
+    acetyl: subtracks.acetylation,
+    //"crotonyl": "MOD_RES_CRO",
+    // "citrul": "MOD_RES_CIT",
+    phospho: subtracks.phosphorylation,
+    ubiq: subtracks.ubiquitination,
+    // "sumo": "MOD_RES_SUM",
+    glcnac: subtracks.glycosylation,
 };
 
 export interface Features {
@@ -74,7 +89,8 @@ export function getFeatureFragments(
     return getFragments(
         features.features,
         (feature): FragmentResult => {
-            const subtrack = mapping[feature.type];
+            const subtrack = getSubtrackFromFeature(feature);
+
             if (!subtrack) {
                 console.debug(`Unprocessed type: ${feature.type}`);
                 return;
@@ -90,6 +106,25 @@ export function getFeatureFragments(
             };
         }
     );
+}
+
+function getSubtrackFromFeature(feature: Feature): SubtrackDefinition | undefined {
+    if (feature.type === "MOD_RES") {
+        const defaultSubtrack = subtracks.modifiedResidue;
+
+        return (
+            _(ptmMappingFromDescription)
+                .map((subtrack, descriptionPrefix) =>
+                    feature.description.toLowerCase().startsWith(descriptionPrefix)
+                        ? subtrack
+                        : null
+                )
+                .compact()
+                .first() || defaultSubtrack
+        );
+    } else {
+        return mapping[feature.type];
+    }
 }
 
 function getEvidences(
