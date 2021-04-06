@@ -2,6 +2,7 @@ import { EbiDbModelRepository } from "./data/repositories/EbiDbModelRepository";
 import { ApiPdbRepository } from "./data/repositories/protvista/ApiPdbRepository";
 import { GetPdbUseCase } from "./domain/usecases/GetPdbUseCase";
 import { SearchDbModelsUseCase } from "./domain/usecases/SearchDbModelsUseCase";
+import { UploadAtomicStructureUseCase } from "./domain/usecases/UploadAtomicStructureUseCase";
 
 export function getCompositionRoot() {
     const pdbRepository = new ApiPdbRepository();
@@ -10,6 +11,7 @@ export function getCompositionRoot() {
     return getExecute({
         getPdb: new GetPdbUseCase(pdbRepository),
         searchDbModels: new SearchDbModelsUseCase(dbModelRepository),
+        uploadAtomicStructure: new UploadAtomicStructureUseCase(dbModelRepository),
     });
 }
 

@@ -1,7 +1,11 @@
 import _ from "lodash";
 import { DbModel, DbModelCollection } from "../../domain/entities/DbModel";
 import { FutureData } from "../../domain/entities/FutureData";
-import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
+import {
+    DbModelRepository,
+    SearchOptions,
+    UploadOptions,
+} from "../../domain/repositories/DbModelRepository";
 import { Future } from "../../utils/future";
 import { assert } from "../../utils/ts-utils";
 import { request } from "../utils";
@@ -22,6 +26,9 @@ const config = {
             const id2 = id.split("-")[1] || "";
             return `https://www.ebi.ac.uk/pdbe/static/entry/${id}/400_${id2}.gif`;
         },
+    },
+    upload: {
+        url: "http://3dbionotes.cnb.csic.es/upload",
     },
 };
 
@@ -46,6 +53,10 @@ export class EbiDbModelRepository implements DbModelRepository {
                 .take(searchPageSize)
                 .value()
         );
+    }
+
+    upload(options: UploadOptions): FutureData<unknown> {
+        return request(config.upload.url, options).map(_res => null);
     }
 }
 
