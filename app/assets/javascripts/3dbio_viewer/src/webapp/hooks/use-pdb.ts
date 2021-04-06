@@ -20,7 +20,7 @@ export function usePdbLoader(selection: SelectionState) {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
     const pdbId = selection.main?.pdb.id || "";
-    const pdbOptions = examples[pdbId];
+    const pdbOptions = examples[pdbId.toLowerCase()];
     if (!pdbOptions) throwError(`PDB not defined: ${pdbId}`);
 
     React.useEffect(() => {
