@@ -10,7 +10,7 @@ import { getTotalFeaturesLength, Track } from "../../../domain/entities/Track";
 import { debugVariable } from "../../../utils/debug";
 import { getEmValidationTrack, PdbAnnotations } from "./tracks/em-validation";
 import { EbiVariation, getVariants } from "./tracks/variants";
-import { addPhosphiteSubtracks, PhosphositeUniprot } from "./tracks/phosphite";
+import { getPhosphiteFragments, PhosphositeUniprot } from "./tracks/phosphite";
 import { Features, getFeatureFragments } from "./tracks/feature";
 import { Coverage, getStructureCoverageFragments } from "./tracks/structure-coverage";
 import { getMobiUniprotFragments, MobiUniprot } from "./tracks/mobi";
@@ -94,27 +94,19 @@ export class ApiPdbRepository implements PdbRepository {
         );
         const epitomesTrack = getIf(data.iedb, getEpitomesTrack);
 
-        const tracks0: Track[] = _.compact([
+        const oldTracks: Track[] = _.compact([
             emValidationTrack,
             epitomesTrack,
             proteomicsTrack,
             pdbRedoTrack,
         ]);
 
-        const tracks1 = tracks0
-            .map(track => ({
-                ...track,
-                subtracks: track.subtracks.filter(
-                    subtrack => (subtrack.locations[0]?.fragments.length || 0) > 0
-                ),
-            }))
-            .filter(tracks => tracks.subtracks.length > 0);
-
-        const tracks3 = addPhosphiteSubtracks(tracks1, options.protein, data.phosphositeUniprot);
         const protein = getProtein(options.protein, data.uniprot);
         const experiment = getIf(data.pdbExperiment, pdbExperiment =>
             getExperiment(options.pdb, pdbExperiment)
         );
+
+        const phosphiteFragments = getPhosphiteFragments(data.phosphositeUniprot, options.protein);
 
         const fragmentsList = [
             featureFragments,
@@ -125,10 +117,11 @@ export class ApiPdbRepository implements PdbRepository {
             structureCoverageFragments,
             mobiFragments,
             elmdbFragments,
+            phosphiteFragments,
         ];
 
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
-        debugVariable({ oldTracks: tracks3, newTracks: tracks });
+        debugVariable({ oldTracks, newTracks: tracks });
 
         return {
             id: options.pdb,

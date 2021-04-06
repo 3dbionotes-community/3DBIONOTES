@@ -230,6 +230,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     acetylation: {
         id: "acetylation" as const,
         name: i18n.t("Acetylation"),
+        color: colors.mod_res_ace,
+        shape: shapes.mod_res_ace,
         source: "Uniprot",
         description: i18n.t(
             "Protein acetylation is one of the major post-translational modifications (PTMs) in eukaryotes, in which the acetyl group from acetyl coenzyme A (Ac-CoA) is transferred to a specific site on a polypeptide chain."
@@ -239,11 +241,11 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "disulfide-bond" as const,
         name: i18n.t("Disulfide Bond"),
         source: "Uniprot",
+        color: colors.disulfid,
+        shape: shapes.disulfid,
         description: i18n.t(
             "The positions of cysteine residues participating in disulphide bonds."
         ),
-        color: colors.disulfid,
-        shape: shapes.disulfid,
         isBlast: false,
     },
     glycosylation: {
@@ -260,6 +262,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         source: "PhosphoSitePlus, Uniprot",
         description: i18n.t("Residues with covalently attached methyl group (s)"),
         color: colors.metal,
+        shape: shapes.metal,
     },
     modifiedResidue: {
         id: "modified-residue" as const,
@@ -271,12 +274,16 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "phosphorylation" as const,
         name: i18n.t("Phosphorylation"),
         source: "PhosphoSitePlus, Uniprot",
+        color: colors.mod_res_pho,
+        shape: shapes.mod_res_pho,
         description: i18n.t("Residues with covalently attached phosphoryl groups."),
     },
     ubiquitination: {
         id: "ubiquitination" as const,
         name: i18n.t("Ubiquitination"),
         source: "PhosphoSitePlus, Uniprot",
+        color: colors.mod_res_ubi,
+        shape: shapes.mod_res_ubi,
         description: i18n.t(
             "Residues with ubiquitin chains. The ubiquitinization process consists of the addition of ubiquitin chains to a protein that has to be degraded."
         ),
