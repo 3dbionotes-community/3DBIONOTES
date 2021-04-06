@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { from } from "../../utils/misc";
+import { from, throwError } from "../../utils/misc";
 import { groupedPairsBy, notNil } from "../../utils/ts-utils";
 import { getTracksFromSubtrack, trackDefinitions } from "../definitions/tracks";
 import { Color } from "./Color";
@@ -39,6 +39,14 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
 
     const subtracks = groupedFragments.map(
         ([subtrackDef, fragmentsForSubtrack]): Subtrack => {
+            // Some features may be repeated in differnet data sources, join them
+            const uniqueFragments = _(fragmentsForSubtrack)
+                .groupBy(fragment => [fragment.start, fragment.end].join("-"))
+                .values()
+                .map(joinFragments)
+                .compact()
+                .value();
+
             return {
                 accession: subtrackDef.dynamicSubtrack
                     ? subtrackDef.dynamicSubtrack.id
@@ -51,7 +59,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 isBlast: subtrackDef.isBlast ?? true,
                 locations: [
                     {
-                        fragments: fragmentsForSubtrack.map(fragment => {
+                        fragments: uniqueFragments.map(fragment => {
                             return {
                                 start: fragment.start,
                                 end: fragment.end,
@@ -89,6 +97,19 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
             };
         }
     );
+}
+
+function joinFragments(fragments: Fragment2[]): Fragment2 {
+    const [reference, ...restFragments] = fragments;
+    if (!reference) throwError();
+
+    // The first fragment is used as reference, only different evidences from the rest of fragments are added
+    const otherEvidences = _.flatMap(restFragments, f => f.evidences || []);
+    const evidences = _(reference.evidences || [])
+        .concat(otherEvidences)
+        .uniqWith(_.isEqual)
+        .value();
+    return { ...reference, evidences };
 }
 
 export function getFragments<Feature>(
