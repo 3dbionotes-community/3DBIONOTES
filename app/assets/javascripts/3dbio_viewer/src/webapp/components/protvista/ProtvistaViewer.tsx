@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import _ from "lodash";
-
 import { Pdb } from "../../../domain/entities/Pdb";
 import { SelectionState } from "../../view-models/SelectionState";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
 import { BlockDef } from "./Protvista.types";
-
+import { useBooleanState } from "../../hooks/use-boolean";
+import { AnnotationsTool } from "../annotations-tool/AnnotationsTool";
+import { ProtvistaAction } from "./Protvista.helpers";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
 
@@ -20,17 +21,26 @@ type OnActionCb = NonNullable<ProtvistaPdbProps["onAction"]>;
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks } = props;
+    const [
+        isAnnotationToolOpen,
+        { enable: openAnnotationTool, disable: closeAnnotationTool },
+    ] = useBooleanState(false);
+    const [action, setAction] = useState<ProtvistaAction>();
 
-    const onAction = React.useCallback<OnActionCb>(action => {
-        console.debug("TODO", "action", action);
-    }, []);
+    const onAction = React.useCallback<OnActionCb>(
+        action => {
+            setAction(action);
+            openAnnotationTool();
+            console.debug("TODO", "action", action);
+        },
+        [openAnnotationTool]
+    );
 
     return (
         <div>
             {blocks.map(block => {
                 if (!blockHasRelevantData(block, pdb)) return null;
                 const CustomComponent = block.component;
-
                 return (
                     <ViewerBlock key={block.id} block={block}>
                         {CustomComponent ? (
@@ -38,7 +48,6 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                         ) : (
                             <ProtvistaPdb pdb={pdb} block={block} onAction={onAction} />
                         )}
-
                         {block.tracks.map((trackDef, idx) => {
                             const CustomTrackComponent = trackDef.component;
                             return (
@@ -52,6 +61,9 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                                 )
                             );
                         })}
+                        {isAnnotationToolOpen && action && (
+                            <AnnotationsTool onClose={closeAnnotationTool} action={action} />
+                        )}
                     </ViewerBlock>
                 );
             })}
