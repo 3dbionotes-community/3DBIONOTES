@@ -13,6 +13,7 @@ button {
     border-radius: 8px;
     border: solid 0px #123546;
     outline: none;
+    cursor: pointer;
 }
 
 button::hover,

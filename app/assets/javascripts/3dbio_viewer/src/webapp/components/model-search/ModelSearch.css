@@ -22,15 +22,15 @@
 }
 
 .item .actions {
-	position: relative;
-	bottom: 0%;
+    position: relative;
+    bottom: 0%;
     text-align: center;
     margin-top: 8px;
     height: 40px;
 }
 
 .item .actions button {
-	padding: 8px 16px;
+    padding: 8px 16px;
 }
 
 .model-search .params,
@@ -85,26 +85,26 @@
 }
 
 .item .id {
-	display: flex;
+    display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .item .id .tooltip {
-	margin-left: 6px;
-	color: #818181;
+    margin-left: 6px;
+    color: #818181;
 }
 
 .MuiTooltip-tooltip {
-	border: none !important;
-	padding: 14px !important;
-	-webkit-box-shadow: 0px 0px 23px -1px rgba(0,0,0,0.45);
-	-moz-box-shadow: 0px 0px 23px -1px rgba(0,0,0,0.45);
-	box-shadow: 0px 0px 23px -1px rgba(0,0,0,0.45);	
+    border: none !important;
+    padding: 14px !important;
+    -webkit-box-shadow: 0px 0px 23px -1px rgba(0, 0, 0, 0.45);
+    -moz-box-shadow: 0px 0px 23px -1px rgba(0, 0, 0, 0.45);
+    box-shadow: 0px 0px 23px -1px rgba(0, 0, 0, 0.45);
 }
 
 .MuiTooltip-tooltip .external-link a {
-	color: #133546;
+    color: #133546;
 }
 
 .close,
@@ -123,5 +123,5 @@
 }
 
 .spinner {
-	margin-left: 12px;
+    margin-left: 12px;
 }
