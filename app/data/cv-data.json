@@ -13,6 +13,11 @@
                 "SPIKE_WCPV"
             ],
             "PDB": {
+                "7l7k": {
+                    "emdbs": [
+                        "EMD-23215"
+                    ]
+                },
                 "6lxt": {
                     "validation": {
                         "isolde": [
@@ -367,6 +372,11 @@
                 }
             },
             "EMDB": {
+                "EMD-23215": {
+                    "pdb": [
+                        "7l7k"
+                    ]
+                },
                 "EMD-30701": {
                     "pdb": [
                         "7dk3"
@@ -726,6 +736,9 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": {
+                        "7lss": {},
+                        "7ls9": {},
+                        "7laa": {},
                         "6m0j": {
                             "validation": {
                                 "isolde": [
@@ -782,8 +795,23 @@
                                 ]
                             }
                         },
+                        "7neh": {},
+                        "7neg": {},
+                        "7ndd": {},
+                        "7ndc": {},
+                        "7nda": {},
+                        "7nd9": {},
+                        "7nd8": {},
+                        "7nd7": {},
+                        "7nd6": {},
+                        "7nd5": {},
+                        "7nd4": {},
+                        "7nd3": {},
+                        "7lop": {},
                         "7ld1": {},
                         "7lcn": {},
+                        "7lab": {},
+                        "7l7f": {},
                         "7l5b": {},
                         "7l3n": {},
                         "7l2c": {},
@@ -854,6 +882,7 @@
                         "7jmp": {},
                         "7jmo": {},
                         "7jjc": {},
+                        "7eam": {},
                         "7dpm": {},
                         "7dmu": {},
                         "7dk7": {},
@@ -867,6 +896,22 @@
                         "7dcc": {},
                         "7d30": {},
                         "7d2z": {},
+                        "7d0d": {},
+                        "7d0c": {},
+                        "7d0b": {},
+                        "7d03": {},
+                        "7d00": {},
+                        "7czz": {},
+                        "7czy": {},
+                        "7czx": {},
+                        "7czw": {},
+                        "7czv": {},
+                        "7czu": {},
+                        "7czt": {},
+                        "7czs": {},
+                        "7czr": {},
+                        "7czq": {},
+                        "7czp": {},
                         "7cwu": {},
                         "7cws": {},
                         "7cwo": {},
@@ -888,9 +933,19 @@
                         "7cak": {},
                         "7cai": {},
                         "7cah": {},
+                        "7cac": {},
                         "7c8j": {},
                         "7c8d": {},
                         "7bh9": {},
+                        "7bep": {},
+                        "7beo": {},
+                        "7ben": {},
+                        "7bem": {},
+                        "7bel": {},
+                        "7bek": {},
+                        "7bej": {},
+                        "7bei": {},
+                        "7beh": {},
                         "7b3o": {},
                         "7b17": {},
                         "7a98": {},
@@ -961,11 +1016,16 @@
                         "EMD-30460",
                         "EMD-30333",
                         "EMD-30332",
+                        "EMD-30326",
                         "EMD-30305",
                         "EMD-30247",
                         "EMD-30039",
+                        "EMD-23507",
+                        "EMD-23506",
                         "EMD-23279",
                         "EMD-23277",
+                        "EMD-23246",
+                        "EMD-23211",
                         "EMD-23156",
                         "EMD-23097",
                         "EMD-23095",
@@ -1012,6 +1072,16 @@
                         "EMD-22288",
                         "EMD-22156",
                         "EMD-21864",
+                        "EMD-12284",
+                        "EMD-12283",
+                        "EMD-12281",
+                        "EMD-12280",
+                        "EMD-12279",
+                        "EMD-12278",
+                        "EMD-12277",
+                        "EMD-12276",
+                        "EMD-12275",
+                        "EMD-12274",
                         "EMD-12187",
                         "EMD-11980",
                         "EMD-11688",
@@ -1465,6 +1535,7 @@
                 "Papain-like proteinase"
             ],
             "PDB": {
+                "7nfv": {},
                 "6w9c": {
                     "validation": {
                         "isolde": [
@@ -1650,7 +1721,8 @@
                 "7kr1": {},
                 "7kr0": {},
                 "7kqw": {},
-                "7kqo": {}
+                "7kqo": {},
+                "7jst": {}
             },
             "CompModels": {
                 "swiss-model": [
@@ -1750,7 +1822,17 @@
                 },
                 "Ligands": {
                     "Misc-PDB": {
+                        "7los": {},
+                        "7llz": {},
+                        "7llf": {},
                         "7lg7": {},
+                        "7lbs": {},
+                        "7lbr": {},
+                        "7l14": {},
+                        "7l13": {},
+                        "7l12": {},
+                        "7l11": {},
+                        "7l10": {},
                         "7kxb": {},
                         "7kqp": {},
                         "7krx": {},
@@ -1764,25 +1846,9 @@
                         "7jiv": {},
                         "7jit": {},
                         "7jir": {},
-                        "7d7t": {},
-                        "7cz4": {
-                            "validation": {
-                                "pdb-redo": [
-                                    {
-                                        "name": "7cjf"
-                                    }
-                                ]
-                            }
-                        },
-                        "7c33": {
-                            "validation": {
-                                "pdb-redo": [
-                                    {
-                                        "name": "7cjf"
-                                    }
-                                ]
-                            }
-                        },
+                        "7e35": {},
+                        "7cz4": {},
+                        "7c33": {},
                         "7cmd": {},
                         "7cjm": {},
                         "7bf6": {},
@@ -2129,7 +2195,7 @@
                 "P0DTC1",
                 "P0DTD1"
             ],
-            "description": "Part of Replicase polyprotein 1a and 1ab. Cleaves the C-terminus of replicase polyprotein at 11 sites. Recognizes substrates containing the core sequence [ILMVF]-Q-|-[SGACN] (PubMed:32198291, PubMed:32272481). Also able to bind an ADP-ribose-1''-phosphate (ADRP).",
+            "description": "Part of Replicase polyprotein 1a and 1ab. Cleaves the C-terminus of replicase polyprotein at 11 sites. Recognizes substrates containing the core sequence [ILMVF]-Q-|-[SGACN] (PubMed:32198291, PubMed:32272481).",
             "names": [
                 "Main Protease",
                 "MPro",
@@ -2289,9 +2355,42 @@
                 "7jr4": {},
                 "7jr3": {},
                 "7jpz": {},
-                "7jfq": {}
+                "7jfq": {},
+                "7bb2": {}
             },
             "CompModels": {
+                "swiss-model": [
+                    {
+                        "model": "01",
+                        "project": "4dt6Sh",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "model": "02",
+                        "project": "4dt6Sh",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "model": "03",
+                        "project": "4dt6Sh",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "model": "04",
+                        "project": "4dt6Sh",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "model": "05",
+                        "project": "4dt6Sh",
+                        "description": "High quality models are available."
+                    },
+                    {
+                        "model": "06",
+                        "project": "4dt6Sh",
+                        "description": "High quality models are available."
+                    }
+                ],
                 "BSM-Arc": [
                     {
                         "model": "YP_009725301_v01"
@@ -2301,6 +2400,12 @@
             "Interactions": {
                 "Ligands": {
                     "Misc-PDB": [
+                        "7nev",
+                        "7nbs",
+                        "7nbr",
+                        "7lyi",
+                        "7lyh",
+                        "7ltj",
                         "7lkx",
                         "7lkw",
                         "7lkv",
@@ -2310,6 +2415,7 @@
                         "7lkr",
                         "7lfe",
                         "7ldx",
+                        "7lbn",
                         "7lb7",
                         "7l5d",
                         "7l0d",
@@ -2321,8 +2427,12 @@
                         "7k6d",
                         "7k40",
                         "7k0f",
+                        "7jw8",
                         "7jyc",
                         "7ju7",
+                        "7jt7",
+                        "7jt0",
+                        "7jsu",
                         "7jq5",
                         "7jq4",
                         "7jq3",
@@ -2347,6 +2457,9 @@
                         "7buy",
                         "7brp",
                         "7bqy",
+                        "7bgp",
+                        "7bfb",
+                        "7be7",
                         "7b83",
                         "7b3e",
                         "7ay7",
@@ -2364,6 +2477,7 @@
                         "7aqj",
                         "7aqi",
                         "7aqh",
+                        "7aqe",
                         "7ap6",
                         "7aol",
                         "7ans",
@@ -2685,6 +2799,10 @@
                 "Nucleocapsid protein"
             ],
             "PDB": {
+                "7lv2": {},
+                "7luz": {},
+                "7lux": {},
+                "7ltu": {},
                 "7de1": {},
                 "7cdz": {
                     "validation": {
@@ -2782,22 +2900,17 @@
                     {
                         "project": "UfqxZJ",
                         "model": "01",
-                        "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
+                        "description": "High quality models are available.Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6wzo, 6wzq, 6yi3, 6yun, 6zco, 7acs, 7act, 7c22, 7cdz, 7ce0, 7de1) is available. Partial coverage by experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     },
                     {
                         "project": "UfqxZJ",
                         "model": "02",
-                        "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
+                        "description": "High quality models are available.Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6wzo, 6wzq, 6yi3, 6yun, 6zco, 7acs, 7act, 7c22, 7cdz, 7ce0, 7de1) is available. Partial coverage by experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     },
                     {
                         "project": "UfqxZJ",
                         "model": "03",
-                        "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
-                    },
-                    {
-                        "project": "UfqxZJ",
-                        "model": "04",
-                        "description": "Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6yi3) and high quality models are available."
+                        "description": "High quality models are available.Partial coverage by experimental structures (PDB: 6m3m, 6vyo, 6wji, 6wkp, 6wzo, 6wzq, 6yi3, 6yun, 6zco, 7acs, 7act, 7c22, 7cdz, 7ce0, 7de1) is available. Partial coverage by experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     }
                 ],
                 "BSM-Arc": [
@@ -2907,12 +3020,17 @@
                     {
                         "project": "JDUya4",
                         "model": "01",
-                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     },
                     {
                         "project": "JDUya4",
                         "model": "02",
-                        "description": "Experimental structures (PDB: 6m71, 7btf, 7bv1, 7bv2) and high quality models are available."
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
+                    },
+                    {
+                        "project": "JDUya4",
+                        "model": "03",
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     }
                 ],
                 "BMS-Arc": [
@@ -3277,17 +3395,27 @@
                     {
                         "project": "M4qFvm",
                         "model": "01",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     },
                     {
                         "project": "M4qFvm",
                         "model": "02",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     },
                     {
                         "project": "M4qFvm",
                         "model": "03",
-                        "description": "Experimental structures (PDB: 6m71, 6wiq, 6wqd, 6yhu, 7btf, 7bv1, 7bv2) and high quality models are available. Monomer models may not be biologically relevant as nsp8 may form a hexadecamer with nsp7 or form a complex with nsp7/Pol."
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
+                    },
+                    {
+                        "project": "M4qFvm",
+                        "model": "04",
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
+                    },
+                    {
+                        "project": "M4qFvm",
+                        "model": "05",
+                        "description": "Experimental structures of hetero-oligomeric complexes exist and high quality models can be extracted from them but should be used with care."
                     }
                 ],
                 "BSM-Arc": [
@@ -3391,6 +3519,20 @@
                     }
                 }
             },
+            "CompModels": {
+                "swiss-model": [
+                    {
+                        "project": "1SagwD",
+                        "model": "01",
+                        "description": "High quality models are available which are predicted to form homo-dimers. An experimental structure (PDB: 6z4u) is available. An experimental hetero-oligomeric complex (PDB: 7kdt) exists and a high quality model can be extracted but should be used with care."
+                    },
+                    {
+                        "project": "1SagwD",
+                        "model": "02",
+                        "description": "High quality models are available which are predicted to form homo-dimers. An experimental structure (PDB: 6z4u) is available. An experimental hetero-oligomeric complex (PDB: 7kdt) exists and a high quality model can be extracted but should be used with care."
+                    }
+                ]
+            },
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
@@ -3401,6 +3543,18 @@
                     ]
                 }
             }
+        },
+        "ORF9c": {
+            "uniprotAccession": [
+                "P0DTD3"
+            ],
+            "description": "May play a role in host-virus interaction, contains a putative transmembrane domain, interacts with membrane proteins in multiple cellular compartments",
+            "names": [
+                "ORF9c protein",
+                "ORF14",
+                "Uncharacterized protein 14",
+                "ORF9C_SARS2"
+            ]
         },
         "NSP10": {
             "uniprotAccession": [
@@ -3425,24 +3579,24 @@
             "CompModels": {
                 "swiss-model": [
                     {
-                        "project": "X6zRCV",
+                        "project": "3xFkkB",
                         "model": "01",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                        "description": "High quality models are available which are predicted to form homo-dodecamers."
                     },
                     {
-                        "project": "X6zRCV",
+                        "project": "3xFkkB",
                         "model": "02",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                        "description": "High quality models are available which are predicted to form homo-dodecamers."
                     },
                     {
-                        "project": "X6zRCV",
-                        "model": "03",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                        "project": "3xFkkB",
+                        "model": "01",
+                        "description": "High quality models are available which are predicted to form homo-dodecamers."
                     },
                     {
-                        "project": "X6zRCV",
-                        "model": "04",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available which are predicted to be homo-dodecamers, unless they are in complex with nsp14 or nsp16."
+                        "project": "3xFkkB",
+                        "model": "02",
+                        "description": "High quality models are available which are predicted to form homo-dodecamers."
                     }
                 ],
                 "BMS-Arc": [
@@ -3658,30 +3812,7 @@
                 "2'-O-methyltransferase",
                 "2'-O-ribose methyltransferase"
             ],
-            "CompModels": {
-                "swiss-model": [
-                    {
-                        "project": "X6zRCV",
-                        "model": "01",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available."
-                    },
-                    {
-                        "project": "X6zRCV",
-                        "model": "02",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available."
-                    },
-                    {
-                        "project": "X6zRCV",
-                        "model": "03",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available."
-                    },
-                    {
-                        "project": "X6zRCV",
-                        "model": "04",
-                        "description": "Experimental structures (PDB: 6w4h, 6w61, 6w75, 6wjt, 6wkq, 6wks, 6wq3) and high quality models are available."
-                    }
-                ]
-            },
+            "CompModels": {},
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
@@ -4070,17 +4201,22 @@
                     {
                         "project": "H9prKX",
                         "model": "01",
-                        "description": "Experimental structures (PDB: 6vww, 6w01, 6wlc) and high quality models are available."
+                        "description": "Experimental structures and high quality models are available."
                     },
                     {
                         "project": "H9prKX",
                         "model": "02",
-                        "description": "Experimental structures (PDB: 6vww, 6w01, 6wlc) and high quality models are available."
+                        "description": "Experimental structures and high quality models are available."
                     },
                     {
                         "project": "H9prKX",
                         "model": "03",
-                        "description": "Experimental structures (PDB: 6vww, 6w01, 6wlc) and high quality models are available."
+                        "description": "Experimental structures and high quality models are available."
+                    },
+                    {
+                        "project": "H9prKX",
+                        "model": "04",
+                        "description": "Experimental structures and high quality models are available."
                     }
                 ],
                 "BSM-Arc": [
@@ -4240,7 +4376,7 @@
                                 ],
                                 "refmac": [
                                     {
-                                        "name": "2ozk"
+                                        "name": "2ozk_refmac"
                                     }
                                 ]
                             }
@@ -4422,7 +4558,9 @@
                 "Hel"
             ],
             "PDB": {
-                "6zsl": {}
+                "7nio": {},
+                "6zsl": {},
+                "5rob": {}
             },
             "CompModels": {
                 "swiss-model": [
@@ -4434,11 +4572,6 @@
                     {
                         "project": "N2NgU3",
                         "model": "02",
-                        "description": "High quality models are available."
-                    },
-                    {
-                        "project": "N2NgU3",
-                        "model": "03",
                         "description": "High quality models are available."
                     }
                 ],
@@ -4586,6 +4719,7 @@
                 "NS7A_WCPV"
             ],
             "PDB": {
+                "7ci3": {},
                 "6w37": {
                     "validation": {
                         "pdb-redo": {
@@ -4725,7 +4859,7 @@
             ],
             "description": "Part of Replicase polyprotein 1a and 1ab. Plays a role in the initial induction of autophagosomes from host reticulum endoplasmic. Later, limits the expansion of these phagosomes that are no longer able to deliver viral components to lysosomes.",
             "names": [
-                "NSP16",
+                "NSP6",
                 "Non-structural protein 6"
             ],
             "CompModels": {
@@ -4765,15 +4899,9 @@
                 "Protein X1"
             ],
             "PDB": {
-                "7kjr": {}
+                "6xdc": {}
             },
-            "EMDB": {
-                "EMD-22898": {
-                    "pdb": [
-                        "7kjr"
-                    ]
-                }
-            },
+            "EMDB": {},
             "CompModels": {
                 "swiss-model": [
                     {
@@ -4782,6 +4910,16 @@
                         "description": "Only remote homologues were identified as potential template structures, limiting the expected quality of the models."
                     }
                 ]
+            },
+            "Interactions": {
+                "P-P-Interactions": {
+                    "PDB": [
+                        "7kjr"
+                    ],
+                    "EMDB": [
+                        "EMD-22898"
+                    ]
+                }
             }
         },
         "ORF8": {
