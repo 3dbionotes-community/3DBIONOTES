@@ -15,7 +15,7 @@ const IncludeNeighborsCheckbox: React.FC<IncludeNeighborsCheckboxProps> = React.
                 type="checkbox"
                 className="include-neighbors-checkbox"
                 checked={checkedValue}
-                onChange={() => onCheckboxChange()}
+                onChange={onCheckboxChange}
             />
             <label>{i18n.t("Include neighbours with structural data")}</label>
         </div>

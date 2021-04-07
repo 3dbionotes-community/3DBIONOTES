@@ -15,7 +15,7 @@ export const ToolsButton: React.FC<ToolsButtonProps> = () => {
             <Dropdown
                 text={i18n.t("Tools")}
                 items={items}
-                onClick={() => openNetwork()}
+                onClick={openNetwork}
                 showSelection={true}
             />
             {isNetworkOpen && <Network onClose={closeNetwork} />}

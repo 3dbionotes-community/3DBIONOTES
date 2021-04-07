@@ -30,14 +30,13 @@ const NetworkForm = React.memo(() => {
     const addNetwork = useCallback(() => {
         setError("");
         if (networkForm.uniProtAccession === "") {
-            setError("Error: Please write down the UniProt accession");
+            setError(i18n.t("Error: Please write down the UniProt accession"));
         }
-        console.debug("TODO: upload form", networkForm);
     }, [networkForm]);
 
     return (
         <div className="network-form">
-            <Label forText="species" labelText="Select species" />
+            <Label forText={i18n.t("species")} label={i18n.t("Select species")} />
             <SpeciesSelect
                 value={networkForm.species}
                 onSpeciesChange={e =>
@@ -47,7 +46,7 @@ const NetworkForm = React.memo(() => {
                     })
                 }
             />
-            <Label forText="uniProtAccession" labelText="Enter a list of UniProt accession" />
+            <Label forText={i18n.t("uniProtAccession")} label={i18n.t("Enter a list of UniProt accession")} />
             <NetworkExample
                 onExampleClick={e =>
                     setNetworkForm({
@@ -70,7 +69,7 @@ const NetworkForm = React.memo(() => {
                 }
             />
 
-            <Label forText="uploadAnnotations" labelText="Upload your annotations in JSON format" />
+            <Label forText={i18n.t("uploadAnnotations")} label={i18n.t("Upload your annotations in JSON format")} />
             <Dropzone ref={annotationFileRef} accept="application/json"></Dropzone>
             {error && <h3>{error}</h3>}
 

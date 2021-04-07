@@ -4,14 +4,14 @@ import "./Network.css";
 
 interface LabelProps {
     forText: string;
-    labelText: string;
+    label: string;
 }
 
 const Label: React.FC<LabelProps> = React.memo(props => {
-    const { forText, labelText } = props;
+    const { forText, label } = props;
     return (
         <label htmlFor={forText}>
-            <strong>{i18n.t(labelText)}</strong>
+            <strong>{i18n.t(label)}</strong>
         </label>
     );
 });
