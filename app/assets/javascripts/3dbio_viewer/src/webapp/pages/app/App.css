@@ -19,6 +19,7 @@ button {
 button::hover,
 button::active,
 button::focus {
+    cursor: pointer;
     background-color: #268bbe;
     border: solid 0px #268bbe;
 }
