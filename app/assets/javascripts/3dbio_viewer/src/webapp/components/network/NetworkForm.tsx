@@ -14,18 +14,15 @@ interface NetworkForm {
     includeNeighboursWithStructuralData: boolean;
 }
 
-function getInitialNetworkForm(): NetworkForm {
-    return {
+const NetworkForm = React.memo(() => {
+    const annotationFileRef = useRef<DropzoneRef>(null);
+    const [error, setError] = useState<string>();
+    const initialNetworkForm = {
         species: "homoSapiens",
         uniProtAccession: "",
         includeNeighboursWithStructuralData: false,
     };
-}
-
-const NetworkForm = React.memo(() => {
-    const annotationFileRef = useRef<DropzoneRef>(null);
-    const [error, setError] = useState<string>();
-    const [networkForm, setNetworkForm] = useState<NetworkForm>(() => getInitialNetworkForm());
+    const [networkForm, setNetworkForm] = useState<NetworkForm>(initialNetworkForm);
 
     const addNetwork = useCallback(() => {
         setError("");
@@ -56,8 +53,8 @@ const NetworkForm = React.memo(() => {
                 }
             />
             <UniProtAccessionTextArea
-                textareaValue={networkForm.uniProtAccession}
-                onTextareaChange={e => setNetworkForm({ ...networkForm, uniProtAccession: e })}
+                value={networkForm.uniProtAccession}
+                onChange={e => setNetworkForm({ ...networkForm, uniProtAccession: e })}
             />
             <IncludeNeighborsCheckbox
                 checkedValue={networkForm.includeNeighboursWithStructuralData}
