@@ -5,6 +5,7 @@ import i18n from "../../utils/i18n";
 import styles from "./Viewers.module.css";
 import { JumpToButton } from "../protvista/JumpToButton";
 import { ProfilesButton } from "../protvista/ProfilesButton";
+import { ToolsButton } from "../protvista/ToolsButton";
 import { SelectionState } from "../../view-models/SelectionState";
 import { Loader } from "../Loader";
 import { usePdbLoader } from "../../hooks/use-pdb";
@@ -22,7 +23,7 @@ export const Viewers: React.FC<ViewersProps> = props => {
         <React.Fragment>
             <div className={styles.section}>
                 <div className={styles.actions}>
-                    <button>{i18n.t("Tools")}</button>
+                    <ToolsButton />
                     <ProfilesButton />
                     <JumpToButton />
                 </div>
