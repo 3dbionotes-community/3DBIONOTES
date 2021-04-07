@@ -5,18 +5,16 @@ import {
     BuildOptions,
 } from "../../domain/entities/AtomicStructureRepository";
 import { FutureData } from "../../domain/entities/FutureData";
-import { Future } from "../../utils/future";
-import {
-    BionotesAnnotationResponse,
-    annotationResponseExample,
-} from "./BionotesAnnotationResponse";
+import { request } from "../request-utils";
+import { BionotesAnnotationResponse } from "./BionotesAnnotationResponse";
 
-const _url = "http://3dbionotes.cnb.csic.es/upload";
+//const url = "http://3dbionotes.cnb.csic.es/upload";
+const url = "/3dbionotes/upload";
 
 export class BionotesAtomicStructureRepository implements AtomicStructureRepository {
     build(_options: BuildOptions): FutureData<AtomicStructure> {
-        // return request(config.upload.url, options).map(_res => uploadMockData);
-        return Future.success<BionotesAnnotationResponse, Error>(annotationResponseExample).map(
+        // Use _options to build a multiform part
+        return request<BionotesAnnotationResponse>({ method: "POST", url }).map(
             getAtomicStructureFromResponse
         );
     }

@@ -4,7 +4,7 @@ import { FutureData } from "../../domain/entities/FutureData";
 import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
 import { Future } from "../../utils/future";
 import { assert } from "../../utils/ts-utils";
-import { request } from "../utils";
+import { request } from "../request-utils";
 
 const searchPageSize = 30;
 
@@ -102,8 +102,7 @@ function getPdbModels(
     if (!performSearch) return Future.success([]);
 
     const searchQuery = query.trim() ? query : emptySearchesByType[config.type];
-
-    const pdbResults = request<ApiSearchParams, ApiSearchResponse>(config.searchUrl, {
+    const params: ApiSearchParams = {
         format: "JSON",
         // Get more records so we can do a more meaningful sorting by score on the grouped collection
         size: searchPageSize * 10,
@@ -111,7 +110,9 @@ function getPdbModels(
         query: searchQuery,
         entryattrs: "score",
         fieldurl: true,
-    });
+    };
+
+    const pdbResults = request<ApiSearchResponse>({ url: config.searchUrl, params });
 
     return pdbResults.map((res): DbModel[] => {
         return res.entries.map(entry => ({

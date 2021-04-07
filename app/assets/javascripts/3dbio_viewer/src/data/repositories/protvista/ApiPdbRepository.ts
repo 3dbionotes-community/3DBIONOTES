@@ -1,11 +1,8 @@
 import _ from "lodash";
-import xml2js from "xml2js";
-import { AxiosRequestConfig } from "axios";
 import { FutureData } from "../../../domain/entities/FutureData";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { PdbRepository } from "../../../domain/repositories/PdbRepository";
 import { Future } from "../../../utils/future";
-import { axiosRequest, defaultBuilder } from "../../../utils/future-axios";
 import { getTotalFeaturesLength, Track } from "../../../domain/entities/Track";
 import { debugVariable } from "../../../utils/debug";
 import { getEmValidationTrack, PdbAnnotations } from "./tracks/em-validation";
@@ -27,6 +24,7 @@ import { getPfamDomainFragments, PfamAnnotations } from "./tracks/pfam-domain";
 import { getSmartDomainFragments, SmartAnnotations } from "./tracks/smart-domain";
 import { getInterproDomainFragments, InterproAnnotations } from "./tracks/interpro-domain";
 import { ElmdbUniprot, getElmdbUniprotFragments } from "./tracks/elmdb";
+import { getJSON, getXML, RequestError } from "../../request-utils";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -48,8 +46,6 @@ interface Data {
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K] | undefined> };
-
-type RequestError = { message: string };
 
 interface Options {
     protein: string;
@@ -163,44 +159,4 @@ function getData(options: Options): FutureData<Partial<Data>> {
     };
 
     return Future.joinObj(data$);
-}
-
-function getFromUrl<Data>(url: string): Future<RequestError, Data> {
-    return request<Data>({ method: "GET", url });
-}
-
-function getJSON<Data>(url: string): Future<RequestError, Data | undefined> {
-    const data$ = getFromUrl<Data>(url) as Future<RequestError, Data | undefined>;
-
-    return data$.flatMapError(_err => {
-        console.debug(`Cannot get data: ${url}`);
-        return Future.success(undefined);
-    });
-}
-
-function getXML<Data>(url: string): Future<RequestError, Data | undefined> {
-    const data$ = getJSON<string>(url);
-
-    return data$.flatMap(xml => {
-        return xml ? xmlToJs<Data>(xml) : Future.success(undefined);
-    });
-}
-
-function xmlToJs<Data>(xml: string): Future<RequestError, Data> {
-    const parser = new xml2js.Parser();
-
-    return Future.fromComputation((resolve, reject) => {
-        parser.parseString(xml, (err: any, result: Data) => {
-            if (err) {
-                reject({ message: err ? err.toString() : "Unknown error" });
-            } else {
-                resolve(result);
-            }
-        });
-        return () => {};
-    });
-}
-
-function request<Data>(request: AxiosRequestConfig): Future<RequestError, Data> {
-    return axiosRequest<RequestError, Data>(defaultBuilder, request);
 }
