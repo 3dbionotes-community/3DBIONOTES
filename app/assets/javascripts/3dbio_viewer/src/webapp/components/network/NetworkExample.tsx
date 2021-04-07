@@ -9,7 +9,10 @@ interface NetworkExampleProps {
 const NetworkExample: React.FC<NetworkExampleProps> = React.memo(props => {
     const { onExampleClick } = props;
     return (
-        <span id="network-example" onClick={() => onExampleClick(["P01111", "P01112", "P01116"].join("\n"))}>
+        <span
+            id="network-example"
+            onClick={() => onExampleClick(["P01111", "P01112", "P01116"].join("\n"))}
+        >
             <small>{i18n.t("Example")}</small>
         </span>
     );

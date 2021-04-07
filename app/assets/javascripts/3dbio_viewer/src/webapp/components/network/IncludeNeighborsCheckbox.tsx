@@ -10,14 +10,11 @@ interface IncludeNeighborsCheckboxProps {
 const IncludeNeighborsCheckbox: React.FC<IncludeNeighborsCheckboxProps> = React.memo(props => {
     const { checkedValue, onCheckboxChange } = props;
     return (
-        <div className="include-neighbors-checkbox">
-            <input
-                type="checkbox"
-                className="include-neighbors-checkbox"
-                checked={checkedValue}
-                onChange={onCheckboxChange}
-            />
-            <label>{i18n.t("Include neighbours with structural data")}</label>
+        <div className="include-neighbors-checkbox" onClick={onCheckboxChange}>
+            <input type="checkbox" checked={checkedValue} />
+            <label className="margin-checkbox-label">
+                {i18n.t("Include neighbours with structural data")}
+            </label>
         </div>
     );
 });

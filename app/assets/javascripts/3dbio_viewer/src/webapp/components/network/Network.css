@@ -8,6 +8,7 @@ textarea {
 }
 
 small {
+    cursor: pointer;
     margin-left: 0.625rem;
     color: #8e8e8e;
 }
@@ -24,6 +25,14 @@ small {
     position: relative;
     display: block;
     margin-bottom: 1rem;
+}
+
+.margin-checkbox-label {
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+input[type="checkbox"] {
+    cursor: pointer;
 }
 
 .form-control {
