@@ -42,7 +42,7 @@ const mapping: Record<string, SubtrackDefinition> = {
 const ptmMappingFromDescription = {
     methyl: subtracks.methylation,
     acetyl: subtracks.acetylation,
-    //"crotonyl": "MOD_RES_CRO",
+    // "crotonyl": "MOD_RES_CRO",
     // "citrul": "MOD_RES_CIT",
     phospho: subtracks.phosphorylation,
     ubiq: subtracks.ubiquitination,
@@ -114,8 +114,8 @@ function getSubtrackFromFeature(feature: Feature): SubtrackDefinition | undefine
 
         return (
             _(ptmMappingFromDescription)
-                .map((subtrack, descriptionPrefix) =>
-                    feature.description.toLowerCase().startsWith(descriptionPrefix)
+                .map((subtrack, descriptionSubstring) =>
+                    feature.description.toLowerCase().includes(descriptionSubstring)
                         ? subtrack
                         : null
                 )
