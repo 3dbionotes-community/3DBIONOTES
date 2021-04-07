@@ -36,3 +36,10 @@ export function withOptionalProperties<T>() {
         return obj as ObjWithOptionalKeys<Obj, T>;
     };
 }
+
+export function isElementOfUnion<Union extends string>(
+    value: string,
+    values: readonly Union[]
+): value is Union {
+    return (values as readonly string[]).includes(value);
+}

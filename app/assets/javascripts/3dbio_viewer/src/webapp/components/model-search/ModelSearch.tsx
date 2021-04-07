@@ -12,12 +12,14 @@ import { DbModel, DbModelCollection } from "../../../domain/entities/DbModel";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value";
 import { useDebounce } from "../../hooks/use-debounce";
+import { useBooleanState } from "../../hooks/use-boolean";
 import i18n from "../../utils/i18n";
 import { ActionType, DbItem } from "../../view-models/SelectionState";
 import { useAppContext } from "../AppContext";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import "./ModelSearch.css";
 import { ModelSearchItem } from "./ModelSearchItem";
+import { ModelUpload } from "../model-upload/ModelUpload";
 
 export interface ModelSearchProps {
     title: string;
@@ -47,6 +49,8 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     }, []);
 
     const [modelType, setModelType] = React.useState<ModelSearchType>("all");
+    const [isUploadOpen, { enable: openUpload, disable: closeUpload }] = useBooleanState(false);
+
     const [searchState, startSearch] = useDbModelSearch(modelType);
 
     return (
@@ -78,8 +82,15 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         onClick={setModelType}
                         showExpandIcon
                     />
-
-                    <button className="upload-model">{i18n.t("Upload model")}</button>
+                    <button className="upload-model" onClick={openUpload}>
+                        {i18n.t("Upload model")}
+                    </button>
+                    {isUploadOpen && (
+                        <ModelUpload
+                            title={i18n.t("Upload your Atomic Structure")}
+                            onClose={closeUpload}
+                        />
+                    )}
 
                     {searchState.type === "searching" && (
                         <div className="spinner">
