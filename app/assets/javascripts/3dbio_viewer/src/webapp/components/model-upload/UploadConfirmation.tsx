@@ -59,6 +59,7 @@ export const UploadConfirmation: React.FC<UploadConfirmationProps> = React.memo(
                     <DataGrid
                         rows={rows}
                         columns={columns}
+                        disableColumnMenu={true}
                         pageSize={5}
                         onSelectionModelChange={e => setSelectedRows(e.selectionModel)}
                         checkboxSelection
