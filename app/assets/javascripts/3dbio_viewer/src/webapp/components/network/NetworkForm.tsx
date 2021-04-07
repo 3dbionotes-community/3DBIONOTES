@@ -43,7 +43,10 @@ const NetworkForm = React.memo(() => {
                     })
                 }
             />
-            <Label forText={i18n.t("uniProtAccession")} label={i18n.t("Enter a list of UniProt accession")} />
+            <Label
+                forText={i18n.t("uniProtAccession")}
+                label={i18n.t("Enter a list of UniProt accession")}
+            />
             <NetworkExample
                 onExampleClick={e =>
                     setNetworkForm({
@@ -66,7 +69,10 @@ const NetworkForm = React.memo(() => {
                 }
             />
 
-            <Label forText={i18n.t("uploadAnnotations")} label={i18n.t("Upload your annotations in JSON format")} />
+            <Label
+                forText={i18n.t("uploadAnnotations")}
+                label={i18n.t("Upload your annotations in JSON format")}
+            />
             <Dropzone ref={annotationFileRef} accept="application/json"></Dropzone>
             {error && <h3>{error}</h3>}
 
