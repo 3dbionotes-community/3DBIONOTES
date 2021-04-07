@@ -5,15 +5,15 @@ import {
     BuildOptions,
 } from "../../domain/entities/AtomicStructureRepository";
 import { FutureData } from "../../domain/entities/FutureData";
+import { routes } from "../../routes";
 import { request } from "../request-utils";
 import { BionotesAnnotationResponse } from "./BionotesAnnotationResponse";
 
-//const url = "http://3dbionotes.cnb.csic.es/upload";
-const url = "/3dbionotes/upload";
+const url = routes.rinchen2 + "/upload";
 
 export class BionotesAtomicStructureRepository implements AtomicStructureRepository {
-    build(_options: BuildOptions): FutureData<AtomicStructure> {
-        // Use _options to build a multiform part
+    build(options: BuildOptions): FutureData<AtomicStructure> {
+        // TODO:  Post a multipart form from options
         return request<BionotesAnnotationResponse>({ method: "POST", url }).map(
             getAtomicStructureFromResponse
         );
