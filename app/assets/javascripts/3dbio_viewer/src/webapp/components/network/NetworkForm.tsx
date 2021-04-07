@@ -14,20 +14,23 @@ interface NetworkForm {
     includeNeighboursWithStructuralData: boolean;
 }
 
+const initialNetworkForm: NetworkForm = {
+    species: "homoSapiens",
+    uniProtAccession: "",
+    includeNeighboursWithStructuralData: false,
+};
+
 const NetworkForm = React.memo(() => {
     const annotationFileRef = useRef<DropzoneRef>(null);
     const [error, setError] = useState<string>();
-    const initialNetworkForm = {
-        species: "homoSapiens",
-        uniProtAccession: "",
-        includeNeighboursWithStructuralData: false,
-    };
-    const [networkForm, setNetworkForm] = useState<NetworkForm>(initialNetworkForm);
+    const [networkForm, setNetworkForm] = useState(initialNetworkForm);
 
     const addNetwork = useCallback(() => {
-        setError("");
         if (networkForm.uniProtAccession === "") {
             setError(i18n.t("Error: Please write down the UniProt accession"));
+        } else {
+            setError("");
+            window.alert("TODO");
         }
     }, [networkForm]);
 
@@ -36,10 +39,10 @@ const NetworkForm = React.memo(() => {
             <Label forText={i18n.t("species")} label={i18n.t("Select species")} />
             <SpeciesSelect
                 value={networkForm.species}
-                onSpeciesChange={e =>
+                onSpeciesChange={newSpecies =>
                     setNetworkForm({
                         ...networkForm,
-                        species: e,
+                        species: newSpecies,
                     })
                 }
             />
