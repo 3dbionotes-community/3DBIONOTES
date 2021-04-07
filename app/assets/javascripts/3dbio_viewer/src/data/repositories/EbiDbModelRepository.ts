@@ -1,22 +1,10 @@
 import _ from "lodash";
 import { DbModel, DbModelCollection } from "../../domain/entities/DbModel";
 import { FutureData } from "../../domain/entities/FutureData";
-import {
-    AtomicStructure,
-    ChainObject as ChainObjectEntity,
-} from "../../domain/entities/AtomicStructure";
-import {
-    DbModelRepository,
-    SearchOptions,
-    UploadOptions,
-} from "../../domain/repositories/DbModelRepository";
+import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
 import { Future } from "../../utils/future";
 import { assert } from "../../utils/ts-utils";
 import { request } from "../utils";
-import {
-    annotationResponseExample,
-    BionotesAnnotationResponse,
-} from "./BionotesAnnotationResponse";
 
 const searchPageSize = 30;
 
@@ -34,9 +22,6 @@ const config = {
             const id2 = id.split("-")[1] || "";
             return `https://www.ebi.ac.uk/pdbe/static/entry/${id}/400_${id2}.gif`;
         },
-    },
-    upload: {
-        url: "http://3dbionotes.cnb.csic.es/upload",
     },
 };
 
@@ -62,29 +47,6 @@ export class EbiDbModelRepository implements DbModelRepository {
                 .value()
         );
     }
-    upload(_options: UploadOptions): FutureData<AtomicStructure> {
-        return Future.success<BionotesAnnotationResponse, Error>(annotationResponseExample).map(
-            getAtomicStructureFromResponse
-        );
-        // return request(config.upload.url, options).map(_res => uploadMockData);
-    }
-}
-
-function getAtomicStructureFromResponse(annotation: BionotesAnnotationResponse): AtomicStructure {
-    return {
-        ...annotation,
-        chains: _.mapValues(annotation.chains, (chains, chainName) =>
-            chains.map(
-                (chain): ChainObjectEntity => ({
-                    ...chain,
-                    id: [chainName, chain.acc].join("-"),
-                    chainName,
-                    name: chain.title.name.long,
-                    org: chain.title.org.long,
-                })
-            )
-        ),
-    };
 }
 
 const apiFields = ["name", "author", "method", "resolution", "specimenstate"] as const;

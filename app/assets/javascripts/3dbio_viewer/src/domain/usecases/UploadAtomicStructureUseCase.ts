@@ -1,12 +1,12 @@
 import { UseCase } from "../../compositionRoot";
 import { AtomicStructure } from "../entities/AtomicStructure";
+import { AtomicStructureRepository, BuildOptions } from "../entities/AtomicStructureRepository";
 import { FutureData } from "../entities/FutureData";
-import { DbModelRepository, UploadOptions } from "../repositories/DbModelRepository";
 
 export class UploadAtomicStructureUseCase implements UseCase {
-    constructor(private dbModelRepository: DbModelRepository) {}
+    constructor(private atomicStructureRepository: AtomicStructureRepository) {}
 
-    execute(options: UploadOptions): FutureData<AtomicStructure> {
-        return this.dbModelRepository.upload(options);
+    execute(options: BuildOptions): FutureData<AtomicStructure> {
+        return this.atomicStructureRepository.build(options);
     }
 }
