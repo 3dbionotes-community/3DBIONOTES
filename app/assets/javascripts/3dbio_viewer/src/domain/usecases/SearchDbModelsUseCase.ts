@@ -1,9 +1,8 @@
 import { UseCase } from "../../compositionRoot";
-import { EbiDbModelRepository } from "../../data/repositories/EbiDbModelRepository";
-import { SearchOptions } from "../repositories/DbModelRepository";
+import { DbModelRepository, SearchOptions } from "../repositories/DbModelRepository";
 
 export class SearchDbModelsUseCase implements UseCase {
-    constructor(private dbModelRepository: EbiDbModelRepository) {}
+    constructor(private dbModelRepository: DbModelRepository) {}
 
     execute(options: SearchOptions) {
         return this.dbModelRepository.search(options);

@@ -68,6 +68,7 @@ export interface TrackView {
     labelType?: "text" | "html";
     overlapping?: boolean;
     data: SubtrackView[];
+    actions: Record<"add", { title: string }>;
 }
 
 interface SubtrackView {
