@@ -38,6 +38,7 @@ export const UploadConfirmation: React.FC<UploadConfirmationProps> = React.memo(
             rows.filter(row => row.id === String(selectedRow))
         );
         console.debug("TODO: ", rowsToSend);
+        window.alert("TODO");
     }, [rows, selectedRows]);
 
     return (

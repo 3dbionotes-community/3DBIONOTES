@@ -53,10 +53,11 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
     }, [annotationForm]);
 
     const uploadAnnotationFile = useCallback(() => {
-        setError("");
-
         if (annotationFileRef.current?.files.length === 0) {
             setError("Missing file: please upload an annotations file in JSON format.");
+        } else {
+            setError("");
+            window.alert("TODO");
         }
     }, []);
 
