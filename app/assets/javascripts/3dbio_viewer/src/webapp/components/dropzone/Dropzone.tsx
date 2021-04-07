@@ -61,7 +61,7 @@ export const Dropzone = React.forwardRef(
             files: acceptedFiles,
         }));
         return (
-            <div {...getRootProps()} style={{ outline: "none", marginTop: "0.5rem" }}>
+            <div {...getRootProps()} style={{ outline: "none" }}>
                 <div>
                     <Shade onClick={open}>
                         <input {...getInputProps()} />
@@ -76,3 +76,6 @@ export const Dropzone = React.forwardRef(
         );
     }
 );
+export function getFile(fileRef: React.RefObject<DropzoneRef>): File | undefined {
+    return fileRef.current?.files[0];
+}
