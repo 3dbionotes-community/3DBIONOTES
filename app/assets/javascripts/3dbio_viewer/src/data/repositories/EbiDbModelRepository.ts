@@ -1,4 +1,5 @@
 import _ from "lodash";
+import axios, { AxiosResponse } from 'axios';
 import { DbModel, DbModelCollection } from "../../domain/entities/DbModel";
 import { FutureData } from "../../domain/entities/FutureData";
 import {
@@ -13,6 +14,7 @@ import {
 import { Future } from "../../utils/future";
 import { assert } from "../../utils/ts-utils";
 import { request } from "../utils";
+import { routes } from "../../routes";
 import {
     annotationResponseExample,
     BionotesAnnotationResponse,
@@ -39,7 +41,8 @@ const config = {
         url: "http://3dbionotes.cnb.csic.es/upload",
     },
 };
-
+//http://rinchen-dos.cnb.csic.es:8882
+//http://3dbionotes.cnb.csic.es
 interface ItemConfig {
     type: DbModel["type"];
     searchUrl: string;
@@ -62,14 +65,37 @@ export class EbiDbModelRepository implements DbModelRepository {
                 .value()
         );
     }
+    async doPostRequest(_options: UploadOptions): Promise<AxiosResponse> {
+        const formData = new FormData();
+        formData.append('structure_file', _options.structureFile);
+        formData.append('title', "test");
+
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data',
+                "accept": "application/json",
+            }
+    }
+    const ff = await axios.post(routes.rinchen2+"/upload", formData, config);
+    return ff;
+    }
     upload(_options: UploadOptions): FutureData<AtomicStructure> {
+        const fff = this.doPostRequest(_options);
         return Future.success<BionotesAnnotationResponse, Error>(annotationResponseExample).map(
             getAtomicStructureFromResponse
         );
         // return request(config.upload.url, options).map(_res => uploadMockData);
     }
 }
+/*
+build(_options: BuildOptions): FutureData<AtomicStructure> {
+        // Use _options to build a multiform part
+        return request<BionotesAnnotationResponse>({ method: "POST", url }).map(
+            getAtomicStructureFromResponse
+        );
+    }
 
+*/
 function getAtomicStructureFromResponse(annotation: BionotesAnnotationResponse): AtomicStructure {
     return {
         ...annotation,

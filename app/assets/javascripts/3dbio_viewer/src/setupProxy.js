@@ -20,6 +20,12 @@ module.exports = function (app) {
         target: "https://www.ebi.ac.uk",
         rewritePath: true,
     });
+
+    proxyRoutes(app, {
+        routes: ["/rinchen-dos"],
+        target: "http://rinchen-dos.cnb.csic.es:8882",
+        rewritePath: true,
+    });
 };
 
 function proxyRoutes(app, options) {
