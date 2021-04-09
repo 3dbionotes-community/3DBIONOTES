@@ -28,9 +28,13 @@ export class BionotesAtomicStructureRepository implements AtomicStructureReposit
     return ff;
     }
     build(options: BuildOptions): FutureData<AtomicStructure> {
-        const fff = this.doPostRequest(options);
+        const data = new FormData();
+        data.append('structure_file', options.structureFile);
+        data.append('title', "test");
+        //const fff = this.doPostRequest(options);
         // TODO:  Post a multipart form from options
-        return request<BionotesAnnotationResponse>({ method: "POST", url }).map(
+        return request<BionotesAnnotationResponse>({ method: "POST", url, data, headers: {'content-type': 'multipart/form-data',
+        "accept": "application/json",} }).map(
             getAtomicStructureFromResponse
         );
     }
