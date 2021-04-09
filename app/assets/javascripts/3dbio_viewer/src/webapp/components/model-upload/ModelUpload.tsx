@@ -38,6 +38,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                 structureFile,
                 annotationsFile: getFile(annotationFileRef),
             };
+            console.log(structureFile);
             return compositionRoot.uploadAtomicStructure(uploadParams).run(result => {
                 setAtomicStructure(result);
                 openUploadConfirmation();

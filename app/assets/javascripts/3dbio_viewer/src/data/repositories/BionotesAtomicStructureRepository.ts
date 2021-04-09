@@ -1,4 +1,5 @@
 import _ from "lodash";
+import axios, { AxiosResponse } from 'axios';
 import { AtomicStructure, ChainObject } from "../../domain/entities/AtomicStructure";
 import {
     AtomicStructureRepository,
@@ -12,7 +13,22 @@ import { BionotesAnnotationResponse } from "./BionotesAnnotationResponse";
 const url = routes.rinchen2 + "/upload";
 
 export class BionotesAtomicStructureRepository implements AtomicStructureRepository {
+    async doPostRequest(_options: BuildOptions): Promise<AxiosResponse> {
+        const formData = new FormData();
+        formData.append('structure_file', _options.structureFile);
+        formData.append('title', "test");
+
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data',
+                "accept": "application/json",
+            }
+    }
+    const ff = await axios.post(routes.rinchen2+"/upload", formData, config);
+    return ff;
+    }
     build(options: BuildOptions): FutureData<AtomicStructure> {
+        const fff = this.doPostRequest(options);
         // TODO:  Post a multipart form from options
         return request<BionotesAnnotationResponse>({ method: "POST", url }).map(
             getAtomicStructureFromResponse

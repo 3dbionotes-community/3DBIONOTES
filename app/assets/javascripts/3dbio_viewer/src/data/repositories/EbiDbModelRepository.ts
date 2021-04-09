@@ -1,16 +1,10 @@
 import _ from "lodash";
-import axios, { AxiosResponse } from 'axios';
 import { DbModel, DbModelCollection } from "../../domain/entities/DbModel";
 import { FutureData } from "../../domain/entities/FutureData";
 import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
 import { Future } from "../../utils/future";
 import { assert } from "../../utils/ts-utils";
 import { request } from "../request-utils";
-import { routes } from "../../routes";
-import {
-    annotationResponseExample,
-    BionotesAnnotationResponse,
-} from "./BionotesAnnotationResponse";
 
 const searchPageSize = 30;
 
@@ -54,6 +48,7 @@ export class EbiDbModelRepository implements DbModelRepository {
                 .value()
         );
     }
+
 }
 
 const apiFields = ["name", "author", "method", "resolution", "specimenstate"] as const;
