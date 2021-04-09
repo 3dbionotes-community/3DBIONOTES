@@ -1,10 +1,16 @@
 import _ from "lodash";
+import axios, { AxiosResponse } from 'axios';
 import { DbModel, DbModelCollection } from "../../domain/entities/DbModel";
 import { FutureData } from "../../domain/entities/FutureData";
 import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
 import { Future } from "../../utils/future";
 import { assert } from "../../utils/ts-utils";
 import { request } from "../request-utils";
+import { routes } from "../../routes";
+import {
+    annotationResponseExample,
+    BionotesAnnotationResponse,
+} from "./BionotesAnnotationResponse";
 
 const searchPageSize = 30;
 
@@ -24,7 +30,8 @@ const config = {
         },
     },
 };
-
+//http://rinchen-dos.cnb.csic.es:8882
+//http://3dbionotes.cnb.csic.es
 interface ItemConfig {
     type: DbModel["type"];
     searchUrl: string;
