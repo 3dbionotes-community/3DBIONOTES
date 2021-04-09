@@ -48,7 +48,6 @@ export class EbiDbModelRepository implements DbModelRepository {
                 .value()
         );
     }
-
 }
 
 const apiFields = ["name", "author", "method", "resolution", "specimenstate"] as const;

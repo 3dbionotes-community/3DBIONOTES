@@ -15,17 +15,18 @@ export class BionotesAtomicStructureRepository implements AtomicStructureReposit
     build(options: BuildOptions): FutureData<AtomicStructure> {
         const data = new FormData();
         const headers = {
-        "content-type": "multipart/form-data",
-        "accept": "application/json"};
-        
-        data.append('structure_file', options.structureFile);
-        if(options.jobTitle){
-            data.append('title', options.jobTitle);
+            "content-type": "multipart/form-data",
+            accept: "application/json",
+        };
+
+        data.append("structure_file", options.structureFile);
+        if (options.jobTitle) {
+            data.append("title", options.jobTitle);
         }
-        if(options.annotationsFile) {
-            data.append('annotations_file', options.annotationsFile);
+        if (options.annotationsFile) {
+            data.append("annotations_file", options.annotationsFile);
         }
-        return request<BionotesAnnotationResponse>({ method: "POST", url, data, headers}).map(
+        return request<BionotesAnnotationResponse>({ method: "POST", url, data, headers }).map(
             getAtomicStructureFromResponse
         );
     }

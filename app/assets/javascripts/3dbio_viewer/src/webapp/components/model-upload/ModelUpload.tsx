@@ -30,7 +30,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const [atomicStructure, setAtomicStructure] = useState<AtomicStructure>();
     const structureFileRef = useRef<DropzoneRef>(null);
     const annotationFileRef = useRef<DropzoneRef>(null);
-    
+
     const submitCb = useCallback(() => {
         setError("");
         const structureFile = getFile(structureFileRef);
@@ -41,11 +41,17 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                 annotationsFile: getFile(annotationFileRef),
             };
             setOpen(true);
-            return compositionRoot.uploadAtomicStructure(uploadParams).run(result => {
-                setAtomicStructure(result);
-                setOpen(false);
-                openUploadConfirmation();
-            }, console.error);
+            return compositionRoot.uploadAtomicStructure(uploadParams).run(
+                result => {
+                    setAtomicStructure(result);
+                    setOpen(false);
+                    openUploadConfirmation();
+                },
+                error => {
+                    setOpen(false);
+                    return error;
+                }
+            );
         } else {
             setError(i18n.t("Error: No file selected. Please select a structure file."));
             return _.noop;
@@ -98,7 +104,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                     <button className="uploadSubmit" onClick={submit}>
                         {i18n.t("Submit")}
                     </button>
-                    { open && <UploadLoader open={open}/> }
+                    {open && <UploadLoader open={open} />}
                 </DialogContent>
             </Dialog>
             {isUploadConfirmationOpen && atomicStructure ? (
@@ -107,7 +113,6 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                     onClose={closeUploadConfirmation}
                 />
             ) : null}
-            
         </>
     );
 });
