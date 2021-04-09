@@ -8,6 +8,7 @@ import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { AtomicStructure } from "../../../domain/entities/AtomicStructure";
 import { useAppContext } from "../AppContext";
 import { useBooleanState } from "../../hooks/use-boolean";
+import { UploadLoader } from "../upload-loader/UploadLoader";
 import { UploadConfirmation } from "./UploadConfirmation";
 
 export interface ModelUploadProps {
@@ -17,6 +18,7 @@ export interface ModelUploadProps {
 
 export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const { title, onClose } = props;
+    const [open, setOpen] = useState<boolean>(false);
     const { compositionRoot } = useAppContext();
     const [
         isUploadConfirmationOpen,
@@ -28,7 +30,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const [atomicStructure, setAtomicStructure] = useState<AtomicStructure>();
     const structureFileRef = useRef<DropzoneRef>(null);
     const annotationFileRef = useRef<DropzoneRef>(null);
-
+    
     const submitCb = useCallback(() => {
         setError("");
         const structureFile = getFile(structureFileRef);
@@ -38,9 +40,10 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                 structureFile,
                 annotationsFile: getFile(annotationFileRef),
             };
-            console.log(structureFile);
+            setOpen(true);
             return compositionRoot.uploadAtomicStructure(uploadParams).run(result => {
                 setAtomicStructure(result);
+                setOpen(false);
                 openUploadConfirmation();
             }, console.error);
         } else {
@@ -59,7 +62,6 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                         <Close />
                     </IconButton>
                 </DialogTitle>
-
                 <DialogContent>
                     {error && <h3>{error}</h3>}
                     <p>
@@ -96,6 +98,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                     <button className="uploadSubmit" onClick={submit}>
                         {i18n.t("Submit")}
                     </button>
+                    { open && <UploadLoader open={open}/> }
                 </DialogContent>
             </Dialog>
             {isUploadConfirmationOpen && atomicStructure ? (
@@ -104,6 +107,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                     onClose={closeUploadConfirmation}
                 />
             ) : null}
+            
         </>
     );
 });
