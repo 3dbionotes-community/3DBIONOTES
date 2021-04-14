@@ -65,3 +65,7 @@ export function isElementOfUnion<Union extends string>(
 ): value is Union {
     return (values as readonly string[]).includes(value);
 }
+
+export function getKeys<K extends string>(obj: Record<K, unknown>): K[] {
+    return Object.keys(obj) as K[];
+}

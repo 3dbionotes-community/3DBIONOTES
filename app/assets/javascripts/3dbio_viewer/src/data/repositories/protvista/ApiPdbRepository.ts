@@ -5,7 +5,7 @@ import { PdbRepository } from "../../../domain/repositories/PdbRepository";
 import { Future } from "../../../utils/future";
 import { getTotalFeaturesLength, Track } from "../../../domain/entities/Track";
 import { debugVariable } from "../../../utils/debug";
-import { getEmValidationTrack, PdbAnnotations } from "./tracks/em-validation";
+import { getEmValidationFragments, PdbAnnotations } from "./tracks/em-validation";
 import { EbiVariation, getVariants } from "./tracks/variants";
 import { getPhosphiteFragments, PhosphositeUniprot } from "./tracks/phosphite";
 import { Features, getFeatureFragments } from "./tracks/feature";
@@ -84,7 +84,7 @@ export class ApiPdbRepository implements PdbRepository {
         const functionalMappingFragments = getIf(data.cv19Tracks, getFunctionalMappingFragments);
         const structureCoverageFragments = getIf(data.coverage, getStructureCoverageFragments);
 
-        const emValidationTrack = getIf(data.pdbAnnotations, getEmValidationTrack);
+        const emValidationFragments = getIf(data.pdbAnnotations, getEmValidationFragments);
         const mobiFragments = getMobiUniprotFragments(data.mobiUniprot, options.protein);
         const proteomicsTrack = getIf(data.proteomics, getProteomicsTrack);
         const pdbRedoFragments = getIf(data.pdbRedo, pdbRedo =>
@@ -92,7 +92,7 @@ export class ApiPdbRepository implements PdbRepository {
         );
         const epitomesTrack = getIf(data.iedb, getEpitomesTrack);
 
-        const oldTracks: Track[] = _.compact([emValidationTrack, epitomesTrack, proteomicsTrack]);
+        const oldTracks: Track[] = _.compact([epitomesTrack, proteomicsTrack]);
 
         const protein = getProtein(options.protein, data.uniprot);
         const experiment = getIf(data.pdbExperiment, pdbExperiment =>
@@ -116,6 +116,7 @@ export class ApiPdbRepository implements PdbRepository {
             phosphiteFragments,
             dbPtmFragments,
             pdbRedoFragments,
+            emValidationFragments,
         ];
 
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());

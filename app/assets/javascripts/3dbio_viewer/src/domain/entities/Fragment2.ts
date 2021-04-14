@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { from, throwError } from "../../utils/misc";
-import { groupedPairsBy, notNil } from "../../utils/ts-utils";
+import { groupedPairsBy } from "../../utils/ts-utils";
 import { getTracksFromSubtrack, trackDefinitions } from "../definitions/tracks";
 import { Color } from "./Color";
 import { Evidence } from "./Evidence";
@@ -40,7 +40,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
     const groupedFragments = groupedPairsBy(fragments, fragment => fragment.subtrack);
 
     const subtracks = groupedFragments.map(
-        ([subtrackDef, fragmentsForSubtrack]): Subtrack => {
+        ([subtrack, fragmentsForSubtrack]): Subtrack => {
             // Some features may be repeated in different data sources, join them
             const uniqueFragments = _(fragmentsForSubtrack)
                 .groupBy(fragment => [fragment.start, fragment.end].join("-"))
@@ -56,7 +56,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                         start: fragment.start,
                         end: fragment.end,
                         description: fragment.description || "",
-                        color: fragment.color || subtrackDef.color || "#200",
+                        color: fragment.color || subtrack.color || "#200",
                         ...from({
                             id: fragment.id,
                             evidences: fragment.evidences,
@@ -68,15 +68,13 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
             );
 
             return {
-                accession: subtrackDef.dynamicSubtrack
-                    ? subtrackDef.dynamicSubtrack.id
-                    : subtrackDef.id,
-                type: subtrackDef.name,
-                label: subtrackDef.name,
-                labelTooltip: subtrackDef.description,
-                shape: subtrackDef.shape || "rectangle",
-                source: subtrackDef.source,
-                isBlast: subtrackDef.isBlast ?? true,
+                accession: subtrack.dynamicSubtrack ? subtrack.dynamicSubtrack.id : subtrack.id,
+                type: subtrack.name,
+                label: subtrack.name,
+                labelTooltip: subtrack.description,
+                shape: subtrack.shape || "rectangle",
+                source: subtrack.source,
+                isBlast: subtrack.isBlast ?? true,
                 locations: [{ fragments }],
             };
         }
@@ -113,16 +111,23 @@ function joinFragments(fragments: Fragment2[]): Fragment2 {
     return { ...reference, evidences };
 }
 
+export function getFragmentsList<Feature>(
+    features: Feature[] | undefined,
+    mapper: (feature: Feature) => Array<LooseFragment2 | undefined>
+): Fragment2[] {
+    return _(features || [])
+        .flatMap(feature => mapper(feature))
+        .compact()
+        .map(looseFragment => toNumericInterval(looseFragment))
+        .compact()
+        .value();
+}
+
 export function getFragments<Feature>(
     features: Feature[] | undefined,
     mapper: (feature: Feature) => LooseFragment2 | undefined
 ): Fragment2[] {
-    return (features || [])
-        .map(feature => {
-            const looseFragment = mapper(feature);
-            return looseFragment ? toNumericInterval(looseFragment) : undefined;
-        })
-        .filter(notNil);
+    return getFragmentsList(features, feature => _.compact([mapper(feature)]));
 }
 
 export type FragmentResult = LooseFragment2 | undefined;

@@ -16,6 +16,7 @@ const proteinFromPdbId: Record<string, string> = {
     "2z62": "O00206",
     "3brv": "O14920",
     "1yyb": "O14737",
+    "7bv1": "P0DTD1",
 };
 
 export function usePdbLoader(selection: SelectionState) {
