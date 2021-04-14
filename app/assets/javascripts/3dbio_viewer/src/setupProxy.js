@@ -32,6 +32,7 @@ function proxyRoutes(app, options) {
         target,
         changeOrigin: true,
         pathRewrite,
+        logLevel: "debug",
     };
 
     const apiProxy = proxy.createProxyMiddleware(proxyOptions);
