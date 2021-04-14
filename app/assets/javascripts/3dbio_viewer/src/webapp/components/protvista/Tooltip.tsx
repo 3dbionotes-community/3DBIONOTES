@@ -1,23 +1,26 @@
 import React from "react";
 import { Evidence } from "../../../domain/entities/Evidence";
 import { Fragment, getFragmentToolsLink } from "../../../domain/entities/Fragment";
+import { Fragment2, getConflict } from "../../../domain/entities/Fragment2";
+import { Pdb } from "../../../domain/entities/Pdb";
 import { Subtrack } from "../../../domain/entities/Track";
 import i18n from "../../utils/i18n";
 import { renderJoin } from "../../utils/react";
 import { Link } from "../Link";
 
 interface TooltipProps {
-    protein: string;
+    pdb: Pdb;
     subtrack: Subtrack;
-    fragment: Fragment;
+    fragment: Fragment | Fragment2;
 }
 
 export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
-    const { protein, subtrack, fragment } = props;
+    const { pdb, subtrack, fragment } = props;
     return (
         <EvidenceTable>
             <EvidenceRow title={i18n.t("Feature ID")} value={fragment.id} className="description" />
             <EvidenceRow title={i18n.t("Description")} value={fragment.description} />
+            <EvidenceRow title={i18n.t("Conflict")} value={getConflict(pdb.sequence, fragment)} />
 
             <EvidenceRow title={i18n.t("Source")} object={subtrack.source}>
                 {source =>
@@ -39,7 +42,7 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
 
             <EvidenceRow
                 title={i18n.t("Tools")}
-                object={getFragmentToolsLink({ protein, subtrack, fragment })}
+                object={getFragmentToolsLink({ protein: pdb.protein.id, subtrack, fragment })}
             >
                 {link => <Link name={link.name} url={link.url} />}
             </EvidenceRow>

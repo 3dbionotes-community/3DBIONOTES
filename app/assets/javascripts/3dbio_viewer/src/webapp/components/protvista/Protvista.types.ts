@@ -85,6 +85,6 @@ interface SubtrackView {
 export interface FragmentView {
     start: number;
     end: number;
-    color: Color;
+    color?: Color;
     tooltipContent: string;
 }

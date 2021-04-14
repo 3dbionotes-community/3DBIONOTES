@@ -51,6 +51,7 @@ export interface Feature {
     begin: string;
     end: string;
     molecule: string;
+    alternativeSequence?: string;
     evidences?: ApiEvidence[];
 }
 
@@ -79,6 +80,7 @@ export function getFeatureFragments(protein: string, features: Features): Fragme
                 end: feature.end,
                 description: feature.description,
                 evidences: getEvidences({ protein, feature }),
+                alternativeSequence: feature.alternativeSequence,
             };
         }
     );

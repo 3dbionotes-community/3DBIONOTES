@@ -59,7 +59,7 @@ export function getPdbView(
 
     const tracks = _(data)
         .map((pdbTrack): TrackView | undefined => {
-            const subtracks = getTrackData(pdb.protein.id, pdbTrack);
+            const subtracks = getTrackData(pdb, pdbTrack);
             if (_.isEmpty(subtracks)) return undefined;
 
             return {
@@ -91,7 +91,7 @@ export function getPdbView(
     };
 }
 
-function getTrackData(protein: string, track: Track): TrackView["data"] {
+function getTrackData(pdb: Pdb, track: Track): TrackView["data"] {
     return _.flatMap(track.subtracks, subtrack =>
         hasFragments(subtrack)
             ? [
@@ -105,7 +105,7 @@ function getTrackData(protein: string, track: Track): TrackView["data"] {
                               ...fragment,
                               tooltipContent: renderToString(
                                   <Tooltip
-                                      protein={protein}
+                                      pdb={pdb}
                                       subtrack={subtrack}
                                       fragment={fragment}
                                   />
