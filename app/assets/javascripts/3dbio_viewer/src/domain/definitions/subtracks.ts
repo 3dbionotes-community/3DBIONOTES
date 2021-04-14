@@ -294,6 +294,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "compositional-bias" as const,
         name: i18n.t("Compositional bias"),
         source: "PhosphoSitePlus, Uniprot",
+        color: colors.compbias,
+        shape: shapes.compbias,
         description: i18n.t(
             "Regions that exhibit compositional bias within the protein. That is, regions where there are over-represented amino acids, which are included in the description of the annotation."
         ),
@@ -301,6 +303,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     sequenceConflict: {
         id: "sequence-conflict" as const,
         name: i18n.t("Sequence conflict"),
+        color: colors.conflict,
+        shape: shapes.conflict,
         source: "Uniprot",
         description: i18n.t("Sequence discrepancies of unknown origin"),
     },
