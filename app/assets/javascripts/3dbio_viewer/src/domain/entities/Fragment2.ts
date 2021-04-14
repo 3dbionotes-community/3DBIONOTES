@@ -105,10 +105,7 @@ function joinFragments(fragments: Fragment2[]): Fragment2 {
 
     // The first fragment is used as reference, only different evidences from the rest of fragments are added
     const otherEvidences = _.flatMap(restFragments, f => f.evidences || []);
-    const evidences = _(reference.evidences || [])
-        .concat(otherEvidences)
-        .uniqWith(_.isEqual)
-        .value();
+    const evidences = _.concat(reference.evidences || [], otherEvidences);
     return { ...reference, evidences };
 }
 
@@ -119,7 +116,7 @@ export function getFragments<Feature>(
     return (features || [])
         .map(feature => {
             const looseFragment = mapper(feature);
-            return looseFragment ? getFragment(looseFragment) : undefined;
+            return looseFragment ? toNumericInterval(looseFragment) : undefined;
         })
         .filter(notNil);
 }
@@ -128,12 +125,25 @@ export type FragmentResult = LooseFragment2 | undefined;
 
 /* Internal */
 
-interface LooseFragment2 extends Omit<Fragment2, "start" | "end"> {
+export interface Interval {
+    start: number;
+    end: number;
+}
+
+export function getIntervalKey<T extends LooseInterval>(obj: T): string {
+    return [obj.start, obj.end].join("-");
+}
+
+interface LooseInterval {
     start: number | string;
     end: number | string;
 }
 
-function getFragment(looseFragment: LooseFragment2): Fragment2 | undefined {
+type LooseFragment2 = Omit<Fragment2, "start" | "end"> & LooseInterval;
+
+export function toNumericInterval<F extends LooseInterval>(
+    looseFragment: F
+): (Omit<F, "start" | "end"> & Interval) | undefined {
     const { start, end } = looseFragment;
     const startNum = Number(start);
     const endNum = Number(end);

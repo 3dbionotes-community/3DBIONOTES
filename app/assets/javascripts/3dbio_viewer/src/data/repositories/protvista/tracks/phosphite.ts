@@ -76,7 +76,7 @@ function getDomainFragments(protein: string, domainsItems: PhosphositeUniprotIte
     );
 }
 
-function getDomainsAndSitesDescription(items: PhosphositeUniprotItem[]) {
+function getDomainsAndSitesDescription(items: PhosphositeUniprotItem[]): string {
     return items
         .map(item => {
             const parts = item.description.split(";;");
@@ -109,13 +109,27 @@ function getNonDomainFragments(protein: string, items: PhosphositeUniprotItem[])
     );
 }
 
+/*
+Subtypes:
+    Acetylation -> acetylation
+    Diseases-associated site -> otherStructuralRelevantSites
+    Methylation -> methylation
+    OGalNAc -> ?
+    OGlcNAc -> Glycosylation
+    Phosphorylation -> phosphorylation
+    Regulatory site -> otherStructuralRelevantSites
+    Sumoylation -> ?
+    Sustrate-Kinase interaction -> bindingSite
+    Ubiquitination -> ubiquitination
+*/
+
 const mapSubTypeToSubtrack = recordOf<SubtrackDefinition>()({
     Acetylation: subtracks.acetylation,
-    Glycosylation: subtracks.glycosylation,
+    OGlcNAc: subtracks.glycosylation,
     Methylation: subtracks.methylation,
-    default: subtracks.modifiedResidue,
     Phosphorylation: subtracks.phosphorylation,
     Ubiquitination: subtracks.ubiquitination,
+    default: subtracks.modifiedResidue,
 });
 
 type PhosphositeSubtype = string;
@@ -138,9 +152,9 @@ const matchingPairs: Array<[PhosphositeSubtype, FeatureDescription]> = [
     ["farnesyl", "farnesyl"],
 ];
 
-function isPhosphosite(phosphositeItem: PhosphositeUniprotItem, feature: Feature): boolean {
+export function isPhosphosite(phosphositeType: string, feature: Feature): boolean {
     const values = {
-        phosphositeSubtype: phosphositeItem.subtype.toLowerCase(),
+        phosphositeSubtype: phosphositeType.toLowerCase(),
         featureDescription: feature.description.toLowerCase(),
     };
 
@@ -151,7 +165,7 @@ function isPhosphosite(phosphositeItem: PhosphositeUniprotItem, feature: Feature
     );
 }
 
-type PhosphositeByInterval = _.Dictionary<PhosphositeUniprotItem[]>;
+export type PhosphositeByInterval = _.Dictionary<PhosphositeUniprotItem[]>;
 
 export function getPhosphiteEvidencesFromFeature(options: {
     protein: string;
@@ -161,7 +175,7 @@ export function getPhosphiteEvidencesFromFeature(options: {
     const { protein, feature, phosphositeByInterval } = options;
     const existsInPhosphosite = _(
         phosphositeByInterval[[feature.begin, feature.end].join("-")]
-    ).some(phosphositeItem => isPhosphosite(phosphositeItem, feature));
+    ).some(phosphositeItem => isPhosphosite(phosphositeItem.subtype, feature));
     if (!existsInPhosphosite) return [];
 
     return getEvidences(protein);

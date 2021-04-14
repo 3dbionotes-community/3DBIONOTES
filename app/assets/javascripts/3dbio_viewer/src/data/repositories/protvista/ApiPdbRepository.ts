@@ -25,6 +25,7 @@ import { getSmartDomainFragments, SmartAnnotations } from "./tracks/smart-domain
 import { getInterproDomainFragments, InterproAnnotations } from "./tracks/interpro-domain";
 import { ElmdbUniprot, getElmdbUniprotFragments } from "./tracks/elmdb";
 import { getJSON, getXML, RequestError } from "../../request-utils";
+import { DbPtmAnnotations, getDbPtmFragments } from "./tracks/db-ptm";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -35,6 +36,7 @@ interface Data {
     coverage: Coverage;
     mobiUniprot: MobiUniprot;
     phosphositeUniprot: PhosphositeUniprot;
+    dbPtm: DbPtmAnnotations;
     pfamAnnotations: PfamAnnotations;
     smartAnnotations: SmartAnnotations;
     interproAnnotations: InterproAnnotations;
@@ -62,7 +64,7 @@ export class ApiPdbRepository implements PdbRepository {
         debugVariable({ apiData: data });
 
         const featureFragments = getIf(data.features, features =>
-            getFeatureFragments(options.protein, features, data.phosphositeUniprot)
+            getFeatureFragments(options.protein, features)
         );
         const pfamDomainFragments = getPfamDomainFragments(data.pfamAnnotations, options.protein);
         const smartDomainFragments = getSmartDomainFragments(
@@ -103,6 +105,9 @@ export class ApiPdbRepository implements PdbRepository {
         );
 
         const phosphiteFragments = getPhosphiteFragments(data.phosphositeUniprot, options.protein);
+        const dbPtmFragments = getIf(data.dbPtm, dbPtm =>
+            getDbPtmFragments(dbPtm, options.protein)
+        );
 
         const fragmentsList = [
             featureFragments,
@@ -114,6 +119,7 @@ export class ApiPdbRepository implements PdbRepository {
             mobiFragments,
             elmdbFragments,
             phosphiteFragments,
+            dbPtmFragments,
         ];
 
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
@@ -148,6 +154,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         coverage: getJSON(`${bioUrl}/api/alignments/Coverage/${pdb}${chain}`),
         mobiUniprot: getJSON(`${bioUrl}/api/annotations/mobi/Uniprot/${protein}`),
         phosphositeUniprot: getJSON(`${bioUrl}/api/annotations/Phosphosite/Uniprot/${protein}`),
+        dbPtm: getJSON(`${bioUrl}/api/annotations/dbptm/Uniprot/${protein}`),
         pfamAnnotations: getJSON(`${bioUrl}/api/annotations/Pfam/Uniprot/${protein}`),
         smartAnnotations: getJSON(`${bioUrl}/api/annotations/SMART/Uniprot/${protein}`),
         interproAnnotations: getJSON(`${bioUrl}/api/annotations/interpro/Uniprot/${protein}`),
