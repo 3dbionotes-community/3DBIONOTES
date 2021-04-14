@@ -313,16 +313,22 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     changedRotamers: {
         id: "changed-rotamers" as const,
         name: i18n.t("Changed rotamers"),
+        color: colors.changed_rotamer,
+        shape: shapes.changed_rotamer,
         source: "PDB-REDO",
     },
     hBondFlip: {
         id: "h-bond-flip" as const,
         name: i18n.t("H bond flip"),
+        color: colors.h_bond_flip,
+        shape: shapes.h_bond_flip,
         source: "PDB-REDO",
     },
     completedResidues: {
         id: "completed-residues" as const,
         name: i18n.t("Completed residues"),
+        color: colors.completed_res,
+        shape: shapes.completed_res,
         source: "PDB-REDO",
     },
 

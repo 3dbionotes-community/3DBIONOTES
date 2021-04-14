@@ -103,12 +103,9 @@ function getTrackData(pdb: Pdb, track: Track): TrackView["data"] {
                           ...location,
                           fragments: location.fragments.map(fragment => ({
                               ...fragment,
+                              color: fragment.color || "black",
                               tooltipContent: renderToString(
-                                  <Tooltip
-                                      pdb={pdb}
-                                      subtrack={subtrack}
-                                      fragment={fragment}
-                                  />
+                                  <Tooltip pdb={pdb} subtrack={subtrack} fragment={fragment} />
                               ),
                           })),
                       })),
