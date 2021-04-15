@@ -23,7 +23,7 @@ export function getEvidenceFromSources(options: {
     const mainSourceEvidence = sourceEvidences[0];
     const evidenceText = getEvidenceText({ accession }, code, sourceEvidences);
 
-    if (!mainSourceEvidence) return { title: evidenceText };
+    if (!mainSourceEvidence) return { title: evidenceText, sources: [] };
 
     const source: EvidenceSource = {
         name: mainSourceEvidence.name,
@@ -42,7 +42,7 @@ export function getEvidenceFromSources(options: {
               links: alternativeSourceLinks,
           };
 
-    return { title: evidenceText, source: source, alternativeSource };
+    return { title: evidenceText, sources: _.compact([source, alternativeSource]) };
 }
 
 export function getSourceEvidencesFromReferences(references: string): ApiEvidenceSource[] {

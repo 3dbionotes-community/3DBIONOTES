@@ -2,8 +2,7 @@ import { Link } from "./Link";
 
 export interface Evidence {
     title: string;
-    source?: EvidenceSource;
-    alternativeSource?: EvidenceSource;
+    sources: EvidenceSource[];
 }
 
 export interface EvidenceSource {

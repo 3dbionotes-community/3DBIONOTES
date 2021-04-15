@@ -62,10 +62,12 @@ function getEvidences(item: PdbRedoItem): Evidence[] {
         (info): Evidence => {
             return {
                 title: i18n.t("Imported information"),
-                source: {
-                    name: i18n.t("Imported from PDB_REDO"),
-                    links: [{ name: info.id, url: info.url }],
-                },
+                sources: [
+                    {
+                        name: i18n.t("Imported from PDB_REDO"),
+                        links: [{ name: info.id, url: info.url }],
+                    },
+                ],
             };
         }
     );

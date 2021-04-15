@@ -61,10 +61,12 @@ function getPfamDescription(annotation: PfamAnnotation): string {
 function getPfamEvidences(protein: string): Evidence[] {
     const evidence: Evidence = {
         title: i18n.t("Imported information"),
-        source: {
-            name: i18n.t("Imported from Pfam"),
-            links: [{ name: protein, url: `http://pfam.xfam.org/protein/${protein}` }],
-        },
+        sources: [
+            {
+                name: i18n.t("Imported from Pfam"),
+                links: [{ name: protein, url: `http://pfam.xfam.org/protein/${protein}` }],
+            },
+        ],
     };
 
     return [evidence];

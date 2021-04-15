@@ -48,15 +48,17 @@ export function getEpitomesTrack(iedb: Iedb): Track {
 function getEvidences(feature: IedbFeature): Fragment["evidences"] {
     const evidence: Evidence = {
         title: "Imported information",
-        source: {
-            name: "Imported from IEDB",
-            links: [
-                {
-                    name: feature.evidence.toString(),
-                    url: `http://www.iedb.org/epitope/${feature.evidence}`,
-                },
-            ],
-        },
+        sources: [
+            {
+                name: "Imported from IEDB",
+                links: [
+                    {
+                        name: feature.evidence.toString(),
+                        url: `http://www.iedb.org/epitope/${feature.evidence}`,
+                    },
+                ],
+            },
+        ],
     };
     return [evidence];
 }

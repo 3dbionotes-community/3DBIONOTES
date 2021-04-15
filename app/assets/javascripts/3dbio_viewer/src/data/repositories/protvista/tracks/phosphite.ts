@@ -184,15 +184,17 @@ export function getPhosphiteEvidencesFromFeature(options: {
 function getEvidences(protein: string): Evidence[] {
     const evidence: Evidence = {
         title: i18n.t("Imported information"),
-        source: {
-            name: i18n.t("Imported from PhosphoSitePlus"),
-            links: [
-                {
-                    name: protein,
-                    url: `http://www.phosphosite.org/uniprotAccAction.do?id=${protein}`,
-                },
-            ],
-        },
+        sources: [
+            {
+                name: i18n.t("Imported from PhosphoSitePlus"),
+                links: [
+                    {
+                        name: protein,
+                        url: `http://www.phosphosite.org/uniprotAccAction.do?id=${protein}`,
+                    },
+                ],
+            },
+        ],
     };
 
     return [evidence];

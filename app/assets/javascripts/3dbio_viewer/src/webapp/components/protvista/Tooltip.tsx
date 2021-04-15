@@ -36,7 +36,6 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
                 <React.Fragment key={idx}>
                     <EvidenceRow title={i18n.t("Evidence")} value={evidence.title} />
                     <EvidenceSourceRow evidence={evidence} />
-                    <EvidenceSourceRow evidence={evidence} alternative />
                 </React.Fragment>
             ))}
 
@@ -102,25 +101,27 @@ function EvidenceRow<Obj>(props: {
     );
 }
 
-const EvidenceSourceRow: React.FC<{ evidence: Evidence; alternative?: boolean }> = props => {
-    const { evidence, alternative } = props;
-    const source = alternative ? evidence.alternativeSource : evidence.source;
-    if (!source) return null;
+const EvidenceSourceRow: React.FC<{ evidence: Evidence }> = props => {
+    const { evidence } = props;
 
     return (
-        <tr>
-            <td></td>
-            <td>
-                {source.name}&nbsp;
-                {renderJoin(
-                    source.links.map(link => (
-                        <React.Fragment key={link.name}>
-                            <Link name={link.name} url={link.url} />
-                        </React.Fragment>
-                    )),
-                    <span> | </span>
-                )}
-            </td>
-        </tr>
+        <React.Fragment>
+            {evidence.sources.map((source, idx) => (
+                <tr key={idx}>
+                    <td></td>
+                    <td>
+                        {source.name}&nbsp;
+                        {renderJoin(
+                            source.links.map(link => (
+                                <React.Fragment key={link.name}>
+                                    <Link name={link.name} url={link.url} />
+                                </React.Fragment>
+                            )),
+                            <span> | </span>
+                        )}
+                    </td>
+                </tr>
+            ))}
+        </React.Fragment>
     );
 };

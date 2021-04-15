@@ -51,8 +51,10 @@ function getEvidences(_feature: ProteomicsFeature): Evidence[] {
         title: i18n.t(
             "Combined sources (Automatic assertion inferred from combination of experimental and computational evidence)"
         ),
-        source: { name: "source", links: [{ name: "Name", url: "http://1" }] },
-        alternativeSource: { name: "source", links: [{ name: "Name", url: "http://1" }] },
+        sources: [
+            { name: "source", links: [{ name: "Name", url: "http://1" }] },
+            { name: "source", links: [{ name: "Name", url: "http://1" }] },
+        ],
     };
 
     return [evidence, evidence];

@@ -101,15 +101,17 @@ function getEvidences(annotation: ElmdbUniprotAnnotation): Evidence[] {
 
     const evidence: Evidence = {
         title: i18n.t("Imported information"),
-        source: {
-            name: i18n.t("Imported from ELM"),
-            links: [
-                {
-                    name: elmId,
-                    url: `http://elm.eu.org/elms/MOD_N-GLC_1/${elmId}`,
-                },
-            ],
-        },
+        sources: [
+            {
+                name: i18n.t("Imported from ELM"),
+                links: [
+                    {
+                        name: elmId,
+                        url: `http://elm.eu.org/elms/MOD_N-GLC_1/${elmId}`,
+                    },
+                ],
+            },
+        ],
     };
 
     const evidenceFromReferences = getEvidenceFromReferences({
