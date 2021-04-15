@@ -76,9 +76,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                         )}
                     </p>
 
-                    <label htmlFor="jobTitle">
-                        <strong>{i18n.t("Job Title")}</strong>
-                    </label>
+                    <label htmlFor="jobTitle">{i18n.t("Job Title")}</label>
                     <input
                         aria-label={i18n.t("Job Title")}
                         value={jobTitle}
@@ -90,29 +88,25 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                     />
 
                     <label className="fileFormat">
-                        <strong>
-                            {i18n.t("Structure file in")}
-                            <a
-                                href="http://www.wwpdb.org/documentation/file-format"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                {" "}
-                                PDB{" "}
-                            </a>
-                            {i18n.t("or")}
-                            <a href="http://mmcif.wwpdb.org/" target="_blank" rel="noreferrer">
-                                {" "}
-                                mmCIF{" "}
-                            </a>{" "}
-                            {i18n.t("format*")}
-                        </strong>
+                        {i18n.t("Structure file in")}
+                        <a
+                            href="http://www.wwpdb.org/documentation/file-format"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            {" "}
+                            PDB{" "}
+                        </a>
+                        {i18n.t("or")}
+                        <a href="http://mmcif.wwpdb.org/" target="_blank" rel="noreferrer">
+                            {" "}
+                            mmCIF{" "}
+                        </a>{" "}
+                        {i18n.t("format*")}
                     </label>
                     <Dropzone ref={structureFileRef} accept=".pdb,.cif"></Dropzone>
 
-                    <label className="fileFormat">
-                        <strong>{i18n.t("Upload your annotations*")}</strong>
-                    </label>
+                    <label className="fileFormat">{i18n.t("Upload your annotations*")}</label>
                     <Dropzone ref={annotationFileRef} accept={"application/json"}></Dropzone>
 
                     {error && <ErrorMessage message={error} />}

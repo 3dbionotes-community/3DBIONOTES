@@ -13,7 +13,7 @@ const NetworkExample: React.FC<NetworkExampleProps> = React.memo(props => {
             className="network-example"
             onClick={() => onExampleClick(["P01111", "P01112", "P01116"].join("\n"))}
         >
-            <small className="network-example">{i18n.t("Example")}</small>
+            <small>{i18n.t("Example")}</small>
         </span>
     );
 });
