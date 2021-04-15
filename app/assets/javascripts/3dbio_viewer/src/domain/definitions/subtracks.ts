@@ -443,16 +443,18 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     functionalMappingLigands: {
         id: "functional-mapping-ligands" as const,
         name: i18n.t("Functional mapping ligands"),
-        source: {
-            url: "http://draco.cs.wpi.edu/wuhan/",
-            icon: "http://draco.cs.wpi.edu/wuhan/favicon.icon",
+        subtype: {
+            name: i18n.t("Ligand"),
+            description: i18n.t("Functional Mapping Ligand"),
         },
-        description: i18n.t("Combined with the following one. Common names or both tags"),
     },
-    panddaDrugScreeningDiamong: {
+    panddaDrugScreeningDiamond: {
         id: "pandda-drug-screening-diamond" as const,
         name: i18n.t("Pandda drug screening diamond"),
-        source: "https://www.diamond.ac.uk/covid-19/for-scientists/",
+        subtype: {
+            name: i18n.t("Pandda"),
+            description: i18n.t("Pandda drug screening diamond"),
+        },
     },
 
     // Gene view

@@ -181,7 +181,7 @@ export const trackDefinitions = recordOf<TrackDefinition>()({
         description: i18n.t(
             "Residues that participate in the interaction between the protein and the ligand. Only available for covid 19 related proteins"
         ),
-        subtracks: [subtracks.functionalMappingLigands, subtracks.panddaDrugScreeningDiamong],
+        subtracks: [subtracks.functionalMappingLigands, subtracks.panddaDrugScreeningDiamond],
     },
     geneViewer: {
         id: "gene-viewer" as const,

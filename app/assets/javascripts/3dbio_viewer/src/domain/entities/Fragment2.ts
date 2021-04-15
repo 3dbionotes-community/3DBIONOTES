@@ -76,6 +76,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 source: subtrack.source,
                 isBlast: subtrack.isBlast ?? true,
                 locations: [{ fragments }],
+                subtype: subtrack.subtype,
             };
         }
     );

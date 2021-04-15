@@ -12,7 +12,7 @@ export interface Track {
     description?: string;
 }
 
-// TODO: extend SubtrackDefinition or have a prop for it
+// * @deprecated Should be replaced eventually by SubtrackDefinition
 export interface Subtrack {
     // TODO: Do we really need type/accesion/label? simplify
     type: string; // Displayed in tooltip title
@@ -24,6 +24,7 @@ export interface Subtrack {
     overlapping?: boolean;
     source?: SubtrackDefinition["source"];
     isBlast?: SubtrackDefinition["isBlast"];
+    subtype?: SubtrackDefinition["subtype"];
 }
 
 export function addToTrack(options: {
