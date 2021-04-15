@@ -46,7 +46,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
     const addManualAnnotation = useCallback(() => {
         setError("");
         if (!annotationForm.startingValue) {
-            setError("Error: Missing starting value - please fill in a starting value.");
+            setError(i18n.t("Error: Missing starting value - please fill in a starting value."));
         }
         if (!annotationForm.endingValue) {
             setAnnotationForm({ ...annotationForm, endingValue: annotationForm.startingValue });
@@ -55,7 +55,9 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
 
     const uploadAnnotationFile = useCallback(() => {
         if (annotationFileRef.current?.files.length === 0) {
-            setError("Error: Missing file - please upload an annotations file in JSON format.");
+            setError(
+                i18n.t("Error: Missing file - please upload an annotations file in JSON format.")
+            );
         } else {
             setError("");
             window.alert("TODO");
@@ -68,7 +70,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
     }, [toggleIsManual]);
 
     return (
-        <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth>
+        <Dialog open={true} onClose={onClose} maxWidth="lg">
             <DialogTitle>
                 {i18n.t("Add annotation")}
                 <IconButton onClick={onClose}>
@@ -80,7 +82,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                 <label>
                     {isManual
                         ? i18n.t("Add annotation manually")
-                        : i18n.t("Upload annotation file in JSON format*")}
+                        : i18n.t("Upload annotation file in JSON format (*)")}
                 </label>
 
                 <Switch value={isManual} onChange={SwitchToggle} color="primary" />
@@ -162,7 +164,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             ))}
                         </select>
 
-                        <label htmlFor="startingValue">{i18n.t("Starting value*")}</label>
+                        <label htmlFor="startingValue">{i18n.t("Starting value (*)")}</label>
 
                         <input
                             aria-label={i18n.t("Starting value")}
@@ -205,7 +207,11 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                     </form>
                 ) : (
                     <>
-                        <Dropzone ref={annotationFileRef} accept="application/json"></Dropzone>
+                        <Dropzone
+                            ref={annotationFileRef}
+                            onDrop={() => setError("")}
+                            accept="application/json"
+                        ></Dropzone>
                         {error && <ErrorMessage message={error} />}
 
                         <button

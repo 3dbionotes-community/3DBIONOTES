@@ -13,7 +13,7 @@ export const Network: React.FC<NetworkProps> = React.memo(props => {
     const { onClose } = props;
 
     return (
-        <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth>
+        <Dialog open={true} onClose={onClose} maxWidth="lg">
             <DialogTitle>
                 {i18n.t("Network")}
                 <IconButton onClick={onClose}>

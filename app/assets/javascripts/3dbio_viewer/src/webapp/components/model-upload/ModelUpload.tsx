@@ -62,7 +62,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const submit = useCallbackEffect(submitCb);
     return (
         <>
-            <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth>
+            <Dialog open={true} onClose={onClose} maxWidth="md">
                 <DialogTitle>
                     {title}
                     <IconButton onClick={onClose}>
@@ -102,12 +102,20 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                             {" "}
                             mmCIF{" "}
                         </a>{" "}
-                        {i18n.t("format*")}
+                        {i18n.t("format (*)")}
                     </label>
-                    <Dropzone ref={structureFileRef} accept=".pdb,.cif"></Dropzone>
+                    <Dropzone
+                        ref={structureFileRef}
+                        onDrop={() => setError("")}
+                        accept=".pdb,.cif"
+                    ></Dropzone>
 
-                    <label className="fileFormat">{i18n.t("Upload your annotations*")}</label>
-                    <Dropzone ref={annotationFileRef} accept={"application/json"}></Dropzone>
+                    <label className="fileFormat">{i18n.t("Upload your annotations")}</label>
+                    <Dropzone
+                        ref={annotationFileRef}
+                        onDrop={() => setError("")}
+                        accept={"application/json"}
+                    ></Dropzone>
 
                     {error && <ErrorMessage message={error} />}
 

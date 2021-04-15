@@ -52,7 +52,6 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const [isUploadOpen, { enable: openUpload, disable: closeUpload }] = useBooleanState(false);
 
     const [searchState, startSearch] = useDbModelSearch(modelType);
-
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
             <DialogTitle>

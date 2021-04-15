@@ -43,6 +43,7 @@ const Text = styled.p`
 export interface DropzoneRef {
     openDialog: () => void;
     files: File[];
+    //setErrorMessage: () => void;
 }
 
 export const Dropzone = React.forwardRef(
@@ -52,6 +53,7 @@ export const Dropzone = React.forwardRef(
             maxFiles: 1,
             ...props,
         });
+
         const files = acceptedFiles.map(file => file.name);
 
         useImperativeHandle(ref, () => ({

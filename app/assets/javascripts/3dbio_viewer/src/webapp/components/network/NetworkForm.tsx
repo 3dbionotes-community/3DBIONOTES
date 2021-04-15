@@ -39,7 +39,7 @@ const NetworkForm = React.memo(() => {
 
     return (
         <div className="network-form">
-            <Label forText={i18n.t("species")} label={i18n.t("Select species*")} />
+            <Label forText={i18n.t("species")} label={i18n.t("Select species (*)")} />
             <SpeciesSelect
                 value={networkForm.species}
                 onSpeciesChange={newSpecies =>
@@ -51,19 +51,23 @@ const NetworkForm = React.memo(() => {
             />
             <Label
                 forText={i18n.t("uniProtAccession")}
-                label={i18n.t("Enter a list of UniProt accession*")}
+                label={i18n.t("Enter a list of UniProt accession (*)")}
             />
             <NetworkExample
-                onExampleClick={e =>
+                onExampleClick={e => {
                     setNetworkForm({
                         ...networkForm,
                         uniProtAccession: e,
-                    })
-                }
+                    });
+                    setError("");
+                }}
             />
             <UniProtAccessionTextArea
                 value={networkForm.uniProtAccession}
-                onChange={e => setNetworkForm({ ...networkForm, uniProtAccession: e })}
+                onChange={e => {
+                    setNetworkForm({ ...networkForm, uniProtAccession: e });
+                    setError("");
+                }}
             />
             <IncludeNeighborsCheckbox
                 checkedValue={networkForm.includeNeighboursWithStructuralData}
