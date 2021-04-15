@@ -467,7 +467,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         ),
     },
 
-    // Mutagenesis
+    // Mutagenesis experiments
     mutagenesis: {
         id: "mutagenesis" as const,
         name: i18n.t("Mutagenesis"),
