@@ -337,11 +337,15 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "rotamer-outlier" as const,
         name: i18n.t("Rotamer outlier"),
         source: "Molprobity",
+        color: colors.rota,
+        shape: shapes.rota,
     },
     phiPsiOutliers: {
         id: "phi-psi-outliers" as const,
         name: i18n.t("Phi/Psi outliers"),
         source: "Molprobity",
+        color: colors.rama,
+        shape: shapes.rama,
     },
 
     // em validation

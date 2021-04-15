@@ -26,6 +26,7 @@ import { getInterproDomainFragments, InterproAnnotations } from "./tracks/interp
 import { ElmdbUniprot, getElmdbUniprotFragments } from "./tracks/elmdb";
 import { getJSON, getXML, RequestError } from "../../request-utils";
 import { DbPtmAnnotations, getDbPtmFragments } from "./tracks/db-ptm";
+import { getMolprobityFragments, MolprobityResponse } from "./molprobity";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -45,6 +46,7 @@ interface Data {
     iedb: Iedb;
     pdbExperiment: PdbExperiment;
     elmdbUniprot: ElmdbUniprot;
+    molprobity: MolprobityResponse;
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K] | undefined> };
@@ -104,6 +106,10 @@ export class ApiPdbRepository implements PdbRepository {
             getDbPtmFragments(dbPtm, options.protein)
         );
 
+        const molprobityFragments = getIf(data.molprobity, molprobity =>
+            getMolprobityFragments(molprobity, options.chain)
+        );
+
         const fragmentsList = [
             featureFragments,
             pfamDomainFragments,
@@ -117,6 +123,7 @@ export class ApiPdbRepository implements PdbRepository {
             dbPtmFragments,
             pdbRedoFragments,
             emValidationFragments,
+            molprobityFragments,
         ];
 
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
@@ -160,6 +167,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         iedb: getJSON(`${bioUrl}/api/annotations/IEDB/Uniprot/${protein}`),
         pdbExperiment: getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/experiment/${pdb}`),
         elmdbUniprot: getJSON(`${bioUrl}/api/annotations/elmdb/Uniprot/${protein}`),
+        molprobity: getJSON(`${bioUrl}/compute/molprobity/${pdb}`),
     };
 
     return Future.joinObj(data$);
