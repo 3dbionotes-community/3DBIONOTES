@@ -22,11 +22,9 @@ export const Network: React.FC<NetworkProps> = React.memo(props => {
             </DialogTitle>
 
             <DialogContent>
-                <label>
-                    {i18n.t(
-                        "In order to calculate Protein-protein interaction networks, please select the species and provide a list of protein identifiers."
-                    )}
-                </label>
+                {i18n.t(
+                    "In order to calculate Protein-protein interaction networks, please select the species and provide a list of protein identifiers."
+                )}
                 <NetworkForm />
             </DialogContent>
         </Dialog>

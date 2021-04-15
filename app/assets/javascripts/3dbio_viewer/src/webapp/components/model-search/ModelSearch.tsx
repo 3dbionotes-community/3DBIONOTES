@@ -87,7 +87,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                     </button>
                     {isUploadOpen && (
                         <ModelUpload
-                            title={i18n.t("Upload your Atomic Structure")}
+                            title={i18n.t("Upload your atomic structure")}
                             onClose={closeUpload}
                         />
                     )}

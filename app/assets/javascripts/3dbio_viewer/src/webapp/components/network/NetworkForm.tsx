@@ -7,6 +7,7 @@ import NetworkExample from "./NetworkExample";
 import UniProtAccessionTextArea from "./UniProtAccessionTextArea";
 import SpeciesSelect from "./SpeciesSelect";
 import "./Network.css";
+import { ErrorMessage } from "../error-message/ErrorMessage";
 
 interface NetworkForm {
     species: string;
@@ -27,7 +28,9 @@ const NetworkForm = React.memo(() => {
 
     const addNetwork = useCallback(() => {
         if (networkForm.uniProtAccession === "") {
-            setError(i18n.t("Error: Please write down the UniProt accession"));
+            setError(
+                i18n.t("Error: Missing UniProt accession - please write down the UniProt accession")
+            );
         } else {
             setError("");
             window.alert("TODO");
@@ -36,7 +39,7 @@ const NetworkForm = React.memo(() => {
 
     return (
         <div className="network-form">
-            <Label forText={i18n.t("species")} label={i18n.t("Select species")} />
+            <Label forText={i18n.t("species")} label={i18n.t("Select species*")} />
             <SpeciesSelect
                 value={networkForm.species}
                 onSpeciesChange={newSpecies =>
@@ -48,7 +51,7 @@ const NetworkForm = React.memo(() => {
             />
             <Label
                 forText={i18n.t("uniProtAccession")}
-                label={i18n.t("Enter a list of UniProt accession")}
+                label={i18n.t("Enter a list of UniProt accession*")}
             />
             <NetworkExample
                 onExampleClick={e =>
@@ -77,7 +80,7 @@ const NetworkForm = React.memo(() => {
                 label={i18n.t("Upload your annotations in JSON format")}
             />
             <Dropzone ref={annotationFileRef} accept="application/json"></Dropzone>
-            {error && <h3>{error}</h3>}
+            {error && <ErrorMessage message={error} />}
 
             <button className="submit-button" type="submit" onClick={addNetwork}>
                 {i18n.t("Submit")}
