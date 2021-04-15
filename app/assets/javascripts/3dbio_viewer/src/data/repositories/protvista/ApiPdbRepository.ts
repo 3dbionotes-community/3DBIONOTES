@@ -5,7 +5,7 @@ import { PdbRepository } from "../../../domain/repositories/PdbRepository";
 import { Future } from "../../../utils/future";
 import { getTotalFeaturesLength, Track } from "../../../domain/entities/Track";
 import { debugVariable } from "../../../utils/debug";
-import { getEmValidationTrack, PdbAnnotations } from "./tracks/em-validation";
+import { getEmValidationFragments, PdbAnnotations } from "./tracks/em-validation";
 import { EbiVariation, getVariants } from "./tracks/variants";
 import { getPhosphiteFragments, PhosphositeUniprot } from "./tracks/phosphite";
 import { Features, getFeatureFragments } from "./tracks/feature";
@@ -13,8 +13,8 @@ import { Coverage, getStructureCoverageFragments } from "./tracks/structure-cove
 import { getMobiUniprotFragments, MobiUniprot } from "./tracks/mobi";
 import { Cv19Tracks, getFunctionalMappingFragments } from "./tracks/functional-mapping";
 import { getIf } from "../../../utils/misc";
-import { getProteomicsTrack, Proteomics } from "./tracks/proteomics";
-import { getPdbRedoTrack, PdbRedo } from "./tracks/pdb-redo";
+import { getProteomicsFragments, Proteomics } from "./tracks/proteomics";
+import { getPdbRedoFragments, PdbRedo } from "./tracks/pdb-redo";
 import { getEpitomesTrack, Iedb } from "./tracks/epitomes";
 import { getProtein, UniprotResponse } from "./uniprot";
 import { getExperiment, PdbExperiment } from "./ebi-pdbe-api";
@@ -25,6 +25,8 @@ import { getSmartDomainFragments, SmartAnnotations } from "./tracks/smart-domain
 import { getInterproDomainFragments, InterproAnnotations } from "./tracks/interpro-domain";
 import { ElmdbUniprot, getElmdbUniprotFragments } from "./tracks/elmdb";
 import { getJSON, getXML, RequestError } from "../../request-utils";
+import { DbPtmAnnotations, getDbPtmFragments } from "./tracks/db-ptm";
+import { getMolprobityFragments, MolprobityResponse } from "./molprobity";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -35,6 +37,7 @@ interface Data {
     coverage: Coverage;
     mobiUniprot: MobiUniprot;
     phosphositeUniprot: PhosphositeUniprot;
+    dbPtm: DbPtmAnnotations;
     pfamAnnotations: PfamAnnotations;
     smartAnnotations: SmartAnnotations;
     interproAnnotations: InterproAnnotations;
@@ -43,6 +46,7 @@ interface Data {
     iedb: Iedb;
     pdbExperiment: PdbExperiment;
     elmdbUniprot: ElmdbUniprot;
+    molprobity: MolprobityResponse;
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K] | undefined> };
@@ -62,7 +66,7 @@ export class ApiPdbRepository implements PdbRepository {
         debugVariable({ apiData: data });
 
         const featureFragments = getIf(data.features, features =>
-            getFeatureFragments(options.protein, features, data.phosphositeUniprot)
+            getFeatureFragments(options.protein, features)
         );
         const pfamDomainFragments = getPfamDomainFragments(data.pfamAnnotations, options.protein);
         const smartDomainFragments = getSmartDomainFragments(
@@ -82,20 +86,15 @@ export class ApiPdbRepository implements PdbRepository {
         const functionalMappingFragments = getIf(data.cv19Tracks, getFunctionalMappingFragments);
         const structureCoverageFragments = getIf(data.coverage, getStructureCoverageFragments);
 
-        const emValidationTrack = getIf(data.pdbAnnotations, getEmValidationTrack);
+        const emValidationFragments = getIf(data.pdbAnnotations, getEmValidationFragments);
         const mobiFragments = getMobiUniprotFragments(data.mobiUniprot, options.protein);
-        const proteomicsTrack = getIf(data.proteomics, getProteomicsTrack);
-        const pdbRedoTrack = getIf(data.pdbRedo, pdbRedo =>
-            getPdbRedoTrack(pdbRedo, options.chain)
+        const proteomicsFragments = getIf(data.proteomics, getProteomicsFragments);
+        const pdbRedoFragments = getIf(data.pdbRedo, pdbRedo =>
+            getPdbRedoFragments(pdbRedo, options.chain)
         );
         const epitomesTrack = getIf(data.iedb, getEpitomesTrack);
 
-        const oldTracks: Track[] = _.compact([
-            emValidationTrack,
-            epitomesTrack,
-            proteomicsTrack,
-            pdbRedoTrack,
-        ]);
+        const oldTracks: Track[] = _.compact([epitomesTrack]);
 
         const protein = getProtein(options.protein, data.uniprot);
         const experiment = getIf(data.pdbExperiment, pdbExperiment =>
@@ -103,6 +102,13 @@ export class ApiPdbRepository implements PdbRepository {
         );
 
         const phosphiteFragments = getPhosphiteFragments(data.phosphositeUniprot, options.protein);
+        const dbPtmFragments = getIf(data.dbPtm, dbPtm =>
+            getDbPtmFragments(dbPtm, options.protein)
+        );
+
+        const molprobityFragments = getIf(data.molprobity, molprobity =>
+            getMolprobityFragments(molprobity, options.chain)
+        );
 
         const fragmentsList = [
             featureFragments,
@@ -114,6 +120,11 @@ export class ApiPdbRepository implements PdbRepository {
             mobiFragments,
             elmdbFragments,
             phosphiteFragments,
+            dbPtmFragments,
+            pdbRedoFragments,
+            emValidationFragments,
+            molprobityFragments,
+            proteomicsFragments,
         ];
 
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
@@ -148,6 +159,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         coverage: getJSON(`${bioUrl}/api/alignments/Coverage/${pdb}${chain}`),
         mobiUniprot: getJSON(`${bioUrl}/api/annotations/mobi/Uniprot/${protein}`),
         phosphositeUniprot: getJSON(`${bioUrl}/api/annotations/Phosphosite/Uniprot/${protein}`),
+        dbPtm: getJSON(`${bioUrl}/api/annotations/dbptm/Uniprot/${protein}`),
         pfamAnnotations: getJSON(`${bioUrl}/api/annotations/Pfam/Uniprot/${protein}`),
         smartAnnotations: getJSON(`${bioUrl}/api/annotations/SMART/Uniprot/${protein}`),
         interproAnnotations: getJSON(`${bioUrl}/api/annotations/interpro/Uniprot/${protein}`),
@@ -156,6 +168,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         iedb: getJSON(`${bioUrl}/api/annotations/IEDB/Uniprot/${protein}`),
         pdbExperiment: getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/experiment/${pdb}`),
         elmdbUniprot: getJSON(`${bioUrl}/api/annotations/elmdb/Uniprot/${protein}`),
+        molprobity: getJSON(`${bioUrl}/compute/molprobity/${pdb}`),
     };
 
     return Future.joinObj(data$);

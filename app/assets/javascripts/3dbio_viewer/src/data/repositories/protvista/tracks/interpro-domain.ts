@@ -56,15 +56,17 @@ function getDescription(annotation: InterproAnnotation): string {
 function getEvidences(protein: string): Evidence[] {
     const evidence: Evidence = {
         title: i18n.t("Imported information"),
-        source: {
-            name: i18n.t("Imported from InterPro"),
-            links: [
-                {
-                    name: protein,
-                    url: `https://www.ebi.ac.uk/interpro/protein/UniProt/${protein}`,
-                },
-            ],
-        },
+        sources: [
+            {
+                name: i18n.t("Imported from InterPro"),
+                links: [
+                    {
+                        name: protein,
+                        url: `https://www.ebi.ac.uk/interpro/protein/UniProt/${protein}`,
+                    },
+                ],
+            },
+        ],
     };
 
     return [evidence];

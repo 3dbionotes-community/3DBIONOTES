@@ -1,9 +1,10 @@
 import _ from "lodash";
 import { from, throwError } from "../../utils/misc";
-import { groupedPairsBy, notNil } from "../../utils/ts-utils";
+import { groupedPairsBy } from "../../utils/ts-utils";
 import { getTracksFromSubtrack, trackDefinitions } from "../definitions/tracks";
 import { Color } from "./Color";
 import { Evidence } from "./Evidence";
+import { Fragment } from "./Fragment";
 import { Legend } from "./Legend";
 import { Subtrack, Track } from "./Track";
 import { SubtrackDefinition } from "./TrackDefinition";
@@ -19,6 +20,7 @@ export interface Fragment2 {
     evidences?: Evidence[];
     color?: Color;
     legend?: Legend;
+    alternativeSequence?: string;
 }
 
 export function getTracksFromFragments(fragments: Fragments): Track[] {
@@ -38,8 +40,8 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
     const groupedFragments = groupedPairsBy(fragments, fragment => fragment.subtrack);
 
     const subtracks = groupedFragments.map(
-        ([subtrackDef, fragmentsForSubtrack]): Subtrack => {
-            // Some features may be repeated in differnet data sources, join them
+        ([subtrack, fragmentsForSubtrack]): Subtrack => {
+            // Some features may be repeated in different data sources, join them
             const uniqueFragments = _(fragmentsForSubtrack)
                 .groupBy(fragment => [fragment.start, fragment.end].join("-"))
                 .values()
@@ -47,33 +49,34 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 .compact()
                 .value();
 
-            return {
-                accession: subtrackDef.dynamicSubtrack
-                    ? subtrackDef.dynamicSubtrack.id
-                    : subtrackDef.id,
-                type: subtrackDef.name,
-                label: subtrackDef.name,
-                labelTooltip: subtrackDef.description,
-                shape: subtrackDef.shape || "rectangle",
-                source: subtrackDef.source,
-                isBlast: subtrackDef.isBlast ?? true,
-                locations: [
-                    {
-                        fragments: uniqueFragments.map(fragment => {
-                            return {
-                                start: fragment.start,
-                                end: fragment.end,
-                                description: fragment.description || "",
-                                color: fragment.color || subtrackDef.color || "#200",
-                                ...from({
-                                    id: fragment.id,
-                                    evidences: fragment.evidences,
-                                    legend: fragment.legend,
-                                }),
-                            };
+            const fragments: Fragment2[] = uniqueFragments.map(
+                (fragment): Fragment2 => {
+                    return {
+                        subtrack: fragment.subtrack,
+                        start: fragment.start,
+                        end: fragment.end,
+                        description: fragment.description || "",
+                        color: fragment.color || subtrack.color || "#200",
+                        ...from({
+                            id: fragment.id,
+                            evidences: fragment.evidences,
+                            legend: fragment.legend,
+                            alternativeSequence: fragment.alternativeSequence,
                         }),
-                    },
-                ],
+                    };
+                }
+            );
+
+            return {
+                accession: subtrack.dynamicSubtrack ? subtrack.dynamicSubtrack.id : subtrack.id,
+                type: subtrack.name,
+                label: subtrack.name,
+                labelTooltip: subtrack.description,
+                shape: subtrack.shape || "rectangle",
+                source: subtrack.source,
+                isBlast: subtrack.isBlast ?? true,
+                locations: [{ fragments }],
+                subtype: subtrack.subtype,
             };
         }
     );
@@ -105,35 +108,60 @@ function joinFragments(fragments: Fragment2[]): Fragment2 {
 
     // The first fragment is used as reference, only different evidences from the rest of fragments are added
     const otherEvidences = _.flatMap(restFragments, f => f.evidences || []);
-    const evidences = _(reference.evidences || [])
-        .concat(otherEvidences)
-        .uniqWith(_.isEqual)
-        .value();
+    const evidences = _.concat(reference.evidences || [], otherEvidences);
     return { ...reference, evidences };
+}
+
+export function getFragmentsList<Feature>(
+    features: Feature[] | undefined,
+    mapper: (feature: Feature) => Array<LooseFragment2 | undefined>
+): Fragment2[] {
+    return _(features || [])
+        .flatMap(feature => mapper(feature))
+        .compact()
+        .map(looseFragment => toNumericInterval(looseFragment))
+        .compact()
+        .value();
 }
 
 export function getFragments<Feature>(
     features: Feature[] | undefined,
     mapper: (feature: Feature) => LooseFragment2 | undefined
 ): Fragment2[] {
-    return (features || [])
-        .map(feature => {
-            const looseFragment = mapper(feature);
-            return looseFragment ? getFragment(looseFragment) : undefined;
-        })
-        .filter(notNil);
+    return getFragmentsList(features, feature => _.compact([mapper(feature)]));
 }
 
 export type FragmentResult = LooseFragment2 | undefined;
 
+export function getConflict(sequence: string, fragment: Fragment | Fragment2): string | undefined {
+    if (!fragment.alternativeSequence) return;
+
+    const { start, end, alternativeSequence } = fragment;
+    const original = sequence.substring(start - 1, end) || "-";
+    return `${original} > ${alternativeSequence}`;
+}
+
 /* Internal */
 
-interface LooseFragment2 extends Omit<Fragment2, "start" | "end"> {
+export interface Interval {
+    start: number;
+    end: number;
+}
+
+export function getIntervalKey<T extends LooseInterval>(obj: T): string {
+    return [obj.start, obj.end].join("-");
+}
+
+interface LooseInterval {
     start: number | string;
     end: number | string;
 }
 
-function getFragment(looseFragment: LooseFragment2): Fragment2 | undefined {
+type LooseFragment2 = Omit<Fragment2, "start" | "end"> & LooseInterval;
+
+export function toNumericInterval<F extends LooseInterval>(
+    looseFragment: F
+): (Omit<F, "start" | "end"> & Interval) | undefined {
     const { start, end } = looseFragment;
     const startNum = Number(start);
     const endNum = Number(end);

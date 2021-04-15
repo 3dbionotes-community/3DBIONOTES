@@ -50,15 +50,17 @@ function getSmartDescription(annotation: SmartAnnotation): string {
 function getSmartEvidences(protein: string): Evidence[] {
     const evidence: Evidence = {
         title: i18n.t("Imported information"),
-        source: {
-            name: i18n.t("Imported from SMART"),
-            links: [
-                {
-                    name: protein,
-                    url: `http://smart.embl.de/smart/batch.pl?INCLUDE_SIGNALP=1&IDS=${protein}`,
-                },
-            ],
-        },
+        sources: [
+            {
+                name: i18n.t("Imported from SMART"),
+                links: [
+                    {
+                        name: protein,
+                        url: `http://smart.embl.de/smart/batch.pl?INCLUDE_SIGNALP=1&IDS=${protein}`,
+                    },
+                ],
+            },
+        ],
     };
 
     return [evidence];

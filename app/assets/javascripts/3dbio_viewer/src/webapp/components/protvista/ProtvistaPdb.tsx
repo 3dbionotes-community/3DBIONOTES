@@ -1,8 +1,9 @@
 import React from "react";
 import _ from "lodash";
 import { Pdb } from "../../../domain/entities/Pdb";
-import { getPdbView, loadPdbView, ProtvistaAction } from "./Protvista.helpers";
+import { loadPdbView, ProtvistaAction } from "./Protvista.helpers";
 import { BlockDef, ProtvistaTrackElement } from "./Protvista.types";
+import { getPdbView } from "../../view-models/PdbView";
 
 export interface ProtvistaPdbProps {
     pdb: Pdb;

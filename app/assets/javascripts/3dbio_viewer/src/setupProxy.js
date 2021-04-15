@@ -35,7 +35,7 @@ function proxyRoutes(app, options) {
         ? _.fromPairs(routes.map(route => [`^${route}/`, "/"]))
         : undefined;
 
-    const proxyOptions = { target, changeOrigin: true, pathRewrite };
+    const proxyOptions = { target, changeOrigin: true, pathRewrite, logLevel: "debug" };
     const apiProxy = proxy.createProxyMiddleware(proxyOptions);
 
     if (cache) {

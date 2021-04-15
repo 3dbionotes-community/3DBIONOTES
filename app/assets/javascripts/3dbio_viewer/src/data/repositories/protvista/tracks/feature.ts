@@ -4,11 +4,7 @@ import { Evidence as DomainEvidence } from "../../../../domain/entities/Evidence
 import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition";
 import { getEvidenceFromSources, ApiEvidenceSource } from "../entities/ApiEvidenceSource";
-import {
-    getPhosphiteEvidencesFromFeature,
-    PhosphositeUniprot,
-    PhosphositeUniprotItem,
-} from "./phosphite";
+import { getPtmSubtrackFromDescription } from "./db-ptm";
 
 const mapping: Record<string, SubtrackDefinition> = {
     ACT_SITE: subtracks.activeSite,
@@ -38,18 +34,6 @@ const mapping: Record<string, SubtrackDefinition> = {
     // VARIANT
 };
 
-// From extendProtVista/rebuild_ptm.js
-const ptmMappingFromDescription = {
-    methyl: subtracks.methylation,
-    acetyl: subtracks.acetylation,
-    //"crotonyl": "MOD_RES_CRO",
-    // "citrul": "MOD_RES_CIT",
-    phospho: subtracks.phosphorylation,
-    ubiq: subtracks.ubiquitination,
-    // "sumo": "MOD_RES_SUM",
-    glcnac: subtracks.glycosylation,
-};
-
 export interface Features {
     accession: string;
     entryName: string;
@@ -67,6 +51,7 @@ export interface Feature {
     begin: string;
     end: string;
     molecule: string;
+    alternativeSequence?: string;
     evidences?: ApiEvidence[];
 }
 
@@ -77,15 +62,7 @@ interface ApiEvidence {
     source?: ApiEvidenceSource;
 }
 
-type PhosphositeByInterval = _.Dictionary<PhosphositeUniprotItem[]>;
-
-export function getFeatureFragments(
-    protein: string,
-    features: Features,
-    phosphosite: PhosphositeUniprot | undefined
-): Fragments {
-    const phosphositeByInterval = _.groupBy(phosphosite, item => [item.start, item.end].join("-"));
-
+export function getFeatureFragments(protein: string, features: Features): Fragments {
     return getFragments(
         features.features,
         (feature): FragmentResult => {
@@ -102,7 +79,8 @@ export function getFeatureFragments(
                 start: feature.begin,
                 end: feature.end,
                 description: feature.description,
-                evidences: getEvidences(protein, feature, phosphositeByInterval),
+                evidences: getEvidences({ protein, feature }),
+                alternativeSequence: feature.alternativeSequence,
             };
         }
     );
@@ -110,28 +88,15 @@ export function getFeatureFragments(
 
 function getSubtrackFromFeature(feature: Feature): SubtrackDefinition | undefined {
     if (feature.type === "MOD_RES") {
-        const defaultSubtrack = subtracks.modifiedResidue;
-
-        return (
-            _(ptmMappingFromDescription)
-                .map((subtrack, descriptionPrefix) =>
-                    feature.description.toLowerCase().startsWith(descriptionPrefix)
-                        ? subtrack
-                        : null
-                )
-                .compact()
-                .first() || defaultSubtrack
-        );
+        return getPtmSubtrackFromDescription(feature.description) || subtracks.modifiedResidue;
     } else {
         return mapping[feature.type];
     }
 }
 
-function getEvidences(
-    protein: string,
-    feature: Feature,
-    phosphositeByInterval: PhosphositeByInterval
-): DomainEvidence[] {
+function getEvidences(options: { protein: string; feature: Feature }): DomainEvidence[] {
+    const { protein, feature } = options;
+
     return _(feature.evidences || [getDefaultEvidence(protein, feature)])
         .groupBy(apiEvidence => apiEvidence.code)
         .toPairs()
@@ -139,7 +104,6 @@ function getEvidences(
             getEvidence(feature, protein, code, apiEvidencesForCode)
         )
         .compact()
-        .concat(getPhosphiteEvidencesFromFeature({ protein, feature, phosphositeByInterval }))
         .value();
 }
 

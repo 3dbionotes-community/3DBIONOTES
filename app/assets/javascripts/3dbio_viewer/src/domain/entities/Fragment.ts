@@ -1,6 +1,7 @@
 import Constants from "../../data/repositories/protvista/tracks/legacy/Constants";
 import { Color } from "./Color";
 import { Evidence } from "./Evidence";
+import { Fragment2 } from "./Fragment2";
 import { Legend } from "./Legend";
 import { Link } from "./Link";
 import { Subtrack } from "./Track";
@@ -14,10 +15,13 @@ export interface Fragment {
     start: number;
     end: number;
     description: string;
+    alternativeSequence?: string;
     evidences?: Evidence[];
     color: Color;
     legend?: Legend;
 }
+
+type FragmentU = Fragment | Fragment2;
 
 interface LooseFragment extends Omit<Fragment, "start" | "end"> {
     start: number | string;
@@ -36,7 +40,7 @@ export function getFragment(looseFragment: LooseFragment): Fragment[] {
 export function getFragmentToolsLink(options: {
     protein: string;
     subtrack: Subtrack;
-    fragment: Fragment;
+    fragment: FragmentU;
 }): Link | undefined {
     const { protein, subtrack, fragment } = options;
 
@@ -48,11 +52,11 @@ export function getFragmentToolsLink(options: {
     }
 }
 
-export function isBlastFragment(subtrack: Subtrack, fragment: Fragment): boolean {
+export function isBlastFragment(subtrack: Subtrack, fragment: FragmentU): boolean {
     return subtrack.isBlast !== false && fragment.end - fragment.start >= 3;
 }
 
-export function getBlastUrl(protein: string, subtrack: Subtrack, fragment: Fragment): string {
+export function getBlastUrl(protein: string, subtrack: Subtrack, fragment: FragmentU): string {
     // Example: https://www.uniprot.org/blast/?about=P0DTC2[816-1273]&key=Chain&id=PRO_0000449649
     const baseUrl = "https://www.uniprot.org/blast";
     const trackInfo: { label: string } | undefined = Constants.getTrackInfo(subtrack.type);

@@ -294,6 +294,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "compositional-bias" as const,
         name: i18n.t("Compositional bias"),
         source: "PhosphoSitePlus, Uniprot",
+        color: colors.compbias,
+        shape: shapes.compbias,
         description: i18n.t(
             "Regions that exhibit compositional bias within the protein. That is, regions where there are over-represented amino acids, which are included in the description of the annotation."
         ),
@@ -301,6 +303,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     sequenceConflict: {
         id: "sequence-conflict" as const,
         name: i18n.t("Sequence conflict"),
+        color: colors.conflict,
+        shape: shapes.conflict,
         source: "Uniprot",
         description: i18n.t("Sequence discrepancies of unknown origin"),
     },
@@ -309,16 +313,22 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     changedRotamers: {
         id: "changed-rotamers" as const,
         name: i18n.t("Changed rotamers"),
+        color: colors.changed_rotamer,
+        shape: shapes.changed_rotamer,
         source: "PDB-REDO",
     },
     hBondFlip: {
         id: "h-bond-flip" as const,
         name: i18n.t("H bond flip"),
+        color: colors.h_bond_flip,
+        shape: shapes.h_bond_flip,
         source: "PDB-REDO",
     },
     completedResidues: {
         id: "completed-residues" as const,
         name: i18n.t("Completed residues"),
+        color: colors.completed_res,
+        shape: shapes.completed_res,
         source: "PDB-REDO",
     },
 
@@ -327,11 +337,15 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "rotamer-outlier" as const,
         name: i18n.t("Rotamer outlier"),
         source: "Molprobity",
+        color: colors.rota,
+        shape: shapes.rota,
     },
     phiPsiOutliers: {
         id: "phi-psi-outliers" as const,
         name: i18n.t("Phi/Psi outliers"),
         source: "Molprobity",
+        color: colors.rama,
+        shape: shapes.rama,
     },
 
     // em validation
@@ -429,16 +443,18 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     functionalMappingLigands: {
         id: "functional-mapping-ligands" as const,
         name: i18n.t("Functional mapping ligands"),
-        source: {
-            url: "http://draco.cs.wpi.edu/wuhan/",
-            icon: "http://draco.cs.wpi.edu/wuhan/favicon.icon",
+        subtype: {
+            name: i18n.t("Ligand"),
+            description: i18n.t("Functional Mapping Ligand"),
         },
-        description: i18n.t("Combined with the following one. Common names or both tags"),
     },
-    panddaDrugScreeningDiamong: {
+    panddaDrugScreeningDiamond: {
         id: "pandda-drug-screening-diamond" as const,
         name: i18n.t("Pandda drug screening diamond"),
-        source: "https://www.diamond.ac.uk/covid-19/for-scientists/",
+        subtype: {
+            name: i18n.t("Pandda"),
+            description: i18n.t("Pandda drug screening diamond"),
+        },
     },
 
     // Gene view
@@ -451,7 +467,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         ),
     },
 
-    // Mutagenesis
+    // Mutagenesis experiments
     mutagenesis: {
         id: "mutagenesis" as const,
         name: i18n.t("Mutagenesis"),
@@ -466,6 +482,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "unique-peptide" as const,
         name: i18n.t("Unique peptide"),
         source: "Uniprot",
+        color: colors.unique,
+        shape: shapes.unique,
         description: i18n.t(
             "Unique peptides are those that only belong to the group of genes that encode the protein"
         ),
@@ -474,6 +492,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "non-unique-peptide" as const,
         name: i18n.t("Non unique peptide"),
         source: "Uniprot",
+        color: colors.non_unique,
+        shape: shapes.non_unique,
         description: i18n.t(
             "Non-unique peptides are those that have been identified for several proteins and, therefore, for 2 or more different groups of genes"
         ),

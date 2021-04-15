@@ -9,16 +9,21 @@ export interface ApiEvidenceSource {
     alternativeUrl?: string;
 }
 
+export interface ApiEvidence {
+    code: string;
+    source?: ApiEvidenceSource;
+}
+
 export function getEvidenceFromSources(options: {
     accession: string;
     code: string;
     sourceEvidences: ApiEvidenceSource[];
-}): Evidence | undefined {
+}): Evidence {
     const { accession, code, sourceEvidences } = options;
     const mainSourceEvidence = sourceEvidences[0];
-    const evidenceText = getEvidenceText({ accession: accession }, code, sourceEvidences);
+    const evidenceText = getEvidenceText({ accession }, code, sourceEvidences);
 
-    if (!mainSourceEvidence) return { title: evidenceText };
+    if (!mainSourceEvidence) return { title: evidenceText, sources: [] };
 
     const source: EvidenceSource = {
         name: mainSourceEvidence.name,
@@ -37,5 +42,29 @@ export function getEvidenceFromSources(options: {
               links: alternativeSourceLinks,
           };
 
-    return { title: evidenceText, source: source, alternativeSource };
+    return { title: evidenceText, sources: _.compact([source, alternativeSource]) };
+}
+
+export function getSourceEvidencesFromReferences(references: string): ApiEvidenceSource[] {
+    return _(references.split(/[^\w]+/))
+        .uniq()
+        .map(
+            (reference): ApiEvidenceSource => ({
+                id: reference,
+                name: "PubMed",
+                url: "http://www.ncbi.nlm.nih.gov/pubmed/" + reference,
+                alternativeUrl: "http://europepmc.org/abstract/MED/" + reference,
+            })
+        )
+        .value();
+}
+
+export function getEvidenceFromReferences(options: {
+    accession: string;
+    code: string;
+    references: string;
+}): Evidence {
+    const { accession, code, references } = options;
+    const sourceEvidences = getSourceEvidencesFromReferences(references);
+    return getEvidenceFromSources({ accession, code, sourceEvidences });
 }

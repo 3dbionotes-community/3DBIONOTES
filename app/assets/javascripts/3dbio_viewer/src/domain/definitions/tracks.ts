@@ -181,7 +181,7 @@ export const trackDefinitions = recordOf<TrackDefinition>()({
         description: i18n.t(
             "Residues that participate in the interaction between the protein and the ligand. Only available for covid 19 related proteins"
         ),
-        subtracks: [subtracks.functionalMappingLigands, subtracks.panddaDrugScreeningDiamong],
+        subtracks: [subtracks.functionalMappingLigands, subtracks.panddaDrugScreeningDiamond],
     },
     geneViewer: {
         id: "gene-viewer" as const,
@@ -232,8 +232,11 @@ export const trackDefinitions = recordOf<TrackDefinition>()({
 });
 
 export function getTracksFromSubtrack(subtrack: SubtrackDefinition): TrackDefinition[] {
+    // Check subtrack ID instead of full subtrack so we match subtracks with custom names (i.e. em-validation)
+    const subtrackId = subtrack.dynamicSubtrack?.id || subtrack.id;
+
     return _(trackDefinitions)
         .values()
-        .filter(track => track.subtracks.includes(subtrack.dynamicSubtrack || subtrack))
+        .filter(track => track.subtracks.map(subtrack => subtrack.id).includes(subtrackId))
         .value();
 }
