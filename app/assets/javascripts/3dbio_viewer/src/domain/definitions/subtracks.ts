@@ -482,6 +482,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "unique-peptide" as const,
         name: i18n.t("Unique peptide"),
         source: "Uniprot",
+        color: colors.unique,
+        shape: shapes.unique,
         description: i18n.t(
             "Unique peptides are those that only belong to the group of genes that encode the protein"
         ),
@@ -490,6 +492,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "non-unique-peptide" as const,
         name: i18n.t("Non unique peptide"),
         source: "Uniprot",
+        color: colors.non_unique,
+        shape: shapes.non_unique,
         description: i18n.t(
             "Non-unique peptides are those that have been identified for several proteins and, therefore, for 2 or more different groups of genes"
         ),

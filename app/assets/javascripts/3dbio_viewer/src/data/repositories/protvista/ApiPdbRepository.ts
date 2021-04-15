@@ -13,7 +13,7 @@ import { Coverage, getStructureCoverageFragments } from "./tracks/structure-cove
 import { getMobiUniprotFragments, MobiUniprot } from "./tracks/mobi";
 import { Cv19Tracks, getFunctionalMappingFragments } from "./tracks/functional-mapping";
 import { getIf } from "../../../utils/misc";
-import { getProteomicsTrack, Proteomics } from "./tracks/proteomics";
+import { getProteomicsFragments, Proteomics } from "./tracks/proteomics";
 import { getPdbRedoFragments, PdbRedo } from "./tracks/pdb-redo";
 import { getEpitomesTrack, Iedb } from "./tracks/epitomes";
 import { getProtein, UniprotResponse } from "./uniprot";
@@ -88,13 +88,13 @@ export class ApiPdbRepository implements PdbRepository {
 
         const emValidationFragments = getIf(data.pdbAnnotations, getEmValidationFragments);
         const mobiFragments = getMobiUniprotFragments(data.mobiUniprot, options.protein);
-        const proteomicsTrack = getIf(data.proteomics, getProteomicsTrack);
+        const proteomicsFragments = getIf(data.proteomics, getProteomicsFragments);
         const pdbRedoFragments = getIf(data.pdbRedo, pdbRedo =>
             getPdbRedoFragments(pdbRedo, options.chain)
         );
         const epitomesTrack = getIf(data.iedb, getEpitomesTrack);
 
-        const oldTracks: Track[] = _.compact([epitomesTrack, proteomicsTrack]);
+        const oldTracks: Track[] = _.compact([epitomesTrack]);
 
         const protein = getProtein(options.protein, data.uniprot);
         const experiment = getIf(data.pdbExperiment, pdbExperiment =>
@@ -124,6 +124,7 @@ export class ApiPdbRepository implements PdbRepository {
             pdbRedoFragments,
             emValidationFragments,
             molprobityFragments,
+            proteomicsFragments
         ];
 
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());

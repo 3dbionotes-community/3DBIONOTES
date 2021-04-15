@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { getFragment } from "../../../../domain/entities/Fragment";
-import { Track } from "../../../../domain/entities/Track";
+import { Evidence } from "../../../../domain/entities/Evidence";
+import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import i18n from "../../../../webapp/utils/i18n";
-import { config } from "../config";
+import { subtracks } from "../definitions";
 
 export interface Proteomics {
     accession: string;
@@ -22,65 +22,38 @@ interface ProteomicsFeature {
     unique: boolean;
 }
 
-export function getProteomicsTrack(proteomics: Proteomics): Track {
-    const uniqueLabel = config.tracks.unique.label;
-    const nonUniqueLabel = config.tracks.non_unique.label;
-
-    const [uniqueFeatures, nonUniqueFeatures] = _.partition(
+export function getProteomicsFragments(proteomics: Proteomics): Fragments {
+    const [uniqueFeatures, _nonUniqueFeatures] = _.partition(
         proteomics.features,
         feature => feature.unique
     );
 
-    return {
-        id: "proteomics",
-        label: "Proteomics",
-        subtracks: [
-            {
-                accession: "unique-peptide",
-                type: uniqueLabel,
-                label: uniqueLabel,
-                shape: config.shapeByTrackName.unique,
-                locations: [
-                    {
-                        fragments: _.flatMap(uniqueFeatures, feature =>
-                            getFragment({
-                                start: feature.begin,
-                                end: feature.end,
-                                description: getDescription(feature),
-                                color: config.colorByTrackName.unique,
-                            })
-                        ),
-                    },
-                ],
-            },
-            {
-                accession: "non-unique-peptide",
-                type: nonUniqueLabel,
-                label: nonUniqueLabel,
-                shape: config.shapeByTrackName.non_unique,
-                locations: [
-                    {
-                        fragments: _.flatMap(nonUniqueFeatures, feature =>
-                            getFragment({
-                                start: feature.begin,
-                                end: feature.end,
-                                description: getDescription(feature),
-                                color: config.colorByTrackName.non_unique,
-                            })
-                        ),
-                    },
-                ],
-            },
-        ],
-    };
+    return getFragments(
+        uniqueFeatures,
+        (feature): FragmentResult => {
+            return {
+                subtrack: subtracks.uniquePeptide,
+                start: feature.begin,
+                end: feature.end,
+                evidences: getEvidences(feature),
+            };
+        }
+    );
 }
 
-function getDescription(feature: ProteomicsFeature): string {
-    return [
-        i18n.t(
+function getEvidences(_feature: ProteomicsFeature): Evidence[] {
+    /*
+    ...feature.evidences.map(({ source }) => `${source.name} - ${source.id} - ${source.url}`),
+    ...feature.xrefs.map(xref => `${xref.id} - ${xref.name} - ${xref.url}`),
+    */
+
+    const evidence: Evidence = {
+        title: i18n.t(
             "Combined sources (Automatic assertion inferred from combination of experimental and computational evidence)"
         ),
-        ...feature.evidences.map(({ source }) => `${source.name} - ${source.id} - ${source.url}`),
-        ...feature.xrefs.map(xref => `${xref.id} - ${xref.name} - ${xref.url}`),
-    ].join("\n");
+        source: { name: "source", links: [{ name: "Name", url: "http://1" }] },
+        alternativeSource: { name: "source", links: [{ name: "Name", url: "http://1" }] },
+    };
+
+    return [evidence, evidence];
 }
