@@ -13,6 +13,34 @@
                 "SPIKE_WCPV"
             ],
             "PDB": {
+                "6lxt": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6lxt_refine_6"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6lxt"
+                            }
+                        ]
+                    }
+                },
+                "6lvn": {
+                    "validation": {
+                        "isolde": [
+                            {
+                                "name": "6lvn_refine_3"
+                            }
+                        ],
+                        "pdb-redo": [
+                            {
+                                "name": "6lvn"
+                            }
+                        ]
+                    }
+                },
                 "7m0j": {
                     "emdbs": [
                         "EMD-23612"
@@ -53,6 +81,36 @@
                         "EMD-23593"
                     ]
                 },
+                "7ly2": {
+                    "emdbs": [
+                        "EMD-23582"
+                    ]
+                },
+                "7ly0": {
+                    "emdbs": [
+                        "EMD-23581"
+                    ]
+                },
+                "7lxz": {
+                    "emdbs": [
+                        "EMD-23580"
+                    ]
+                },
+                "7lxy": {
+                    "emdbs": [
+                        "EMD-23579"
+                    ]
+                },
+                "7lxx": {
+                    "emdbs": [
+                        "EMD-23578"
+                    ]
+                },
+                "7lxw": {
+                    "emdbs": [
+                        "EMD-23577"
+                    ]
+                },
                 "7lww": {
                     "emdbs": [
                         "EMD-23559"
@@ -77,34 +135,6 @@
                     "emdbs": [
                         "EMD-23555"
                     ]
-                },
-                "6lxt": {
-                    "validation": {
-                        "isolde": [
-                            {
-                                "name": "6lxt_refine_6"
-                            }
-                        ],
-                        "pdb-redo": [
-                            {
-                                "name": "6lxt"
-                            }
-                        ]
-                    }
-                },
-                "6lvn": {
-                    "validation": {
-                        "isolde": [
-                            {
-                                "name": "6lvn_refine_3"
-                            }
-                        ],
-                        "pdb-redo": [
-                            {
-                                "name": "6lvn"
-                            }
-                        ]
-                    }
                 },
                 "7d4g": {
                     "emdbs": [
@@ -525,6 +555,36 @@
                 "EMD-30573": {
                     "pdb": [
                         "7d4g"
+                    ]
+                },
+                "EMD-23582": {
+                    "pdb": [
+                        "7ly2"
+                    ]
+                },
+                "EMD-23581": {
+                    "pdb": [
+                        "7ly0"
+                    ]
+                },
+                "EMD-23580": {
+                    "pdb": [
+                        "7lxz"
+                    ]
+                },
+                "EMD-23579": {
+                    "pdb": [
+                        "7lxy"
+                    ]
+                },
+                "EMD-23578": {
+                    "pdb": [
+                        "7lxx"
+                    ]
+                },
+                "EMD-23577": {
+                    "pdb": [
+                        "7lxw"
                     ]
                 },
                 "EMD-23010": {
@@ -1047,6 +1107,7 @@
                 "P-P-Interactions": {
                     "PDB": {
                         "7e3j": {},
+                        "7ly3": {},
                         "7lss": {},
                         "7ls9": {},
                         "7lqw": {},
@@ -1055,6 +1116,9 @@
                         "7lm8": {},
                         "7ljr": {},
                         "7laa": {},
+                        "7l58": {},
+                        "7l57": {},
+                        "7l56": {},
                         "7l2f": {},
                         "7l2e": {},
                         "7l2d": {},
@@ -1374,6 +1438,9 @@
                         "EMD-23277",
                         "EMD-23246",
                         "EMD-23211",
+                        "EMD-23167",
+                        "EMD-23166",
+                        "EMD-23165",
                         "EMD-23156",
                         "EMD-23127",
                         "EMD-23126",
@@ -2775,6 +2842,7 @@
                         "7lyi",
                         "7lyh",
                         "7ltj",
+                        "7lmc",
                         "7lkx",
                         "7lkw",
                         "7lkv",
@@ -2782,6 +2850,8 @@
                         "7lkt",
                         "7lks",
                         "7lkr",
+                        "7lke",
+                        "7lkd",
                         "7lfe",
                         "7ldx",
                         "7lbn",
@@ -4505,6 +4575,11 @@
                 "NendoU/nsp15"
             ],
             "PDB": {
+                "7me0": {
+                    "emdbs": [
+                        "EMD-23786"
+                    ]
+                },
                 "6vww": {
                     "description": "",
                     "validation": {
@@ -4546,7 +4621,7 @@
                 },
                 "7k0r": {
                     "emdbs": [
-                        "7k0r"
+                        "EMD-22610"
                     ]
                 },
                 "6xdh": {
@@ -4566,6 +4641,11 @@
                 "EMD-22610": {
                     "pdb": [
                         "7k0r"
+                    ]
+                },
+                "EMD-23786": {
+                    "pdb": [
+                        "7me0"
                     ]
                 }
             },
