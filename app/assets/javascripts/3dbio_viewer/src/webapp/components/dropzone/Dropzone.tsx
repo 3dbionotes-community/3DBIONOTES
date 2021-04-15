@@ -20,7 +20,7 @@ const Shade = styled.div<DropzoneRootProps>`
     display: flex;
     place-content: center;
     text-shadow: 1px 1px 10px black;
-    padding: 20px;
+    padding: 60px;
     align-items: center;
     border-width: 2px;
     border-radius: 2px;
@@ -43,6 +43,7 @@ const Text = styled.p`
 export interface DropzoneRef {
     openDialog: () => void;
     files: File[];
+    //setErrorMessage: () => void;
 }
 
 export const Dropzone = React.forwardRef(
@@ -52,6 +53,7 @@ export const Dropzone = React.forwardRef(
             maxFiles: 1,
             ...props,
         });
+
         const files = acceptedFiles.map(file => file.name);
 
         useImperativeHandle(ref, () => ({

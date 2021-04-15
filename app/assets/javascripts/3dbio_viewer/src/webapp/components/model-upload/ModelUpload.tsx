@@ -10,6 +10,7 @@ import { useAppContext } from "../AppContext";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { UploadLoader } from "../upload-loader/UploadLoader";
 import { UploadConfirmation } from "./UploadConfirmation";
+import { ErrorMessage } from "../error-message/ErrorMessage";
 
 export interface ModelUploadProps {
     title: string;
@@ -53,7 +54,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                 }
             );
         } else {
-            setError(i18n.t("Error: No file selected. Please select a structure file."));
+            setError(i18n.t("Error: Missing file - please select a structure file."));
             return _.noop;
         }
     }, [compositionRoot, jobTitle, openUploadConfirmation]);
@@ -61,7 +62,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const submit = useCallbackEffect(submitCb);
     return (
         <>
-            <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth>
+            <Dialog open={true} onClose={onClose} maxWidth="md">
                 <DialogTitle>
                     {title}
                     <IconButton onClick={onClose}>
@@ -69,17 +70,13 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    {error && <h3>{error}</h3>}
                     <p>
                         {i18n.t(
                             "Models under study and not deposited to PDB yet can be analysed too. Annotations from similar entries based on BLAST sequence match will be displayed, but also customised annotations can be provided by the user. Job title (if provided) will be used to identify the model, otherwise the file name will be used."
                         )}
                     </p>
 
-                    <label htmlFor="jobTitle">
-                        <strong>{i18n.t("Job Title")}</strong>
-                    </label>
-                    <small>{i18n.t("Optional")}</small>
+                    <label htmlFor="jobTitle">{i18n.t("Job Title")}</label>
                     <input
                         aria-label={i18n.t("Job Title")}
                         value={jobTitle}
@@ -92,14 +89,35 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
 
                     <label className="fileFormat">
                         {i18n.t("Structure file in")}
-                        <a href="http://www.wwpdb.org/documentation/file-format"> PDB </a>
+                        <a
+                            href="http://www.wwpdb.org/documentation/file-format"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            {" "}
+                            PDB{" "}
+                        </a>
                         {i18n.t("or")}
-                        <a href="http://mmcif.wwpdb.org/"> mmCIF </a> {i18n.t("format")}
+                        <a href="http://mmcif.wwpdb.org/" target="_blank" rel="noreferrer">
+                            {" "}
+                            mmCIF{" "}
+                        </a>{" "}
+                        {i18n.t("format (*)")}
                     </label>
-                    <Dropzone ref={structureFileRef} accept=".pdb,.cif"></Dropzone>
+                    <Dropzone
+                        ref={structureFileRef}
+                        onDrop={() => setError("")}
+                        accept=".pdb,.cif"
+                    ></Dropzone>
 
                     <label className="fileFormat">{i18n.t("Upload your annotations")}</label>
-                    <Dropzone ref={annotationFileRef} accept={"application/json"}></Dropzone>
+                    <Dropzone
+                        ref={annotationFileRef}
+                        onDrop={() => setError("")}
+                        accept={"application/json"}
+                    ></Dropzone>
+
+                    {error && <ErrorMessage message={error} />}
 
                     <button className="uploadSubmit" onClick={submit}>
                         {i18n.t("Submit")}

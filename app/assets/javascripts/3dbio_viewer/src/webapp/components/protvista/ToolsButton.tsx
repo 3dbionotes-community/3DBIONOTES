@@ -12,12 +12,7 @@ export const ToolsButton: React.FC<ToolsButtonProps> = () => {
 
     return (
         <>
-            <Dropdown
-                text={i18n.t("Tools")}
-                items={items}
-                onClick={openNetwork}
-                showSelection={true}
-            />
+            <Dropdown text={i18n.t("Tools")} items={items} onClick={openNetwork} />
             {isNetworkOpen && <Network onClose={closeNetwork} />}
         </>
     );

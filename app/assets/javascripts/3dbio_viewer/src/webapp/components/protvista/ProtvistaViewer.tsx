@@ -66,12 +66,12 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                                 )
                             );
                         })}
-                        {isAnnotationToolOpen && action && (
-                            <AnnotationsTool onClose={closeAnnotationTool} action={action} />
-                        )}
                     </ViewerBlock>
                 );
             })}
+            {isAnnotationToolOpen && action && (
+                <AnnotationsTool onClose={closeAnnotationTool} action={action} />
+            )}
         </div>
     );
 };
