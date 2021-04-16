@@ -64,7 +64,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
         }
     }, []);
 
-    const SwitchToggle = useCallback(() => {
+    const switchToggle = useCallback(() => {
         setError("");
         toggleIsManual();
     }, [toggleIsManual]);
@@ -85,7 +85,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                         : i18n.t("Upload annotation file in JSON format (*)")}
                 </label>
 
-                <Switch value={isManual} onChange={SwitchToggle} color="primary" />
+                <Switch value={isManual} onChange={switchToggle} color="primary" />
 
                 {isManual ? (
                     <form className="annotationForm">
