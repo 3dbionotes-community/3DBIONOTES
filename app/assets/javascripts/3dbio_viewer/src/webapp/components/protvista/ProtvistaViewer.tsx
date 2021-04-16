@@ -11,6 +11,7 @@ import { ProtvistaAction } from "./Protvista.helpers";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
 import { PPIViewer } from "../ppi/PPIViewer";
+import { GeneViewer } from "../gene-viewer/GeneViewer";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
@@ -20,6 +21,7 @@ export interface ProtvistaViewerProps {
 
 const mapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
     "ppi-viewer": PPIViewer,
+    "gene-viewer": GeneViewer,
 };
 
 type OnActionCb = NonNullable<ProtvistaPdbProps["onAction"]>;

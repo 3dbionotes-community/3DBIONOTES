@@ -122,12 +122,7 @@ export const blockDefs: BlockDef[] = [
         title: "Variants and mutagenesis experiments",
         description: "",
         help: "",
-        tracks: [
-            tracks.structureCoverage,
-            tracks.geneViewer /* viewer */,
-            tracks.mutagenesis,
-            tracks.variants,
-        ],
+        tracks: [tracks.structureCoverage, tracks.geneViewer, tracks.mutagenesis, tracks.variants],
     },
     {
         id: "proteomics",
