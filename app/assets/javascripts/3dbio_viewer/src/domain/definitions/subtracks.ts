@@ -12,6 +12,8 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "structure-coverage" as const,
         name: i18n.t("Structure Coverage"),
         description: i18n.t("Coverage of the sequence shown with the primary protein sequence"),
+        color: colors.region,
+        shape: shapes.region,
     },
 
     // Domains
