@@ -12,65 +12,25 @@ import { Link } from "../Link";
 interface TooltipProps {
     pdb: Pdb;
     subtrack: Subtrack;
-    fragment: Fragment | Fragment2;
+    fragment: FragmentP;
 }
+
+type FragmentP = Fragment | Fragment2;
 
 export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
     const { pdb, subtrack, fragment } = props;
+
     return (
-        <EvidenceTable>
-            <EvidenceRow title={i18n.t("Feature ID")} value={fragment.id} className="description" />
-            <EvidenceRow title={i18n.t("Description")} value={fragment.description} />
-            <EvidenceRow title={i18n.t("Conflict")} value={getConflict(pdb.sequence, fragment)} />
-
-            <EvidenceRow title={i18n.t("Source")} object={subtrack.source}>
-                {source =>
-                    typeof source === "string" ? null : (
-                        <div>
-                            <img src={source.icon} /> <Link name={source.url} url={source.url} />
-                        </div>
-                    )
-                }
-            </EvidenceRow>
-
-            {(fragment.evidences || []).map((evidence, idx) => (
-                <React.Fragment key={idx}>
-                    <EvidenceRow title={i18n.t("Evidence")} value={evidence.title} />
-                    <EvidenceSourceRows sources={evidence.sources} />
-                </React.Fragment>
-            ))}
-
-            {fragment.crossReferences && (
-                <React.Fragment>
-                    <EvidenceSourceRows
-                        title={i18n.t("Cross-references")}
-                        sources={_.take(fragment.crossReferences, 1)}
-                    />
-                    <EvidenceSourceRows sources={_.drop(fragment.crossReferences, 1)} />
-                </React.Fragment>
-            )}
-
-            <EvidenceRow
-                title={i18n.t("Tools")}
-                object={getFragmentToolsLink({ protein: pdb.protein.id, subtrack, fragment })}
-            >
-                {link => <Link name={link.name} url={link.url} />}
-            </EvidenceRow>
-
-            <EvidenceRow title={i18n.t("Legend")} object={fragment.legend}>
-                {legend =>
-                    legend.map(legendItem => (
-                        <React.Fragment key={legendItem.text}>
-                            <div
-                                style={{ ...styles.tooltip, backgroundColor: legendItem.color }}
-                            ></div>
-                            <span>{legendItem.text}</span>
-                            <br />
-                        </React.Fragment>
-                    ))
-                }
-            </EvidenceRow>
-        </EvidenceTable>
+        <TooltipTable>
+            <TooltipRow title={i18n.t("Feature ID")} value={fragment.id} className="description" />
+            <TooltipRow title={i18n.t("Description")} value={fragment.description} />
+            <TooltipRow title={i18n.t("Conflict")} value={getConflict(pdb.sequence, fragment)} />
+            <Source subtrack={subtrack} />
+            <Evidences fragment={fragment} />
+            <CrossReferences fragment={fragment} />
+            <Tools pdb={pdb} subtrack={subtrack} fragment={fragment} />
+            <Legend fragment={fragment} />
+        </TooltipTable>
     );
 });
 
@@ -85,17 +45,88 @@ const styles = {
     },
 };
 
-const EvidenceTable: React.FC = props => {
+const TooltipTable: React.FC = props => {
     return <table className="tooltip">{props.children}</table>;
 };
 
-function EvidenceRow<Obj>(props: {
+const Legend: React.FC<{ fragment: FragmentP }> = props => {
+    return (
+        <TooltipRow title={i18n.t("Legend")} object={props.fragment.legend}>
+            {legend =>
+                legend.map(legendItem => (
+                    <React.Fragment key={legendItem.text}>
+                        <div style={{ ...styles.tooltip, backgroundColor: legendItem.color }}></div>
+                        <span>{legendItem.text}</span>
+                        <br />
+                    </React.Fragment>
+                ))
+            }
+        </TooltipRow>
+    );
+};
+
+const Tools: React.FC<{ pdb: Pdb; subtrack: Subtrack; fragment: FragmentP }> = props => {
+    const { pdb, subtrack, fragment } = props;
+
+    return (
+        <TooltipRow
+            title={i18n.t("Tools")}
+            object={getFragmentToolsLink({ protein: pdb.protein.id, subtrack, fragment })}
+        >
+            {link => <Link name={link.name} url={link.url} />}
+        </TooltipRow>
+    );
+};
+
+const CrossReferences: React.FC<{ fragment: FragmentP }> = props => {
+    const { crossReferences = [] } = props.fragment;
+    const [headCrossReferences, restCrossReferences] = React.useMemo(() => {
+        return [_.take(crossReferences, 1), _.drop(crossReferences, 1)];
+    }, [crossReferences]);
+    if (_.isEmpty(headCrossReferences)) return null;
+
+    return (
+        <React.Fragment>
+            <ReferencesRows title={i18n.t("Cross-references")} sources={headCrossReferences} />
+            <ReferencesRows sources={restCrossReferences} />
+        </React.Fragment>
+    );
+};
+
+const Evidences: React.FC<{ fragment: FragmentP }> = props => {
+    return (
+        <React.Fragment>
+            {(props.fragment.evidences || []).map((evidence, idx) => (
+                <React.Fragment key={idx}>
+                    <TooltipRow title={i18n.t("Evidence")} value={evidence.title} />
+                    <ReferencesRows sources={evidence.sources} />
+                </React.Fragment>
+            ))}
+        </React.Fragment>
+    );
+};
+
+const Source: React.FC<{ subtrack: Subtrack }> = props => {
+    return (
+        <TooltipRow title={i18n.t("Source")} object={props.subtrack.source}>
+            {source =>
+                typeof source === "string" ? null : (
+                    <div>
+                        <img src={source.icon} /> <Link name={source.url} url={source.url} />
+                    </div>
+                )
+            }
+        </TooltipRow>
+    );
+};
+
+function TooltipRow<Obj>(props: {
     title: string;
     value?: string;
     object?: Obj;
     className?: string;
     children?: (obj: Obj) => React.ReactNode;
-}) {
+}): React.ReactElement | null {
     const { title, value, object, children, className } = props;
 
     const childrenContent = object && children && children(object);
@@ -112,7 +143,7 @@ function EvidenceRow<Obj>(props: {
     );
 }
 
-const EvidenceSourceRows: React.FC<{ title?: string; sources: Reference[] }> = props => {
+const ReferencesRows: React.FC<{ title?: string; sources: Reference[] }> = props => {
     const { title, sources } = props;
 
     return (
