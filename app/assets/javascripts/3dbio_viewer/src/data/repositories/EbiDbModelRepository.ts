@@ -24,7 +24,8 @@ const config = {
         },
     },
 };
-
+//http://rinchen-dos.cnb.csic.es:8882
+//http://3dbionotes.cnb.csic.es
 interface ItemConfig {
     type: DbModel["type"];
     searchUrl: string;

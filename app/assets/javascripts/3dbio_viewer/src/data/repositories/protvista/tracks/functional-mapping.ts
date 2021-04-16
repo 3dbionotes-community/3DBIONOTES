@@ -14,8 +14,8 @@ export type Cv19Tracks = Cv19Track[];
 export type Cv19Track =
     | Cv19FunctionalMappingLigandsTrack
     | Cv19FunctionalMappingPPITrack
-    | Cv19DiamondDrugScreeningTrack
-    //| Cv19GenomicVariantsTrack;
+    | Cv19DiamondDrugScreeningTrack;
+//| Cv19GenomicVariantsTrack;
 
 export interface Cv19BaseTrack {
     visualization_type?: "variants";
