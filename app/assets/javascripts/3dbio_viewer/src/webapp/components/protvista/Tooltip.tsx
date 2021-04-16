@@ -1,5 +1,6 @@
 import React from "react";
-import { Evidence } from "../../../domain/entities/Evidence";
+import _ from "lodash";
+import { Reference } from "../../../domain/entities/Evidence";
 import { Fragment, getFragmentToolsLink } from "../../../domain/entities/Fragment";
 import { Fragment2, getConflict } from "../../../domain/entities/Fragment2";
 import { Pdb } from "../../../domain/entities/Pdb";
@@ -35,9 +36,19 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
             {(fragment.evidences || []).map((evidence, idx) => (
                 <React.Fragment key={idx}>
                     <EvidenceRow title={i18n.t("Evidence")} value={evidence.title} />
-                    <EvidenceSourceRow evidence={evidence} />
+                    <EvidenceSourceRows sources={evidence.sources} />
                 </React.Fragment>
             ))}
+
+            {fragment.crossReferences && (
+                <React.Fragment>
+                    <EvidenceSourceRows
+                        title={i18n.t("Cross-references")}
+                        sources={_.take(fragment.crossReferences, 1)}
+                    />
+                    <EvidenceSourceRows sources={_.drop(fragment.crossReferences, 1)} />
+                </React.Fragment>
+            )}
 
             <EvidenceRow
                 title={i18n.t("Tools")}
@@ -101,14 +112,14 @@ function EvidenceRow<Obj>(props: {
     );
 }
 
-const EvidenceSourceRow: React.FC<{ evidence: Evidence }> = props => {
-    const { evidence } = props;
+const EvidenceSourceRows: React.FC<{ title?: string; sources: Reference[] }> = props => {
+    const { title, sources } = props;
 
     return (
         <React.Fragment>
-            {evidence.sources.map((source, idx) => (
+            {sources.map((source, idx) => (
                 <tr key={idx}>
-                    <td></td>
+                    <td>{title}</td>
                     <td>
                         {source.name}&nbsp;
                         {renderJoin(

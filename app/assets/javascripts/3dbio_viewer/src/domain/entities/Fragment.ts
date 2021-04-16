@@ -1,6 +1,6 @@
 import Constants from "../../data/repositories/protvista/tracks/legacy/Constants";
 import { Color } from "./Color";
-import { Evidence } from "./Evidence";
+import { Evidence, Reference } from "./Evidence";
 import { Fragment2 } from "./Fragment2";
 import { Legend } from "./Legend";
 import { Link } from "./Link";
@@ -19,6 +19,7 @@ export interface Fragment {
     evidences?: Evidence[];
     color: Color;
     legend?: Legend;
+    crossReferences?: Reference[];
 }
 
 type FragmentU = Fragment | Fragment2;

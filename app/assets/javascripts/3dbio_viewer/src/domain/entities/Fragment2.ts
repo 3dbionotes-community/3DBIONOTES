@@ -1,9 +1,9 @@
 import _ from "lodash";
-import { from, throwError } from "../../utils/misc";
+import { from as withoutUndefinedValues, throwError } from "../../utils/misc";
 import { groupedPairsBy } from "../../utils/ts-utils";
 import { getTracksFromSubtrack, trackDefinitions } from "../definitions/tracks";
 import { Color } from "./Color";
-import { Evidence } from "./Evidence";
+import { Evidence, Reference } from "./Evidence";
 import { Fragment } from "./Fragment";
 import { Legend } from "./Legend";
 import { Subtrack, Track } from "./Track";
@@ -17,10 +17,11 @@ export interface Fragment2 {
     start: number;
     end: number;
     description?: string;
-    evidences?: Evidence[];
     color?: Color;
     legend?: Legend;
     alternativeSequence?: string;
+    evidences?: Evidence[];
+    crossReferences?: Reference[];
 }
 
 export function getTracksFromFragments(fragments: Fragments): Track[] {
@@ -57,11 +58,12 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                         end: fragment.end,
                         description: fragment.description || "",
                         color: fragment.color || subtrack.color || "#200",
-                        ...from({
+                        ...withoutUndefinedValues({
                             id: fragment.id,
                             evidences: fragment.evidences,
                             legend: fragment.legend,
                             alternativeSequence: fragment.alternativeSequence,
+                            crossReferences: fragment.crossReferences,
                         }),
                     };
                 }

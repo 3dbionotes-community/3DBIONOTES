@@ -1,8 +1,8 @@
 import _ from "lodash";
-import { Evidence } from "../../../../domain/entities/Evidence";
 import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
-import i18n from "../../../../webapp/utils/i18n";
+import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition";
 import { subtracks } from "../definitions";
+import { getEvidencesFromApiEvidence } from "../entities/ApiEvidenceSource";
 
 export interface Proteomics {
     accession: string;
@@ -22,40 +22,33 @@ interface ProteomicsFeature {
     unique: boolean;
 }
 
-export function getProteomicsFragments(proteomics: Proteomics): Fragments {
-    const [uniqueFeatures, _nonUniqueFeatures] = _.partition(
+export function getProteomicsFragments(proteomics: Proteomics, protein: string): Fragments {
+    const [uniqueFeatures, nonUniqueFeatures] = _.partition(
         proteomics.features,
         feature => feature.unique
     );
 
-    return getFragments(
-        uniqueFeatures,
-        (feature): FragmentResult => {
-            return {
-                subtrack: subtracks.uniquePeptide,
-                start: feature.begin,
-                end: feature.end,
-                evidences: getEvidences(feature),
-            };
-        }
+    return _.concat(
+        getFragmentsFor(uniqueFeatures, subtracks.uniquePeptide, protein),
+        getFragmentsFor(nonUniqueFeatures, subtracks.nonUniquePeptide, protein)
     );
 }
 
-function getEvidences(_feature: ProteomicsFeature): Evidence[] {
-    /*
-    ...feature.evidences.map(({ source }) => `${source.name} - ${source.id} - ${source.url}`),
-    ...feature.xrefs.map(xref => `${xref.id} - ${xref.name} - ${xref.url}`),
-    */
-
-    const evidence: Evidence = {
-        title: i18n.t(
-            "Combined sources (Automatic assertion inferred from combination of experimental and computational evidence)"
-        ),
-        sources: [
-            { name: "source", links: [{ name: "Name", url: "http://1" }] },
-            { name: "source", links: [{ name: "Name", url: "http://1" }] },
-        ],
-    };
-
-    return [evidence, evidence];
+function getFragmentsFor(
+    features: ProteomicsFeature[],
+    subtrack: SubtrackDefinition,
+    protein: string
+) {
+    return getFragments(
+        features,
+        (feature): FragmentResult => {
+            return {
+                subtrack,
+                start: feature.begin,
+                end: feature.end,
+                evidences: getEvidencesFromApiEvidence(feature.evidences, protein),
+                crossReferences: feature.xrefs.map(xref => ({ name: xref.id, links: [xref] })),
+            };
+        }
+    );
 }
