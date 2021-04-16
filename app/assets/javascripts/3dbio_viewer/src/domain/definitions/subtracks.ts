@@ -22,6 +22,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         source: "Prosite db",
         name: i18n.t("Prosite domain"), // (domain in domain & sites)
         color: colors.domain,
+        shape: shapes.domain,
         description: i18n.t(
             "Information collected from the Prosite database. PROSITE consists of documentation entries describing protein domains, families and functional sites, as well as associated patterns and profiles to identify them, using  multiple sequence alignments. Prosite profiles may be less sensitive, as they are intended to cover domains along their entire length with the best possible alignment and obtain an accurate functional characterization"
         ),
@@ -31,6 +32,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Pfam domains"), // (domain families)
         source: "Pfam db",
         color: colors.pfam_domain,
+        shape: shapes.pfam_domain,
         description: i18n.t(
             "Information collected from the Pfam database. The Pfam database is a large collection of protein families, each represented by multiple sequence alignments and hidden Markov models (HMMs)"
         ),
@@ -40,6 +42,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Smart domains"), // (domain families)
         source: "Smart db",
         color: colors.smart_domain,
+        shape: shapes.smart_domain,
         description: i18n.t(
             "Information collected from the SMART database. The SMART (Simple Modular Architecture Research Tool) compiles genetically mobile domains and domain architectures"
         ),
@@ -49,6 +52,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Interpro domains"), // (domain families)
         source: "Interpro db",
         color: "#A0A0FF",
+        shape: shapes.interpro_domain,
         description: i18n.t(
             "Information collected from the InterPro database. The InterPro database is a large collection of protein families, each represented by multiple sequence alignments and hidden Markov models"
         ),
@@ -75,6 +79,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         source: "Uniprot",
         description: i18n.t("Region of the protein embedded in cell membranes"),
         color: colors.transmem,
+        shape: shapes.transmem,
     },
 
     // Secondary structure
@@ -83,6 +88,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Helix"),
         source: "Uniprot",
         color: colors.helix,
+        shape: shapes.helix,
         isBlast: false,
     },
     betaStrand: {
@@ -90,6 +96,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Beta strand"),
         source: "Uniprot",
         color: colors.strand,
+        shape: shapes.strand,
         isBlast: false,
     },
     turn: {
@@ -97,6 +104,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Turn"),
         source: "Uniprot",
         color: colors.turn,
+        shape: shapes.turn,
         isBlast: false,
     },
 
@@ -105,6 +113,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "prediction" as const,
         name: i18n.t("Prediction"),
         source: "DIBS",
+        // TODO: color, shape
         description: i18n.t(
             "Disordered Binding Site (DIBS) database is a large repository for protein complexes that are formed between Intrinsically Disordered"
         ),
@@ -117,6 +126,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         source: "Uniprot",
         description: i18n.t(""),
         color: colors.motif,
+        shape: shapes.motif,
     },
 
     // Regions
@@ -125,6 +135,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Regions"),
         source: "Uniprot",
         color: colors.region,
+        shape: shapes.region,
     },
 
     // Other regions
@@ -133,6 +144,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Coiled coils"),
         source: "Uniprot",
         color: colors.coiled,
+        shape: shapes.coiled,
         description: i18n.t(
             "Coiled coils are built by two or more alpha helices that wind around each other to form a supercoil"
         ),
@@ -142,6 +154,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Linear interacting peptide"),
         source: "Uniprot/MobyDB",
         color: colors.linear_interacting_peptide,
+        shape: "rectangle",
         description: i18n.t(
             "This are regions that interact with other peptides. Protein-protein interactions are often mediated by short linear motifs (SLiMs) that are  normally located in intrinsically disordered regions (IDRs) of proteins"
         ),
@@ -151,6 +164,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Repeats"),
         source: "Uniprot",
         color: colors.repeat,
+        shape: shapes.repeat,
         description: i18n.t(
             "A repeat is any sequence block that appear more than one time in the sequence, either in an identical or a highly similar form"
         ),
@@ -160,6 +174,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Zinc finger"),
         source: "Uniprot",
         color: colors.zn_fing,
+        shape: shapes.zn_fing,
         description: i18n.t(
             "Small, functional, independently folded domain that coordinates one or more zinc ions.  It is a structural motifs and hence, it should be inside of motifs annotations. Apply differents colours to represent the differents type of motifs"
         ),
@@ -197,16 +212,16 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Metal binding"),
         source: "Uniprot",
         description: i18n.t("Binding site for a metal ion"),
-        shape: shapes.metal,
         color: colors.metal,
+        shape: shapes.metal,
     },
     otherStructuralRelevantSites: {
         id: "other-structural-relevant-sites" as const,
         name: i18n.t("Others structural relevant sites"),
         source: "Uniprot, PhosphoSitePlus",
         description: i18n.t("Binding site for others chemical group"),
-        shape: shapes.site,
         color: colors.site,
+        shape: shapes.site,
     },
 
     // Mollecular processing
@@ -216,12 +231,13 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         source: "Uniprot",
         description: i18n.t("N-terminal signal peptide"),
         color: colors.signal,
+        shape: shapes.signal,
     },
     chain: {
         id: "chain" as const,
         name: i18n.t("Chain"),
-        shape: shapes.chain,
         color: colors.chain,
+        shape: shapes.chain,
         source: "Uniprot",
         description: i18n.t(
             "Mature region of the protein. This describes the extension of a polypeptide chain in the mature protein after processing"
@@ -271,14 +287,16 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("Modified residue"),
         source: "Uniprot",
         description: i18n.t("Modified residues with others chemical groups bounded"),
+        color: colors.mod_res,
+        shape: shapes.mod_res,
     },
     phosphorylation: {
         id: "phosphorylation" as const,
         name: i18n.t("Phosphorylation"),
         source: "PhosphoSitePlus, Uniprot",
+        description: i18n.t("Residues with covalently attached phosphoryl groups."),
         color: colors.mod_res_pho,
         shape: shapes.mod_res_pho,
-        description: i18n.t("Residues with covalently attached phosphoryl groups."),
     },
     ubiquitination: {
         id: "ubiquitination" as const,
@@ -506,11 +524,15 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "linear-epitope-n" as const,
         name: i18n.t("Linear epitope 1, 2, 3, 4, 5"),
         description: i18n.t("Different entries from IEDB"),
+        color: colors.linear_epitope,
+        shape: shapes.linear_epitope,
     },
     linearEpitomes: {
         id: "linear-epitope" as const,
         name: i18n.t("Linear epitope"),
         source: "IEDB",
+        color: colors.linear_epitope,
+        shape: shapes.linear_epitope,
     },
 
     // Antigenic sequence
@@ -518,5 +540,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "ab-binding-sequence" as const,
         name: i18n.t("Ab binding sequence"),
         source: "Uniprot - HPA",
+        color: colors.antigen,
+        shape: "rectangle",
     },
 });
