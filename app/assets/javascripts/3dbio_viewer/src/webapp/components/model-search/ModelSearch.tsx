@@ -52,7 +52,6 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const [isUploadOpen, { enable: openUpload, disable: closeUpload }] = useBooleanState(false);
 
     const [searchState, startSearch] = useDbModelSearch(modelType);
-
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
             <DialogTitle>
@@ -87,7 +86,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                     </button>
                     {isUploadOpen && (
                         <ModelUpload
-                            title={i18n.t("Upload your Atomic Structure")}
+                            title={i18n.t("Upload your atomic structure")}
                             onClose={closeUpload}
                         />
                     )}

@@ -32,5 +32,3 @@ export interface ProtvistaBlock extends ViewerBlockModel {
     tracks: TrackDef[];
     component?: React.FC<BlockComponentProps>;
 }
-
-
