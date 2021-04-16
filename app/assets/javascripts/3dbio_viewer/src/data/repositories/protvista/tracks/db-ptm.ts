@@ -4,6 +4,8 @@ import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition"
 import { subtracks } from "../definitions";
 import { getEvidenceFromDefaultReferences } from "../entities/ApiEvidenceSource";
 
+// http://3dbionotes.cnb.csic.es/api/annotations/dbptm/Uniprot/O14920
+
 export type DbPtmAnnotations = DbPtmAnnotation[];
 
 export interface DbPtmAnnotation {

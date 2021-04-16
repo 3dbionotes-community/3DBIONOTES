@@ -6,6 +6,8 @@ import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition"
 import { getEvidenceFromDefaultSources, ApiEvidence } from "../entities/ApiEvidenceSource";
 import { getPtmSubtrackFromDescription } from "./db-ptm";
 
+// Example: https://www.ebi.ac.uk/proteins/api/features/O14920
+
 const mapping: Record<string, SubtrackDefinition> = {
     ACT_SITE: subtracks.activeSite,
     BINDING: subtracks.bindingSite,

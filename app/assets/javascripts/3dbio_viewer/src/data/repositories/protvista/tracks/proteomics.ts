@@ -4,6 +4,8 @@ import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition"
 import { subtracks } from "../definitions";
 import { getEvidencesFromApiEvidence } from "../entities/ApiEvidenceSource";
 
+// Example: https://www.ebi.ac.uk/proteins/api/proteomics/O14920
+
 export interface Proteomics {
     accession: string;
     entryName: string;

@@ -11,7 +11,7 @@ import { Feature } from "./feature";
 /*
 Example: http://3dbionotes.cnb.csic.es/api/annotations/Phosphosite/Uniprot/O00141
 
-Note that we also have phosphite fragments coming from ebi /proteins/api/feature
+Note that we also have phosphite fragments coming from ebi /proteins/api/feature.
 */
 
 export type PhosphositeUniprot = PhosphositeUniprotItem[];

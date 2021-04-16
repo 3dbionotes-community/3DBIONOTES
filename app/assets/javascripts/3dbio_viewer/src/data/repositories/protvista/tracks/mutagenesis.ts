@@ -1,6 +1,7 @@
-/* Example: http://3dbionotes.cnb.csic.es/api/annotations/biomuta/Uniprot/O14920
+/*
+Example: http://3dbionotes.cnb.csic.es/api/annotations/biomuta/Uniprot/O14920
 
-Mutagenesis track uses /api/features of type: "MUTAGEN". This endpoint only adds variants.
+Mutagenesis track uses protein/api/features of type: "MUTAGEN". This endpoint only adds variants.
 */
 
 export type MutagenesisResponse = MutagenesisAnotation[];

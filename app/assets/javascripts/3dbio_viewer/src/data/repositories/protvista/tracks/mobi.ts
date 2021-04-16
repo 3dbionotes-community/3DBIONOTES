@@ -4,6 +4,8 @@ import { FragmentResult, Fragments, getFragments } from "../../../../domain/enti
 import i18n from "../../../../webapp/utils/i18n";
 import { subtracks } from "../definitions";
 
+// Example: http://3dbionotes.cnb.csic.es/api/annotations/IEDB/Uniprot/O14920
+
 export interface MobiUniprot {
     disorder: MobiUniprotItem;
     lips: MobiUniprotItem;

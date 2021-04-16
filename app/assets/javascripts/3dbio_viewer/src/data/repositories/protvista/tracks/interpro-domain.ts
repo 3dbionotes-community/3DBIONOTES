@@ -4,9 +4,7 @@ import { getEvidencesFrom } from "../../../../domain/entities/Evidence";
 import { Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import { Maybe } from "../../../../utils/ts-utils";
 
-/*
-Example: http://3dbionotes.cnb.csic.es/api/annotations/interpro/Uniprot/O00206
-*/
+// Example: http://3dbionotes.cnb.csic.es/api/annotations/interpro/Uniprot/O00206
 
 export type InterproAnnotations = InterproAnnotation[];
 

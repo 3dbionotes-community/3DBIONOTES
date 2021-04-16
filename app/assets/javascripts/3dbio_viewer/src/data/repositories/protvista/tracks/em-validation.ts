@@ -9,6 +9,7 @@ import { subtracks } from "../definitions";
 
     - deepres, mapq, fscq:
         http://3dbionotes.cnb.csic.es/ws/lrs/pdbAnnotFromMap/all/6zow/A/?format=json
+
     - mapq, monores:
         http://3dbionotes.cnb.csic.es/ws/lrs/pdbAnnotFromMap/all/7bv1/A/
 */

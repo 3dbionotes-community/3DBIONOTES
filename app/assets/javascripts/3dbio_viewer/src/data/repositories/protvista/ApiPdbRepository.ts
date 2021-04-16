@@ -147,10 +147,10 @@ export class ApiPdbRepository implements PdbRepository {
 function getData(options: Options): FutureData<Partial<Data>> {
     const { protein, pdb, chain } = options;
     const { bionotes: bioUrl, ebi: ebiBaseUrl } = routes;
-
     const ebiProteinsApiUrl = `${ebiBaseUrl}/proteins/api`;
     const pdbAnnotUrl = `${bioUrl}/ws/lrs/pdbAnnotFromMap`;
 
+    // Move URLS to each track module?
     const data$: DataRequests = {
         uniprot: getXML(`https://www.uniprot.org/uniprot/${protein}.xml`),
         features: getJSON(`${ebiProteinsApiUrl}/features/${protein}`),

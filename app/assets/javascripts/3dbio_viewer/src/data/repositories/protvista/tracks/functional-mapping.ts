@@ -14,8 +14,8 @@ export type Cv19Tracks = Cv19Track[];
 export type Cv19Track =
     | Cv19FunctionalMappingLigandsTrack
     | Cv19FunctionalMappingPPITrack
-    | Cv19DiamondDrugScreeningTrack
-    //| Cv19GenomicVariantsTrack;
+    | Cv19DiamondDrugScreeningTrack;
+//| Cv19GenomicVariantsTrack;
 
 export interface Cv19BaseTrack {
     visualization_type?: "variants";
@@ -102,7 +102,7 @@ export function getFunctionalMappingFragments(tracks: Cv19Tracks): Fragments {
 function getFragmentsFrom<TrackName extends Cv19TrackName>(
     tracks: Cv19Track[],
     name: TrackName,
-    subtrackDef: SubtrackDefinition
+    subtrack: SubtrackDefinition
 ): Fragments {
     const track = getTrack(tracks, name);
     if (!track) return [];
@@ -114,22 +114,22 @@ function getFragmentsFrom<TrackName extends Cv19TrackName>(
         const referenceAnnotation = _.first(annotations);
         if (!referenceAnnotation) return [];
 
-        const subtrack: SubtrackDefinition = {
-            dynamicSubtrack: subtrackDef,
-            id: getDynamicSubtrackId(subtrackDef, partnerName),
+        const fragmentSubtrack: SubtrackDefinition = {
+            dynamicSubtrack: subtrack,
+            id: getDynamicSubtrackId(subtrack, partnerName),
             name: partnerName,
-            description: subtrackDef.description,
-            shape: subtrackDef.shape,
+            description: subtrack.description,
+            shape: subtrack.shape,
             color: referenceAnnotation.color,
-            subtype: subtrackDef.subtype,
-            source: { url: track.reference, icon: track.fav_icon } || subtrackDef.source,
+            subtype: subtrack.subtype,
+            source: { url: track.reference, icon: track.fav_icon } || subtrack.source,
         };
 
         return getFragments(
             annotations,
             (annotation): FragmentResult => {
                 return {
-                    subtrack,
+                    subtrack: fragmentSubtrack,
                     start: annotation.begin,
                     end: annotation.end,
                     description: annotation.description,

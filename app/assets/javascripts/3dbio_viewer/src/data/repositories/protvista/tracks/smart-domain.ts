@@ -6,9 +6,7 @@ import i18n from "../../../../domain/utils/i18n";
 import { Maybe } from "../../../../utils/ts-utils";
 import { getStringFromItems, Item } from "../utils";
 
-/*
-Example: http://3dbionotes.cnb.csic.es/api/annotations/SMART/Uniprot/P0DTC2
-*/
+// Example: http://3dbionotes.cnb.csic.es/api/annotations/SMART/Uniprot/P0DTC2
 
 export type SmartAnnotations = SmartAnnotation[];
 
