@@ -3,7 +3,7 @@ import { FutureData } from "../../../domain/entities/FutureData";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { PdbRepository } from "../../../domain/repositories/PdbRepository";
 import { Future } from "../../../utils/future";
-import { getTotalFeaturesLength, Track } from "../../../domain/entities/Track";
+import { getTotalFeaturesLength } from "../../../domain/entities/Track";
 import { debugVariable } from "../../../utils/debug";
 import { getEmValidationFragments, PdbAnnotations } from "./tracks/em-validation";
 import { EbiVariation, getVariants } from "./tracks/variants";
@@ -15,7 +15,7 @@ import { Cv19Tracks, getFunctionalMappingFragments } from "./tracks/functional-m
 import { getIf } from "../../../utils/misc";
 import { getProteomicsFragments, Proteomics } from "./tracks/proteomics";
 import { getPdbRedoFragments, PdbRedo } from "./tracks/pdb-redo";
-import { getEpitomesTrack, Iedb } from "./tracks/epitomes";
+import { getEpitomesFragments, IedbAnnotationsResponse } from "./tracks/epitomes";
 import { getProtein, UniprotResponse } from "./uniprot";
 import { getExperiment, PdbExperiment } from "./ebi-pdbe-api";
 import { routes } from "../../../routes";
@@ -43,7 +43,7 @@ interface Data {
     interproAnnotations: InterproAnnotations;
     proteomics: Proteomics;
     pdbRedo: PdbRedo;
-    iedb: Iedb;
+    iedb: IedbAnnotationsResponse;
     pdbExperiment: PdbExperiment;
     elmdbUniprot: ElmdbUniprot;
     molprobity: MolprobityResponse;
@@ -94,9 +94,7 @@ export class ApiPdbRepository implements PdbRepository {
         const pdbRedoFragments = getIf(data.pdbRedo, pdbRedo =>
             getPdbRedoFragments(pdbRedo, options.chain)
         );
-        const epitomesTrack = getIf(data.iedb, getEpitomesTrack);
-
-        const oldTracks: Track[] = _.compact([epitomesTrack]);
+        const epitomesFragments = getIf(data.iedb, getEpitomesFragments);
 
         const protein = getProtein(options.protein, data.uniprot);
         const experiment = getIf(data.pdbExperiment, pdbExperiment =>
@@ -127,10 +125,11 @@ export class ApiPdbRepository implements PdbRepository {
             emValidationFragments,
             molprobityFragments,
             proteomicsFragments,
+            epitomesFragments,
         ];
 
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
-        debugVariable({ oldTracks, newTracks: tracks });
+        debugVariable({ tracks });
 
         return {
             id: options.pdb,

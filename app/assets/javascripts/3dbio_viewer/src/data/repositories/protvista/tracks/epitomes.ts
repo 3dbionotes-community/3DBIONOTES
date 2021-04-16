@@ -1,12 +1,15 @@
 import _ from "lodash";
+import { subtracks } from "../../../../domain/definitions/subtracks";
 import { Evidence } from "../../../../domain/entities/Evidence";
-import { Fragment, getFragment } from "../../../../domain/entities/Fragment";
-import { Track } from "../../../../domain/entities/Track";
+import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
+import i18n from "../../../../webapp/utils/i18n";
 import { config } from "../config";
 
-export type Iedb = IedbFeature[];
+// Example: http://3dbionotes.cnb.csic.es/api/annotations/IEDB/Uniprot/O14920
 
-export interface IedbFeature {
+export type IedbAnnotationsResponse = IedbAnnotation[];
+
+export interface IedbAnnotation {
     start: number;
     end: number;
     type: string; // "epitope";
@@ -14,43 +17,28 @@ export interface IedbFeature {
     evidence: number;
 }
 
-export function getEpitomesTrack(iedb: Iedb): Track {
-    const label = config.tracks.linear_epitope.label;
-
-    return {
-        id: "epitomes",
-        label: "Epitomes",
-        subtracks: [
-            {
-                accession: "linear-epitome",
-                type: label,
-                label: label,
-                shape: config.shapeByTrackName.linear_epitope,
-                locations: [
-                    {
-                        fragments: _.flatMap(iedb, feature =>
-                            getFragment({
-                                description: "Linear epitome",
-                                type: feature.type,
-                                start: feature.start,
-                                end: feature.end,
-                                evidences: getEvidences(feature),
-                                color: config.colorByTrackName.linear_epitope,
-                            })
-                        ),
-                    },
-                ],
-            },
-        ],
-    };
+export function getEpitomesFragments(iedb: IedbAnnotationsResponse): Fragments {
+    return getFragments(
+        iedb,
+        (feature): FragmentResult => {
+            return {
+                subtrack: subtracks.linearEpitomes,
+                description: i18n.t("Linear epitome"),
+                start: feature.start,
+                end: feature.end,
+                evidences: getEvidences(feature),
+                color: config.colorByTrackName.linear_epitope,
+            };
+        }
+    );
 }
 
-function getEvidences(feature: IedbFeature): Fragment["evidences"] {
+function getEvidences(feature: IedbAnnotation): Evidence[] {
     const evidence: Evidence = {
-        title: "Imported information",
+        title: i18n.t("Imported information"),
         sources: [
             {
-                name: "Imported from IEDB",
+                name: i18n.t("Imported from IEDB"),
                 links: [
                     {
                         name: feature.evidence.toString(),
@@ -60,5 +48,6 @@ function getEvidences(feature: IedbFeature): Fragment["evidences"] {
             },
         ],
     };
+
     return [evidence];
 }
