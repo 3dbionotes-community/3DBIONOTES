@@ -9,7 +9,7 @@ import { routes } from "../../routes";
 import { request } from "../request-utils";
 import { BionotesAnnotationResponse } from "./BionotesAnnotationResponse";
 
-const url = routes.rinchen2 + "/upload";
+const url = routes.bionotesDev + "/upload";
 
 export class BionotesAtomicStructureRepository implements AtomicStructureRepository {
     build(options: BuildOptions): FutureData<AtomicStructure> {
