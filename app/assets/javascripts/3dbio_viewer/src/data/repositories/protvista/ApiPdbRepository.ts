@@ -27,6 +27,7 @@ import { ElmdbUniprot, getElmdbUniprotFragments } from "./tracks/elmdb";
 import { getJSON, getXML, RequestError } from "../../request-utils";
 import { DbPtmAnnotations, getDbPtmFragments } from "./tracks/db-ptm";
 import { getMolprobityFragments, MolprobityResponse } from "./molprobity";
+import { AntigenicResponse, getAntigenicFragments } from "./tracks/antigenic";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -47,6 +48,7 @@ interface Data {
     pdbExperiment: PdbExperiment;
     elmdbUniprot: ElmdbUniprot;
     molprobity: MolprobityResponse;
+    antigenic: AntigenicResponse;
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K] | undefined> };
@@ -110,6 +112,10 @@ export class ApiPdbRepository implements PdbRepository {
             getMolprobityFragments(molprobity, options.chain)
         );
 
+        const antigenFragments = getIf(data.antigenic, antigenic =>
+            getAntigenicFragments(antigenic, options.protein)
+        );
+
         const fragmentsList = [
             featureFragments,
             pfamDomainFragments,
@@ -126,6 +132,7 @@ export class ApiPdbRepository implements PdbRepository {
             molprobityFragments,
             proteomicsFragments,
             epitomesFragments,
+            antigenFragments,
         ];
 
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
@@ -170,6 +177,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         pdbExperiment: getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/experiment/${pdb}`),
         elmdbUniprot: getJSON(`${bioUrl}/api/annotations/elmdb/Uniprot/${protein}`),
         molprobity: getJSON(`${bioUrl}/compute/molprobity/${pdb}`),
+        antigenic: getJSON(`${ebiProteinsApiUrl}/antigen/${protein}`),
     };
 
     return Future.joinObj(data$);

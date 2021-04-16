@@ -19,11 +19,14 @@ type FragmentP = Fragment | Fragment2;
 
 export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
     const { pdb, subtrack, fragment } = props;
+    const { description, alignmentScore } = fragment;
+    const score = alignmentScore ? alignmentScore + " %" : undefined;
 
     return (
         <TooltipTable>
             <TooltipRow title={i18n.t("Feature ID")} value={fragment.id} className="description" />
-            <TooltipRow title={i18n.t("Description")} value={fragment.description} />
+            <TooltipRow title={i18n.t("Description")} value={description} />
+            <TooltipRow title={i18n.t("Alignment score")} value={score} className="description" />
             <TooltipRow title={i18n.t("Conflict")} value={getConflict(pdb.sequence, fragment)} />
             <Source subtrack={subtrack} />
             <Evidences fragment={fragment} />

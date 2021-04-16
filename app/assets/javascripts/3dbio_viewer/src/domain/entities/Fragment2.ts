@@ -22,6 +22,7 @@ export interface Fragment2 {
     alternativeSequence?: string;
     evidences?: Evidence[];
     crossReferences?: Reference[];
+    alignmentScore?: number;
 }
 
 export function getTracksFromFragments(fragments: Fragments): Track[] {
@@ -64,6 +65,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                             legend: fragment.legend,
                             alternativeSequence: fragment.alternativeSequence,
                             crossReferences: fragment.crossReferences,
+                            alignmentScore: fragment.alignmentScore,
                         }),
                     };
                 }

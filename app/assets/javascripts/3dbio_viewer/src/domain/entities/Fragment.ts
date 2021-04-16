@@ -20,6 +20,7 @@ export interface Fragment {
     color: Color;
     legend?: Legend;
     crossReferences?: Reference[];
+    alignmentScore?: number;
 }
 
 type FragmentU = Fragment | Fragment2;
