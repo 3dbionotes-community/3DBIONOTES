@@ -88,7 +88,9 @@ export class ApiPdbRepository implements PdbRepository {
 
         const emValidationFragments = getIf(data.pdbAnnotations, getEmValidationFragments);
         const mobiFragments = getMobiUniprotFragments(data.mobiUniprot, options.protein);
-        const proteomicsFragments = getIf(data.proteomics, getProteomicsFragments);
+        const proteomicsFragments = getIf(data.proteomics, proteomics =>
+            getProteomicsFragments(proteomics, options.protein)
+        );
         const pdbRedoFragments = getIf(data.pdbRedo, pdbRedo =>
             getPdbRedoFragments(pdbRedo, options.chain)
         );

@@ -3,7 +3,7 @@ import { subtracks } from "../../../../domain/definitions/subtracks";
 import { Evidence as DomainEvidence } from "../../../../domain/entities/Evidence";
 import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition";
-import { getEvidenceFromSources, ApiEvidenceSource } from "../entities/ApiEvidenceSource";
+import { getEvidenceFromDefaultSources, ApiEvidence } from "../entities/ApiEvidenceSource";
 import { getPtmSubtrackFromDescription } from "./db-ptm";
 
 const mapping: Record<string, SubtrackDefinition> = {
@@ -56,11 +56,6 @@ export interface Feature {
 }
 
 type FeatureType = string;
-
-interface ApiEvidence {
-    code: string;
-    source?: ApiEvidenceSource;
-}
 
 export function getFeatureFragments(protein: string, features: Features): Fragments {
     return getFragments(
@@ -120,7 +115,7 @@ function getEvidence(
         .compact()
         .value();
 
-    return getEvidenceFromSources({ accession: protein, code, sourceEvidences });
+    return getEvidenceFromDefaultSources({ accession: protein, code, sourceEvidences });
 }
 
 /* From extendProtVista/add_evidences.js */

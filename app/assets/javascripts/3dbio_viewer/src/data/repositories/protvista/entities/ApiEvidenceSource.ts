@@ -1,6 +1,11 @@
 import _ from "lodash";
-import { Evidence, EvidenceSource } from "../../../../domain/entities/Evidence";
+import { Evidence, Reference } from "../../../../domain/entities/Evidence";
 import { getEvidenceText } from "../tracks/legacy/TooltipFactory";
+
+export interface ApiEvidence {
+    code: string;
+    source?: ApiEvidenceSource;
+}
 
 export interface ApiEvidenceSource {
     name: string;
@@ -14,7 +19,34 @@ export interface ApiEvidence {
     source?: ApiEvidenceSource;
 }
 
-export function getEvidenceFromSources(options: {
+export function getEvidencesFromApiEvidence(
+    evidences: ApiEvidence[],
+    accession: string
+): Evidence[] {
+    return _(evidences)
+        .groupBy(apiEvidence => apiEvidence.code)
+        .toPairs()
+        .map(
+            ([code, apiEvidences]): Evidence => {
+                const apiSourceEvidences = _(apiEvidences)
+                    .map(apiEvidence => apiEvidence.source)
+                    .compact()
+                    .value();
+                const title = getEvidenceText({ accession }, code, apiSourceEvidences);
+
+                return {
+                    title,
+                    sources: apiSourceEvidences.map(src => ({
+                        name: src.name,
+                        links: [{ name: src.id, url: src.url }],
+                    })),
+                };
+            }
+        )
+        .value();
+}
+
+export function getEvidenceFromDefaultSources(options: {
     accession: string;
     code: string;
     sourceEvidences: ApiEvidenceSource[];
@@ -25,7 +57,7 @@ export function getEvidenceFromSources(options: {
 
     if (!mainSourceEvidence) return { title: evidenceText, sources: [] };
 
-    const source: EvidenceSource = {
+    const source: Reference = {
         name: mainSourceEvidence.name,
         links: sourceEvidences.map(src => ({ name: src.id, url: src.url })),
     };
@@ -35,7 +67,7 @@ export function getEvidenceFromSources(options: {
         .compact()
         .value();
 
-    const alternativeSource: EvidenceSource | undefined = _.isEmpty(alternativeSourceLinks)
+    const alternativeSource: Reference | undefined = _.isEmpty(alternativeSourceLinks)
         ? undefined
         : {
               name: mainSourceEvidence.name === "PubMed" ? "EuropePMC" : source.name,
@@ -59,12 +91,12 @@ export function getSourceEvidencesFromReferences(references: string): ApiEvidenc
         .value();
 }
 
-export function getEvidenceFromReferences(options: {
+export function getEvidenceFromDefaultReferences(options: {
     accession: string;
     code: string;
     references: string;
 }): Evidence {
     const { accession, code, references } = options;
     const sourceEvidences = getSourceEvidencesFromReferences(references);
-    return getEvidenceFromSources({ accession, code, sourceEvidences });
+    return getEvidenceFromDefaultSources({ accession, code, sourceEvidences });
 }

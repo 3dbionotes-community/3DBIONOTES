@@ -4,7 +4,7 @@ import { Evidence } from "../../../../domain/entities/Evidence";
 import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import i18n from "../../../../domain/utils/i18n";
 import { subtracks } from "../definitions";
-import { getEvidenceFromReferences } from "../entities/ApiEvidenceSource";
+import { getEvidenceFromDefaultReferences } from "../entities/ApiEvidenceSource";
 import { bold, lineBreak } from "../utils";
 
 // http://3dbionotes.cnb.csic.es/api/annotations/elmdb/Uniprot/O00206
@@ -114,7 +114,7 @@ function getEvidences(annotation: ElmdbUniprotAnnotation): Evidence[] {
         ],
     };
 
-    const evidenceFromReferences = getEvidenceFromReferences({
+    const evidenceFromReferences = getEvidenceFromDefaultReferences({
         accession: elmId,
         code: "ECO:0000269",
         references: annotation.References,

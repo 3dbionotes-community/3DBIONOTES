@@ -2,7 +2,7 @@ import _ from "lodash";
 import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition";
 import { subtracks } from "../definitions";
-import { getEvidenceFromReferences } from "../entities/ApiEvidenceSource";
+import { getEvidenceFromDefaultReferences } from "../entities/ApiEvidenceSource";
 
 export type DbPtmAnnotations = DbPtmAnnotation[];
 
@@ -20,7 +20,7 @@ export function getDbPtmFragments(items: DbPtmAnnotations, protein: string): Fra
             const subtrack = getPtmSubtrackFromDescription(item.type);
             if (!subtrack) return;
 
-            const evidence = getEvidenceFromReferences({
+            const evidence = getEvidenceFromDefaultReferences({
                 accession: protein,
                 code: "ECO:0000269",
                 references: item.evidences,

@@ -2,10 +2,10 @@ import { Link } from "./Link";
 
 export interface Evidence {
     title: string;
-    sources: EvidenceSource[];
+    sources: Reference[];
 }
 
-export interface EvidenceSource {
+export interface Reference {
     name: string;
     links: Link[];
 }
