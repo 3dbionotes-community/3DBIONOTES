@@ -1,17 +1,18 @@
 import _ from "lodash";
-import { Evidence } from "../../../../domain/entities/Evidence";
+import { Evidence, getEvidencesFrom } from "../../../../domain/entities/Evidence";
 import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition";
-import i18n from "../../../../domain/utils/i18n";
 import { throwError } from "../../../../utils/misc";
 import { recordOf } from "../../../../utils/ts-utils";
 import { subtracks } from "../definitions";
 import { lineBreak } from "../utils";
 import { Feature } from "./feature";
 
-// http://3dbionotes.cnb.csic.es/api/annotations/Phosphosite/Uniprot/O00141
+/*
+Example: http://3dbionotes.cnb.csic.es/api/annotations/Phosphosite/Uniprot/O00141
 
-// Note that we also have phosphite fragments coming from the feature endpoint
+Note that we also have phosphite fragments coming from ebi /proteins/api/feature
+*/
 
 export type PhosphositeUniprot = PhosphositeUniprotItem[];
 
@@ -173,29 +174,17 @@ export function getPhosphiteEvidencesFromFeature(options: {
     feature: Feature;
 }): Evidence[] {
     const { protein, feature, phosphositeByInterval } = options;
+
     const existsInPhosphosite = _(
         phosphositeByInterval[[feature.begin, feature.end].join("-")]
     ).some(phosphositeItem => isPhosphosite(phosphositeItem.subtype, feature));
-    if (!existsInPhosphosite) return [];
 
-    return getEvidences(protein);
+    return existsInPhosphosite ? getEvidences(protein) : [];
 }
 
 function getEvidences(protein: string): Evidence[] {
-    const evidence: Evidence = {
-        title: i18n.t("Imported information"),
-        sources: [
-            {
-                name: i18n.t("Imported from PhosphoSitePlus"),
-                links: [
-                    {
-                        name: protein,
-                        url: `http://www.phosphosite.org/uniprotAccAction.do?id=${protein}`,
-                    },
-                ],
-            },
-        ],
-    };
-
-    return [evidence];
+    return getEvidencesFrom("PhosphoSitePlus", {
+        name: protein,
+        url: `http://www.phosphosite.org/uniprotAccAction.do?id=${protein}`,
+    });
 }

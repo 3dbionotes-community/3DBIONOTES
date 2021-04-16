@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { subtracks } from "../../../../domain/definitions/subtracks";
-import { Evidence } from "../../../../domain/entities/Evidence";
+import { getEvidencesFrom } from "../../../../domain/entities/Evidence";
 import { Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import i18n from "../../../../domain/utils/i18n";
 import { Maybe } from "../../../../utils/ts-utils";
@@ -25,7 +25,10 @@ export function getSmartDomainFragments(
     smartAnnotations: Maybe<SmartAnnotations>,
     protein: string
 ): Fragments {
-    const smartEvidences = getSmartEvidences(protein);
+    const smartEvidences = getEvidencesFrom("Imported from SMART", {
+        name: protein,
+        url: `http://smart.embl.de/smart/batch.pl?INCLUDE_SIGNALP=1&IDS=${protein}`,
+    });
 
     return getFragments(smartAnnotations, annotation => {
         return {
@@ -45,23 +48,4 @@ function getSmartDescription(annotation: SmartAnnotation): string {
     ];
 
     return getStringFromItems(items);
-}
-
-function getSmartEvidences(protein: string): Evidence[] {
-    const evidence: Evidence = {
-        title: i18n.t("Imported information"),
-        sources: [
-            {
-                name: i18n.t("Imported from SMART"),
-                links: [
-                    {
-                        name: protein,
-                        url: `http://smart.embl.de/smart/batch.pl?INCLUDE_SIGNALP=1&IDS=${protein}`,
-                    },
-                ],
-            },
-        ],
-    };
-
-    return [evidence];
 }

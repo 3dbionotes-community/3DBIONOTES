@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Evidence } from "../../../../domain/entities/Evidence";
+import { getEvidencesFrom } from "../../../../domain/entities/Evidence";
 import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import i18n from "../../../../webapp/utils/i18n";
 import { subtracks } from "../definitions";
@@ -22,7 +22,11 @@ export function getMobiUniprotFragments(
     protein: string
 ): Fragments {
     if (!mobiUniprot) return [];
-    const evidences = getEvidences(protein);
+
+    const evidences = getEvidencesFrom("MobyDB", {
+        name: protein,
+        url: `https://mobidb.bio.unipd.it/entries/${protein}`,
+    });
 
     const lipsFragments = getFragments(
         mobiUniprot.lips.inferred,
@@ -54,23 +58,4 @@ export function getMobiUniprotFragments(
     );
 
     return _.concat(lipsFragments, disorderFragments);
-}
-
-function getEvidences(protein: string): Evidence[] {
-    const evidence: Evidence = {
-        title: i18n.t("Imported information"),
-        sources: [
-            {
-                name: i18n.t("Imported from MobyDB"),
-                links: [
-                    {
-                        name: protein,
-                        url: `https://mobidb.bio.unipd.it/entries/${protein}`,
-                    },
-                ],
-            },
-        ],
-    };
-
-    return [evidence];
 }

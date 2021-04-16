@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import { Evidence } from "../../../../domain/entities/Evidence";
+import { Evidence, getEvidencesFrom } from "../../../../domain/entities/Evidence";
 import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import i18n from "../../../../domain/utils/i18n";
 import { subtracks } from "../definitions";
@@ -99,20 +99,10 @@ function getDescription(annotation: ElmdbUniprotAnnotation): string {
 function getEvidences(annotation: ElmdbUniprotAnnotation): Evidence[] {
     const elmId = annotation.ELMIdentifier;
 
-    const evidence: Evidence = {
-        title: i18n.t("Imported information"),
-        sources: [
-            {
-                name: i18n.t("Imported from ELM"),
-                links: [
-                    {
-                        name: elmId,
-                        url: `http://elm.eu.org/elms/MOD_N-GLC_1/${elmId}`,
-                    },
-                ],
-            },
-        ],
-    };
+    const evidencesFromId = getEvidencesFrom("ELM", {
+        name: elmId,
+        url: `http://elm.eu.org/elms/MOD_N-GLC_1/${elmId}`,
+    });
 
     const evidenceFromReferences = getEvidenceFromDefaultReferences({
         accession: elmId,
@@ -120,5 +110,5 @@ function getEvidences(annotation: ElmdbUniprotAnnotation): Evidence[] {
         references: annotation.References,
     });
 
-    return _.compact([evidence, evidenceFromReferences]);
+    return [...evidencesFromId, evidenceFromReferences];
 }

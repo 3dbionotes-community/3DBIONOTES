@@ -1,8 +1,7 @@
 import _ from "lodash";
 import { subtracks } from "../../../../domain/definitions/subtracks";
-import { Evidence } from "../../../../domain/entities/Evidence";
+import { getEvidencesFrom } from "../../../../domain/entities/Evidence";
 import { Fragments, getFragments } from "../../../../domain/entities/Fragment2";
-import i18n from "../../../../domain/utils/i18n";
 import { Maybe } from "../../../../utils/ts-utils";
 
 /*
@@ -25,7 +24,10 @@ export function getInterproDomainFragments(
     annotations: Maybe<InterproAnnotations>,
     protein: string
 ): Fragments {
-    const evidences = getEvidences(protein);
+    const evidences = getEvidencesFrom("InterPro", {
+        name: protein,
+        url: `https://www.ebi.ac.uk/interpro/protein/UniProt/${protein}`,
+    });
 
     return getFragments(annotations, annotation => {
         return {
@@ -51,23 +53,4 @@ function getDescription(annotation: InterproAnnotation): string {
                 : null;
         }),
     ]).join("<br />");
-}
-
-function getEvidences(protein: string): Evidence[] {
-    const evidence: Evidence = {
-        title: i18n.t("Imported information"),
-        sources: [
-            {
-                name: i18n.t("Imported from InterPro"),
-                links: [
-                    {
-                        name: protein,
-                        url: `https://www.ebi.ac.uk/interpro/protein/UniProt/${protein}`,
-                    },
-                ],
-            },
-        ],
-    };
-
-    return [evidence];
 }

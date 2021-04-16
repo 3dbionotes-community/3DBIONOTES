@@ -1,9 +1,8 @@
 import _ from "lodash";
 import { subtracks } from "../../../../domain/definitions/subtracks";
-import { Evidence } from "../../../../domain/entities/Evidence";
+import { getEvidencesFrom } from "../../../../domain/entities/Evidence";
 import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import i18n from "../../../../webapp/utils/i18n";
-import { config } from "../config";
 
 // Example: http://3dbionotes.cnb.csic.es/api/annotations/IEDB/Uniprot/O14920
 
@@ -26,28 +25,11 @@ export function getEpitomesFragments(iedb: IedbAnnotationsResponse): Fragments {
                 description: i18n.t("Linear epitome"),
                 start: feature.start,
                 end: feature.end,
-                evidences: getEvidences(feature),
-                color: config.colorByTrackName.linear_epitope,
+                evidences: getEvidencesFrom("IEDB", {
+                    name: feature.evidence.toString(),
+                    url: `http://www.iedb.org/epitope/${feature.evidence}`,
+                }),
             };
         }
     );
-}
-
-function getEvidences(feature: IedbAnnotation): Evidence[] {
-    const evidence: Evidence = {
-        title: i18n.t("Imported information"),
-        sources: [
-            {
-                name: i18n.t("Imported from IEDB"),
-                links: [
-                    {
-                        name: feature.evidence.toString(),
-                        url: `http://www.iedb.org/epitope/${feature.evidence}`,
-                    },
-                ],
-            },
-        ],
-    };
-
-    return [evidence];
 }

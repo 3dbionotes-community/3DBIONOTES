@@ -1,11 +1,10 @@
 import _ from "lodash";
 import { subtracks } from "../../../../domain/definitions/subtracks";
 import { Chain } from "../../../../domain/entities/Chain";
-import { Evidence } from "../../../../domain/entities/Evidence";
+import { Evidence, getEvidencesFrom } from "../../../../domain/entities/Evidence";
 import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition";
 import { isElementOfUnion } from "../../../../utils/ts-utils";
-import i18n from "../../../../webapp/utils/i18n";
 
 // Example: http://3dbionotes.cnb.csic.es/api/annotations/PDB_REDO/2r5t
 
@@ -58,17 +57,7 @@ export function getPdbRedoFragments(pdbRedo: PdbRedo, chain: Chain): Fragments {
 }
 
 function getEvidences(item: PdbRedoItem): Evidence[] {
-    return (item.evidences["Imported information"] || []).map(
-        (info): Evidence => {
-            return {
-                title: i18n.t("Imported information"),
-                sources: [
-                    {
-                        name: i18n.t("Imported from PDB_REDO"),
-                        links: [{ name: info.id, url: info.url }],
-                    },
-                ],
-            };
-        }
+    return _.flatMap(item.evidences["Imported information"], info =>
+        getEvidencesFrom("PDB_REDO", { name: info.id, url: info.url })
     );
 }

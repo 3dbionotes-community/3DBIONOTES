@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { subtracks } from "../../../../domain/definitions/subtracks";
-import { Evidence } from "../../../../domain/entities/Evidence";
+import { getEvidencesFrom } from "../../../../domain/entities/Evidence";
 import { Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import i18n from "../../../../domain/utils/i18n";
 import { Maybe } from "../../../../utils/ts-utils";
@@ -31,7 +31,10 @@ export function getPfamDomainFragments(
     pfamAnnotations: Maybe<PfamAnnotations>,
     protein: string
 ): Fragments {
-    const pfamEvidences = getPfamEvidences(protein);
+    const pfamEvidences = getEvidencesFrom("Pfam", {
+        name: protein,
+        url: `http://pfam.xfam.org/protein/${protein}`,
+    });
 
     return getFragments(pfamAnnotations, annotation => {
         return {
@@ -56,18 +59,4 @@ function getPfamDescription(annotation: PfamAnnotation): string {
     ];
 
     return getStringFromItems(items);
-}
-
-function getPfamEvidences(protein: string): Evidence[] {
-    const evidence: Evidence = {
-        title: i18n.t("Imported information"),
-        sources: [
-            {
-                name: i18n.t("Imported from Pfam"),
-                links: [{ name: protein, url: `http://pfam.xfam.org/protein/${protein}` }],
-            },
-        ],
-    };
-
-    return [evidence];
 }
