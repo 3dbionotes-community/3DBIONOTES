@@ -35,6 +35,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const submitCb = useCallback(() => {
         setError("");
         const structureFile = getFile(structureFileRef);
+
         if (structureFile) {
             const uploadParams = {
                 jobTitle,
@@ -50,7 +51,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                 },
                 error => {
                     setOpen(false);
-                    return error;
+                    setError(error.message);
                 }
             );
         } else {
@@ -69,6 +70,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                         <Close />
                     </IconButton>
                 </DialogTitle>
+
                 <DialogContent>
                     <p>
                         {i18n.t(
@@ -125,6 +127,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                     {open && <UploadLoader open={open} />}
                 </DialogContent>
             </Dialog>
+
             {isUploadConfirmationOpen && atomicStructure ? (
                 <UploadConfirmation
                     atomicStructure={atomicStructure}
