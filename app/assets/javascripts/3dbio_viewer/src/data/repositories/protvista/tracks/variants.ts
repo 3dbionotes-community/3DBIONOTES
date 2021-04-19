@@ -1,5 +1,7 @@
 import { Variant, VariantFilter, Variants } from "../../../../domain/entities/Variant";
 
+// Example: https://www.ebi.ac.uk/proteins/api/variation/O14920
+
 export interface EbiVariation {
     accession: string; // "P0DTC2";
     entryName: string; // "SPIKE_SARS2";
@@ -22,7 +24,10 @@ export interface EbiVariationFeature {
     xrefs?: Array<{
         name: string; // "ENA",
         id: string; // "MN908947.3:21568:T:A"
+        url: string;
+        alternativeUrl?: string;
     }>;
+    cytogeneticBand?: string;
     genomicLocation: string; //"NC_045512.2:g.21568T>A";
     locations: Array<{
         loc: string; // "p.Phe2Leu";
@@ -33,7 +38,23 @@ export interface EbiVariationFeature {
     consequenceType: "missense" | "stop gained";
     wildType: string; //"F";
     mutatedType: string; // "L";
+    populationFrequencies: Array<{
+        populationName: string;
+        frequency: number;
+        source: string;
+    }>;
+    predictions?: Array<{
+        predictionValType: string;
+        predictorType: string;
+        score: number;
+        predAlgorithmNameType: string;
+        sources: string[];
+    }>;
     somaticStatus: number; // 0;
+    clinicalSignificances: Array<{
+        type: string;
+        sources: string[];
+    }>;
     sourceType: string; // "large_scale_study";
 }
 
@@ -108,8 +129,6 @@ export function getVariants(ebiVariation: EbiVariation): Variants {
                 color: "#800", // TODO
                 start: v.begin,
                 end: v.end,
-                //polyphenScore: number,
-                //siftScore: number,
                 sourceType: v.sourceType,
                 description: "TODO",
                 variant: v.alternativeSequence,

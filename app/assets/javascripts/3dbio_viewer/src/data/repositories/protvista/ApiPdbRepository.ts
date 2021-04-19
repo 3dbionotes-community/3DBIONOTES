@@ -28,6 +28,7 @@ import { getJSON, getXML, RequestError } from "../../request-utils";
 import { DbPtmAnnotations, getDbPtmFragments } from "./tracks/db-ptm";
 import { getMolprobityFragments, MolprobityResponse } from "./molprobity";
 import { AntigenicResponse, getAntigenicFragments } from "./tracks/antigenic";
+import { Variants } from "../../../domain/entities/Variant";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -84,7 +85,7 @@ export class ApiPdbRepository implements PdbRepository {
             getElmdbUniprotFragments(elmdbUniprot, options.protein)
         );
 
-        const _variants = getIf(data.ebiVariation, getVariants);
+        const variants = getIf(data.ebiVariation, getVariants);
         const functionalMappingFragments = getIf(data.cv19Tracks, getFunctionalMappingFragments);
         const structureCoverageFragments = getIf(data.coverage, getStructureCoverageFragments);
 
@@ -135,17 +136,28 @@ export class ApiPdbRepository implements PdbRepository {
             antigenFragments,
         ];
 
-        const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
-        debugVariable({ tracks });
+        const sequence = data.features ? data.features.sequence : "";
+        const tracks = getTracksFromFragments(
+            _(fragmentsList).compact().flatten().take(1000).value()
+        );
+        debugVariable({ tracks, variants });
+        const variantItems = (variants?.variants || []).filter(v => v.variant);
+
+        const testVariants: Variants = {
+            ...(variants || {}),
+            sequence,
+            variants: variantItems,
+            filters: [],
+        };
 
         return {
             id: options.pdb,
             emdb: undefined,
             protein,
-            sequence: data.features ? data.features.sequence : "",
+            sequence,
             length: getTotalFeaturesLength(tracks),
             tracks,
-            variants: undefined,
+            variants: testVariants,
             experiment,
         };
     }
