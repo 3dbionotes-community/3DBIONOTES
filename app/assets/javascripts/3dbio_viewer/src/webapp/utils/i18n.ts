@@ -1,9 +1,3 @@
-import i18n from "d2-ui-components/locales";
+import i18n from "../../domain/utils/i18n";
 
-const i18nWrapper = {
-    t(s: string, namespace?: object): string {
-        return i18n.t(s, namespace);
-    },
-};
-
-export default i18nWrapper;
+export default i18n;
