@@ -42,13 +42,13 @@ export const blockDefs: BlockDef[] = [
     {
         id: "structuralInfo",
         title: "Structural information",
-        description: i18n.t(`The protein <name> has a secondary structure consisting of  <number> alpha helices,  <number> beta sheets and  <number> turns.
+        description: i18n.t(`The protein \${proteinName} has a secondary structure consisting of \${alphaHelices} alpha helices, \${betaSheets} beta sheets and \${turns} turns.
 
-        It contains  <number> domains known and annotated by the different databases used (PFAM, SMART, Interpro, CATH and Prosite). The consensus domains are:
+        It contains \${domains} domains known and annotated by the different databases used (PFAM, SMART, Interpro, CATH and Prosite). The consensus domains are:
 
-        Furthermore, this protein contains a transmembrane region, formed by  <number> alpha helices, and <1-2> external regions, a larger cytosolic and a smaller external one ( <number> residues.
+        Furthermore, this protein contains a transmembrane region, formed by \${transmembraneAlphaHelices} alpha helices, and \${transmembraneExternalRegions} external regions, a larger cytosolic and a smaller external one (\${transmembraneResidues} residues).
 
-        It contains a disordered region <range> and various motifs and regions that are relevant to it functio
+        It contains a disordered region \${disorderedRegionRange} and various motifs and regions that are relevant to its function.
         `),
         help: "",
         tracks: [
@@ -96,11 +96,11 @@ export const blockDefs: BlockDef[] = [
         description: i18n.t(`
             This section offers a complete validation of the atomic models obtained by different methods. Also, where possible, a validation of the Cryo-EM maps and the map-model fit will be carried out. For this, methods based on biophysical characteristics of structure (molprobity), refinement methods, showing the residues affected by said processes, and methods, when it is a structure obtained by cryo-EM, of validation of maps and models will be used.
 
-            In summary, the mean resolution of the protein is <number> Å.
+            In summary, the mean resolution of the protein is \${resolution} Å.
 
-            There are regions that have a poorer quality, with values between <value> and <value>. These regions can be visualized in red in the structure (why is it worse? Is there any possibility of refinement by the user (guide)?)
+            There are regions that have a poorer quality, with values between \${poorQualityRegionMin} and \${poorQualityRegionMax}. These regions can be visualized in red in the structure (why is it worse? Is there any possibility of refinement by the user (guide)?)
 
-            Furthermore, there are <number> amino acids that have been modified or are capable of refinement.
+            Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have been modified or are capable of refinement.
 
             Pearson correlation, 2-2 scatter, ranking of models according to whether they measure the same, local accuracy graph, comparison with pdb - percentile in similar resolutions and more globally, combination of measurements`),
         help: "",
@@ -125,7 +125,7 @@ export const blockDefs: BlockDef[] = [
         id: "proteinInteraction",
         title: "Protein Interaction",
         description: i18n.t(
-            "This section shows other proteins observed together with the protein of interest in PDB entries as a interaction network and as a list. In addittion, we show the protein residues that are interacting with the other proteins.\n\nFor this protein, we found <number> different partners."
+            "This section shows other proteins observed together with the protein of interest in PDB entries as a interaction network and as a list. In addittion, we show the protein residues that are interacting with the other proteins.\n\nFor this protein, we found ${proteinPartners} different partners."
         ),
         help: "",
         tracks: [
@@ -139,7 +139,7 @@ export const blockDefs: BlockDef[] = [
         id: "ligandInteraction",
         title: "Ligand interaction",
         description: i18n.t(`
-            This protein interacts with <name> and it could be interact with <number> protein more.`),
+            This protein interacts with \${proteinInteractsWith} and it could be interact with \${proteinInteractsMoreCount} protein more.`),
         help: "",
         tracks: [
             tracks.structureCoverage,

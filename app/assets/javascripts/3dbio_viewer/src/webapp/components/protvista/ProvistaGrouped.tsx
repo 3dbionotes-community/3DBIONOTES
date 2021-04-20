@@ -16,11 +16,13 @@ export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(prop
     const block = allTracksBlock;
 
     return loader.type === "loaded" ? (
-        <ViewerBlock block={block}>
-            PDB: {loader.data.id} | Protein: {loader.data.protein.id}
+        <ViewerBlock block={block} namespace={namespace}>
+            Protein: {loader.data.protein.id} | PDB: {loader.data.id} | Chain: {loader.data.chain}
             <ProtvistaPdb pdb={loader.data} block={block} showAllTracks={true} />
         </ViewerBlock>
     ) : (
         <div>Loading...</div>
     );
 });
+
+const namespace = {};

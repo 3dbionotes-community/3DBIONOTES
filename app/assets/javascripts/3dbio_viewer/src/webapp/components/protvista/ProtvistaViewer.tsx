@@ -43,12 +43,31 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         [openAnnotationTool]
     );
 
+    const namespace = {
+        alphaHelices: "TODO",
+        betaSheets: "TODO",
+        disorderedRegionRange: "TODO",
+        domains: "TODO",
+        modifiedOrRefinementAminoAcids: "TODO",
+        poorQualityRegionMax: "TODO",
+        poorQualityRegionMin: "TODO",
+        proteinInteractsMoreCount: "TODO",
+        proteinInteractsWith: "TODO",
+        proteinName: pdb.protein.name,
+        proteinPartners: "TODO",
+        resolution: pdb.experiment?.resolution,
+        transmembraneAlphaHelices: "TODO",
+        transmembraneExternalRegions: "TODO",
+        transmembraneResidues: "TODO",
+        turns: "TODO",
+    };
+
     return (
         <div>
             {blocks.map(block => {
                 const CustomComponent = block.component;
                 return (
-                    <ViewerBlock key={block.id} block={block}>
+                    <ViewerBlock key={block.id} block={block} namespace={namespace}>
                         {CustomComponent ? (
                             <CustomComponent pdb={pdb} selection={selection} />
                         ) : (
