@@ -8,24 +8,23 @@ import { ExpandMore } from "@material-ui/icons";
 
 export interface DropdownProps<Id extends string = string> {
     text: string;
-    value?: Id;
     items: DropdownItemModel<Id>[];
     onClick(id: Id): void;
     showSelection?: boolean;
     showExpandIcon?: boolean;
+    selected?: Id | undefined;
 }
 
 export interface DropdownItemModel<Id extends string> {
     id: Id;
     text: string;
-    selected?: boolean;
 }
 
 export function Dropdown<Id extends string = string>(props: DropdownProps<Id>): React.ReactElement {
-    const { items, text, onClick, showExpandIcon = false, value } = props;
+    const { items, text, onClick, showExpandIcon = false, selected } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
-    const showSelection = props.showSelection ?? _(items).some(item => item.selected !== undefined);
+    const showSelection = Boolean(selected);
 
     const runOnClickAndCloseMenu = React.useCallback(
         (id: string) => {
@@ -35,7 +34,8 @@ export function Dropdown<Id extends string = string>(props: DropdownProps<Id>): 
         [onClick, closeMenu]
     );
 
-    const buttonText = value !== undefined ? items.find(item => item.id === value)?.text : text;
+    const buttonText =
+        selected !== undefined ? items.find(item => item.id === selected)?.text : text;
 
     return (
         <React.Fragment>
@@ -50,7 +50,7 @@ export function Dropdown<Id extends string = string>(props: DropdownProps<Id>): 
                         key={item.id}
                         onClick={runOnClickAndCloseMenu}
                         item={item}
-                        isSelected={item.selected ?? false}
+                        isSelected={item.id === selected}
                         showSelection={showSelection}
                     >
                         {item.text}

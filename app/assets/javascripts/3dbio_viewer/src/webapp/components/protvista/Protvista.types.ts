@@ -1,10 +1,11 @@
 import React from "react";
-import _ from "lodash"
+import _ from "lodash";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { TrackDefinition } from "../../../domain/entities/TrackDefinition";
 import { PdbView } from "../../view-models/PdbView";
 import { SelectionState } from "../../view-models/SelectionState";
 import { ViewerBlockModel } from "../ViewerBlock";
+import { Profile, profiles } from "./protvista-blocks";
 
 export interface ProtvistaTrackElement extends HTMLDivElement {
     viewerdata: PdbView;
@@ -27,6 +28,7 @@ export interface TrackComponentProps extends BlockComponentProps {
 export interface BlockDef extends ViewerBlockModel {
     tracks: TrackDef[];
     component?: React.FC<BlockComponentProps>;
+    profiles: Profile[];
 }
 
 export interface ProtvistaBlock extends ViewerBlockModel {
@@ -34,7 +36,18 @@ export interface ProtvistaBlock extends ViewerBlockModel {
     component?: React.FC<BlockComponentProps>;
 }
 
-export function blockHasRelevantData(block: BlockDef, pdb: Pdb): boolean {
+export function getVisibleBlocks(
+    blocks: BlockDef[],
+    options: { pdb: Pdb; profile: Profile }
+): BlockDef[] {
+    const { pdb, profile } = options;
+
+    return blocks
+        .filter(block => blockHasRelevantData(block, pdb))
+        .filter(block => profile === profiles.general || block.profiles.includes(profile));
+}
+
+function blockHasRelevantData(block: BlockDef, pdb: Pdb): boolean {
     const tracks = _(pdb.tracks)
         .keyBy(track => track.id)
         .at(...block.tracks.map(trackDef => trackDef.id))

@@ -76,7 +76,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 
                     <Dropdown<ModelSearchType>
                         text={i18n.t("Model type")}
-                        value={modelType}
+                        selected={modelType}
                         items={modelTypes}
                         onClick={setModelType}
                         showExpandIcon

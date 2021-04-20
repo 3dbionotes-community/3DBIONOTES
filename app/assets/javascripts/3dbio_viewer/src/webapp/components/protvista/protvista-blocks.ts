@@ -3,6 +3,23 @@ import i18n from "../../utils/i18n";
 import { BasicInfoViewer } from "../BasicInfoViewer";
 import { trackDefinitions as tracks } from "../../../domain/definitions/tracks";
 import { BlockDef } from "./Protvista.types";
+import { GetRecordId, GetValue, idRecordOf } from "../../../utils/ts-utils";
+
+/* Profiles */
+
+export const profiles = idRecordOf<{ name: string }>()({
+    general: { name: i18n.t("General") },
+    structural: { name: i18n.t("Structural") },
+    validation: { name: i18n.t("Cryo-Em Quality Validation") },
+    drugDesign: { name: i18n.t("Drug Design") },
+    biomedicine: { name: i18n.t("Biomedicine") },
+    omics: { name: i18n.t("Omics") },
+});
+
+export type Profile = GetValue<typeof profiles>;
+export type ProfileId = GetRecordId<typeof profiles>;
+
+/* Blocks */
 
 export const blockDefs: BlockDef[] = [
     {
@@ -14,6 +31,13 @@ export const blockDefs: BlockDef[] = [
         ),
         tracks: [],
         component: BasicInfoViewer,
+        profiles: [
+            profiles.structural,
+            profiles.validation,
+            profiles.drugDesign,
+            profiles.biomedicine,
+            profiles.omics,
+        ],
     },
     {
         id: "structuralInfo",
@@ -37,6 +61,7 @@ export const blockDefs: BlockDef[] = [
             tracks.regions /* The one in Domains&Sites? */,
             tracks.otherRegions /* Coiled coil (D&S), LIPS (D&S), Repeats (D&S), Zinc finger (D&S) */,
         ],
+        profiles: [profiles.structural, profiles.drugDesign],
     },
     {
         id: "relevantSites",
@@ -49,6 +74,7 @@ export const blockDefs: BlockDef[] = [
             tracks.structureCoverage,
             tracks.sites /* active site (D&S), biding site, nucleotide binding, metal binding */,
         ],
+        profiles: [profiles.structural, profiles.drugDesign, profiles.biomedicine],
     },
     {
         id: "processing",
@@ -62,6 +88,7 @@ export const blockDefs: BlockDef[] = [
             tracks.molecularProcessing /* signal peptide, chain */,
             tracks.ptm /* All from Phosphite/uniprot PTM */,
         ],
+        profiles: [profiles.structural, profiles.biomedicine],
     },
     {
         id: "mapValidation",
@@ -84,6 +111,7 @@ export const blockDefs: BlockDef[] = [
             tracks.molprobity,
             tracks.emValidation,
         ],
+        profiles: [profiles.structural, profiles.validation, profiles.drugDesign],
     },
     {
         id: "residueAccessibility",
@@ -91,6 +119,7 @@ export const blockDefs: BlockDef[] = [
         description: i18n.t(`Number of pockets`),
         help: "",
         tracks: [tracks.structureCoverage, tracks.pockets, tracks.residueAccessibility],
+        profiles: [profiles.drugDesign],
     },
     {
         id: "proteinInteraction",
@@ -104,6 +133,7 @@ export const blockDefs: BlockDef[] = [
             tracks.ppiViewer,
             tracks.functionalMappingPpi /* separate: ppi-viewer */,
         ],
+        profiles: [profiles.drugDesign, profiles.biomedicine],
     },
     {
         id: "ligandInteraction",
@@ -116,13 +146,16 @@ export const blockDefs: BlockDef[] = [
             tracks.ligands,
             tracks.functionalMappingLigands /* + Pandda, how to show, prefix?*/,
         ],
+        profiles: [profiles.drugDesign, profiles.biomedicine],
     },
+    // <- Diseases and his relation with the variants
     {
         id: "variants",
         title: "Variants and mutagenesis experiments",
         description: "",
         help: "",
         tracks: [tracks.structureCoverage, tracks.geneViewer, tracks.mutagenesis, tracks.variants],
+        profiles: [profiles.omics, profiles.biomedicine],
     },
     {
         id: "proteomics",
@@ -130,6 +163,7 @@ export const blockDefs: BlockDef[] = [
         description: "",
         help: "",
         tracks: [tracks.structureCoverage, tracks.peptides],
+        profiles: [profiles.omics],
     },
     {
         id: "inmunology",
@@ -137,6 +171,7 @@ export const blockDefs: BlockDef[] = [
         description: "",
         help: "",
         tracks: [tracks.structureCoverage, tracks.epitomes, tracks.antigenicSequence],
+        profiles: [profiles.drugDesign, profiles.biomedicine],
     },
 ];
 
@@ -174,4 +209,5 @@ export const allTracksBlock: BlockDef = {
         tracks.epitomes,
         tracks.antigenicSequence,
     ],
+    profiles: [],
 };
