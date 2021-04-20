@@ -20,7 +20,7 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
         <div className={styles.section} id={block.id}>
             <div className={styles.title}>
                 {title}
-                <button title={help}>?</button>
+                {help && <button title={help}>?</button>}
             </div>
 
             <div className="contents">{description}</div>
