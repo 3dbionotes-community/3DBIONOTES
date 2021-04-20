@@ -46,7 +46,6 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     return (
         <div>
             {blocks.map(block => {
-                if (!blockHasRelevantData(block, pdb)) return null;
                 const CustomComponent = block.component;
                 return (
                     <ViewerBlock key={block.id} block={block}>
@@ -77,16 +76,3 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         </div>
     );
 };
-
-function blockHasRelevantData(block: BlockDef, pdb: Pdb): boolean {
-    const tracks = _(pdb.tracks)
-        .keyBy(track => track.id)
-        .at(...block.tracks.map(trackDef => trackDef.id))
-        .compact()
-        .value();
-    const trackIds = tracks.map(track => track.id);
-    const hasCustomComponent = Boolean(block.component);
-    const hasRelevantTracks = !_(tracks).isEmpty() && !_.isEqual(trackIds, ["structure-coverage"]);
-
-    return hasCustomComponent || hasRelevantTracks;
-}
