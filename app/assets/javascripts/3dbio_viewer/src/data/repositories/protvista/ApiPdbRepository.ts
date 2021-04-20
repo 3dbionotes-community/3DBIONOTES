@@ -142,6 +142,7 @@ export class ApiPdbRepository implements PdbRepository {
             id: options.pdb,
             emdb: undefined,
             protein,
+            chain: options.chain,
             sequence: data.features ? data.features.sequence : "",
             length: getTotalFeaturesLength(tracks),
             tracks,

@@ -11,6 +11,7 @@ export interface Pdb {
     experiment: Maybe<Experiment>;
     emdb: { id: string } | undefined;
     protein: Protein;
+    chain: string;
     sequence: string;
     length: number;
     // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track#data-array
