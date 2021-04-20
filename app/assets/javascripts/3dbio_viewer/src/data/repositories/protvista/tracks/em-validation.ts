@@ -1,8 +1,18 @@
 import _ from "lodash";
-import { Fragment } from "../../../../domain/entities/Fragment";
+import { FragmentResult, Fragments, getFragmentsList } from "../../../../domain/entities/Fragment2";
 import { Legend } from "../../../../domain/entities/Legend";
-import { Track } from "../../../../domain/entities/Track";
-import { getName } from "../utils";
+import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition";
+import { getKeys, isElementOfUnion } from "../../../../utils/ts-utils";
+import { subtracks } from "../definitions";
+
+/* Examples:
+
+    - deepres, mapq, fscq:
+        http://3dbionotes.cnb.csic.es/ws/lrs/pdbAnnotFromMap/all/6zow/A/?format=json
+
+    - mapq, monores:
+        http://3dbionotes.cnb.csic.es/ws/lrs/pdbAnnotFromMap/all/7bv1/A/
+*/
 
 export type PdbAnnotations = PdbAnnotation[];
 
@@ -14,6 +24,15 @@ export interface PdbAnnotation {
     algoType: string;
     data: Array<{ begin: string; value: number }>;
 }
+
+type KnownAlgorithm = "deepres" | "mapq" | "fscq" | "monores";
+
+const subtrackByAlgorithm: Record<KnownAlgorithm, SubtrackDefinition> = {
+    deepres: subtracks.deepRes,
+    mapq: subtracks.mapQ,
+    fscq: subtracks.fscQ,
+    monores: subtracks.monoRes,
+};
 
 const MAXQ_COLOR_UPPPER_THRESHOLD = 0.8;
 
@@ -55,35 +74,26 @@ const config = {
     },
 };
 
-export function getEmValidationTrack(pdbAnnotations: PdbAnnotations): Track {
-    const data: Track["subtracks"] = pdbAnnotations.map((pdbAnnotation: PdbAnnotation) => {
-        const label = `${pdbAnnotation.algorithm} (${pdbAnnotation.minVal} -> ${pdbAnnotation.maxVal})`;
-        const { descriptionPrefix, legend, getColor } = getEmResolution(pdbAnnotation);
+export function getEmValidationFragments(pdbAnnotations: PdbAnnotations): Fragments {
+    return getFragmentsList(pdbAnnotations, (annotation): FragmentResult[] => {
+        if (!isElementOfUnion(annotation.algorithm, getKeys(subtrackByAlgorithm))) return [];
 
-        return {
-            accession: pdbAnnotation.algorithm,
-            type: _.capitalize(label),
-            label: getName(label),
-            labelTooltip: label,
-            overlapping: false,
-            shape: "rectangle",
-            locations: [
-                {
-                    fragments: pdbAnnotation.data.map(
-                        (fragment): Fragment => ({
-                            start: parseInt(fragment.begin),
-                            end: parseInt(fragment.begin),
-                            description: `${descriptionPrefix}${pdbAnnotation.algorithm}: ${fragment.value}`,
-                            legend: legend,
-                            color: getColor(fragment.value),
-                        })
-                    ),
-                },
-            ],
-        };
+        const { descriptionPrefix, legend, getColor } = getEmResolution(annotation);
+        const interval = [annotation.minVal, " -> ", annotation.maxVal].join("");
+        const subtrack = subtrackByAlgorithm[annotation.algorithm];
+        const subtrackWithCustomName = { ...subtrack, name: `${subtrack.name} (${interval})` };
+
+        return annotation.data.map(fragment => {
+            return {
+                subtrack: subtrackWithCustomName,
+                start: fragment.begin,
+                end: fragment.begin,
+                description: `${descriptionPrefix}${annotation.algorithm}: ${fragment.value}`,
+                legend: legend,
+                color: getColor(fragment.value),
+            };
+        });
     });
-
-    return { id: "em-validation", label: "em validation", subtracks: data };
 }
 
 function getEmResolution(pdbAnnotation: PdbAnnotation): EmResolution {

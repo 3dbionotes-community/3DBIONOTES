@@ -7,10 +7,10 @@ const innerSeparator = "+";
 const mainSeparator = "|";
 
 export function useViewerSelector(
-    selector: string
+    selector: string | undefined
 ): [SelectionState, (state: SelectionState) => void] {
     const goTo = useGoto();
-    const [main = "", overlay = ""] = selector.split(mainSeparator, 2);
+    const [main = "", overlay = ""] = (selector || "").split(mainSeparator, 2);
     const [mainPdbRichId, mainEmdbRichId] = main.split(innerSeparator, 2);
     const overlayIds = overlay.split(innerSeparator);
     const pdbItem = buildDbItem(mainPdbRichId);

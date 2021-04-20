@@ -17,7 +17,7 @@ export interface ViewersProps {
 
 export const Viewers: React.FC<ViewersProps> = props => {
     const { selection } = props;
-    const loader = usePdbLoader();
+    const loader = usePdbLoader(selection);
 
     return (
         <React.Fragment>

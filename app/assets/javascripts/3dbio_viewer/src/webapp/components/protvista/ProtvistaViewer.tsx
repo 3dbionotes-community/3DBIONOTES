@@ -4,18 +4,25 @@ import { Pdb } from "../../../domain/entities/Pdb";
 import { SelectionState } from "../../view-models/SelectionState";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
-import { BlockDef } from "./Protvista.types";
+import { BlockDef, TrackComponentProps } from "./Protvista.types";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { AnnotationsTool } from "../annotations-tool/AnnotationsTool";
 import { ProtvistaAction } from "./Protvista.helpers";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
+import { PPIViewer } from "../ppi/PPIViewer";
+import { GeneViewer } from "../gene-viewer/GeneViewer";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
     selection: SelectionState;
     blocks: BlockDef[];
 }
+
+const mapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
+    "ppi-viewer": PPIViewer,
+    "gene-viewer": GeneViewer,
+};
 
 type OnActionCb = NonNullable<ProtvistaPdbProps["onAction"]>;
 
@@ -49,7 +56,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                             <ProtvistaPdb pdb={pdb} block={block} onAction={onAction} />
                         )}
                         {block.tracks.map((trackDef, idx) => {
-                            const CustomTrackComponent = trackDef.component;
+                            const CustomTrackComponent = mapping[trackDef.id];
                             return (
                                 CustomTrackComponent && (
                                     <CustomTrackComponent
@@ -61,12 +68,12 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                                 )
                             );
                         })}
-                        {isAnnotationToolOpen && action && (
-                            <AnnotationsTool onClose={closeAnnotationTool} action={action} />
-                        )}
                     </ViewerBlock>
                 );
             })}
+            {isAnnotationToolOpen && action && (
+                <AnnotationsTool onClose={closeAnnotationTool} action={action} />
+            )}
         </div>
     );
 };

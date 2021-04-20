@@ -1,29 +1,42 @@
 import React from "react";
 import { Pdb } from "../../domain/entities/Pdb";
+import { PdbOptions } from "../../domain/repositories/PdbRepository";
 import { debugVariable } from "../../utils/debug";
+import { throwError } from "../../utils/misc";
 import { useAppContext } from "../components/AppContext";
 import { useLoader } from "../components/Loader";
+import { SelectionState } from "../view-models/SelectionState";
 
-export function usePdbLoader() {
+const proteinFromPdbId: Record<string, string> = {
+    "6zow": "P0DTC2",
+    "6lzg": "Q9BYF1",
+    "6w9c": "P0DTD1",
+    "1iyj": "P60896",
+    "2r5t": "O00141",
+    "2z62": "O00206",
+    "3brv": "O14920",
+    "1yyb": "O14737",
+    "7bv1": "P0DTD1",
+};
+
+export function usePdbLoader(selection: SelectionState) {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
+    const pdbId = (selection.main?.pdb.id || "6zow").toLowerCase();
+    const pdbOptions: PdbOptions = React.useMemo(() => {
+        const protein = proteinFromPdbId[pdbId] || "P0DTC2";
+        return { pdb: pdbId, protein, chain: "A" };
+    }, [pdbId]);
+    if (!pdbOptions) throwError(`PDB not defined: ${pdbId}`);
 
     React.useEffect(() => {
-        const pdbOptions = {
-            "6zow": { protein: "P0DTC2", pdb: "6zow", chain: "A" },
-            "6lzg": { protein: "O00141", pdb: "6lzg", chain: "A" },
-            "6w9c": { protein: "P0DTD1", pdb: "6w9c", chain: "A" },
-            "1iyj": { protein: "P60896", pdb: "1iyj", chain: "A" },
-            "2R5T": { protein: "O00141", pdb: "2R5T", chain: "A" }, // Kinenasa
-        };
-
         setLoader({ type: "loading" });
 
-        return compositionRoot.getPdb(pdbOptions["6zow"]).run(
+        return compositionRoot.getPdb(pdbOptions).run(
             pdb => setLoader({ type: "loaded", data: pdb }),
             error => setLoader({ type: "error", message: error.message })
         );
-    }, [compositionRoot, setLoader]);
+    }, [compositionRoot, setLoader, pdbOptions]);
 
     React.useEffect(() => {
         if (loader.type === "loaded") debugVariable({ pdbData: loader.data });

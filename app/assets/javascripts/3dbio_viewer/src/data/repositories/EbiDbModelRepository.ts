@@ -1,22 +1,10 @@
 import _ from "lodash";
 import { DbModel, DbModelCollection } from "../../domain/entities/DbModel";
 import { FutureData } from "../../domain/entities/FutureData";
-import {
-    AtomicStructure,
-    ChainObject as ChainObjectEntity,
-} from "../../domain/entities/AtomicStructure";
-import {
-    DbModelRepository,
-    SearchOptions,
-    UploadOptions,
-} from "../../domain/repositories/DbModelRepository";
+import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
 import { Future } from "../../utils/future";
 import { assert } from "../../utils/ts-utils";
-import { request } from "../utils";
-import {
-    annotationResponseExample,
-    BionotesAnnotationResponse,
-} from "./BionotesAnnotationResponse";
+import { request } from "../request-utils";
 
 const searchPageSize = 30;
 
@@ -35,11 +23,9 @@ const config = {
             return `https://www.ebi.ac.uk/pdbe/static/entry/${id}/400_${id2}.gif`;
         },
     },
-    upload: {
-        url: "http://3dbionotes.cnb.csic.es/upload",
-    },
 };
-
+//http://rinchen-dos.cnb.csic.es:8882
+//http://3dbionotes.cnb.csic.es
 interface ItemConfig {
     type: DbModel["type"];
     searchUrl: string;
@@ -62,29 +48,6 @@ export class EbiDbModelRepository implements DbModelRepository {
                 .value()
         );
     }
-    upload(_options: UploadOptions): FutureData<AtomicStructure> {
-        return Future.success<BionotesAnnotationResponse, Error>(annotationResponseExample).map(
-            getAtomicStructureFromResponse
-        );
-        // return request(config.upload.url, options).map(_res => uploadMockData);
-    }
-}
-
-function getAtomicStructureFromResponse(annotation: BionotesAnnotationResponse): AtomicStructure {
-    return {
-        ...annotation,
-        chains: _.mapValues(annotation.chains, (chains, chainName) =>
-            chains.map(
-                (chain): ChainObjectEntity => ({
-                    ...chain,
-                    id: [chainName, chain.acc].join("-"),
-                    chainName,
-                    name: chain.title.name.long,
-                    org: chain.title.org.long,
-                })
-            )
-        ),
-    };
 }
 
 const apiFields = ["name", "author", "method", "resolution", "specimenstate"] as const;
@@ -140,8 +103,7 @@ function getPdbModels(
     if (!performSearch) return Future.success([]);
 
     const searchQuery = query.trim() ? query : emptySearchesByType[config.type];
-
-    const pdbResults = request<ApiSearchParams, ApiSearchResponse>(config.searchUrl, {
+    const params: ApiSearchParams = {
         format: "JSON",
         // Get more records so we can do a more meaningful sorting by score on the grouped collection
         size: searchPageSize * 10,
@@ -149,7 +111,9 @@ function getPdbModels(
         query: searchQuery,
         entryattrs: "score",
         fieldurl: true,
-    });
+    };
+
+    const pdbResults = request<ApiSearchResponse>({ url: config.searchUrl, params });
 
     return pdbResults.map((res): DbModel[] => {
         return res.entries.map(entry => ({

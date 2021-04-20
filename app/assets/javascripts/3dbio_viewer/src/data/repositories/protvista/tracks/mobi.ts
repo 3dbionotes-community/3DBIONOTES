@@ -1,86 +1,63 @@
 import _ from "lodash";
-import { Fragment, getFragment } from "../../../../domain/entities/Fragment";
-import { Track, addToTrack, Subtrack } from "../../../../domain/entities/Track";
+import { getEvidencesFrom } from "../../../../domain/entities/Evidence";
+import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import i18n from "../../../../webapp/utils/i18n";
-import { config } from "../config";
+import { subtracks } from "../definitions";
+
+// Example: http://3dbionotes.cnb.csic.es/api/annotations/IEDB/Uniprot/O14920
 
 export interface MobiUniprot {
     disorder: MobiUniprotItem;
     lips: MobiUniprotItem;
 }
 
-export interface MobiUniprotItem {
-    [key: string]: Array<{
-        start: number;
-        end: number;
-        method: string | null;
-    }>;
+export type MobiUniprotItem = Partial<Record<"inferred" | "database", MobiAnnotation[]>>;
+
+interface MobiAnnotation {
+    start: number;
+    end: number;
+    method: string | null;
 }
 
-export function addMobiSubtracks(tracks: Track[], mobiUniprot: MobiUniprot | undefined): Track[] {
-    if (!mobiUniprot) return tracks;
-
-    return addToTrack({
-        tracks,
-        trackInfo: { id: "domains-and-sites", label: "Domains & sites" },
-        subtracks: getMobiUniprotSubtracks(mobiUniprot),
-    });
-}
-
-function getMobiUniprotSubtracks(mobiUniprot: MobiUniprot | undefined): Subtrack[] {
+export function getMobiUniprotFragments(
+    mobiUniprot: MobiUniprot | undefined,
+    protein: string
+): Fragments {
     if (!mobiUniprot) return [];
 
-    const fragments = _(mobiUniprot.lips)
-        .values()
-        .flatten()
-        .map(
-            (obj): Fragment => ({
-                start: obj.start,
-                end: obj.end,
-                description: "TODO",
-                color: "#cc2060", // TODO: Missing in config
-            })
-        )
-        .value();
+    const evidences = getEvidencesFrom("MobyDB", {
+        name: protein,
+        url: `https://mobidb.bio.unipd.it/entries/${protein}`,
+    });
 
-    const subtrack: Subtrack = {
-        type: "LINEAR_INTERACTING_PEPTIDE",
-        accession: "LIPS",
-        shape: "rectangle",
-        locations: [{ fragments }],
-        label: "Linear interacting peptide",
-    };
+    const lipsFragments = getFragments(
+        mobiUniprot.lips.inferred,
+        (annotation): FragmentResult => {
+            return {
+                subtrack: subtracks.linearInteractingPeptide,
+                start: annotation.start,
+                end: annotation.end,
+                description: i18n.t("Interacting peptide region"),
+                evidences,
+            };
+        }
+    );
 
-    return [subtrack];
-}
+    const disorderFragments = getFragments(
+        mobiUniprot.disorder.inferred,
+        (annotation): FragmentResult => {
+            const method = annotation.method || "Unknown";
+            const inferredFrom = i18n.t("Inferred from") + " " + method;
 
-export function getMobiDisorderTrack(mobiUniprot: MobiUniprot | undefined): Track | undefined {
-    if (!mobiUniprot || !mobiUniprot.disorder) return;
-    const annotations = _.flatten(_.values(mobiUniprot.disorder));
+            return {
+                subtrack: subtracks.prediction,
+                start: annotation.start,
+                end: annotation.end,
+                description: i18n.t("Disordered region") + " - " + inferredFrom,
+                evidences,
+            };
+        }
+    );
 
-    return {
-        id: "disordered-regions",
-        label: "Disordered regions",
-        subtracks: [
-            {
-                accession: "inferred",
-                type: "Inferred",
-                label: "Inferred",
-                shape: "rectangle",
-                locations: [
-                    {
-                        fragments: _.flatMap(annotations, an =>
-                            getFragment({
-                                start: an.start,
-                                end: an.end,
-                                description:
-                                    i18n.t("Inferred from") + " " + (an.method || "Unknown"),
-                                color: an.method ? config.colorByTrackName.inferred : "#557071",
-                            })
-                        ),
-                    },
-                ],
-            },
-        ],
-    };
+    return _.concat(lipsFragments, disorderFragments);
 }

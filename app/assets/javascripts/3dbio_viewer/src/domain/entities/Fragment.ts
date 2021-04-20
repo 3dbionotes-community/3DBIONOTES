@@ -1,20 +1,29 @@
 import Constants from "../../data/repositories/protvista/tracks/legacy/Constants";
 import { Color } from "./Color";
-import { Evidence } from "./Evidence";
+import { Evidence, Reference } from "./Evidence";
+import { Fragment2 } from "./Fragment2";
 import { Legend } from "./Legend";
 import { Link } from "./Link";
 import { Subtrack } from "./Track";
 
+/**
+ * @deprecated Use Fragment2 instead
+ */
 export interface Fragment {
     id?: string;
     type?: string;
     start: number;
     end: number;
     description: string;
+    alternativeSequence?: string;
     evidences?: Evidence[];
     color: Color;
     legend?: Legend;
+    crossReferences?: Reference[];
+    alignmentScore?: number;
 }
+
+type FragmentU = Fragment | Fragment2;
 
 interface LooseFragment extends Omit<Fragment, "start" | "end"> {
     start: number | string;
@@ -33,22 +42,23 @@ export function getFragment(looseFragment: LooseFragment): Fragment[] {
 export function getFragmentToolsLink(options: {
     protein: string;
     subtrack: Subtrack;
-    fragment: Fragment;
+    fragment: FragmentU;
 }): Link | undefined {
     const { protein, subtrack, fragment } = options;
 
     if (isBlastFragment(subtrack, fragment)) {
-        return { name: "BLAST", url: getBlastUrl(protein, subtrack, fragment) };
+        return {
+            name: "BLAST",
+            url: getBlastUrl(protein, subtrack, fragment),
+        };
     }
 }
 
-const noBlastTypes = Constants.getNoBlastTypes();
-
-export function isBlastFragment(subtrack: Subtrack, fragment: Fragment): boolean {
-    const type = subtrack.type;
-    return type !== undefined && fragment.end - fragment.start >= 3 && !noBlastTypes.includes(type);
+export function isBlastFragment(subtrack: Subtrack, fragment: FragmentU): boolean {
+    return subtrack.isBlast !== false && fragment.end - fragment.start >= 3;
 }
-export function getBlastUrl(protein: string, subtrack: Subtrack, fragment: Fragment): string {
+
+export function getBlastUrl(protein: string, subtrack: Subtrack, fragment: FragmentU): string {
     // Example: https://www.uniprot.org/blast/?about=P0DTC2[816-1273]&key=Chain&id=PRO_0000449649
     const baseUrl = "https://www.uniprot.org/blast";
     const trackInfo: { label: string } | undefined = Constants.getTrackInfo(subtrack.type);

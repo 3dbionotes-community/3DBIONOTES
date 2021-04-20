@@ -1,16 +1,40 @@
 import _ from "lodash";
-import { getFragment } from "../../../../domain/entities/Fragment";
-import { Evidence as DomainEvidence, EvidenceSource } from "../../../../domain/entities/Evidence";
-import { Subtrack, Track } from "../../../../domain/entities/Track";
-import { config, getColorFromString, getShapeFromString, getTrack } from "../config";
-import { getId, getName } from "../utils";
-import { getEvidenceText } from "./legacy/TooltipFactory";
-import {
-    getPhosphiteEvidencesFromFeature,
-    PhosphositeUniprot,
-    PhosphositeUniprotItem,
-} from "./phosphite";
-import { SubtrackId, TrackId } from "../../../../webapp/components/protvista/protvista-tracks";
+import { subtracks } from "../../../../domain/definitions/subtracks";
+import { Evidence as DomainEvidence } from "../../../../domain/entities/Evidence";
+import { FragmentResult, Fragments, getFragments } from "../../../../domain/entities/Fragment2";
+import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition";
+import { getEvidenceFromDefaultSources, ApiEvidence } from "../entities/ApiEvidenceSource";
+import { getPtmSubtrackFromDescription } from "./db-ptm";
+
+// Example: https://www.ebi.ac.uk/proteins/api/features/O14920
+
+const mapping: Record<string, SubtrackDefinition> = {
+    ACT_SITE: subtracks.activeSite,
+    BINDING: subtracks.bindingSite,
+    CARBOHYD: subtracks.glycosylation,
+    CHAIN: subtracks.chain,
+    COILED: subtracks.coiledCoils,
+    COMPBIAS: subtracks.compositionalBias,
+    CONFLICT: subtracks.sequenceConflict,
+    DISULFID: subtracks.disulfideBond,
+    DOMAIN: subtracks.prositeDomain,
+    HELIX: subtracks.helix,
+    METAL: subtracks.metalBinding,
+    // MOD_RES -> PTM subtracks, use ptmMappingFromDescription
+    MOTIF: subtracks.motifs,
+    MUTAGEN: subtracks.mutagenesis,
+    NP_BIND: subtracks.nucleotidesBinding,
+    REGION: subtracks.regions,
+    REPEAT: subtracks.repeats,
+    SIGNAL: subtracks.signalPeptide,
+    SITE: subtracks.otherStructuralRelevantSites,
+    STRAND: subtracks.betaStrand,
+    TOPO_DOM: subtracks.cytolosic,
+    TRANSMEM: subtracks.transmembraneRegion,
+    TURN: subtracks.turn,
+    ZN_FING: subtracks.zincFinger,
+    // VARIANT
+};
 
 export interface Features {
     accession: string;
@@ -29,172 +53,72 @@ export interface Feature {
     begin: string;
     end: string;
     molecule: string;
-    evidences?: Evidence[];
+    alternativeSequence?: string;
+    evidences?: ApiEvidence[];
 }
 
 type FeatureType = string;
 
-interface Evidence {
-    code: string;
-    source?: {
-        name: string;
-        id: string;
-        url: string;
-        alternativeUrl?: string;
-    };
-}
+export function getFeatureFragments(protein: string, features: Features): Fragments {
+    return getFragments(
+        features.features,
+        (feature): FragmentResult => {
+            const subtrack = getSubtrackFromFeature(feature);
 
-export interface GroupedFeature {
-    name: string;
-    items: {
-        name: string;
-        items: Feature[];
-    }[];
-}
+            if (!subtrack) {
+                console.debug(`Unprocessed type: ${feature.type}`);
+                return;
+            }
 
-type PhosphositeByInterval = _.Dictionary<PhosphositeUniprotItem[]>;
-
-export function getTrackFromFeatures(
-    features: Features,
-    phosphosite: PhosphositeUniprot | undefined
-): Track[] {
-    const groupedFeatures = features ? getGroupedFeatures(features) : [];
-    const phosphositeByInterval = _.groupBy(phosphosite, item => [item.start, item.end].join("-"));
-    return groupedFeatures.map(groupedFeature =>
-        getTrackFromGroupedFeature(features.accession, groupedFeature, phosphositeByInterval)
+            return {
+                id: feature.ftId,
+                subtrack,
+                start: feature.begin,
+                end: feature.end,
+                description: feature.description,
+                evidences: getEvidences({ protein, feature }),
+                alternativeSequence: feature.alternativeSequence,
+            };
+        }
     );
 }
 
-function getTrackFromGroupedFeature(
-    protein: string,
-    feature: GroupedFeature,
-    phosphositeByInterval: PhosphositeByInterval
-): Track {
-    return {
-        id: getId(feature.name),
-        label: feature.name,
-        subtracks: feature.items.map(
-            (item, idx): Subtrack => {
-                const itemKey = item.name.toLowerCase();
-                const track = getTrack(itemKey);
-
-                return {
-                    accession: item.name + "-" + idx,
-                    type: item.name,
-                    label: track?.label || getName(item.name),
-                    labelTooltip: track?.tooltip || getName(item.name),
-                    shape: getShapeFromString(itemKey, "circle"),
-                    locations: [
-                        {
-                            fragments: _.flatMap(item.items, feature =>
-                                getFragment({
-                                    id: feature.ftId,
-                                    type: feature.type,
-                                    start: feature.begin,
-                                    end: feature.end,
-                                    description: feature.description,
-                                    evidences: getEvidences(
-                                        protein,
-                                        feature,
-                                        phosphositeByInterval
-                                    ),
-                                    color: getColorFromString(itemKey),
-                                })
-                            ),
-                        },
-                    ],
-                };
-            }
-        ),
-    };
+function getSubtrackFromFeature(feature: Feature): SubtrackDefinition | undefined {
+    if (feature.type === "MOD_RES") {
+        return getPtmSubtrackFromDescription(feature.description) || subtracks.modifiedResidue;
+    } else {
+        return mapping[feature.type];
+    }
 }
 
-function getEvidences(
-    protein: string,
-    feature: Feature,
-    phosphositeByInterval: PhosphositeByInterval
-): DomainEvidence[] {
-    return _(feature.evidences || getDefaultEvidences(protein, feature))
+function getEvidences(options: { protein: string; feature: Feature }): DomainEvidence[] {
+    const { protein, feature } = options;
+
+    return _(feature.evidences || [getDefaultEvidence(protein, feature)])
         .groupBy(apiEvidence => apiEvidence.code)
         .toPairs()
-        .map(([code, apiEvidencesForCode]) => getEvidence(protein, code, apiEvidencesForCode))
+        .map(([code, apiEvidencesForCode]) =>
+            getEvidence(feature, protein, code, apiEvidencesForCode)
+        )
         .compact()
-        .concat(getPhosphiteEvidencesFromFeature({ protein, feature, phosphositeByInterval }))
         .value();
 }
 
 function getEvidence(
+    feature: Feature,
     protein: string,
     code: string,
-    apiEvidences: Evidence[]
-): DomainEvidence | undefined {
-    const apiSources = _.compact(apiEvidences.map(apiEvidence => apiEvidence.source));
-    const evidenceText = getEvidenceText({ accession: protein }, code, apiSources);
-    const apiSource = apiSources[0];
-    if (!apiSource) return;
+    apiEvidencesForCode: ApiEvidence[]
+) {
+    const defaultEvidence = getDefaultEvidence(protein, feature);
 
-    const source: EvidenceSource = {
-        name: apiSource.name,
-        links: apiSources.map(src => ({ name: src.id, url: src.url })),
-    };
-
-    const alternativeSourceLinks = _(apiSources)
-        .map(src => (src.alternativeUrl ? { name: src.id, url: src.alternativeUrl } : null))
+    const sourceEvidences = _(apiEvidencesForCode)
+        .map(apiEvidence => ({ ...defaultEvidence, ...apiEvidence }.source))
         .compact()
         .value();
 
-    const alternativeSource: EvidenceSource | undefined = _.isEmpty(alternativeSourceLinks)
-        ? undefined
-        : {
-              name: apiSource.name === "PubMed" ? "EuropePMC" : source.name,
-              links: alternativeSourceLinks,
-          };
-
-    return { title: evidenceText, source: source, alternativeSource };
+    return getEvidenceFromDefaultSources({ accession: protein, code, sourceEvidences });
 }
-
-function getGroupedFeatures(featuresData: Features): GroupedFeature[] {
-    const featuresByCategory = featuresData
-        ? _(featuresData.features)
-              .groupBy(data => data.category)
-              .mapValues(values =>
-                  _(values)
-                      .groupBy(value => value.type)
-                      .map((values, key) => ({ name: key, items: values }))
-                      .value()
-              )
-              .value()
-        : {};
-
-    const features = _(config.categories)
-        .map(category => {
-            const items = featuresByCategory[category.name];
-            return items ? { name: category.label, items } : null;
-        })
-        .compact()
-        .value();
-
-    return features;
-}
-
-const _mapping: Record<string, { trackId: TrackId; subtrackId: SubtrackId }> = {
-    REGION: { trackId: "regions", subtrackId: "regions" },
-    COILED: { trackId: "other-structural-regions", subtrackId: "coiled-coils" },
-    CARBOHYD: { trackId: "ptm", subtrackId: "glycosylation" },
-    CHAIN: { trackId: "molecule-processing", subtrackId: "chain" },
-    DISULFID: { trackId: "ptm", subtrackId: "disulfide-bond" },
-    DOMAIN: { trackId: "domains-and-sites", subtrackId: "prosite-domain" },
-    HELIX: { trackId: "structural-features", subtrackId: "helix" },
-    MOTIF: { trackId: "motifs", subtrackId: "motifs" },
-    MUTAGEN: { trackId: "mutagenesis", subtrackId: "mutagenesis" },
-    SIGNAL: { trackId: "molecule-processing", subtrackId: "signal-peptide" },
-    SITE: { trackId: "sites", subtrackId: "other-structural-relevant-sites" },
-    STRAND: { trackId: "structural-features", subtrackId: "beta-strand" },
-    TOPO_DOM: { trackId: "topology", subtrackId: "cytolosic" },
-    TRANSMEM: { trackId: "topology", subtrackId: "transmembrane-region" },
-    TURN: { trackId: "structural-features", subtrackId: "turn" },
-    // VARIANT: {trackId: "", subtrackId: ""},
-};
 
 /* From extendProtVista/add_evidences.js */
 
@@ -222,13 +146,12 @@ const uniprotLink: Record<FeatureType, string> = {
     ACT_SITE: "sitesAnno_section",
 };
 
-function getDefaultEvidences(protein: string, feature: Feature): Evidence[] {
+function getDefaultEvidence(protein: string, feature: Feature): ApiEvidence {
     const type = uniprotLink[feature.type];
     const url = `http://www.uniprot.org/uniprot/${protein}#${type || ""}`;
-    const evidence: Evidence = {
+
+    return {
         code: "Imported information",
         source: { name: "Imported from UniProt", id: protein, url },
     };
-
-    return [evidence];
 }

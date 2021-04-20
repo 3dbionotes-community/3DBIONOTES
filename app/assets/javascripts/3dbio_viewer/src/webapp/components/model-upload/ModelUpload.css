@@ -9,10 +9,7 @@ a:hover {
 label {
     margin-top: 1.125rem;
     margin-bottom: 0.5rem;
-}
-small {
-    margin-left: 0.625rem;
-    color: #8e8e8e;
+    font-weight: bold;
 }
 .form-control {
     display: block;

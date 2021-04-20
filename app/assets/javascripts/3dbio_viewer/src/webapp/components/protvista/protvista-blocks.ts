@@ -1,7 +1,7 @@
 import _ from "lodash";
 import i18n from "../../utils/i18n";
 import { BasicInfoViewer } from "../BasicInfoViewer";
-import { tracksDef as tracks } from "./protvista-tracks";
+import { trackDefinitions as tracks } from "../../../domain/definitions/tracks";
 import { BlockDef } from "./Protvista.types";
 
 export const blockDefs: BlockDef[] = [
@@ -122,12 +122,7 @@ export const blockDefs: BlockDef[] = [
         title: "Variants and mutagenesis experiments",
         description: "",
         help: "",
-        tracks: [
-            tracks.structureCoverage,
-            tracks.geneViewer /* viewer */,
-            tracks.mutagenesis,
-            tracks.variants,
-        ],
+        tracks: [tracks.structureCoverage, tracks.geneViewer, tracks.mutagenesis, tracks.variants],
     },
     {
         id: "proteomics",
@@ -148,7 +143,7 @@ export const blockDefs: BlockDef[] = [
 export const allTracksBlock: BlockDef = {
     id: "allTracksBlock",
     title: "All Tracks Block",
-    description: "Show all tracks in single protvista viewer",
+    description: "",
     help: "Help message",
     tracks: [
         tracks.structureCoverage,

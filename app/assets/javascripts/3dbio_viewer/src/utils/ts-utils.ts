@@ -23,7 +23,9 @@ export function assert<T>(value: T | undefined): T {
     return value;
 }
 
-//
+export function notNil<T>(x: T | undefined | null): x is T {
+    return x !== undefined && x !== null;
+}
 
 export type OptionalKeys<T> = { [K in keyof T]-?: {} extends Pick<T, K> ? K : never }[keyof T];
 
@@ -37,9 +39,33 @@ export function withOptionalProperties<T>() {
     };
 }
 
+export function groupedPairsBy<Obj, Key>(
+    objs: Obj[],
+    mapper: (obj: Obj) => Key
+): Array<[Key, Obj[]]> {
+    const result = new Map<Key, Obj[]>();
+
+    objs.forEach(obj => {
+        const key = mapper(obj);
+        const objs = result.get(key);
+
+        if (objs) {
+            objs.push(obj);
+        } else {
+            result.set(key, [obj]);
+        }
+    });
+
+    return Array.from(result);
+}
+
 export function isElementOfUnion<Union extends string>(
     value: string,
     values: readonly Union[]
 ): value is Union {
     return (values as readonly string[]).includes(value);
+}
+
+export function getKeys<K extends string>(obj: Record<K, unknown>): K[] {
+    return Object.keys(obj) as K[];
 }

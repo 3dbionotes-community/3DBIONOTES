@@ -20,20 +20,28 @@ module.exports = function (app) {
         target: "https://www.ebi.ac.uk",
         rewritePath: true,
     });
+
+    proxyRoutes(app, {
+        routes: ["/rinchen-dos"],
+        target: "http://rinchen-dos.cnb.csic.es:8882",
+        rewritePath: true,
+        cache: false,
+    });
 };
 
 function proxyRoutes(app, options) {
-    const { routes, target, rewritePath } = options;
+    const { routes, target, rewritePath, cache = true } = options;
     const pathRewrite = rewritePath
         ? _.fromPairs(routes.map(route => [`^${route}/`, "/"]))
         : undefined;
 
-    const proxyOptions = {
-        target,
-        changeOrigin: true,
-        pathRewrite,
-    };
-
+    const proxyOptions = { target, changeOrigin: true, pathRewrite, logLevel: "debug" };
     const apiProxy = proxy.createProxyMiddleware(proxyOptions);
-    app.use(routes, apicache.middleware("1 day"), apiProxy);
+
+    if (cache) {
+        const cacheMidddleware = apicache.middleware("1 day");
+        app.use(routes, cacheMidddleware, apiProxy);
+    } else {
+        app.use(routes, apiProxy);
+    }
 }
