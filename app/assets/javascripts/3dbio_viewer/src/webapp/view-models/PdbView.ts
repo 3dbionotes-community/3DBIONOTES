@@ -28,6 +28,8 @@ export interface PdbView {
     tracks: TrackView[];
     variants?: VariantsView;
     sequenceConservation?: unknown;
+    // New flag in @3dbionotes/protvista-pdb
+    expandFirstTrack: boolean;
 }
 
 interface VariantsView extends Variants {
@@ -96,6 +98,7 @@ export function getPdbView(
         displayNavigation: true,
         displaySequence: true,
         displayConservation: false,
+        expandFirstTrack: false,
         displayVariants: !!pdb.variants,
         tracks,
         variants: pdb.variants
