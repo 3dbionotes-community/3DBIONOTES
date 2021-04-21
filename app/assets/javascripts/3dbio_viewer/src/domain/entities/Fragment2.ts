@@ -79,8 +79,11 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 shape: subtrack.shape || "rectangle",
                 source: subtrack.source,
                 isBlast: subtrack.isBlast ?? true,
-                locations: [{ fragments }],
+                locations: splitOverlappingFragments(fragments, {
+                    maxGroups: 5,
+                }).map(fragments => ({ fragments })),
                 subtype: subtrack.subtype,
+                overlapping: false,
             };
         }
     );
@@ -172,4 +175,62 @@ export function toNumericInterval<F extends LooseInterval>(
     const fragment = { ...looseFragment, start: startNum, end: endNum };
 
     return isNaN(startNum) || isNaN(endNum) ? undefined : fragment;
+}
+
+/* Split overlapping intervals (defined by start -> end) into non-overlapping groups.
+
+Example input: A (1->11), B (4->16), C (6->14), D (13->19), E (16->22), F (18->24)
+
+Output:
+
+<----A----> <--D-->
+   <----B------> <--F-->
+     <---C---> <--E-->
+*/
+function splitOverlappingFragments<Interval extends LooseInterval>(
+    intervals: Interval[],
+    options: { maxGroups: number }
+): Array<Interval[]> {
+    const { maxGroups } = options;
+    const events = _(intervals)
+        .flatMap(interval => [
+            { type: "start" as const, pos: interval.start, interval },
+            { type: "end" as const, pos: interval.end, interval },
+        ])
+        .sortBy(({ pos }) => pos)
+        .value();
+
+    const state: Record<number, { current: Interval | undefined; intervals: Interval[] }> = {};
+
+    for (const event of events) {
+        const { type, interval } = event;
+        if (type === "start") {
+            const freeIndex = _.range(0, maxGroups).find(idx => !state[idx]?.current);
+            const group = freeIndex !== undefined ? state[freeIndex] : undefined;
+
+            if (freeIndex !== undefined) {
+                if (!group) {
+                    state[freeIndex] = { current: interval, intervals: [interval] };
+                } else {
+                    state[freeIndex] = {
+                        current: interval,
+                        intervals: group.intervals.concat(interval),
+                    };
+                }
+            }
+        } else if (type === "end") {
+            const freeIndex = _.range(0, maxGroups).find(idx => state[idx]?.current === interval);
+            if (freeIndex)
+                state[freeIndex] = {
+                    current: undefined,
+                    intervals: state[freeIndex]?.intervals || [],
+                };
+        }
+    }
+
+    return _(0)
+        .range(10)
+        .map(idx => state[idx]?.intervals)
+        .compact()
+        .value();
 }
