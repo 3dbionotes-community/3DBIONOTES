@@ -1178,6 +1178,7 @@
                                 ]
                             }
                         },
+                        "7dx4": {},
                         "7nxc": {},
                         "7nxb": {},
                         "7nxa": {},
@@ -1403,6 +1404,7 @@
                     },
                     "EMDB": [
                         "EMD-30900",
+                        "EMD-30895",
                         "EMD-30899",
                         "EMD-30898",
                         "EMD-30897",
@@ -1955,6 +1957,8 @@
             ],
             "PDB": {
                 "7nfv": {},
+                "7d7l": {},
+                "7d7k": {},
                 "6w9c": {
                     "validation": {
                         "isolde": [
@@ -3365,6 +3369,7 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": {
+                        "7lgd": {},
                         "7lg0": {},
                         "7kgt": {},
                         "7kgs": {},
@@ -3483,6 +3488,9 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7krp",
+                        "7kro",
+                        "7krn",
                         "7d4f",
                         "7cyq",
                         "7cxn",
@@ -3512,6 +3520,9 @@
                         "EMD-30209",
                         "EMD-30178",
                         "EMD-30127",
+                        "EMD-23009",
+                        "EMD-23008",
+                        "EMD-23007",
                         "EMD-22288",
                         "EMD-22160",
                         "EMD-11995",
@@ -3747,6 +3758,9 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7krp",
+                        "7kro",
+                        "7krn",
                         "7lg3",
                         "7jlt",
                         "7d4f",
@@ -3781,6 +3795,9 @@
                         "EMD-30209",
                         "EMD-30178",
                         "EMD-30127",
+                        "EMD-23009",
+                        "EMD-23008",
+                        "EMD-23007",
                         "EMD-22288",
                         "EMD-22160",
                         "EMD-11995",
@@ -3869,6 +3886,9 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7krp",
+                        "7kro",
+                        "7krn",
                         "7lg2",
                         "7jlt",
                         "7dcd",
@@ -3903,6 +3923,9 @@
                         "EMD-30209",
                         "EMD-30178",
                         "EMD-30127",
+                        "EMD-23009",
+                        "EMD-23008",
+                        "EMD-23007",
                         "EMD-22288",
                         "EMD-22160",
                         "EMD-11995",
@@ -5038,6 +5061,9 @@
                 "P-P-Interactions": {
                     "PDB": [
                         "7lfz",
+                        "7krp",
+                        "7kro",
+                        "7krn",
                         "7cyq",
                         "7cxn",
                         "6xez"
@@ -5045,6 +5071,9 @@
                     "EMDB": [
                         "EMD-30504",
                         "EMD-30493",
+                        "EMD-23009",
+                        "EMD-23008",
+                        "EMD-23007",
                         "EMD-22160"
                     ]
                 },
