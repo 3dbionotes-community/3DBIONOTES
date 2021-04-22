@@ -71,6 +71,8 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 }
             );
 
+            const slots = splitOverlappingFragments(fragments, { maxSlots: 5 });
+
             return {
                 accession: subtrack.dynamicSubtrack ? subtrack.dynamicSubtrack.id : subtrack.id,
                 type: subtrack.name,
@@ -79,9 +81,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 shape: subtrack.shape || "rectangle",
                 source: subtrack.source,
                 isBlast: subtrack.isBlast ?? true,
-                locations: splitOverlappingFragments(fragments, {
-                    maxGroups: 5,
-                }).map(fragments => ({ fragments })),
+                locations: slots.map(fragments => ({ fragments })),
                 subtype: subtrack.subtype,
                 overlapping: false,
             };
@@ -187,49 +187,56 @@ Output:
    <----B------> <--F-->
      <---C---> <--E-->
 */
-function splitOverlappingFragments<Interval extends LooseInterval>(
-    intervals: Interval[],
-    options: { maxGroups: number }
-): Array<Interval[]> {
-    const { maxGroups } = options;
+function splitOverlappingFragments<Interval_ extends Interval>(
+    intervals: Interval_[],
+    options: { maxSlots: number }
+): Array<Interval_[]> {
+    type Event = { type: "start" | "end"; pos: number; interval: Interval_ };
+    type SlotState = {
+        current: Interval_ | undefined;
+        intervals: Interval_[];
+    };
+    type State = Record<number, SlotState>;
+
+    const { maxSlots } = options;
     const events = _(intervals)
-        .flatMap(interval => [
-            { type: "start" as const, pos: interval.start, interval },
-            { type: "end" as const, pos: interval.end, interval },
+        .flatMap((interval): Event[] => [
+            { type: "start", pos: interval.start, interval },
+            { type: "end", pos: interval.end, interval },
         ])
         .sortBy(({ pos }) => pos)
         .value();
 
-    const state: Record<number, { current: Interval | undefined; intervals: Interval[] }> = {};
+    const state: State = {};
 
     for (const event of events) {
         const { type, interval } = event;
-        if (type === "start") {
-            const freeIndex = _.range(0, maxGroups).find(idx => !state[idx]?.current);
-            const group = freeIndex !== undefined ? state[freeIndex] : undefined;
 
-            if (freeIndex !== undefined) {
-                if (!group) {
-                    state[freeIndex] = { current: interval, intervals: [interval] };
-                } else {
-                    state[freeIndex] = {
-                        current: interval,
-                        intervals: group.intervals.concat(interval),
-                    };
-                }
+        if (type === "start") {
+            const index = _.range(0, maxSlots).find(idx => !state[idx]?.current);
+
+            if (index !== undefined) {
+                const slot = state[index];
+
+                state[index] = {
+                    current: interval,
+                    intervals: slot ? slot.intervals.concat(interval) : [interval],
+                };
             }
         } else if (type === "end") {
-            const freeIndex = _.range(0, maxGroups).find(idx => state[idx]?.current === interval);
-            if (freeIndex)
-                state[freeIndex] = {
+            const index = _.range(0, maxSlots).find(idx => state[idx]?.current === interval);
+            if (index !== undefined)
+                state[index] = {
                     current: undefined,
-                    intervals: state[freeIndex]?.intervals || [],
+                    intervals: state[index]?.intervals || [],
                 };
         }
     }
 
-    return _(0)
-        .range(10)
+    return _(state)
+        .keys()
+        .map(key => parseInt(key))
+        .sortBy()
         .map(idx => state[idx]?.intervals)
         .compact()
         .value();
