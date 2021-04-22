@@ -25,9 +25,11 @@ export const ProfilesButton: React.FC<ProfilesButtonProps> = props => {
         [onChange]
     );
 
+    const text = i18n.t("Profile") + ": " + profile.name;
+
     return (
         <Dropdown<ProfileId>
-            text={i18n.t("Profiles")}
+            text={text}
             selected={profile.id}
             items={dropdownItems}
             onClick={setProfile}

@@ -5,14 +5,16 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import { PopperMenu } from "./PopperMenu";
 import Done from "@material-ui/icons/Done";
 import { ExpandMore } from "@material-ui/icons";
+import i18n from "d2-ui-components/locales";
 
 export interface DropdownProps<Id extends string = string> {
-    text: string;
     items: DropdownItemModel<Id>[];
+    // Show text or, if empty, the selected item.
+    text?: string;
+    selected?: Id | undefined;
     onClick(id: Id): void;
     showSelection?: boolean;
     showExpandIcon?: boolean;
-    selected?: Id | undefined;
 }
 
 export interface DropdownItemModel<Id extends string> {
@@ -35,7 +37,10 @@ export function Dropdown<Id extends string = string>(props: DropdownProps<Id>): 
     );
 
     const buttonText =
-        selected !== undefined ? items.find(item => item.id === selected)?.text : text;
+        text ||
+        (selected !== undefined
+            ? items.find(item => item.id === selected)?.text
+            : i18n.t("No value"));
 
     return (
         <React.Fragment>
