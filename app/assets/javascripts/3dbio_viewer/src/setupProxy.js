@@ -9,6 +9,15 @@ module.exports = function (app) {
         rewritePath: true,
     });
 
+    // Use by PPI Viewer
+    proxyRoutes(app, {
+        routes: ["/api"],
+        target: "https://3dbionotes.cnb.csic.es",
+        cache: false,
+        rewritePath: false,
+    });
+
+    // Use by PPI Viewer
     proxyRoutes(app, {
         routes: ["/assets"],
         target: "https://3dbionotes.cnb.csic.es",

@@ -128,11 +128,7 @@ export const blockDefs: BlockDef[] = [
             "This section shows other proteins observed together with the protein of interest in PDB entries as a interaction network and as a list. In addittion, we show the protein residues that are interacting with the other proteins.\n\nFor this protein, we found ${proteinPartners} different partners."
         ),
         help: "",
-        tracks: [
-            tracks.structureCoverage,
-            tracks.ppiViewer,
-            tracks.functionalMappingPpi /* separate: ppi-viewer */,
-        ],
+        tracks: [tracks.structureCoverage, tracks.ppiViewer, tracks.functionalMappingPpi],
         profiles: [profiles.drugDesign, profiles.biomedicine],
     },
     {
