@@ -12,7 +12,7 @@ import { Features, getFeatureFragments } from "./tracks/feature";
 import { Coverage, getStructureCoverageFragments } from "./tracks/structure-coverage";
 import { getMobiUniprotFragments, MobiUniprot } from "./tracks/mobi";
 import { Cv19Tracks, getFunctionalMappingFragments } from "./tracks/functional-mapping";
-import { getIf } from "../../../utils/misc";
+import { on } from "../../../utils/misc";
 import { getProteomicsFragments, Proteomics } from "./tracks/proteomics";
 import { getPdbRedoFragments, PdbRedo } from "./tracks/pdb-redo";
 import { getEpitomesFragments, IedbAnnotationsResponse } from "./tracks/epitomes";
@@ -67,52 +67,56 @@ export class ApiPdbRepository implements PdbRepository {
     getPdb(data: Partial<Data>, options: Options): Pdb {
         debugVariable({ apiData: data });
 
-        const featureFragments = getIf(data.features, features =>
+        const featureFragments = on(data.features, features =>
             getFeatureFragments(options.protein, features)
         );
-        const pfamDomainFragments = getPfamDomainFragments(data.pfamAnnotations, options.protein);
-        const smartDomainFragments = getSmartDomainFragments(
-            data.smartAnnotations,
-            options.protein
+        const pfamDomainFragments = on(data.pfamAnnotations, pfamAnnotations =>
+            getPfamDomainFragments(pfamAnnotations, options.protein)
         );
-        const interproFragments = getInterproDomainFragments(
-            data.interproAnnotations,
-            options.protein
+        const smartDomainFragments = on(data.smartAnnotations, smartAnnotations =>
+            getSmartDomainFragments(smartAnnotations, options.protein)
+        );
+        const interproFragments = on(data.interproAnnotations, interproAnnotations =>
+            getInterproDomainFragments(interproAnnotations, options.protein)
         );
 
-        const elmdbFragments = getIf(data.elmdbUniprot, elmdbUniprot =>
+        const elmdbFragments = on(data.elmdbUniprot, elmdbUniprot =>
             getElmdbUniprotFragments(elmdbUniprot, options.protein)
         );
 
-        const _variants = getIf(data.ebiVariation, getVariants);
-        const functionalMappingFragments = getIf(data.cv19Tracks, getFunctionalMappingFragments);
-        const structureCoverageFragments = getIf(data.coverage, getStructureCoverageFragments);
+        const _variants = on(data.ebiVariation, getVariants);
+        const functionalMappingFragments = on(data.cv19Tracks, getFunctionalMappingFragments);
+        const structureCoverageFragments = on(data.coverage, getStructureCoverageFragments);
 
-        const emValidationFragments = getIf(data.pdbAnnotations, getEmValidationFragments);
-        const mobiFragments = getMobiUniprotFragments(data.mobiUniprot, options.protein);
-        const proteomicsFragments = getIf(data.proteomics, proteomics =>
+        const emValidationFragments = on(data.pdbAnnotations, getEmValidationFragments);
+        const mobiFragments = on(data.mobiUniprot, mobiUniprot =>
+            getMobiUniprotFragments(mobiUniprot, options.protein)
+        );
+        const proteomicsFragments = on(data.proteomics, proteomics =>
             getProteomicsFragments(proteomics, options.protein)
         );
-        const pdbRedoFragments = getIf(data.pdbRedo, pdbRedo =>
+        const pdbRedoFragments = on(data.pdbRedo, pdbRedo =>
             getPdbRedoFragments(pdbRedo, options.chain)
         );
-        const epitomesFragments = getIf(data.iedb, getEpitomesFragments);
+        const epitomesFragments = on(data.iedb, getEpitomesFragments);
 
         const protein = getProtein(options.protein, data.uniprot);
-        const experiment = getIf(data.pdbExperiment, pdbExperiment =>
+        const experiment = on(data.pdbExperiment, pdbExperiment =>
             getExperiment(options.pdb, pdbExperiment)
         );
 
-        const phosphiteFragments = getPhosphiteFragments(data.phosphositeUniprot, options.protein);
-        const dbPtmFragments = getIf(data.dbPtm, dbPtm =>
+        const phosphiteFragments = on(data.phosphositeUniprot, phosphositeUniprot =>
+            getPhosphiteFragments(phosphositeUniprot, options.protein)
+        );
+        const dbPtmFragments = on(data.dbPtm, dbPtm =>
             getDbPtmFragments(dbPtm, options.protein)
         );
 
-        const molprobityFragments = getIf(data.molprobity, molprobity =>
+        const molprobityFragments = on(data.molprobity, molprobity =>
             getMolprobityFragments(molprobity, options.chain)
         );
 
-        const antigenFragments = getIf(data.antigenic, antigenic =>
+        const antigenFragments = on(data.antigenic, antigenic =>
             getAntigenicFragments(antigenic, options.protein)
         );
 
