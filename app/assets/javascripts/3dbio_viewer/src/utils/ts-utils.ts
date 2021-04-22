@@ -15,9 +15,13 @@ export type GetValue<T> = T[keyof T];
     })
 */
 export function recordOf<T>() {
-    return function <Obj>(obj: { [K in keyof Obj]: T }) {
+    return function <Obj>(obj: Record<keyof Obj, T>) {
         return obj;
     };
+}
+
+export function recordOfStyles<Obj>(obj: Record<keyof Obj, React.CSSProperties>) {
+    return obj;
 }
 
 export function assert<T>(value: T | undefined): T {
