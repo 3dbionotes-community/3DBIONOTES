@@ -12,7 +12,7 @@ import { RootViewerRoute } from "../RootViewerPage";
 
 import "./App.css";
 
-const showTraining = false;
+const showTraining = true;
 
 function App() {
     return (
