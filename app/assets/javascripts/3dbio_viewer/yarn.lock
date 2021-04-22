@@ -10,10 +10,10 @@
     lit-element "^2.2.1"
     molstar "^1.1.1"
 
-"@3dbionotes/protvista-pdb@2.0.1-beta.5":
-  version "2.0.1-beta.5"
-  resolved "https://registry.npmjs.org/@3dbionotes/protvista-pdb/-/protvista-pdb-2.0.1-beta.5.tgz#cd73510673efc400ecb1174b4052c71b7c98af27"
-  integrity sha512-nNGbdhnxq+HdAxncNLTjpvu0uOTzAgozIpP0E+eIcTAPOlAoow38l7WUI0QxR62JWnAZ7HyljbV7YrtbfEFU9Q==
+"@3dbionotes/protvista-pdb@2.0.1-beta.6":
+  version "2.0.1-beta.6"
+  resolved "https://registry.npmjs.org/@3dbionotes/protvista-pdb/-/protvista-pdb-2.0.1-beta.6.tgz#81ba1aceabff8a443007e210cc87c98391f894c5"
+  integrity sha512-iKevWtOXYpP6rrqogPe4Kp65/9QDfdiZZ0RZ5HsA3fkNsD2SEvZTojGSmFk3uRv48zlvUjq+nTSphjWz1FzmMg==
   dependencies:
     lodash-es "^4.17.11"
     protvista-filter "2.0.0"
