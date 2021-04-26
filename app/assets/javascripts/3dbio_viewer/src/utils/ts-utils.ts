@@ -87,3 +87,10 @@ export function idRecordOf<T>() {
 }
 
 export type GetRecordId<T extends Record<any, { id: unknown }>> = GetValue<T>["id"];
+
+export function fromPairs<Key extends string, Value>(
+    pairs: Array<[Key, Value]>
+): Record<Key, Value> {
+    const empty = {} as Record<Key, Value>;
+    return pairs.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), empty);
+}
