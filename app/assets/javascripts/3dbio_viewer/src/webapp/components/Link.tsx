@@ -1,5 +1,7 @@
 import React from "react";
+import _ from "lodash";
 import { Link as LinkE } from "../../domain/entities/Link";
+import { renderJoin } from "../utils/react";
 
 interface LinkProps {
     name: string;
@@ -21,15 +23,14 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
 });
 
 export interface LinkFromObjProps {
-    link: LinkE | undefined;
+    links: LinkE[];
     emptyValue?: string;
+    joinNode?: React.ReactNode;
 }
 
-export const LinkFromObj: React.FC<LinkFromObjProps> = React.memo(props => {
-    const { link, emptyValue = "-" } = props;
-    if (!link) return <span>{emptyValue}</span>;
+export const Links: React.FC<LinkFromObjProps> = React.memo(props => {
+    const { links, emptyValue = "-", joinNode = ", " } = props;
+    const linksNodes = links.map(link => <Link key={link.url} name={link.name} url={link.url} />);
 
-    const { name, url } = link;
-
-    return <Link name={name} url={url} />;
+    return <span>{_.isEmpty(links) ? emptyValue : renderJoin(linksNodes, joinNode)}</span>;
 });
