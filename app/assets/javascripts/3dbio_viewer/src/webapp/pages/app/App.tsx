@@ -1,5 +1,5 @@
 import React from "react";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
 
 import { AppContext } from "../../../webapp/components/AppContext";
 import { TrainingApp } from "../../../webapp/training-app";
@@ -22,7 +22,9 @@ function App() {
 
                     <Route path="/:selection/:profile" render={() => <RootViewer />} />
                     <Route path="/:selection" render={() => <RootViewer />} />
-                    <Route path="/" render={() => <RootViewer />} />
+                    <Route path="/">
+                        <Redirect to="/6zow" />
+                    </Route>
                 </Switch>
             </HashRouter>
 
