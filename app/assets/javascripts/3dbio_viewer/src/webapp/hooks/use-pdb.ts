@@ -21,7 +21,7 @@ const proteinFromPdbId: Record<string, string> = {
 export function usePdbLoader(selection: Selection): LoaderState<Pdb> | undefined {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
-    const pdbId = selection.main?.pdb.id;
+    const pdbId = selection.main.pdb?.id;
 
     const pdbOptions: PdbOptions | undefined = React.useMemo(() => {
         if (!pdbId) return;

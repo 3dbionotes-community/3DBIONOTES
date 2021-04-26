@@ -1,3 +1,4 @@
+import { Selector } from "@3dbionotes/pdbe-molstar/lib";
 import _ from "lodash";
 import { Maybe } from "../../utils/ts-utils";
 
@@ -9,7 +10,7 @@ export type Type = "pdb" | "emdb";
 export type ActionType = "select" | "append";
 
 export interface Selection {
-    main: { pdb: DbItem; emdb?: DbItem } | undefined;
+    main: { pdb?: DbItem; emdb?: DbItem };
     overlay: Array<DbItem>;
 }
 
@@ -17,6 +18,15 @@ export interface DbItem {
     type: Type;
     id: string;
     visible: boolean;
+}
+
+export function getItemSelector(item: DbItem): Selector {
+    switch (item.type) {
+        case "pdb": // Example: label = "6w9c"
+            return { label: new RegExp("^" + item.id.toUpperCase() + "$") };
+        case "emdb": // Example: label = "RCSB PDB EMD Density Server: EMD-8650"
+            return { label: new RegExp(item.id.toUpperCase() + "$") };
+    }
 }
 
 /* toString, fromString */
@@ -28,7 +38,7 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
     const pdbItem = buildDbItem(mainPdbRichId);
 
     const selection: Selection = {
-        main: pdbItem ? { pdb: pdbItem, emdb: buildDbItem(mainEmdbRichId) } : undefined,
+        main: pdbItem ? { pdb: pdbItem, emdb: buildDbItem(mainEmdbRichId) } : {},
         overlay: _.compact(overlayIds.map(buildDbItem)),
     };
 
@@ -79,7 +89,7 @@ export function setMainItemVisibility(
 ): Selection {
     const { main } = selection;
     if (!main) return selection;
-    const newMainPdb = main.pdb.id === id ? { ...main.pdb, visible } : main.pdb;
+    const newMainPdb = main.pdb?.id === id ? { ...main.pdb, visible } : main.pdb;
     const newMainEmdb = main.emdb?.id === id ? { ...main.emdb, visible } : main.emdb;
     return { ...selection, main: { pdb: newMainPdb, emdb: newMainEmdb } };
 }
@@ -134,17 +144,26 @@ export function getItemParam(item: DbItem | undefined): string | undefined {
 }
 
 export function runAction(selection: Selection, action: ActionType, item: DbItem): Selection {
-    if (action === "select") {
-        return {
-            main: { pdb: { type: "pdb", id: item.id, visible: true } },
-            overlay: [],
-        };
-    } else if (action === "append") {
-        return {
-            ...selection,
-            overlay: [...selection.overlay, { type: "pdb", id: item.id, visible: true }],
-        };
-    } else {
-        return selection;
+    switch (action) {
+        case "select": {
+            const newMain: Selection["main"] =
+                item.type === "pdb"
+                    ? { ...selection.main, pdb: { type: "pdb", id: item.id, visible: true } }
+                    : { ...selection.main, emdb: { type: "emdb", id: item.id, visible: true } };
+
+            return { main: newMain, overlay: [] };
+        }
+        case "append": {
+            const newOverlay: Selection["overlay"] = _.uniqBy(
+                [...selection.overlay, { type: "pdb", id: item.id, visible: true }],
+                getDbItemUid
+            );
+
+            return { ...selection, overlay: newOverlay };
+        }
     }
+}
+
+function getDbItemUid(item: DbItem): string {
+    return [item.type, item.id].join("-");
 }

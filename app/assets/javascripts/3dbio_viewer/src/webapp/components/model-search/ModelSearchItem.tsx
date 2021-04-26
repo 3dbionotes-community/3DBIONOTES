@@ -23,7 +23,6 @@ export const ModelSearchItem: React.FC<{
     const itemV = React.useMemo(() => ({ ...item, visible: true }), [item]);
     const selectModel = React.useCallback(() => onSelect("select", itemV), [onSelect, itemV]);
     const appendModel = React.useCallback(() => onSelect("append", itemV), [onSelect, itemV]);
-    const isPdb = item.type === "pdb" || undefined;
 
     const description = (
         <React.Fragment>
@@ -66,11 +65,11 @@ export const ModelSearchItem: React.FC<{
             <div className="actions">
                 {isMouseOver && (
                     <div>
-                        <button className="action" onClick={isPdb && selectModel}>
+                        <button className="action" onClick={selectModel}>
                             {i18n.t("Select")}
                         </button>
 
-                        <button className="action" onClick={isPdb && appendModel}>
+                        <button className="action" onClick={appendModel}>
                             {i18n.t("Append")}
                         </button>
                     </div>
