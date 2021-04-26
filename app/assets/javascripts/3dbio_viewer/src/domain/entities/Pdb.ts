@@ -9,7 +9,7 @@ import { Variants } from "./Variant";
 export interface Pdb {
     id: string;
     experiment: Maybe<Experiment>;
-    emdb: { id: string } | undefined;
+    emdbs: Emdb[];
     protein: Protein;
     chain: string;
     sequence: string;
@@ -24,23 +24,27 @@ export interface Pdb {
     };
 }
 
+export interface Emdb {
+    id: string;
+}
+
 type PdbEntity = "pdb" | "emdb" | "uniprot";
 
-export function getEntityLink(pdb: Pdb, entity: PdbEntity): Link | undefined {
+export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
     switch (entity) {
         case "pdb": {
             const pdbId = pdb.id.toUpperCase();
-            return { name: pdbId, url: `https://www.ebi.ac.uk/pdbe/entry/pdb/${pdbId}` };
+            return [{ name: pdbId, url: `https://www.ebi.ac.uk/pdbe/entry/pdb/${pdbId}` }];
         }
         case "emdb": {
-            const emdbId = pdb.emdb?.id.toUpperCase();
-            return emdbId
-                ? { name: emdbId, url: `https://www.ebi.ac.uk/pdbe/entry/emdb/${emdbId}` }
-                : undefined;
+            return pdb.emdbs.map(emdb => ({
+                name: emdb.id,
+                url: `https://www.ebi.ac.uk/pdbe/entry/emdb/${emdb.id}`,
+            }));
         }
         case "uniprot": {
             const proteinId = pdb.protein.id.toUpperCase();
-            return { name: proteinId, url: `https://www.uniprot.org/uniprot/${proteinId}` };
+            return [{ name: proteinId, url: `https://www.uniprot.org/uniprot/${proteinId}` }];
         }
     }
 }

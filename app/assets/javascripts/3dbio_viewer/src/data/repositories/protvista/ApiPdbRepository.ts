@@ -28,9 +28,11 @@ import { getJSON, getXML, RequestError } from "../../request-utils";
 import { DbPtmAnnotations, getDbPtmFragments } from "./tracks/db-ptm";
 import { getMolprobityFragments, MolprobityResponse } from "./molprobity";
 import { AntigenicResponse, getAntigenicFragments } from "./tracks/antigenic";
+import { getEmdbsFromPdbEmdbMapping, PdbEmdbMapping } from "./mapping";
 
 interface Data {
     uniprot: UniprotResponse;
+    pdbEmdbMapping: PdbEmdbMapping;
     features: Features;
     cv19Tracks: Cv19Tracks;
     pdbAnnotations: PdbAnnotations;
@@ -108,9 +110,7 @@ export class ApiPdbRepository implements PdbRepository {
         const phosphiteFragments = on(data.phosphositeUniprot, phosphositeUniprot =>
             getPhosphiteFragments(phosphositeUniprot, options.protein)
         );
-        const dbPtmFragments = on(data.dbPtm, dbPtm =>
-            getDbPtmFragments(dbPtm, options.protein)
-        );
+        const dbPtmFragments = on(data.dbPtm, dbPtm => getDbPtmFragments(dbPtm, options.protein));
 
         const molprobityFragments = on(data.molprobity, molprobity =>
             getMolprobityFragments(molprobity, options.chain)
@@ -140,11 +140,14 @@ export class ApiPdbRepository implements PdbRepository {
         ];
 
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
+        const emdbs = on(data.pdbEmdbMapping, mapping =>
+            getEmdbsFromPdbEmdbMapping(mapping, options.pdb)
+        );
         debugVariable({ tracks });
 
         return {
             id: options.pdb,
-            emdb: undefined,
+            emdbs: emdbs || [],
             protein,
             chain: options.chain,
             sequence: data.features ? data.features.sequence : "",
@@ -165,6 +168,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
     // Move URLS to each track module?
     const data$: DataRequests = {
         uniprot: getXML(`https://www.uniprot.org/uniprot/${protein}.xml`),
+        pdbEmdbMapping: getJSON(`${bioUrl}/api/mappings/PDB/EMDB/${pdb}`),
         features: getJSON(`${ebiProteinsApiUrl}/features/${protein}`),
         cv19Tracks: getJSON(`${bioUrl}/cv19_annotations/${protein}_annotations.json`),
         pdbAnnotations: getJSON(`${pdbAnnotUrl}/all/${pdb}/${chain}/?format=json`),
