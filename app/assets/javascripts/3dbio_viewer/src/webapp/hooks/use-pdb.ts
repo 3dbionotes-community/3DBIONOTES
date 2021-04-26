@@ -30,7 +30,10 @@ export function usePdbLoader(selection: Selection): LoaderState<Pdb> | undefined
     }, [pdbId]);
 
     React.useEffect(() => {
-        if (!pdbOptions) return;
+        if (!pdbOptions) {
+            setLoader({ type: "error", message: `PDB not configured in use-pdb: ${pdbId || "-"}` });
+            return;
+        }
         setLoader({ type: "loading" });
 
         return compositionRoot.getPdb(pdbOptions).run(
@@ -43,5 +46,5 @@ export function usePdbLoader(selection: Selection): LoaderState<Pdb> | undefined
         if (loader.type === "loaded") debugVariable({ pdbData: loader.data });
     }, [loader]);
 
-    return pdbId ? loader : undefined;
+    return loader;
 }

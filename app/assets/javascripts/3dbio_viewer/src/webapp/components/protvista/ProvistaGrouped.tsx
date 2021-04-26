@@ -21,7 +21,7 @@ export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(() =
             <ProtvistaPdb pdb={loader.data} block={block} showAllTracks={true} />
         </ViewerBlock>
     ) : (
-        <div>{i18n.t("Loading...")}</div>
+        <div>{loader.type === "loading" ? i18n.t("Loading...") : loader.message}</div>
     );
 });
 
