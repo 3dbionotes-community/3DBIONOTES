@@ -4,16 +4,16 @@ import { usePdbLoader } from "../../hooks/use-pdb";
 import { allTracksBlock } from "./protvista-blocks";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
-import { useViewerSelector } from "../viewer-selector/viewer-selector.hooks";
+import { useViewerState } from "../viewer-selector/viewer-selector.hooks";
+import i18n from "../../utils/i18n";
 
-export interface ProtvistaGroupedProps {
-    selector: string;
-}
+export interface ProtvistaGroupedProps {}
 
-export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(props => {
-    const [selection] = useViewerSelector(props.selector);
-    const loader = usePdbLoader(selection);
+export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(() => {
+    const [viewerState] = useViewerState();
+    const loader = usePdbLoader(viewerState.selection);
     const block = allTracksBlock;
+    if (!loader) return null;
 
     return loader.type === "loaded" ? (
         <ViewerBlock block={block} namespace={namespace}>
@@ -21,7 +21,7 @@ export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(prop
             <ProtvistaPdb pdb={loader.data} block={block} showAllTracks={true} />
         </ViewerBlock>
     ) : (
-        <div>Loading...</div>
+        <div>{i18n.t("Loading...")}</div>
     );
 });
 

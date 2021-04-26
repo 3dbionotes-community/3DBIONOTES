@@ -2,14 +2,14 @@ import React from "react";
 import _ from "lodash";
 import i18n from "../../utils/i18n";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
-import { Profile, ProfileId, profiles } from "./protvista-blocks";
+import { Profile, ProfileId, profiles } from "../../../domain/entities/Profile";
 
 export interface ProfilesButtonProps {
     profile: Profile;
     onChange(newProfile: Profile): void;
 }
 
-export const ProfilesButton: React.FC<ProfilesButtonProps> = props => {
+export const ProfilesButton: React.FC<ProfilesButtonProps> = React.memo(props => {
     const { profile, onChange } = props;
 
     const dropdownItems: DropdownProps<ProfileId>["items"] = React.useMemo(() => {
@@ -36,4 +36,4 @@ export const ProfilesButton: React.FC<ProfilesButtonProps> = props => {
             showSelection={true}
         />
     );
-};
+});

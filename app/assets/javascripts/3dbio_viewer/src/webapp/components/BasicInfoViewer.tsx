@@ -1,12 +1,12 @@
 import React from "react";
 import { getEntityLink, Pdb } from "../../domain/entities/Pdb";
 import i18n from "../utils/i18n";
-import { SelectionState } from "../view-models/SelectionState";
+import { Selection } from "../view-models/Selection";
 import { LinkFromObj } from "./Link";
 
 export interface BasicInfoProps {
     pdb: Pdb;
-    selection: SelectionState;
+    selection: Selection;
 }
 
 interface Item {

@@ -5,10 +5,8 @@ import { AppContext } from "../../../webapp/components/AppContext";
 import { TrainingApp } from "../../../webapp/training-app";
 import { modules } from "../../../webapp/training-app/training-modules";
 import { ProtvistaGrouped } from "../../components/protvista/ProvistaGrouped";
-import { Viewers } from "../../components/viewers/Viewers";
-import { SelectionState } from "../../view-models/SelectionState";
-import { MolecularStructureRoute } from "../MolecularStructurePage";
-import { RootViewerRoute } from "../RootViewerPage";
+import { RootViewer } from "../../components/RootViewer";
+import { MolecularStructurePage } from "../MolecularStructurePage";
 
 import "./App.css";
 
@@ -19,19 +17,12 @@ function App() {
         <AppContext>
             <HashRouter>
                 <Switch>
-                    <MolecularStructureRoute path="/molstar/:selector" />
-                    <Route
-                        path="/protvista"
-                        render={() => <Viewers selection={protvistaSelection} />}
-                    />
-                    <Route
-                        path="/protvista-all/:selector"
-                        render={props => (
-                            <ProtvistaGrouped selector={props.match.params.selector} />
-                        )}
-                    />
-                    <RootViewerRoute path="/:selector" />
-                    <RootViewerRoute path="/" />
+                    <Route path="/molstar/:selector" render={() => <MolecularStructurePage />} />
+                    <Route path="/protvista-all/:selection" render={() => <ProtvistaGrouped />} />
+
+                    <Route path="/:selection/:profile" render={() => <RootViewer />} />
+                    <Route path="/:selection" render={() => <RootViewer />} />
+                    <Route path="/" render={() => <RootViewer />} />
                 </Switch>
             </HashRouter>
 
@@ -39,13 +30,5 @@ function App() {
         </AppContext>
     );
 }
-
-const protvistaSelection: SelectionState = {
-    main: {
-        pdb: { type: "pdb", id: "6zow", visible: true },
-        emdb: { type: "emdb", id: "EMD-21375", visible: true },
-    },
-    overlay: [],
-};
 
 export default App;

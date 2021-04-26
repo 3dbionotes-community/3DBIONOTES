@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import _ from "lodash";
 import { Pdb } from "../../../domain/entities/Pdb";
-import { SelectionState } from "../../view-models/SelectionState";
+import { Selection } from "../../view-models/Selection";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
 import { BlockDef, TrackComponentProps } from "./Protvista.types";
@@ -15,7 +15,7 @@ import { GeneViewer } from "../gene-viewer/GeneViewer";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
-    selection: SelectionState;
+    selection: Selection;
     blocks: BlockDef[];
 }
 

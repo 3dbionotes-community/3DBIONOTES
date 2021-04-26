@@ -6,11 +6,11 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import i18n from "../../utils/i18n";
 import {
     removeOverlayItem,
-    SelectionState,
+    Selection,
     setOverlayItemVisibility,
     setMainItemVisibility,
     runAction,
-} from "../../view-models/SelectionState";
+} from "../../view-models/Selection";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import { ModelSearch, ModelSearchProps } from "../model-search/ModelSearch";
 
@@ -20,8 +20,8 @@ import { useUpdateActions } from "../../hooks/use-update-actions";
 import classnames from "classnames";
 
 interface ViewerSelectorProps {
-    selection: SelectionState;
-    onSelectionChange(newSelection: SelectionState): void;
+    selection: Selection;
+    onSelectionChange(newSelection: Selection): void;
 }
 
 const actions = { setOverlayItemVisibility, removeOverlayItem, setMainItemVisibility };

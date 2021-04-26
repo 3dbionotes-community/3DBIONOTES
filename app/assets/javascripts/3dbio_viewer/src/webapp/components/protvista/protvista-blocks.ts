@@ -3,23 +3,7 @@ import i18n from "../../utils/i18n";
 import { BasicInfoViewer } from "../BasicInfoViewer";
 import { trackDefinitions as tracks } from "../../../domain/definitions/tracks";
 import { BlockDef } from "./Protvista.types";
-import { GetRecordId, GetValue, idRecordOf } from "../../../utils/ts-utils";
-
-/* Profiles */
-
-export const profiles = idRecordOf<{ name: string }>()({
-    general: { name: i18n.t("General") },
-    structural: { name: i18n.t("Structural") },
-    validation: { name: i18n.t("Cryo-Em Quality Validation") },
-    drugDesign: { name: i18n.t("Drug Design") },
-    biomedicine: { name: i18n.t("Biomedicine") },
-    omics: { name: i18n.t("Omics") },
-});
-
-export type Profile = GetValue<typeof profiles>;
-export type ProfileId = GetRecordId<typeof profiles>;
-
-/* Blocks */
+import { profiles } from "../../../domain/entities/Profile";
 
 export const blockDefs: BlockDef[] = [
     {

@@ -1,39 +1,64 @@
 import React from "react";
 import _ from "lodash";
 import { useGoto } from "../../hooks/use-goto";
-import { buildDbItem, getItemParam, SelectionState } from "../../view-models/SelectionState";
+import {
+    getSelectionFromString,
+    getStringFromSelection,
+    Selection,
+} from "../../view-models/Selection";
+import {
+    getProfileFromString,
+    getStringFromProfile,
+    Profile,
+} from "../../../domain/entities/Profile";
+import { ViewerState } from "../../view-models/ViewerState";
+import { useParams } from "react-router-dom";
 
-const innerSeparator = "+";
-const mainSeparator = "|";
+/* Examples:
+    /3brv
+    /3brv+EMD-21375
+    /3brv+EMD-21375|6zow
+    /3brv+EMD-21375|6zow/structural
+*/
 
-export function useViewerSelector(
-    selector: string | undefined
-): [SelectionState, (state: SelectionState) => void] {
+export interface Selector {
+    selection?: string;
+    profile?: string;
+}
+
+export function useViewerState(): [
+    ViewerState,
+    { setSelection: (selection: Selection) => void; setProfile: (profile: Profile) => void }
+] {
     const goTo = useGoto();
-    const [main = "", overlay = ""] = (selector || "").split(mainSeparator, 2);
-    const [mainPdbRichId, mainEmdbRichId] = main.split(innerSeparator, 2);
-    const overlayIds = overlay.split(innerSeparator);
-    const pdbItem = buildDbItem(mainPdbRichId);
+    const params = useParams<Selector>();
+    const selection = getSelectionFromString(params.selection);
+    const profile = getProfileFromString(params.profile);
+    const viewerState: ViewerState = { selection, profile };
 
-    const selection: SelectionState = {
-        main: pdbItem ? { pdb: pdbItem, emdb: buildDbItem(mainEmdbRichId) } : undefined,
-        overlay: _.compact(overlayIds.map(buildDbItem)),
-    };
-
-    const setSelection = React.useCallback(
-        (newSelection: SelectionState) => {
-            const { main, overlay } = newSelection;
-            const mainParts = main ? [getItemParam(main.pdb), getItemParam(main.emdb)] : [];
-            const parts = [
-                _.compact(mainParts).join(innerSeparator),
-                overlay.map(getItemParam).join(innerSeparator),
-            ];
-            const newPath = _.compact(parts).join(mainSeparator);
-
-            goTo(newPath);
+    const goToPath = React.useCallback(
+        (selection: Selection, profile: Profile) => {
+            const selectionPath = getStringFromSelection(selection);
+            const profilePath = getStringFromProfile(profile);
+            const newPath = _([selectionPath, profilePath]).compact().join("/");
+            goTo("/" + newPath);
         },
         [goTo]
     );
 
-    return [selection, setSelection];
+    const setSelection = React.useCallback(
+        (newSelection: Selection) => goToPath(newSelection, viewerState.profile),
+        [goToPath, viewerState.profile]
+    );
+
+    const setProfile = React.useCallback(
+        (newProfile: Profile) => goToPath(viewerState.selection, newProfile),
+        [goToPath, viewerState.selection]
+    );
+
+    const setViewerState = React.useMemo(() => {
+        return { setSelection, setProfile };
+    }, [setSelection, setProfile]);
+
+    return [viewerState, setViewerState];
 }

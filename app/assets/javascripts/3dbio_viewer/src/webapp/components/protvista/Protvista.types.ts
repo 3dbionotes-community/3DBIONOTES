@@ -3,9 +3,9 @@ import _ from "lodash";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { TrackDefinition } from "../../../domain/entities/TrackDefinition";
 import { PdbView } from "../../view-models/PdbView";
-import { SelectionState } from "../../view-models/SelectionState";
+import { Selection } from "../../view-models/Selection";
 import { ViewerBlockModel } from "../ViewerBlock";
-import { Profile, profiles } from "./protvista-blocks";
+import { Profile, profiles } from "../../../domain/entities/Profile";
 
 export interface ProtvistaTrackElement extends HTMLDivElement {
     viewerdata: PdbView;
@@ -16,7 +16,7 @@ export interface ProtvistaTrackElement extends HTMLDivElement {
 
 export interface BlockComponentProps {
     pdb: Pdb;
-    selection: SelectionState;
+    selection: Selection;
 }
 
 export type TrackDef = TrackDefinition;
