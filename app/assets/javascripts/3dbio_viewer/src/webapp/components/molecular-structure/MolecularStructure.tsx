@@ -22,7 +22,7 @@ import "./molstar.css";
 import "./molstar.scss";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
-import { useViewerState } from "../viewer-selector/viewer-selector.hooks";
+import { useCallbackEffect } from "../../hooks/use-callback-effect";
 
 declare global {
     interface Window {
@@ -78,7 +78,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         [pdbePlugin, newSelection, setPrevSelection]
     );
 
-    React.useEffect(() => {
+    const updatePluginOnNewSelection = React.useCallback(() => {
         function updateSelection(currentSelection: Selection, newSelection: Selection): void {
             if (!pdbePlugin) return;
 
@@ -87,24 +87,23 @@ function usePdbePlugin(options: MolecularStructureProps) {
             setSelection(newSelection);
         }
 
-        async function updatePluginOnNewSelection() {
-            const currentSelection = prevSelectionRef.current;
-            if (!(pdbePlugin && currentSelection)) return;
+        const currentSelection = prevSelectionRef.current;
+        if (!(pdbePlugin && currentSelection)) return _.noop;
 
-            const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
+        const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
 
-            if (pdbId) {
-                compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(emdbId => {
-                    updateSelection(currentSelection, setMainEmdb(newSelection, emdbId));
-                }, console.error);
-            } else if (emdbId) {
-                compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
-                    updateSelection(currentSelection, setMainPdb(newSelection, pdbId));
-                }, console.error);
-            }
+        if (pdbId) {
+            return compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(emdbId => {
+                updateSelection(currentSelection, setMainEmdb(newSelection, emdbId));
+            }, console.error);
+        } else if (emdbId) {
+            return compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
+                updateSelection(currentSelection, setMainPdb(newSelection, pdbId));
+            }, console.error);
+        } else {
+            updateSelection(currentSelection, newSelection);
+            return _.noop;
         }
-
-        updatePluginOnNewSelection();
     }, [
         compositionRoot,
         pdbePlugin,
@@ -113,6 +112,9 @@ function usePdbePlugin(options: MolecularStructureProps) {
         setPrevSelection,
         setSelection,
     ]);
+
+    const updatePluginOnNewSelectionEffect = useCallbackEffect(updatePluginOnNewSelection);
+    React.useEffect(updatePluginOnNewSelectionEffect, [updatePluginOnNewSelectionEffect]);
 
     return { pluginRef };
 }

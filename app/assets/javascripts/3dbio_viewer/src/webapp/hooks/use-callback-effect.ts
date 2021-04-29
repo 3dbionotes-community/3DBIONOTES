@@ -6,9 +6,9 @@ type Effect = void;
 type EffectFn<Args extends any[]> = (...args: Args) => Effect;
 type Cancel = { (): void };
 
-/*  Merge the functionality of React.useCallback and React.useEffect to run a non-concurrent,
-    cancellable effect. Only one effect will be running at a given time. If a new effect is
-    requested when the previous one has not finished yet, it will be cancelled.
+/*  Merge the features of React.useCallback and React.useEffect to run a single, non-concurrent,
+    cancellable effect. Only one effect will be running concurrently. Thus, if a new effect is
+    requested when the previous one has not finished yet, that old effect will be cancelled.
 */
 
 export function useCallbackEffect<Args extends any[]>(
