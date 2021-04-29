@@ -10,6 +10,9 @@ import {
     diffDbItems,
     getItems,
     getItemSelector,
+    getMainChanges,
+    getMainEmdbId,
+    getMainPdbId,
     Selection,
     setMainEmdb,
     setMainPdb,
@@ -35,7 +38,7 @@ interface MolecularStructureProps {
 const emdbProvider: EmdbDownloadProvider = "rcsb"; // "pdbe" server not working at this moment
 
 export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
-    const { pluginRef } = usePdbePlugin(props.selection);
+    const { pluginRef } = usePdbePlugin(props);
 
     return (
         <div ref={pluginRef} className="molecular-structure">
@@ -44,13 +47,14 @@ export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
     );
 };
 
-function usePdbePlugin(newSelection: Selection) {
-    const [pdbePlugin, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
+function usePdbePlugin(options: MolecularStructureProps) {
+    const { selection: newSelection, onSelectionChange: setSelection } = options;
     const { compositionRoot } = useAppContext();
-    const [_viewerState, { setSelection }] = useViewerState();
+    const [pdbePlugin, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
 
-    // Keep a reference having the previous value of selection, so we can diff with a new
-    // state and perform the imperative add/remove/update operations on the plugin.
+    // Keep a reference containing the previous value of selection. We need this value to diff
+    // the new state against the old state and perform imperative operations (add/remove/update)
+    // on the plugin.
     const [prevSelectionRef, setPrevSelection] = useReference<Selection>();
 
     const pluginRef = React.useCallback(
@@ -58,14 +62,14 @@ function usePdbePlugin(newSelection: Selection) {
             const pluginAlreadyRendered = Boolean(pdbePlugin);
             if (!element || pluginAlreadyRendered || !newSelection || !newSelection.main) return;
 
-            const initParams = getPdbePluginInitParams(newSelection.main.pdb?.id);
+            const initParams = getPdbePluginInitParams(getMainPdbId(newSelection));
             const plugin = new window.PDBeMolstarPlugin();
             debugVariable({ pdbeMolstar: plugin });
 
-            // Subscribe event: plugin.events.loadComplete.subscribe(loaded => { ... });
+            // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
             plugin.render(element, initParams);
 
-            const emdbId = newSelection.main.emdb?.id;
+            const emdbId = getMainEmdbId(newSelection);
             if (emdbId) plugin.loadEmdb({ id: emdbId, detail: 3, provider: emdbProvider });
 
             setPdbePlugin(plugin);
@@ -77,7 +81,8 @@ function usePdbePlugin(newSelection: Selection) {
     React.useEffect(() => {
         function updateSelection(currentSelection: Selection, newSelection: Selection): void {
             if (!pdbePlugin) return;
-            updateItems(pdbePlugin, currentSelection, newSelection);
+
+            applySelectionChangesToPlugin(pdbePlugin, currentSelection, newSelection);
             setPrevSelection(newSelection);
             setSelection(newSelection);
         }
@@ -86,22 +91,15 @@ function usePdbePlugin(newSelection: Selection) {
             const currentSelection = prevSelectionRef.current;
             if (!(pdbePlugin && currentSelection)) return;
 
-            const newMainPdbId = newSelection.main.pdb?.id;
-            const mainPdbChanged =
-                newMainPdbId !== undefined && newMainPdbId != currentSelection.main.pdb?.id;
-            const newMainEmdbId = newSelection.main.emdb?.id;
-            const mainEmdbChanged =
-                newMainEmdbId !== undefined && newMainEmdbId != currentSelection.main.emdb?.id;
+            const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
 
-            if (newMainPdbId && mainPdbChanged) {
-                compositionRoot.getRelatedModels.emdbFromPdb(newMainPdbId).run(emdbId => {
-                    const newSelectionWithRelated = setMainEmdb(newSelection, emdbId);
-                    updateSelection(currentSelection, newSelectionWithRelated);
+            if (pdbId) {
+                compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(emdbId => {
+                    updateSelection(currentSelection, setMainEmdb(newSelection, emdbId));
                 }, console.error);
-            } else if (newMainEmdbId && mainEmdbChanged) {
-                compositionRoot.getRelatedModels.pdbFromEmdb(newMainEmdbId).run(pdbId => {
-                    const newSelectionWithRelated = setMainPdb(newSelection, pdbId);
-                    updateSelection(currentSelection, newSelectionWithRelated);
+            } else if (emdbId) {
+                compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
+                    updateSelection(currentSelection, setMainPdb(newSelection, pdbId));
                 }, console.error);
             }
         }
@@ -119,7 +117,7 @@ function usePdbePlugin(newSelection: Selection) {
     return { pluginRef };
 }
 
-async function updateItems(
+async function applySelectionChangesToPlugin(
     plugin: PDBeMolstarPlugin,
     currentSelection: Selection,
     newSelection: Selection

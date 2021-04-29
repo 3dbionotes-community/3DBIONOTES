@@ -29,6 +29,14 @@ export function getItemSelector(item: DbItem): Selector {
     }
 }
 
+export function getMainPdbId(newSelection: Selection): Maybe<string> {
+    return newSelection.main.pdb?.id;
+}
+
+export function getMainEmdbId(newSelection: Selection): Maybe<string> {
+    return newSelection.main.emdb?.id;
+}
+
 /* toString, fromString */
 
 export function getSelectionFromString(items: Maybe<string>): Selection {
@@ -177,4 +185,17 @@ export function runAction(selection: Selection, action: ActionType, item: DbItem
 
 function getDbItemUid(item: DbItem): string {
     return [item.type, item.id].join("-");
+}
+
+export function getMainChanges(
+    prevSelection: Selection,
+    newSelection: Selection
+): { pdbId?: string; emdbId?: string } {
+    const newPdbId = getMainPdbId(newSelection);
+    const newEmdbId = getMainEmdbId(newSelection);
+
+    return {
+        pdbId: newPdbId != getMainPdbId(prevSelection) ? newPdbId : undefined,
+        emdbId: newEmdbId != getMainEmdbId(prevSelection) ? newEmdbId : undefined,
+    };
 }
