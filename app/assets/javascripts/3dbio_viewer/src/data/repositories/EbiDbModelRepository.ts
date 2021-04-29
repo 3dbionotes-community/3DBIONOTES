@@ -48,6 +48,14 @@ export class EbiDbModelRepository implements DbModelRepository {
                 .value()
         );
     }
+
+    getEmdbsFromPdb(_pdbId: string): FutureData<string[]> {
+        throw new Error("Not implemented");
+    }
+
+    getPdbsFromEmdb(_emdbId: string): FutureData<string[]> {
+        throw new Error("Not implemented");
+    }
 }
 
 const apiFields = ["name", "author", "method", "resolution", "specimenstate"] as const;

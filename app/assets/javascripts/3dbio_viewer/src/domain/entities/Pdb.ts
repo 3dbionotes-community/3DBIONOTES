@@ -7,7 +7,7 @@ import { Track } from "./Track";
 import { Variants } from "./Variant";
 
 export interface Pdb {
-    id: string;
+    id: PdbId;
     experiment: Maybe<Experiment>;
     emdbs: Emdb[];
     protein: Protein;
@@ -24,9 +24,13 @@ export interface Pdb {
     };
 }
 
+export type PdbId = string;
+
 export interface Emdb {
-    id: string;
+    id: EmdbId;
 }
+
+export type EmdbId = string;
 
 type PdbEntity = "pdb" | "emdb" | "uniprot";
 

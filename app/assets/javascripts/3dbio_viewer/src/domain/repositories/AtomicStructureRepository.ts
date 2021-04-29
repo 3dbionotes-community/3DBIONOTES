@@ -1,5 +1,5 @@
-import { AtomicStructure } from "./AtomicStructure";
-import { FutureData } from "./FutureData";
+import { AtomicStructure } from "../entities/AtomicStructure";
+import { FutureData } from "../entities/FutureData";
 
 export interface AtomicStructureRepository {
     build(options: BuildOptions): FutureData<AtomicStructure>;

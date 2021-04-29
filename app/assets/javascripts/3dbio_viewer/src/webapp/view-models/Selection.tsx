@@ -35,10 +35,9 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
     const [main = "", overlay = ""] = (items || "").split(mainSeparator, 2);
     const [mainPdbRichId, mainEmdbRichId] = main.split(innerSeparator, 2);
     const overlayIds = overlay.split(innerSeparator);
-    const pdbItem = buildDbItem(mainPdbRichId);
 
     const selection: Selection = {
-        main: pdbItem ? { pdb: pdbItem, emdb: buildDbItem(mainEmdbRichId) } : {},
+        main: { pdb: buildDbItem(mainPdbRichId), emdb: buildDbItem(mainEmdbRichId) },
         overlay: _.compact(overlayIds.map(buildDbItem)),
     };
 
@@ -48,21 +47,33 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
 export function getStringFromSelection(selection: Selection): string {
     const { main, overlay } = selection;
     const mainParts = main ? [getItemParam(main.pdb), getItemParam(main.emdb)] : [];
-    const parts = [
-        _.compact(mainParts).join(innerSeparator),
-        overlay.map(getItemParam).join(innerSeparator),
-    ];
+    const parts = [mainParts.join(innerSeparator), overlay.map(getItemParam).join(innerSeparator)];
     return _.compact(parts).join(mainSeparator);
 }
 
 /* Updaters */
 
-export function setMainEmdb(selection: Selection, emdbId: string): Selection {
+export function setMainPdb(selection: Selection, pdbId: Maybe<string>): Selection {
+    if (!selection.main || selection.main?.pdb?.id === pdbId) return selection;
+
+    return {
+        ...selection,
+        main: {
+            ...selection.main,
+            pdb: pdbId ? { type: "pdb", id: pdbId, visible: true } : undefined,
+        },
+    };
+}
+
+export function setMainEmdb(selection: Selection, emdbId: Maybe<string>): Selection {
     if (!selection.main || selection.main?.emdb?.id === emdbId) return selection;
 
     return {
         ...selection,
-        main: { ...selection.main, emdb: { type: "emdb", id: emdbId, visible: true } },
+        main: {
+            ...selection.main,
+            emdb: emdbId ? { type: "emdb", id: emdbId, visible: true } : undefined,
+        },
     };
 }
 

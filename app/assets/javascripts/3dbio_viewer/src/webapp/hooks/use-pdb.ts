@@ -36,11 +36,11 @@ export function usePdbLoader(selection: Selection): LoaderState<Pdb> | undefined
         }
         setLoader({ type: "loading" });
 
-        return compositionRoot.getPdb(pdbOptions).run(
+        return compositionRoot.getPdb.execute(pdbOptions).run(
             pdb => setLoader({ type: "loaded", data: pdb }),
             error => setLoader({ type: "error", message: error.message })
         );
-    }, [compositionRoot, setLoader, pdbOptions]);
+    }, [compositionRoot, setLoader, pdbOptions, pdbId]);
 
     React.useEffect(() => {
         if (loader.type === "loaded") debugVariable({ pdbData: loader.data });

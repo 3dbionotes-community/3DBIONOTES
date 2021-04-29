@@ -28,7 +28,7 @@ import { getJSON, getXML, RequestError } from "../../request-utils";
 import { DbPtmAnnotations, getDbPtmFragments } from "./tracks/db-ptm";
 import { getMolprobityFragments, MolprobityResponse } from "./molprobity";
 import { AntigenicResponse, getAntigenicFragments } from "./tracks/antigenic";
-import { getEmdbsFromPdbEmdbMapping, PdbEmdbMapping } from "./mapping";
+import { getEmdbsFromMapping, PdbEmdbMapping } from "./mapping";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -141,7 +141,7 @@ export class ApiPdbRepository implements PdbRepository {
 
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
         const emdbs = on(data.pdbEmdbMapping, mapping =>
-            getEmdbsFromPdbEmdbMapping(mapping, options.pdb)
+            getEmdbsFromMapping(mapping, options.pdb).map(id => ({ id }))
         );
         debugVariable({ tracks });
 

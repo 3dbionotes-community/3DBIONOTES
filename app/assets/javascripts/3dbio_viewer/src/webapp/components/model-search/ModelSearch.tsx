@@ -50,8 +50,8 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 
     const [modelType, setModelType] = React.useState<ModelSearchType>("all");
     const [isUploadOpen, { enable: openUpload, disable: closeUpload }] = useBooleanState(false);
-
     const [searchState, startSearch] = useDbModelSearch(modelType);
+
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
             <DialogTitle>
@@ -132,8 +132,8 @@ function useDbModelSearch(modelType: ModelSearchType) {
             setSearchState({ type: "searching" });
             const searchType = modelType === "all" ? undefined : modelType;
 
-            return compositionRoot
-                .searchDbModels({ query, type: searchType })
+            return compositionRoot.searchDbModels
+                .execute({ query, type: searchType })
                 .run(dbModelCollection => {
                     const newState: SearchState =
                         _.isEmpty(dbModelCollection) && !query

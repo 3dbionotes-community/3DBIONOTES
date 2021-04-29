@@ -1,11 +1,12 @@
-import { Emdb } from "../../../domain/entities/Pdb";
+import { EmdbId, PdbId } from "../../../domain/entities/Pdb";
 
 export type PdbEmdbMapping = Record<PdbId, EmdbId[]>;
+export type EmdbPdbMapping = Record<EmdbId, PdbId[]>;
 
-type PdbId = string;
-type EmdbId = string;
+export function getEmdbsFromMapping(pdbEmdbMapping: PdbEmdbMapping, pdbId: string): EmdbId[] {
+    return pdbEmdbMapping[pdbId.toLowerCase()] || [];
+}
 
-export function getEmdbsFromPdbEmdbMapping(pdbEmdbMapping: PdbEmdbMapping, pdbId: string): Emdb[] {
-    const emdbIds = pdbEmdbMapping[pdbId.toLowerCase()];
-    return emdbIds ? emdbIds.map(emdbId => ({ id: emdbId })) : [];
+export function getPdbsFromMapping(emdbPdbMapping: EmdbPdbMapping, emdbId: string): EmdbId[] {
+    return emdbPdbMapping[emdbId.toUpperCase()] || [];
 }
