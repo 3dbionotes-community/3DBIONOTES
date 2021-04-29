@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@3dbionotes/pdbe-molstar@1.1.0-beta.3":
+"@3dbionotes/pdbe-molstar@1.1.0-beta.4":
   version "1.1.0-beta.3"
   resolved "https://registry.npmjs.org/@3dbionotes/pdbe-molstar/-/pdbe-molstar-1.1.0-beta.3.tgz#d833ea00b20bc4bdbab092efc0367de2b0cce8f5"
   integrity sha512-0gkGg6a2SN/IVfwH0+VdtIhSews4DhZlgIpuW82qzpyiXt/zD0Nj4eCDu2Gt3yrMos7TDKT0BvduharMdzfFOQ==
