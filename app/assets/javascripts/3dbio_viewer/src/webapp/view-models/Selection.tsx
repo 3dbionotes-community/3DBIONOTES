@@ -2,8 +2,8 @@ import { Selector } from "@3dbionotes/pdbe-molstar/lib";
 import _ from "lodash";
 import { Maybe } from "../../utils/ts-utils";
 
-const innerSeparator = "+";
-const mainSeparator = "|";
+const mainSeparator = "+";
+const overlaySeparator = "|";
 
 export type Type = "pdb" | "emdb";
 
@@ -40,9 +40,9 @@ export function getMainEmdbId(newSelection: Selection): Maybe<string> {
 /* toString, fromString */
 
 export function getSelectionFromString(items: Maybe<string>): Selection {
-    const [main = "", overlay = ""] = (items || "").split(mainSeparator, 2);
-    const [mainPdbRichId, mainEmdbRichId] = main.split(innerSeparator, 2);
-    const overlayIds = overlay.split(innerSeparator);
+    const [main = "", overlay = ""] = (items || "").split(overlaySeparator, 2);
+    const [mainPdbRichId, mainEmdbRichId] = main.split(mainSeparator, 2);
+    const overlayIds = overlay.split(mainSeparator);
 
     const selection: Selection = {
         main: { pdb: buildDbItem(mainPdbRichId), emdb: buildDbItem(mainEmdbRichId) },
@@ -55,8 +55,11 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
 export function getStringFromSelection(selection: Selection): string {
     const { main, overlay } = selection;
     const mainParts = main ? [getItemParam(main.pdb), getItemParam(main.emdb)] : [];
-    const parts = [mainParts.join(innerSeparator), overlay.map(getItemParam).join(innerSeparator)];
-    return _.compact(parts).join(mainSeparator);
+    const parts = [
+        _(mainParts).dropRightWhile(_.isEmpty).join(mainSeparator),
+        overlay.map(getItemParam).join(mainSeparator),
+    ];
+    return _.compact(parts).join(overlaySeparator);
 }
 
 /* Updaters */
