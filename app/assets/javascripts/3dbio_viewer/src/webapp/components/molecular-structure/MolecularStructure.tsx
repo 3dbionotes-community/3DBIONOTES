@@ -1,5 +1,4 @@
 import React from "react";
-import { StructureProperties as Props } from "molstar/lib/mol-model/structure";
 import _ from "lodash";
 import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
@@ -24,7 +23,8 @@ import "./molstar.scss";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
-import { Maybe } from "../../../utils/ts-utils";
+import { getLigands } from "./molstar";
+import { Ligand } from "../../../domain/entities/Ligand";
 
 declare global {
     interface Window {
@@ -35,6 +35,7 @@ declare global {
 interface MolecularStructureProps {
     selection: Selection;
     onSelectionChange(newSelection: Selection): void;
+    onLigandsLoaded(ligands: Ligand[]): void;
 }
 
 const emdbProvider: EmdbDownloadProvider = "rcsb"; // "pdbe" server not working at this moment
@@ -50,7 +51,7 @@ export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
 };
 
 function usePdbePlugin(options: MolecularStructureProps) {
-    const { selection: newSelection, onSelectionChange: setSelection } = options;
+    const { selection: newSelection, onSelectionChange: setSelection, onLigandsLoaded } = options;
     const { compositionRoot } = useAppContext();
     const [pdbePlugin, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
 
@@ -69,6 +70,11 @@ function usePdbePlugin(options: MolecularStructureProps) {
             debugVariable({ pdbeMolstar: plugin });
 
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
+            plugin.events.loadComplete.subscribe(loaded => {
+                if (!loaded) return;
+                const ligands = getLigands(plugin, newSelection) || [];
+                onLigandsLoaded(ligands);
+            });
             plugin.render(element, initParams);
 
             const emdbId = getMainEmdbId(newSelection);
@@ -77,10 +83,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
             setPdbePlugin(plugin);
             setPrevSelection({ ...newSelection, overlay: [] });
         },
-        [pdbePlugin, newSelection, setPrevSelection]
+        [pdbePlugin, newSelection, setPrevSelection, onLigandsLoaded]
     );
-
-    useChainSelection(pdbePlugin, newSelection);
 
     const updatePluginOnNewSelection = React.useCallback(() => {
         function updateSelection(currentSelection: Selection, newSelection: Selection): void {
@@ -147,22 +151,13 @@ async function applySelectionChangesToPlugin(
         } else {
             const pdbId: string = item.id;
             const url = `https://www.ebi.ac.uk/pdbe/model-server/v1/${pdbId}/full?encoding=cif`;
-            const loadParams = { url, format: "mmcif", isBinary: false };
+            const loadParams = { url, format: "mmcif", isBinary: false, assemblyId: "1" };
             await plugin.load(loadParams, false);
         }
         plugin.visual.setVisibility(getItemSelector(item), item.visible);
     }
 
     plugin.visual.reset({ camera: true });
-}
-
-function useChainSelection(pdbePlugin: Maybe<PDBeMolstarPlugin>, newSelection: Selection): void {
-    React.useEffect(() => {
-        if (!pdbePlugin) return;
-        pdbePlugin.visual.select({
-            data: [{ struct_asym_id: newSelection.chainId }],
-        });
-    }, [pdbePlugin, newSelection.chainId]);
 }
 
 function getPdbePluginInitParams(pdbId: string | undefined): InitParams {
@@ -187,5 +182,3 @@ function getPdbePluginInitParams(pdbId: string | undefined): InitParams {
         mapSettings: {},
     };
 }
-
-(window as any).Props = Props;

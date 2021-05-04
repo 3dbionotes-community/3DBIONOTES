@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { Ligand } from "./Ligand";
 import { Emdb } from "./Pdb";
 import { ChainId, Protein, ProteinId } from "./Protein";
 
@@ -12,7 +13,7 @@ export interface PdbInfo {
         chainId: ChainId;
         protein: Protein;
     }>;
-    ligands: [];
+    ligands: Ligand[];
 }
 
 interface BuildPdbInfoOptions extends Omit<PdbInfo, "chains"> {
