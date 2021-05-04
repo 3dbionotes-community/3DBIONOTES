@@ -10,6 +10,7 @@ import {
     setOverlayItemVisibility,
     setMainItemVisibility,
     runAction,
+    setSelectionChain,
 } from "../../view-models/Selection";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import { ModelSearch, ModelSearchProps } from "../model-search/ModelSearch";
@@ -18,8 +19,10 @@ import "./ViewerSelector.css";
 import { SelectionItem } from "./SelectionItem";
 import { useUpdateActions } from "../../hooks/use-update-actions";
 import classnames from "classnames";
+import { PdbInfo } from "../../../domain/entities/PdbInfo";
 
 interface ViewerSelectorProps {
+    pdbInfo: PdbInfo | undefined;
     selection: Selection;
     onSelectionChange(newSelection: Selection): void;
 }
@@ -28,11 +31,7 @@ const actions = { setOverlayItemVisibility, removeOverlayItem, setMainItemVisibi
 
 export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     const { selection, onSelectionChange } = props;
-
-    const chainItems: DropdownProps["items"] = [
-        { id: "A", text: "Chain A" },
-        { id: "B", text: "Chain B" },
-    ];
+    const chainDropdownProps = useChainDropdown(props);
 
     const ligandItems: DropdownProps["items"] = [
         { id: "L1", text: "Ligand 1" },
@@ -103,12 +102,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
             </div>
 
             <div className="selectors">
-                <Dropdown
-                    text={i18n.t("Chains")}
-                    items={chainItems}
-                    onClick={console.debug}
-                    showExpandIcon
-                />
+                <Dropdown {...chainDropdownProps} showExpandIcon />
 
                 <Dropdown
                     text={i18n.t("Ligands")}
@@ -131,3 +125,26 @@ const MainItemBox: React.FC<{ label: string; className?: string }> = props => {
         </div>
     );
 };
+
+function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
+    const { pdbInfo, selection, onSelectionChange } = options;
+
+    const setChain = React.useCallback(
+        (chainId: string) => {
+            onSelectionChange(setSelectionChain(selection, chainId));
+        },
+        [selection, onSelectionChange]
+    );
+
+    const chainItems: DropdownProps["items"] = React.useMemo(
+        () => pdbInfo?.chains.map(chain => ({ id: chain.chainId, text: chain.name })),
+        [pdbInfo]
+    );
+
+    const chains = pdbInfo?.chains || [];
+    const selectedChain = chains.find(chain => chain.chainId === selection.chainId) || chains[0];
+
+    const chainText = [i18n.t("Chain"), selectedChain?.shortName || "-"].join(" ");
+
+    return { text: chainText, items: chainItems, onClick: setChain };
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import { StructureProperties as Props } from "molstar/lib/mol-model/structure";
 import _ from "lodash";
 import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
@@ -170,7 +171,9 @@ function getPdbePluginInitParams(pdbId: string | undefined): InitParams {
         expanded: false,
         bgColor: colors.white,
         subscribeEvents: true,
-        assemblyId: "1",
+        assemblyId: "1", // For assembly type? Check model type-
         mapSettings: {},
     };
 }
+
+(window as any).Props = Props;

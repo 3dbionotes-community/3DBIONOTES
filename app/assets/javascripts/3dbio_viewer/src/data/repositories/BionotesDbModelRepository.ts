@@ -10,7 +10,7 @@ import {
     getEmdbsFromMapping,
     getPdbsFromMapping,
     PdbEmdbMapping,
-} from "./protvista/mapping";
+} from "./mapping";
 
 export class BionotesDbModelRepository implements DbModelRepository {
     search(_options: SearchOptions): FutureData<DbModelCollection> {

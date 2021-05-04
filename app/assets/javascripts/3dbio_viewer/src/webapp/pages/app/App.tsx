@@ -6,7 +6,6 @@ import { TrainingApp } from "../../../webapp/training-app";
 import { modules } from "../../../webapp/training-app/training-modules";
 import { ProtvistaGrouped } from "../../components/protvista/ProvistaGrouped";
 import { RootViewer } from "../../components/RootViewer";
-import { MolecularStructurePage } from "../MolecularStructurePage";
 
 import "./App.css";
 
@@ -17,9 +16,7 @@ function App() {
         <AppContext>
             <HashRouter>
                 <Switch>
-                    <Route path="/molstar/:selector" render={() => <MolecularStructurePage />} />
                     <Route path="/protvista-all/:selection" render={() => <ProtvistaGrouped />} />
-
                     <Route path="/:selection/:profile" render={() => <RootViewer />} />
                     <Route path="/:selection" render={() => <RootViewer />} />
                     <Route path="/">

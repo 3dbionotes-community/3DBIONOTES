@@ -1,4 +1,4 @@
-import { Protein } from "../../../domain/entities/Protein";
+import { Protein, emptyProtein } from "../../../domain/entities/Protein";
 import _ from "lodash";
 
 /*
@@ -43,7 +43,7 @@ export interface UniprotResponse {
 
 export function getProtein(id: string, res: UniprotResponse | undefined): Protein {
     const entry = res?.uniprot.entry[0];
-    if (!entry) return { id };
+    if (!entry) return _.defaults({}, { id }, emptyProtein);
 
     const name = entry.protein[0]?.recommendedName[0]?.fullName[0]?._;
     const geneEntries = entry.gene[0]?.name || [];
@@ -57,5 +57,5 @@ export function getProtein(id: string, res: UniprotResponse | undefined): Protei
 
     const gene = geneEntry ? geneEntry._ : undefined;
 
-    return { id, name, gene, organism };
+    return _.defaults({}, { id, name, gene, organism }, emptyProtein);
 }

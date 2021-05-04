@@ -1,12 +1,13 @@
 import { FutureData } from "../entities/FutureData";
-import { Pdb } from "../entities/Pdb";
+import { Pdb, PdbId } from "../entities/Pdb";
+import { ProteinId, ChainId } from "../entities/Protein";
 
 export interface PdbRepository {
     get(options: PdbOptions): FutureData<Pdb>;
 }
 
 export interface PdbOptions {
-    protein: string;
-    pdb: string;
-    chain: string;
+    proteinId: ProteinId;
+    pdbId: PdbId;
+    chainId: ChainId;
 }
