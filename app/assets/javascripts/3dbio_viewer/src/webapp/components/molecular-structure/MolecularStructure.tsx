@@ -24,6 +24,7 @@ import "./molstar.scss";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
+import { Maybe } from "../../../utils/ts-utils";
 
 declare global {
     interface Window {
@@ -78,6 +79,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
         },
         [pdbePlugin, newSelection, setPrevSelection]
     );
+
+    useChainSelection(pdbePlugin, newSelection);
 
     const updatePluginOnNewSelection = React.useCallback(() => {
         function updateSelection(currentSelection: Selection, newSelection: Selection): void {
@@ -144,13 +147,22 @@ async function applySelectionChangesToPlugin(
         } else {
             const pdbId: string = item.id;
             const url = `https://www.ebi.ac.uk/pdbe/model-server/v1/${pdbId}/full?encoding=cif`;
-            const loadParams = { url, format: "mmcif", isBinary: false, assemblyId: "1" };
+            const loadParams = { url, format: "mmcif", isBinary: false };
             await plugin.load(loadParams, false);
         }
         plugin.visual.setVisibility(getItemSelector(item), item.visible);
     }
 
     plugin.visual.reset({ camera: true });
+}
+
+function useChainSelection(pdbePlugin: Maybe<PDBeMolstarPlugin>, newSelection: Selection): void {
+    React.useEffect(() => {
+        if (!pdbePlugin) return;
+        pdbePlugin.visual.select({
+            data: [{ struct_asym_id: newSelection.chainId }],
+        });
+    }, [pdbePlugin, newSelection.chainId]);
 }
 
 function getPdbePluginInitParams(pdbId: string | undefined): InitParams {
