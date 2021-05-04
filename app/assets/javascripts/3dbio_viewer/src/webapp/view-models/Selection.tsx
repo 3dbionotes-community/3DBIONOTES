@@ -1,9 +1,20 @@
 import { Selector } from "@3dbionotes/pdbe-molstar/lib";
 import _ from "lodash";
+import { PdbId } from "../../domain/entities/Pdb";
+import { PdbInfo } from "../../domain/entities/PdbInfo";
 import { Maybe } from "../../utils/ts-utils";
+
+/* Selection object from/to string.
+
+Example: 6w9c:A+EMD-8650|6lzg+!EMD-23150+EMD-15311
+
+Main: 6w9c (chain A), EMD-8650
+Overlay: 6lzg, EMD-23150 (invisible), EMD-15311.
+*/
 
 const mainSeparator = "+";
 const overlaySeparator = "|";
+const chainSeparator = ":";
 
 export type Type = "pdb" | "emdb";
 
@@ -12,6 +23,12 @@ export type ActionType = "select" | "append";
 export interface Selection {
     main: { pdb?: DbItem; emdb?: DbItem };
     overlay: Array<DbItem>;
+    chainId: string | undefined;
+}
+
+export interface WithVisibility<T> {
+    item: T;
+    visible: boolean;
 }
 
 export interface DbItem {
@@ -29,32 +46,40 @@ export function getItemSelector(item: DbItem): Selector {
     }
 }
 
-export function getMainPdbId(newSelection: Selection): Maybe<string> {
-    return newSelection.main.pdb?.id;
+export function getMainPdbId(selection: Selection): Maybe<string> {
+    return selection.main.pdb?.id;
 }
 
-export function getMainEmdbId(newSelection: Selection): Maybe<string> {
-    return newSelection.main.emdb?.id;
+export function getMainEmdbId(selection: Selection): Maybe<string> {
+    return selection.main.emdb?.id;
+}
+
+export function getChainId(selection: Selection): Maybe<string> {
+    return selection.chainId;
 }
 
 /* toString, fromString */
 
 export function getSelectionFromString(items: Maybe<string>): Selection {
     const [main = "", overlay = ""] = (items || "").split(overlaySeparator, 2);
-    const [mainPdbRichId, mainEmdbRichId] = main.split(mainSeparator, 2);
+    const [mainPdbRich = "", mainEmdbRichId] = main.split(mainSeparator, 2);
+    const [mainPdbRichId, chainId] = mainPdbRich.split(chainSeparator, 2);
     const overlayIds = overlay.split(mainSeparator);
 
     const selection: Selection = {
         main: { pdb: buildDbItem(mainPdbRichId), emdb: buildDbItem(mainEmdbRichId) },
         overlay: _.compact(overlayIds.map(buildDbItem)),
+        chainId: chainId,
     };
 
     return selection;
 }
 
 export function getStringFromSelection(selection: Selection): string {
-    const { main, overlay } = selection;
-    const mainParts = main ? [getItemParam(main.pdb), getItemParam(main.emdb)] : [];
+    const { main, overlay, chainId } = selection;
+    const pdb = getItemParam(main.pdb);
+    const pdbWithChain = pdb ? pdb + (chainId ? chainSeparator + chainId : "") : null;
+    const mainParts = main ? [pdbWithChain, getItemParam(main.emdb)] : [];
     const parts = [
         _(mainParts).dropRightWhile(_.isEmpty).join(mainSeparator),
         overlay.map(getItemParam).join(mainSeparator),
@@ -116,6 +141,10 @@ export function setMainItemVisibility(
     return { ...selection, main: { pdb: newMainPdb, emdb: newMainEmdb } };
 }
 
+export function setSelectionChain(selection: Selection, chainId: string): Selection {
+    return { ...selection, chainId };
+}
+
 function getId(item: DbItem) {
     return item.id;
 }
@@ -173,7 +202,7 @@ export function runAction(selection: Selection, action: ActionType, item: DbItem
                     ? { ...selection.main, pdb: { type: "pdb", id: item.id, visible: true } }
                     : { ...selection.main, emdb: { type: "emdb", id: item.id, visible: true } };
 
-            return { main: newMain, overlay: [] };
+            return { main: newMain, overlay: [], chainId: undefined };
         }
         case "append": {
             const newOverlay: Selection["overlay"] = _.uniqBy(
@@ -201,4 +230,21 @@ export function getMainChanges(
         pdbId: newPdbId != getMainPdbId(prevSelection) ? newPdbId : undefined,
         emdbId: newEmdbId != getMainEmdbId(prevSelection) ? newEmdbId : undefined,
     };
+}
+
+export function getPdbOptions(
+    pdbId: Maybe<PdbId>,
+    chainId: Maybe<string>,
+    pdbInfo: Maybe<PdbInfo>
+) {
+    if (!pdbId || !pdbInfo) return;
+
+    const defaultChain = pdbInfo.chains[0];
+    const chain = chainId
+        ? _(pdbInfo.chains)
+              .keyBy(chain => chain.chainId)
+              .get(chainId, defaultChain)
+        : defaultChain;
+
+    return chain ? { pdbId, proteinId: chain.protein.id, chainId: chain.chainId } : undefined;
 }
