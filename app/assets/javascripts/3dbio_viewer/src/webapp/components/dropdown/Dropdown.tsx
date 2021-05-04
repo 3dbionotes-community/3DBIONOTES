@@ -5,11 +5,13 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import { PopperMenu } from "./PopperMenu";
 import Done from "@material-ui/icons/Done";
 import { ExpandMore } from "@material-ui/icons";
+import i18n from "d2-ui-components/locales";
 
 export interface DropdownProps<Id extends string = string> {
-    text: string;
-    value?: Id;
     items: DropdownItemModel<Id>[];
+    // Show text or, if empty, the selected item.
+    text?: string;
+    selected?: Id | undefined;
     onClick(id: Id): void;
     showSelection?: boolean;
     showExpandIcon?: boolean;
@@ -18,14 +20,13 @@ export interface DropdownProps<Id extends string = string> {
 export interface DropdownItemModel<Id extends string> {
     id: Id;
     text: string;
-    selected?: boolean;
 }
 
 export function Dropdown<Id extends string = string>(props: DropdownProps<Id>): React.ReactElement {
-    const { items, text, onClick, showExpandIcon = false, value } = props;
+    const { items, text, onClick, showExpandIcon = false, selected } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
-    const showSelection = props.showSelection ?? _(items).some(item => item.selected !== undefined);
+    const showSelection = Boolean(selected);
 
     const runOnClickAndCloseMenu = React.useCallback(
         (id: string) => {
@@ -35,7 +36,11 @@ export function Dropdown<Id extends string = string>(props: DropdownProps<Id>): 
         [onClick, closeMenu]
     );
 
-    const buttonText = value !== undefined ? items.find(item => item.id === value)?.text : text;
+    const buttonText =
+        text ||
+        (selected !== undefined
+            ? items.find(item => item.id === selected)?.text
+            : i18n.t("No value"));
 
     return (
         <React.Fragment>
@@ -50,7 +55,7 @@ export function Dropdown<Id extends string = string>(props: DropdownProps<Id>): 
                         key={item.id}
                         onClick={runOnClickAndCloseMenu}
                         item={item}
-                        isSelected={item.selected ?? false}
+                        isSelected={item.id === selected}
                         showSelection={showSelection}
                     >
                         {item.text}

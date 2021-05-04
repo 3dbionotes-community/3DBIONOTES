@@ -2,7 +2,6 @@ import _ from "lodash";
 import { subtracks } from "../../../../domain/definitions/subtracks";
 import { getEvidencesFrom } from "../../../../domain/entities/Evidence";
 import { Fragments, getFragments } from "../../../../domain/entities/Fragment2";
-import { Maybe } from "../../../../utils/ts-utils";
 
 // Example: http://3dbionotes.cnb.csic.es/api/annotations/interpro/Uniprot/O00206
 
@@ -19,7 +18,7 @@ export interface InterproAnnotation {
 }
 
 export function getInterproDomainFragments(
-    annotations: Maybe<InterproAnnotations>,
+    annotations: InterproAnnotations,
     protein: string
 ): Fragments {
     const evidences = getEvidencesFrom("InterPro", {

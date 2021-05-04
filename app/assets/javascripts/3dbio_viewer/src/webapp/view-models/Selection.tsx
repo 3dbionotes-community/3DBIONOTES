@@ -1,10 +1,14 @@
 import _ from "lodash";
+import { Maybe } from "../../utils/ts-utils";
+
+const innerSeparator = "+";
+const mainSeparator = "|";
 
 export type Type = "pdb" | "emdb";
 
 export type ActionType = "select" | "append";
 
-export interface SelectionState {
+export interface Selection {
     main: { pdb: DbItem; emdb?: DbItem } | undefined;
     overlay: Array<DbItem>;
 }
@@ -15,7 +19,35 @@ export interface DbItem {
     visible: boolean;
 }
 
-export function setMainEmdb(selection: SelectionState, emdbId: string): SelectionState {
+/* toString, fromString */
+
+export function getSelectionFromString(items: Maybe<string>): Selection {
+    const [main = "", overlay = ""] = (items || "").split(mainSeparator, 2);
+    const [mainPdbRichId, mainEmdbRichId] = main.split(innerSeparator, 2);
+    const overlayIds = overlay.split(innerSeparator);
+    const pdbItem = buildDbItem(mainPdbRichId);
+
+    const selection: Selection = {
+        main: pdbItem ? { pdb: pdbItem, emdb: buildDbItem(mainEmdbRichId) } : undefined,
+        overlay: _.compact(overlayIds.map(buildDbItem)),
+    };
+
+    return selection;
+}
+
+export function getStringFromSelection(selection: Selection): string {
+    const { main, overlay } = selection;
+    const mainParts = main ? [getItemParam(main.pdb), getItemParam(main.emdb)] : [];
+    const parts = [
+        _.compact(mainParts).join(innerSeparator),
+        overlay.map(getItemParam).join(innerSeparator),
+    ];
+    return _.compact(parts).join(mainSeparator);
+}
+
+/* Updaters */
+
+export function setMainEmdb(selection: Selection, emdbId: string): Selection {
     if (!selection.main || selection.main?.emdb?.id === emdbId) return selection;
 
     return {
@@ -24,16 +56,16 @@ export function setMainEmdb(selection: SelectionState, emdbId: string): Selectio
     };
 }
 
-export function removeOverlayItem(selection: SelectionState, id: string): SelectionState {
+export function removeOverlayItem(selection: Selection, id: string): Selection {
     const newOverlay = selection.overlay.map(item => (item.id === id ? null : item));
     return { ...selection, overlay: _.compact(newOverlay) };
 }
 
 export function setOverlayItemVisibility(
-    selection: SelectionState,
+    selection: Selection,
     id: string,
     visible: boolean
-): SelectionState {
+): Selection {
     const newOverlay = selection.overlay.map(item =>
         item.id === id ? { ...item, visible } : item
     );
@@ -41,10 +73,10 @@ export function setOverlayItemVisibility(
 }
 
 export function setMainItemVisibility(
-    selection: SelectionState,
+    selection: Selection,
     id: string,
     visible: boolean
-): SelectionState {
+): Selection {
     const { main } = selection;
     if (!main) return selection;
     const newMainPdb = main.pdb.id === id ? { ...main.pdb, visible } : main.pdb;
@@ -71,7 +103,7 @@ export function diffDbItems(newItems: DbItem[], oldItems: DbItem[]) {
     return { added, removed, updated };
 }
 
-export function getItems(selection: SelectionState | undefined): DbItem[] {
+export function getItems(selection: Selection | undefined): DbItem[] {
     return selection
         ? _.concat(
               selection.main ? _.compact([selection.main.pdb, selection.main.emdb]) : [],
@@ -101,11 +133,7 @@ export function getItemParam(item: DbItem | undefined): string | undefined {
     return item ? [item.visible ? "" : "!", item.id].join("") : undefined;
 }
 
-export function runAction(
-    selection: SelectionState,
-    action: ActionType,
-    item: DbItem
-): SelectionState {
+export function runAction(selection: Selection, action: ActionType, item: DbItem): Selection {
     if (action === "select") {
         return {
             main: { pdb: { type: "pdb", id: item.id, visible: true } },

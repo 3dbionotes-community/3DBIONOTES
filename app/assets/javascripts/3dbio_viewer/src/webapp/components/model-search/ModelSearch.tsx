@@ -14,7 +14,7 @@ import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value"
 import { useDebounce } from "../../hooks/use-debounce";
 import { useBooleanState } from "../../hooks/use-boolean";
 import i18n from "../../utils/i18n";
-import { ActionType, DbItem } from "../../view-models/SelectionState";
+import { ActionType, DbItem } from "../../view-models/Selection";
 import { useAppContext } from "../AppContext";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import "./ModelSearch.css";
@@ -76,7 +76,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 
                     <Dropdown<ModelSearchType>
                         text={i18n.t("Model type")}
-                        value={modelType}
+                        selected={modelType}
                         items={modelTypes}
                         onClick={setModelType}
                         showExpandIcon

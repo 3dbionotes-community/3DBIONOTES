@@ -2,10 +2,9 @@ import React from "react";
 import { Pdb } from "../../domain/entities/Pdb";
 import { PdbOptions } from "../../domain/repositories/PdbRepository";
 import { debugVariable } from "../../utils/debug";
-import { throwError } from "../../utils/misc";
 import { useAppContext } from "../components/AppContext";
-import { useLoader } from "../components/Loader";
-import { SelectionState } from "../view-models/SelectionState";
+import { LoaderState, useLoader } from "../components/Loader";
+import { Selection } from "../view-models/Selection";
 
 const proteinFromPdbId: Record<string, string> = {
     "6zow": "P0DTC2",
@@ -19,17 +18,19 @@ const proteinFromPdbId: Record<string, string> = {
     "7bv1": "P0DTD1",
 };
 
-export function usePdbLoader(selection: SelectionState) {
+export function usePdbLoader(selection: Selection): LoaderState<Pdb> | undefined {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
-    const pdbId = (selection.main?.pdb.id || "6zow").toLowerCase();
-    const pdbOptions: PdbOptions = React.useMemo(() => {
-        const protein = proteinFromPdbId[pdbId] || "P0DTC2";
-        return { pdb: pdbId, protein, chain: "A" };
+    const pdbId = selection.main?.pdb.id;
+
+    const pdbOptions: PdbOptions | undefined = React.useMemo(() => {
+        if (!pdbId) return;
+        const protein = proteinFromPdbId[pdbId.toLowerCase()];
+        return protein ? { pdb: pdbId, protein, chain: "A" } : undefined;
     }, [pdbId]);
-    if (!pdbOptions) throwError(`PDB not defined: ${pdbId}`);
 
     React.useEffect(() => {
+        if (!pdbOptions) return;
         setLoader({ type: "loading" });
 
         return compositionRoot.getPdb(pdbOptions).run(
@@ -42,5 +43,5 @@ export function usePdbLoader(selection: SelectionState) {
         if (loader.type === "loaded") debugVariable({ pdbData: loader.data });
     }, [loader]);
 
-    return loader;
+    return pdbId ? loader : undefined;
 }

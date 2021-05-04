@@ -1,23 +1,21 @@
 import React from "react";
 import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
-import { SelectionState } from "../view-models/SelectionState";
 import { ViewerSelector } from "./viewer-selector/ViewerSelector";
+import { useViewerState } from "./viewer-selector/viewer-selector.hooks";
 
-interface RootViewerProps {
-    selection: SelectionState;
-    onSelectionChange(newSelection: SelectionState): void;
-}
+interface RootViewerProps {}
 
-export const RootViewer: React.FC<RootViewerProps> = props => {
-    const { selection, onSelectionChange } = props;
+export const RootViewer: React.FC<RootViewerProps> = React.memo(() => {
+    const [viewerState, { setSelection }] = useViewerState();
+    const { selection } = viewerState;
 
     return (
         <div id="viewer">
-            <ViewerSelector selection={selection} onSelectionChange={onSelectionChange} />
+            <ViewerSelector selection={selection} onSelectionChange={setSelection} />
 
             <div id="left">
-                <MolecularStructure selection={selection} onSelectionChange={onSelectionChange} />
+                <MolecularStructure selection={selection} onSelectionChange={setSelection} />
             </div>
 
             <div id="right">
@@ -25,4 +23,4 @@ export const RootViewer: React.FC<RootViewerProps> = props => {
             </div>
         </div>
     );
-};
+});

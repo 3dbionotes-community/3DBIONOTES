@@ -1,14 +1,14 @@
 import React from "react";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { routes } from "../../../routes";
-import { SelectionState } from "../../view-models/SelectionState";
+import { Selection } from "../../view-models/Selection";
 import { FrameViewer } from "../frame-viewer/FrameViewer";
 import { TrackDef } from "../protvista/Protvista.types";
 
 interface GeneViewerProps {
     trackDef: TrackDef;
     pdb: Pdb;
-    selection: SelectionState;
+    selection: Selection;
 }
 
 export const GeneViewer: React.FC<GeneViewerProps> = props => {

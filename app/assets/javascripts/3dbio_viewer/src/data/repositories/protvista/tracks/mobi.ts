@@ -20,11 +20,9 @@ interface MobiAnnotation {
 }
 
 export function getMobiUniprotFragments(
-    mobiUniprot: MobiUniprot | undefined,
+    mobiUniprot: MobiUniprot,
     protein: string
 ): Fragments {
-    if (!mobiUniprot) return [];
-
     const evidences = getEvidencesFrom("MobyDB", {
         name: protein,
         url: `https://mobidb.bio.unipd.it/entries/${protein}`,

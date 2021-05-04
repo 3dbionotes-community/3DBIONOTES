@@ -34,12 +34,7 @@ const domainSubtypes = [
 
 const bindingSubtypes = ["Sustrate-Kinase interaction"];
 
-export function getPhosphiteFragments(
-    phosphosite: PhosphositeUniprot | undefined,
-    protein: string
-): Fragments {
-    if (!phosphosite) return [];
-
+export function getPhosphiteFragments(phosphosite: PhosphositeUniprot, protein: string): Fragments {
     const [domainItems, nonDomainItems] = _(phosphosite)
         .filter(obj => obj.type === "Ptm/processing")
         .partition(obj => domainSubtypes.includes(obj.subtype))

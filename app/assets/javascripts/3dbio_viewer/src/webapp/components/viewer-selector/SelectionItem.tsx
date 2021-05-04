@@ -1,13 +1,13 @@
 import React from "react";
 import { IconButton } from "@material-ui/core";
 import { Close, Visibility, VisibilityOff } from "@material-ui/icons";
-import { DbItem, SelectionState } from "../../view-models/SelectionState";
+import { DbItem, Selection } from "../../view-models/Selection";
 
 export interface SelectionItemProps {
-    selection: SelectionState;
+    selection: Selection;
     item: DbItem;
-    onVisibilityChange(selection: SelectionState, id: DbItem["id"], visible: boolean): void;
-    onRemove?(selection: SelectionState, id: DbItem["id"]): void;
+    onVisibilityChange(selection: Selection, id: DbItem["id"], visible: boolean): void;
+    onRemove?(selection: Selection, id: DbItem["id"]): void;
 }
 
 export const SelectionItem: React.FC<SelectionItemProps> = React.memo(props => {

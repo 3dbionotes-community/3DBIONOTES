@@ -9,9 +9,9 @@ import {
     DbItem,
     diffDbItems,
     getItems,
-    SelectionState,
+    Selection,
     setMainEmdb,
-} from "../../view-models/SelectionState";
+} from "../../view-models/Selection";
 
 import "./molstar.css";
 import "./molstar.scss";
@@ -24,8 +24,8 @@ declare global {
 }
 
 interface MolecularStructureProps {
-    selection: SelectionState;
-    onSelectionChange(newSelection: SelectionState): void;
+    selection: Selection;
+    onSelectionChange(newSelection: Selection): void;
 }
 
 export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
@@ -39,14 +39,14 @@ export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
 };
 
 function usePdbePlugin(
-    newSelection: SelectionState,
-    onSelectionChange: (newSelection: SelectionState) => void
+    newSelection: Selection,
+    onSelectionChange: (newSelection: Selection) => void
 ) {
     const [pdbePlugin, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
 
     // Keep a reference with the previous value of selection, so we can diff with a new
     // state and perform the imperative add/remove/update operations.
-    const [prevSelectionRef, setPrevSelection] = useReference<SelectionState>();
+    const [prevSelectionRef, setPrevSelection] = useReference<Selection>();
 
     const setEmdbFromLoadEvent = React.useCallback(
         (plugin: PDBeMolstarPlugin, loaded) => {

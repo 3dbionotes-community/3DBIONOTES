@@ -1,11 +1,11 @@
 import React from "react";
-import { Route } from "react-router-dom";
 import { MolecularStructure } from "../components/molecular-structure/MolecularStructure";
-import { useViewerSelector } from "../components/viewer-selector/viewer-selector.hooks";
+import { useViewerState } from "../components/viewer-selector/viewer-selector.hooks";
 import { ViewerSelector } from "../components/viewer-selector/ViewerSelector";
 
-export const MolecularStructurePage: React.FC<{ selector: string }> = React.memo(props => {
-    const [selection, setSelection] = useViewerSelector(props.selector);
+export const MolecularStructurePage: React.FC = React.memo(() => {
+    const [viewerState, { setSelection }] = useViewerState();
+    const { selection } = viewerState;
 
     return (
         <React.Fragment>
@@ -15,11 +15,3 @@ export const MolecularStructurePage: React.FC<{ selector: string }> = React.memo
     );
 });
 
-export const MolecularStructureRoute: React.FC<{ path: string }> = React.memo(props => {
-    return (
-        <Route
-            path={props.path}
-            render={props => <MolecularStructurePage selector={props.match.params.selector} />}
-        />
-    );
-});
