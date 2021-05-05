@@ -41,6 +41,11 @@
                         ]
                     }
                 },
+                "7m8k": {
+                    "emdbs": [
+                        "EMD-23718"
+                    ]
+                },
                 "7m0j": {
                     "emdbs": [
                         "EMD-23612"
@@ -555,6 +560,11 @@
                 "EMD-30573": {
                     "pdb": [
                         "7d4g"
+                    ]
+                },
+                "EMD-23718": {
+                    "pdb": [
+                        "7m8k"
                     ]
                 },
                 "EMD-23582": {
@@ -1106,19 +1116,6 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": {
-                        "7ntc": {},
-                        "7b18": {},
-                        "7b14": {},
-                        "7e3j": {},
-                        "7ly3": {},
-                        "7lss": {},
-                        "7ls9": {},
-                        "7lqw": {},
-                        "7lqv": {},
-                        "7lo4": {},
-                        "7lm8": {},
-                        "7ljr": {},
-                        "7laa": {},
                         "6m0j": {
                             "validation": {
                                 "isolde": [
@@ -1149,11 +1146,6 @@
                         },
                         "6w41": {
                             "validation": {
-                                "isolde": [
-                                    {
-                                        "name": "6w41_refine_5"
-                                    }
-                                ],
                                 "pdb-redo": [
                                     {
                                         "name": "6w41"
@@ -1163,11 +1155,6 @@
                         },
                         "6vw1": {
                             "validation": {
-                                "isolde": [
-                                    {
-                                        "name": "6vw1_refine_7"
-                                    }
-                                ],
                                 "pdb-redo": [
                                     {
                                         "name": "6vw1"
@@ -1175,6 +1162,25 @@
                                 ]
                             }
                         },
+                        "7e3j": {},
+                        "7m6i": {},
+                        "7m6h": {},
+                        "7m6g": {},
+                        "7m6f": {},
+                        "7m6e": {},
+                        "7m7w": {},
+                        "7m6d": {},
+                        "7ldj": {},
+                        "7ly3": {},
+                        "7lx5": {},
+                        "7lss": {},
+                        "7ls9": {},
+                        "7lqw": {},
+                        "7lqv": {},
+                        "7lo4": {},
+                        "7lm8": {},
+                        "7ljr": {},
+                        "7laa": {},
                         "7l58": {},
                         "7l57": {},
                         "7l56": {},
@@ -1279,6 +1285,7 @@
                         "7jjc": {},
                         "7ean": {},
                         "7eam": {},
+                        "7e23": {},
                         "7dx9": {},
                         "7dx8": {},
                         "7dx7": {},
@@ -1406,6 +1413,7 @@
                         "7can": {}
                     },
                     "EMDB": [
+                        "EMD-30950",
                         "EMD-30900",
                         "EMD-30895",
                         "EMD-30899",
@@ -1434,6 +1442,12 @@
                         "EMD-30305",
                         "EMD-30247",
                         "EMD-30039",
+                        "EMD-23697",
+                        "EMD-23696",
+                        "EMD-23695",
+                        "EMD-23694",
+                        "EMD-23693",
+                        "EMD-23566",
                         "EMD-23507",
                         "EMD-23506",
                         "EMD-23490",
@@ -1496,7 +1510,6 @@
                         "EMD-22288",
                         "EMD-22156",
                         "EMD-21864",
-                        "EMD-12587",
                         "EMD-12284",
                         "EMD-12283",
                         "EMD-12281",
@@ -1508,9 +1521,7 @@
                         "EMD-12275",
                         "EMD-12274",
                         "EMD-12187",
-                        "EMD-11981",
                         "EMD-11980",
-                        "EMD-11978",
                         "EMD-11688",
                         "EMD-11617",
                         "EMD-11616",
@@ -1521,15 +1532,7 @@
                     ]
                 },
                 "Ligands": {
-                    "Misc-PDB": {
-                        "7ntc": {},
-                        "7nt9": {},
-                        "7b62": {}
-                    },
-                    "EMDB": {
-                        "EMD-12586": {},
-                        "EMD-12585": {}
-                    },
+                    "Misc-PDB": {},
                     "BCU-CDR": {
                         "6vsb": {
                             "pockets": [
@@ -1796,11 +1799,6 @@
                         },
                         "6w41": {
                             "validation": {
-                                "isolde": [
-                                    {
-                                        "name": "6w41_refine_5"
-                                    }
-                                ],
                                 "pdb-redo": [
                                     {
                                         "name": "6w41"
@@ -2643,6 +2641,8 @@
             ],
             "PDB": {
                 "7mbg": {},
+                "7cb7": {},
+                "7cam": {},
                 "6m03": {
                     "validation": {
                         "isolde": [
@@ -3095,15 +3095,7 @@
                         "6lo0": {},
                         "6lnq": {},
                         "6lny": {},
-                        "6y7m": {
-                            "validation": {
-                                "isolde": [
-                                    {
-                                        "name": "6y7m_refine_2"
-                                    }
-                                ]
-                            }
-                        },
+                        "6y7m": {},
                         "3eaj": {},
                         "3sne": {},
                         "2amq": {},
@@ -4088,6 +4080,10 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7mc6",
+                        "7mc5",
+                        "7lw4",
+                        "7lw3",
                         "7koa",
                         "7jz0",
                         "7jyy",
@@ -4108,11 +4104,6 @@
                     "Misc-PDB": {
                         "5c8t": {
                             "validation": {
-                                "isolde": [
-                                    {
-                                        "name": "5c8t_refine_2"
-                                    }
-                                ],
                                 "pdb-redo": [
                                     {
                                         "name": "5c8t"
@@ -4256,13 +4247,7 @@
                         "5ynn": {},
                         "2xyv": {},
                         "5nfy": {
-                            "validation": {
-                                "isolde": [
-                                    {
-                                        "name": "5nfy_refine_4"
-                                    }
-                                ]
-                            }
+                            "validation": {}
                         },
                         "2xyr": {},
                         "5ynj": {},
@@ -4296,6 +4281,8 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7lw4",
+                        "7lw3",
                         "7koa",
                         "7jz0",
                         "7jyy",
@@ -4923,6 +4910,8 @@
             "Interactions": {
                 "P-P-Interactions": {
                     "PDB": [
+                        "7mc6",
+                        "7mc5",
                         "5c8s",
                         "5c8u"
                     ]
@@ -5339,13 +5328,7 @@
                     "PDB": {
                         "1yo4": {},
                         "1xak": {
-                            "validation": {
-                                "isolde": [
-                                    {
-                                        "name": "1xak_refine_8"
-                                    }
-                                ]
-                            }
+                            "validation": {}
                         }
                     }
                 }
