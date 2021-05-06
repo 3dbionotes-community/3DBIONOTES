@@ -21,7 +21,7 @@ const proteinFromPdbId: Record<string, string> = {
 export function usePdbLoader(selection: Selection): LoaderState<Pdb> | undefined {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
-    const pdbId = selection.main?.pdb.id;
+    const pdbId = selection.main.pdb?.id;
 
     const pdbOptions: PdbOptions | undefined = React.useMemo(() => {
         if (!pdbId) return;
@@ -30,18 +30,21 @@ export function usePdbLoader(selection: Selection): LoaderState<Pdb> | undefined
     }, [pdbId]);
 
     React.useEffect(() => {
-        if (!pdbOptions) return;
+        if (!pdbOptions) {
+            setLoader({ type: "error", message: `PDB not configured in use-pdb: ${pdbId || "-"}` });
+            return;
+        }
         setLoader({ type: "loading" });
 
-        return compositionRoot.getPdb(pdbOptions).run(
+        return compositionRoot.getPdb.execute(pdbOptions).run(
             pdb => setLoader({ type: "loaded", data: pdb }),
             error => setLoader({ type: "error", message: error.message })
         );
-    }, [compositionRoot, setLoader, pdbOptions]);
+    }, [compositionRoot, setLoader, pdbOptions, pdbId]);
 
     React.useEffect(() => {
         if (loader.type === "loaded") debugVariable({ pdbData: loader.data });
     }, [loader]);
 
-    return pdbId ? loader : undefined;
+    return loader;
 }

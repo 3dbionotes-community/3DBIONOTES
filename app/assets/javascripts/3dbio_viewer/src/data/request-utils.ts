@@ -5,7 +5,7 @@ import { axiosRequest, defaultBuilder } from "../utils/future-axios";
 
 export type RequestError = { message: string };
 
-function getFromUrl<Data>(url: string): Future<RequestError, Data> {
+export function getFromUrl<Data>(url: string): Future<RequestError, Data> {
     return request<Data>({ method: "GET", url });
 }
 

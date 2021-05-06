@@ -1,15 +1,16 @@
+import { Selector } from "@3dbionotes/pdbe-molstar/lib";
 import _ from "lodash";
 import { Maybe } from "../../utils/ts-utils";
 
-const innerSeparator = "+";
-const mainSeparator = "|";
+const mainSeparator = "+";
+const overlaySeparator = "|";
 
 export type Type = "pdb" | "emdb";
 
 export type ActionType = "select" | "append";
 
 export interface Selection {
-    main: { pdb: DbItem; emdb?: DbItem } | undefined;
+    main: { pdb?: DbItem; emdb?: DbItem };
     overlay: Array<DbItem>;
 }
 
@@ -19,16 +20,32 @@ export interface DbItem {
     visible: boolean;
 }
 
+export function getItemSelector(item: DbItem): Selector {
+    switch (item.type) {
+        case "pdb": // Example: label = "6w9c"
+            return { label: new RegExp("^" + item.id.toUpperCase() + "$") };
+        case "emdb": // Example: label = "RCSB PDB EMD Density Server: EMD-8650"
+            return { label: new RegExp(item.id.toUpperCase() + "$") };
+    }
+}
+
+export function getMainPdbId(newSelection: Selection): Maybe<string> {
+    return newSelection.main.pdb?.id;
+}
+
+export function getMainEmdbId(newSelection: Selection): Maybe<string> {
+    return newSelection.main.emdb?.id;
+}
+
 /* toString, fromString */
 
 export function getSelectionFromString(items: Maybe<string>): Selection {
-    const [main = "", overlay = ""] = (items || "").split(mainSeparator, 2);
-    const [mainPdbRichId, mainEmdbRichId] = main.split(innerSeparator, 2);
-    const overlayIds = overlay.split(innerSeparator);
-    const pdbItem = buildDbItem(mainPdbRichId);
+    const [main = "", overlay = ""] = (items || "").split(overlaySeparator, 2);
+    const [mainPdbRichId, mainEmdbRichId] = main.split(mainSeparator, 2);
+    const overlayIds = overlay.split(mainSeparator);
 
     const selection: Selection = {
-        main: pdbItem ? { pdb: pdbItem, emdb: buildDbItem(mainEmdbRichId) } : undefined,
+        main: { pdb: buildDbItem(mainPdbRichId), emdb: buildDbItem(mainEmdbRichId) },
         overlay: _.compact(overlayIds.map(buildDbItem)),
     };
 
@@ -39,20 +56,35 @@ export function getStringFromSelection(selection: Selection): string {
     const { main, overlay } = selection;
     const mainParts = main ? [getItemParam(main.pdb), getItemParam(main.emdb)] : [];
     const parts = [
-        _.compact(mainParts).join(innerSeparator),
-        overlay.map(getItemParam).join(innerSeparator),
+        _(mainParts).dropRightWhile(_.isEmpty).join(mainSeparator),
+        overlay.map(getItemParam).join(mainSeparator),
     ];
-    return _.compact(parts).join(mainSeparator);
+    return _.compact(parts).join(overlaySeparator);
 }
 
 /* Updaters */
 
-export function setMainEmdb(selection: Selection, emdbId: string): Selection {
+export function setMainPdb(selection: Selection, pdbId: Maybe<string>): Selection {
+    if (!selection.main || selection.main?.pdb?.id === pdbId) return selection;
+
+    return {
+        ...selection,
+        main: {
+            ...selection.main,
+            pdb: pdbId ? { type: "pdb", id: pdbId, visible: true } : undefined,
+        },
+    };
+}
+
+export function setMainEmdb(selection: Selection, emdbId: Maybe<string>): Selection {
     if (!selection.main || selection.main?.emdb?.id === emdbId) return selection;
 
     return {
         ...selection,
-        main: { ...selection.main, emdb: { type: "emdb", id: emdbId, visible: true } },
+        main: {
+            ...selection.main,
+            emdb: emdbId ? { type: "emdb", id: emdbId, visible: true } : undefined,
+        },
     };
 }
 
@@ -79,7 +111,7 @@ export function setMainItemVisibility(
 ): Selection {
     const { main } = selection;
     if (!main) return selection;
-    const newMainPdb = main.pdb.id === id ? { ...main.pdb, visible } : main.pdb;
+    const newMainPdb = main.pdb?.id === id ? { ...main.pdb, visible } : main.pdb;
     const newMainEmdb = main.emdb?.id === id ? { ...main.emdb, visible } : main.emdb;
     return { ...selection, main: { pdb: newMainPdb, emdb: newMainEmdb } };
 }
@@ -134,17 +166,39 @@ export function getItemParam(item: DbItem | undefined): string | undefined {
 }
 
 export function runAction(selection: Selection, action: ActionType, item: DbItem): Selection {
-    if (action === "select") {
-        return {
-            main: { pdb: { type: "pdb", id: item.id, visible: true } },
-            overlay: [],
-        };
-    } else if (action === "append") {
-        return {
-            ...selection,
-            overlay: [...selection.overlay, { type: "pdb", id: item.id, visible: true }],
-        };
-    } else {
-        return selection;
+    switch (action) {
+        case "select": {
+            const newMain: Selection["main"] =
+                item.type === "pdb"
+                    ? { ...selection.main, pdb: { type: "pdb", id: item.id, visible: true } }
+                    : { ...selection.main, emdb: { type: "emdb", id: item.id, visible: true } };
+
+            return { main: newMain, overlay: [] };
+        }
+        case "append": {
+            const newOverlay: Selection["overlay"] = _.uniqBy(
+                [...selection.overlay, { type: "pdb", id: item.id, visible: true }],
+                getDbItemUid
+            );
+
+            return { ...selection, overlay: newOverlay };
+        }
     }
+}
+
+function getDbItemUid(item: DbItem): string {
+    return [item.type, item.id].join("-");
+}
+
+export function getMainChanges(
+    prevSelection: Selection,
+    newSelection: Selection
+): { pdbId?: string; emdbId?: string } {
+    const newPdbId = getMainPdbId(newSelection);
+    const newEmdbId = getMainEmdbId(newSelection);
+
+    return {
+        pdbId: newPdbId != getMainPdbId(prevSelection) ? newPdbId : undefined,
+        emdbId: newEmdbId != getMainEmdbId(prevSelection) ? newEmdbId : undefined,
+    };
 }

@@ -56,11 +56,11 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
         <div id="viewer-selector">
             <div className="db">
                 <div className="status">
-                    {selection.main && (
+                    {selection.main && selection.main.pdb && (
                         <MainItemBox label={i18n.t("PDB")}>
                             <SelectionItem
                                 selection={selection}
-                                item={selection.main.pdb}
+                                item={selection.main?.pdb}
                                 onVisibilityChange={update.setMainItemVisibility}
                             />
                         </MainItemBox>

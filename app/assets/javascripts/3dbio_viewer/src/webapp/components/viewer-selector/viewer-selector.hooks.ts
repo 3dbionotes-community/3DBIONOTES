@@ -32,9 +32,12 @@ export function useViewerState(): [
 ] {
     const goTo = useGoto();
     const params = useParams<Selector>();
-    const selection = getSelectionFromString(params.selection);
-    const profile = getProfileFromString(params.profile);
-    const viewerState: ViewerState = { selection, profile };
+
+    const viewerState = React.useMemo<ViewerState>(() => {
+        const selection = getSelectionFromString(params.selection);
+        const profile = getProfileFromString(params.profile);
+        return { selection, profile };
+    }, [params.selection, params.profile]);
 
     const goToPath = React.useCallback(
         (selection: Selection, profile: Profile) => {

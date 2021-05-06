@@ -9,7 +9,10 @@ $ yarn install
 ## Build
 
 ```shell
-$ $ yarn build
+$ yarn build
+
+# On main Rails app
+$ RAILS_ENV=production bundle exec rake assets:precompile
 ```
 
 ## Development

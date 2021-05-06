@@ -1,8 +1,8 @@
 import React from "react";
-import { getEntityLink, Pdb } from "../../domain/entities/Pdb";
+import { getEntityLinks, Pdb } from "../../domain/entities/Pdb";
 import i18n from "../utils/i18n";
 import { Selection } from "../view-models/Selection";
-import { LinkFromObj } from "./Link";
+import { Links } from "./Link";
 
 export interface BasicInfoProps {
     pdb: Pdb;
@@ -78,15 +78,15 @@ function getItems(pdb: Pdb) {
         { name: i18n.t("Obtaining method"), value: pdb.experiment?.method },
         {
             name: i18n.t("Uniprot ID"),
-            value: <LinkFromObj link={getEntityLink(pdb, "uniprot")} />,
+            value: <Links links={getEntityLinks(pdb, "uniprot")} />,
         },
         {
             name: i18n.t("PDB ID"),
-            value: <LinkFromObj link={getEntityLink(pdb, "pdb")} />,
+            value: <Links links={getEntityLinks(pdb, "pdb")} />,
         },
         {
             name: i18n.t("EMDB ID"),
-            value: <LinkFromObj link={getEntityLink(pdb, "emdb")} emptyValue="-" />,
+            value: <Links links={getEntityLinks(pdb, "emdb")} emptyValue="-" />,
             help: i18n.t("Do you want to load the associated map with this protein structure?"),
         },
         {
