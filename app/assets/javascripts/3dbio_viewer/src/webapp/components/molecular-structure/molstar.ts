@@ -5,7 +5,7 @@ import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
 import { PluginContext } from "molstar/lib/mol-plugin/context";
 import { getMainPdbId, Selection } from "../../view-models/Selection";
 import { Maybe } from "../../../utils/ts-utils";
-import { Ligand } from "../../../domain/entities/Ligand";
+import { buildLigand, Ligand } from "../../../domain/entities/Ligand";
 
 function getCellsWithPath(molstarPlugin: PluginContext) {
     const cells = Array.from(molstarPlugin.state.data.cells.values());
@@ -73,21 +73,19 @@ export function getLigands(pdbePlugin: PDBeMolstarPlugin, newSelection: Selectio
         .flatMap(location =>
             location.compIds
                 .filter(compId => compId !== "HOH")
-                .map(ligandId => ({ ligandId, location }))
+                .map(compId => ({ symbol: compId, location }))
         )
-        .keyBy(({ ligandId, location }) =>
-            [ligandId, location.chainId, location.authSeqId].join("-")
-        )
+        .keyBy(({ symbol, location }) => [symbol, location.chainId, location.authSeqId].join("-"))
         .values()
         .map(
             (referenceObj): Ligand => {
-                const ligandId = referenceObj.ligandId;
+                const symbol = referenceObj.symbol;
                 const chainId = referenceObj.location.chainId;
                 const position = referenceObj.location.authSeqId;
-                return { chainId, ligandId, position };
+                return buildLigand({ chainId, component: symbol, position });
             }
         )
-        .orderBy([obj => obj.chainId, obj => obj.ligandId, obj => obj.position])
+        .orderBy([obj => obj.component, obj => obj.component, obj => obj.position])
         .value();
 
     return ligands;

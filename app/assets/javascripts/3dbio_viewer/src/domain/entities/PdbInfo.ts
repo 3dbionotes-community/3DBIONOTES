@@ -42,3 +42,7 @@ export function buildPdbInfo(options: BuildPdbInfoOptions): PdbInfo {
 
     return { ...options, chains };
 }
+
+export function setPdbInfoLigands(pdbInfo: PdbInfo, newLigands: PdbInfo["ligands"]): PdbInfo {
+    return { ...pdbInfo, ligands: newLigands };
+}

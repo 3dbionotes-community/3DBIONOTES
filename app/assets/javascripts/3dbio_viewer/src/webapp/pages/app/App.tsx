@@ -20,7 +20,7 @@ function App() {
                     <Route path="/:selection/:profile" render={() => <RootViewer />} />
                     <Route path="/:selection" render={() => <RootViewer />} />
                     <Route path="/">
-                        <Redirect to="/6zow" />
+                        <Redirect to="/6zow+EMD-21375" />
                     </Route>
                 </Switch>
             </HashRouter>

@@ -22,8 +22,10 @@ export interface DropdownItemModel<Id extends string> {
     text: string;
 }
 
-export function Dropdown<Id extends string = string>(props: DropdownProps<Id>): React.ReactElement {
-    const { items = [], text, onClick, showExpandIcon = false, selected } = props;
+export function Dropdown<Id extends string = string>(
+    props: DropdownProps<Id>
+): React.ReactElement | null {
+    const { items, text, onClick, showExpandIcon = false, selected } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
     const showSelection = Boolean(selected);
@@ -35,6 +37,8 @@ export function Dropdown<Id extends string = string>(props: DropdownProps<Id>): 
         },
         [onClick, closeMenu]
     );
+
+    if (!items) return null;
 
     const buttonText =
         text ||

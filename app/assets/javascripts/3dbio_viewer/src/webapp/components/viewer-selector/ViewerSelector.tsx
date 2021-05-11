@@ -11,6 +11,8 @@ import {
     setMainItemVisibility,
     runAction,
     setSelectionChain,
+    setSelectionLigand,
+    getSelectedLigand,
 } from "../../view-models/Selection";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import { ModelSearch, ModelSearchProps } from "../model-search/ModelSearch";
@@ -32,11 +34,7 @@ const actions = { setOverlayItemVisibility, removeOverlayItem, setMainItemVisibi
 export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     const { selection, onSelectionChange } = props;
     const chainDropdownProps = useChainDropdown(props);
-
-    const ligandItems: DropdownProps["items"] = [
-        { id: "L1", text: "Ligand 1" },
-        { id: "L2", text: "Ligand 2" },
-    ];
+    const ligandsDropdownProps = useLigandsDropdown(props);
 
     const [isSearchOpen, { enable: openSearch, disable: closeSearch }] = useBooleanState(false);
 
@@ -103,13 +101,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
 
             <div className="selectors">
                 <Dropdown {...chainDropdownProps} showExpandIcon />
-
-                <Dropdown
-                    text={i18n.t("Ligands")}
-                    items={ligandItems}
-                    onClick={console.debug}
-                    showExpandIcon
-                />
+                <Dropdown {...ligandsDropdownProps} showExpandIcon />
             </div>
         </div>
     );
@@ -136,15 +128,50 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
         [selection, onSelectionChange]
     );
 
-    const chainItems: DropdownProps["items"] = React.useMemo(
+    const items: DropdownProps["items"] = React.useMemo(
         () => pdbInfo?.chains.map(chain => ({ id: chain.chainId, text: chain.name })),
         [pdbInfo]
     );
 
+    const selectedChain = getSelectedChain(pdbInfo, selection);
+
+    const text = selectedChain
+        ? `${i18n.t("Chain")}: ${selectedChain.shortName}`
+        : i18n.t("Chains");
+
+    return { text, items, onClick: setChain };
+}
+
+function getSelectedChain(pdbInfo: PdbInfo | undefined, selection: Selection) {
     const chains = pdbInfo?.chains || [];
     const selectedChain = chains.find(chain => chain.chainId === selection.chainId) || chains[0];
+    return selectedChain;
+}
 
-    const chainText = [i18n.t("Chain"), selectedChain?.shortName || "-"].join(" ");
+function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
+    const { pdbInfo, selection, onSelectionChange } = options;
 
-    return { text: chainText, items: chainItems, onClick: setChain };
+    const setLigand = React.useCallback(
+        (ligandId: string) => {
+            const selectedLigand = getSelectedLigand({ ...selection, ligandId }, pdbInfo);
+            if (selectedLigand) onSelectionChange(setSelectionLigand(selection, selectedLigand));
+        },
+        [selection, onSelectionChange, pdbInfo]
+    );
+
+    const selectedChain = getSelectedChain(pdbInfo, selection);
+
+    const items: DropdownProps["items"] = React.useMemo(() => {
+        return pdbInfo?.ligands
+            .filter(ligand => ligand.shortChainId === selectedChain?.chainId)
+            .map(ligand => ({ id: ligand.shortId, text: ligand.shortId }));
+    }, [selectedChain, pdbInfo]);
+
+    const selectedLigand = getSelectedLigand(selection, pdbInfo);
+
+    const text = selectedLigand
+        ? `${i18n.t("Ligand")}: ${selectedLigand.shortId}`
+        : i18n.t("Ligands");
+
+    return { text, items, onClick: setLigand };
 }

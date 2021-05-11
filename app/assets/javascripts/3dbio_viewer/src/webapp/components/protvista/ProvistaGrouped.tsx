@@ -13,7 +13,7 @@ export interface ProtvistaGroupedProps {}
 export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(() => {
     const [viewerState] = useViewerState();
     const { selection } = viewerState;
-    const pdbInfo = usePdbInfo(selection);
+    const { pdbInfo } = usePdbInfo(selection);
     const loader = usePdbLoader(selection, pdbInfo);
     const block = allTracksBlock;
     if (!loader) return null;

@@ -4,19 +4,15 @@ import { MolecularStructure } from "./molecular-structure/MolecularStructure";
 import { ViewerSelector } from "./viewer-selector/ViewerSelector";
 import { useViewerState } from "./viewer-selector/viewer-selector.hooks";
 import { usePdbInfo } from "../hooks/loader-hooks";
-import { Ligand } from "../../domain/entities/Ligand";
 
 export const RootViewer: React.FC = React.memo(() => {
     const [viewerState, { setSelection }] = useViewerState();
     const { selection } = viewerState;
-    const pdbInfo = usePdbInfo(selection);
-    const [ligands, setLigands] = React.useState<Ligand[]>();
-    console.debug({ ligands });
+    const { pdbInfo, setLigands } = usePdbInfo(selection);
 
     return (
         <div id="viewer">
             <ViewerSelector
-                /* ligands={ligands} */
                 pdbInfo={pdbInfo}
                 selection={selection}
                 onSelectionChange={setSelection}
@@ -24,6 +20,7 @@ export const RootViewer: React.FC = React.memo(() => {
 
             <div id="left">
                 <MolecularStructure
+                    pdbInfo={pdbInfo}
                     selection={selection}
                     onSelectionChange={setSelection}
                     onLigandsLoaded={setLigands}

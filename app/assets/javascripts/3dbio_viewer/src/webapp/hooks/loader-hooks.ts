@@ -1,12 +1,12 @@
 import React from "react";
 import { FutureData } from "../../domain/entities/FutureData";
-import { PdbInfo } from "../../domain/entities/PdbInfo";
-import { Maybe } from "../../utils/ts-utils";
+import { Ligand } from "../../domain/entities/Ligand";
+import { setPdbInfoLigands } from "../../domain/entities/PdbInfo";
 import { useAppContext } from "../components/AppContext";
 import { getMainPdbId, Selection } from "../view-models/Selection";
 import { useCallbackEffect } from "./use-callback-effect";
 
-export function useValueFromFuture<Value>(
+export function useStateFromFuture<Value>(
     getFutureValue: () => FutureData<Value> | undefined
 ): Value | undefined {
     const [value, setValue] = React.useState<Value>();
@@ -22,13 +22,20 @@ export function useValueFromFuture<Value>(
     return value;
 }
 
-export function usePdbInfo(selection: Selection): Maybe<PdbInfo> {
+export function usePdbInfo(selection: Selection) {
     const { compositionRoot } = useAppContext();
     const mainPdbId = getMainPdbId(selection);
+    const [ligands, setLigands] = React.useState<Ligand[]>();
 
     const getPdbInfo = React.useCallback(() => {
         return mainPdbId ? compositionRoot.getPdbInfo.execute(mainPdbId) : undefined;
     }, [mainPdbId, compositionRoot]);
 
-    return useValueFromFuture(getPdbInfo);
+    const pdbInfo = useStateFromFuture(getPdbInfo);
+
+    const pdbInfoWithLigands = React.useMemo(() => {
+        return pdbInfo && ligands ? setPdbInfoLigands(pdbInfo, ligands) : pdbInfo;
+    }, [pdbInfo, ligands]);
+
+    return { pdbInfo: pdbInfoWithLigands, setLigands };
 }
