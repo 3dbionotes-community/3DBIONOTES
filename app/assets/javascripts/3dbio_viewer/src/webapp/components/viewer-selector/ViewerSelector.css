@@ -1,5 +1,5 @@
 #viewer-selector {
-    width: 45%;
+    width: 40%;
     position: absolute;
     top: 20px;
     left: 10px;
@@ -60,7 +60,7 @@
 
 .selectors {
     position: absolute;
-    right: 70px;
+    right: 0px;
 }
 
 .selectors .close {
