@@ -1172,6 +1172,13 @@
                                 ]
                             }
                         },
+                        "7mkb": {},
+                        "7m7b": {},
+                        "7m53": {},
+                        "7m71": {},
+                        "7kqe": {},
+                        "7kqb": {},
+                        "7e8m": {},
                         "7m8j": {},
                         "7c53": {},
                         "7chs": {},
@@ -1482,6 +1489,8 @@
                         "EMD-23874",
                         "EMD-23873",
                         "EMD-23717",
+                        "EMD-23709",
+                        "EMD-23707",
                         "EMD-23697",
                         "EMD-23696",
                         "EMD-23695",
@@ -1512,6 +1521,8 @@
                         "EMD-23018",
                         "EMD-23016",
                         "EMD-23010",
+                        "EMD-22997",
+                        "EMD-22993",
                         "EMD-22950",
                         "EMD-22949",
                         "EMD-22943",
@@ -5253,6 +5264,30 @@
                 "NSP2",
                 "Non-structural protein 2"
             ],
+            "PDB": {
+                "7msx": {
+                    "emdbs": [
+                        "EMD-23971"
+                    ]
+                },
+                "7msw": {
+                    "emdbs": [
+                        "EMD-23970"
+                    ]
+                }
+            },
+            "EMDB": {
+                "EMD-23971": {
+                    "pdb": [
+                        "7msx"
+                    ]
+                },
+                "EMD-23970": {
+                    "pdb": [
+                        "7msw"
+                    ]
+                }
+            },
             "CompModels": {
                 "AlphaFold": [
                     {
@@ -5725,6 +5760,19 @@
                 "Hypothetical ORF10 Protein",
                 "A0A663DJA2_9BETC"
             ]
+        },
+        "MISC": {
+            "uniprotAccession": [],
+            "description": "Structures not covered in other sections",
+            "names": [
+                "Miscellanea",
+                "Miscellany"
+            ],
+            "PDB": {
+                "7mky": {},
+                "7lyj": {}
+            },
+            "EMDB": {}
         }
     }
 }
