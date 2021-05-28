@@ -5769,10 +5769,21 @@
                 "Miscellany"
             ],
             "PDB": {
+                "6xrz": {
+                    "emdbs": [
+                        "EMD-22296"
+                    ]
+                },
                 "7mky": {},
                 "7lyj": {}
             },
-            "EMDB": {}
+            "EMDB": {
+                "EMD-22296": {
+                    "pdb": [
+                        "6zgg"
+                    ]
+                }
+            }
         }
     }
 }
