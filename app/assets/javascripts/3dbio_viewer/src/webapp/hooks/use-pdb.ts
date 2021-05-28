@@ -19,9 +19,10 @@ export function usePdbLoader(
 
     const pdbId = getMainPdbId(selection);
     const chainId = getChainId(selection);
+    const chains = pdbInfo?.chains;
     const pdbOptions: PdbOptions | undefined = React.useMemo(() => {
-        return getPdbOptions(pdbId, chainId, pdbInfo);
-    }, [pdbId, chainId, pdbInfo]);
+        return getPdbOptions(pdbId, chainId, chains);
+    }, [pdbId, chainId, chains]);
 
     React.useEffect(() => {
         if (!pdbOptions) {
