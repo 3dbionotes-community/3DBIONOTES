@@ -31,6 +31,12 @@ module.exports = function (app) {
     });
 
     proxyRoutes(app, {
+        routes: ["/uniprot"],
+        target: "https://www.uniprot.org",
+        rewritePath: true,
+    });
+
+    proxyRoutes(app, {
         routes: ["/rinchen-dos"],
         target: "http://rinchen-dos.cnb.csic.es:8882",
         rewritePath: true,
