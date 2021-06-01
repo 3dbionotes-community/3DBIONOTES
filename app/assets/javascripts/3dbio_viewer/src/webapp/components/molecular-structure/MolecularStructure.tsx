@@ -2,7 +2,6 @@ import React from "react";
 import _ from "lodash";
 import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
-import { EmdbDownloadProvider } from "molstar/lib/mol-plugin-state/actions/volume";
 
 import { debugVariable } from "../../../utils/debug";
 import i18n from "../../utils/i18n";
@@ -24,11 +23,10 @@ import "./molstar.scss";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
-import { getLigands } from "./molstar";
+import { getLigands, loadEmdb } from "./molstar";
 import { Ligand } from "../../../domain/entities/Ligand";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
-import { routes } from "../../../routes";
 
 declare global {
     interface Window {
@@ -42,8 +40,6 @@ interface MolecularStructureProps {
     onSelectionChange(newSelection: Selection): void;
     onLigandsLoaded(ligands: Ligand[]): void;
 }
-
-const emdbProvider: EmdbDownloadProvider = "rcsb"; // "pdbe" server not working at this moment
 
 export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
     const { pluginRef } = usePdbePlugin(props);
@@ -86,8 +82,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             if (!ligandChanged && pluginAlreadyRendered) return;
 
-            const initParams = getPdbePluginInitParams(newSelection);
             const plugin = pdbePlugin || new window.PDBeMolstarPlugin();
+            const initParams = getPdbePluginInitParams(plugin, newSelection);
             debugVariable({ pdbeMolstar: plugin });
 
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
@@ -104,7 +100,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             const emdbId = getMainEmdbId(newSelection);
             if (emdbId) {
-                plugin.loadEmdbFromUrl({ url: getEmdbUrl(emdbId) });
+                loadEmdb(plugin, emdbId);
             }
 
             setPdbePlugin(plugin);
@@ -151,7 +147,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const updatePluginOnNewSelectionEffect = useCallbackEffect(updatePluginOnNewSelection);
     React.useEffect(updatePluginOnNewSelectionEffect, [updatePluginOnNewSelectionEffect]);
 
-    return { pluginRef };
+    return { pluginRef, pdbePlugin };
 }
 
 function setVisibilityForSelection(plugin: PDBeMolstarPlugin, selection: Selection) {
@@ -159,7 +155,8 @@ function setVisibilityForSelection(plugin: PDBeMolstarPlugin, selection: Selecti
 }
 
 function setVisibility(plugin: PDBeMolstarPlugin, item: DbItem) {
-    return plugin.visual.setVisibility(getItemSelector(item), item.visible);
+    const selector = getItemSelector(item);
+    return plugin.visual.setVisibility(selector, item.visible);
 }
 
 async function applySelectionChangesToPlugin(
@@ -182,7 +179,7 @@ async function applySelectionChangesToPlugin(
 
     for (const item of added) {
         if (item.type === "emdb") {
-            await plugin.loadEmdb({ id: item.id, detail: 3, provider: emdbProvider });
+            loadEmdb(plugin, item.id);
         } else {
             const pdbId: string = item.id;
             const url = `https://www.ebi.ac.uk/pdbe/model-server/v1/${pdbId}/full?encoding=cif`;
@@ -222,7 +219,7 @@ const colors = {
 
 type LigandView = InitParams["ligandView"];
 
-function getPdbePluginInitParams(newSelection: Selection): InitParams {
+function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selection): InitParams {
     const pdbId = getMainPdbId(newSelection);
     const ligandView = getLigandView(newSelection);
 
@@ -255,19 +252,4 @@ function getLigandView(selection: Selection): LigandView | undefined {
         auth_seq_id: parseInt(position),
         label_comp_id: component,
     };
-}
-
-function getEmdbUrl(emdbId: string): string {
-    return "http://localhost:8000/emd_21375.map";
-
-    // https://3dbionotes.cnb.csic.es/ws/pond/maps/EMD-30651/file/emd_30651.map.gz
-    const parts = [
-        routes.bionotes,
-        "/ws/pond/maps",
-        emdbId.toUpperCase(),
-        "file",
-        emdbId.toLowerCase().replace("-", "_") + ".map.gz",
-    ];
-
-    return parts.join("/");
 }

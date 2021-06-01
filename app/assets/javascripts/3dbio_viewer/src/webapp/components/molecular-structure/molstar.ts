@@ -6,6 +6,7 @@ import { PluginContext } from "molstar/lib/mol-plugin/context";
 import { getMainPdbId, Selection } from "../../view-models/Selection";
 import { Maybe } from "../../../utils/ts-utils";
 import { buildLigand, Ligand } from "../../../domain/entities/Ligand";
+import { EmdbDownloadProvider } from "molstar/lib/mol-plugin-state/actions/volume";
 
 function getCellsWithPath(molstarPlugin: PluginContext) {
     const cells = Array.from(molstarPlugin.state.data.cells.values());
@@ -91,4 +92,12 @@ export function getLigands(pdbePlugin: PDBeMolstarPlugin, newSelection: Selectio
     return ligands;
 }
 
-(window as any).Props = Props;
+export async function loadEmdb(pdbePlugin: PDBeMolstarPlugin, emdbId: string) {
+    const emdbProvider: EmdbDownloadProvider = "rcsb"; // "pdbe" server not working at this moment
+
+    await pdbePlugin.loadEmdbFromUrl({
+        url: `https://maps.rcsb.org/em/${emdbId}/cell?detail=3`,
+        isBinary: true,
+        format: "dscif",
+    });
+}

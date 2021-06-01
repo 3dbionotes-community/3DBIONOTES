@@ -42,9 +42,11 @@ export interface DbItem {
 export function getItemSelector(item: DbItem): Selector {
     switch (item.type) {
         case "pdb": // Example: label = "6w9c"
-            return { label: new RegExp("^" + item.id.toUpperCase() + "$") };
-        case "emdb": // Example: label = "RCSB PDB EMD Density Server: EMD-8650"
-            return { label: new RegExp(item.id.toUpperCase() + "$") };
+            return { label: new RegExp(`^${item.id}$`, "i") };
+        case "emdb":
+            // Example: with provider = "RCSB PDB EMD Density Server: EMD-8650"
+            // Example: with URL "https://maps.rcsb.org/em/EMD-21375/cell?detail=3"
+            return { label: new RegExp(`/${item.id}/`, "i") };
     }
 }
 
