@@ -104,7 +104,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             const emdbId = getMainEmdbId(newSelection);
             if (emdbId) {
-                plugin.loadEmdbFromUrl({ url: getEmdbUrl(emdbId) });
+                await plugin.loadEmdb({ id: emdbId, detail: 3, provider: emdbProvider });
             }
 
             setPdbePlugin(plugin);
@@ -255,19 +255,4 @@ function getLigandView(selection: Selection): LigandView | undefined {
         auth_seq_id: parseInt(position),
         label_comp_id: component,
     };
-}
-
-function getEmdbUrl(emdbId: string): string {
-    return "http://localhost:8000/emd_21375.map";
-
-    // https://3dbionotes.cnb.csic.es/ws/pond/maps/EMD-30651/file/emd_30651.map.gz
-    const parts = [
-        routes.bionotes,
-        "/ws/pond/maps",
-        emdbId.toUpperCase(),
-        "file",
-        emdbId.toLowerCase().replace("-", "_") + ".map.gz",
-    ];
-
-    return parts.join("/");
 }
