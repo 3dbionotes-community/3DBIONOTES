@@ -48,7 +48,14 @@ function proxyRoutes(app, options) {
     const apiProxy = proxy.createProxyMiddleware(proxyOptions);
 
     if (cache) {
-        const cacheMidddleware = apicache.middleware("1 day");
+        const cacheMidddleware = apicache
+            .options({
+                debug: true,
+                statusCodes: {
+                    include: [200, 404],
+                },
+            })
+            .middleware("1 day");
         app.use(routes, cacheMidddleware, apiProxy);
     } else {
         app.use(routes, apiProxy);

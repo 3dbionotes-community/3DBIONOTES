@@ -245,13 +245,13 @@ export function getMainChanges(
 export function getPdbOptions(
     pdbId: Maybe<PdbId>,
     chainId: Maybe<string>,
-    pdbInfo: Maybe<PdbInfo>
+    chains: Maybe<PdbInfo["chains"]>
 ) {
-    if (!pdbId || !pdbInfo) return;
+    if (!pdbId || !chains) return;
 
-    const defaultChain = pdbInfo.chains[0];
+    const defaultChain = chains[0];
     const chain = chainId
-        ? _(pdbInfo.chains)
+        ? _(chains)
               .keyBy(chain => chain.chainId)
               .get(chainId, defaultChain)
         : defaultChain;

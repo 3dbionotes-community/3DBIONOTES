@@ -46,7 +46,7 @@ export function getLigands(pdbePlugin: PDBeMolstarPlugin, newSelection: Selectio
 
     const locations = cellsWithinPdb.flatMap(cell => {
         // TODO: don't use any
-        const units = cell.obj?.data.units || [];
+        const units = cell.obj?.data?.units || [];
         const structure = cell.obj?.data;
         const locationsForCell = _.flatMap(units, (unit: any) =>
             _.flatMap(Array.from(unit.elements), (element: any) => {
