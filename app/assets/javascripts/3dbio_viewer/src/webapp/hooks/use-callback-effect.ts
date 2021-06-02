@@ -1,4 +1,5 @@
 import React from "react";
+import { noCancel } from "../../utils/future";
 
 // Use a wrap value so identical arguments still run a new effect
 type ArgsValue<Args extends any[]> = { value: Args };
@@ -12,9 +13,9 @@ type Cancel = { (): void };
 */
 
 export function useCallbackEffect<Args extends any[]>(
-    callback: (...args: Args) => Cancel
+    callback: (...args: Args) => Cancel | undefined
 ): EffectFn<Args> {
-    const cancelRef = React.useRef<Cancel>(noop);
+    const cancelRef = React.useRef<Cancel>(noCancel);
 
     const [args, setArgs] = React.useState<ArgsValue<Args>>();
 
@@ -29,12 +30,10 @@ export function useCallbackEffect<Args extends any[]>(
     React.useEffect(() => {
         if (args) {
             const cancelFn = callback(...args.value);
-            cancelRef.current = cancelFn;
+            cancelRef.current = cancelFn || noCancel;
             return cancelFn;
         }
     }, [callback, args]);
 
     return runEffect;
 }
-
-const noop = () => {};

@@ -13,14 +13,16 @@ import { blockDefs } from "../protvista/protvista-blocks";
 import { getVisibleBlocks } from "../protvista/Protvista.types";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { useViewerState } from "../viewer-selector/viewer-selector.hooks";
+import { PdbInfo } from "../../../domain/entities/PdbInfo";
 
 export interface ViewersProps {
     selection: Selection;
+    pdbInfo: PdbInfo;
 }
 
 export const Viewers: React.FC<ViewersProps> = React.memo(props => {
-    const { selection } = props;
-    const loader = usePdbLoader(selection);
+    const { selection, pdbInfo } = props;
+    const loader = usePdbLoader(selection, pdbInfo);
     if (!loader) return null;
 
     return (

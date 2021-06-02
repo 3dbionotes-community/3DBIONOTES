@@ -85,13 +85,10 @@ type JoinObj<Futures extends Record<string, Future<any, any>>> = Future<
 type ExtractFutureData<F> = F extends Future<any, infer D> ? D : never;
 type ExtractFutureError<F> = F extends Future<infer E, any> ? E : never;
 
-type _TestJoinObj1 = JoinObj<{
-    d1: Future<string, "data1">;
-    d2: Future<string, "data2">;
-}>;
-
 type Fn<T> = { (value: T): void };
 
 export type Cancel = { (): void };
+
+export const noCancel: Cancel = () => {};
 
 export type Computation<E, D> = (resolve: Fn<D>, reject: Fn<E>) => fluture.Cancel;

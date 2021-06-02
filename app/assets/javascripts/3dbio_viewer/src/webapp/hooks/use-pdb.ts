@@ -1,37 +1,31 @@
 import React from "react";
+import _ from "lodash";
 import { Pdb } from "../../domain/entities/Pdb";
+import { PdbInfo } from "../../domain/entities/PdbInfo";
 import { PdbOptions } from "../../domain/repositories/PdbRepository";
 import { debugVariable } from "../../utils/debug";
+import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
 import { LoaderState, useLoader } from "../components/Loader";
-import { Selection } from "../view-models/Selection";
+import { getChainId, getMainPdbId, getPdbOptions, Selection } from "../view-models/Selection";
+import i18n from "../utils/i18n";
 
-const proteinFromPdbId: Record<string, string> = {
-    "6zow": "P0DTC2",
-    "6lzg": "Q9BYF1",
-    "6w9c": "P0DTD1",
-    "1iyj": "P60896",
-    "2r5t": "O00141",
-    "2z62": "O00206",
-    "3brv": "O14920",
-    "1yyb": "O14737",
-    "7bv1": "P0DTD1",
-};
-
-export function usePdbLoader(selection: Selection): LoaderState<Pdb> | undefined {
+export function usePdbLoader(
+    selection: Selection,
+    pdbInfo: Maybe<PdbInfo>
+): LoaderState<Pdb> | undefined {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
-    const pdbId = selection.main.pdb?.id;
 
+    const pdbId = getMainPdbId(selection);
+    const chainId = getChainId(selection);
     const pdbOptions: PdbOptions | undefined = React.useMemo(() => {
-        if (!pdbId) return;
-        const protein = proteinFromPdbId[pdbId.toLowerCase()];
-        return protein ? { pdb: pdbId, protein, chain: "A" } : undefined;
-    }, [pdbId]);
+        return getPdbOptions(pdbId, chainId, pdbInfo);
+    }, [pdbId, chainId, pdbInfo]);
 
     React.useEffect(() => {
         if (!pdbOptions) {
-            setLoader({ type: "error", message: `PDB not configured in use-pdb: ${pdbId || "-"}` });
+            setLoader({ type: "error", message: i18n.t("Select a PDB to display protvista") });
             return;
         }
         setLoader({ type: "loading" });
@@ -40,7 +34,7 @@ export function usePdbLoader(selection: Selection): LoaderState<Pdb> | undefined
             pdb => setLoader({ type: "loaded", data: pdb }),
             error => setLoader({ type: "error", message: error.message })
         );
-    }, [compositionRoot, setLoader, pdbOptions, pdbId]);
+    }, [compositionRoot, setLoader, pdbOptions]);
 
     React.useEffect(() => {
         if (loader.type === "loaded") debugVariable({ pdbData: loader.data });

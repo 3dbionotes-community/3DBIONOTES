@@ -8,8 +8,8 @@ import { ExpandMore } from "@material-ui/icons";
 import i18n from "d2-ui-components/locales";
 
 export interface DropdownProps<Id extends string = string> {
-    items: DropdownItemModel<Id>[];
     // Show text or, if empty, the selected item.
+    items: DropdownItemModel<Id>[] | undefined;
     text?: string;
     selected?: Id | undefined;
     onClick(id: Id): void;
@@ -22,7 +22,9 @@ export interface DropdownItemModel<Id extends string> {
     text: string;
 }
 
-export function Dropdown<Id extends string = string>(props: DropdownProps<Id>): React.ReactElement {
+export function Dropdown<Id extends string = string>(
+    props: DropdownProps<Id>
+): React.ReactElement | null {
     const { items, text, onClick, showExpandIcon = false, selected } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
@@ -35,6 +37,8 @@ export function Dropdown<Id extends string = string>(props: DropdownProps<Id>): 
         },
         [onClick, closeMenu]
     );
+
+    if (!items) return null;
 
     const buttonText =
         text ||

@@ -1,5 +1,6 @@
 import React from "react";
 import { getEntityLinks, Pdb } from "../../domain/entities/Pdb";
+import { recordOfStyles } from "../../utils/ts-utils";
 import i18n from "../utils/i18n";
 import { Selection } from "../view-models/Selection";
 import { Links } from "./Link";
@@ -32,7 +33,7 @@ export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
 });
 
 const Parent: React.FC = ({ children }) => {
-    return <ul>{children}</ul>;
+    return <ul style={styles.ul}>{children}</ul>;
 };
 
 interface ChildProps {
@@ -45,20 +46,21 @@ const Child: React.FC<ChildProps> = props => {
     const { name, value, help } = props;
 
     return (
-        <ul>
+        <li>
             {name}: {value ?? "-"}
             {help && (
                 <span style={styles.help} title={help}>
                     [?]
                 </span>
             )}
-        </ul>
+        </li>
     );
 };
 
-const styles = {
+const styles = recordOfStyles({
+    ul: { listStyleType: "none" },
     help: { marginLeft: 10 },
-};
+});
 
 function getItems(pdb: Pdb) {
     const resolution = pdb.experiment?.resolution;
@@ -83,6 +85,10 @@ function getItems(pdb: Pdb) {
         {
             name: i18n.t("PDB ID"),
             value: <Links links={getEntityLinks(pdb, "pdb")} />,
+        },
+        {
+            name: i18n.t("Chain"),
+            value: pdb.chainId,
         },
         {
             name: i18n.t("EMDB ID"),
