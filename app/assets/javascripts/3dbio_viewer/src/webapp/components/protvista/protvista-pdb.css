@@ -51,6 +51,17 @@
     top: 34%;
 }
 
+.labelHighlightRight {
+    color: #848a86;
+    position: absolute;
+    right: 66px;
+    top: 34%;
+}
+
+.enabled {
+    background-color: #ddd;
+}
+
 .subtrack-help,
 .track-action-add,
 .track-help {

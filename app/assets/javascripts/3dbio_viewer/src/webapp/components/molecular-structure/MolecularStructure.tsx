@@ -202,6 +202,7 @@ async function applySelectionChangesToPlugin(
 async function highlight(plugin: PDBeMolstarPlugin, selection: Selection): Promise<void> {
     const ligandsView = getLigandView(selection);
     if (ligandsView) return;
+    return;
 
     return plugin.visual.select({
         data: [
