@@ -26,7 +26,10 @@ export function usePdbLoader(
 
     React.useEffect(() => {
         if (!pdbOptions) {
-            setLoader({ type: "error", message: i18n.t("Select a PDB to display protvista") });
+            setLoader({
+                type: "error",
+                message: i18n.t("PDB has no protein"),
+            });
             return;
         }
         setLoader({ type: "loading" });

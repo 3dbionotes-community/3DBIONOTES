@@ -23,9 +23,7 @@ export function Loader<Data>(props: LoaderProps<Data>) {
             {state.type === "loading" ? (
                 <div style={styles.section}>{loadingMsg || i18n.t("Loading...")}</div>
             ) : state.type === "error" ? (
-                <div style={styles.section}>
-                    {i18n.t("Error")}: {state.message}
-                </div>
+                <div style={styles.section}>{state.message}</div>
             ) : null}
         </div>
     );
