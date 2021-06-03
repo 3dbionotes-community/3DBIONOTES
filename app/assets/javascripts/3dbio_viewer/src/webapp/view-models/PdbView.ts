@@ -65,6 +65,7 @@ export interface FragmentView {
     end: number;
     color: Color;
     tooltipContent: string;
+    chainId?: string;
 }
 
 export function getPdbView(
@@ -80,7 +81,7 @@ export function getPdbView(
 
     const tracks = _(data)
         .map((pdbTrack): TrackView | undefined => {
-            const subtracks = getTrackData(pdb, pdbTrack);
+            const subtracks = getSubtracks(pdb, pdbTrack);
             if (_.isEmpty(subtracks)) return undefined;
 
             return {
@@ -113,7 +114,7 @@ export function getPdbView(
     };
 }
 
-function getTrackData(pdb: Pdb, track: Track): TrackView["data"] {
+function getSubtracks(pdb: Pdb, track: Track): TrackView["data"] {
     return _.flatMap(track.subtracks, subtrack => {
         return hasFragments(subtrack) ? [getSubtrack(pdb, subtrack)] : [];
     });
@@ -136,6 +137,7 @@ function getSubtrack(pdb: Pdb, subtrack: Subtrack): SubtrackView {
             ...location,
             fragments: location.fragments.map(fragment => ({
                 ...fragment,
+                chainId: pdb.chainId, // Override specific fragment chainId with PDB
                 color: fragment.color || "black",
                 tooltipContent: renderToString(
                     React.createElement(Tooltip, { pdb, subtrack, fragment })
