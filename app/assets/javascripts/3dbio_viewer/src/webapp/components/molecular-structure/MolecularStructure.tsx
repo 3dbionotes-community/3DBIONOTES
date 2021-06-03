@@ -109,6 +109,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             const emdbId = getMainEmdbId(newSelection);
             if (emdbId) {
+                showLoading();
                 loadEmdb(plugin, emdbId);
             }
 
@@ -190,6 +191,7 @@ async function applySelectionChangesToPlugin(
 
     for (const item of added) {
         if (item.type === "emdb") {
+            showLoading();
             loadEmdb(plugin, item.id);
         } else {
             const pdbId: string = item.id;
