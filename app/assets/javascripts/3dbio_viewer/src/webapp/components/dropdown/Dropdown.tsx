@@ -38,7 +38,7 @@ export function Dropdown<Id extends string = string>(
         [onClick, closeMenu]
     );
 
-    if (!items) return null;
+    if (!items || _.isEmpty(items)) return null;
 
     const buttonText =
         text ||
