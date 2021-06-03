@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { FragmentResult, Fragments, getFragmentsList } from "../../../../domain/entities/Fragment2";
 import { Legend } from "../../../../domain/entities/Legend";
+import { ChainId } from "../../../../domain/entities/Protein";
 import { SubtrackDefinition } from "../../../../domain/entities/TrackDefinition";
 import { getKeys, isElementOfUnion } from "../../../../utils/ts-utils";
 import { subtracks } from "../definitions";
@@ -74,7 +75,10 @@ const config = {
     },
 };
 
-export function getEmValidationFragments(pdbAnnotations: PdbAnnotations): Fragments {
+export function getEmValidationFragments(
+    pdbAnnotations: PdbAnnotations,
+    chainId: ChainId
+): Fragments {
     return getFragmentsList(pdbAnnotations, (annotation): FragmentResult[] => {
         if (!isElementOfUnion(annotation.algorithm, getKeys(subtrackByAlgorithm))) return [];
 
@@ -83,16 +87,19 @@ export function getEmValidationFragments(pdbAnnotations: PdbAnnotations): Fragme
         const subtrack = subtrackByAlgorithm[annotation.algorithm];
         const subtrackWithCustomName = { ...subtrack, name: `${subtrack.name} (${interval})` };
 
-        return annotation.data.map(fragment => {
-            return {
-                subtrack: subtrackWithCustomName,
-                start: fragment.begin,
-                end: fragment.begin,
-                description: `${descriptionPrefix}${annotation.algorithm}: ${fragment.value}`,
-                legend: legend,
-                color: getColor(fragment.value),
-            };
-        });
+        return annotation.data.map(
+            (fragment): FragmentResult => {
+                return {
+                    subtrack: subtrackWithCustomName,
+                    start: fragment.begin,
+                    end: fragment.begin,
+                    description: `${descriptionPrefix}${annotation.algorithm}: ${fragment.value}`,
+                    legend: legend,
+                    color: getColor(fragment.value),
+                    chainId,
+                };
+            }
+        );
     });
 }
 

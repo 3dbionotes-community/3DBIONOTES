@@ -89,9 +89,13 @@ export class ApiPdbRepository implements PdbRepository {
 
         const _variants = on(data.ebiVariation, getVariants);
         const functionalMappingFragments = on(data.cv19Tracks, getFunctionalMappingFragments);
-        const structureCoverageFragments = on(data.coverage, getStructureCoverageFragments);
+        const structureCoverageFragments = on(data.coverage, coverage =>
+            getStructureCoverageFragments(coverage, options.chainId)
+        );
 
-        const emValidationFragments = on(data.pdbAnnotations, getEmValidationFragments);
+        const emValidationFragments = on(data.pdbAnnotations, pdbAnnotations =>
+            getEmValidationFragments(pdbAnnotations, options.chainId)
+        );
         const mobiFragments = on(data.mobiUniprot, mobiUniprot =>
             getMobiUniprotFragments(mobiUniprot, proteinId)
         );
@@ -173,8 +177,8 @@ function getData(options: Options): FutureData<Partial<Data>> {
         features: getJSON(`${ebiProteinsApiUrl}/features/${proteinId}`),
         cv19Tracks: getJSON(`${bioUrl}/cv19_annotations/${proteinId}_annotations.json`),
         pdbAnnotations: getJSON(`${pdbAnnotUrl}/all/${pdbId}/${chainId}/?format=json`),
-        ebiVariation: getJSON(`${ebiProteinsApiUrl}/variation/${proteinId}`),
         coverage: getJSON(`${bioUrl}/api/alignments/Coverage/${pdbId}${chainId}`),
+        ebiVariation: getJSON(`${ebiProteinsApiUrl}/variation/${proteinId}`),
         mobiUniprot: getJSON(`${bioUrl}/api/annotations/mobi/Uniprot/${proteinId}`),
         phosphositeUniprot: getJSON(`${bioUrl}/api/annotations/Phosphosite/Uniprot/${proteinId}`),
         dbPtm: getJSON(`${bioUrl}/api/annotations/dbptm/Uniprot/${proteinId}`),

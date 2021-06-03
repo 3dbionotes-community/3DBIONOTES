@@ -16,6 +16,7 @@ export interface Fragment2 {
     subtrack: SubtrackDefinition;
     start: number;
     end: number;
+    chainId?: string;
     description?: string;
     color?: Color;
     legend?: Legend;
@@ -61,6 +62,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                         color: fragment.color || subtrack.color || "#200",
                         ...withoutUndefinedValues({
                             id: fragment.id,
+                            chainId: fragment.chainId,
                             evidences: fragment.evidences,
                             legend: fragment.legend,
                             alternativeSequence: fragment.alternativeSequence,
