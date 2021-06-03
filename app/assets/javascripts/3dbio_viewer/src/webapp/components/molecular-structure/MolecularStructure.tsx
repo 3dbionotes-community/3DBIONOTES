@@ -28,7 +28,6 @@ import { getLigands } from "./molstar";
 import { Ligand } from "../../../domain/entities/Ligand";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
-import { routes } from "../../../routes";
 
 declare global {
     interface Window {
