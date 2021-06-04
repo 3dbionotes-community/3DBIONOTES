@@ -51,6 +51,7 @@ export interface TrackView {
 
 interface SubtrackView {
     accession: string;
+    bestChainId: string;
     type: string; // Displayed in tooltip title
     label: string; // Supports: text and html.
     labelTooltip: string; // Label tooltip content. Support text and HTML mark-up
@@ -65,7 +66,6 @@ export interface FragmentView {
     end: number;
     color: Color;
     tooltipContent: string;
-    chainId?: string;
 }
 
 export function getPdbView(
@@ -133,11 +133,11 @@ function getSubtrack(pdb: Pdb, subtrack: Subtrack): SubtrackView {
         label,
         help: subtrack.labelTooltip || "",
         labelTooltip,
+        bestChainId: pdb.chainId,
         locations: subtrack.locations.map(location => ({
             ...location,
             fragments: location.fragments.map(fragment => ({
                 ...fragment,
-                chainId: pdb.chainId, // Override specific fragment chainId with PDB
                 color: fragment.color || "black",
                 tooltipContent: renderToString(
                     React.createElement(Tooltip, { pdb, subtrack, fragment })
