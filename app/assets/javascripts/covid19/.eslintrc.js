@@ -3,19 +3,19 @@
 module.exports = {
     extends: [
         "react-app",
-        "prettier",
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:cypress/recommended",
         "plugin:@typescript-eslint/recommended",
-        "prettier/@typescript-eslint",
-        "plugin:prettier/recommended",
     ],
     rules: {
         "no-console": "off",
         "@typescript-eslint/camelcase": "off",
         "@typescript-eslint/explicit-function-return-type": ["off"],
-        "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+        ],
         "react/prop-types": "off",
         "react/display-name": "off",
         "no-unused-expressions": "off",
