@@ -1,6 +1,9 @@
 module Covid19Helper
   PROTEIN_COLORS = {
     "S" => "w3-cyan",
+    "E" => "w3-purple",
+    "M" => "w3-lime",
+    "N" => "w3-green",
   }
 
   def protein_css_class(protein)
