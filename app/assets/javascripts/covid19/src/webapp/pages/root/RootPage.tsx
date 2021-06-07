@@ -1,6 +1,5 @@
 import React from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
-import Example from "../example/Example";
 import LandingPage from "../landing/LandingPage";
 
 const Root = () => {

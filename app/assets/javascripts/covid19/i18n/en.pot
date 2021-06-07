@@ -5,17 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2020-11-11T10:10:17.826Z\n"
-"PO-Revision-Date: 2020-11-11T10:10:17.826Z\n"
-
-msgid "Back"
-msgstr ""
-
-msgid "Help"
-msgstr ""
-
-msgid "Click to show feedback"
-msgstr ""
+"POT-Creation-Date: 2021-06-07T10:23:15.434Z\n"
+"PO-Revision-Date: 2021-06-07T10:23:15.434Z\n"
 
 msgid "Add"
 msgstr ""
