@@ -1,5 +1,3 @@
-import { GetDataValuesUseCase } from "./domain/usecases/GetDataValuesUseCase";
-
 export function getCompositionRoot() {
     return {};
 }

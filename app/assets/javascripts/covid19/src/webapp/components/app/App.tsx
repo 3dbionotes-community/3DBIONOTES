@@ -1,5 +1,5 @@
 import React from "react";
 
 export const App: React.FC = () => {
-    return <div>App</div>;
+    return <div>App component</div>;
 };

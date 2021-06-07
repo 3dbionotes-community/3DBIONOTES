@@ -11,7 +11,7 @@ $ yarn install
 Start development server:
 
 ```
-$ PORT=8081 REACT_APP_DHIS2_BASE_URL="http://localhost:8080" yarn start
+$ PORT=3002 yarn start
 ```
 
 Linting:
@@ -31,9 +31,7 @@ $ yarn test
 Run integration tests locally:
 
 ```
-$ export CYPRESS_DHIS2_AUTH='admin:district'
-$ export CYPRESS_EXTERNAL_API="http://localhost:8080"
-$ export CYPRESS_ROOT_URL=http://localhost:8081
+$ export CYPRESS_ROOT_URL=http://localhost:3002
 
 # non-interactive
 $ yarn cy:e2e:run
@@ -41,9 +39,6 @@ $ yarn cy:e2e:run
 # interactive UI
 $ yarn cy:e2e:open
 ```
-
-For this to work in Travis, you will have to create an environment variable `CYPRESS_DHIS2_AUTH`
-(Settings -> Environment Variables) with the `user:password` used in your testing DHIS2 instance.
 
 ## Build app ZIP
 
