@@ -40,17 +40,20 @@ $ yarn cy:e2e:run
 $ yarn cy:e2e:open
 ```
 
-## Build app ZIP
+## Build
 
+```shell
+$ yarn build
+
+# On main Rails app
+$ RAILS_ENV=production bundle exec rake assets:precompile
 ```
-$ yarn build-webapp
-```
+
 
 ## Some development tips
 
 ### Structure
 
--   `i18n/`: Contains literal translations (gettext format)
 -   `public/`: Main app folder with a `index.html`, exposes the APP, contains the feedback-tool.
 -   `src/pages`: Main React components.
 -   `src/domain`: Domain layer of the app (clean architecture)
@@ -58,8 +61,9 @@ $ yarn build-webapp
 -   `src/components`: Reusable React components.
 -   `src/types`: `.d.ts` file types for modules without TS definitions.
 -   `src/utils`: Misc utilities.
--   `src/locales`: Auto-generated, do not update or add to the version control.
 -   `cypress/integration/`: Cypress integration tests.
+-   `i18n/`: Contains literal translations (gettext format)
+-   `src/locales`: Auto-generated, do not update or add to the version control.
 
 ### i18n
 
