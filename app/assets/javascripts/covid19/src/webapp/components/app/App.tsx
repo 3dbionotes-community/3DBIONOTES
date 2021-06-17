@@ -1,7 +1,7 @@
 import { Backdrop, Button, CircularProgress } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import testCovid19Data from "../../../data/covid19.json";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { createStyles, makeStyles, withStyles } from "@material-ui/core/styles";
 import {
     DataGrid,
     GridColDef,
@@ -47,6 +47,9 @@ interface ProteinItems {
     query_url: string;
     related?: string[];
     type?: string;
+    interaction?: string;
+    relatedType?: string;
+    computationalModel?: string;
 }
 
 interface ProteinItemExternal {
@@ -122,12 +125,51 @@ const useStyles = makeStyles(() =>
         },
     })
 );
+const BootstrapButton = withStyles({
+    root: {
+      boxShadow: 'none',
+      textTransform: 'none',
+      fontSize: 14,
+      padding: '6px 12px',
+      border: '1px solid',
+      lineHeight: 1.5,
+      backgroundColor: '#0063cc',
+      borderColor: '#0063cc',
+      margin: "2px 0",
+      textShadow: "1px 1px 2px rgb(0 0 0 / 30%)",
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+      '&:hover': {
+        backgroundColor: '#0069d9',
+        borderColor: '#0062cc',
+        boxShadow: 'none',
+      },
+      '&:active': {
+        boxShadow: 'none',
+        backgroundColor: '#0062cc',
+        borderColor: '#005cbf',
+      },
+      '&:focus': {
+        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+      },
+    },
+  })(Button);
 export const App: React.FC<AppProps> = props => {
     const data: Covid19Data = props.data || testCovid19Data;
-    const [pageSize, setPageSize] = React.useState<number>(50);
+    const [page, setPage] = React.useState(0);
     const [rows, setRows] = React.useState<RowUpload[]>([]);
     const classes = useStyles();
-    const isLoading = () => (rows === [] ? true : false);
+    const isLoading = () => (rows.length === 0 ? true : false);
 
     const Loader = () => (
         <div>
@@ -136,59 +178,66 @@ export const App: React.FC<AppProps> = props => {
             </Backdrop>
         </div>
     );
+    const getDetailsData = useCallback(async (items: ProteinItems[]) => {
+        try {
+            const urlsToRetrieve = items.map(item => item.api);
+            const res = await Promise.all(
+                urlsToRetrieve.map(url => {
+                    return url !== undefined ? axios
+                        .get(url)
+                        .then((resp: AxiosResponse<any>) =>
+                            Object.values(resp.data).flatMap(data => data)
+                        ) : [];
+                })
+            );
+            const newRes = res.flatMap(res1 => res1[0] as ApiResponse);
 
+            const rowsToUpload = items.map((item, index) => ({
+                id: index,
+                details: newRes[index]
+                    ? {
+                          description: newRes[index].title,
+                          author: newRes[index].entry_authors,
+                          released: newRes[index].release_date,
+                      }
+                    : {},
+                links: item.links,
+                name: item.name,
+                interaction: item.interaction || undefined,
+                relatedType: item.relatedType || undefined,
+                computationalModel: item.computationalModel || undefined,
+                type: item.type,
+                image_url: item.image_url,
+                external: item.external,
+                experiment: item.experiment,
+                pockets: item.pockets,
+            }));
+            setRows(rowsToUpload);
+        } catch {
+            throw Error("Promise failed");
+        }
+    }, []);
     useEffect(() => {
-        const getDetailsData = async (items: ProteinItems[]) => {
-            try {
-                const urlsToRetrieve = items.map(item => item.api);
-                const res = await Promise.all(
-                    urlsToRetrieve.map(url => {
-                        if (url !== undefined) {
-                            return axios
-                                .get(url)
-                                .then((resp: AxiosResponse<any>) =>
-                                    Object.values(resp.data).flatMap(data => data)
-                                );
-                        } else return [];
-                    })
-                );
-                const newRes = res.flatMap(res1 => res1[0] as ApiResponse);
-
-                const rowsToUpload = items.map((item, index) => ({
-                    id: index,
-                    details: newRes[index]
-                        ? {
-                              description: newRes[index].title,
-                              author: newRes[index].entry_authors,
-                              released: newRes[index].release_date,
-                          }
-                        : {},
-                    links: item.links,
-                    name: item.name,
-                    type: item.type,
-                    image_url: item.image_url,
-                    external: item.external,
-                    experiment: item.experiment,
-                    pockets: item.pockets,
-                }));
-                setRows(rowsToUpload);
-            } catch {
-                throw Error("Promise failed");
-            }
-        };
         const items = data.proteins[0].sections.flatMap(section => {
             if (section.subsections.length !== 0) {
                 const itemsToPush = section.items;
-                const subsectionItems = section.subsections.flatMap(subsection => subsection.items);
+                const subsectionItems = section.subsections.flatMap(subsection => subsection.items.map(item => {
+                    if(section.name === "Interactions") {
+                        return ({interaction: subsection.name, ...item})
+                    }
+                    else if(section.name === "Related") {
+                        return ({relatedType: subsection.name, ...item})
+                    }
+                    else return ({computationalModel: subsection.name, ...item})
+                }));
                 return itemsToPush.concat(subsectionItems);
-            } else return section.items;
+            } else 
+            {
+                return section.items;
+            }
         });
         getDetailsData(items);
-    }, [rows]);
-
-    const handlePageSizeChange = (params: any) => {
-        setPageSize(params.pageSize);
-    };
+    }, []);
 
     const CustomToolbar = () => (
         <GridToolbarContainer>
@@ -197,7 +246,14 @@ export const App: React.FC<AppProps> = props => {
             <GridToolbarExport />
         </GridToolbarContainer>
     );
-
+    const determineButtonColor = (name: string) => {
+        if(name === "turq"){
+            return "#009688";
+        }
+        else if(name === "cyan") {
+            return "#00bcd4";
+        }
+    }
     const columns: GridColDef[] = [
         { field: "name", headerName: t("Title"), width: 100 },
         {
@@ -206,8 +262,24 @@ export const App: React.FC<AppProps> = props => {
             width: 135,
         },
         {
+            field: "interaction",
+            headerName: t("Interaction"),
+            width: 200,
+        },
+        {
+            field: "relatedType",
+            headerName: t("Related"),
+            width: 110,
+        },
+        {
+            field: "computationalModel",
+            headerName: t("Computational Model"),
+            width: 150,
+        },
+        
+        {
             field: "links",
-            width: 400,
+            width: 350,
             headerName: t("Badges"),
             sortable: false,
             renderCell: (params: GridCellParams) => {
@@ -223,15 +295,16 @@ export const App: React.FC<AppProps> = props => {
                                             href={badge.external_url}
                                             target="_blank"
                                             rel="noreferrer"
+                                            style={{textDecoration: "none"}}
                                         >
-                                            <Button color="primary" variant="contained">
+                                            <BootstrapButton color="primary" variant="contained" style={{backgroundColor: `${determineButtonColor(badge.style)}`, borderColor: determineButtonColor(badge.style), marginRight: 5}}>
                                                 {badge.title} External
-                                            </Button>
+                                            </BootstrapButton>
                                         </a>
-                                        <a href={badge.query_url} target="_blank" rel="noreferrer">
-                                            <Button color="primary" variant="contained">
+                                        <a href={badge.query_url} target="_blank" rel="noreferrer" style={{textDecoration: "none"}}>
+                                            <BootstrapButton color="primary" variant="contained" style={{backgroundColor: `${determineButtonColor(badge.style)}`, borderColor: determineButtonColor(badge.style), marginRight: 5}}>
                                                 {badge.title}
-                                            </Button>
+                                            </BootstrapButton>
                                         </a>
                                     </>
                                 );
@@ -242,10 +315,11 @@ export const App: React.FC<AppProps> = props => {
                                     href={badge.query_url}
                                     target="_blank"
                                     rel="noreferrer"
+                                    style={{textDecoration: "none"}}
                                 >
-                                    <Button color="primary" variant="contained">
+                                    <BootstrapButton color="primary" variant="contained" style={{backgroundColor: `${determineButtonColor(badge.style)}`, borderColor: determineButtonColor(badge.style), marginRight: 5}}>
                                         {badge.title}
-                                    </Button>
+                                    </BootstrapButton>
                                 </a>
                             );
                         })}
@@ -280,21 +354,21 @@ export const App: React.FC<AppProps> = props => {
         {
             field: "external",
             headerName: t("Actions"),
-            width: 220,
+            width: 200,
             sortable: false,
             renderCell: (params: GridCellParams) => {
                 if (params && params.row) {
                     return (
                         <div>
-                            <a href={params.row.external.url} target="_blank" rel="noreferrer">
-                                <Button color="primary" variant="contained">
+                            <a href={params.row.external.url} target="_blank" rel="noreferrer" style={{textDecoration: "none"}}>
+                                <BootstrapButton color="primary" variant="contained" style={{backgroundColor: "#607d8b", borderColor: "#607d8b", marginRight: 5}}>
                                     {params.row.external.text}
-                                </Button>
+                                </BootstrapButton>
                             </a>
-                            <a href={params.row.query_url}>
-                                <Button color="primary" variant="contained">
+                            <a href={params.row.query_url} target="_blank" rel="noreferrer" style={{textDecoration: "none"}}>
+                                <BootstrapButton color="primary" variant="contained" style={{backgroundColor: "#607d8b", borderColor: "#607d8b", marginRight: 5}}>
                                     Go to Viewer
-                                </Button>
+                                </BootstrapButton>
                             </a>
                         </div>
                     );
@@ -315,14 +389,23 @@ export const App: React.FC<AppProps> = props => {
     return (
         <div>
             <Loader />
-            <h1>Known Proteins</h1>
+            <div style={{backgroundColor: "#fff", padding: 0, boxShadow: "0 0px 10px rgb(0 0 0 / 3%), 0 0px 23px rgb(0 0 0 / 4%)"}}>
+                <div style={{backgroundColor: "#607d8b", color: "#fff", padding: 10 }}>
+                    <h1><b>Known Proteins</b></h1>
+                </div>
+            </div>
+            <div style={{margin: "20px 0 20px", backgroundColor: "#fff", padding: 0, boxShadow: "0 0px 10px rgb(0 0 0 / 3%), 0 0px 23px rgb(0 0 0 / 4%)", borderLeft: "20px solid #607d8b"}}>
+            <div style={{padding: 16}}>
+            <BootstrapButton color="primary" variant="contained" style={{backgroundColor: "#00bcd4", borderColor: "#00bcd4"}}>
+                    <strong>{data.proteins[0].name}</strong>
+                </BootstrapButton>
             {data.proteins[0].polyproteins.map((polyprotein, index) => (
-                <Button key={index} color="primary" variant="contained">
+                <BootstrapButton key={index} color="primary" variant="contained" style={{backgroundColor: "#607d8b", borderColor: "#607d8b", marginLeft: 5}}>
                     {polyprotein}
-                </Button>
+                </BootstrapButton>
             ))}
-            <p>{data.proteins[0].names.map(name => `${name} | `)}</p>
-            <p>{data.proteins[0].description}</p>
+            <p style={{margin: "5px 0 8px", color: "#484848", fontWeight: "bold"}}>{data.proteins[0].names.join(" | ")}</p>
+            <p><i>{data.proteins[0].description}</i></p>
             <div style={{ height: 400, width: "100%" }}>
                 <DataGrid
                     rows={rows}
@@ -331,13 +414,16 @@ export const App: React.FC<AppProps> = props => {
                     components={{
                         Toolbar: CustomToolbar,
                     }}
+                    onPageChange={(params) => {
+                        setPage(params.page);
+                      }}
                     disableColumnMenu={true}
-                    pageSize={pageSize}
-                    onPageSizeChange={handlePageSizeChange}
-                    rowsPerPageOptions={[25, 50, 75, 100]}
+                    pageSize={50}
                     pagination
                 />
             </div>
+        </div>
+        </div>
         </div>
     );
 };

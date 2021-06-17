@@ -90,9 +90,9 @@ const CellExpand = React.memo(function CellExpand(props: CellExpandProps) {
 export function renderCellExpand(params: GridCellParams) {
     return (
         <CellExpand
-            description={params.row ? params.row.details.description.toString() : ""}
-            authors={params.row ? (params.row.details.authors as string[]) : []}
-            released={params.row ? params.row.details.released.toString() : ""}
+            description={params.row.details.description ? params.row.details.description.toString() : ""}
+            authors={params.row.details.authors ? (params.row.details.authors as string[]) : []}
+            released={params.row.details.released ? params.row.details.released.toString() : ""}
             width={params.colDef.width}
         />
     );
