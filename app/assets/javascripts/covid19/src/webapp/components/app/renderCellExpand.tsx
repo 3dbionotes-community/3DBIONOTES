@@ -2,10 +2,9 @@ import * as React from "react";
 import { Box, Link, Paper, Popover, Typography } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { GridCellParams, isOverflown } from "@material-ui/data-grid";
-
 interface CellExpandProps {
     description: string;
-    authors: string[];
+    authors: string;
     released: string;
     width: number;
 }
@@ -55,7 +54,6 @@ const CellExpand = React.memo(function CellExpand(props: CellExpandProps) {
             <div ref={cellValueRef} className="cellValue">
                 {description}
             </div>
-            {isCurrentlyOverflown && (
                 <>
                     <Link href="/#" onClick={handleClick}>
                         Show All
@@ -76,24 +74,26 @@ const CellExpand = React.memo(function CellExpand(props: CellExpandProps) {
                         <Paper elevation={1}>
                             <Box width={width} p={2}>
                                 <Typography variant="body2"> Description: {description}</Typography>
-                                <Typography variant="body2">Authors: hello</Typography>
+                                <Typography variant="body2">Authors: {authors}</Typography>
                                 <Typography variant="body2">Released: {released}</Typography>
                             </Box>
                         </Paper>
                     </Popover>
                 </>
-            )}
+            
+        
         </div>
     );
 });
 
-export function renderCellExpand(params: GridCellParams) {
-    return (
+export const RenderCellExpand = (params: GridCellParams) => (
         <CellExpand
-            description={params.row.details.description ? params.row.details.description.toString() : ""}
-            authors={params.row.details.authors ? (params.row.details.authors as string[]) : []}
-            released={params.row.details.released ? params.row.details.released.toString() : ""}
+            description={
+                params.row.details?.description ? params.row.details.description.toString() : ""
+            }
+            authors={params.row.details?.authors ? params.row.details.authors : ""}
+            released={params.row.details?.released ? params.row.details.released.toString() : ""}
             width={params.colDef.width}
         />
     );
-}
+export default RenderCellExpand;
