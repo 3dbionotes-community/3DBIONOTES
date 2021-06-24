@@ -73,7 +73,7 @@ const CellExpand = React.memo(function CellExpand(props: CellExpandProps) {
                 >
                     <Paper elevation={1}>
                         <Box width={width} p={2}>
-                            <Typography variant="body2"> Description: {description}</Typography>
+                            <Typography variant="body2">Description: {description}</Typography>
                             <Typography variant="body2">Authors: {authors}</Typography>
                             <Typography variant="body2">Released: {released}</Typography>
                         </Box>

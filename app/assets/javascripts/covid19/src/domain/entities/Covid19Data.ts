@@ -53,10 +53,13 @@ export interface ProteinItemLink {
 }
 
 export interface RowUpload {
+    title?: string;
     id?: number;
     details?: ItemDetails;
     links?: ProteinItemLink[];
     name?: string;
+    pdb?: string;
+    emdb?: string;
     type?: string;
     experiment?: string;
     pockets?: Record<string, number> | never[] | {};
