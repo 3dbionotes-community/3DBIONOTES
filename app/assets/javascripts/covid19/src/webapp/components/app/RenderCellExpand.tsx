@@ -54,46 +54,44 @@ const CellExpand = React.memo(function CellExpand(props: CellExpandProps) {
             <div ref={cellValueRef} className="cellValue">
                 {description}
             </div>
-                <>
-                    <Link href="/#" onClick={handleClick}>
-                        Show All
-                    </Link>
-                    <Popover
-                        open={open}
-                        anchorEl={anchorEl}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                            vertical: "bottom",
-                            horizontal: "center",
-                        }}
-                        transformOrigin={{
-                            vertical: "top",
-                            horizontal: "center",
-                        }}
-                    >
-                        <Paper elevation={1}>
-                            <Box width={width} p={2}>
-                                <Typography variant="body2"> Description: {description}</Typography>
-                                <Typography variant="body2">Authors: {authors}</Typography>
-                                <Typography variant="body2">Released: {released}</Typography>
-                            </Box>
-                        </Paper>
-                    </Popover>
-                </>
-            
-        
+            <>
+                <Link href="/#" onClick={handleClick}>
+                    Show All
+                </Link>
+                <Popover
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center",
+                    }}
+                    transformOrigin={{
+                        vertical: "top",
+                        horizontal: "center",
+                    }}
+                >
+                    <Paper elevation={1}>
+                        <Box width={width} p={2}>
+                            <Typography variant="body2"> Description: {description}</Typography>
+                            <Typography variant="body2">Authors: {authors}</Typography>
+                            <Typography variant="body2">Released: {released}</Typography>
+                        </Box>
+                    </Paper>
+                </Popover>
+            </>
         </div>
     );
 });
 
 export const RenderCellExpand = (params: GridCellParams) => (
-        <CellExpand
-            description={
-                params.row.details?.description ? params.row.details.description.toString() : ""
-            }
-            authors={params.row.details?.authors ? params.row.details.authors : ""}
-            released={params.row.details?.released ? params.row.details.released.toString() : ""}
-            width={params.colDef.width}
-        />
-    );
+    <CellExpand
+        description={
+            params.row.details?.description ? params.row.details.description.toString() : ""
+        }
+        authors={params.row.details?.authors ? params.row.details.authors : ""}
+        released={params.row.details?.released ? params.row.details.released.toString() : ""}
+        width={params.colDef.width}
+    />
+);
 export default RenderCellExpand;
