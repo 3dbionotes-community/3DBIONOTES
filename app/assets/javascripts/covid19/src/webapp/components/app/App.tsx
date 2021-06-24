@@ -20,51 +20,31 @@ import {
 } from "../../../domain/entities/Covid19Data";
 import { columnSettings } from "./ColumnSettings";
 import styled from "styled-components";
+import i18n from "../../../utils/i18n";
 
 interface AppProps {
     data?: Covid19Data;
 }
 
-export const BootstrapButton = withStyles({
-    root: {
-        boxShadow: "none",
-        textTransform: "none",
-        fontSize: 14,
-        padding: "6px",
-        border: "1px solid",
-        lineHeight: 1,
-        backgroundColor: "#0063cc",
-        borderColor: "#0063cc",
-        borderRadius: "0.25rem",
-        margin: "2px 0",
-        textShadow: "1px 1px 2px rgb(0 0 0 / 30%)",
-        fontFamily: [
-            "-apple-system",
-            "BlinkMacSystemFont",
-            '"Segoe UI"',
-            "Roboto",
-            '"Helvetica Neue"',
-            "Arial",
-            "sans-serif",
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-        ].join(","),
-        "&:hover": {
-            backgroundColor: "#0069d9",
-            borderColor: "#0062cc",
-            boxShadow: "none",
-        },
-        "&:active": {
-            boxShadow: "none",
-            backgroundColor: "#0062cc",
-            borderColor: "#005cbf",
-        },
-        "&:focus": {
-            boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
-        },
-    },
-})(Button);
+export const Badge = styled.span`
+    padding: 6px 12px;
+    font-size: 10.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    margin: 2px 0px;
+    white-space: normal;
+    color: #fff;
+    color: #fff;
+    background-color: #007bff;
+    display: inline-block;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+`;
 
 const HeaderBanner = styled.div`
     padding: 0;
@@ -183,37 +163,40 @@ export const App: React.FC<AppProps> = props => {
     }, [rows, page]);
 
     return (
-        <div>
+        <Body>
             <HeaderBanner>
                 <div style={{ backgroundColor: "#607d8b", color: "#fff", padding: 10 }}>
                     <h1>
-                        <b>Known Proteins</b>
+                        <b>{i18n.t("Known Proteins")}</b>
                     </h1>
                 </div>
             </HeaderBanner>
+
             {data.proteins.slice(0, 2).map((protein, index) => (
                 <ProteinHeader key={index}>
                     <div style={{ padding: 16 }}>
-                        <BootstrapButton
-                            color="primary"
-                            variant="contained"
-                            style={{ backgroundColor: "#00bcd4", borderColor: "#00bcd4" }}
+                        <Badge
+                            style={{
+                                fontSize: 14,
+                                backgroundColor: "#00bcd4",
+                                borderColor: "#00bcd4",
+                            }}
                         >
                             <strong>{protein.name}</strong>
-                        </BootstrapButton>
+                        </Badge>
+
                         {protein.polyproteins.map((polyprotein, index) => (
-                            <BootstrapButton
+                            <Badge
                                 key={index}
-                                color="primary"
-                                variant="contained"
                                 style={{
+                                    fontSize: 14,
                                     backgroundColor: "#607d8b",
                                     borderColor: "#607d8b",
                                     marginLeft: 5,
                                 }}
                             >
                                 {polyprotein}
-                            </BootstrapButton>
+                            </Badge>
                         ))}
                         <ProteinName>{protein.names.join(" | ")}</ProteinName>
                         <p>
@@ -248,6 +231,11 @@ export const App: React.FC<AppProps> = props => {
                     </div>
                 </ProteinHeader>
             ))}
-        </div>
+        </Body>
     );
 };
+
+const Body = styled.div`
+    font-family: Lato, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial,
+        Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+`;

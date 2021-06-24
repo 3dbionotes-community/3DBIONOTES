@@ -2,7 +2,7 @@ import React from "react";
 import { GridColDef, GridCellParams } from "@material-ui/data-grid";
 import { t } from "@dhis2/d2-i18n";
 import RenderCellExpand from "./RenderCellExpand";
-import { BootstrapButton } from "./App";
+import { Badge } from "./App";
 import { ProteinItemLink } from "../../../domain/entities/Covid19Data";
 
 const determineButtonColor = (name: string) => {
@@ -55,9 +55,7 @@ export const columnSettings: GridColDef[] = [
                             rel="noreferrer"
                             style={{ textDecoration: "none" }}
                         >
-                            <BootstrapButton
-                                color="primary"
-                                variant="contained"
+                            <Badge
                                 style={{
                                     backgroundColor: `${determineButtonColor(badgeInfo.style)}`,
                                     borderColor: determineButtonColor(badgeInfo.style),
@@ -65,7 +63,7 @@ export const columnSettings: GridColDef[] = [
                                 }}
                             >
                                 {badgeInfo.title} External
-                            </BootstrapButton>
+                            </Badge>
                         </a>
                         <a
                             href={badgeInfo.query_url}
@@ -73,9 +71,7 @@ export const columnSettings: GridColDef[] = [
                             rel="noreferrer"
                             style={{ textDecoration: "none" }}
                         >
-                            <BootstrapButton
-                                color="primary"
-                                variant="contained"
+                            <Badge
                                 style={{
                                     backgroundColor: `${determineButtonColor(badgeInfo.style)}`,
                                     borderColor: determineButtonColor(badgeInfo.style),
@@ -83,7 +79,7 @@ export const columnSettings: GridColDef[] = [
                                 }}
                             >
                                 {badgeInfo.title}
-                            </BootstrapButton>
+                            </Badge>
                         </a>
                     </>
                 );
@@ -106,9 +102,7 @@ export const columnSettings: GridColDef[] = [
                             rel="noreferrer"
                             style={{ textDecoration: "none" }}
                         >
-                            <BootstrapButton
-                                color="primary"
-                                variant="contained"
+                            <Badge
                                 style={{
                                     backgroundColor: `${determineButtonColor(badgeInfo.style)}`,
                                     borderColor: determineButtonColor(badgeInfo.style),
@@ -116,7 +110,7 @@ export const columnSettings: GridColDef[] = [
                                 }}
                             >
                                 {badgeInfo.title}
-                            </BootstrapButton>
+                            </Badge>
                         </a>
                     </>
                 );
@@ -139,9 +133,7 @@ export const columnSettings: GridColDef[] = [
                             rel="noreferrer"
                             style={{ textDecoration: "none" }}
                         >
-                            <BootstrapButton
-                                color="primary"
-                                variant="contained"
+                            <Badge
                                 style={{
                                     backgroundColor: `${determineButtonColor(badgeInfo.style)}`,
                                     borderColor: determineButtonColor(badgeInfo.style),
@@ -149,7 +141,7 @@ export const columnSettings: GridColDef[] = [
                                 }}
                             >
                                 {badgeInfo.title}
-                            </BootstrapButton>
+                            </Badge>
                         </a>
                     </>
                 );
@@ -195,9 +187,7 @@ export const columnSettings: GridColDef[] = [
                             rel="noreferrer"
                             style={{ textDecoration: "none" }}
                         >
-                            <BootstrapButton
-                                color="primary"
-                                variant="contained"
+                            <Badge
                                 style={{
                                     backgroundColor: "#607d8b",
                                     borderColor: "#607d8b",
@@ -205,7 +195,7 @@ export const columnSettings: GridColDef[] = [
                                 }}
                             >
                                 {params.row.external.text}
-                            </BootstrapButton>
+                            </Badge>
                         </a>
                         <a
                             href={params.row.query_url}
@@ -213,9 +203,7 @@ export const columnSettings: GridColDef[] = [
                             rel="noreferrer"
                             style={{ textDecoration: "none" }}
                         >
-                            <BootstrapButton
-                                color="primary"
-                                variant="contained"
+                            <Badge
                                 style={{
                                     backgroundColor: "#607d8b",
                                     borderColor: "#607d8b",
@@ -223,7 +211,7 @@ export const columnSettings: GridColDef[] = [
                                 }}
                             >
                                 Go to Viewer
-                            </BootstrapButton>
+                            </Badge>
                         </a>
                     </div>
                 );
