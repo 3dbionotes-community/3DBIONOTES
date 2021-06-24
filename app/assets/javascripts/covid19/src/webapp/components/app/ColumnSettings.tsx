@@ -1,8 +1,5 @@
 import React from "react";
-import {
-    GridColDef,
-    GridCellParams,
-} from "@material-ui/data-grid";
+import { GridColDef, GridCellParams } from "@material-ui/data-grid";
 import { t } from "@dhis2/d2-i18n";
 import RenderCellExpand from "./RenderCellExpand";
 import { BootstrapButton } from "./App";
@@ -49,51 +46,47 @@ export const columnSettings: GridColDef[] = [
         sortable: false,
         renderCell: (params: GridCellParams) => {
             const badgeInfo = params.getValue(params.id, "pdb_redo") as ProteinItemLink;
-            if(badgeInfo) {
+            if (badgeInfo) {
                 return (
                     <>
-                                    <a
-                                        href={badgeInfo.external_url}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        style={{ textDecoration: "none" }}
-                                    >
-                                        <BootstrapButton
-                                            color="primary"
-                                            variant="contained"
-                                            style={{
-                                                backgroundColor: `${determineButtonColor(
-                                                    badgeInfo.style
-                                                )}`,
-                                                borderColor: determineButtonColor(badgeInfo.style),
-                                                marginRight: 5,
-                                            }}
-                                        >
-                                            {badgeInfo.title} External
-                                        </BootstrapButton>
-                                    </a>
-                                    <a
-                                        href={badgeInfo.query_url}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        style={{ textDecoration: "none" }}
-                                    >
-                                        <BootstrapButton
-                                            color="primary"
-                                            variant="contained"
-                                            style={{
-                                                backgroundColor: `${determineButtonColor(
-                                                    badgeInfo.style
-                                                )}`,
-                                                borderColor: determineButtonColor(badgeInfo.style),
-                                                marginRight: 5,
-                                            }}
-                                        >
-                                            {badgeInfo.title}
-                                        </BootstrapButton>
-                                    </a>
-                                </>
-                )
+                        <a
+                            href={badgeInfo.external_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{ textDecoration: "none" }}
+                        >
+                            <BootstrapButton
+                                color="primary"
+                                variant="contained"
+                                style={{
+                                    backgroundColor: `${determineButtonColor(badgeInfo.style)}`,
+                                    borderColor: determineButtonColor(badgeInfo.style),
+                                    marginRight: 5,
+                                }}
+                            >
+                                {badgeInfo.title} External
+                            </BootstrapButton>
+                        </a>
+                        <a
+                            href={badgeInfo.query_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{ textDecoration: "none" }}
+                        >
+                            <BootstrapButton
+                                color="primary"
+                                variant="contained"
+                                style={{
+                                    backgroundColor: `${determineButtonColor(badgeInfo.style)}`,
+                                    borderColor: determineButtonColor(badgeInfo.style),
+                                    marginRight: 5,
+                                }}
+                            >
+                                {badgeInfo.title}
+                            </BootstrapButton>
+                        </a>
+                    </>
+                );
             }
         },
     },
@@ -104,31 +97,29 @@ export const columnSettings: GridColDef[] = [
         sortable: false,
         renderCell: (params: GridCellParams) => {
             const badgeInfo = params.getValue(params.id, "isolde") as ProteinItemLink;
-            if(badgeInfo) {
+            if (badgeInfo) {
                 return (
                     <>
-                    <a
-                        href={badgeInfo.query_url}
-                        target="_blank"
-                        rel="noreferrer"
-                        style={{ textDecoration: "none" }}
-                    >
-                        <BootstrapButton
-                            color="primary"
-                            variant="contained"
-                            style={{
-                                backgroundColor: `${determineButtonColor(
-                                    badgeInfo.style
-                                )}`,
-                                borderColor: determineButtonColor(badgeInfo.style),
-                                marginRight: 5,
-                            }}
+                        <a
+                            href={badgeInfo.query_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{ textDecoration: "none" }}
                         >
-                            {badgeInfo.title}
-                        </BootstrapButton>
-                    </a>
-                </>
-                )
+                            <BootstrapButton
+                                color="primary"
+                                variant="contained"
+                                style={{
+                                    backgroundColor: `${determineButtonColor(badgeInfo.style)}`,
+                                    borderColor: determineButtonColor(badgeInfo.style),
+                                    marginRight: 5,
+                                }}
+                            >
+                                {badgeInfo.title}
+                            </BootstrapButton>
+                        </a>
+                    </>
+                );
             }
         },
     },
@@ -139,31 +130,29 @@ export const columnSettings: GridColDef[] = [
         sortable: false,
         renderCell: (params: GridCellParams) => {
             const badgeInfo = params.getValue(params.id, "refmac") as ProteinItemLink;
-            if(badgeInfo) {
+            if (badgeInfo) {
                 return (
                     <>
-                    <a
-                        href={badgeInfo.query_url}
-                        target="_blank"
-                        rel="noreferrer"
-                        style={{ textDecoration: "none" }}
-                    >
-                        <BootstrapButton
-                            color="primary"
-                            variant="contained"
-                            style={{
-                                backgroundColor: `${determineButtonColor(
-                                    badgeInfo.style
-                                )}`,
-                                borderColor: determineButtonColor(badgeInfo.style),
-                                marginRight: 5,
-                            }}
+                        <a
+                            href={badgeInfo.query_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{ textDecoration: "none" }}
                         >
-                            {badgeInfo.title}
-                        </BootstrapButton>
-                    </a>
-                </>
-                )
+                            <BootstrapButton
+                                color="primary"
+                                variant="contained"
+                                style={{
+                                    backgroundColor: `${determineButtonColor(badgeInfo.style)}`,
+                                    borderColor: determineButtonColor(badgeInfo.style),
+                                    marginRight: 5,
+                                }}
+                            >
+                                {badgeInfo.title}
+                            </BootstrapButton>
+                        </a>
+                    </>
+                );
             }
         },
     },
@@ -248,6 +237,6 @@ export const columnSettings: GridColDef[] = [
         headerName: t("Details"),
         width: 150,
         sortable: false,
-        renderCell: RenderCellExpand
-    }
+        renderCell: RenderCellExpand,
+    },
 ];

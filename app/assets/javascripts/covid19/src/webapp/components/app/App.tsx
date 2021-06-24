@@ -10,9 +10,16 @@ import {
     GridToolbarExport,
 } from "@material-ui/data-grid";
 import axios, { AxiosResponse } from "axios";
-import { Covid19Data, RowUpload, ItemDetails, PdbApiResponse, EmdbApiResponse, ProteinItems } from "../../../domain/entities/Covid19Data";
+import {
+    Covid19Data,
+    RowUpload,
+    ItemDetails,
+    PdbApiResponse,
+    EmdbApiResponse,
+    ProteinItems,
+} from "../../../domain/entities/Covid19Data";
 import { columnSettings } from "./ColumnSettings";
-import styled from "styled-components"; 
+import styled from "styled-components";
 
 interface AppProps {
     data?: Covid19Data;
@@ -61,7 +68,7 @@ export const BootstrapButton = withStyles({
 
 const HeaderBanner = styled.div`
     padding: 0;
-    boxShadow: 0 0px 10px rgb(0 0 0 / 3%), 0 0px 23px rgb(0 0 0 / 4%);
+    boxshadow: 0 0px 10px rgb(0 0 0 / 3%), 0 0px 23px rgb(0 0 0 / 4%);
 `;
 const ProteinHeader = styled.div`
     margin: 20px 0 20px;
@@ -89,16 +96,21 @@ export const App: React.FC<AppProps> = props => {
     const [pageSize, setPageSize] = React.useState(50);
     const [rows, setRows] = React.useState<RowUpload[]>([]);
     const [details, setDetails] = React.useState<ItemDetails[]>([]);
-    const begin = page === 0 ? 0: page * pageSize;
+    const begin = page === 0 ? 0 : page * pageSize;
     const end = (page + 1) * pageSize;
 
     const items = data.proteins[0].sections.flatMap(section => {
         if (section.subsections.length !== 0) {
             const itemsToPush = section.items;
-            const subsectionItems = section.subsections.flatMap(subsection => subsection.items.map(item => section.name === "Related" 
-                ? ({ relatedType: subsection.name, ...item }) 
-                : section.name === "Computational Models" 
-                    ?  ({ computationalModel: subsection.name, ...item }) : item));
+            const subsectionItems = section.subsections.flatMap(subsection =>
+                subsection.items.map(item =>
+                    section.name === "Related"
+                        ? { relatedType: subsection.name, ...item }
+                        : section.name === "Computational Models"
+                        ? { computationalModel: subsection.name, ...item }
+                        : item
+                )
+            );
 
             return itemsToPush.concat(subsectionItems);
         } else {
@@ -122,11 +134,17 @@ export const App: React.FC<AppProps> = props => {
             );
             const newRes = res.flatMap(res1 => res1[0] as PdbApiResponse | EmdbApiResponse);
             const newRows = newRes.map(res => {
-                    return ({
-                        description: (res as PdbApiResponse)?.title || (res as EmdbApiResponse)?.deposition?.title,
-                        authors: (res as PdbApiResponse)?.entry_authors?.join(" , ") || (res as EmdbApiResponse)?.deposition?.authors,
-                        released: (res as PdbApiResponse)?.release_date || (res as EmdbApiResponse)?.deposition?.deposition_date,
-                    })
+                return {
+                    description:
+                        (res as PdbApiResponse)?.title ||
+                        (res as EmdbApiResponse)?.deposition?.title,
+                    authors:
+                        (res as PdbApiResponse)?.entry_authors?.join(" , ") ||
+                        (res as EmdbApiResponse)?.deposition?.authors,
+                    released:
+                        (res as PdbApiResponse)?.release_date ||
+                        (res as EmdbApiResponse)?.deposition?.deposition_date,
+                };
             });
             setDetails(newRows);
         } catch {
@@ -134,36 +152,36 @@ export const App: React.FC<AppProps> = props => {
         }
     }, []);
     useEffect(() => {
-    
         const rowsToUpload = items.map((item, index) => {
-           const itemWithSeparatedLinks = item.links.map(link => {
-                if(link.title === "PDB-Redo") {
+            const itemWithSeparatedLinks = item.links.map(link => {
+                if (link.title === "PDB-Redo") {
                     item["pdb_redo"] = link;
                 }
-                if(link.title === "Isolde") {
+                if (link.title === "Isolde") {
                     item["isolde"] = link;
                 }
-                if(link.title === "Refmac") {
+                if (link.title === "Refmac") {
                     item["refmac"] = link;
                 }
                 return item;
             });
-            return ({
-            id: index,
-            ...item,
-            details:  {
-                      description: "",
-                      authors: [],
-                      released: "",
-                  },
-        })});
+            return {
+                id: index,
+                ...item,
+                details: {
+                    description: "",
+                    authors: [],
+                    released: "",
+                },
+            };
+        });
         setRows(rowsToUpload);
     }, []);
 
     useEffect(() => {
         getDetailsData(items.slice(begin, end));
-    }, [rows, page]); 
-    
+    }, [rows, page]);
+
     return (
         <div>
             <HeaderBanner>
@@ -174,66 +192,62 @@ export const App: React.FC<AppProps> = props => {
                 </div>
             </HeaderBanner>
             {data.proteins.slice(0, 2).map((protein, index) => (
-            <ProteinHeader
-                key={index}
-            >
-                <div style={{ padding: 16 }}>
-                    <BootstrapButton
-                        color="primary"
-                        variant="contained"
-                        style={{ backgroundColor: "#00bcd4", borderColor: "#00bcd4" }}
-                    >
-                        <strong>{protein.name}</strong>
-                    </BootstrapButton>
-                    {protein.polyproteins.map((polyprotein, index) => (
+                <ProteinHeader key={index}>
+                    <div style={{ padding: 16 }}>
                         <BootstrapButton
-                            key={index}
                             color="primary"
                             variant="contained"
-                            style={{
-                                backgroundColor: "#607d8b",
-                                borderColor: "#607d8b",
-                                marginLeft: 5,
-                            }}
+                            style={{ backgroundColor: "#00bcd4", borderColor: "#00bcd4" }}
                         >
-                            {polyprotein}
+                            <strong>{protein.name}</strong>
                         </BootstrapButton>
-                    ))}
-                    <ProteinName>
-                        {protein.names.join(" | ")}
-                    </ProteinName>
-                    <p>
-                        <i>{protein.description}</i>
-                    </p>
-                    <div style={{ display: 'flex', height: '100%' }}>
-                        <div style={{ flexGrow: 1 }}>
-                        <DataGrid
-                            rows={rows.map((row, index) => index >= begin && index <= end 
-                                ? ({...row, details: details[index-begin]}) 
-                                : row)}
-                            autoHeight
-                            columns={columnSettings}
-                            components={{
-                                Toolbar: CustomToolbar,
-                            }}
-                            disableColumnMenu={true}
-                            pageSize={pageSize}
-                            onPageChange={params => {
-                                setPage(params.page);
-                            }}
-                            onPageSizeChange={params => {
-                                setPageSize(params.pageSize);
-                            }}
-
-                            pagination
-                            rowsPerPageOptions={[25, 50, 75, 100]}
-                        />
+                        {protein.polyproteins.map((polyprotein, index) => (
+                            <BootstrapButton
+                                key={index}
+                                color="primary"
+                                variant="contained"
+                                style={{
+                                    backgroundColor: "#607d8b",
+                                    borderColor: "#607d8b",
+                                    marginLeft: 5,
+                                }}
+                            >
+                                {polyprotein}
+                            </BootstrapButton>
+                        ))}
+                        <ProteinName>{protein.names.join(" | ")}</ProteinName>
+                        <p>
+                            <i>{protein.description}</i>
+                        </p>
+                        <div style={{ display: "flex", height: "100%" }}>
+                            <div style={{ flexGrow: 1 }}>
+                                <DataGrid
+                                    rows={rows.map((row, index) =>
+                                        index >= begin && index <= end
+                                            ? { ...row, details: details[index - begin] }
+                                            : row
+                                    )}
+                                    autoHeight
+                                    columns={columnSettings}
+                                    components={{
+                                        Toolbar: CustomToolbar,
+                                    }}
+                                    disableColumnMenu={true}
+                                    pageSize={pageSize}
+                                    onPageChange={params => {
+                                        setPage(params.page);
+                                    }}
+                                    onPageSizeChange={params => {
+                                        setPageSize(params.pageSize);
+                                    }}
+                                    pagination
+                                    rowsPerPageOptions={[25, 50, 75, 100]}
+                                />
+                            </div>
+                        </div>
                     </div>
-                    </div>
-                </div>
-            </ProteinHeader>
+                </ProteinHeader>
             ))}
         </div>
-        
     );
 };
