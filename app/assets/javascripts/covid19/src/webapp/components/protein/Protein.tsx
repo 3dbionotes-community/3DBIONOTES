@@ -233,34 +233,36 @@ export const Protein: React.FC<ProteinProps> = props => {
                     <i>{protein.description}</i>
                 </p>
 
-                <div style={{ display: "flex" }}>
-                    <div style={{ flexGrow: 1 }}>
-                        <DataGrid
-                            page={page}
-                            onStateChange={setRenderedRowsFromState}
-                            className={classes.root}
-                            rowHeight={150}
-                            onSortModelChange={setFirstPage}
-                            sortingOrder={["asc", "desc"]}
-                            rows={rowsWithDetails}
-                            autoHeight
-                            columns={columnSettings}
-                            components={{
-                                Toolbar: CustomToolbar,
-                            }}
-                            disableColumnMenu={true}
-                            pageSize={pageSize}
-                            onPageChange={params => {
-                                setPage(params.page);
-                            }}
-                            onPageSizeChange={params => {
-                                setPageSize(params.pageSize);
-                            }}
-                            pagination
-                            rowsPerPageOptions={[25, 50, 75, 100]}
-                        />
+                {!_.isEmpty(rows) && (
+                    <div style={{ display: "flex" }}>
+                        <div style={{ flexGrow: 1 }}>
+                            <DataGrid
+                                page={page}
+                                onStateChange={setRenderedRowsFromState}
+                                className={classes.root}
+                                rowHeight={150}
+                                onSortModelChange={setFirstPage}
+                                sortingOrder={["asc", "desc"]}
+                                rows={rowsWithDetails}
+                                autoHeight
+                                columns={columnSettings}
+                                components={{
+                                    Toolbar: CustomToolbar,
+                                }}
+                                disableColumnMenu={true}
+                                pageSize={pageSize}
+                                onPageChange={params => {
+                                    setPage(params.page);
+                                }}
+                                onPageSizeChange={params => {
+                                    setPageSize(params.pageSize);
+                                }}
+                                pagination
+                                rowsPerPageOptions={[25, 50, 75, 100]}
+                            />
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </ProteinHeader>
     );

@@ -26,11 +26,9 @@ export const App: React.FC<AppProps> = props => {
                 </div>
             </HeaderBanner>
 
-            {proteins.map(protein =>
-                _.isEmpty(protein.sections) ? null : (
-                    <Protein key={protein.name} protein={protein} />
-                )
-            )}
+            {proteins.map(protein => (
+                <Protein key={protein.name} protein={protein} />
+            ))}
         </Body>
     );
 };
