@@ -45,10 +45,11 @@ export const Badge = styled.span`
 `;
 
 const ProteinHeader = styled.div`
-    margin: 20px 0 20px;
-    padding: 0;
-    box-shadow: 0 0px 10px rgb(0 0 0 / 3%), 0 0px 23px rgb(0 0 0 / 4%);
-    border-left: 100% solid #607d8b;
+    margin: 20px 0px 20px;
+    background-color: #fff;
+    padding: 0px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.025), 0 0px 23px rgba(0, 0, 0, 0.04);
+    border-left: 20px solid #607d8b;
 `;
 
 const ProteinName = styled.p`
@@ -160,7 +161,7 @@ export const Protein: React.FC<ProteinProps> = props => {
 
     const [renderedRows, setRenderedRows] = React.useState<RowUpload[]>([]);
 
-    const loadDetails = React.useCallback<NonNullable<DataGridProps["onStateChange"]>>(
+    const setRenderedRowsFromState = React.useCallback<NonNullable<DataGridProps["onStateChange"]>>(
         gridParams => {
             const { api } = gridParams;
             const { page, pageSize } = gridParams.state.pagination;
@@ -171,14 +172,13 @@ export const Protein: React.FC<ProteinProps> = props => {
                 .drop(page * pageSize)
                 .take(pageSize)
                 .value();
-
             //console.debug("loadDetails", { page }, "->", { ids });
-
-            const newRenderedRows = _(gridParams.state.rows.idRowsLookup).at(ids).compact().value();
 
             setRenderedRows(prevRenderedRows => {
                 const prevIds = prevRenderedRows.map(x => x.id);
-                return _.isEqual(prevIds, ids) ? prevRenderedRows : newRenderedRows;
+                const newRenderedRows = () =>
+                    _(gridParams.state.rows.idRowsLookup).at(ids).compact().value();
+                return _.isEqual(prevIds, ids) ? prevRenderedRows : newRenderedRows();
             });
         },
         []
@@ -231,11 +231,11 @@ export const Protein: React.FC<ProteinProps> = props => {
                     <i>{protein.description}</i>
                 </p>
 
-                <div style={{ display: "flex", height: "100%" }}>
+                <div style={{ display: "flex" }}>
                     <div style={{ flexGrow: 1 }}>
                         <DataGrid
                             page={page}
-                            onStateChange={loadDetails}
+                            onStateChange={setRenderedRowsFromState}
                             className={classes.root}
                             rowHeight={150}
                             onSortModelChange={setFirstPage}

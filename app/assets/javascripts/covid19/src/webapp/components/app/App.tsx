@@ -11,9 +11,8 @@ interface AppProps {
 
 export const App: React.FC<AppProps> = props => {
     const data: Covid19Data = props.data || testCovid19Data;
-    (window as any).data = data;
-
-    const proteins = data.proteins.filter(p => p.name === "NSP1");
+    const proteins = data.proteins.filter(p => p.name === "NSP15");
+    //const proteins = data.proteins.slice(0, 2);
 
     return (
         <Body>
@@ -38,6 +37,7 @@ const HeaderBanner = styled.div`
 `;
 
 const Body = styled.div`
+    background-color: #fff;
     font-family: Lato, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial,
         Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 `;

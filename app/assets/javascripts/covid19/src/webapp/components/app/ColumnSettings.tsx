@@ -46,6 +46,7 @@ const Thumbnail: React.FC<GridCellParams> = props => {
             <img
                 alt={name}
                 src={imageSrc}
+                loading="lazy"
                 style={{
                     display: "block",
                     marginLeft: "auto",
@@ -96,31 +97,33 @@ export const columnSettings: GridColDef[] = [
         width: 200,
         renderCell: Thumbnail,
     },
-    /*
     {
         field: "protein",
+        hide: true,
         headerName: i18n.t("Protein"),
         headerAlign: "center",
         width: 120,
     },
     {
         field: "ligands",
+        hide: true,
         headerName: i18n.t("Ligands"),
         width: 120,
     },
     {
         field: "relatedType",
+        hide: true,
         headerName: i18n.t("Specimen"),
         headerAlign: "center",
         width: 120,
     },
     {
         field: "computationalModel",
+        hide: true,
         headerName: i18n.t("Comp. Model"),
         headerAlign: "center",
         width: 150,
     },
-    */
     {
         field: "pdb_redo",
         headerName: i18n.t("PDB-Redo"),
@@ -198,6 +201,7 @@ export const columnSettings: GridColDef[] = [
         headerName: i18n.t("Refmac"),
         headerAlign: "center",
         width: 120,
+        hide: true,
         sortable: true,
         renderCell: (params: GridCellParams) => {
             const badgeInfo = params.getValue(params.id, "refmac") as ProteinItemLink;
