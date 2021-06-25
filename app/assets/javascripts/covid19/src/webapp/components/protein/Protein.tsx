@@ -6,6 +6,7 @@ import {
     GridToolbarColumnsButton,
     GridToolbarFilterButton,
     GridToolbarExport,
+    DataGridProps,
 } from "@material-ui/data-grid";
 import axios, { AxiosResponse } from "axios";
 import {
@@ -14,10 +15,10 @@ import {
     ItemDetails,
     PdbApiResponse,
     EmdbApiResponse,
-    ProteinItems,
 } from "../../../domain/entities/Covid19Data";
 import styled from "styled-components";
 import { columnSettings } from "../app/ColumnSettings";
+import _ from "lodash";
 
 interface ProteinProps {
     protein: Covid19Data["proteins"][number];
@@ -66,69 +67,69 @@ const CustomToolbar = () => (
 export const Protein: React.FC<ProteinProps> = props => {
     const { protein } = props;
     const [page, setPage] = React.useState(0);
-    const [pageSize, setPageSize] = React.useState(10); // 50
-    const [rows, setRows] = React.useState<RowUpload[]>([]);
-    const [details, setDetails] = React.useState<ItemDetails[]>([]);
-    const begin = page === 0 ? 0 : page * pageSize;
-    const end = (page + 1) * pageSize;
+    const [pageSize, setPageSize] = React.useState(2); // 50
+    const [details, setDetails] = React.useState<Record<number, ItemDetails>>({});
+    const setFirstPage = React.useCallback(() => setPage(0), [setPage]);
 
-    const items = protein.sections.flatMap(section => {
-        if (section.subsections.length !== 0) {
-            const itemsToPush = section.items;
-            const subsectionItems = section.subsections.flatMap(subsection =>
-                subsection.items.map(item =>
-                    section.name === "Related"
-                        ? { relatedType: subsection.name, ...item }
-                        : section.name === "Computational Models"
-                        ? { computationalModel: subsection.name, ...item }
-                        : item
-                )
-            );
+    const items = React.useMemo(() => {
+        return protein.sections.flatMap(section => {
+            if (section.subsections.length !== 0) {
+                const itemsToPush = section.items;
+                const subsectionItems = section.subsections.flatMap(subsection =>
+                    subsection.items.map(item =>
+                        section.name === "Related"
+                            ? { relatedType: subsection.name, ...item }
+                            : section.name === "Computational Models"
+                            ? { computationalModel: subsection.name, ...item }
+                            : item
+                    )
+                );
 
-            return itemsToPush.concat(subsectionItems);
-        } else {
-            return section.items;
-        }
-    });
+                return itemsToPush.concat(subsectionItems);
+            } else {
+                return section.items;
+            }
+        });
+    }, [protein.sections]);
 
-    const getDetailsData = useCallback(async (items: ProteinItems[]) => {
+    const getDetailsData = useCallback(async (items: RowUpload[]) => {
         try {
-            const urlsToRetrieve = items.map(item => item.api);
-            const res = await Promise.all(
-                urlsToRetrieve.map(url => {
-                    return url !== undefined
-                        ? axios
-                              .get(url)
-                              .then((resp: AxiosResponse<any>) =>
-                                  Object.values(resp.data).flatMap(data => data)
-                              )
-                        : [];
-                })
-            );
-            const newRes = res.flatMap(res1 => res1[0] as PdbApiResponse | EmdbApiResponse);
-            const newRows = newRes.map(res => {
-                return {
-                    description:
-                        (res as PdbApiResponse)?.title ||
-                        (res as EmdbApiResponse)?.deposition?.title,
-                    authors:
-                        (res as PdbApiResponse)?.entry_authors?.join(" , ") ||
-                        (res as EmdbApiResponse)?.deposition?.authors,
-                    released:
-                        (res as PdbApiResponse)?.release_date ||
-                        (res as EmdbApiResponse)?.deposition?.deposition_date,
-                };
+            const promises = items.map(item => {
+                const { api: url, id } = item;
+                return url !== undefined && id !== undefined
+                    ? axios.get(url).then((resp: AxiosResponse<any>) => ({
+                          id,
+                          value: Object.values(resp.data).flatMap(data => data)[0] as
+                              | PdbApiResponse
+                              | EmdbApiResponse,
+                      }))
+                    : null;
             });
-            setDetails(newRows);
+            const res0 = await Promise.all(_.compact(promises));
+            const newRows = res0.map(({ id, value }) => {
+                const det = {
+                    description:
+                        (value as PdbApiResponse)?.title ||
+                        (value as EmdbApiResponse)?.deposition?.title,
+                    authors:
+                        (value as PdbApiResponse)?.entry_authors?.join(" , ") ||
+                        (value as EmdbApiResponse)?.deposition?.authors,
+                    released:
+                        (value as PdbApiResponse)?.release_date ||
+                        (value as EmdbApiResponse)?.deposition?.deposition_date,
+                };
+                return [id, det] as [number, ItemDetails];
+            });
+            setDetails(_.fromPairs(newRows));
         } catch {
             throw Error("Promise failed");
         }
     }, []);
 
-    useEffect(() => {
-        const rowsToUpload = items.map(
+    const rows = React.useMemo(() => {
+        return items.map(
             (item, index): RowUpload => {
-                const itemWithSeparatedLinks = item.links.map(link => {
+                item.links.map(link => {
                     if (link.title === "PDB-Redo") {
                         item["pdb_redo"] = link;
                     }
@@ -155,14 +156,48 @@ export const Protein: React.FC<ProteinProps> = props => {
                 };
             }
         );
-        setRows(rowsToUpload);
-    }, []);
+    }, [items]);
+
+    const [renderedRows, setRenderedRows] = React.useState<RowUpload[]>([]);
+
+    const loadDetails = React.useCallback<NonNullable<DataGridProps["onStateChange"]>>(
+        gridParams => {
+            const { api } = gridParams;
+            const { page, pageSize } = gridParams.state.pagination;
+            const sortedIds = api.getSortedRowIds() as number[];
+            const visibleIds = Array.from(api.getVisibleRowModels().keys()) as number[];
+            const ids = _(sortedIds)
+                .intersection(visibleIds)
+                .drop(page * pageSize)
+                .take(pageSize)
+                .value();
+
+            //console.debug("loadDetails", { page }, "->", { ids });
+
+            const newRenderedRows = _(gridParams.state.rows.idRowsLookup).at(ids).compact().value();
+
+            setRenderedRows(prevRenderedRows => {
+                const prevIds = prevRenderedRows.map(x => x.id);
+                return _.isEqual(prevIds, ids) ? prevRenderedRows : newRenderedRows;
+            });
+        },
+        []
+    );
 
     useEffect(() => {
-        getDetailsData(items.slice(begin, end));
-    }, [rows, page]);
+        getDetailsData(renderedRows);
+    }, [getDetailsData, renderedRows]);
 
     const classes = useStyles();
+
+    const rowsWithDetails = React.useMemo(
+        () =>
+            rows.map(row => {
+                const det = details && row.id !== undefined ? details[row.id] : null;
+                return det ? { ...row, title: det.description, details: det } : row;
+            }),
+        [rows, details]
+    );
 
     return (
         <ProteinHeader>
@@ -199,18 +234,13 @@ export const Protein: React.FC<ProteinProps> = props => {
                 <div style={{ display: "flex", height: "100%" }}>
                     <div style={{ flexGrow: 1 }}>
                         <DataGrid
+                            page={page}
+                            onStateChange={loadDetails}
                             className={classes.root}
                             rowHeight={150}
+                            onSortModelChange={setFirstPage}
                             sortingOrder={["asc", "desc"]}
-                            rows={rows.map((row, index) =>
-                                index >= begin && index <= end
-                                    ? {
-                                          ...row,
-                                          title: details[index - begin]?.description,
-                                          details: details[index - begin],
-                                      }
-                                    : row
-                            )}
+                            rows={rowsWithDetails}
                             autoHeight
                             columns={columnSettings}
                             components={{

@@ -53,6 +53,7 @@ export interface ProteinItemLink {
 }
 
 export interface RowUpload {
+    api?: string;
     title?: string;
     id?: number;
     details?: ItemDetails;

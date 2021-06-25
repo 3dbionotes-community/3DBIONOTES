@@ -24,7 +24,7 @@ const Title: React.FC<GridCellParams> = props => {
     return <div style={{ lineHeight: "20px" }}>{props.value}</div>;
 };
 
-const Details: React.FC<GridCellParams> = props => {
+const DetailsCell: React.FC<GridCellParams> = props => {
     const details = props.row.details as Details | undefined;
     if (!details) return null;
 
@@ -44,6 +44,7 @@ const Thumbnail: React.FC<GridCellParams> = props => {
     return (
         <div style={{ width: "100%", lineHeight: 0, fontSize: 16, textAlign: "center" }}>
             <img
+                alt={name}
                 src={imageSrc}
                 style={{
                     display: "block",
@@ -63,6 +64,7 @@ export const columnSettings: GridColDef[] = [
     {
         field: "title",
         headerName: i18n.t("Title"),
+        sortable: false,
         headerAlign: "center",
         width: 200,
         renderCell: Title,
@@ -73,8 +75,8 @@ export const columnSettings: GridColDef[] = [
         headerAlign: "center",
         width: 200,
         renderCell: Thumbnail,
-        sortComparator: (v1, v2, cellParams1, cellParams2) => {
-            console.log({ v1, v2, cellParams1, cellParams2 });
+        /*
+        sortComparator: (v1, v2, _cellParams1, _cellParams2) => {
             if (v1 && v2) {
                 return v1 === v2 ? 0 : v1 > v2 ? 1 : -1;
             } else if (v1 && !v2) {
@@ -85,6 +87,7 @@ export const columnSettings: GridColDef[] = [
                 return 0;
             }
         },
+        */
     },
     {
         field: "emdb",
@@ -288,7 +291,7 @@ export const columnSettings: GridColDef[] = [
         headerName: i18n.t("Details"),
         headerAlign: "center",
         width: 200,
-        renderCell: Details,
+        renderCell: DetailsCell,
     },
 ];
 

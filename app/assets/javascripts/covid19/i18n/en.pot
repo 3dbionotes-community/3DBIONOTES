@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2021-06-24T09:52:30.024Z\n"
-"PO-Revision-Date: 2021-06-24T09:52:30.024Z\n"
+"POT-Creation-Date: 2021-06-24T12:02:28.964Z\n"
+"PO-Revision-Date: 2021-06-24T12:02:28.964Z\n"
 
 msgid "Known Proteins"
 msgstr ""
@@ -20,5 +20,44 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
+msgid "PDB"
+msgstr ""
+
+msgid "EMDB"
+msgstr ""
+
+msgid "Protein"
+msgstr ""
+
+msgid "Ligands"
+msgstr ""
+
+msgid "Specimen"
+msgstr ""
+
+msgid "Comp. Model"
+msgstr ""
+
+msgid "PDB-Redo"
+msgstr ""
+
+msgid "Isolde"
+msgstr ""
+
+msgid "Refmac"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
 msgid "Go to Viewer"
+msgstr ""
+
+msgid "Experiment"
+msgstr ""
+
+msgid "Pocket"
+msgstr ""
+
+msgid "Details"
 msgstr ""
