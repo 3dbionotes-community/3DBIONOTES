@@ -94,37 +94,36 @@ export const Protein: React.FC<ProteinProps> = props => {
     }, [protein.sections]);
 
     const getDetailsData = useCallback(async (items: RowUpload[]) => {
-        try {
-            const promises = items.map(item => {
-                const { api: url, id } = item;
-                return url !== undefined && id !== undefined
-                    ? axios.get(url).then((resp: AxiosResponse<any>) => ({
+        const promises = items.map(item => {
+            const { api: url, id } = item;
+            return url !== undefined && id !== undefined
+                ? axios
+                      .get(url)
+                      .then((resp: AxiosResponse<any>) => ({
                           id,
                           value: Object.values(resp.data).flatMap(data => data)[0] as
                               | PdbApiResponse
                               | EmdbApiResponse,
                       }))
-                    : null;
-            });
-            const res0 = await Promise.all(_.compact(promises));
-            const newRows = res0.map(({ id, value }) => {
-                const det = {
-                    description:
-                        (value as PdbApiResponse)?.title ||
-                        (value as EmdbApiResponse)?.deposition?.title,
-                    authors:
-                        (value as PdbApiResponse)?.entry_authors?.join(" , ") ||
-                        (value as EmdbApiResponse)?.deposition?.authors,
-                    released:
-                        (value as PdbApiResponse)?.release_date ||
-                        (value as EmdbApiResponse)?.deposition?.deposition_date,
-                };
-                return [id, det] as [number, ItemDetails];
-            });
-            setDetails(_.fromPairs(newRows));
-        } catch {
-            throw Error("Promise failed");
-        }
+                      .catch(_err => null)
+                : null;
+        });
+        const res0 = _.compact(await Promise.all(_.compact(promises)));
+        const newRows = res0.map(({ id, value }) => {
+            const det = {
+                description:
+                    (value as PdbApiResponse)?.title ||
+                    (value as EmdbApiResponse)?.deposition?.title,
+                authors:
+                    (value as PdbApiResponse)?.entry_authors?.join(" , ") ||
+                    (value as EmdbApiResponse)?.deposition?.authors,
+                released:
+                    (value as PdbApiResponse)?.release_date ||
+                    (value as EmdbApiResponse)?.deposition?.deposition_date,
+            };
+            return [id, det] as [number, ItemDetails];
+        });
+        setDetails(_.fromPairs(newRows));
     }, []);
 
     const rows = React.useMemo(() => {

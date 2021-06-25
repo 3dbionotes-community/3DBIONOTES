@@ -69,14 +69,14 @@ export const columnSettingsBase: GridColDef[] = [
         headerName: i18n.t("Title"),
         sortable: false,
         headerAlign: "center",
-        width: 200,
+        width: 220,
         renderCell: Title,
     },
     {
         field: "pdb",
         headerName: i18n.t("PDB"),
         headerAlign: "center",
-        width: 200,
+        width: 120,
         renderCell: Thumbnail,
         sortComparator: compareIds,
     },
@@ -84,7 +84,7 @@ export const columnSettingsBase: GridColDef[] = [
         field: "emdb",
         headerName: i18n.t("EMDB"),
         headerAlign: "center",
-        width: 200,
+        width: 120,
         renderCell: Thumbnail,
         sortComparator: compareIds,
     },
@@ -113,7 +113,7 @@ export const columnSettingsBase: GridColDef[] = [
         hide: false,
         headerName: i18n.t("Comp. Model"),
         headerAlign: "center",
-        width: 200,
+        width: 150,
         renderCell: Thumbnail,
         sortComparator: compareIds,
     },
@@ -181,7 +181,7 @@ export const columnSettingsBase: GridColDef[] = [
                                     marginRight: 5,
                                 }}
                             >
-                                {badgeInfo.title}
+                                <External text={badgeInfo.title} icon="viewer" />
                             </Badge>
                         </a>
                     </>
@@ -338,7 +338,6 @@ export const External: React.FC<{ text: string; icon: "external" | "viewer" }> =
 
 /* Compare pdb/emdb Ids keeping empty values to the end so an ASC ordering shows values */
 function compareIds(id1: GridCellValue, id2: GridCellValue): number {
-    console.log("compare", id1, id2);
     if (id1 && id2) {
         return id1 === id2 ? 0 : id1 > id2 ? +1 : -1;
     } else if (id1 && !id2) {

@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 import styled from "styled-components";
 import testCovid19Data from "../../../data/covid19.json";
 import { Covid19Data } from "../../../domain/entities/Covid19Data";
@@ -11,8 +12,9 @@ interface AppProps {
 
 export const App: React.FC<AppProps> = props => {
     const data: Covid19Data = props.data || testCovid19Data;
-    const proteins = data.proteins.filter(p => p.name === "NSP15");
-    //const proteins = data.proteins.slice(0, 2);
+    const proteins = data.proteins;
+    // const proteins = data.proteins.filter(p => p.name === "NSP15");
+    // const proteins = data.proteins.slice(0, 2);
 
     return (
         <Body>
@@ -24,9 +26,11 @@ export const App: React.FC<AppProps> = props => {
                 </div>
             </HeaderBanner>
 
-            {proteins.map(protein => (
-                <Protein key={protein.name} protein={protein} />
-            ))}
+            {proteins.map(protein =>
+                _.isEmpty(protein.sections) ? null : (
+                    <Protein key={protein.name} protein={protein} />
+                )
+            )}
         </Body>
     );
 };
