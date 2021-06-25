@@ -61,6 +61,7 @@ export interface RowUpload {
     name?: string;
     pdb?: string;
     emdb?: string;
+    computationalModel?: string;
     type?: string;
     experiment?: string;
     pockets?: Record<string, number> | never[] | {};

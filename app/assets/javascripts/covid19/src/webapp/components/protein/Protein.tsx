@@ -68,7 +68,7 @@ const CustomToolbar = () => (
 export const Protein: React.FC<ProteinProps> = props => {
     const { protein } = props;
     const [page, setPage] = React.useState(0);
-    const [pageSize, setPageSize] = React.useState(2); // 50
+    const [pageSize, setPageSize] = React.useState(20); // 50
     const [details, setDetails] = React.useState<Record<number, ItemDetails>>({});
     const setFirstPage = React.useCallback(() => setPage(0), [setPage]);
 
@@ -128,35 +128,38 @@ export const Protein: React.FC<ProteinProps> = props => {
     }, []);
 
     const rows = React.useMemo(() => {
-        return items.map(
-            (item, index): RowUpload => {
-                item.links.map(link => {
-                    if (link.title === "PDB-Redo") {
-                        item["pdb_redo"] = link;
-                    }
-                    if (link.title === "Isolde") {
-                        item["isolde"] = link;
-                    }
-                    if (link.title === "Refmac") {
-                        item["refmac"] = link;
-                    }
-                    return item;
-                });
+        const rows = items.map((item, index): RowUpload | null => {
+            item.links.map(link => {
+                if (link.title === "PDB-Redo") {
+                    item["pdb_redo"] = link;
+                }
+                if (link.title === "Isolde") {
+                    item["isolde"] = link;
+                }
+                if (link.title === "Refmac") {
+                    item["refmac"] = link;
+                }
+                return item;
+            });
 
-                return {
-                    id: index,
-                    ...item,
-                    title: "",
-                    pdb: item.type === "pdb" ? item.name : undefined,
-                    emdb: item.type === "emdb" ? item.name : undefined,
-                    details: {
-                        description: "",
-                        authors: [],
-                        released: "",
-                    },
-                };
-            }
-        );
+            const type = item.type || (item.external.text === "SWISS-MODEL" ? "swiss-model" : null);
+
+            if (!type || !["pdb", "emdb", "swiss-model"].includes(type)) return null;
+
+            return {
+                id: index,
+                ...item,
+                type,
+                title: "",
+                ...(type === "swiss-model" ? { title: item.description || "" } : {}),
+                pdb: item.type === "pdb" ? item.name : undefined,
+                emdb: item.type === "emdb" ? item.name : undefined,
+                computationalModel: type === "swiss-model" ? item.name : undefined,
+                details: undefined,
+            };
+        });
+
+        return _.compact(rows);
     }, [items]);
 
     const [renderedRows, setRenderedRows] = React.useState<RowUpload[]>([]);

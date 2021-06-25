@@ -1,5 +1,5 @@
 import React from "react";
-import { GridColDef, GridCellParams } from "@material-ui/data-grid";
+import { GridColDef, GridCellParams, GridCellValue } from "@material-ui/data-grid";
 import { ProteinItemLink } from "../../../domain/entities/Covid19Data";
 import i18n from "../../../utils/i18n";
 import classNames from "classnames";
@@ -40,7 +40,9 @@ const DetailsCell: React.FC<GridCellParams> = props => {
 const Thumbnail: React.FC<GridCellParams> = props => {
     const { type, image_url: imageSrc, name } = props.row;
 
-    if (type !== props.field) return null;
+    if (!(type === props.field || (props.field === "computationalModel" && type === "swiss-model")))
+        return null;
+
     return (
         <div style={{ width: "100%", lineHeight: 0, fontSize: 16, textAlign: "center" }}>
             <img
@@ -61,7 +63,7 @@ const Thumbnail: React.FC<GridCellParams> = props => {
     );
 };
 
-export const columnSettings: GridColDef[] = [
+export const columnSettingsBase: GridColDef[] = [
     {
         field: "title",
         headerName: i18n.t("Title"),
@@ -76,19 +78,7 @@ export const columnSettings: GridColDef[] = [
         headerAlign: "center",
         width: 200,
         renderCell: Thumbnail,
-        /*
-        sortComparator: (v1, v2, _cellParams1, _cellParams2) => {
-            if (v1 && v2) {
-                return v1 === v2 ? 0 : v1 > v2 ? 1 : -1;
-            } else if (v1 && !v2) {
-                return 1;
-            } else if (!v1 && v2) {
-                return 1;
-            } else {
-                return 0;
-            }
-        },
-        */
+        sortComparator: compareIds,
     },
     {
         field: "emdb",
@@ -96,6 +86,7 @@ export const columnSettings: GridColDef[] = [
         headerAlign: "center",
         width: 200,
         renderCell: Thumbnail,
+        sortComparator: compareIds,
     },
     {
         field: "protein",
@@ -119,10 +110,12 @@ export const columnSettings: GridColDef[] = [
     },
     {
         field: "computationalModel",
-        hide: true,
+        hide: false,
         headerName: i18n.t("Comp. Model"),
         headerAlign: "center",
-        width: 150,
+        width: 200,
+        renderCell: Thumbnail,
+        sortComparator: compareIds,
     },
     {
         field: "pdb_redo",
@@ -299,6 +292,24 @@ export const columnSettings: GridColDef[] = [
     },
 ];
 
+// Add a wrapper <div style="line-height: 0"> to render multi-line values in cell correctly
+export const columnSettings = columnSettingsBase.map(columnSetting => {
+    return {
+        ...columnSetting,
+        renderCell: (params: GridCellParams) => {
+            return (
+                <div style={styles.column}>
+                    {columnSetting.renderCell ? columnSetting.renderCell(params) : null}
+                </div>
+            );
+        },
+    };
+});
+
+const styles = {
+    column: { lineHeight: 0 },
+};
+
 const useStyles = makeStyles({
     externalLink: { textDecoration: "none", color: "#484848" },
     externalLinkIcon: { marginLeft: 2 },
@@ -324,3 +335,17 @@ export const External: React.FC<{ text: string; icon: "external" | "viewer" }> =
         </React.Fragment>
     );
 };
+
+/* Compare pdb/emdb Ids keeping empty values to the end so an ASC ordering shows values */
+function compareIds(id1: GridCellValue, id2: GridCellValue): number {
+    console.log("compare", id1, id2);
+    if (id1 && id2) {
+        return id1 === id2 ? 0 : id1 > id2 ? +1 : -1;
+    } else if (id1 && !id2) {
+        return -1;
+    } else if (!id1 && id2) {
+        return +1;
+    } else {
+        return 0;
+    }
+}
