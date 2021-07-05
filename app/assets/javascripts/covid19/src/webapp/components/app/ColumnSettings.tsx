@@ -5,6 +5,7 @@ import i18n from "../../../utils/i18n";
 import classNames from "classnames";
 import { makeStyles } from "@material-ui/core";
 import { Badge } from "../protein/Protein";
+import BSMArcImage from "./BSM-arc-generic-photo.png";
 
 const determineButtonColor = (name: string) => {
     if (name === "turq") {
@@ -38,10 +39,22 @@ const DetailsCell: React.FC<GridCellParams> = props => {
 };
 
 const Thumbnail: React.FC<GridCellParams> = props => {
-    const { type, image_url: imageSrc, name } = props.row;
+    //console.log(props.row);
+    const { type, name } = props.row;
+    let { image_url: imageSrc } = props.row;
 
-    if (!(type === props.field || (props.field === "computationalModel" && type === "swiss-model")))
+    if (
+        !(
+            type === props.field ||
+            (props.field === "computationalModel" &&
+                ["swiss-model", "BSM-Arc", "AlphaFold"].includes(type))
+        )
+    )
         return null;
+
+    if (type === "BSM-Arc") {
+        imageSrc = BSMArcImage;
+    }
 
     return (
         <div style={{ width: "100%", lineHeight: 0, fontSize: 16, textAlign: "center" }}>
@@ -57,8 +70,39 @@ const Thumbnail: React.FC<GridCellParams> = props => {
                     height: 110,
                 }}
             />
-
-            <div>{name}</div>
+            <p>{name}</p>
+            <a
+                href={props.row.external.url}
+                target="_blank"
+                rel="noreferrer"
+                style={{ textDecoration: "none" }}
+            >
+                <Badge
+                    style={{
+                        backgroundColor: "#607d8b",
+                        borderColor: "#607d8b",
+                        marginRight: 5,
+                    }}
+                >
+                    <External text={props.row.external.text} icon="external" />
+                </Badge>
+            </a>
+            <a
+                href={props.row.query_url}
+                target="_blank"
+                rel="noreferrer"
+                style={{ textDecoration: "none" }}
+            >
+                <Badge
+                    style={{
+                        backgroundColor: "#607d8b",
+                        borderColor: "#607d8b",
+                        marginRight: 5,
+                    }}
+                >
+                    <External text={i18n.t("Go to Viewer")} icon="viewer" />
+                </Badge>
+            </a>
         </div>
     );
 };
@@ -68,6 +112,7 @@ export const columnSettingsBase: GridColDef[] = [
         field: "title",
         headerName: i18n.t("Title"),
         sortable: false,
+        hide: false,
         headerAlign: "center",
         width: 220,
         renderCell: Title,
@@ -76,6 +121,7 @@ export const columnSettingsBase: GridColDef[] = [
         field: "pdb",
         headerName: i18n.t("PDB"),
         headerAlign: "center",
+        hide: false,
         width: 120,
         renderCell: Thumbnail,
         sortComparator: compareIds,
@@ -84,6 +130,7 @@ export const columnSettingsBase: GridColDef[] = [
         field: "emdb",
         headerName: i18n.t("EMDB"),
         headerAlign: "center",
+        hide: false,
         width: 120,
         renderCell: Thumbnail,
         sortComparator: compareIds,
@@ -91,7 +138,7 @@ export const columnSettingsBase: GridColDef[] = [
     {
         field: "protein",
         hide: true,
-        headerName: i18n.t("Protein"),
+        headerName: i18n.t("Entity"),
         headerAlign: "center",
         width: 120,
     },
@@ -110,10 +157,10 @@ export const columnSettingsBase: GridColDef[] = [
     },
     {
         field: "computationalModel",
-        hide: false,
         headerName: i18n.t("Comp. Model"),
         headerAlign: "center",
-        width: 150,
+        hide: false,
+        width: 180,
         renderCell: Thumbnail,
         sortComparator: compareIds,
     },
@@ -121,6 +168,7 @@ export const columnSettingsBase: GridColDef[] = [
         field: "pdb_redo",
         headerName: i18n.t("PDB-Redo"),
         headerAlign: "center",
+        hide: false,
         width: 250,
         sortable: false,
         renderCell: (params: GridCellParams) => {
@@ -161,6 +209,7 @@ export const columnSettingsBase: GridColDef[] = [
         field: "isolde",
         headerName: i18n.t("Isolde"),
         headerAlign: "center",
+        hide: false,
         width: 80,
         sortable: false,
         renderCell: (params: GridCellParams) => {
@@ -222,53 +271,6 @@ export const columnSettingsBase: GridColDef[] = [
             }
         },
     },
-    {
-        field: "external",
-        headerName: i18n.t("Actions"),
-        headerAlign: "center",
-        width: 220,
-        sortable: false,
-        renderCell: (params: GridCellParams) => {
-            if (params && params.row) {
-                return (
-                    <div>
-                        <a
-                            href={params.row.external.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            style={{ textDecoration: "none" }}
-                        >
-                            <Badge
-                                style={{
-                                    backgroundColor: "#607d8b",
-                                    borderColor: "#607d8b",
-                                    marginRight: 5,
-                                }}
-                            >
-                                <External text={params.row.external.text} icon="external" />
-                            </Badge>
-                        </a>
-                        <a
-                            href={params.row.query_url}
-                            target="_blank"
-                            rel="noreferrer"
-                            style={{ textDecoration: "none" }}
-                        >
-                            <Badge
-                                style={{
-                                    backgroundColor: "#607d8b",
-                                    borderColor: "#607d8b",
-                                    marginRight: 5,
-                                }}
-                            >
-                                <External text={i18n.t("Go to Viewer")} icon="viewer" />
-                            </Badge>
-                        </a>
-                    </div>
-                );
-            }
-        },
-    },
     /*
     {
         field: "experiment",
@@ -287,6 +289,7 @@ export const columnSettingsBase: GridColDef[] = [
         field: "details",
         headerName: i18n.t("Details"),
         headerAlign: "center",
+        hide: false,
         width: 200,
         renderCell: DetailsCell,
     },

@@ -66,6 +66,7 @@ export interface RowUpload {
     experiment?: string;
     pockets?: Record<string, number> | never[] | {};
     image_url?: string;
+    query_url?: string;
     external?: ProteinItemExternal;
 }
 
