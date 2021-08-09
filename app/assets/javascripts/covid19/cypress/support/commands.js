@@ -1,7 +1,5 @@
 // <reference types="Cypress" />
 
-import _ from "lodash";
-
 const appUrl = Cypress.env("ROOT_URL");
 
 if (!appUrl) {
