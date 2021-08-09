@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useCallback } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -216,41 +217,44 @@ export const Protein: React.FC<ProteinProps> = props => {
         [rows, details]
     );
 
-    const getRenderedRowsWithVisibleColumns =  React.useCallback(() => {
+    const getRenderedRowsWithVisibleColumns = React.useCallback(() => {
         const visibleColumns = columns.filter(column => column.hide === false).map(x => x.field);
-        const columnsDataToRemove = _.difference(columns.map(x => x.field), visibleColumns);
+        const columnsDataToRemove = _.difference(
+            columns.map(x => x.field),
+            visibleColumns
+        );
         const rowsWithVisibleColumns = renderedRows.map(row => {
             let newRow = row;
             //these are not shown in the first place
             newRow = _.omit(newRow, ["links", "related", "pockets"]);
-           
-        if (
-            !columnsDataToRemove.includes("pdb") &&
-            !columnsDataToRemove.includes("emdb") &&
-            !columnsDataToRemove.includes("computationalModel")
-        )
-            newRow = _.omit(newRow, [
-                "pdb",
-                "emdb",
-                "computationalModel",
-                "image_url",
-                "external",
-                "query_url",
-            ]);
+
+            if (
+                !columnsDataToRemove.includes("pdb") &&
+                !columnsDataToRemove.includes("emdb") &&
+                !columnsDataToRemove.includes("computationalModel")
+            )
+                newRow = _.omit(newRow, [
+                    "pdb",
+                    "emdb",
+                    "computationalModel",
+                    "image_url",
+                    "external",
+                    "query_url",
+                ]);
             columnsDataToRemove.forEach(column => {
                 const key = column as keyof RowUpload;
                 newRow = _.omit(newRow, [key]);
             });
-        if (visibleColumns.includes("title")) {
-            newRow.title = rowsWithDetails[row.id as number].title;
-        }
-        if (visibleColumns.includes("details")) {
-            newRow.details = rowsWithDetails[row.id as number].details;
-        }
+            if (visibleColumns.includes("title")) {
+                newRow.title = rowsWithDetails[row.id as number].title;
+            }
+            if (visibleColumns.includes("details")) {
+                newRow.details = rowsWithDetails[row.id as number].details;
+            }
             return newRow;
         });
         return rowsWithVisibleColumns;
-    },[columns, rowsWithDetails, renderedRows]);
+    }, [columns, rowsWithDetails, renderedRows]);
 
     const getRenderedRowsWithVisibleColumnsCsv = React.useCallback(() => {
         const visibleColumns = columns.filter(column => column.hide === false).map(x => x.field);

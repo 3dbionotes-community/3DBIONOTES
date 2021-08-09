@@ -1,46 +1,24 @@
 import React from "react";
-import styled from "styled-components";
-import testCovid19Data from "../../../data/covid19.json";
-import { Covid19Data } from "../../../domain/entities/Covid19Data";
-import i18n from "../../../utils/i18n";
-import { Protein } from "../protein/Protein";
+import { getCompositionRoot } from "../../../compositionRoot";
+import { Covid19Info } from "../../../domain/entities/Covid19Info";
+import { AppContext } from "../../contexts/app-context";
+import { Root } from "./Root";
 
-interface AppProps {
-    data?: Covid19Data;
+declare global {
+    interface Window {
+        app: { data: Covid19Info };
+    }
 }
 
-export const App: React.FC<AppProps> = props => {
-    const data: Covid19Data = props.data || testCovid19Data;
-    const proteins = data.proteins;
-    const ff = [data.proteins[1]];
-    console.log(proteins);
-    // const proteins = data.proteins.filter(p => p.name === "NSP15");
-    // const proteins = data.proteins.slice(0, 2);
+interface AppProps {}
+
+export const App: React.FC<AppProps> = () => {
+    const compositionRoot = getCompositionRoot();
+    const appContext = { compositionRoot, config: {} };
 
     return (
-        <Body>
-            <HeaderBanner>
-                <div style={{ backgroundColor: "#607d8b", color: "#fff", padding: 10 }}>
-                    <h1>
-                        <b>{i18n.t("Known Proteins")}</b>
-                    </h1>
-                </div>
-            </HeaderBanner>
-
-            {ff.map(protein => (
-                <Protein key={protein.name} protein={protein} />
-            ))}
-        </Body>
+        <AppContext.Provider value={appContext}>
+            <Root />
+        </AppContext.Provider>
     );
 };
-
-const HeaderBanner = styled.div`
-    padding: 0;
-    boxshadow: 0 0px 10px rgb(0 0 0 / 3%), 0 0px 23px rgb(0 0 0 / 4%);
-`;
-
-const Body = styled.div`
-    background-color: #fff;
-    font-family: Lato, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial,
-        Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-`;

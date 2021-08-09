@@ -5,16 +5,13 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2021-06-30T15:05:06.567Z\n"
-"PO-Revision-Date: 2021-06-30T15:05:06.567Z\n"
+"POT-Creation-Date: 2021-08-09T09:55:11.335Z\n"
+"PO-Revision-Date: 2021-08-09T09:55:11.335Z\n"
 
 msgid "Known Proteins"
 msgstr ""
 
-msgid "Authors"
-msgstr ""
-
-msgid "Released"
+msgid "IUPAC InChI key"
 msgstr ""
 
 msgid "Go to Viewer"
@@ -29,32 +26,20 @@ msgstr ""
 msgid "EMDB"
 msgstr ""
 
-msgid "Entity"
+msgid "Entities"
 msgstr ""
 
 msgid "Ligands"
 msgstr ""
 
-msgid "Specimen"
+msgid "Organisms"
 msgstr ""
 
 msgid "Comp. Model"
 msgstr ""
 
-msgid "PDB-Redo"
-msgstr ""
-
-msgid "Isolde"
-msgstr ""
-
-msgid "Refmac"
-msgstr ""
-
-msgid "Experiment"
-msgstr ""
-
-msgid "Pocket"
-msgstr ""
-
 msgid "Details"
+msgstr ""
+
+msgid "Export as JSON"
 msgstr ""
