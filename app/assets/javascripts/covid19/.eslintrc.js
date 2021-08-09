@@ -10,10 +10,15 @@ module.exports = {
     ],
     rules: {
         "no-console": "off",
+        "no-debugger": "warn",
         "@typescript-eslint/camelcase": "off",
         "@typescript-eslint/explicit-function-return-type": ["off"],
         "react/prop-types": "off",
         "react/display-name": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "warn",
+            { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+        ],
         "no-unused-expressions": "off",
         "no-useless-concat": "off",
         "no-useless-constructor": "off",
@@ -37,6 +42,7 @@ module.exports = {
         "no-mixed-spaces-and-tabs": "off",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
+        "react/jsx-key": "warn",
     },
     plugins: ["cypress", "@typescript-eslint", "react-hooks"],
     env: { "cypress/globals": true },
