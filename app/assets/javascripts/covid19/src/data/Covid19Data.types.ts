@@ -1,3 +1,5 @@
+import { W3Color } from "../domain/entities/Covid19Info";
+
 export interface Covid19Data {
     Organisms: Dictionary<Maybe<Organism>>;
     Entities: Dictionary<Maybe<Entity>>;
@@ -43,13 +45,32 @@ export interface Structure {
 
 export type LigandRef = Dictionary<{ instances: number }>;
 
-export interface ComputationalModel {
-    source: "SWISS-MODEL" | "BSM-Arc";
+export type ComputationalModel =
+    | SwissComputationalModel
+    | BSMArcComputationalModel
+    | AlphaFoldComputationalModel;
+
+export interface SwissComputationalModel {
+    source: "SWISS-MODEL";
+    project: string;
     model: string;
     externalLink: [Url];
     queryLink: [Url];
-    project?: string;
     imageLink?: [Url];
+}
+
+export interface BSMArcComputationalModel {
+    source: "BSM-Arc";
+    model: string;
+    externalLink: [Url];
+    queryLink: [Url];
+}
+
+export interface AlphaFoldComputationalModel {
+    source: "AlphaFold";
+    model: string;
+    externalLink: [Url];
+    queryLink: [Url];
 }
 
 export interface DbItem {
@@ -62,20 +83,22 @@ export interface DbItem {
 }
 
 export interface Pdb extends DbItem {
-    validation?: Maybe<{
+    validation?: Partial<{
         "pdb-redo": Validation;
-        isolde: Validation;
+        isolde: Omit<Validation, "externalLink">;
     }>;
 }
 
 export interface Emdb extends DbItem {
-    validation?: string[];
+    validation?: EmdbValidation[];
 }
 
+type EmdbValidation = "DeepRes" | "MonoRes" | "Map-Q" | "FSC-Q";
+
 export interface Validation {
-    externalLink?: Url[];
+    externalLink: Url[];
     queryLink: Url[];
-    badgeColor: string;
+    badgeColor: W3Color;
 }
 
 export type Url = string;

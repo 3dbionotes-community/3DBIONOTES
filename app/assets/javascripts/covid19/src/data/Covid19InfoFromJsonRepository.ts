@@ -7,6 +7,7 @@ import {
     LigandInstance,
     Organism,
     Pdb,
+    PdbRedoValidation,
     Structure,
 } from "../domain/entities/Covid19Info";
 import { Covid19InfoRepository } from "../domain/repositories/Covid19InfoRepository";
@@ -15,24 +16,44 @@ import * as Data from "./Covid19Data.types";
 
 export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     get(): Covid19Info {
-        return {
-            //organisms: removeEmptyValues(data.Organisms),
-            structures: data.Structures.map(
-                (structure): Structure => ({
-                    ..._.omit(structure, ["ligand", "organism", "entities"]),
-                    title: (structure.title || []).join(", "),
-                    id: structure.entity.join("-"),
-                    pdb: structure.pdb ? getPdb(structure.pdb) : undefined,
-                    emdb: structure.emdb ? getEmdb(structure.emdb) : undefined,
-                    computationalModel: getComputationModel(structure.compModel),
-                    entities: getEntities(data.Entities, structure.entity),
-                    ligands: getLigands(data.Ligands, structure.ligand),
-                    organisms: getOrganisms(data.Organisms, structure.organism),
-                    details: "",
-                })
-            ),
-        };
+        const structures: Covid19Info["structures"] = data.Structures.map(
+            (structure): Structure => ({
+                ..._.omit(structure, ["ligand", "organism", "entities", "compModel"]),
+                title: (structure.title || []).join(", "),
+                id: getStructureId(structure),
+                pdb: structure.pdb ? getPdb(structure.pdb) : undefined,
+                emdb: structure.emdb ? getEmdb(structure.emdb) : undefined,
+                computationalModel: getComputationModel(structure.compModel),
+                entities: getEntities(data.Entities, structure.entity),
+                ligands: getLigands(data.Ligands, structure.ligand),
+                organisms: getOrganisms(data.Organisms, structure.organism),
+                details: "",
+            })
+        );
+
+        const repeatedIds = _(structures)
+            .countBy(structure => structure.id)
+            .toPairs()
+            .map(([structureId, structuresCount]) => (structuresCount > 1 ? structureId : null))
+            .compact()
+            .value();
+
+        if (repeatedIds.length > 0) {
+            console.error(`Repeated structure IDs: ${repeatedIds.join(", ")}`);
+        }
+
+        return { structures: _.uniqBy(structures, getId) };
     }
+}
+
+function getStructureId(structure: Data.Structure): string {
+    const parts = [
+        structure.pdb?.id,
+        structure.emdb?.id,
+        ...structure.entity,
+        ...structure.organism,
+    ];
+    return _(parts).compact().join("-");
 }
 
 function getComputationModel(
@@ -40,12 +61,22 @@ function getComputationModel(
 ): ComputationalModel | undefined {
     if (!dataCompModel) return undefined;
 
-    return {
-        ...dataCompModel,
-        externalLink: dataCompModel.externalLink[0],
-        queryLink: dataCompModel.queryLink[0],
-        imageLink: dataCompModel.imageLink?.[0],
-    };
+    switch (dataCompModel.source) {
+        case "SWISS-MODEL":
+            return {
+                ...dataCompModel,
+                externalLink: dataCompModel.externalLink[0],
+                queryLink: dataCompModel.queryLink[0],
+                imageLink: dataCompModel.imageLink?.[0],
+            };
+        case "BSM-Arc":
+        case "AlphaFold":
+            return {
+                ...dataCompModel,
+                externalLink: dataCompModel.externalLink[0],
+                queryLink: dataCompModel.queryLink[0],
+            };
+    }
 }
 
 function getLigands(
@@ -117,8 +148,9 @@ function getId<T extends { id: string }>(obj: T): string {
 }
 
 function getPdb<T extends Data.Pdb>(pdb: T): Pdb {
-    return {
-        ...pdb,
+    const pdbE: Pdb = {
+        ..._.omit(pdb, ["imageLink", "externalLink", "validation"]),
+        validations: getPdbValidations(pdb.validation),
         imageUrl:
             pdb.imageLink?.[0] ||
             `https://www.ebi.ac.uk/pdbe/static/entry/${pdb.id}_deposited_chain_front_image-200x200.png`,
@@ -128,11 +160,35 @@ function getPdb<T extends Data.Pdb>(pdb: T): Pdb {
             })
         ),
     };
+    return pdbE;
+}
+
+function getPdbValidations(dataValidations: Data.Pdb["validation"]): Pdb["validations"] {
+    const { "pdb-redo": pdbRedo, isolde } = dataValidations || {};
+
+    return _.compact([
+        pdbRedo
+            ? ({
+                  type: "pdbRedo",
+                  badgeColor: pdbRedo.badgeColor,
+                  externalLink: pdbRedo["externalLink"][0],
+                  queryLink: pdbRedo["queryLink"][0],
+              } as PdbRedoValidation)
+            : null,
+        isolde
+            ? {
+                  type: "isolde",
+                  badgeColor: isolde.badgeColor,
+                  queryLink: isolde["queryLink"][0],
+              }
+            : null,
+    ]);
 }
 
 function getEmdb<T extends Data.Emdb>(emdb: T): Emdb {
-    return {
-        ...emdb,
+    const emdbE: Emdb = {
+        ..._.omit(emdb, ["imageLink", "externalLink", "validation"]),
+        validations: emdb.validation || [],
         imageUrl:
             emdb.imageLink?.[0] ||
             `https://www.ebi.ac.uk/pdbe/static/entry/EMD-${emdb.id}/400_${emdb.id}.gif`,
@@ -142,6 +198,7 @@ function getEmdb<T extends Data.Emdb>(emdb: T): Emdb {
             })
         ),
     };
+    return emdbE;
 }
 
 function withPluralNames<T extends { name: string[] }>(value: T): UseNamesField<T> {

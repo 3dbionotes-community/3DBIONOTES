@@ -42,13 +42,33 @@ export interface Structure {
     details: Maybe<string>;
 }
 
-export interface ComputationalModel {
-    source: "SWISS-MODEL" | "BSM-Arc";
+export type ComputationalModel =
+    | SwissComputationalModel
+    | BSMArcComputationalModel
+    | AlphaFoldComputationalModel;
+
+export interface SwissComputationalModel {
+    source: "SWISS-MODEL";
+    // TODO: id: project-model
+    project: string;
     model: string;
     externalLink: Url;
     queryLink: Url;
-    project?: string;
     imageLink?: Url;
+}
+
+export interface BSMArcComputationalModel {
+    source: "BSM-Arc";
+    model: string;
+    externalLink: Url;
+    queryLink: Url;
+}
+
+export interface AlphaFoldComputationalModel {
+    source: "AlphaFold";
+    model: string;
+    externalLink: Url;
+    queryLink: Url;
 }
 
 export interface DbItem {
@@ -66,15 +86,29 @@ export interface Link {
     tooltip?: string;
 }
 
+export interface PdbRedoValidation {
+    type: "pdbRedo";
+    externalLink: Url;
+    queryLink: Url;
+    badgeColor: W3Color;
+}
+
+export interface IsoldeValidation {
+    type: "isolde";
+    queryLink: Url;
+    badgeColor: W3Color;
+}
+
+export type W3Color = "w3-cyan" | "w3-turq";
+
+export type PdbValidation = PdbRedoValidation | IsoldeValidation;
+
 export interface Pdb extends DbItem {
-    validation?: Maybe<{
-        "pdb-redo": Validation;
-        isolde: Validation;
-    }>;
+    validations: PdbValidation[];
 }
 
 export interface Emdb extends DbItem {
-    validation?: Maybe<string[]>;
+    validations: string[];
 }
 
 export interface Validation {
@@ -90,3 +124,5 @@ export type Dictionary<T> = Record<Id, T>;
 type Maybe<T> = T | undefined | null;
 
 export type Url = string;
+
+export type Ref = { id: Id };
