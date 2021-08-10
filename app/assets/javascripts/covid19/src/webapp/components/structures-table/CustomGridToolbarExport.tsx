@@ -1,5 +1,4 @@
-// @ts-nocheck
-// TODO
+// @ts-nocheck TODO
 import React from "react";
 import { Button, MenuItem, MenuList } from "@material-ui/core";
 import { GridMenu } from "@material-ui/data-grid";
@@ -9,12 +8,13 @@ export interface CustomGridToolbarExportProps {
     columns: unknown;
 }
 
-export const CustomGridToolbarExport: React.FC = React.memo(() => {
+export const CustomGridToolbarExport: React.FC = React.memo(props => {
+    const { columns } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleMenuOpen = (event: any) => setAnchorEl(event.currentTarget);
     const handleMenuClose = () => setAnchorEl(null);
 
-    const exportToCsv = () => {
+    const exportToCsv = React.useCallback(() => {
         const visibleColumns = columns.filter(column => column.hide === false).map(x => x.field);
         const userRows = getRenderedRowsWithVisibleColumnsCsv();
         const table = [visibleColumns, ...userRows];
@@ -23,7 +23,7 @@ export const CustomGridToolbarExport: React.FC = React.memo(() => {
         const datetime = moment().format("YYYY-MM-DD_HH-mm-ss");
         const filename = `${protein.name}-${datetime}.csv`;
         FileSaver.saveAs(blob, filename);
-    };
+    }, []);
 
     return (
         <React.Fragment>
@@ -38,6 +38,7 @@ export const CustomGridToolbarExport: React.FC = React.memo(() => {
             >
                 toolbarExport
             </Button>
+
             <GridMenu
                 open={Boolean(anchorEl)}
                 target={anchorEl}
@@ -45,7 +46,7 @@ export const CustomGridToolbarExport: React.FC = React.memo(() => {
                 position="bottom-start"
             >
                 <MenuList className="MuiDataGrid-gridMenuList" autoFocusItem={Boolean(anchorEl)}>
-                    <MenuItem onClick={exportToCsv}>Export to CSV</MenuItem>
+                    <MenuItem onClick={exportToCsv}>{i18n.t("Export to CSV")}</MenuItem>
                     <MenuItem>
                         <DownloadJsonLink />
                     </MenuItem>
@@ -57,9 +58,10 @@ export const CustomGridToolbarExport: React.FC = React.memo(() => {
 
 const DownloadJsonLink: React.FC = React.memo(() => {
     const rowsWithVisibleColumns = getRenderedRowsWithVisibleColumns();
+
     return (
         <a
-            style={{ textDecoration: "none", color: "black" }}
+            style={styles.link}
             href={`data:text/json;charset=utf-8,${encodeURIComponent(
                 JSON.stringify(rowsWithVisibleColumns)
             )}`}
@@ -70,8 +72,12 @@ const DownloadJsonLink: React.FC = React.memo(() => {
     );
 });
 
-const ExportIcon = () => (
+const ExportIcon: React.FC = React.memo(() => (
     <svg className="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"></path>
     </svg>
-);
+));
+
+const styles = {
+    link: { textDecoration: "none", color: "black" },
+};

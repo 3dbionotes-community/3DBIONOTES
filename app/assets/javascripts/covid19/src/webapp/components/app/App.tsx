@@ -12,7 +12,7 @@ declare global {
 
 interface AppProps {}
 
-export const App: React.FC<AppProps> = () => {
+export const App: React.FC<AppProps> = React.memo(() => {
     const compositionRoot = getCompositionRoot();
     const appContext = { compositionRoot, config: {} };
 
@@ -21,4 +21,4 @@ export const App: React.FC<AppProps> = () => {
             <Root />
         </AppContext.Provider>
     );
-};
+});

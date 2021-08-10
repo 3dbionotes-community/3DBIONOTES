@@ -7,7 +7,11 @@ interface SpinnerProps {
 
 export const Spinner: React.FunctionComponent<SpinnerProps> = React.memo(({ isVisible }) => (
     <React.Fragment>
-        <div style={{ flex: "10 1 auto" }}></div>
+        <div style={styles.div}></div>
         {isVisible && <CircularProgress />}
     </React.Fragment>
 ));
+
+const styles = {
+    div: { flex: "10 1 auto" },
+};

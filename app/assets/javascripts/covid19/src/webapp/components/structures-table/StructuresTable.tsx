@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import {
     DataGrid,
+    DataGridProps,
     GridToolbarColumnsButton,
     GridToolbarContainer,
     GridToolbarFilterButton,
@@ -13,7 +14,7 @@ export interface StructuresTableProps {
     data: Covid19Info;
 }
 
-export const StructuresTable: React.FC<StructuresTableProps> = props => {
+export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
     const { data } = props;
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(pageSizes[0]);
@@ -22,36 +23,44 @@ export const StructuresTable: React.FC<StructuresTableProps> = props => {
     const classes = useStyles();
     const components = React.useMemo(() => ({ Toolbar: CustomToolbar }), []);
 
+    const setPageFromParams = React.useCallback<NonNullable<DataGridProps["onPageChange"]>>(
+        params => setPage(params.page),
+        []
+    );
+
+    const setFirstPage = React.useCallback<NonNullable<DataGridProps["onSortModelChange"]>>(
+        () => setPage(0),
+        []
+    );
+
+    const setPageSizeFromParams = React.useCallback<NonNullable<DataGridProps["onPageSizeChange"]>>(
+        params => setPageSize(params.pageSize),
+        []
+    );
+
     return (
-        <div style={{ display: "flex" }}>
-            <div style={{ flexGrow: 1 }}>
-                <DataGrid
-                    page={page}
-                    //onStateChange={setRenderedRowsFromState}
-                    className={classes.root}
-                    rowHeight={195}
-                    //onSortModelChange={setFirstPage}
-                    sortingOrder={sortingOrder}
-                    rows={rows}
-                    autoHeight
-                    columns={columns}
-                    components={components}
-                    disableColumnMenu={true}
-                    pageSize={pageSize}
-                    onPageChange={params => {
-                        setPage(params.page);
-                    }}
-                    onPageSizeChange={params => {
-                        setPageSize(params.pageSize);
-                    }}
-                    // onColumnVisibilityChange={updateVisibilityColumns}
-                    pagination
-                    rowsPerPageOptions={pageSizes}
-                />
-            </div>
+        <div className={classes.wrapper}>
+            <DataGrid
+                page={page}
+                // onColumnVisibilityChange={updateVisibilityColumns}
+                onSortModelChange={setFirstPage}
+                className={classes.root}
+                rowHeight={200}
+                sortingOrder={sortingOrder}
+                rows={rows}
+                autoHeight
+                columns={columns}
+                components={components}
+                disableColumnMenu={true}
+                rowsPerPageOptions={pageSizes}
+                pagination={true}
+                pageSize={pageSize}
+                onPageChange={setPageFromParams}
+                onPageSizeChange={setPageSizeFromParams}
+            />
         </div>
     );
-};
+});
 
 const CustomToolbar: React.FC = React.memo(() => (
     <GridToolbarContainer>
@@ -65,10 +74,11 @@ const useStyles = makeStyles({
     root: {
         "&.MuiDataGrid-root .MuiDataGrid-cell": {
             whiteSpace: "normal",
-            display: "flex", // "block" for non-vertically-centered text
+            display: "flex", // "flex": center vertically. "block" otherwise
         },
         "&.MuiDataGrid-root .MuiDataGrid-cellWithRenderer": {},
     },
+    wrapper: { display: "flex", flexGrow: 1 },
 });
 
 const pageSizes = [25, 50, 75, 100];

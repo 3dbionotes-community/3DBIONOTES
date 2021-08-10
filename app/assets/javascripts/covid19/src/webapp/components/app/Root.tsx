@@ -6,7 +6,7 @@ import { StructuresTable } from "../structures-table/StructuresTable";
 
 interface RootProps {}
 
-export const Root: React.FC<RootProps> = () => {
+export const Root: React.FC<RootProps> = React.memo(() => {
     const { compositionRoot } = useAppContext();
     const data = compositionRoot.getCovid19Info.execute();
     window.app = { data };
@@ -24,7 +24,7 @@ export const Root: React.FC<RootProps> = () => {
             <StructuresTable data={data} />
         </Body>
     );
-};
+});
 
 const HeaderBanner = styled.div`
     padding: 0;
