@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2021-08-10T08:44:01.367Z\n"
-"PO-Revision-Date: 2021-08-10T08:44:01.367Z\n"
+"POT-Creation-Date: 2021-08-10T10:37:59.288Z\n"
+"PO-Revision-Date: 2021-08-10T10:37:59.288Z\n"
 
 msgid "Known Proteins"
 msgstr ""
@@ -72,6 +72,9 @@ msgid "Export to CSV"
 msgstr ""
 
 msgid "Export as JSON"
+msgstr ""
+
+msgid "Search by title/PDB/EMDB"
 msgstr ""
 
 msgid "IUPAC InChI key"

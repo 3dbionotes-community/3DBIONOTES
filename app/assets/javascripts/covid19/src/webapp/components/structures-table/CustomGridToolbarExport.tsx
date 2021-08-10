@@ -23,7 +23,7 @@ export const CustomGridToolbarExport: React.FC = React.memo(props => {
         const datetime = moment().format("YYYY-MM-DD_HH-mm-ss");
         const filename = `${protein.name}-${datetime}.csv`;
         FileSaver.saveAs(blob, filename);
-    }, []);
+    }, [columns]);
 
     return (
         <React.Fragment>

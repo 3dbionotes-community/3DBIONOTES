@@ -128,3 +128,15 @@ type Maybe<T> = T | undefined | null;
 export type Url = string;
 
 export type Ref = { id: Id };
+
+export function searchStructures(structures: Structure[], search: string): Structure[] {
+    const text = search.trim().toLocaleLowerCase();
+    if (!text) return structures;
+
+    return structures.filter(
+        structure =>
+            structure.title.toLocaleLowerCase().includes(text) ||
+            structure.pdb?.id.toLocaleLowerCase().includes(text) ||
+            structure.emdb?.id.toLocaleLowerCase().includes(text)
+    );
+}

@@ -14,7 +14,7 @@ export const ValidationsCell: React.FC<CellProps> = React.memo(props => {
                 switch (pdbValidation.type) {
                     case "pdbRedo":
                         return (
-                            <React.Fragment>
+                            <React.Fragment key="pdb-redo">
                                 <BadgeLink
                                     key="pdb-redo-external"
                                     url={pdbValidation.externalLink}
@@ -34,15 +34,13 @@ export const ValidationsCell: React.FC<CellProps> = React.memo(props => {
                         );
                     case "isolde":
                         return (
-                            <React.Fragment>
-                                <BadgeLink
-                                    key="pdb-isolde"
-                                    url={pdbValidation.queryLink}
-                                    text={i18n.t("Isolde")}
-                                    icon="viewer"
-                                    color={pdbValidation.badgeColor}
-                                />
-                            </React.Fragment>
+                            <BadgeLink
+                                key="pdb-isolde"
+                                url={pdbValidation.queryLink}
+                                text={i18n.t("Isolde")}
+                                icon="viewer"
+                                color={pdbValidation.badgeColor}
+                            />
                         );
                     default:
                         throw new Error("Unsupported");

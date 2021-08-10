@@ -1,42 +1,42 @@
 import { makeStyles } from "@material-ui/core";
-import {
-    DataGrid,
-    DataGridProps,
-    GridToolbarColumnsButton,
-    GridToolbarContainer,
-    GridToolbarFilterButton,
-} from "@material-ui/data-grid";
+import { DataGrid, DataGridProps } from "@material-ui/data-grid";
 import React from "react";
-import { Covid19Info } from "../../../domain/entities/Covid19Info";
+import { Covid19Info, searchStructures } from "../../../domain/entities/Covid19Info";
 import { getColumns } from "./Columns";
+import { Toolbar, ToolbarProps } from "./Toolbar";
 
 export interface StructuresTableProps {
     data: Covid19Info;
 }
 
+type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
+
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
     const { data } = props;
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(pageSizes[0]);
-    const rows = data.structures;
     const columns = React.useMemo(() => getColumns(data), [data]);
     const classes = useStyles();
-    const components = React.useMemo(() => ({ Toolbar: CustomToolbar }), []);
+    const [search, setSearch] = React.useState("");
 
-    const setPageFromParams = React.useCallback<NonNullable<DataGridProps["onPageChange"]>>(
-        params => setPage(params.page),
-        []
+    const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
+
+    const componentsProps = React.useMemo<{ toolbar: ToolbarProps }>(
+        () => ({ toolbar: { search, setSearch } }),
+        [search, setSearch]
     );
 
-    const setFirstPage = React.useCallback<NonNullable<DataGridProps["onSortModelChange"]>>(
-        () => setPage(0),
-        []
-    );
+    const setPageFromParams = React.useCallback<GridProp<"onPageChange">>(params => {
+        return setPage(params.page);
+    }, []);
 
-    const setPageSizeFromParams = React.useCallback<NonNullable<DataGridProps["onPageSizeChange"]>>(
-        params => setPageSize(params.pageSize),
-        []
-    );
+    const setFirstPage = React.useCallback<GridProp<"onSortModelChange">>(() => setPage(0), []);
+
+    const setPageSizeFromParams = React.useCallback<GridProp<"onPageSizeChange">>(params => {
+        return setPageSize(params.pageSize);
+    }, []);
+
+    const structures = searchStructures(data.structures, search);
 
     return (
         <div className={classes.wrapper}>
@@ -47,28 +47,21 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 className={classes.root}
                 rowHeight={200}
                 sortingOrder={sortingOrder}
-                rows={rows}
+                rows={structures}
                 autoHeight
                 columns={columns}
-                components={components}
                 disableColumnMenu={true}
                 rowsPerPageOptions={pageSizes}
                 pagination={true}
                 pageSize={pageSize}
                 onPageChange={setPageFromParams}
                 onPageSizeChange={setPageSizeFromParams}
+                components={components}
+                componentsProps={componentsProps}
             />
         </div>
     );
 });
-
-const CustomToolbar: React.FC = React.memo(() => (
-    <GridToolbarContainer>
-        <GridToolbarColumnsButton />
-        <GridToolbarFilterButton />
-        {/*<CustomGridToolbarExport /> */}
-    </GridToolbarContainer>
-));
 
 const useStyles = makeStyles({
     root: {

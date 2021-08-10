@@ -99,6 +99,7 @@ export function getColumns(data: Covid19Info): GridColDef[] {
                 ...column,
                 renderCell: params => {
                     const CellComponent = column.renderCell;
+
                     return (
                         <div style={styles.column}>
                             <CellComponent row={params.row as Row} data={data} />
@@ -112,7 +113,7 @@ export function getColumns(data: Covid19Info): GridColDef[] {
 
 type Ref = { id?: string };
 
-/* Compare IDs keeping always empty values to the end (it supports only single column sorting) */
+/* Compare IDs keeping always empty values to the end (it only supports single column sorting) */
 function compareIds(
     cell1: GridCellValue | undefined,
     cell2: GridCellValue | undefined,
