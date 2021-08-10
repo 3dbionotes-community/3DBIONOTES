@@ -15,11 +15,7 @@ export const ComputationalModelCell: React.FC<CellProps> = React.memo(props => {
     const { computationalModel } = props.row;
     if (!computationalModel) return null;
 
-    const { source, externalLink, queryLink } = computationalModel;
-    const name =
-        computationalModel.source === "SWISS-MODEL"
-            ? computationalModel.project
-            : computationalModel.model;
+    const { source, externalLink, queryLink, name } = computationalModel;
 
     return (
         <div style={styles.thumbnailWrapper}>

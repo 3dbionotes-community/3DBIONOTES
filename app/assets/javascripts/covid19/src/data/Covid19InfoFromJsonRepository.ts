@@ -65,6 +65,7 @@ function getComputationModel(
         case "SWISS-MODEL":
             return {
                 ...dataCompModel,
+                name: [dataCompModel.project, dataCompModel.model].join("-"),
                 externalLink: dataCompModel.externalLink[0],
                 queryLink: dataCompModel.queryLink[0],
                 imageLink: dataCompModel.imageLink?.[0],
@@ -73,6 +74,7 @@ function getComputationModel(
         case "AlphaFold":
             return {
                 ...dataCompModel,
+                name: dataCompModel.model,
                 externalLink: dataCompModel.externalLink[0],
                 queryLink: dataCompModel.queryLink[0],
             };

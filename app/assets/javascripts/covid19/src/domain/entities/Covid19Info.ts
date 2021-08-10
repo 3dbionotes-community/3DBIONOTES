@@ -49,7 +49,7 @@ export type ComputationalModel =
 
 export interface SwissComputationalModel {
     source: "SWISS-MODEL";
-    // TODO: id: project-model
+    name: string;
     project: string;
     model: string;
     externalLink: Url;
@@ -59,6 +59,7 @@ export interface SwissComputationalModel {
 
 export interface BSMArcComputationalModel {
     source: "BSM-Arc";
+    name: string;
     model: string;
     externalLink: Url;
     queryLink: Url;
@@ -66,6 +67,7 @@ export interface BSMArcComputationalModel {
 
 export interface AlphaFoldComputationalModel {
     source: "AlphaFold";
+    name: string;
     model: string;
     externalLink: Url;
     queryLink: Url;
