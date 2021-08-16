@@ -1,15 +1,16 @@
-// @ts-nocheck TODO
+// @ts-nocheck
 import React from "react";
 import { Button, MenuItem, MenuList } from "@material-ui/core";
 import { GridMenu } from "@material-ui/data-grid";
 import i18n from "../../../utils/i18n";
+import { Structure } from "../../../domain/entities/Covid19Info";
 
 export interface CustomGridToolbarExportProps {
-    columns: unknown;
+    structures: Structure[];
 }
 
-export const CustomGridToolbarExport: React.FC = React.memo(props => {
-    const { columns } = props;
+export const CustomGridToolbarExport: React.FC<CustomGridToolbarExportProps> = React.memo(props => {
+    const { structures } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleMenuOpen = (event: any) => setAnchorEl(event.currentTarget);
     const handleMenuClose = () => setAnchorEl(null);

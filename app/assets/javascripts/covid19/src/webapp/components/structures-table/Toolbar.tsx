@@ -11,11 +11,14 @@ export const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
     const { search, setSearch } = props;
 
     return (
-        <GridToolbarContainer style={styles.container}>
-            <SearchBar value={search} setValue={setSearch} />
-            {/* <CustomGridToolbarExport /> */}
-            <GridToolbarColumnsButton style={styles.columns} />
-        </GridToolbarContainer>
+        <React.Fragment>
+            <GridToolbarContainer style={styles.container}>
+                <SearchBar value={search} setValue={setSearch} />
+                {/*<CustomGridToolbarExport columns={1} />*/}
+                <GridToolbarColumnsButton style={styles.columns} />
+            </GridToolbarContainer>
+            <div>TOP SCROLLBAR PLACEHOLDER</div>
+        </React.Fragment>
     );
 });
 
