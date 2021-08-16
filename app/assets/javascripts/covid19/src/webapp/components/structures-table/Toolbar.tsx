@@ -1,6 +1,8 @@
+import { makeStyles } from "@material-ui/core";
 import { GridToolbarColumnsButton, GridToolbarContainer } from "@material-ui/data-grid";
 import React from "react";
 import { SearchBar } from "./SearchBar";
+import "./Toolbar.css";
 
 export interface ToolbarProps {
     search: string;
