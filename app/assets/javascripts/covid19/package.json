@@ -60,6 +60,7 @@
         "@types/jest": "26.0.19",
         "@types/lodash": "4.14.166",
         "@types/material-ui": "0.21.8",
+        "@types/mime-types": "^2.1.0",
         "@types/react": "17.0.0",
         "@types/react-dom": "17.0.0",
         "@types/react-router-dom": "5.1.6",
