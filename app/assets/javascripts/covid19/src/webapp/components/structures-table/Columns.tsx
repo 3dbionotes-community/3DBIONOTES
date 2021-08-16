@@ -18,70 +18,94 @@ import { ComputationalModelCell } from "./cells/ComputationalModelCell";
 import { ValidationsCell } from "./ValidationsCell";
 
 type Row = Structure;
-type Field = keyof Row | "validations";
+export type Field = keyof Row | "validations";
 
 export interface CellProps {
     data: Covid19Info;
     row: Row;
 }
 
-export interface ColumnAttrs<F extends Field> extends Omit<GridColDef, "field" | "renderCell"> {
+export interface ColumnAttrs<F extends Field>
+    extends Omit<GridColDef, "headerName" | "field" | "renderCell"> {
+    headerName: string;
     field: F;
     renderCell: React.FC<{ row: Row; data: Covid19Info }>;
+    renderString(row: Row): string | undefined;
 }
 
 function column<F extends Field>(field: F, options: Omit<ColumnAttrs<F>, "field">): ColumnAttrs<F> {
     return { ...options, field, hide: false, headerAlign: "center" };
 }
 
-export const columnsBase: ColumnAttrs<Field>[] = [
+export type Columns = ColumnAttrs<Field>[];
+
+export const columnsBase: Columns = [
     column("title", {
         headerName: i18n.t("Title"),
         sortable: true,
         width: 220,
         renderCell: TitleCell,
+        renderString: row => row.title,
     }),
     column("pdb", {
         headerName: i18n.t("PDB"),
         width: 120,
         renderCell: PdbCell,
         sortComparator: compareIds,
+        renderString: row => row.pdb?.id,
     }),
     column("emdb", {
         headerName: i18n.t("EMDB"),
         width: 120,
         renderCell: EmdbCell,
         sortComparator: compareIds,
+        renderString: row => row.emdb?.id,
     }),
     column("validations", {
         headerName: i18n.t("Validations"),
         width: 130,
         renderCell: ValidationsCell,
+        renderString: row => {
+            const pdbValidations = (row.pdb?.validations || []).map(v => v.type);
+            const emdbValidations = row.emdb?.validations || [];
+            const validations = [...pdbValidations, ...emdbValidations];
+            return validations.join(", ");
+        },
     }),
     column("entities", {
         headerName: i18n.t("Entities"),
         width: 120,
         sortable: false,
         renderCell: EntityCell,
+        renderString: row => row.entities.map(entity => entity.id).join(", "),
     }),
     column("ligands", {
         headerName: i18n.t("Ligands"),
         width: 180,
         sortable: false,
         renderCell: LigandsCell,
+        renderString: row =>
+            row.ligands.map(ligand => `${ligand.instances} ${ligand.info.id}`).join(", "),
     }),
     column("organisms", {
         headerName: i18n.t("Organisms"),
         width: 150,
         sortable: false,
         renderCell: OrganismCell,
+        renderString: row => row.organisms.map(organism => organism.id).join(", "),
     }),
     column("computationalModel", {
         headerName: i18n.t("Comp. Model"),
         width: 180,
         sortable: false,
-        renderCell: ComputationalModelCell,
         sortComparator: compareIds,
+        renderCell: ComputationalModelCell,
+        renderString: row => {
+            const { computationalModel } = row;
+            return computationalModel
+                ? `${computationalModel?.source}: ${computationalModel?.name}`
+                : undefined;
+        },
     }),
     column("details", {
         headerName: i18n.t("Details"),
@@ -89,14 +113,16 @@ export const columnsBase: ColumnAttrs<Field>[] = [
         width: 200,
         sortable: false,
         renderCell: DetailsCell,
+        renderString: row => row.details || "",
     }),
 ];
 
-export function getColumns(data: Covid19Info): GridColDef[] {
-    return columnsBase.map(
+export function getColumns(data: Covid19Info): { definition: GridColDef[]; base: Columns } {
+    const definition = columnsBase.map(
         (column): GridColDef => {
             return {
                 ...column,
+
                 renderCell: params => {
                     const CellComponent = column.renderCell;
 
@@ -109,6 +135,8 @@ export function getColumns(data: Covid19Info): GridColDef[] {
             };
         }
     );
+
+    return { definition, base: columnsBase };
 }
 
 type Ref = { id?: string };
