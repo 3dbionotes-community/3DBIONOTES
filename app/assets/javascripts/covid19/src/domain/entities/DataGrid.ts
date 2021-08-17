@@ -7,10 +7,8 @@ export interface DataGrid {
 
 type Columns = Column[];
 
-export type Field = keyof Structure | "validations";
-
 interface Column {
     headerName: string;
-    field: Field;
+    field: keyof Structure;
     renderString(structure: Structure): string | undefined;
 }

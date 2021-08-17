@@ -40,6 +40,10 @@ export interface Structure {
     computationalModel: Maybe<ComputationalModel>;
     ligands: LigandInstance[];
     details: Maybe<string>;
+    validations: {
+        pdb: PdbValidation[];
+        emdb: EmdbValidation[];
+    };
 }
 
 export type ComputationalModel =
@@ -104,14 +108,11 @@ export interface IsoldeValidation {
 export type W3Color = "w3-cyan" | "w3-turq";
 
 export type PdbValidation = PdbRedoValidation | IsoldeValidation;
+export type EmdbValidation = string;
 
-export interface Pdb extends DbItem {
-    validations: PdbValidation[];
-}
+export interface Pdb extends DbItem {}
 
-export interface Emdb extends DbItem {
-    validations: string[];
-}
+export interface Emdb extends DbItem {}
 
 export interface Validation {
     externalLink?: Url[];

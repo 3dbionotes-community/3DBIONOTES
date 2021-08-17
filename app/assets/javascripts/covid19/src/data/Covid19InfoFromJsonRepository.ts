@@ -8,6 +8,7 @@ import {
     Organism,
     Pdb,
     PdbRedoValidation,
+    PdbValidation,
     Structure,
 } from "../domain/entities/Covid19Info";
 import { Covid19InfoRepository } from "../domain/repositories/Covid19InfoRepository";
@@ -28,6 +29,10 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
                 ligands: getLigands(data.Ligands, structure.ligand),
                 organisms: getOrganisms(data.Organisms, structure.organism),
                 details: "",
+                validations: {
+                    pdb: getPdbValidations(structure.pdb?.validation),
+                    emdb: structure.emdb?.validation || [],
+                },
             })
         );
 
@@ -152,7 +157,6 @@ function getId<T extends { id: string }>(obj: T): string {
 function getPdb<T extends Data.Pdb>(pdb: T): Pdb {
     const pdbE: Pdb = {
         ..._.omit(pdb, ["imageLink", "externalLink", "validation"]),
-        validations: getPdbValidations(pdb.validation),
         imageUrl:
             pdb.imageLink?.[0] ||
             `https://www.ebi.ac.uk/pdbe/static/entry/${pdb.id}_deposited_chain_front_image-200x200.png`,
@@ -165,7 +169,7 @@ function getPdb<T extends Data.Pdb>(pdb: T): Pdb {
     return pdbE;
 }
 
-function getPdbValidations(dataValidations: Data.Pdb["validation"]): Pdb["validations"] {
+function getPdbValidations(dataValidations: Data.Pdb["validation"]): PdbValidation[] {
     const { "pdb-redo": pdbRedo, isolde } = dataValidations || {};
 
     return _.compact([
@@ -190,7 +194,6 @@ function getPdbValidations(dataValidations: Data.Pdb["validation"]): Pdb["valida
 function getEmdb<T extends Data.Emdb>(emdb: T): Emdb {
     const emdbE: Emdb = {
         ..._.omit(emdb, ["imageLink", "externalLink", "validation"]),
-        validations: emdb.validation || [],
         imageUrl:
             emdb.imageLink?.[0] ||
             `https://www.ebi.ac.uk/pdbe/static/entry/EMD-${emdb.id}/400_${emdb.id}.gif`,

@@ -4,13 +4,11 @@ import { CellProps } from "./Columns";
 import { BadgeLink } from "./BadgeLink";
 
 export const ValidationsCell: React.FC<CellProps> = React.memo(props => {
-    const { pdb, emdb } = props.row;
-    const pdbValidations = pdb?.validations || [];
-    const emdbValidations = emdb?.validations || [];
+    const { validations } = props.row;
 
     return (
         <div>
-            {pdbValidations.map(pdbValidation => {
+            {validations.pdb.map(pdbValidation => {
                 switch (pdbValidation.type) {
                     case "pdbRedo":
                         return (
@@ -47,7 +45,7 @@ export const ValidationsCell: React.FC<CellProps> = React.memo(props => {
                 }
             })}
 
-            {emdbValidations.map(emdbValidation => (
+            {validations.emdb.map(emdbValidation => (
                 <BadgeLink key={emdbValidation} text={emdbValidation} />
             ))}
         </div>

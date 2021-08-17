@@ -18,7 +18,7 @@ import { ComputationalModelCell } from "./cells/ComputationalModelCell";
 import { ValidationsCell } from "./ValidationsCell";
 
 type Row = Structure;
-export type Field = keyof Row | "validations";
+export type Field = keyof Row;
 
 export interface CellProps {
     data: Covid19Info;
@@ -66,10 +66,9 @@ export const columnsBase: Columns = [
         width: 130,
         renderCell: ValidationsCell,
         renderString: row => {
-            const pdbValidations = (row.pdb?.validations || []).map(v => v.type);
-            const emdbValidations = row.emdb?.validations || [];
-            const validations = [...pdbValidations, ...emdbValidations];
-            return validations.join(", ");
+            const { validations } = row;
+            const allValidations = [...validations.pdb.map(v => v.type), ...validations.emdb];
+            return allValidations.join(", ");
         },
     }),
     column("entities", {
