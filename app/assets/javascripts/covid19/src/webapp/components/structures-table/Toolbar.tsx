@@ -13,7 +13,7 @@ export interface ToolbarProps {
     virtualScrollbarProps: VirtualScrollbarProps;
 }
 
-export const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
+export const Toolbar: React.FC<ToolbarProps> = props => {
     const { search, setSearch, dataGrid, virtualScrollbarProps } = props;
 
     return (
@@ -27,7 +27,7 @@ export const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
             <VirtualScroll {...virtualScrollbarProps} />
         </React.Fragment>
     );
-});
+};
 
 export const styles = {
     container: { padding: 10 },
