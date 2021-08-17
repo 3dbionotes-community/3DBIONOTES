@@ -23,14 +23,20 @@ export const VirtualScroll: React.FC<VirtualScrollbarProps> = React.memo(props =
 
     const slideRef = React.useRef<HTMLDivElement>(null);
 
+    const scrollLeftRef = React.useRef<number>(0);
+
     React.useEffect(() => {
         const el = slideRef.current;
-        if (el) el.scrollLeft = scrollLeft;
+        if (el) {
+            el.scrollLeft = scrollLeft;
+            scrollLeftRef.current = scrollLeft;
+        }
     }, [scrollLeft]);
 
     const notifyScroll = React.useCallback<NonNullable<DOMAttributes<HTMLDivElement>["onScroll"]>>(
         ev => {
-            onScrollLeftChange(ev.currentTarget.scrollLeft);
+            const el = ev.currentTarget;
+            if (scrollLeftRef.current !== el.scrollLeft) onScrollLeftChange(el.scrollLeft);
         },
         [onScrollLeftChange]
     );
@@ -75,7 +81,10 @@ export function useVirtualScrollbarForDataGrid() {
         }
     }, []);
 
-    const virtualScrollbarProps: VirtualScrollbarProps = { displayInfo, onScrollLeftChange };
+    const virtualScrollbarProps: VirtualScrollbarProps = React.useMemo(
+        () => ({ displayInfo, onScrollLeftChange }),
+        [displayInfo, onScrollLeftChange]
+    );
 
     return { virtualScrollbarProps, updateScrollBarFromStateChange };
 }
