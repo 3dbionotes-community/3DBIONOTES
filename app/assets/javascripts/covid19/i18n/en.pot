@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2021-08-10T10:37:59.288Z\n"
-"PO-Revision-Date: 2021-08-10T10:37:59.288Z\n"
+"POT-Creation-Date: 2021-08-16T12:15:47.888Z\n"
+"PO-Revision-Date: 2021-08-16T12:15:47.888Z\n"
 
 msgid "Known Proteins"
 msgstr ""
@@ -68,10 +68,13 @@ msgstr ""
 msgid "Organisms"
 msgstr ""
 
-msgid "Export to CSV"
+msgid "Export"
 msgstr ""
 
-msgid "Export as JSON"
+msgid "Save as CSV"
+msgstr ""
+
+msgid "Save as JSON"
 msgstr ""
 
 msgid "Search by title/PDB/EMDB"
