@@ -1,10 +1,11 @@
 import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
-import { DataGrid, DataGridProps, GridApi } from "@material-ui/data-grid";
+import { DataGrid, DataGridProps } from "@material-ui/data-grid";
 import { Covid19Info, searchStructures } from "../../../domain/entities/Covid19Info";
 import { Field, getColumns } from "./Columns";
 import { Toolbar, ToolbarProps } from "./Toolbar";
+import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
 
 export interface StructuresTableProps {
     data: Covid19Info;
@@ -20,15 +21,20 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const classes = useStyles();
     const [search, setSearch] = React.useState("");
 
-    const [visibleDefColumns, setVisibleDefColumns] = React.useState(columns.definition);
-    const setVisibileColumnsFromState = React.useCallback<
-        NonNullable<DataGridProps["onStateChange"]>
+    const [columnsVisibility, setColumnsVisibility] = React.useState<Record<string, boolean>>({});
+    const visibleDefColumns = React.useMemo(() => {
+        return columns.definition.filter(column => columnsVisibility[column.field] !== false);
+    }, [columnsVisibility, columns.definition]);
+
+    const updateColumnsVisibility = React.useCallback<
+        NonNullable<DataGridProps["onColumnVisibilityChange"]>
     >(params => {
-        setVisibleDefColumns((params.api as GridApi).getVisibleColumns());
+        setColumnsVisibility(prevValue => ({ ...prevValue, [params.field]: params.isVisible }));
     }, []);
 
     const structures = searchStructures(data.structures, search);
     const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
+
     const dataGrid = React.useMemo(() => {
         const visibilityMapping = _.fromPairs(
             visibleDefColumns.map(gridColDef => [gridColDef.field, !gridColDef.hide])
@@ -37,9 +43,14 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         return { columns: visibleColumns, structures };
     }, [columns, structures, visibleDefColumns]);
 
+    const {
+        virtualScrollbarProps,
+        updateScrollBarFromStateChange,
+    } = useVirtualScrollbarForDataGrid();
+
     const componentsProps = React.useMemo<{ toolbar: ToolbarProps }>(() => {
-        return { toolbar: { search, setSearch, dataGrid } };
-    }, [search, setSearch, dataGrid]);
+        return { toolbar: { search, setSearch, dataGrid, virtualScrollbarProps } };
+    }, [search, setSearch, dataGrid, virtualScrollbarProps]);
 
     const setPageFromParams = React.useCallback<GridProp<"onPageChange">>(params => {
         return setPage(params.page);
@@ -55,7 +66,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         <div className={classes.wrapper}>
             <DataGrid
                 page={page}
-                onStateChange={setVisibileColumnsFromState}
+                onColumnVisibilityChange={updateColumnsVisibility}
+                onStateChange={updateScrollBarFromStateChange}
                 onSortModelChange={setFirstPage}
                 className={classes.root}
                 rowHeight={200}
@@ -84,7 +96,7 @@ const useStyles = makeStyles({
         },
         "&.MuiDataGrid-root .MuiDataGrid-cellWithRenderer": {},
     },
-    wrapper: { display: "flex", flexGrow: 1 },
+    wrapper: {},
 });
 
 const pageSizes = [25, 50, 75, 100];

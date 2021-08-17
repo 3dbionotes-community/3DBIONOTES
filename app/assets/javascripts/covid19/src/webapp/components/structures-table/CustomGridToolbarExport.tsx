@@ -14,16 +14,19 @@ export const CustomGridToolbarExport: React.FC<CustomGridToolbarExportProps> = R
     const { compositionRoot } = useAppContext();
     const { dataGrid } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
+
     const openMenu = React.useCallback(event => setAnchorEl(event.currentTarget), []);
-    const handleMenuClose = React.useCallback(() => setAnchorEl(null), []);
+    const closeMenu = React.useCallback(() => setAnchorEl(null), []);
 
     const exportToCsv = React.useCallback(() => {
         compositionRoot.exportStructures.execute({ dataGrid, format: "csv" });
-    }, [compositionRoot, dataGrid]);
+        closeMenu();
+    }, [compositionRoot, dataGrid, closeMenu]);
 
     const exportToJson = React.useCallback(() => {
         compositionRoot.exportStructures.execute({ dataGrid, format: "json" });
-    }, [compositionRoot, dataGrid]);
+        closeMenu();
+    }, [compositionRoot, dataGrid, closeMenu]);
 
     const startIcon = React.useMemo(() => <ExportIcon />, []);
     const isOpen = Boolean(anchorEl);
@@ -45,7 +48,7 @@ export const CustomGridToolbarExport: React.FC<CustomGridToolbarExportProps> = R
             <GridMenu
                 open={isOpen}
                 target={anchorEl}
-                onClickAway={handleMenuClose}
+                onClickAway={closeMenu}
                 position="bottom-start"
             >
                 <MenuList className="MuiDataGrid-gridMenuList" autoFocusItem={isOpen}>

@@ -1,6 +1,7 @@
 import { GridToolbarColumnsButton, GridToolbarContainer } from "@material-ui/data-grid";
 import React from "react";
 import { DataGrid } from "../../../domain/entities/DataGrid";
+import { VirtualScroll, VirtualScrollbarProps } from "../VirtualScrollbar";
 import { CustomGridToolbarExport } from "./CustomGridToolbarExport";
 import { SearchBar } from "./SearchBar";
 import "./Toolbar.css";
@@ -9,10 +10,11 @@ export interface ToolbarProps {
     search: string;
     setSearch(search: string): void;
     dataGrid: DataGrid;
+    virtualScrollbarProps: VirtualScrollbarProps;
 }
 
 export const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
-    const { search, setSearch, dataGrid } = props;
+    const { search, setSearch, dataGrid, virtualScrollbarProps } = props;
 
     return (
         <React.Fragment>
@@ -22,7 +24,7 @@ export const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
                 <GridToolbarColumnsButton style={styles.columns} />
             </GridToolbarContainer>
 
-            <div>TOP SCROLLBAR PLACEHOLDER</div>
+            <VirtualScroll {...virtualScrollbarProps} />
         </React.Fragment>
     );
 });
