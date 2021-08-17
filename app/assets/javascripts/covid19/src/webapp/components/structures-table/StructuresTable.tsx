@@ -3,9 +3,10 @@ import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps } from "@material-ui/data-grid";
 import { Covid19Info, searchStructures } from "../../../domain/entities/Covid19Info";
-import { Field, getColumns } from "./Columns";
+import { getColumns } from "./Columns";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
+import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
 
 export interface StructuresTableProps {
     data: Covid19Info;
@@ -21,36 +22,24 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const classes = useStyles();
     const [search, setSearch] = React.useState("");
 
-    const [columnsVisibility, setColumnsVisibility] = React.useState<Record<string, boolean>>({});
-    const visibleDefColumns = React.useMemo(() => {
-        return columns.definition.filter(column => columnsVisibility[column.field] !== false);
-    }, [columnsVisibility, columns.definition]);
-
-    const updateColumnsVisibility = React.useCallback<
-        NonNullable<DataGridProps["onColumnVisibilityChange"]>
-    >(params => {
-        setColumnsVisibility(prevValue => ({ ...prevValue, [params.field]: params.isVisible }));
-    }, []);
-
     const structures = searchStructures(data.structures, search);
     const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
 
-    const dataGrid = React.useMemo(() => {
-        const visibilityMapping = _.fromPairs(
-            visibleDefColumns.map(gridColDef => [gridColDef.field, !gridColDef.hide])
-        ) as Record<Field, boolean>;
-        const visibleColumns = columns.base.filter(c => visibilityMapping[c.field]);
-        return { columns: visibleColumns, structures };
-    }, [columns, structures, visibleDefColumns]);
-
     const {
+        gridApi,
         virtualScrollbarProps,
         updateScrollBarFromStateChange,
     } = useVirtualScrollbarForDataGrid();
 
-    const componentsProps = React.useMemo<{ toolbar: ToolbarProps }>(() => {
-        return { toolbar: { search, setSearch, dataGrid, virtualScrollbarProps } };
-    }, [search, setSearch, dataGrid, virtualScrollbarProps]);
+    const dataGrid = React.useMemo<DataGridE>(() => {
+        return { columns: columns.base, structures };
+    }, [columns, structures]);
+
+    const componentsProps = React.useMemo<{ toolbar: ToolbarProps } | undefined>(() => {
+        return gridApi
+            ? { toolbar: { search, setSearch, gridApi, dataGrid, virtualScrollbarProps } }
+            : undefined;
+    }, [search, setSearch, gridApi, dataGrid, virtualScrollbarProps]);
 
     const setPageFromParams = React.useCallback<GridProp<"onPageChange">>(params => {
         return setPage(params.page);
@@ -66,7 +55,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         <div className={classes.wrapper}>
             <DataGrid
                 page={page}
-                onColumnVisibilityChange={updateColumnsVisibility}
                 onStateChange={updateScrollBarFromStateChange}
                 onSortModelChange={setFirstPage}
                 className={classes.root}

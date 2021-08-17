@@ -86,5 +86,5 @@ export function useVirtualScrollbarForDataGrid() {
         [displayInfo, onScrollLeftChange]
     );
 
-    return { virtualScrollbarProps, updateScrollBarFromStateChange };
+    return { gridApi: gridApi.current, virtualScrollbarProps, updateScrollBarFromStateChange };
 }
