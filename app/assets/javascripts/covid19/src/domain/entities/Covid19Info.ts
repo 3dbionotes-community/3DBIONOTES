@@ -95,13 +95,13 @@ export interface Link {
 export interface PdbRedoValidation {
     type: "pdbRedo";
     externalLink: Url;
-    queryLink: Url;
+    queryLink?: Url;
     badgeColor: W3Color;
 }
 
 export interface IsoldeValidation {
     type: "isolde";
-    queryLink: Url;
+    queryLink?: Url;
     badgeColor: W3Color;
 }
 
