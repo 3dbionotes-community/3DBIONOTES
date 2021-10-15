@@ -10,14 +10,14 @@ export interface Organism {
 
 export interface Entity {
     id: string;
-    names: string[];
+    name: string;
     description: Url;
     externalLink: Url;
 }
 
 export interface Ligand {
     id: string;
-    names: string[];
+    name: string;
     imageLink?: Url;
     externalLink?: Url;
     type?: string;
@@ -38,7 +38,7 @@ export interface Structure {
     emdb: Maybe<Emdb>;
     organisms: Organism[];
     computationalModel: Maybe<ComputationalModel>;
-    ligands: LigandInstance[];
+    ligands: Ligand[];
     details: Maybe<string>;
     validations: {
         pdb: PdbValidation[];
@@ -83,7 +83,7 @@ export interface DbItem {
     resolution?: string;
     imageUrl: Url;
     externalLinks: Link[];
-    queryLink: Url[];
+    queryLink: Url;
 }
 
 export interface Link {
@@ -124,7 +124,7 @@ export type Id = string;
 
 export type Dictionary<T> = Record<Id, T>;
 
-type Maybe<T> = T | undefined | null;
+export type Maybe<T> = T | undefined | null;
 
 export type Url = string;
 

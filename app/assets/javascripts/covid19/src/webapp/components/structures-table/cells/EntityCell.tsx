@@ -13,7 +13,7 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
                 return {
                     id: entity.id,
                     url: entity.externalLink,
-                    tooltip: [entity.names.join(", "), entity.description].join("\n"),
+                    tooltip: _.compact([entity.name, entity.description]).join("\n"),
                 };
             })
             .compact()

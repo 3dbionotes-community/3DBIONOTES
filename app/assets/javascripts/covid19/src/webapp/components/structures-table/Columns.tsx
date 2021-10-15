@@ -83,8 +83,7 @@ export const columnsBase: Columns = [
         width: 180,
         sortable: false,
         renderCell: LigandsCell,
-        renderString: row =>
-            row.ligands.map(ligand => `${ligand.instances} ${ligand.info.id}`).join(", "),
+        renderString: row => row.ligands.map(ligand => ligand.id).join(", "),
     }),
     column("organisms", {
         headerName: i18n.t("Organisms"),

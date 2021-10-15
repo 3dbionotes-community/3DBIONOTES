@@ -4,10 +4,10 @@ import {
     Covid19Info,
     Emdb,
     Entity,
-    LigandInstance,
+    Ligand,
+    Maybe,
     Organism,
     Pdb,
-    PdbRedoValidation,
     PdbValidation,
     Structure,
 } from "../domain/entities/Covid19Info";
@@ -20,18 +20,18 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         const structures: Covid19Info["structures"] = data.Structures.map(
             (structure): Structure => ({
                 ..._.omit(structure, ["ligand", "organism", "entities", "compModel"]),
-                title: (structure.title || []).join(", "),
+                title: structure.pdbId.title,
                 id: getStructureId(structure),
-                pdb: structure.pdb ? getPdb(structure.pdb) : undefined,
-                emdb: structure.emdb ? getEmdb(structure.emdb) : undefined,
+                pdb: structure.pdbId ? getPdb(structure.pdbId) : undefined,
+                emdb: structure.emdbId ? getEmdb(structure.emdbId) : undefined,
                 computationalModel: getComputationModel(structure.compModel),
-                entities: getEntities(data.Entities, structure.entity),
-                ligands: getLigands(data.Ligands, structure.ligand),
-                organisms: getOrganisms(data.Organisms, structure.organism),
+                entities: getEntitiesForStructure(data, structure),
+                organisms: getOrganismsForStructure(data, structure),
+                ligands: getLigands(data.Ligands, structure.pdbId.ligands),
                 details: "",
                 validations: {
-                    pdb: getPdbValidations(structure.pdb?.validation),
-                    emdb: structure.emdb?.validation || [],
+                    pdb: getPdbValidations(structure.pdbId?.validation),
+                    emdb: structure.emdbId?.validation || [],
                 },
             })
         );
@@ -52,17 +52,12 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
 }
 
 function getStructureId(structure: Data.Structure): string {
-    const parts = [
-        structure.pdb?.id,
-        structure.emdb?.id,
-        ...structure.entity,
-        ...structure.organism,
-    ];
+    const parts = [structure.pdbId?.dbId, structure.emdbId?.dbId];
     return _(parts).compact().join("-");
 }
 
 function getComputationModel(
-    dataCompModel: Data.ComputationalModel | null
+    dataCompModel: Maybe<Data.ComputationalModel>
 ): ComputationalModel | undefined {
     if (!dataCompModel) return undefined;
 
@@ -71,82 +66,70 @@ function getComputationModel(
             return {
                 ...dataCompModel,
                 name: [dataCompModel.project, dataCompModel.model].join("-"),
-                externalLink: dataCompModel.externalLink[0],
-                queryLink: dataCompModel.queryLink[0],
-                imageLink: dataCompModel.imageLink?.[0],
+                externalLink: dataCompModel.externalLink,
+                queryLink: dataCompModel.queryLink,
+                imageLink: dataCompModel.imageLink,
             };
         case "BSM-Arc":
         case "AlphaFold":
             return {
                 ...dataCompModel,
                 name: dataCompModel.model,
-                externalLink: dataCompModel.externalLink[0],
-                queryLink: dataCompModel.queryLink[0],
+                externalLink: dataCompModel.externalLink,
+                queryLink: dataCompModel.queryLink,
             };
     }
 }
 
 function getLigands(
     dataLigands: Data.Covid19Data["Ligands"],
-    ligandRefs: Data.LigandRef[] | undefined
-): LigandInstance[] {
+    ligandRefs: Data.Pdb["ligands"]
+): Ligand[] {
     const ligandsById = _(dataLigands)
-        .map((ligand, ligandId) => ({ id: ligandId, ...ligand }))
+        .map((ligand): Ligand => ({ id: ligand.dbId, ...ligand }))
         .keyBy(getId)
         .value();
 
     return _(ligandRefs)
-        .flatMap(ligandRef => _.toPairs(ligandRef))
-        .map(([ligandId, { instances }]): LigandInstance | null => {
-            const ligandInfo = ligandsById[ligandId];
-            return instances && ligandInfo
-                ? {
-                      instances,
-                      info: {
-                          ...withPluralNames(ligandInfo),
-                          imageLink: _.first(ligandInfo.imageLink),
-                          externalLink: _.first(ligandInfo.externalLink),
-                      },
-                  }
-                : null;
-        })
+        .map(ligandId => ligandsById[ligandId])
         .compact()
         .value();
 }
 
-function getOrganisms(
-    dataOrganisms: Data.Covid19Data["Organisms"],
-    organismIds: string[] | undefined
-): Organism[] {
-    const organismsById = _(dataOrganisms)
-        .map((organism, organismId): Organism | null =>
-            organism ? { id: organismId, ...organism } : null
+function getOrganismsForStructure(data: Data.Covid19Data, structure: Data.Structure): Organism[] {
+    const organismsById = _(data.Organisms)
+        .map(
+            (organism): Organism => ({
+                id: organism.ncbi_taxonomy_id,
+                name: organism.scientific_name,
+                externalLink: organism.externalLink,
+            })
         )
-        .compact()
-        .keyBy(getId)
-        .value();
+        .keyBy(getId);
 
-    return _(organismIds)
-        .map(organismId => organismsById[organismId])
+    return _(structure.pdbId.entities)
+        .map(ref => (ref.organism ? organismsById.get(ref.organism) : null))
         .compact()
+        .uniqBy(getId)
         .value();
 }
 
-function getEntities(
-    dataEntities: Data.Covid19Data["Entities"],
-    entityIds: string[] | undefined
-): Entity[] {
-    const entititesById = _(dataEntities)
-        .map((entity, entityId): Entity | null =>
-            entity ? { id: entityId, ...withPluralNames(entity) } : null
+function getEntitiesForStructure(data: Data.Covid19Data, structure: Data.Structure): Entity[] {
+    const entitiesById = _(data.Entities)
+        .map(
+            (entity): Entity => ({
+                id: entity.dbId,
+                name: entity.name,
+                externalLink: entity.externalLink,
+                description: "",
+            })
         )
-        .compact()
-        .keyBy(getId)
-        .value();
+        .keyBy(getId);
 
-    return _(entityIds)
-        .map(entityId => entititesById[entityId])
+    return _(structure.pdbId.entities)
+        .map(ref => (ref.uniprotAcc ? entitiesById.get(ref.uniprotAcc) : null))
         .compact()
+        .uniqBy(getId)
         .value();
 }
 
@@ -154,17 +137,16 @@ function getId<T extends { id: string }>(obj: T): string {
     return obj.id;
 }
 
-function getPdb<T extends Data.Pdb>(pdb: T): Pdb {
+function getPdb(pdb: Data.Pdb): Pdb {
     const pdbE: Pdb = {
-        ..._.omit(pdb, ["imageLink", "externalLink", "validation"]),
+        id: pdb.dbId,
+        queryLink: pdb.queryLink,
         imageUrl:
-            pdb.imageLink?.[0] ||
-            `https://www.ebi.ac.uk/pdbe/static/entry/${pdb.id}_deposited_chain_front_image-200x200.png`,
-        externalLinks: _.compact(
-            pdb.externalLink.map(externalLink => {
-                return externalLink.includes("www.ebi") ? { url: externalLink, text: "EBI" } : null;
-            })
-        ),
+            pdb.imageLink ||
+            `https://www.ebi.ac.uk/pdbe/static/entry/${pdb.dbId}_deposited_chain_front_image-200x200.png`,
+        externalLinks: pdb.externalLink.includes("www.ebi")
+            ? [{ url: pdb.externalLink, text: "EBI" }]
+            : [],
     };
     return pdbE;
 }
@@ -173,42 +155,23 @@ function getPdbValidations(dataValidations: Data.Pdb["validation"]): PdbValidati
     const { "pdb-redo": pdbRedo, isolde } = dataValidations || {};
 
     return _.compact([
-        pdbRedo
-            ? ({
-                  type: "pdbRedo",
-                  badgeColor: pdbRedo.badgeColor,
-                  externalLink: pdbRedo["externalLink"][0],
-                  queryLink: pdbRedo["queryLink"][0],
-              } as PdbRedoValidation)
-            : null,
+        pdbRedo ? { type: "pdbRedo", ...pdbRedo } : null,
         isolde
-            ? {
-                  type: "isolde",
-                  badgeColor: isolde.badgeColor,
-                  queryLink: isolde["queryLink"][0],
-              }
+            ? { type: "isolde", badgeColor: isolde.badgeColor, queryLink: isolde.queryLink }
             : null,
     ]);
 }
 
 function getEmdb<T extends Data.Emdb>(emdb: T): Emdb {
     const emdbE: Emdb = {
+        id: emdb.dbId,
         ..._.omit(emdb, ["imageLink", "externalLink", "validation"]),
         imageUrl:
-            emdb.imageLink?.[0] ||
-            `https://www.ebi.ac.uk/pdbe/static/entry/EMD-${emdb.id}/400_${emdb.id}.gif`,
-        externalLinks: _.compact(
-            emdb.externalLink.map(externalLink => {
-                return externalLink.includes("www.ebi") ? { url: externalLink, text: "EBI" } : null;
-            })
-        ),
+            emdb.imageLink ||
+            `https://www.ebi.ac.uk/pdbe/static/entry/EMD-${emdb.dbId}/400_${emdb.dbId}.gif`,
+        externalLinks: emdb.externalLink.includes("www.ebi")
+            ? [{ url: emdb.externalLink, text: "EBI" }]
+            : [],
     };
     return emdbE;
 }
-
-function withPluralNames<T extends { name: string[] }>(value: T): UseNamesField<T> {
-    const { name, ...other } = value;
-    return { ...other, names: name };
-}
-
-type UseNamesField<T> = Omit<T, "name"> & { names: string[] };
