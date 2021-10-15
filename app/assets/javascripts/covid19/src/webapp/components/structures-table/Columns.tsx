@@ -172,6 +172,7 @@ export const styles = {
         marginLeft: "auto",
         marginRight: "auto",
         marginBottom: 10,
-        height: 110,
+        maxHeight: 110,
+        maxWidth: 110,
     },
 };

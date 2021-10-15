@@ -3,6 +3,7 @@ import { getCompositionRoot } from "../../../compositionRoot";
 import { Covid19Info } from "../../../domain/entities/Covid19Info";
 import { AppContext } from "../../contexts/app-context";
 import { Root } from "./Root";
+import "./App.css";
 
 declare global {
     interface Window {

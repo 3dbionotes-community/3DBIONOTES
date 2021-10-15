@@ -11,3 +11,7 @@ body {
 li {
     line-height: 1.75;
 }
+
+.MuiDataGrid-cellWithRenderer {
+    overflow-y: auto !important;
+}
