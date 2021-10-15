@@ -15,11 +15,15 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
                 tooltip: (
                     <React.Fragment>
                         <div>{ligand.name}</div>
+
+                        {ligand.details !== ligand.name && <div>{ligand.details}</div>}
+
                         {ligand.InnChIKey && (
                             <div>
                                 {i18n.t("IUPAC InChI key")}: ${ligand.InnChIKey}
                             </div>
                         )}
+
                         {ligand.imageLink && (
                             <img alt={ligand.id} src={ligand.imageLink} style={styles.image} />
                         )}

@@ -18,6 +18,7 @@ export interface Entity {
 export interface Ligand {
     id: string;
     name: string;
+    details: string;
     imageLink?: Url;
     externalLink?: Url;
     type?: string;
