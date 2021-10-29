@@ -12,7 +12,6 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
             .map(entity => {
                 return {
                     id: entity.id,
-                    url: entity.externalLink,
                     tooltip: _.compact([entity.name, entity.description]).join("\n"),
                 };
             })
@@ -27,7 +26,6 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
                     <Link
                         key={entity.id}
                         tooltip={entity.tooltip}
-                        url={entity.url}
                         text={entity.id}
                     />
                 </p>

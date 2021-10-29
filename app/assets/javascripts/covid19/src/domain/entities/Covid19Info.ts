@@ -12,7 +12,7 @@ export interface Entity {
     id: string;
     name: string;
     description: Url;
-    externalLink: Url;
+    //externalLink: Url;
 }
 
 export interface Ligand {

@@ -15,9 +15,14 @@ export interface Organism {
 }
 
 export interface Entity {
-    dbId: string;
+    uniprotAcc: string | null;
     name: string;
-    externalLink: Url;
+    organism: string;
+    details?: string;
+    altNames: string;
+    isAntibody: boolean;
+    isNanobody: boolean;
+    isSybody: boolean;
 }
 
 export interface Ligand {
@@ -32,8 +37,9 @@ export interface Ligand {
 }
 
 export interface Structure {
-    pdbId: Pdb;
-    emdbId: Emdb;
+    title: string;
+    pdb: Pdb;
+    emdb: Emdb;
     compModel?: Maybe<ComputationalModel>;
 }
 
@@ -67,7 +73,7 @@ export interface AlphaFoldComputationalModel {
 
 export interface DbItem {
     dbId: string;
-    title: string;
+    /*title: string;*/
     method?: string;
     resolution?: string;
     imageLink?: Url;
@@ -77,7 +83,7 @@ export interface DbItem {
 
 export interface Pdb extends DbItem {
     keywords: string;
-    entities: EntityRef[];
+    entities: Entity[];
     ligands: LigandId[];
     validation?: Partial<{
         "pdb-redo": Validation;

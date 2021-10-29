@@ -20,18 +20,18 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         const structures: Covid19Info["structures"] = data.Structures.map(
             (structure): Structure => ({
                 ..._.omit(structure, ["ligand", "organism", "entities", "compModel"]),
-                title: structure.pdbId.title,
+                title: structure.title,
                 id: getStructureId(structure),
-                pdb: structure.pdbId ? getPdb(structure.pdbId) : undefined,
-                emdb: structure.emdbId ? getEmdb(structure.emdbId) : undefined,
+                pdb: structure.pdb ? getPdb(structure.pdb) : undefined,
+                emdb: structure.emdb ? getEmdb(structure.emdb) : undefined,
                 computationalModel: getComputationModel(structure.compModel),
                 entities: getEntitiesForStructure(data, structure),
                 organisms: getOrganismsForStructure(data, structure),
-                ligands: getLigands(data.Ligands, structure.pdbId.ligands),
+                ligands: getLigands(data.Ligands, structure.pdb.ligands),
                 details: "",
                 validations: {
-                    pdb: getPdbValidations(structure.pdbId?.validation),
-                    emdb: structure.emdbId?.validation || [],
+                    pdb: getPdbValidations(structure.pdb?.validation),
+                    emdb: structure.emdb?.validation || [],
                 },
             })
         );
@@ -52,7 +52,7 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
 }
 
 function getStructureId(structure: Data.Structure): string {
-    const parts = [structure.pdbId?.dbId, structure.emdbId?.dbId];
+    const parts = [structure.pdb?.dbId, structure.emdb?.dbId];
     return _(parts).compact().join("-");
 }
 
@@ -107,7 +107,7 @@ function getOrganismsForStructure(data: Data.Covid19Data, structure: Data.Struct
         )
         .keyBy(getId);
 
-    return _(structure.pdbId.entities)
+    return _(structure.pdb.entities)
         .map(ref => (ref.organism ? organismsById.get(ref.organism) : null))
         .compact()
         .uniqBy(getId)
@@ -118,15 +118,14 @@ function getEntitiesForStructure(data: Data.Covid19Data, structure: Data.Structu
     const entitiesById = _(data.Entities)
         .map(
             (entity): Entity => ({
-                id: entity.dbId,
+                id: entity.uniprotAcc !== null ? entity.uniprotAcc : "",
                 name: entity.name,
-                externalLink: entity.externalLink,
-                description: "",
+                description: entity.details || ""
             })
         )
         .keyBy(getId);
 
-    return _(structure.pdbId.entities)
+    return _(structure.pdb.entities)
         .map(ref => (ref.uniprotAcc ? entitiesById.get(ref.uniprotAcc) : null))
         .compact()
         .uniqBy(getId)

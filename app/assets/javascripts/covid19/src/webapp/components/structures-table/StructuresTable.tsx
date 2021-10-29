@@ -21,6 +21,11 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const columns = React.useMemo(() => getColumns(data), [data]);
     const classes = useStyles();
     const [search, setSearch] = React.useState("");
+    /*const [filterState, setFilterState] = React.useState({
+        antibody: false,
+        nanobody: false,
+        sybody: false,
+      });*/
 
     const structures = searchStructures(data.structures, search);
     const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
