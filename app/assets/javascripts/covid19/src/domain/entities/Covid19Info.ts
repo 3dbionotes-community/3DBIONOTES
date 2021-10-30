@@ -1,3 +1,5 @@
+import { FilterModelBodies } from "../../webapp/components/structures-table/CustomCheckboxFilter";
+
 export interface Covid19Info {
     structures: Structure[];
 }
@@ -10,9 +12,14 @@ export interface Organism {
 
 export interface Entity {
     id: string;
+    uniprotAcc: string | null;
     name: string;
-    description: Url;
-    //externalLink: Url;
+    organism: string;
+    details?: string;
+    altNames: string;
+    isAntibody: boolean;
+    isNanobody: boolean;
+    isSybody: boolean;
 }
 
 export interface Ligand {
@@ -131,14 +138,39 @@ export type Url = string;
 
 export type Ref = { id: Id };
 
-export function searchStructures(structures: Structure[], search: string): Structure[] {
+export function searchAndFilterStructures(
+    structures: Structure[],
+    search: string,
+    filterState: FilterModelBodies
+): Structure[] {
     const text = search.trim().toLocaleLowerCase();
-    if (!text) return structures;
+    if (!text && !filterState.antibody && !filterState.nanobody && !filterState.sybody)
+        return structures;
 
     return structures.filter(
         structure =>
-            structure.title.toLocaleLowerCase().includes(text) ||
-            structure.pdb?.id.toLocaleLowerCase().includes(text) ||
-            structure.emdb?.id.toLocaleLowerCase().includes(text)
+            (structure.title.toLocaleLowerCase().includes(text) ||
+                structure.pdb?.id.toLocaleLowerCase().includes(text) ||
+                structure.emdb?.id.toLocaleLowerCase().includes(text) ||
+                searchSubStructures(structure.organisms, text) ||
+                searchSubStructures(structure.ligands, text) ||
+                searchSubStructures(structure.entities, text) ||
+                structure.details?.toLocaleLowerCase().includes(text)) &&
+            filterEntities(structure.entities, filterState).length > 0
+    );
+}
+
+export function filterEntities(entities: Entity[], filterState: FilterModelBodies): Entity[] {
+    return entities.filter(
+        entity =>
+            entity.isAntibody === filterState.antibody &&
+            entity.isNanobody === filterState.nanobody &&
+            entity.isSybody === filterState.sybody
+    );
+}
+
+function searchSubStructures(subStructure: (Organism | Ligand | Entity)[], text: string): boolean {
+    return (
+        subStructure.filter(structure => structure.id.toLocaleLowerCase().includes(text)).length > 0
     );
 }

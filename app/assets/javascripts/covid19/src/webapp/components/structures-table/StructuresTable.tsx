@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps } from "@material-ui/data-grid";
-import { Covid19Info, searchStructures } from "../../../domain/entities/Covid19Info";
+import { Covid19Info, searchAndFilterStructures } from "../../../domain/entities/Covid19Info";
 import { getColumns } from "./Columns";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
@@ -21,13 +21,12 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const columns = React.useMemo(() => getColumns(data), [data]);
     const classes = useStyles();
     const [search, setSearch] = React.useState("");
-    /*const [filterState, setFilterState] = React.useState({
+    const [filterState, setFilterState] = React.useState({
         antibody: false,
         nanobody: false,
         sybody: false,
-      });*/
-
-    const structures = searchStructures(data.structures, search);
+    });
+    const structures = searchAndFilterStructures(data.structures, search, filterState);
     const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
 
     const {
@@ -42,9 +41,19 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
     const componentsProps = React.useMemo<{ toolbar: ToolbarProps } | undefined>(() => {
         return gridApi
-            ? { toolbar: { search, setSearch, gridApi, dataGrid, virtualScrollbarProps } }
+            ? {
+                  toolbar: {
+                      search,
+                      setSearch,
+                      filterState,
+                      setFilterState,
+                      gridApi,
+                      dataGrid,
+                      virtualScrollbarProps,
+                  },
+              }
             : undefined;
-    }, [search, setSearch, gridApi, dataGrid, virtualScrollbarProps]);
+    }, [search, setSearch, filterState, setFilterState, gridApi, dataGrid, virtualScrollbarProps]);
 
     const setPageFromParams = React.useCallback<GridProp<"onPageChange">>(params => {
         return setPage(params.page);

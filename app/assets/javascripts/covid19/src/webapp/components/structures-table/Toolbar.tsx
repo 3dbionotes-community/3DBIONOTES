@@ -10,8 +10,8 @@ import { CustomCheckboxFilter, FilterModelBodies } from "./CustomCheckboxFilter"
 export interface ToolbarProps {
     search: string;
     setSearch(search: string): void;
-    /*filterState: FilterModelBodies;
-    setFilterState(filter: FilterModelBodies): void;*/
+    filterState: FilterModelBodies;
+    setFilterState(filter: FilterModelBodies): void;
     gridApi: GridApi;
     dataGrid: DataGrid;
     virtualScrollbarProps: VirtualScrollbarProps;
@@ -19,13 +19,21 @@ export interface ToolbarProps {
 
 export const Toolbar: React.FC<ToolbarProps> = props => {
     //filterState, setFilterState,
-    const { search, setSearch, gridApi, dataGrid, virtualScrollbarProps } = props;
+    const {
+        search,
+        setSearch,
+        filterState,
+        setFilterState,
+        gridApi,
+        dataGrid,
+        virtualScrollbarProps,
+    } = props;
     //filterState={filterState} setFilterState={setFilterState}
     return (
         <React.Fragment>
             <GridToolbarContainer style={styles.container}>
                 <SearchBar value={search} setValue={setSearch} />
-                <CustomCheckboxFilter/>
+                <CustomCheckboxFilter filterState={filterState} setFilterState={setFilterState} />
                 <CustomGridToolbarExport dataGrid={dataGrid} gridApi={gridApi} />
                 <GridToolbarColumnsButton style={styles.columns} />
             </GridToolbarContainer>
@@ -37,6 +45,6 @@ export const Toolbar: React.FC<ToolbarProps> = props => {
 
 export const styles = {
     container: { padding: 10 },
-    search: { width: "30em" },
+    search: { width: "35em" },
     columns: { marginLeft: "auto" },
 };

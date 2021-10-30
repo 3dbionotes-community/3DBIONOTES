@@ -24,7 +24,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
             value={value || ""}
             style={styles.search}
             onChange={setValueFromEv}
-            placeholder={i18n.t("Search by title/PDB/EMDB")}
+            placeholder={i18n.t("Search by title/PDB/EMDB/Entities/Ligands/Organisms/Details")}
         />
     );
 });

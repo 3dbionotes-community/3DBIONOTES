@@ -73,7 +73,7 @@ export const columnsBase: Columns = [
     }),
     column("entities", {
         headerName: i18n.t("Entities"),
-        width: 120,
+        width: 280,
         sortable: false,
         renderCell: EntityCell,
         renderString: row => row.entities.map(entity => entity.id).join(", "),

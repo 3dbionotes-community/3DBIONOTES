@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2021-10-28T12:13:17.211Z\n"
-"PO-Revision-Date: 2021-10-28T12:13:17.211Z\n"
+"POT-Creation-Date: 2021-10-30T16:50:29.925Z\n"
+"PO-Revision-Date: 2021-10-30T16:50:29.925Z\n"
 
 msgid "Known Proteins"
 msgstr ""
@@ -47,7 +47,7 @@ msgstr ""
 msgid "Save as JSON"
 msgstr ""
 
-msgid "Search by title/PDB/EMDB"
+msgid "Search by title/PDB/EMDB/Entities/Ligands/Organisms/Details"
 msgstr ""
 
 msgid "Go to Viewer"
@@ -57,6 +57,24 @@ msgid "PDB-Redo"
 msgstr ""
 
 msgid "Isolde"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Alt Names"
+msgstr ""
+
+msgid "Organism"
+msgstr ""
+
+msgid "Entity is antibody"
+msgstr ""
+
+msgid "Entity is nanobody"
+msgstr ""
+
+msgid "Entity is sybody"
 msgstr ""
 
 msgid "IUPAC InChI key"

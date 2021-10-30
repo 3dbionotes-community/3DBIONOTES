@@ -81,21 +81,6 @@ function getComputationModel(
     }
 }
 
-function getLigands(
-    dataLigands: Data.Covid19Data["Ligands"],
-    ligandRefs: Data.Pdb["ligands"]
-): Ligand[] {
-    const ligandsById = _(dataLigands)
-        .map((ligand): Ligand => ({ id: ligand.dbId, ...ligand }))
-        .keyBy(getId)
-        .value();
-
-    return _(ligandRefs)
-        .map(ligandId => ligandsById[ligandId])
-        .compact()
-        .value();
-}
-
 function getOrganismsForStructure(data: Data.Covid19Data, structure: Data.Structure): Organism[] {
     const organismsById = _(data.Organisms)
         .map(
@@ -113,14 +98,26 @@ function getOrganismsForStructure(data: Data.Covid19Data, structure: Data.Struct
         .uniqBy(getId)
         .value();
 }
+function getLigands(
+    dataLigands: Data.Covid19Data["Ligands"],
+    ligandRefs: Data.Pdb["ligands"]
+): Ligand[] {
+    const ligandsById = _(dataLigands)
+        .map((ligand): Ligand => ({ id: ligand.dbId, ...ligand }))
+        .keyBy(getId)
+        .value();
 
+    return _(ligandRefs)
+        .map(ligandId => ligandsById[ligandId])
+        .compact()
+        .value();
+}
 function getEntitiesForStructure(data: Data.Covid19Data, structure: Data.Structure): Entity[] {
     const entitiesById = _(data.Entities)
         .map(
             (entity): Entity => ({
                 id: entity.uniprotAcc !== null ? entity.uniprotAcc : "",
-                name: entity.name,
-                description: entity.details || ""
+                ...entity,
             })
         )
         .keyBy(getId);
