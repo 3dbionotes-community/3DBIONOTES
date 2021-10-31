@@ -27,6 +27,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         sybody: false,
     });
     const structures = searchAndFilterStructures(data.structures, search, filterState);
+    console.log(structures);
     const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
 
     const {

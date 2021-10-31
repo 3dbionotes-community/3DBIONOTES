@@ -18,7 +18,6 @@ export interface ToolbarProps {
 }
 
 export const Toolbar: React.FC<ToolbarProps> = props => {
-    //filterState, setFilterState,
     const {
         search,
         setSearch,
@@ -28,7 +27,7 @@ export const Toolbar: React.FC<ToolbarProps> = props => {
         dataGrid,
         virtualScrollbarProps,
     } = props;
-    //filterState={filterState} setFilterState={setFilterState}
+
     return (
         <React.Fragment>
             <GridToolbarContainer style={styles.container}>

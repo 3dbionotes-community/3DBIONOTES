@@ -118,7 +118,9 @@ export type W3Color = "w3-cyan" | "w3-turq";
 export type PdbValidation = PdbRedoValidation | IsoldeValidation;
 export type EmdbValidation = string;
 
-export interface Pdb extends DbItem {}
+export interface Pdb extends DbItem {
+    entities: Entity[];
+}
 
 export interface Emdb extends DbItem {}
 
@@ -152,11 +154,12 @@ export function searchAndFilterStructures(
             (structure.title.toLocaleLowerCase().includes(text) ||
                 structure.pdb?.id.toLocaleLowerCase().includes(text) ||
                 structure.emdb?.id.toLocaleLowerCase().includes(text) ||
-                searchSubStructures(structure.organisms, text) ||
-                searchSubStructures(structure.ligands, text) ||
-                searchSubStructures(structure.entities, text) ||
+                searchOrganismSubStructures(structure.organisms, text) ||
+                searchLigandSubStructures(structure.ligands, text) ||
+                searchEntitySubStructures(structure.entities, text) ||
                 structure.details?.toLocaleLowerCase().includes(text)) &&
-            filterEntities(structure.entities, filterState).length > 0
+            (filterEntities(structure.entities, filterState).length > 0 ||
+                (structure.pdb && filterEntities(structure.pdb.entities, filterState).length > 0))
     );
 }
 
@@ -169,8 +172,35 @@ export function filterEntities(entities: Entity[], filterState: FilterModelBodie
     );
 }
 
-function searchSubStructures(subStructure: (Organism | Ligand | Entity)[], text: string): boolean {
+function searchOrganismSubStructures(subStructure: Organism[], text: string): boolean {
     return (
         subStructure.filter(structure => structure.id.toLocaleLowerCase().includes(text)).length > 0
+    );
+}
+
+function searchLigandSubStructures(subStructure: Ligand[], text: string): boolean {
+    return (
+        subStructure.filter(structure => {
+            return (
+                structure.id.toLocaleLowerCase().includes(text) ||
+                structure.name.toLocaleLowerCase().includes(text) ||
+                (structure.InnChIKey && structure.InnChIKey.toLocaleLowerCase().includes(text)) ||
+                (structure.details && structure.details.toLocaleLowerCase().includes(text))
+            );
+        }).length > 0
+    );
+}
+
+function searchEntitySubStructures(subStructure: Entity[], text: string): boolean {
+    return (
+        subStructure.filter(structure => {
+            return (
+                structure.id.toLocaleLowerCase().includes(text) ||
+                structure.name.toLocaleLowerCase().includes(text) ||
+                structure.altNames.toLocaleLowerCase().includes(text) ||
+                (structure.details && structure.details.toLocaleLowerCase().includes(text)) ||
+                structure.organism.toLocaleLowerCase().includes(text)
+            );
+        }).length > 0
     );
 }

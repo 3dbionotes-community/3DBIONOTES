@@ -143,6 +143,7 @@ function getPdb(pdb: Data.Pdb): Pdb {
         externalLinks: pdb.externalLink.includes("www.ebi")
             ? [{ url: pdb.externalLink, text: "EBI" }]
             : [],
+        entities: pdb.entities.map(entity => ({ id: pdb.dbId, ...entity })),
     };
     return pdbE;
 }

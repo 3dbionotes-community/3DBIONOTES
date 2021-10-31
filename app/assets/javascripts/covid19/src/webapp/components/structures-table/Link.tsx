@@ -1,6 +1,12 @@
 import React from "react";
+import styled from "styled-components";
 import { HtmlTooltip } from "./HtmlTooltip";
 import { styles } from "./Columns";
+import { Typography } from "@material-ui/core";
+
+export const NoWrapTypography = styled(Typography)`
+    word-wrap: break-word;
+`;
 
 export const Link: React.FC<LinkProps> = React.memo(props => {
     const { text, url, tooltip, children } = props;
@@ -9,7 +15,7 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
         if (tooltip === undefined || typeof tooltip === "string") {
             return (
                 <a title={tooltip} href={url} target="_blank" rel="noreferrer" style={styles.link}>
-                    {text}
+                    <NoWrapTypography>{text}</NoWrapTypography>
                     {children}
                 </a>
             );
@@ -17,7 +23,7 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
             return (
                 <HtmlTooltip title={tooltip}>
                     <a href={url} target="_blank" rel="noreferrer" style={styles.link}>
-                        {text}
+                        <NoWrapTypography>{text}</NoWrapTypography>
                         {children}
                     </a>
                 </HtmlTooltip>
@@ -27,7 +33,7 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
         if (tooltip === undefined || typeof tooltip === "string") {
             return (
                 <span title={tooltip}>
-                    {text}
+                    <NoWrapTypography>{text}</NoWrapTypography>
                     {children}
                 </span>
             );
@@ -35,7 +41,7 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
             return (
                 <HtmlTooltip title={tooltip}>
                     <span>
-                        {text}
+                        <NoWrapTypography>{text}</NoWrapTypography>
                         {children}
                     </span>
                 </HtmlTooltip>

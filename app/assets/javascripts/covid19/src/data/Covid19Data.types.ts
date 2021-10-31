@@ -73,7 +73,6 @@ export interface AlphaFoldComputationalModel {
 
 export interface DbItem {
     dbId: string;
-    /*title: string;*/
     method?: string;
     resolution?: string;
     imageLink?: Url;
