@@ -6,6 +6,7 @@ import { Link } from "../Link";
 
 export const LigandsCell: React.FC<CellProps> = React.memo(props => {
     const { row } = props;
+
     const ligands = React.useMemo(() => {
         return row.ligands.map(ligand => {
             return {
