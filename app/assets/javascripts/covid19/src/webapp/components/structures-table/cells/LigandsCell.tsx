@@ -8,13 +8,14 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
     const { row } = props;
 
     const ligands = React.useMemo(() => {
-        return row.ligands.map(ligand => {
+        return row.ligands.map((ligand, index) => {
             return {
                 id: ligand.id,
                 url: ligand.externalLink,
+                name: `${ligand.name}${index !== row.ligands.length - 1 ? " / " : ""}`,
                 tooltip: (
                     <React.Fragment>
-                        <div>{ligand.name}</div>
+                        <div>{ligand.id}</div>
 
                         {ligand.details !== ligand.name && <div>{ligand.details}</div>}
 
@@ -36,14 +37,12 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
     return (
         <CenteredTextBox>
             {ligands.map(ligand => (
-                <p key={ligand.id}>
-                    <Link
-                        key={ligand.id}
-                        tooltip={ligand.tooltip}
-                        url={ligand.url}
-                        text={ligand.id}
-                    />
-                </p>
+                <Link
+                    key={ligand.id}
+                    tooltip={ligand.tooltip}
+                    url={ligand.url}
+                    text={ligand.name}
+                />
             ))}
         </CenteredTextBox>
     );

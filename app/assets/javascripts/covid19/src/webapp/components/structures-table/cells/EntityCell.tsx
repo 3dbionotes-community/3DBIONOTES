@@ -9,10 +9,10 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
     const { row } = props;
 
     const entities = React.useMemo(() => {
-        return row.entities.map(entity => {
+        return row.entities.map((entity, index) => {
             return {
                 id: entity.id,
-                name: entity.name,
+                name: `${entity.name}${index !== row.entities.length - 1 ? " / " : ""}`,
                 tooltip: (
                     <React.Fragment>
                         <div>
@@ -44,9 +44,7 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
     return (
         <CenteredTextBox>
             {entities.map(entity => (
-                <p key={entity.id}>
-                    <Link key={entity.id} tooltip={entity.tooltip} text={entity.name} />
-                </p>
+                <Link key={entity.id} tooltip={entity.tooltip} text={entity.name} />
             ))}
         </CenteredTextBox>
     );

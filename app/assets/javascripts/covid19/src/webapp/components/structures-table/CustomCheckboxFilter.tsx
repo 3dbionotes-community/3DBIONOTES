@@ -22,7 +22,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
     };
 
     return (
-        <FormGroup style={{ display: "flex", flexDirection: "row" }}>
+        <FormGroup style={{ display: "flex", flexDirection: "row", marginLeft: 15 }}>
             <FormControlLabel
                 control={
                     <Checkbox

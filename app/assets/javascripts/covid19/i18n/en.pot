@@ -47,7 +47,7 @@ msgstr ""
 msgid "Save as JSON"
 msgstr ""
 
-msgid "Search by title/PDB/EMDB/Entities/Ligands/Organisms/Details"
+msgid "Search"
 msgstr ""
 
 msgid "Go to Viewer"

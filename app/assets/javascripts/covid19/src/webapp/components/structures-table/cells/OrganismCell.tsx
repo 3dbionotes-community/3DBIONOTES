@@ -9,10 +9,11 @@ export const OrganismCell: React.FC<CellProps> = React.memo(props => {
 
     const organisms = React.useMemo(() => {
         return _(row.organisms)
-            .map(organism => ({
+            .map((organism, index) => ({
                 id: organism.id,
                 url: organism.externalLink,
                 tooltip: organism.name,
+                name: `${organism.name}${index !== row.organisms.length - 1 ? " / " : ""}`,
             }))
             .compact()
             .value();
@@ -21,14 +22,12 @@ export const OrganismCell: React.FC<CellProps> = React.memo(props => {
     return (
         <CenteredTextBox>
             {organisms.map(entity => (
-                <p key={entity.id}>
-                    <Link
-                        key={entity.id}
-                        tooltip={entity.tooltip}
-                        url={entity.url}
-                        text={entity.id}
-                    />
-                </p>
+                <Link
+                    key={entity.id}
+                    tooltip={entity.tooltip}
+                    url={entity.url}
+                    text={entity.name}
+                />
             ))}
         </CenteredTextBox>
     );

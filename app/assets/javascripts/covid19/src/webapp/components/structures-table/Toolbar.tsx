@@ -44,6 +44,6 @@ export const Toolbar: React.FC<ToolbarProps> = props => {
 
 export const styles = {
     container: { padding: 10 },
-    search: { width: "35em" },
+    search: { width: "20em" },
     columns: { marginLeft: "auto" },
 };

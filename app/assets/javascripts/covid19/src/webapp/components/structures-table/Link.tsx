@@ -5,7 +5,10 @@ import { styles } from "./Columns";
 import { Typography } from "@material-ui/core";
 
 export const NoWrapTypography = styled(Typography)`
-    word-wrap: break-word;
+    &&& {
+        word-wrap: break-word;
+        font-size: 0.875rem;
+    }
 `;
 
 export const Link: React.FC<LinkProps> = React.memo(props => {
