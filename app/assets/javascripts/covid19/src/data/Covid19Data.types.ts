@@ -29,11 +29,8 @@ export interface Ligand {
     dbId: LigandId;
     name: string;
     details: string;
-    InnChIKey?: string;
-    imageLink?: Url;
-    type?: string;
-    externalLink?: Url;
-    components?: string[];
+    imageLink: Url;
+    externalLink: Url;
 }
 
 export interface Structure {

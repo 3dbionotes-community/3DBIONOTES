@@ -1,18 +1,16 @@
 import React from "react";
-import _ from "lodash";
 import i18n from "../../../../utils/i18n";
 import { CellProps } from "../Columns";
 import { Link } from "../Link";
-import { CenteredTextBox } from "../CenteredTextBox";
 
 export const EntityCell: React.FC<CellProps> = React.memo(props => {
     const { row } = props;
 
     const entities = React.useMemo(() => {
-        return row.entities.map((entity, index) => {
+        return row.entities.map(entity => {
             return {
                 id: entity.id,
-                name: `${entity.name}${index !== row.entities.length - 1 ? " / " : ""}`,
+                name: entity.name,
                 tooltip: (
                     <React.Fragment>
                         <div>
@@ -42,10 +40,10 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
     }, [row.entities]);
 
     return (
-        <CenteredTextBox>
+        <ul>
             {entities.map(entity => (
                 <Link key={entity.id} tooltip={entity.tooltip} text={entity.name} />
             ))}
-        </CenteredTextBox>
+        </ul>
     );
 });

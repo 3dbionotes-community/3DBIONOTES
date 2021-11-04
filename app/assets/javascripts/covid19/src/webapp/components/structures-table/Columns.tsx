@@ -73,7 +73,7 @@ export const columnsBase: Columns = [
     }),
     column("entities", {
         headerName: i18n.t("Entities"),
-        width: 280,
+        width: 180,
         sortable: false,
         renderCell: EntityCell,
         renderString: row => row.entities.map(entity => entity.id).join(", "),
@@ -87,7 +87,7 @@ export const columnsBase: Columns = [
     }),
     column("organisms", {
         headerName: i18n.t("Organisms"),
-        width: 150,
+        width: 180,
         sortable: false,
         renderCell: OrganismCell,
         renderString: row => row.organisms.map(organism => organism.id).join(", "),

@@ -87,6 +87,7 @@ function getOrganismsForStructure(data: Data.Covid19Data, structure: Data.Struct
             (organism): Organism => ({
                 id: organism.ncbi_taxonomy_id,
                 name: organism.scientific_name,
+                commonName: organism.common_name,
                 externalLink: organism.externalLink,
             })
         )
@@ -134,8 +135,12 @@ function getId<T extends { id: string }>(obj: T): string {
 }
 
 function getPdb(pdb: Data.Pdb): Pdb {
+    const entities = pdb.entities.map(entity => ({ id: pdb.dbId, ...entity }));
     const pdbE: Pdb = {
         id: pdb.dbId,
+        method: pdb.method,
+        ligands: pdb.ligands,
+        keywords: pdb.keywords,
         queryLink: pdb.queryLink,
         imageUrl:
             pdb.imageLink ||
@@ -143,7 +148,7 @@ function getPdb(pdb: Data.Pdb): Pdb {
         externalLinks: pdb.externalLink.includes("www.ebi")
             ? [{ url: pdb.externalLink, text: "EBI" }]
             : [],
-        entities: pdb.entities.map(entity => ({ id: pdb.dbId, ...entity })),
+        entities,
     };
     return pdbE;
 }

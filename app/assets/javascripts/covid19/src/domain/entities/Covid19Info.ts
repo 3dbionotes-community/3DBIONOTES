@@ -7,6 +7,7 @@ export interface Covid19Info {
 export interface Organism {
     id: string;
     name: string;
+    commonName?: string;
     externalLink: Url;
 }
 
@@ -26,11 +27,8 @@ export interface Ligand {
     id: string;
     name: string;
     details: string;
-    imageLink?: Url;
-    externalLink?: Url;
-    type?: string;
-    InnChIKey?: string;
-    components?: string[];
+    imageLink: Url;
+    externalLink: Url;
 }
 
 export interface LigandInstance {
@@ -119,10 +117,19 @@ export type PdbValidation = PdbRedoValidation | IsoldeValidation;
 export type EmdbValidation = string;
 
 export interface Pdb extends DbItem {
+    keywords: string;
     entities: Entity[];
+    ligands: string[];
+    validation?: Partial<{
+        "pdb-redo": Validation;
+        isolde: Omit<Validation, "externalLink">;
+    }>;
 }
 
-export interface Emdb extends DbItem {}
+export interface Emdb extends DbItem {
+    emMethod: string;
+    validation?: EmdbValidation[];
+}
 
 export interface Validation {
     externalLink?: Url[];
@@ -174,7 +181,13 @@ export function filterEntities(entities: Entity[], filterState: FilterModelBodie
 
 function searchOrganismSubStructures(subStructure: Organism[], text: string): boolean {
     return (
-        subStructure.filter(structure => structure.id.toLocaleLowerCase().includes(text)).length > 0
+        subStructure.filter(structure => {
+            return (
+                structure.id.toLocaleLowerCase().includes(text) ||
+                structure.name.toLocaleLowerCase().includes(text) ||
+                (structure.commonName && structure.commonName.toLocaleLowerCase().includes(text))
+            );
+        }).length > 0
     );
 }
 
@@ -184,7 +197,6 @@ function searchLigandSubStructures(subStructure: Ligand[], text: string): boolea
             return (
                 structure.id.toLocaleLowerCase().includes(text) ||
                 structure.name.toLocaleLowerCase().includes(text) ||
-                (structure.InnChIKey && structure.InnChIKey.toLocaleLowerCase().includes(text)) ||
                 (structure.details && structure.details.toLocaleLowerCase().includes(text))
             );
         }).length > 0

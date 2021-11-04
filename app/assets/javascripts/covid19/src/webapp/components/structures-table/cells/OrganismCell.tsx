@@ -2,25 +2,41 @@ import React from "react";
 import _ from "lodash";
 import { CellProps } from "../Columns";
 import { Link } from "../Link";
-import { CenteredTextBox } from "../CenteredTextBox";
+import i18n from "../../../../utils/i18n";
 
 export const OrganismCell: React.FC<CellProps> = React.memo(props => {
     const { row } = props;
 
     const organisms = React.useMemo(() => {
         return _(row.organisms)
-            .map((organism, index) => ({
+            .map(organism => ({
                 id: organism.id,
                 url: organism.externalLink,
-                tooltip: organism.name,
-                name: `${organism.name}${index !== row.organisms.length - 1 ? " / " : ""}`,
+                tooltip: (
+                    <React.Fragment>
+                        <div>
+                            {i18n.t("ID")}: {organism.id}
+                        </div>
+
+                        <div>
+                            {i18n.t("Scientific name")}: {organism.name}
+                        </div>
+
+                        {organism.commonName && (
+                            <div>
+                                {i18n.t("Common name")}: {organism.commonName}
+                            </div>
+                        )}
+                    </React.Fragment>
+                ),
+                name: organism.name,
             }))
             .compact()
             .value();
     }, [row.organisms]);
 
     return (
-        <CenteredTextBox>
+        <ul>
             {organisms.map(entity => (
                 <Link
                     key={entity.id}
@@ -29,6 +45,6 @@ export const OrganismCell: React.FC<CellProps> = React.memo(props => {
                     text={entity.name}
                 />
             ))}
-        </CenteredTextBox>
+        </ul>
     );
 });

@@ -77,5 +77,20 @@ msgstr ""
 msgid "Entity is sybody"
 msgstr ""
 
-msgid "IUPAC InChI key"
+msgid "Name"
+msgstr ""
+
+msgid "Scientific name"
+msgstr ""
+
+msgid "Common name"
+msgstr ""
+
+msgid "Method"
+msgstr ""
+
+msgid "Keywords"
+msgstr ""
+
+msgid "Resolution"
 msgstr ""

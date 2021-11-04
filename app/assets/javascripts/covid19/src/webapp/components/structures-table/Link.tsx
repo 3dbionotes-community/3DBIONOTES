@@ -6,8 +6,7 @@ import { Typography } from "@material-ui/core";
 
 export const NoWrapTypography = styled(Typography)`
     &&& {
-        word-wrap: break-word;
-        font-size: 0.875rem;
+        font-size: 0.75rem;
     }
 `;
 
@@ -25,10 +24,14 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
         } else {
             return (
                 <HtmlTooltip title={tooltip}>
-                    <a href={url} target="_blank" rel="noreferrer" style={styles.link}>
-                        <NoWrapTypography>{text}</NoWrapTypography>
-                        {children}
-                    </a>
+                    <span style={{ display: "flex", justifyContent: "flex-start" }}>
+                        <li>
+                            <a href={url} target="_blank" rel="noreferrer" style={styles.link}>
+                                <NoWrapTypography>{text}</NoWrapTypography>
+                                {children}
+                            </a>
+                        </li>
+                    </span>
                 </HtmlTooltip>
             );
         }
@@ -40,12 +43,22 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
                     {children}
                 </span>
             );
+        } else if (text === undefined) {
+            return (
+                <HtmlTooltip title={tooltip}>
+                    <span style={{ display: "flex", justifyContent: "flex-start" }}>
+                        {children}
+                    </span>
+                </HtmlTooltip>
+            );
         } else {
             return (
                 <HtmlTooltip title={tooltip}>
-                    <span>
-                        <NoWrapTypography>{text}</NoWrapTypography>
-                        {children}
+                    <span style={{ display: "flex", justifyContent: "flex-start" }}>
+                        <li>
+                            <NoWrapTypography>{text}</NoWrapTypography>
+                            {children}
+                        </li>
                     </span>
                 </HtmlTooltip>
             );

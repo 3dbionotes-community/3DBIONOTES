@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
 export const CenteredTextBox = styled.div`
-    text-align: center;
+    text-align: left;
     width: 100%;
 `;
