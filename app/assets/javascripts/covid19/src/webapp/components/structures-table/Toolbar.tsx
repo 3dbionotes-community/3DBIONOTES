@@ -3,6 +3,7 @@ import React from "react";
 import { DataGrid } from "../../../domain/entities/DataGrid";
 import { VirtualScroll, VirtualScrollbarProps } from "../VirtualScrollbar";
 import { CustomGridToolbarExport } from "./CustomGridToolbarExport";
+import { CustomGridTopPagination } from "./CustomGridTopPagination";
 import { SearchBar } from "./SearchBar";
 import "./Toolbar.css";
 import { CustomCheckboxFilter, FilterModelBodies } from "./CustomCheckboxFilter";
@@ -15,6 +16,10 @@ export interface ToolbarProps {
     gridApi: GridApi;
     dataGrid: DataGrid;
     virtualScrollbarProps: VirtualScrollbarProps;
+    page: number;
+    pageSize: number | undefined;
+    setPage: (param: number) => void;
+    setPageSize: (param: number) => void;
 }
 
 export const Toolbar: React.FC<ToolbarProps> = props => {
@@ -26,6 +31,10 @@ export const Toolbar: React.FC<ToolbarProps> = props => {
         gridApi,
         dataGrid,
         virtualScrollbarProps,
+        page,
+        pageSize,
+        setPage,
+        setPageSize,
     } = props;
 
     return (
@@ -36,7 +45,13 @@ export const Toolbar: React.FC<ToolbarProps> = props => {
                 <CustomGridToolbarExport dataGrid={dataGrid} gridApi={gridApi} />
                 <GridToolbarColumnsButton style={styles.columns} />
             </GridToolbarContainer>
-
+            <CustomGridTopPagination
+                dataGrid={dataGrid}
+                page={page}
+                pageSize={pageSize}
+                setPage={setPage}
+                setPageSize={setPageSize}
+            />
             <VirtualScroll {...virtualScrollbarProps} />
         </React.Fragment>
     );

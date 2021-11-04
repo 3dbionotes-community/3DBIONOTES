@@ -13,7 +13,6 @@ export interface StructuresTableProps {
 }
 
 type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
-
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
     const { data } = props;
     const [page, setPage] = React.useState(0);
@@ -50,16 +49,32 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                       gridApi,
                       dataGrid,
                       virtualScrollbarProps,
+                      page,
+                      pageSize,
+                      setPage,
+                      setPageSize,
                   },
               }
             : undefined;
-    }, [search, setSearch, filterState, setFilterState, gridApi, dataGrid, virtualScrollbarProps]);
+    }, [
+        search,
+        setSearch,
+        filterState,
+        setFilterState,
+        gridApi,
+        dataGrid,
+        virtualScrollbarProps,
+        page,
+        pageSize,
+        setPage,
+        setPageSize,
+    ]);
+
+    const setFirstPage = React.useCallback<GridProp<"onSortModelChange">>(() => setPage(0), []);
 
     const setPageFromParams = React.useCallback<GridProp<"onPageChange">>(params => {
         return setPage(params.page);
     }, []);
-
-    const setFirstPage = React.useCallback<GridProp<"onSortModelChange">>(() => setPage(0), []);
 
     const setPageSizeFromParams = React.useCallback<GridProp<"onPageSizeChange">>(params => {
         return setPageSize(params.pageSize);
