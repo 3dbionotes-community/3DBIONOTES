@@ -44,9 +44,7 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
         } else if (text === undefined) {
             return (
                 <HtmlTooltip title={tooltip}>
-                    <span>
-                        {children}
-                    </span>
+                    <span>{children}</span>
                 </HtmlTooltip>
             );
         } else {
@@ -61,8 +59,11 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
         }
     }
 });
-interface LinkProps {
+
+export interface LinkProps {
     text?: string;
     url?: string;
-    tooltip?: NonNullable<React.ReactNode>;
+    tooltip?: Tooltip;
 }
+
+export type Tooltip = NonNullable<React.ReactNode>;

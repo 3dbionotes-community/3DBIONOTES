@@ -2,7 +2,6 @@ import React from "react";
 import i18n from "../../../../utils/i18n";
 import { CellProps } from "../Columns";
 import { Thumbnail } from "../Thumbnail";
-import { Link } from "../Link";
 
 export const PdbCell: React.FC<CellProps> = React.memo(props => {
     const { pdb } = props.row;
@@ -29,9 +28,5 @@ export const PdbCell: React.FC<CellProps> = React.memo(props => {
         </React.Fragment>
     );
 
-    return pdb ? (
-        <Link key={pdb.id} tooltip={tooltip}>
-            <Thumbnail type="pdb" value={pdb} />
-        </Link>
-    ) : null;
+    return pdb ? <Thumbnail type="pdb" value={pdb} tooltip={tooltip} /> : null;
 });

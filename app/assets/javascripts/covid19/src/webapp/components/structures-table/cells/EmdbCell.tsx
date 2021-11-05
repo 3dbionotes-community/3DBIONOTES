@@ -2,7 +2,6 @@ import React from "react";
 import { CellProps } from "../Columns";
 import { Thumbnail } from "../Thumbnail";
 import i18n from "../../../../utils/i18n";
-import { Link } from "../Link";
 
 export const EmdbCell: React.FC<CellProps> = React.memo(props => {
     const { emdb } = props.row;
@@ -23,9 +22,5 @@ export const EmdbCell: React.FC<CellProps> = React.memo(props => {
         </React.Fragment>
     );
 
-    return emdb ? (
-        <Link key={emdb.id} tooltip={tooltip}>
-            <Thumbnail type="pdb" value={emdb} />
-        </Link>
-    ) : null;
+    return emdb ? <Thumbnail type="pdb" value={emdb} tooltip={tooltip} /> : null;
 });
