@@ -5,10 +5,19 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2021-11-04T15:11:31.943Z\n"
-"PO-Revision-Date: 2021-11-04T15:11:31.943Z\n"
+"POT-Creation-Date: 2021-11-05T09:09:42.385Z\n"
+"PO-Revision-Date: 2021-11-05T09:09:42.385Z\n"
 
 msgid "Known Proteins"
+msgstr ""
+
+msgid "Authors"
+msgstr ""
+
+msgid "Released"
+msgstr ""
+
+msgid "Go to Viewer"
 msgstr ""
 
 msgid "Title"
@@ -20,22 +29,43 @@ msgstr ""
 msgid "EMDB"
 msgstr ""
 
+msgid "Entity"
+msgstr ""
+
+msgid "Ligands"
+msgstr ""
+
+msgid "Specimen"
+msgstr ""
+
+msgid "Comp. Model"
+msgstr ""
+
+msgid "PDB-Redo"
+msgstr ""
+
+msgid "Isolde"
+msgstr ""
+
+msgid "Refmac"
+msgstr ""
+
+msgid "Experiment"
+msgstr ""
+
+msgid "Pocket"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
 msgid "Validations"
 msgstr ""
 
 msgid "Entities"
 msgstr ""
 
-msgid "Ligands"
-msgstr ""
-
 msgid "Organisms"
-msgstr ""
-
-msgid "Comp. Model"
-msgstr ""
-
-msgid "Details"
 msgstr ""
 
 msgid "Export"
@@ -48,15 +78,6 @@ msgid "Save as JSON"
 msgstr ""
 
 msgid "Search"
-msgstr ""
-
-msgid "Go to Viewer"
-msgstr ""
-
-msgid "PDB-Redo"
-msgstr ""
-
-msgid "Isolde"
 msgstr ""
 
 msgid "ID"
