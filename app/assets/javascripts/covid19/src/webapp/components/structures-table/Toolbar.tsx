@@ -42,8 +42,10 @@ export const Toolbar: React.FC<ToolbarProps> = props => {
             <GridToolbarContainer style={styles.container}>
                 <SearchBar value={search} setValue={setSearch} />
                 <CustomCheckboxFilter filterState={filterState} setFilterState={setFilterState} />
-                <CustomGridToolbarExport dataGrid={dataGrid} gridApi={gridApi} />
-                <GridToolbarColumnsButton style={styles.columns} />
+                <div style={styles.columns}>
+                    <CustomGridToolbarExport dataGrid={dataGrid} gridApi={gridApi} />
+                    <GridToolbarColumnsButton />
+                </div>
             </GridToolbarContainer>
             <CustomGridTopPagination
                 dataGrid={dataGrid}
