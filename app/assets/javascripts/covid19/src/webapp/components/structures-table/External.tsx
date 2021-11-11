@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 
 export interface ExternalProps {
-    text: string;
+    text?: string;
     icon?: ExternalIcon;
 }
 

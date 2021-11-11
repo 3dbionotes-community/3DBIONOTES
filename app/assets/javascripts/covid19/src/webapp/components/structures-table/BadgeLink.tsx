@@ -5,7 +5,7 @@ import { Link } from "./Link";
 import { W3Color } from "../../../domain/entities/Covid19Info";
 
 export interface BadgeLinkProps {
-    text: string;
+    text?: string;
     url?: string;
     icon?: ExternalIcon;
     color?: W3Color;

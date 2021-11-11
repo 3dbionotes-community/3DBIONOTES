@@ -1,5 +1,4 @@
 import React from "react";
-import i18n from "../../../utils/i18n";
 import { DbItem } from "../../../domain/entities/Covid19Info";
 import { styles } from "./Columns";
 import { BadgeLink } from "./BadgeLink";
@@ -14,7 +13,7 @@ interface ThumbnailProps {
 
 export const Thumbnail: React.FC<ThumbnailProps> = React.memo(props => {
     const { value, tooltip } = props;
-    const { imageUrl: imageSrc, id: name, queryLink } = value;
+    const { imageUrl: imageSrc, id: name } = value;
 
     return (
         <div style={styles.thumbnailWrapper}>
@@ -32,13 +31,6 @@ export const Thumbnail: React.FC<ThumbnailProps> = React.memo(props => {
                     icon="external"
                 />
             ))}
-
-            <BadgeLink
-                key={queryLink}
-                url={queryLink}
-                text={i18n.t("Go to Viewer")}
-                icon="viewer"
-            />
         </div>
     );
 });
