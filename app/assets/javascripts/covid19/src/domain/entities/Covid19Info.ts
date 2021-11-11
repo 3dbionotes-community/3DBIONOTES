@@ -46,10 +46,6 @@ export interface Structure {
     computationalModel: Maybe<ComputationalModel>;
     ligands: Ligand[];
     details: Maybe<string>;
-    validations: {
-        pdb: PdbValidation[];
-        emdb: EmdbValidation[];
-    };
 }
 
 export type ComputationalModel =
@@ -98,37 +94,17 @@ export interface Link {
     tooltip?: string;
 }
 
-export interface PdbRedoValidation {
-    type: "pdbRedo";
-    externalLink: Url;
-    queryLink?: Url;
-    badgeColor: W3Color;
-}
-
-export interface IsoldeValidation {
-    type: "isolde";
-    queryLink?: Url;
-    badgeColor: W3Color;
-}
-
 export type W3Color = "w3-cyan" | "w3-turq";
-
-export type PdbValidation = PdbRedoValidation | IsoldeValidation;
 export type EmdbValidation = string;
 
 export interface Pdb extends DbItem {
     keywords: string;
     entities: Entity[];
     ligands: string[];
-    validation?: Partial<{
-        "pdb-redo": Validation;
-        isolde: Omit<Validation, "externalLink">;
-    }>;
 }
 
 export interface Emdb extends DbItem {
     emMethod: string;
-    validation?: EmdbValidation[];
 }
 
 export interface Validation {

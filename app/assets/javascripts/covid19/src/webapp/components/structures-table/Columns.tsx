@@ -15,7 +15,6 @@ import { EntityCell } from "./cells/EntityCell";
 import { LigandsCell } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
 import { ComputationalModelCell } from "./cells/ComputationalModelCell";
-import { ValidationsCell } from "./ValidationsCell";
 
 type Row = Structure;
 export type Field = keyof Row;
@@ -60,16 +59,6 @@ export const columnsBase: Columns = [
         renderCell: EmdbCell,
         sortComparator: compareIds,
         renderString: row => row.emdb?.id,
-    }),
-    column("validations", {
-        headerName: i18n.t("Validations"),
-        width: 130,
-        renderCell: ValidationsCell,
-        renderString: row => {
-            const { validations } = row;
-            const allValidations = [...validations.pdb.map(v => v.type), ...validations.emdb];
-            return allValidations.join(", ");
-        },
     }),
     column("entities", {
         headerName: i18n.t("Entities"),
