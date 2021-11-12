@@ -9,6 +9,7 @@ import {
     Organism,
     Pdb,
     Structure,
+    PdbValidation,
 } from "../domain/entities/Covid19Info";
 import { Covid19InfoRepository } from "../domain/repositories/Covid19InfoRepository";
 import { data } from "./covid19-data";
@@ -28,6 +29,10 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
                 organisms: getOrganismsForStructure(data, structure),
                 ligands: getLigands(data.Ligands, structure.pdb.ligands),
                 details: "",
+                validations: {
+                    pdb: getPdbValidations(structure.pdb?.validation),
+                    emdb: structure.emdb?.validation || [],
+                },
             })
         );
 
@@ -148,10 +153,21 @@ function getPdb(pdb: Data.Pdb): Pdb {
     return pdbE;
 }
 
+function getPdbValidations(dataValidations: Data.Pdb["validation"]): PdbValidation[] {
+    const { "pdb-redo": pdbRedo, isolde } = dataValidations || {};
+
+    return _.compact([
+        pdbRedo ? { type: "pdbRedo", ...pdbRedo } : null,
+        isolde
+            ? { type: "isolde", badgeColor: isolde.badgeColor, queryLink: isolde.queryLink }
+            : null,
+    ]);
+}
+
 function getEmdb<T extends Data.Emdb>(emdb: T): Emdb {
     const emdbE: Emdb = {
         id: emdb.dbId,
-        ..._.omit(emdb, ["imageLink", "externalLink"]),
+        ..._.omit(emdb, ["imageLink", "externalLink", "validation"]),
         imageUrl:
             emdb.imageLink ||
             `https://www.ebi.ac.uk/pdbe/static/entry/EMD-${emdb.dbId}/400_${emdb.dbId}.gif`,

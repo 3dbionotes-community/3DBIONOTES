@@ -2,12 +2,11 @@ import React from "react";
 import i18n from "../../../../utils/i18n";
 import { CellProps } from "../Columns";
 import { Thumbnail } from "../Thumbnail";
+import { BadgeLink } from "../BadgeLink";
 
 export const PdbCell: React.FC<CellProps> = React.memo(props => {
-    const { pdb } = props.row;
-    console.log(props.row)
+    const { pdb, validations } = props.row;
 
-    console.log(pdb)
     const tooltip = (
         <React.Fragment>
             <div>
@@ -30,5 +29,53 @@ export const PdbCell: React.FC<CellProps> = React.memo(props => {
         </React.Fragment>
     );
 
-    return pdb ? <Thumbnail type="pdb" value={pdb} tooltip={tooltip} /> : null;
+    return (
+        <React.Fragment>
+            {pdb ? <Thumbnail type="pdb" value={pdb} tooltip={tooltip} /> : null}
+            {validations ? (
+                <div>
+                    {validations.pdb.map(pdbValidation => {
+                        switch (pdbValidation.type) {
+                            case "pdbRedo":
+                                return (
+                                    <React.Fragment key="pdb-redo">
+                                        <BadgeLink
+                                            key="pdb-redo-external"
+                                            url={pdbValidation.externalLink}
+                                            text={i18n.t("PDB-Redo")}
+                                            icon="external"
+                                            color={pdbValidation.badgeColor}
+                                        />
+
+                                        <BadgeLink
+                                            key="pdb-redo-viewer"
+                                            url={pdbValidation.queryLink}
+                                            text={i18n.t("PDB-Redo")}
+                                            icon="viewer"
+                                            color={pdbValidation.badgeColor}
+                                        />
+                                    </React.Fragment>
+                                );
+                            case "isolde":
+                                return (
+                                    <BadgeLink
+                                        key="pdb-isolde"
+                                        url={pdbValidation.queryLink}
+                                        text={i18n.t("Isolde")}
+                                        icon="viewer"
+                                        color={pdbValidation.badgeColor}
+                                    />
+                                );
+                            default:
+                                throw new Error("Unsupported");
+                        }
+                    })}
+
+                    {validations.emdb.map(emdbValidation => (
+                        <BadgeLink key={emdbValidation} text={emdbValidation} />
+                    ))}
+                </div>
+            ) : null}
+        </React.Fragment>
+    );
 });

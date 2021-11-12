@@ -81,10 +81,15 @@ export interface Pdb extends DbItem {
     keywords: string;
     entities: Entity[];
     ligands: LigandId[];
+    validation?: Partial<{
+        "pdb-redo": Validation;
+        isolde: Omit<Validation, "externalLink">;
+    }>;
 }
 
 export interface Emdb extends DbItem {
     emMethod: string;
+    validation?: EmdbValidation[];
 }
 
 type Maybe<T> = T | null;
@@ -92,5 +97,13 @@ type Maybe<T> = T | null;
 type LigandId = string;
 
 export type EntityRef = { organism?: string; uniprotAcc?: string };
+
+type EmdbValidation = "DeepRes" | "MonoRes" | "Map-Q" | "FSC-Q";
+
+export interface Validation {
+    externalLink: Url;
+    queryLink: Url;
+    badgeColor: W3Color;
+}
 
 export type Url = string;
