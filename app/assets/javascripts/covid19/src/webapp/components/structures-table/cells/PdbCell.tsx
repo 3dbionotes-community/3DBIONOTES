@@ -5,7 +5,9 @@ import { Thumbnail } from "../Thumbnail";
 
 export const PdbCell: React.FC<CellProps> = React.memo(props => {
     const { pdb } = props.row;
+    console.log(props.row)
 
+    console.log(pdb)
     const tooltip = (
         <React.Fragment>
             <div>
