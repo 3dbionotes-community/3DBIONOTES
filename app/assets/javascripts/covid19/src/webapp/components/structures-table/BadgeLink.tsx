@@ -9,7 +9,7 @@ export interface BadgeLinkProps {
     url?: string;
     icon?: ExternalIcon;
     color?: W3Color;
-    style?: Record<string, string | number | boolean>
+    style?: Record<string, string | number | boolean>;
 }
 
 export const BadgeLink: React.FC<BadgeLinkProps> = React.memo(props => {

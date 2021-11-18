@@ -16,7 +16,13 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
     if (props.url) {
         if (tooltip === undefined || typeof tooltip === "string") {
             return (
-                <a title={tooltip} href={url} target="_blank" rel="noreferrer" style={{...styles.link, ...style}}>
+                <a
+                    title={tooltip}
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ ...styles.link, ...style }}
+                >
                     <NoWrapTypography>{text}</NoWrapTypography>
                     {children}
                 </a>
@@ -47,8 +53,7 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
                     <span>{children}</span>
                 </HtmlTooltip>
             );
-        }
-         else {
+        } else {
             return (
                 <HtmlTooltip title={tooltip}>
                     <li>

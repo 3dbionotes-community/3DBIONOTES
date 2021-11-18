@@ -12,7 +12,7 @@ export const External: React.FC<ExternalProps> = React.memo(props => {
 
     return (
         <React.Fragment>
-            {text && <span style={styles.text}>{text}</span> }
+            {text && <span style={styles.text}>{text}</span>}
             {icon && <i className={classNames("fa", iconClassName)} />}
         </React.Fragment>
     );

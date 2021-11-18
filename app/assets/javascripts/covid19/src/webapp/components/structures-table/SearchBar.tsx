@@ -28,7 +28,9 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                 onChange={setValueFromEv}
                 placeholder={i18n.t("Search")}
             />
+            
             <div style={searchBarStyle.exampleRow}>
+                <p>Examples:</p>
                 <SearchExampleButton setValue={setValue} exampleValue="6YOR" />
                 <SearchExampleButton setValue={setValue} exampleValue="Homo sapiens" />
                 <SearchExampleButton setValue={setValue} exampleValue="SARS-CoV-2" />
