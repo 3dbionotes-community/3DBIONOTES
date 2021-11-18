@@ -9,10 +9,11 @@ export interface BadgeLinkProps {
     url?: string;
     icon?: ExternalIcon;
     color?: W3Color;
+    style?: Record<string, string | number | boolean>
 }
 
 export const BadgeLink: React.FC<BadgeLinkProps> = React.memo(props => {
-    const { text, url, icon, color } = props;
+    const { text, url, icon, color, style } = props;
 
     const badgeStyle = React.useMemo(() => {
         const htmlColor = color ? colors[color] : undefined;
@@ -24,7 +25,7 @@ export const BadgeLink: React.FC<BadgeLinkProps> = React.memo(props => {
     }, [color]);
 
     return (
-        <Link url={url}>
+        <Link url={url} style={style}>
             <Badge style={badgeStyle}>
                 <External text={text} icon={icon} />
             </Badge>

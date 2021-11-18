@@ -13,8 +13,15 @@ export const TitleCell: React.FC<CellProps> = React.memo(props => {
 
     return (
         <>
-            <div style={styles.title}>{props.row.title}</div>
-            <BadgeLink key={queryLinkToUse} url={queryLinkToUse} icon="viewer" />
+            <div style={{...styles.title, display: "inline"}}>{props.row.title}</div>
+            <BadgeLink style={badgeStyles.badgeLink} key={queryLinkToUse} url={queryLinkToUse} icon="viewer" />    
         </>
     );
 });
+
+const badgeStyles = {
+    badgeLink: {
+        display: "inline-block", 
+        marginLeft: 5
+    },
+};

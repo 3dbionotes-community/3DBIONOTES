@@ -11,12 +11,12 @@ export const NoWrapTypography = styled(Typography)`
 `;
 
 export const Link: React.FC<LinkProps> = React.memo(props => {
-    const { text, url, tooltip, children } = props;
+    const { text, url, tooltip, children, style } = props;
 
     if (props.url) {
         if (tooltip === undefined || typeof tooltip === "string") {
             return (
-                <a title={tooltip} href={url} target="_blank" rel="noreferrer" style={styles.link}>
+                <a title={tooltip} href={url} target="_blank" rel="noreferrer" style={{...styles.link, ...style}}>
                     <NoWrapTypography>{text}</NoWrapTypography>
                     {children}
                 </a>
@@ -47,7 +47,8 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
                     <span>{children}</span>
                 </HtmlTooltip>
             );
-        } else {
+        }
+         else {
             return (
                 <HtmlTooltip title={tooltip}>
                     <li>
@@ -64,6 +65,7 @@ export interface LinkProps {
     text?: string;
     url?: string;
     tooltip?: Tooltip;
+    style?: Record<string, string | number | boolean>;
 }
 
 export type Tooltip = NonNullable<React.ReactNode>;
