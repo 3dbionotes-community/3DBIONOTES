@@ -87,7 +87,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 onStateChange={updateScrollBarFromStateChange}
                 onSortModelChange={setFirstPage}
                 className={classes.root}
-                rowHeight={200}
+                rowHeight={220}
                 sortingOrder={sortingOrder}
                 rows={structures}
                 autoHeight
