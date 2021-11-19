@@ -218,6 +218,6 @@ export function buildPdbRedoValidation(pdbId: Id): PdbRedoValidation {
         type: "pdbRedo",
         externalLink: pdbRedoUrl,
         queryLink: `/pdb_redo/${pdbId}`,
-        badgeColor: "w3-cyan",
+        badgeColor: "w3-turq",
     };
 }
