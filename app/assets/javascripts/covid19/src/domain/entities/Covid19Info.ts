@@ -113,21 +113,16 @@ export interface Link {
 
 export type W3Color = "w3-cyan" | "w3-turq";
 export type PdbValidation = PdbRedoValidation | IsoldeValidation;
-export type EmdbValidation = string;
+export type EmdbValidation = "DeepRes" | "MonoRes" | "Map-Q" | "FSC-Q";
 
 export interface Pdb extends DbItem {
     keywords: string;
     entities: Entity[];
     ligands: string[];
-    validation?: Partial<{
-        "pdb-redo": Validation;
-        isolde: Omit<Validation, "externalLink">;
-    }>;
 }
 
 export interface Emdb extends DbItem {
     emMethod: string;
-    validation?: EmdbValidation[];
 }
 
 export interface Validation {
@@ -214,4 +209,15 @@ function searchEntitySubStructures(subStructure: Entity[], text: string): boolea
             );
         }).length > 0
     );
+}
+
+export function buildPdbRedoValidation(pdbId: Id): PdbRedoValidation {
+    const pdbRedoUrl = `https://pdb-redo.eu/db/${pdbId.toLowerCase()}`;
+
+    return {
+        type: "pdbRedo",
+        externalLink: pdbRedoUrl,
+        queryLink: `/pdb_redo/${pdbId}`,
+        badgeColor: "w3-cyan",
+    };
 }
