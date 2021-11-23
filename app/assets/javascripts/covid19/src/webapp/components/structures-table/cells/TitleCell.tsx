@@ -3,13 +3,7 @@ import { CellProps, styles } from "../Columns";
 import { BadgeLink } from "../BadgeLink";
 
 export const TitleCell: React.FC<CellProps> = React.memo(props => {
-    let queryLinkToUse;
-
-    if ((props.row?.pdb && props.row?.emdb) || props.row?.pdb) {
-        queryLinkToUse = props.row?.pdb.queryLink;
-    } else if (props.row?.emdb) {
-        queryLinkToUse = props.row.emdb?.queryLink;
-    }
+    const queryLinkToUse = props.row?.emdb ? props.row?.emdb.queryLink : undefined;
 
     return (
         <>
