@@ -1,15 +1,17 @@
 import React from "react";
-import { CellProps, styles } from "../Columns";
+import { CellProps } from "../Columns";
 import { BadgeLink } from "../BadgeLink";
 
 export const TitleCell: React.FC<CellProps> = React.memo(props => {
-    const queryLinkToUse = props.row?.emdb ? props.row?.emdb.queryLink : props.row?.pdb?.queryLink;
+    const structure = props.row;
+    const queryLinkToUse = structure.emdb?.queryLink || structure.pdb?.queryLink;
 
     return (
         <>
-            <div style={{ ...styles.title, display: "inline" }}>{props.row.title}</div>
+            <div style={styles.title}>{props.row.title}</div>
+
             <BadgeLink
-                style={badgeStyles.badgeLink}
+                style={styles.badgeLink}
                 key={queryLinkToUse}
                 url={queryLinkToUse}
                 icon="viewer"
@@ -18,7 +20,11 @@ export const TitleCell: React.FC<CellProps> = React.memo(props => {
     );
 });
 
-const badgeStyles = {
+const styles = {
+    title: {
+        lineHeight: "20px",
+        display: "inline",
+    },
     badgeLink: {
         display: "inline-block",
         marginLeft: 5,
