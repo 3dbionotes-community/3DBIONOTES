@@ -49,7 +49,13 @@ export const VirtualScroll: React.FC<VirtualScrollbarProps> = React.memo(props =
 });
 
 export const styles = {
-    parent: { width: "100%", overflowX: "auto" as const, overflowY: "hidden" as const },
+    parent: {
+        display: "grid" /* Required by Firefox */,
+        width: "100%",
+        height: 20,
+        overflowX: "auto" as const,
+        overflowY: "hidden" as const,
+    },
     inner: { display: "inline-block" },
 };
 
