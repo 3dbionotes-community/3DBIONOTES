@@ -394,7 +394,7 @@ function display_noAlignments(PDB){
     $j(this).css('color','#96C8C8');
   });
   $j("#manual_annotation").click(function(){
-    var pdb_url = "http://www.ebi.ac.uk/pdbe/entry-files/download/"+PDB[0]+".cif";
+    var pdb_url = "https://www.ebi.ac.uk/pdbe/entry-files/download/"+PDB[0]+".cif";
     top.stop_wait_message  =  false;
     wait_message("PROTEIN CONTENT ANALYSIS");
     $j.ajax({
