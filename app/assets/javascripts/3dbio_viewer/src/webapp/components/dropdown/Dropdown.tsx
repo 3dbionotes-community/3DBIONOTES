@@ -48,7 +48,7 @@ export function Dropdown<Id extends string = string>(
 
     return (
         <React.Fragment>
-            <button ref={buttonRef} onClick={openMenu} className={isMenuOpen ? "open" : "close"}>
+            <button ref={buttonRef} onClick={openMenu} className={isMenuOpen ? "open" : undefined}>
                 {buttonText}
                 {showExpandIcon && <ExpandMore />}
             </button>
