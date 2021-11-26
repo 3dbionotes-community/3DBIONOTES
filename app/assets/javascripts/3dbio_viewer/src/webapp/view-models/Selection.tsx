@@ -28,6 +28,13 @@ export interface Selection {
     ligandId: Maybe<string>;
 }
 
+export const emptySelection: Selection = {
+    main: {},
+    overlay: [],
+    chainId: undefined,
+    ligandId: undefined,
+};
+
 export interface WithVisibility<T> {
     item: T;
     visible: boolean;
@@ -64,9 +71,19 @@ export function getChainId(selection: Selection): Maybe<string> {
 
 /* toString, fromString */
 
+function splitPdbIdb(main: string): Array<string | undefined> {
+    if (main.includes(mainSeparator)) {
+        return main.split(mainSeparator, 2);
+    } else if (main.startsWith("EMD")) {
+        return [undefined, main];
+    } else {
+        return [main, undefined];
+    }
+}
+
 export function getSelectionFromString(items: Maybe<string>): Selection {
     const [main = "", overlay = ""] = (items || "").split(overlaySeparator, 2);
-    const [mainPdbRich = "", mainEmdbRichId] = main.split(mainSeparator, 2);
+    const [mainPdbRich = "", mainEmdbRichId] = splitPdbIdb(main);
     const [mainPdbRichId, chainId, ligandId] = mainPdbRich.split(chainSeparator, 3);
     const overlayIds = overlay.split(mainSeparator);
 
