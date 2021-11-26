@@ -16,7 +16,7 @@
         "@types/react": "17.0.2",
         "@types/react-dom": "17.0.2",
         "@types/react-image-fallback": "^8.0.1",
-        "apicache": "^1.6.2",
+        "apicache": "1.6.3",
         "axios": "^0.21.1",
         "classnames": "^2.2.6",
         "d2-ui-components": "^2.4.0",
