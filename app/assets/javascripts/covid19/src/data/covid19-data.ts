@@ -8238,7 +8238,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-10863/400_10863.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-10863",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-10863",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-10863",
             },
             pdb: {
                 dbId: "6YOR",
@@ -8277,7 +8277,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6yor_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6yor",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6yor",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6yor",
             },
         },
         {
@@ -8288,7 +8288,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11007/400_11007.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11007",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11007",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11007",
             },
             pdb: {
                 dbId: "6YYT",
@@ -8336,7 +8336,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6yyt_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6yyt",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6yyt",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6yyt",
             },
         },
         {
@@ -8347,7 +8347,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11068/400_11068.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11068",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11068",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11068",
             },
             pdb: {
                 dbId: "6Z43",
@@ -8377,7 +8377,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6z43_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6z43",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6z43",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6z43",
             },
         },
         {
@@ -8388,7 +8388,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11119/400_11119.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11119",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11119",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11119",
             },
             pdb: {
                 dbId: "6Z97",
@@ -8410,7 +8410,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6z97_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6z97",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6z97",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6z97",
             },
         },
         {
@@ -8421,7 +8421,7 @@ export const data: Covid19Data = {
                 resolution: "3.03",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11144/400_11144.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11144",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11144",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11144",
             },
             pdb: {
                 dbId: "6ZB4",
@@ -8442,7 +8442,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zb4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zb4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zb4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zb4",
             },
         },
         {
@@ -8453,7 +8453,7 @@ export const data: Covid19Data = {
                 resolution: "2.85",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11145/400_11145.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11145",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11145",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11145",
             },
             pdb: {
                 dbId: "6ZB5",
@@ -8474,7 +8474,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zb5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zb5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zb5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zb5",
             },
         },
         {
@@ -8486,7 +8486,7 @@ export const data: Covid19Data = {
                 resolution: "4.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11173/400_11173.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11173",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11173",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11173",
             },
             pdb: {
                 dbId: "6ZDG",
@@ -8526,7 +8526,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zdg_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zdg",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zdg",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zdg",
             },
         },
         {
@@ -8537,7 +8537,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11174/400_11174.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11174",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11174",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11174",
             },
             pdb: {
                 dbId: "6ZDH",
@@ -8577,7 +8577,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zdh_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zdh",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zdh",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zdh",
             },
         },
         {
@@ -8589,7 +8589,7 @@ export const data: Covid19Data = {
                 resolution: "4.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11184/400_11184.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11184",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11184",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11184",
             },
             pdb: {
                 dbId: "6ZFO",
@@ -8629,7 +8629,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zfo_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zfo",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zfo",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zfo",
             },
         },
         {
@@ -8640,7 +8640,7 @@ export const data: Covid19Data = {
                 resolution: "2.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11203/400_11203.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11203",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11203",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11203",
             },
             pdb: {
                 dbId: "6ZGE",
@@ -8661,7 +8661,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zge_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zge",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zge",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zge",
             },
         },
         {
@@ -8672,7 +8672,7 @@ export const data: Covid19Data = {
                 resolution: "3.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11205/400_11205.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11205",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11205",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11205",
             },
             pdb: {
                 dbId: "6ZGG",
@@ -8693,7 +8693,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zgg_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zgg",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zgg",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zgg",
             },
         },
         {
@@ -8704,7 +8704,7 @@ export const data: Covid19Data = {
                 resolution: "6.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11206/400_11206.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11206",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11206",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11206",
             },
             pdb: {
                 dbId: "6ZGH",
@@ -8725,7 +8725,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zgh_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zgh",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zgh",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zgh",
             },
         },
         {
@@ -8736,7 +8736,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11207/400_11207.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11207",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11207",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11207",
             },
             pdb: {
                 dbId: "6ZGI",
@@ -8757,7 +8757,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zgi_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zgi",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zgi",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zgi",
             },
         },
         {
@@ -8768,7 +8768,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11218/400_11218.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11218",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11218",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11218",
             },
             pdb: {
                 dbId: "6ZHD",
@@ -8799,7 +8799,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zhd_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zhd",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zhd",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zhd",
             },
         },
         {
@@ -8810,7 +8810,7 @@ export const data: Covid19Data = {
                 resolution: "2.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11276/400_11276.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11276",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11276",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11276",
             },
             pdb: {
                 dbId: "6ZLW",
@@ -9153,7 +9153,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zlw_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zlw",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zlw",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zlw",
             },
         },
         {
@@ -9164,7 +9164,7 @@ export const data: Covid19Data = {
                 resolution: "2.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11288/400_11288.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11288",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11288",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11288",
             },
             pdb: {
                 dbId: "6ZM7",
@@ -9970,7 +9970,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zm7_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zm7",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zm7",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zm7",
             },
         },
         {
@@ -9981,7 +9981,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11289/400_11289.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11289",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11289",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11289",
             },
             pdb: {
                 dbId: "6ZME",
@@ -10807,7 +10807,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zme_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zme",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zme",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zme",
             },
         },
         {
@@ -10818,7 +10818,7 @@ export const data: Covid19Data = {
                 resolution: "2.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11292/400_11292.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11292",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11292",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11292",
             },
             pdb: {
                 dbId: "6ZMI",
@@ -11624,7 +11624,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zmi_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zmi",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zmi",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zmi",
             },
         },
         {
@@ -11635,7 +11635,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11299/400_11299.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11299",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11299",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11299",
             },
             pdb: {
                 dbId: "6ZMO",
@@ -12451,7 +12451,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zmo_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zmo",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zmo",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zmo",
             },
         },
         {
@@ -12462,7 +12462,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11301/400_11301.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11301",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11301",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11301",
             },
             pdb: {
                 dbId: "6ZMT",
@@ -12796,7 +12796,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zmt_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zmt",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zmt",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zmt",
             },
         },
         {
@@ -12807,7 +12807,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11310/400_11310.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11310",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11310",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11310",
             },
             pdb: {
                 dbId: "6ZN5",
@@ -13150,7 +13150,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zn5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zn5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zn5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zn5",
             },
         },
         {
@@ -13161,7 +13161,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11320/400_11320.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11320",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11320",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11320",
             },
             pdb: {
                 dbId: "6ZOJ",
@@ -13503,7 +13503,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zoj_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zoj",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zoj",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zoj",
             },
         },
         {
@@ -13514,7 +13514,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11321/400_11321.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11321",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11321",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11321",
             },
             pdb: {
                 dbId: "6ZOK",
@@ -13729,7 +13729,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zok_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zok",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zok",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zok",
             },
         },
         {
@@ -13740,7 +13740,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11325/400_11325.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11325",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11325",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11325",
             },
             pdb: {
                 dbId: "6ZON",
@@ -14204,7 +14204,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zon_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zon",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zon",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zon",
             },
         },
         {
@@ -14215,7 +14215,7 @@ export const data: Covid19Data = {
                 resolution: "3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11328/400_11328.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11328",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11328",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11328",
             },
             pdb: {
                 dbId: "6ZOW",
@@ -14236,7 +14236,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zow_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zow",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zow",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zow",
             },
         },
         {
@@ -14248,7 +14248,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11329/400_11329.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11329",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11329",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11329",
             },
             pdb: {
                 dbId: "6ZOX",
@@ -14270,7 +14270,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zox_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zox",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zox",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zox",
             },
         },
         {
@@ -14282,7 +14282,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11330/400_11330.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11330",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11330",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11330",
             },
             pdb: {
                 dbId: "6ZOY",
@@ -14304,7 +14304,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zoy_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zoy",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zoy",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zoy",
             },
         },
         {
@@ -14316,7 +14316,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11331/400_11331.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11331",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11331",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11331",
             },
             pdb: {
                 dbId: "6ZOZ",
@@ -14338,7 +14338,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zoz_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zoz",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zoz",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zoz",
             },
         },
         {
@@ -14350,7 +14350,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11332/400_11332.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11332",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11332",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11332",
             },
             pdb: {
                 dbId: "6ZP0",
@@ -14372,7 +14372,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zp0_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zp0",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zp0",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zp0",
             },
         },
         {
@@ -14384,7 +14384,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11333/400_11333.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11333",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11333",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11333",
             },
             pdb: {
                 dbId: "6ZP1",
@@ -14406,7 +14406,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zp1_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zp1",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zp1",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zp1",
             },
         },
         {
@@ -14418,7 +14418,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11334/400_11334.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11334",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11334",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11334",
             },
             pdb: {
                 dbId: "6ZP2",
@@ -14440,7 +14440,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zp2_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zp2",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zp2",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zp2",
             },
         },
         {
@@ -14451,7 +14451,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11335/400_11335.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11335",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11335",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11335",
             },
             pdb: {
                 dbId: "6ZP4",
@@ -14971,7 +14971,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zp4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zp4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zp4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zp4",
             },
         },
         {
@@ -14983,7 +14983,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11336/400_11336.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11336",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11336",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11336",
             },
             pdb: {
                 dbId: "6ZP5",
@@ -15004,7 +15004,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zp5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zp5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zp5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zp5",
             },
         },
         {
@@ -15016,7 +15016,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11337/400_11337.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11337",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11337",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11337",
             },
             pdb: {
                 dbId: "6ZP7",
@@ -15037,7 +15037,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zp7_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zp7",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zp7",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zp7",
             },
         },
         {
@@ -15049,7 +15049,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11497/400_11497.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11497",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11497",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11497",
             },
             pdb: {
                 dbId: "6ZWV",
@@ -15070,7 +15070,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zwv_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zwv",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zwv",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zwv",
             },
         },
         {
@@ -15082,7 +15082,7 @@ export const data: Covid19Data = {
                 resolution: "2.93",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11526/400_11526.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11526",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11526",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11526",
             },
             pdb: {
                 dbId: "6ZXN",
@@ -15114,7 +15114,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6zxn_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zxn",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zxn",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6zxn",
             },
         },
         {
@@ -15126,7 +15126,7 @@ export const data: Covid19Data = {
                 resolution: "3.06",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11616/400_11616.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11616",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11616",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11616",
             },
             pdb: {
                 dbId: "7A25",
@@ -15156,7 +15156,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a25_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a25",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a25",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a25",
             },
         },
         {
@@ -15168,7 +15168,7 @@ export const data: Covid19Data = {
                 resolution: "2.94",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11617/400_11617.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11617",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11617",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11617",
             },
             pdb: {
                 dbId: "7A29",
@@ -15198,7 +15198,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a29_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a29",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a29",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a29",
             },
         },
         {
@@ -15210,7 +15210,7 @@ export const data: Covid19Data = {
                 resolution: "2.75",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11639/400_11639.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11639",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11639",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11639",
             },
             pdb: {
                 dbId: "7A4N",
@@ -15233,7 +15233,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a4n_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a4n",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a4n",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a4n",
             },
         },
         {
@@ -15244,7 +15244,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11647/400_11647.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11647",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11647",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11647",
             },
             pdb: {
                 dbId: "7A5S",
@@ -15283,7 +15283,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a5s_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a5s",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a5s",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a5s",
             },
         },
         {
@@ -15294,7 +15294,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11648/400_11648.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11648",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11648",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11648",
             },
             pdb: {
                 dbId: "7A5R",
@@ -15333,7 +15333,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a5r_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a5r",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a5r",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a5r",
             },
         },
         {
@@ -15345,7 +15345,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11681/400_11681.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11681",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11681",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11681",
             },
             pdb: {
                 dbId: "7A91",
@@ -15376,7 +15376,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a91_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a91",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a91",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a91",
             },
         },
         {
@@ -15387,7 +15387,7 @@ export const data: Covid19Data = {
                 resolution: "4.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11682/400_11682.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11682",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11682",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11682",
             },
             pdb: {
                 dbId: "7A92",
@@ -15418,7 +15418,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a92_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a92",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a92",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a92",
             },
         },
         {
@@ -15429,7 +15429,7 @@ export const data: Covid19Data = {
                 resolution: "5.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11683/400_11683.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11683",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11683",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11683",
             },
             pdb: {
                 dbId: "7A93",
@@ -15450,7 +15450,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a93_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a93",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a93",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a93",
             },
         },
         {
@@ -15461,7 +15461,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11684/400_11684.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11684",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11684",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11684",
             },
             pdb: {
                 dbId: "7A94",
@@ -15492,7 +15492,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a94_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a94",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a94",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a94",
             },
         },
         {
@@ -15504,7 +15504,7 @@ export const data: Covid19Data = {
                 resolution: "4.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11685/400_11685.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11685",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11685",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11685",
             },
             pdb: {
                 dbId: "7A95",
@@ -15535,7 +15535,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a95_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a95",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a95",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a95",
             },
         },
         {
@@ -15547,7 +15547,7 @@ export const data: Covid19Data = {
                 resolution: "4.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11686/400_11686.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11686",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11686",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11686",
             },
             pdb: {
                 dbId: "7A96",
@@ -15578,7 +15578,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a96_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a96",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a96",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a96",
             },
         },
         {
@@ -15589,7 +15589,7 @@ export const data: Covid19Data = {
                 resolution: "4.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11687/400_11687.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11687",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11687",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11687",
             },
             pdb: {
                 dbId: "7A97",
@@ -15620,7 +15620,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a97_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a97",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a97",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a97",
             },
         },
         {
@@ -15631,7 +15631,7 @@ export const data: Covid19Data = {
                 resolution: "5.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11688/400_11688.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11688",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11688",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11688",
             },
             pdb: {
                 dbId: "7A98",
@@ -15662,7 +15662,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7a98_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7a98",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7a98",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7a98",
             },
         },
         {
@@ -15674,7 +15674,7 @@ export const data: Covid19Data = {
                 resolution: "2.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11692/400_11692.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11692",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11692",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11692",
             },
             pdb: {
                 dbId: "7AAP",
@@ -15732,7 +15732,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7aap_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7aap",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7aap",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7aap",
             },
         },
         {
@@ -15744,7 +15744,7 @@ export const data: Covid19Data = {
                 resolution: "2.92",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11719/400_11719.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11719",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11719",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11719",
             },
             pdb: {
                 dbId: "7AD1",
@@ -15767,7 +15767,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ad1_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ad1",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ad1",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ad1",
             },
         },
         {
@@ -15779,7 +15779,7 @@ export const data: Covid19Data = {
                 resolution: "4.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11812/400_11812.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11812",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11812",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11812",
             },
             pdb: {
                 dbId: "7AKD",
@@ -15828,7 +15828,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7akd_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7akd",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7akd",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7akd",
             },
         },
         {
@@ -15839,7 +15839,7 @@ export const data: Covid19Data = {
                 resolution: "3.79",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11978/400_11978.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11978",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11978",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11978",
             },
             pdb: {
                 dbId: "7B14",
@@ -15869,7 +15869,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7b14_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7b14",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7b14",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7b14",
             },
         },
         {
@@ -15880,7 +15880,7 @@ export const data: Covid19Data = {
                 resolution: "4.01",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11980/400_11980.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11980",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11980",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11980",
             },
             pdb: {
                 dbId: "7B17",
@@ -15913,7 +15913,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7b17_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7b17",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7b17",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7b17",
             },
         },
         {
@@ -15924,7 +15924,7 @@ export const data: Covid19Data = {
                 resolution: "2.62",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11981/400_11981.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11981",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11981",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11981",
             },
             pdb: {
                 dbId: "7B18",
@@ -15963,7 +15963,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7b18_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7b18",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7b18",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7b18",
             },
         },
         {
@@ -15975,7 +15975,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11993/400_11993.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11993",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11993",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11993",
             },
             pdb: {
                 dbId: "7B3B",
@@ -16033,7 +16033,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7b3b_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7b3b",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7b3b",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7b3b",
             },
         },
         {
@@ -16045,7 +16045,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11994/400_11994.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11994",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11994",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11994",
             },
             pdb: {
                 dbId: "7B3C",
@@ -16103,7 +16103,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7b3c_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7b3c",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7b3c",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7b3c",
             },
         },
         {
@@ -16115,7 +16115,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-11995/400_11995.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-11995",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-11995",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-11995",
             },
             pdb: {
                 dbId: "7B3D",
@@ -16173,7 +16173,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7b3d_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7b3d",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7b3d",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7b3d",
             },
         },
         {
@@ -16185,7 +16185,7 @@ export const data: Covid19Data = {
                 resolution: "2.98",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12082/400_12082.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12082",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12082",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12082",
             },
             pdb: {
                 dbId: "7P77",
@@ -16224,7 +16224,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7p77_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7p77",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7p77",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7p77",
             },
         },
         {
@@ -16236,7 +16236,7 @@ export const data: Covid19Data = {
                 resolution: "3.32",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12083/400_12083.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12083",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12083",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12083",
             },
             pdb: {
                 dbId: "7P78",
@@ -16275,7 +16275,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7p78_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7p78",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7p78",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7p78",
             },
         },
         {
@@ -16287,7 +16287,7 @@ export const data: Covid19Data = {
                 resolution: "4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12084/400_12084.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12084",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12084",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12084",
             },
             pdb: {
                 dbId: "7P79",
@@ -16317,7 +16317,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7p79_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7p79",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7p79",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7p79",
             },
         },
         {
@@ -16329,7 +16329,7 @@ export const data: Covid19Data = {
                 resolution: "4.76",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12085/400_12085.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12085",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12085",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12085",
             },
             pdb: {
                 dbId: "7P7A",
@@ -16359,7 +16359,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7p7a_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7p7a",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7p7a",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7p7a",
             },
         },
         {
@@ -16370,7 +16370,7 @@ export const data: Covid19Data = {
                 resolution: "3.13",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12086/400_12086.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12086",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12086",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12086",
             },
             pdb: {
                 dbId: "7P7B",
@@ -16391,7 +16391,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7p7b_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7p7b",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7p7b",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7p7b",
             },
         },
         {
@@ -16402,7 +16402,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12187/400_12187.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12187",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12187",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12187",
             },
             pdb: {
                 dbId: "7BH9",
@@ -16433,7 +16433,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7bh9_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7bh9",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7bh9",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7bh9",
             },
         },
         {
@@ -16444,7 +16444,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12229/400_12229.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12229",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12229",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12229",
             },
             pdb: {
                 dbId: "7BNM",
@@ -16465,7 +16465,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7bnm_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7bnm",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7bnm",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7bnm",
             },
         },
         {
@@ -16476,7 +16476,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12230/400_12230.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12230",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12230",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12230",
             },
             pdb: {
                 dbId: "7BNN",
@@ -16497,7 +16497,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7bnn_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7bnn",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7bnn",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7bnn",
             },
         },
         {
@@ -16508,7 +16508,7 @@ export const data: Covid19Data = {
                 resolution: "4.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12231/400_12231.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12231",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12231",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12231",
             },
             pdb: {
                 dbId: "7BNO",
@@ -16529,7 +16529,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7bno_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7bno",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7bno",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7bno",
             },
         },
         {
@@ -16540,7 +16540,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12274/400_12274.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12274",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12274",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12274",
             },
             pdb: {
                 dbId: "7ND3",
@@ -16580,7 +16580,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7nd3_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nd3",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nd3",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7nd3",
             },
         },
         {
@@ -16591,7 +16591,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12275/400_12275.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12275",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12275",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12275",
             },
             pdb: {
                 dbId: "7ND4",
@@ -16631,7 +16631,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7nd4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nd4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nd4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7nd4",
             },
         },
         {
@@ -16642,7 +16642,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12276/400_12276.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12276",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12276",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12276",
             },
             pdb: {
                 dbId: "7ND5",
@@ -16682,7 +16682,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7nd5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nd5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nd5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7nd5",
             },
         },
         {
@@ -16693,7 +16693,7 @@ export const data: Covid19Data = {
                 resolution: "7.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12277/400_12277.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12277",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12277",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12277",
             },
             pdb: {
                 dbId: "7ND6",
@@ -16733,7 +16733,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7nd6_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nd6",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nd6",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7nd6",
             },
         },
         {
@@ -16744,7 +16744,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12278/400_12278.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12278",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12278",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12278",
             },
             pdb: {
                 dbId: "7ND7",
@@ -16784,7 +16784,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7nd7_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nd7",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nd7",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7nd7",
             },
         },
         {
@@ -16795,7 +16795,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12279/400_12279.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12279",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12279",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12279",
             },
             pdb: {
                 dbId: "7ND8",
@@ -16835,7 +16835,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7nd8_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nd8",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nd8",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7nd8",
             },
         },
         {
@@ -16847,7 +16847,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12280/400_12280.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12280",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12280",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12280",
             },
             pdb: {
                 dbId: "7ND9",
@@ -16887,7 +16887,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7nd9_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nd9",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nd9",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7nd9",
             },
         },
         {
@@ -16899,7 +16899,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12281/400_12281.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12281",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12281",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12281",
             },
             pdb: {
                 dbId: "7NDA",
@@ -16939,7 +16939,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7nda_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nda",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nda",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7nda",
             },
         },
         {
@@ -16951,7 +16951,7 @@ export const data: Covid19Data = {
                 resolution: "4.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12282/400_12282.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12282",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12282",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12282",
             },
             pdb: {
                 dbId: "7NDB",
@@ -16991,7 +16991,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ndb_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ndb",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ndb",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ndb",
             },
         },
         {
@@ -17003,7 +17003,7 @@ export const data: Covid19Data = {
                 resolution: "4.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12283/400_12283.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12283",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12283",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12283",
             },
             pdb: {
                 dbId: "7NDC",
@@ -17043,7 +17043,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ndc_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ndc",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ndc",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ndc",
             },
         },
         {
@@ -17055,7 +17055,7 @@ export const data: Covid19Data = {
                 resolution: "4.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12284/400_12284.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12284",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12284",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12284",
             },
             pdb: {
                 dbId: "7NDD",
@@ -17095,7 +17095,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ndd_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ndd",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ndd",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ndd",
             },
         },
         {
@@ -17107,7 +17107,7 @@ export const data: Covid19Data = {
                 resolution: "3.36",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12585/400_12585.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12585",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12585",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12585",
             },
             pdb: {
                 dbId: "7NT9",
@@ -17128,7 +17128,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7nt9_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nt9",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nt9",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7nt9",
             },
         },
         {
@@ -17140,7 +17140,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12586/400_12586.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12586",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12586",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12586",
             },
             pdb: {
                 dbId: "7NTA",
@@ -17161,7 +17161,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7nta_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nta",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nta",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7nta",
             },
         },
         {
@@ -17172,7 +17172,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12587/400_12587.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12587",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12587",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12587",
             },
             pdb: {
                 dbId: "7NTC",
@@ -17212,7 +17212,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ntc_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ntc",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ntc",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ntc",
             },
         },
         {
@@ -17224,7 +17224,7 @@ export const data: Covid19Data = {
                 resolution: "2.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12756/400_12756.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12756",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12756",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12756",
             },
             pdb: {
                 dbId: "7O7Y",
@@ -18029,7 +18029,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7o7y_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7o7y",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7o7y",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7o7y",
             },
         },
         {
@@ -18041,7 +18041,7 @@ export const data: Covid19Data = {
                 resolution: "2.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12757/400_12757.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12757",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12757",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12757",
             },
             pdb: {
                 dbId: "7O7Z",
@@ -18846,7 +18846,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7o7z_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7o7z",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7o7z",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7o7z",
             },
         },
         {
@@ -18858,7 +18858,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12758/400_12758.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12758",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12758",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12758",
             },
             pdb: {
                 dbId: "7O80",
@@ -19686,7 +19686,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7o80_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7o80",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7o80",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7o80",
             },
         },
         {
@@ -19698,7 +19698,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12759/400_12759.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12759",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12759",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12759",
             },
             pdb: {
                 dbId: "7O81",
@@ -20512,7 +20512,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7o81_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7o81",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7o81",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7o81",
             },
         },
         {
@@ -20523,7 +20523,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-12777/400_12777.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-12777",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-12777",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-12777",
             },
             pdb: {
                 dbId: "7OAN",
@@ -20553,7 +20553,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7oan_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7oan",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7oan",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7oan",
             },
         },
         {
@@ -20564,7 +20564,7 @@ export const data: Covid19Data = {
                 resolution: "5.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-13116/400_13116.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-13116",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-13116",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-13116",
             },
             pdb: {
                 dbId: "7OYG",
@@ -20622,7 +20622,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7oyg_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7oyg",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7oyg",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7oyg",
             },
         },
         {
@@ -20634,7 +20634,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-13135/400_13135.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-13135",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-13135",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-13135",
             },
             pdb: {
                 dbId: "7OZU",
@@ -20692,7 +20692,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ozu_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ozu",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ozu",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ozu",
             },
         },
         {
@@ -20704,7 +20704,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-13138/400_13138.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-13138",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-13138",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-13138",
             },
             pdb: {
                 dbId: "7OZV",
@@ -20762,7 +20762,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ozv_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ozv",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ozv",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ozv",
             },
         },
         {
@@ -20773,7 +20773,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-13190/400_13190.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-13190",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-13190",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-13190",
             },
             pdb: {
                 dbId: "7P40",
@@ -20812,7 +20812,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7p40_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7p40",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7p40",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7p40",
             },
         },
         {
@@ -20823,7 +20823,7 @@ export const data: Covid19Data = {
                 resolution: "4.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-13415/400_13415.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-13415",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-13415",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-13415",
             },
             pdb: {
                 dbId: "7PHG",
@@ -20862,7 +20862,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7phg_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7phg",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7phg",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7phg",
             },
         },
         {
@@ -20874,7 +20874,7 @@ export const data: Covid19Data = {
                 resolution: "3.46",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-21375/400_21375.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-21375",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-21375",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-21375",
             },
             pdb: {
                 dbId: "6VSB",
@@ -20895,7 +20895,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6vsb_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6vsb",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6vsb",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6vsb",
             },
         },
         {
@@ -20906,7 +20906,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-21452/400_21452.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-21452",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-21452",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-21452",
             },
             pdb: {
                 dbId: "6VXX",
@@ -20928,7 +20928,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6vxx_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6vxx",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6vxx",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6vxx",
             },
         },
         {
@@ -20939,7 +20939,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-21457/400_21457.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-21457",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-21457",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-21457",
             },
             pdb: {
                 dbId: "6VYB",
@@ -20961,7 +20961,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6vyb_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6vyb",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6vyb",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6vyb",
             },
         },
         {
@@ -20973,7 +20973,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-21864/400_21864.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-21864",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-21864",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-21864",
             },
             pdb: {
                 dbId: "6WPS",
@@ -21013,7 +21013,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6wps_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6wps",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6wps",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6wps",
             },
         },
         {
@@ -21025,7 +21025,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-21865/400_21865.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-21865",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-21865",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-21865",
             },
             pdb: {
                 dbId: "6WPT",
@@ -21065,7 +21065,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6wpt_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6wpt",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6wpt",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6wpt",
             },
         },
         {
@@ -21076,7 +21076,7 @@ export const data: Covid19Data = {
                 resolution: "2.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-21997/400_21997.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-21997",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-21997",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-21997",
             },
             pdb: {
                 dbId: "6X29",
@@ -21097,7 +21097,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6x29_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6x29",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6x29",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6x29",
             },
         },
         {
@@ -21108,7 +21108,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-21999/400_21999.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-21999",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-21999",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-21999",
             },
             pdb: {
                 dbId: "6X2A",
@@ -21129,7 +21129,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6x2a_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6x2a",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6x2a",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6x2a",
             },
         },
         {
@@ -21140,7 +21140,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22000/400_22000.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22000",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22000",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22000",
             },
             pdb: {
                 dbId: "6X2B",
@@ -21161,7 +21161,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6x2b_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6x2b",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6x2b",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6x2b",
             },
         },
         {
@@ -21172,7 +21172,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22001/400_22001.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22001",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22001",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22001",
             },
             pdb: {
                 dbId: "6X2C",
@@ -21193,7 +21193,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6x2c_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6x2c",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6x2c",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6x2c",
             },
         },
         {
@@ -21205,7 +21205,7 @@ export const data: Covid19Data = {
                 resolution: "3.22",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22078/400_22078.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22078",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22078",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22078",
             },
             pdb: {
                 dbId: "6X6P",
@@ -21227,7 +21227,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6x6p_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6x6p",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6x6p",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6x6p",
             },
         },
         {
@@ -21239,7 +21239,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22083/400_22083.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22083",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22083",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22083",
             },
             pdb: {
                 dbId: "6X79",
@@ -21261,7 +21261,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6x79_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6x79",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6x79",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6x79",
             },
         },
         {
@@ -21273,7 +21273,7 @@ export const data: Covid19Data = {
                 resolution: "3.42",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22127/400_22127.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22127",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22127",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22127",
             },
             pdb: {
                 dbId: "6XCM",
@@ -21313,7 +21313,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xcm_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xcm",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xcm",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xcm",
             },
         },
         {
@@ -21325,7 +21325,7 @@ export const data: Covid19Data = {
                 resolution: "3.66",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22128/400_22128.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22128",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22128",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22128",
             },
             pdb: {
                 dbId: "6XCN",
@@ -21365,7 +21365,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xcn_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xcn",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xcn",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xcn",
             },
         },
         {
@@ -21376,7 +21376,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22136/400_22136.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22136",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22136",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22136",
             },
             pdb: {
                 dbId: "6XDC",
@@ -21397,7 +21397,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xdc_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xdc",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xdc",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xdc",
             },
         },
         {
@@ -21409,7 +21409,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22137/400_22137.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22137",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22137",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22137",
             },
             pdb: {
                 dbId: "6XDG",
@@ -21467,7 +21467,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xdg_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xdg",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xdg",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xdg",
             },
         },
         {
@@ -21478,7 +21478,7 @@ export const data: Covid19Data = {
                 resolution: "3.25",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22156/400_22156.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22156",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22156",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22156",
             },
             pdb: {
                 dbId: "6XEY",
@@ -21518,7 +21518,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xey_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xey",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xey",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xey",
             },
         },
         {
@@ -21530,7 +21530,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22160/400_22160.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22160",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22160",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22160",
             },
             pdb: {
                 dbId: "6XEZ",
@@ -21597,7 +21597,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xez_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xez",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xez",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xez",
             },
         },
         {
@@ -21609,7 +21609,7 @@ export const data: Covid19Data = {
                 resolution: "3.45",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22161/400_22161.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22161",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22161",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22161",
             },
             pdb: {
                 dbId: "6XF5",
@@ -21631,7 +21631,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xf5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xf5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xf5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xf5",
             },
         },
         {
@@ -21643,7 +21643,7 @@ export const data: Covid19Data = {
                 resolution: "4.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22162/400_22162.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22162",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22162",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22162",
             },
             pdb: {
                 dbId: "6XF6",
@@ -21665,7 +21665,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xf6_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xf6",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xf6",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xf6",
             },
         },
         {
@@ -21676,7 +21676,7 @@ export const data: Covid19Data = {
                 resolution: "3.21",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22221/400_22221.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22221",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22221",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22221",
             },
             pdb: {
                 dbId: "6XKL",
@@ -21697,7 +21697,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xkl_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xkl",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xkl",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xkl",
             },
         },
         {
@@ -21708,7 +21708,7 @@ export const data: Covid19Data = {
                 resolution: "2.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22251/400_22251.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22251",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22251",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22251",
             },
             pdb: {
                 dbId: "6XLU",
@@ -21729,7 +21729,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xlu_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xlu",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xlu",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xlu",
             },
         },
         {
@@ -21740,7 +21740,7 @@ export const data: Covid19Data = {
                 resolution: "2.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22253/400_22253.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22253",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22253",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22253",
             },
             pdb: {
                 dbId: "6XM0",
@@ -21761,7 +21761,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xm0_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xm0",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xm0",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xm0",
             },
         },
         {
@@ -21772,7 +21772,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22254/400_22254.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22254",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22254",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22254",
             },
             pdb: {
                 dbId: "6XM3",
@@ -21793,7 +21793,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xm3_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xm3",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xm3",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xm3",
             },
         },
         {
@@ -21804,7 +21804,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22255/400_22255.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22255",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22255",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22255",
             },
             pdb: {
                 dbId: "6XM4",
@@ -21825,7 +21825,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xm4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xm4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xm4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xm4",
             },
         },
         {
@@ -21836,7 +21836,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22256/400_22256.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22256",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22256",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22256",
             },
             pdb: {
                 dbId: "6XM5",
@@ -21857,7 +21857,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xm5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xm5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xm5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xm5",
             },
         },
         {
@@ -21868,7 +21868,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22288/400_22288.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22288",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22288",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22288",
             },
             pdb: {
                 dbId: "6XQB",
@@ -21917,7 +21917,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xqb_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xqb",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xqb",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xqb",
             },
         },
         {
@@ -21928,7 +21928,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22292/400_22292.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22292",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22292",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22292",
             },
             pdb: {
                 dbId: "6XR8",
@@ -21949,7 +21949,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xr8_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xr8",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xr8",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xr8",
             },
         },
         {
@@ -21960,7 +21960,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22293/400_22293.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22293",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22293",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22293",
             },
             pdb: {
                 dbId: "6XRA",
@@ -21981,7 +21981,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xra_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xra",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xra",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xra",
             },
         },
         {
@@ -21992,7 +21992,7 @@ export const data: Covid19Data = {
                 resolution: "6.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22296/400_22296.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22296",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22296",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22296",
             },
             pdb: {
                 dbId: "6XRZ",
@@ -22013,7 +22013,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xrz_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xrz",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xrz",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xrz",
             },
         },
         {
@@ -22024,7 +22024,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22301/400_22301.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22301",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22301",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22301",
             },
             pdb: {
                 dbId: "6XS6",
@@ -22045,7 +22045,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6xs6_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xs6",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xs6",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6xs6",
             },
         },
         {
@@ -22056,7 +22056,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22352/400_22352.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22352",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22352",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22352",
             },
             pdb: {
                 dbId: "7JJI",
@@ -22077,7 +22077,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jji_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jji",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jji",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jji",
             },
         },
         {
@@ -22088,7 +22088,7 @@ export const data: Covid19Data = {
                 resolution: "4.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22354/400_22354.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22354",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22354",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22354",
             },
             pdb: {
                 dbId: "7JJJ",
@@ -22109,7 +22109,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jjj_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jjj",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jjj",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jjj",
             },
         },
         {
@@ -22120,7 +22120,7 @@ export const data: Covid19Data = {
                 resolution: "2.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22432/400_22432.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22432",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22432",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22432",
             },
             pdb: {
                 dbId: "7JQB",
@@ -22413,7 +22413,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jqb_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jqb",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jqb",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jqb",
             },
         },
         {
@@ -22424,7 +22424,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22433/400_22433.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22433",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22433",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22433",
             },
             pdb: {
                 dbId: "7JQC",
@@ -22726,7 +22726,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jqc_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jqc",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jqc",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jqc",
             },
         },
         {
@@ -22738,7 +22738,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22491/400_22491.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22491",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22491",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22491",
             },
             pdb: {
                 dbId: "7JV2",
@@ -22778,7 +22778,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jv2_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jv2",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jv2",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jv2",
             },
         },
         {
@@ -22790,7 +22790,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22492/400_22492.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22492",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22492",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22492",
             },
             pdb: {
                 dbId: "7JV4",
@@ -22830,7 +22830,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jv4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jv4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jv4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jv4",
             },
         },
         {
@@ -22842,7 +22842,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22494/400_22494.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22494",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22494",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22494",
             },
             pdb: {
                 dbId: "7JV6",
@@ -22882,7 +22882,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jv6_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jv6",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jv6",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jv6",
             },
         },
         {
@@ -22894,7 +22894,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22497/400_22497.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22497",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22497",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22497",
             },
             pdb: {
                 dbId: "7JVA",
@@ -22934,7 +22934,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jva_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jva",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jva",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jva",
             },
         },
         {
@@ -22945,7 +22945,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22506/400_22506.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22506",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22506",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22506",
             },
             pdb: {
                 dbId: "7JVC",
@@ -22985,7 +22985,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jvc_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jvc",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jvc",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jvc",
             },
         },
         {
@@ -22996,7 +22996,7 @@ export const data: Covid19Data = {
                 resolution: "4.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22512/400_22512.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22512",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22512",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22512",
             },
             pdb: {
                 dbId: "7JW0",
@@ -23036,7 +23036,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jw0_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jw0",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jw0",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jw0",
             },
         },
         {
@@ -23047,7 +23047,7 @@ export const data: Covid19Data = {
                 resolution: "6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22514/400_22514.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22514",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22514",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22514",
             },
             pdb: {
                 dbId: "7JWB",
@@ -23077,7 +23077,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jwb_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jwb",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jwb",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jwb",
             },
         },
         {
@@ -23088,7 +23088,7 @@ export const data: Covid19Data = {
                 resolution: "2.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22515/400_22515.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22515",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22515",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22515",
             },
             pdb: {
                 dbId: "7JWY",
@@ -23109,7 +23109,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jwy_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jwy",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jwy",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jwy",
             },
         },
         {
@@ -23120,7 +23120,7 @@ export const data: Covid19Data = {
                 resolution: "2.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22532/400_22532.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22532",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22532",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22532",
             },
             pdb: {
                 dbId: "7JZL",
@@ -23151,7 +23151,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jzl_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jzl",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jzl",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jzl",
             },
         },
         {
@@ -23162,7 +23162,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22533/400_22533.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22533",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22533",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22533",
             },
             pdb: {
                 dbId: "7JZM",
@@ -23193,7 +23193,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jzm_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jzm",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jzm",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jzm",
             },
         },
         {
@@ -23204,7 +23204,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22534/400_22534.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22534",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22534",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22534",
             },
             pdb: {
                 dbId: "7JZN",
@@ -23235,7 +23235,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jzn_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jzn",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jzn",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jzn",
             },
         },
         {
@@ -23246,7 +23246,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22574/400_22574.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22574",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22574",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22574",
             },
             pdb: {
                 dbId: "7JZU",
@@ -23277,7 +23277,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7jzu_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jzu",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jzu",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7jzu",
             },
         },
         {
@@ -23288,7 +23288,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22610/400_22610.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22610",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22610",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22610",
             },
             pdb: {
                 dbId: "7K0R",
@@ -23309,7 +23309,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k0r_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k0r",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k0r",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k0r",
             },
         },
         {
@@ -23320,7 +23320,7 @@ export const data: Covid19Data = {
                 resolution: "2.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22659/400_22659.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22659",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22659",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22659",
             },
             pdb: {
                 dbId: "7K43",
@@ -23360,7 +23360,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k43_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k43",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k43",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k43",
             },
         },
         {
@@ -23372,7 +23372,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22660/400_22660.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22660",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22660",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22660",
             },
             pdb: {
                 dbId: "7K45",
@@ -23412,7 +23412,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k45_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k45",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k45",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k45",
             },
         },
         {
@@ -23423,7 +23423,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22668/400_22668.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22668",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22668",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22668",
             },
             pdb: {
                 dbId: "7K4N",
@@ -23463,7 +23463,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k4n_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k4n",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k4n",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k4n",
             },
         },
         {
@@ -23474,7 +23474,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22681/400_22681.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22681",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22681",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22681",
             },
             pdb: {
                 dbId: "7K5I",
@@ -23817,7 +23817,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k5i_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k5i",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k5i",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k5i",
             },
         },
         {
@@ -23829,7 +23829,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22729/400_22729.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22729",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22729",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22729",
             },
             pdb: {
                 dbId: "7K8S",
@@ -23869,7 +23869,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k8s_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k8s",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k8s",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k8s",
             },
         },
         {
@@ -23881,7 +23881,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22730/400_22730.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22730",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22730",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22730",
             },
             pdb: {
                 dbId: "7K8T",
@@ -23921,7 +23921,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k8t_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k8t",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k8t",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k8t",
             },
         },
         {
@@ -23933,7 +23933,7 @@ export const data: Covid19Data = {
                 resolution: "3.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22731/400_22731.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22731",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22731",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22731",
             },
             pdb: {
                 dbId: "7K8U",
@@ -23973,7 +23973,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k8u_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k8u",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k8u",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k8u",
             },
         },
         {
@@ -23985,7 +23985,7 @@ export const data: Covid19Data = {
                 resolution: "3.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22732/400_22732.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22732",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22732",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22732",
             },
             pdb: {
                 dbId: "7K8V",
@@ -24025,7 +24025,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k8v_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k8v",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k8v",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k8v",
             },
         },
         {
@@ -24037,7 +24037,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22733/400_22733.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22733",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22733",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22733",
             },
             pdb: {
                 dbId: "7K8W",
@@ -24077,7 +24077,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k8w_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k8w",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k8w",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k8w",
             },
         },
         {
@@ -24089,7 +24089,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22734/400_22734.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22734",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22734",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22734",
             },
             pdb: {
                 dbId: "7K8X",
@@ -24129,7 +24129,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k8x_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k8x",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k8x",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k8x",
             },
         },
         {
@@ -24141,7 +24141,7 @@ export const data: Covid19Data = {
                 resolution: "4.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22735/400_22735.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22735",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22735",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22735",
             },
             pdb: {
                 dbId: "7K8Y",
@@ -24181,7 +24181,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k8y_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k8y",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k8y",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k8y",
             },
         },
         {
@@ -24193,7 +24193,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22736/400_22736.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22736",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22736",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22736",
             },
             pdb: {
                 dbId: "7K8Z",
@@ -24233,7 +24233,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k8z_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k8z",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k8z",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k8z",
             },
         },
         {
@@ -24245,7 +24245,7 @@ export const data: Covid19Data = {
                 resolution: "3.24",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22737/400_22737.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22737",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22737",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22737",
             },
             pdb: {
                 dbId: "7K90",
@@ -24285,7 +24285,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k90_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k90",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k90",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k90",
             },
         },
         {
@@ -24297,7 +24297,7 @@ export const data: Covid19Data = {
                 resolution: "3.20",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22748/400_22748.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22748",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22748",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22748",
             },
             pdb: {
                 dbId: "7K9H",
@@ -24337,7 +24337,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k9h_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k9h",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k9h",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k9h",
             },
         },
         {
@@ -24348,7 +24348,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22749/400_22749.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22749",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22749",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22749",
             },
             pdb: {
                 dbId: "7K9I",
@@ -24388,7 +24388,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k9i_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k9i",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k9i",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k9i",
             },
         },
         {
@@ -24400,7 +24400,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22750/400_22750.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22750",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22750",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22750",
             },
             pdb: {
                 dbId: "7K9J",
@@ -24447,7 +24447,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k9j_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k9j",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k9j",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k9j",
             },
         },
         {
@@ -24458,7 +24458,7 @@ export const data: Covid19Data = {
                 resolution: "3.14",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22751/400_22751.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22751",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22751",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22751",
             },
             pdb: {
                 dbId: "7K9K",
@@ -24498,7 +24498,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7k9k_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k9k",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k9k",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7k9k",
             },
         },
         {
@@ -24510,7 +24510,7 @@ export const data: Covid19Data = {
                 resolution: "3.01",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22821/400_22821.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22821",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22821",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22821",
             },
             pdb: {
                 dbId: "7KDG",
@@ -24531,7 +24531,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kdg_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kdg",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kdg",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kdg",
             },
         },
         {
@@ -24543,7 +24543,7 @@ export const data: Covid19Data = {
                 resolution: "3.33",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22822/400_22822.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22822",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22822",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22822",
             },
             pdb: {
                 dbId: "7KDH",
@@ -24564,7 +24564,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kdh_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kdh",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kdh",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kdh",
             },
         },
         {
@@ -24576,7 +24576,7 @@ export const data: Covid19Data = {
                 resolution: "3.26",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22823/400_22823.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22823",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22823",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22823",
             },
             pdb: {
                 dbId: "7KDI",
@@ -24597,7 +24597,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kdi_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kdi",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kdi",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kdi",
             },
         },
         {
@@ -24609,7 +24609,7 @@ export const data: Covid19Data = {
                 resolution: "3.49",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22824/400_22824.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22824",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22824",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22824",
             },
             pdb: {
                 dbId: "7KDJ",
@@ -24630,7 +24630,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kdj_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kdj",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kdj",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kdj",
             },
         },
         {
@@ -24642,7 +24642,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22825/400_22825.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22825",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22825",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22825",
             },
             pdb: {
                 dbId: "7KDK",
@@ -24663,7 +24663,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kdk_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kdk",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kdk",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kdk",
             },
         },
         {
@@ -24675,7 +24675,7 @@ export const data: Covid19Data = {
                 resolution: "2.96",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22826/400_22826.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22826",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22826",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22826",
             },
             pdb: {
                 dbId: "7KDL",
@@ -24696,7 +24696,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kdl_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kdl",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kdl",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kdl",
             },
         },
         {
@@ -24707,7 +24707,7 @@ export const data: Covid19Data = {
                 resolution: "3.05",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22829/400_22829.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22829",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22829",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22829",
             },
             pdb: {
                 dbId: "7KDT",
@@ -24738,7 +24738,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kdt_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kdt",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kdt",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kdt",
             },
         },
         {
@@ -24750,7 +24750,7 @@ export const data: Covid19Data = {
                 resolution: "3.21",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22831/400_22831.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22831",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22831",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22831",
             },
             pdb: {
                 dbId: "7KE4",
@@ -24771,7 +24771,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ke4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ke4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ke4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ke4",
             },
         },
         {
@@ -24783,7 +24783,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22832/400_22832.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22832",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22832",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22832",
             },
             pdb: {
                 dbId: "7KE6",
@@ -24804,7 +24804,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ke6_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ke6",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ke6",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ke6",
             },
         },
         {
@@ -24816,7 +24816,7 @@ export const data: Covid19Data = {
                 resolution: "3.32",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22833/400_22833.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22833",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22833",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22833",
             },
             pdb: {
                 dbId: "7KE7",
@@ -24837,7 +24837,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ke7_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ke7",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ke7",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ke7",
             },
         },
         {
@@ -24849,7 +24849,7 @@ export const data: Covid19Data = {
                 resolution: "3.26",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22834/400_22834.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22834",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22834",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22834",
             },
             pdb: {
                 dbId: "7KE8",
@@ -24870,7 +24870,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ke8_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ke8",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ke8",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ke8",
             },
         },
         {
@@ -24882,7 +24882,7 @@ export const data: Covid19Data = {
                 resolution: "3.08",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22835/400_22835.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22835",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22835",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22835",
             },
             pdb: {
                 dbId: "7KE9",
@@ -24903,7 +24903,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ke9_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ke9",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ke9",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ke9",
             },
         },
         {
@@ -24915,7 +24915,7 @@ export const data: Covid19Data = {
                 resolution: "3.33",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22836/400_22836.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22836",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22836",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22836",
             },
             pdb: {
                 dbId: "7KEA",
@@ -24936,7 +24936,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kea_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kea",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kea",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kea",
             },
         },
         {
@@ -24948,7 +24948,7 @@ export const data: Covid19Data = {
                 resolution: "3.48",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22837/400_22837.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22837",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22837",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22837",
             },
             pdb: {
                 dbId: "7KEB",
@@ -24969,7 +24969,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7keb_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7keb",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7keb",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7keb",
             },
         },
         {
@@ -24981,7 +24981,7 @@ export const data: Covid19Data = {
                 resolution: "3.84",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22838/400_22838.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22838",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22838",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22838",
             },
             pdb: {
                 dbId: "7KEC",
@@ -25002,7 +25002,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kec_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kec",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kec",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kec",
             },
         },
         {
@@ -25013,7 +25013,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22891/400_22891.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22891",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22891",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22891",
             },
             pdb: {
                 dbId: "7KJ2",
@@ -25044,7 +25044,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kj2_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kj2",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kj2",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kj2",
             },
         },
         {
@@ -25055,7 +25055,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22892/400_22892.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22892",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22892",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22892",
             },
             pdb: {
                 dbId: "7KJ3",
@@ -25086,7 +25086,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kj3_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kj3",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kj3",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kj3",
             },
         },
         {
@@ -25097,7 +25097,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22893/400_22893.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22893",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22893",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22893",
             },
             pdb: {
                 dbId: "7KJ4",
@@ -25128,7 +25128,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kj4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kj4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kj4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kj4",
             },
         },
         {
@@ -25139,7 +25139,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22894/400_22894.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22894",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22894",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22894",
             },
             pdb: {
                 dbId: "7KJ5",
@@ -25160,7 +25160,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kj5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kj5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kj5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kj5",
             },
         },
         {
@@ -25171,7 +25171,7 @@ export const data: Covid19Data = {
                 resolution: "2.08",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22898/400_22898.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22898",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22898",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22898",
             },
             pdb: {
                 dbId: "7KJR",
@@ -25202,7 +25202,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kjr_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kjr",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kjr",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kjr",
             },
         },
         {
@@ -25213,7 +25213,7 @@ export const data: Covid19Data = {
                 resolution: "3.03",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22907/400_22907.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22907",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22907",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22907",
             },
             pdb: {
                 dbId: "7KKK",
@@ -25243,7 +25243,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kkk_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kkk",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kkk",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kkk",
             },
         },
         {
@@ -25254,7 +25254,7 @@ export const data: Covid19Data = {
                 resolution: "2.85",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22910/400_22910.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22910",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22910",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22910",
             },
             pdb: {
                 dbId: "7KKL",
@@ -25284,7 +25284,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kkl_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kkl",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kkl",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kkl",
             },
         },
         {
@@ -25296,7 +25296,7 @@ export const data: Covid19Data = {
                 resolution: "4.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22916/400_22916.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22916",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22916",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22916",
             },
             pdb: {
                 dbId: "7KL9",
@@ -25327,7 +25327,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kl9_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kl9",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kl9",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kl9",
             },
         },
         {
@@ -25339,7 +25339,7 @@ export const data: Covid19Data = {
                 resolution: "3.39",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22922/400_22922.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22922",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22922",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22922",
             },
             pdb: {
                 dbId: "7KMB",
@@ -25371,7 +25371,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kmb_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kmb",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kmb",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kmb",
             },
         },
         {
@@ -25383,7 +25383,7 @@ export const data: Covid19Data = {
                 resolution: "4.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22925/400_22925.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22925",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22925",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22925",
             },
             pdb: {
                 dbId: "7KMK",
@@ -25422,7 +25422,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kmk_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kmk",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kmk",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kmk",
             },
         },
         {
@@ -25434,7 +25434,7 @@ export const data: Covid19Data = {
                 resolution: "3.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22926/400_22926.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22926",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22926",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22926",
             },
             pdb: {
                 dbId: "7KML",
@@ -25473,7 +25473,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kml_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kml",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kml",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kml",
             },
         },
         {
@@ -25484,7 +25484,7 @@ export const data: Covid19Data = {
                 resolution: "3.64",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22927/400_22927.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22927",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22927",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22927",
             },
             pdb: {
                 dbId: "7KMS",
@@ -25516,7 +25516,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kms_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kms",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kms",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kms",
             },
         },
         {
@@ -25527,7 +25527,7 @@ export const data: Covid19Data = {
                 resolution: "3.62",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22932/400_22932.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22932",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22932",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22932",
             },
             pdb: {
                 dbId: "7KMZ",
@@ -25559,7 +25559,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kmz_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kmz",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kmz",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kmz",
             },
         },
         {
@@ -25570,7 +25570,7 @@ export const data: Covid19Data = {
                 resolution: "3.93",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22941/400_22941.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22941",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22941",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22941",
             },
             pdb: {
                 dbId: "7KNB",
@@ -25602,7 +25602,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7knb_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7knb",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7knb",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7knb",
             },
         },
         {
@@ -25613,7 +25613,7 @@ export const data: Covid19Data = {
                 resolution: "3.85",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22943/400_22943.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22943",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22943",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22943",
             },
             pdb: {
                 dbId: "7KNE",
@@ -25645,7 +25645,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kne_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kne",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kne",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kne",
             },
         },
         {
@@ -25656,7 +25656,7 @@ export const data: Covid19Data = {
                 resolution: "3.74",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22949/400_22949.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22949",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22949",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22949",
             },
             pdb: {
                 dbId: "7KNH",
@@ -25688,7 +25688,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7knh_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7knh",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7knh",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7knh",
             },
         },
         {
@@ -25699,7 +25699,7 @@ export const data: Covid19Data = {
                 resolution: "3.91",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22950/400_22950.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22950",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22950",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22950",
             },
             pdb: {
                 dbId: "7KNI",
@@ -25731,7 +25731,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kni_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kni",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kni",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kni",
             },
         },
         {
@@ -25742,7 +25742,7 @@ export const data: Covid19Data = {
                 resolution: "2.42",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22993/400_22993.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22993",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22993",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22993",
             },
             pdb: {
                 dbId: "7KQB",
@@ -25781,7 +25781,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kqb_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kqb",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kqb",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kqb",
             },
         },
         {
@@ -25792,7 +25792,7 @@ export const data: Covid19Data = {
                 resolution: "2.88",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22997/400_22997.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-22997",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-22997",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-22997",
             },
             pdb: {
                 dbId: "7KQE",
@@ -25831,7 +25831,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kqe_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kqe",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kqe",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kqe",
             },
         },
         {
@@ -25843,7 +25843,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23007/400_23007.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23007",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23007",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23007",
             },
             pdb: {
                 dbId: "7KRN",
@@ -25910,7 +25910,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7krn_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7krn",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7krn",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7krn",
             },
         },
         {
@@ -25922,7 +25922,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23008/400_23008.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23008",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23008",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23008",
             },
             pdb: {
                 dbId: "7KRO",
@@ -25989,7 +25989,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kro_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kro",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kro",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kro",
             },
         },
         {
@@ -26001,7 +26001,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23009/400_23009.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23009",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23009",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23009",
             },
             pdb: {
                 dbId: "7KRP",
@@ -26059,7 +26059,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7krp_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7krp",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7krp",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7krp",
             },
         },
         {
@@ -26070,7 +26070,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23010/400_23010.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23010",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23010",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23010",
             },
             pdb: {
                 dbId: "7KRQ",
@@ -26091,7 +26091,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7krq_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7krq",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7krq",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7krq",
             },
         },
         {
@@ -26102,7 +26102,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23011/400_23011.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23011",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23011",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23011",
             },
             pdb: {
                 dbId: "7KRR",
@@ -26123,7 +26123,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7krr_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7krr",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7krr",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7krr",
             },
         },
         {
@@ -26134,7 +26134,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23012/400_23012.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23012",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23012",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23012",
             },
             pdb: {
                 dbId: "7KRS",
@@ -26155,7 +26155,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7krs_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7krs",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7krs",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7krs",
             },
         },
         {
@@ -26167,7 +26167,7 @@ export const data: Covid19Data = {
                 resolution: "4.75",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23016/400_23016.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23016",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23016",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23016",
             },
             pdb: {
                 dbId: "7KS9",
@@ -26207,7 +26207,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ks9_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ks9",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ks9",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ks9",
             },
         },
         {
@@ -26218,7 +26218,7 @@ export const data: Covid19Data = {
                 resolution: "3.33",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23018/400_23018.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23018",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23018",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23018",
             },
             pdb: {
                 dbId: "7KSG",
@@ -26249,7 +26249,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ksg_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ksg",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ksg",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ksg",
             },
         },
         {
@@ -26260,7 +26260,7 @@ export const data: Covid19Data = {
                 resolution: "6.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23064/400_23064.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23064",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23064",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23064",
             },
             pdb: {
                 dbId: "7KXJ",
@@ -26300,7 +26300,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kxj_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kxj",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kxj",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kxj",
             },
         },
         {
@@ -26312,7 +26312,7 @@ export const data: Covid19Data = {
                 resolution: "5.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23065/400_23065.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23065",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23065",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23065",
             },
             pdb: {
                 dbId: "7KXK",
@@ -26352,7 +26352,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7kxk_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kxk",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kxk",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7kxk",
             },
         },
         {
@@ -26364,7 +26364,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23094/400_23094.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23094",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23094",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23094",
             },
             pdb: {
                 dbId: "7L02",
@@ -26410,7 +26410,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l02_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l02",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l02",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l02",
             },
         },
         {
@@ -26422,7 +26422,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23095/400_23095.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23095",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23095",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23095",
             },
             pdb: {
                 dbId: "7L06",
@@ -26468,7 +26468,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l06_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l06",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l06",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l06",
             },
         },
         {
@@ -26480,7 +26480,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23097/400_23097.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23097",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23097",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23097",
             },
             pdb: {
                 dbId: "7L09",
@@ -26526,7 +26526,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l09_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l09",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l09",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l09",
             },
         },
         {
@@ -26537,7 +26537,7 @@ export const data: Covid19Data = {
                 resolution: "3.89",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23109/400_23109.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23109",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23109",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23109",
             },
             pdb: {
                 dbId: "7L1F",
@@ -26596,7 +26596,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l1f_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l1f",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l1f",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l1f",
             },
         },
         {
@@ -26608,7 +26608,7 @@ export const data: Covid19Data = {
                 resolution: "3.55",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23125/400_23125.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23125",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23125",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23125",
             },
             pdb: {
                 dbId: "7L2D",
@@ -26648,7 +26648,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l2d_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l2d",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l2d",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l2d",
             },
         },
         {
@@ -26660,7 +26660,7 @@ export const data: Covid19Data = {
                 resolution: "2.97",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23126/400_23126.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23126",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23126",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23126",
             },
             pdb: {
                 dbId: "7L2E",
@@ -26700,7 +26700,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l2e_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l2e",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l2e",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l2e",
             },
         },
         {
@@ -26712,7 +26712,7 @@ export const data: Covid19Data = {
                 resolution: "3.90",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23127/400_23127.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23127",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23127",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23127",
             },
             pdb: {
                 dbId: "7L2F",
@@ -26752,7 +26752,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l2f_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l2f",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l2f",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l2f",
             },
         },
         {
@@ -26763,7 +26763,7 @@ export const data: Covid19Data = {
                 resolution: "3.27",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23156/400_23156.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23156",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23156",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23156",
             },
             pdb: {
                 dbId: "7L3N",
@@ -26802,7 +26802,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l3n_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l3n",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l3n",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l3n",
             },
         },
         {
@@ -26813,7 +26813,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23165/400_23165.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23165",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23165",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23165",
             },
             pdb: {
                 dbId: "7L56",
@@ -26853,7 +26853,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l56_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l56",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l56",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l56",
             },
         },
         {
@@ -26864,7 +26864,7 @@ export const data: Covid19Data = {
                 resolution: "5.87",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23166/400_23166.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23166",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23166",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23166",
             },
             pdb: {
                 dbId: "7L57",
@@ -26904,7 +26904,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l57_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l57",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l57",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l57",
             },
         },
         {
@@ -26915,7 +26915,7 @@ export const data: Covid19Data = {
                 resolution: "5.07",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23167/400_23167.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23167",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23167",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23167",
             },
             pdb: {
                 dbId: "7L58",
@@ -26955,7 +26955,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l58_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l58",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l58",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l58",
             },
         },
         {
@@ -26967,7 +26967,7 @@ export const data: Covid19Data = {
                 resolution: "3.24",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23211/400_23211.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23211",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23211",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23211",
             },
             pdb: {
                 dbId: "7L7F",
@@ -26998,7 +26998,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l7f_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l7f",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l7f",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l7f",
             },
         },
         {
@@ -27009,7 +27009,7 @@ export const data: Covid19Data = {
                 resolution: "3.29",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23215/400_23215.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23215",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23215",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23215",
             },
             pdb: {
                 dbId: "7L7K",
@@ -27030,7 +27030,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7l7k_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l7k",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l7k",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7l7k",
             },
         },
         {
@@ -27042,7 +27042,7 @@ export const data: Covid19Data = {
                 resolution: "3.42",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23246/400_23246.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23246",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23246",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23246",
             },
             pdb: {
                 dbId: "7LAA",
@@ -27082,7 +27082,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7laa_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7laa",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7laa",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7laa",
             },
         },
         {
@@ -27094,7 +27094,7 @@ export const data: Covid19Data = {
                 resolution: "2.97",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23248/400_23248.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23248",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23248",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23248",
             },
             pdb: {
                 dbId: "7LAB",
@@ -27134,7 +27134,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lab_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lab",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lab",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lab",
             },
         },
         {
@@ -27146,7 +27146,7 @@ export const data: Covid19Data = {
                 resolution: "3.35",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23277/400_23277.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23277",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23277",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23277",
             },
             pdb: {
                 dbId: "7LCN",
@@ -27186,7 +27186,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lcn_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lcn",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lcn",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lcn",
             },
         },
         {
@@ -27198,7 +27198,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23279/400_23279.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23279",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23279",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23279",
             },
             pdb: {
                 dbId: "7LD1",
@@ -27238,7 +27238,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ld1_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ld1",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ld1",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ld1",
             },
         },
         {
@@ -27249,7 +27249,7 @@ export const data: Covid19Data = {
                 resolution: "3.66",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23400/400_23400.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23400",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23400",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23400",
             },
             pdb: {
                 dbId: "7LJR",
@@ -27288,7 +27288,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ljr_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ljr",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ljr",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ljr",
             },
         },
         {
@@ -27300,7 +27300,7 @@ export const data: Covid19Data = {
                 resolution: "3.25",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23489/400_23489.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23489",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23489",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23489",
             },
             pdb: {
                 dbId: "7LQV",
@@ -27340,7 +27340,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lqv_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lqv",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lqv",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lqv",
             },
         },
         {
@@ -27352,7 +27352,7 @@ export const data: Covid19Data = {
                 resolution: "4.47",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23490/400_23490.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23490",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23490",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23490",
             },
             pdb: {
                 dbId: "7LQW",
@@ -27392,7 +27392,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lqw_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lqw",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lqw",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lqw",
             },
         },
         {
@@ -27404,7 +27404,7 @@ export const data: Covid19Data = {
                 resolution: "3.89",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23498/400_23498.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23498",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23498",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23498",
             },
             pdb: {
                 dbId: "7LRS",
@@ -27444,7 +27444,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lrs_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lrs",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lrs",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lrs",
             },
         },
         {
@@ -27456,7 +27456,7 @@ export const data: Covid19Data = {
                 resolution: "3.54",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23499/400_23499.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23499",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23499",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23499",
             },
             pdb: {
                 dbId: "7LRT",
@@ -27496,7 +27496,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lrt_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lrt",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lrt",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lrt",
             },
         },
         {
@@ -27508,7 +27508,7 @@ export const data: Covid19Data = {
                 resolution: "3.42",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23506/400_23506.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23506",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23506",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23506",
             },
             pdb: {
                 dbId: "7LS9",
@@ -27548,7 +27548,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ls9_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ls9",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ls9",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ls9",
             },
         },
         {
@@ -27559,7 +27559,7 @@ export const data: Covid19Data = {
                 resolution: "3.72",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23507/400_23507.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23507",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23507",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23507",
             },
             pdb: {
                 dbId: "7LSS",
@@ -27598,7 +27598,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lss_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lss",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lss",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lss",
             },
         },
         {
@@ -27610,7 +27610,7 @@ export const data: Covid19Data = {
                 resolution: "3.07",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23546/400_23546.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23546",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23546",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23546",
             },
             pdb: {
                 dbId: "7LWI",
@@ -27631,7 +27631,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lwi_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lwi",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lwi",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lwi",
             },
         },
         {
@@ -27643,7 +27643,7 @@ export const data: Covid19Data = {
                 resolution: "3.24",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23547/400_23547.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23547",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23547",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23547",
             },
             pdb: {
                 dbId: "7LWJ",
@@ -27664,7 +27664,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lwj_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lwj",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lwj",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lwj",
             },
         },
         {
@@ -27676,7 +27676,7 @@ export const data: Covid19Data = {
                 resolution: "2.92",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23548/400_23548.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23548",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23548",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23548",
             },
             pdb: {
                 dbId: "7LWK",
@@ -27697,7 +27697,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lwk_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lwk",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lwk",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lwk",
             },
         },
         {
@@ -27709,7 +27709,7 @@ export const data: Covid19Data = {
                 resolution: "2.84",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23549/400_23549.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23549",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23549",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23549",
             },
             pdb: {
                 dbId: "7LWL",
@@ -27730,7 +27730,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lwl_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lwl",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lwl",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lwl",
             },
         },
         {
@@ -27742,7 +27742,7 @@ export const data: Covid19Data = {
                 resolution: "2.83",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23550/400_23550.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23550",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23550",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23550",
             },
             pdb: {
                 dbId: "7LWM",
@@ -27763,7 +27763,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lwm_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lwm",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lwm",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lwm",
             },
         },
         {
@@ -27775,7 +27775,7 @@ export const data: Covid19Data = {
                 resolution: "2.94",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23551/400_23551.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23551",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23551",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23551",
             },
             pdb: {
                 dbId: "7LWN",
@@ -27796,7 +27796,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lwn_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lwn",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lwn",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lwn",
             },
         },
         {
@@ -27808,7 +27808,7 @@ export const data: Covid19Data = {
                 resolution: "2.85",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23552/400_23552.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23552",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23552",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23552",
             },
             pdb: {
                 dbId: "7LWO",
@@ -27829,7 +27829,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lwo_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lwo",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lwo",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lwo",
             },
         },
         {
@@ -27841,7 +27841,7 @@ export const data: Covid19Data = {
                 resolution: "3.01",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23553/400_23553.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23553",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23553",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23553",
             },
             pdb: {
                 dbId: "7LWP",
@@ -27862,7 +27862,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lwp_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lwp",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lwp",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lwp",
             },
         },
         {
@@ -27874,7 +27874,7 @@ export const data: Covid19Data = {
                 resolution: "3.44",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23554/400_23554.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23554",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23554",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23554",
             },
             pdb: {
                 dbId: "7LWQ",
@@ -27895,7 +27895,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lwq_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lwq",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lwq",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lwq",
             },
         },
         {
@@ -27907,7 +27907,7 @@ export const data: Covid19Data = {
                 resolution: "3.22",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23555/400_23555.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23555",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23555",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23555",
             },
             pdb: {
                 dbId: "7LWS",
@@ -27928,7 +27928,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lws_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lws",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lws",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lws",
             },
         },
         {
@@ -27940,7 +27940,7 @@ export const data: Covid19Data = {
                 resolution: "3.19",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23556/400_23556.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23556",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23556",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23556",
             },
             pdb: {
                 dbId: "7LWT",
@@ -27961,7 +27961,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lwt_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lwt",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lwt",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lwt",
             },
         },
         {
@@ -27973,7 +27973,7 @@ export const data: Covid19Data = {
                 resolution: "3.22",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23557/400_23557.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23557",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23557",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23557",
             },
             pdb: {
                 dbId: "7LWU",
@@ -27994,7 +27994,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lwu_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lwu",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lwu",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lwu",
             },
         },
         {
@@ -28006,7 +28006,7 @@ export const data: Covid19Data = {
                 resolution: "3.12",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23558/400_23558.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23558",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23558",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23558",
             },
             pdb: {
                 dbId: "7LWV",
@@ -28027,7 +28027,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lwv_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lwv",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lwv",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lwv",
             },
         },
         {
@@ -28039,7 +28039,7 @@ export const data: Covid19Data = {
                 resolution: "3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23559/400_23559.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23559",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23559",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23559",
             },
             pdb: {
                 dbId: "7LWW",
@@ -28060,7 +28060,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lww_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lww",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lww",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lww",
             },
         },
         {
@@ -28072,7 +28072,7 @@ export const data: Covid19Data = {
                 resolution: "3.44",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23566/400_23566.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23566",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23566",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23566",
             },
             pdb: {
                 dbId: "7LX5",
@@ -28112,7 +28112,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lx5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lx5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lx5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lx5",
             },
         },
         {
@@ -28123,7 +28123,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23577/400_23577.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23577",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23577",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23577",
             },
             pdb: {
                 dbId: "7LXW",
@@ -28163,7 +28163,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lxw_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lxw",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lxw",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lxw",
             },
         },
         {
@@ -28174,7 +28174,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23578/400_23578.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23578",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23578",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23578",
             },
             pdb: {
                 dbId: "7LXX",
@@ -28214,7 +28214,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lxx_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lxx",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lxx",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lxx",
             },
         },
         {
@@ -28225,7 +28225,7 @@ export const data: Covid19Data = {
                 resolution: "2.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23579/400_23579.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23579",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23579",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23579",
             },
             pdb: {
                 dbId: "7LXY",
@@ -28283,7 +28283,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lxy_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lxy",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lxy",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lxy",
             },
         },
         {
@@ -28294,7 +28294,7 @@ export const data: Covid19Data = {
                 resolution: "2.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23580/400_23580.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23580",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23580",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23580",
             },
             pdb: {
                 dbId: "7LXZ",
@@ -28352,7 +28352,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lxz_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lxz",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lxz",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lxz",
             },
         },
         {
@@ -28363,7 +28363,7 @@ export const data: Covid19Data = {
                 resolution: "2.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23581/400_23581.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23581",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23581",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23581",
             },
             pdb: {
                 dbId: "7LY0",
@@ -28403,7 +28403,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ly0_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ly0",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ly0",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ly0",
             },
         },
         {
@@ -28414,7 +28414,7 @@ export const data: Covid19Data = {
                 resolution: "2.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23582/400_23582.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23582",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23582",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23582",
             },
             pdb: {
                 dbId: "7LY2",
@@ -28472,7 +28472,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ly2_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ly2",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ly2",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ly2",
             },
         },
         {
@@ -28484,7 +28484,7 @@ export const data: Covid19Data = {
                 resolution: "3.65",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23593/400_23593.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23593",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23593",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23593",
             },
             pdb: {
                 dbId: "7LYK",
@@ -28505,7 +28505,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lyk_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lyk",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lyk",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lyk",
             },
         },
         {
@@ -28517,7 +28517,7 @@ export const data: Covid19Data = {
                 resolution: "3.72",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23594/400_23594.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23594",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23594",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23594",
             },
             pdb: {
                 dbId: "7LYL",
@@ -28538,7 +28538,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lyl_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lyl",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lyl",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lyl",
             },
         },
         {
@@ -28550,7 +28550,7 @@ export const data: Covid19Data = {
                 resolution: "3.57",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23595/400_23595.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23595",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23595",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23595",
             },
             pdb: {
                 dbId: "7LYM",
@@ -28571,7 +28571,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lym_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lym",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lym",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lym",
             },
         },
         {
@@ -28583,7 +28583,7 @@ export const data: Covid19Data = {
                 resolution: "3.32",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23596/400_23596.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23596",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23596",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23596",
             },
             pdb: {
                 dbId: "7LYN",
@@ -28604,7 +28604,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lyn_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lyn",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lyn",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lyn",
             },
         },
         {
@@ -28616,7 +28616,7 @@ export const data: Covid19Data = {
                 resolution: "3.32",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23597/400_23597.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23597",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23597",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23597",
             },
             pdb: {
                 dbId: "7LYO",
@@ -28637,7 +28637,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lyo_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lyo",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lyo",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lyo",
             },
         },
         {
@@ -28649,7 +28649,7 @@ export const data: Covid19Data = {
                 resolution: "4.05",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23598/400_23598.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23598",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23598",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23598",
             },
             pdb: {
                 dbId: "7LYP",
@@ -28670,7 +28670,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lyp_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lyp",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lyp",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lyp",
             },
         },
         {
@@ -28682,7 +28682,7 @@ export const data: Covid19Data = {
                 resolution: "3.34",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23599/400_23599.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23599",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23599",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23599",
             },
             pdb: {
                 dbId: "7LYQ",
@@ -28703,7 +28703,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7lyq_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lyq",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lyq",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7lyq",
             },
         },
         {
@@ -28715,7 +28715,7 @@ export const data: Covid19Data = {
                 resolution: "3.52",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23612/400_23612.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23612",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23612",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23612",
             },
             pdb: {
                 dbId: "7M0J",
@@ -28736,7 +28736,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7m0j_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7m0j",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7m0j",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7m0j",
             },
         },
         {
@@ -28748,7 +28748,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23662/400_23662.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23662",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23662",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23662",
             },
             pdb: {
                 dbId: "7M42",
@@ -28806,7 +28806,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7m42_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7m42",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7m42",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7m42",
             },
         },
         {
@@ -28818,7 +28818,7 @@ export const data: Covid19Data = {
                 resolution: "3.65",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23665/400_23665.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23665",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23665",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23665",
             },
             pdb: {
                 dbId: "7M4R",
@@ -28851,7 +28851,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7m4r_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7m4r",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7m4r",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7m4r",
             },
         },
         {
@@ -28863,7 +28863,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23693/400_23693.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23693",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23693",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23693",
             },
             pdb: {
                 dbId: "7M6E",
@@ -28903,7 +28903,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7m6e_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7m6e",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7m6e",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7m6e",
             },
         },
         {
@@ -28915,7 +28915,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23694/400_23694.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23694",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23694",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23694",
             },
             pdb: {
                 dbId: "7M6F",
@@ -28955,7 +28955,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7m6f_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7m6f",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7m6f",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7m6f",
             },
         },
         {
@@ -28967,7 +28967,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23695/400_23695.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23695",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23695",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23695",
             },
             pdb: {
                 dbId: "7M6G",
@@ -29007,7 +29007,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7m6g_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7m6g",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7m6g",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7m6g",
             },
         },
         {
@@ -29019,7 +29019,7 @@ export const data: Covid19Data = {
                 resolution: "4.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23696/400_23696.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23696",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23696",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23696",
             },
             pdb: {
                 dbId: "7M6H",
@@ -29059,7 +29059,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7m6h_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7m6h",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7m6h",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7m6h",
             },
         },
         {
@@ -29071,7 +29071,7 @@ export const data: Covid19Data = {
                 resolution: "4.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23697/400_23697.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23697",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23697",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23697",
             },
             pdb: {
                 dbId: "7M6I",
@@ -29111,7 +29111,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7m6i_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7m6i",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7m6i",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7m6i",
             },
         },
         {
@@ -29122,7 +29122,7 @@ export const data: Covid19Data = {
                 resolution: "2.66",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23707/400_23707.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23707",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23707",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23707",
             },
             pdb: {
                 dbId: "7M71",
@@ -29162,7 +29162,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7m71_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7m71",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7m71",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7m71",
             },
         },
         {
@@ -29173,7 +29173,7 @@ export const data: Covid19Data = {
                 resolution: "2.95",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23709/400_23709.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23709",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23709",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23709",
             },
             pdb: {
                 dbId: "7M7B",
@@ -29213,7 +29213,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7m7b_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7m7b",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7m7b",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7m7b",
             },
         },
         {
@@ -29224,7 +29224,7 @@ export const data: Covid19Data = {
                 resolution: "3.48",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23717/400_23717.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23717",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23717",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23717",
             },
             pdb: {
                 dbId: "7M8J",
@@ -29264,7 +29264,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7m8j_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7m8j",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7m8j",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7m8j",
             },
         },
         {
@@ -29276,7 +29276,7 @@ export const data: Covid19Data = {
                 resolution: "?",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23718/400_23718.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23718",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23718",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23718",
             },
             pdb: {
                 dbId: "7M8K",
@@ -29297,7 +29297,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7m8k_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7m8k",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7m8k",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7m8k",
             },
         },
         {
@@ -29308,7 +29308,7 @@ export const data: Covid19Data = {
                 resolution: "3.58",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23782/400_23782.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23782",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23782",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23782",
             },
             pdb: {
                 dbId: "7MDW",
@@ -29348,7 +29348,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mdw_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mdw",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mdw",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mdw",
             },
         },
         {
@@ -29359,7 +29359,7 @@ export const data: Covid19Data = {
                 resolution: "2.48",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23786/400_23786.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23786",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23786",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23786",
             },
             pdb: {
                 dbId: "7ME0",
@@ -29381,7 +29381,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7me0_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7me0",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7me0",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7me0",
             },
         },
         {
@@ -29392,7 +29392,7 @@ export const data: Covid19Data = {
                 resolution: "3.73",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23788/400_23788.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23788",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23788",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23788",
             },
             pdb: {
                 dbId: "7ME7",
@@ -29432,7 +29432,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7me7_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7me7",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7me7",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7me7",
             },
         },
         {
@@ -29443,7 +29443,7 @@ export const data: Covid19Data = {
                 resolution: "3.55",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23790/400_23790.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23790",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23790",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23790",
             },
             pdb: {
                 dbId: "7MEJ",
@@ -29483,7 +29483,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mej_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mej",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mej",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mej",
             },
         },
         {
@@ -29494,7 +29494,7 @@ export const data: Covid19Data = {
                 resolution: "2.81",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23872/400_23872.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23872",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23872",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23872",
             },
             pdb: {
                 dbId: "7MJG",
@@ -29515,7 +29515,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mjg_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mjg",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mjg",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mjg",
             },
         },
         {
@@ -29527,7 +29527,7 @@ export const data: Covid19Data = {
                 resolution: "2.66",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23873/400_23873.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23873",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23873",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23873",
             },
             pdb: {
                 dbId: "7MJH",
@@ -29558,7 +29558,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mjh_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mjh",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mjh",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mjh",
             },
         },
         {
@@ -29570,7 +29570,7 @@ export const data: Covid19Data = {
                 resolution: "2.81",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23874/400_23874.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23874",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23874",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23874",
             },
             pdb: {
                 dbId: "7MJI",
@@ -29601,7 +29601,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mji_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mji",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mji",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mji",
             },
         },
         {
@@ -29613,7 +29613,7 @@ export const data: Covid19Data = {
                 resolution: "3.32",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23875/400_23875.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23875",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23875",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23875",
             },
             pdb: {
                 dbId: "7MJJ",
@@ -29653,7 +29653,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mjj_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mjj",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mjj",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mjj",
             },
         },
         {
@@ -29665,7 +29665,7 @@ export const data: Covid19Data = {
                 resolution: "2.73",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23876/400_23876.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23876",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23876",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23876",
             },
             pdb: {
                 dbId: "7MJK",
@@ -29705,7 +29705,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mjk_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mjk",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mjk",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mjk",
             },
         },
         {
@@ -29717,7 +29717,7 @@ export const data: Covid19Data = {
                 resolution: "2.95",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23877/400_23877.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23877",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23877",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23877",
             },
             pdb: {
                 dbId: "7MJL",
@@ -29757,7 +29757,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mjl_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mjl",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mjl",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mjl",
             },
         },
         {
@@ -29769,7 +29769,7 @@ export const data: Covid19Data = {
                 resolution: "2.83",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23878/400_23878.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23878",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23878",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23878",
             },
             pdb: {
                 dbId: "7MJM",
@@ -29799,7 +29799,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mjm_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mjm",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mjm",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mjm",
             },
         },
         {
@@ -29811,7 +29811,7 @@ export const data: Covid19Data = {
                 resolution: "3.29",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23879/400_23879.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23879",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23879",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23879",
             },
             pdb: {
                 dbId: "7MJN",
@@ -29842,7 +29842,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mjn_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mjn",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mjn",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mjn",
             },
         },
         {
@@ -29854,7 +29854,7 @@ export const data: Covid19Data = {
                 resolution: "3.20",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23898/400_23898.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23898",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23898",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23898",
             },
             pdb: {
                 dbId: "7MKL",
@@ -29894,7 +29894,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mkl_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mkl",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mkl",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mkl",
             },
         },
         {
@@ -29906,7 +29906,7 @@ export const data: Covid19Data = {
                 resolution: "3.16",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23899/400_23899.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23899",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23899",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23899",
             },
             pdb: {
                 dbId: "7MKM",
@@ -29946,7 +29946,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mkm_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mkm",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mkm",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mkm",
             },
         },
         {
@@ -29958,7 +29958,7 @@ export const data: Covid19Data = {
                 resolution: "3.71",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23914/400_23914.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23914",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23914",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23914",
             },
             pdb: {
                 dbId: "7MLZ",
@@ -29998,7 +29998,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mlz_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mlz",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mlz",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mlz",
             },
         },
         {
@@ -30010,7 +30010,7 @@ export const data: Covid19Data = {
                 resolution: "3.15",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23915/400_23915.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23915",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23915",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23915",
             },
             pdb: {
                 dbId: "7MM0",
@@ -30050,7 +30050,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mm0_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mm0",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mm0",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mm0",
             },
         },
         {
@@ -30061,7 +30061,7 @@ export const data: Covid19Data = {
                 resolution: "3.76",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23970/400_23970.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23970",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23970",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23970",
             },
             pdb: {
                 dbId: "7MSW",
@@ -30082,7 +30082,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7msw_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7msw",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7msw",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7msw",
             },
         },
         {
@@ -30093,7 +30093,7 @@ export const data: Covid19Data = {
                 resolution: "3.15",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23971/400_23971.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23971",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23971",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23971",
             },
             pdb: {
                 dbId: "7MSX",
@@ -30114,7 +30114,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7msx_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7msx",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7msx",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7msx",
             },
         },
         {
@@ -30125,7 +30125,7 @@ export const data: Covid19Data = {
                 resolution: "2.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23982/400_23982.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23982",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23982",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23982",
             },
             pdb: {
                 dbId: "7MTC",
@@ -30146,7 +30146,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mtc_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mtc",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mtc",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mtc",
             },
         },
         {
@@ -30157,7 +30157,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23983/400_23983.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23983",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23983",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23983",
             },
             pdb: {
                 dbId: "7MTD",
@@ -30178,7 +30178,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mtd_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mtd",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mtd",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mtd",
             },
         },
         {
@@ -30189,7 +30189,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23984/400_23984.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-23984",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-23984",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-23984",
             },
             pdb: {
                 dbId: "7MTE",
@@ -30210,7 +30210,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7mte_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mte",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mte",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7mte",
             },
         },
         {
@@ -30221,7 +30221,7 @@ export const data: Covid19Data = {
                 resolution: "2.65",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24077/400_24077.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24077",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24077",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24077",
             },
             pdb: {
                 dbId: "7MY2",
@@ -30252,7 +30252,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7my2_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7my2",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7my2",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7my2",
             },
         },
         {
@@ -30263,7 +30263,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24078/400_24078.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24078",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24078",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24078",
             },
             pdb: {
                 dbId: "7MY3",
@@ -30294,7 +30294,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7my3_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7my3",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7my3",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7my3",
             },
         },
         {
@@ -30305,7 +30305,7 @@ export const data: Covid19Data = {
                 resolution: "2.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24101/400_24101.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24101",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24101",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24101",
             },
             pdb: {
                 dbId: "7N06",
@@ -30335,7 +30335,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n06_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n06",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n06",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n06",
             },
         },
         {
@@ -30346,7 +30346,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24102/400_24102.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24102",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24102",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24102",
             },
             pdb: {
                 dbId: "7N0B",
@@ -30399,7 +30399,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n0b_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n0b",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n0b",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n0b",
             },
         },
         {
@@ -30411,7 +30411,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24103/400_24103.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24103",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24103",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24103",
             },
             pdb: {
                 dbId: "7N0C",
@@ -30462,7 +30462,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n0c_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n0c",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n0c",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n0c",
             },
         },
         {
@@ -30474,7 +30474,7 @@ export const data: Covid19Data = {
                 resolution: "2.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24104/400_24104.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24104",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24104",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24104",
             },
             pdb: {
                 dbId: "7N0D",
@@ -30535,7 +30535,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n0d_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n0d",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n0d",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n0d",
             },
         },
         {
@@ -30547,7 +30547,7 @@ export const data: Covid19Data = {
                 resolution: "3.02",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24105/400_24105.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24105",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24105",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24105",
             },
             pdb: {
                 dbId: "7N0G",
@@ -30578,7 +30578,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n0g_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n0g",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n0g",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n0g",
             },
         },
         {
@@ -30590,7 +30590,7 @@ export const data: Covid19Data = {
                 resolution: "3.34",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24106/400_24106.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24106",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24106",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24106",
             },
             pdb: {
                 dbId: "7N0H",
@@ -30621,7 +30621,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n0h_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n0h",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n0h",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n0h",
             },
         },
         {
@@ -30633,7 +30633,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24121/400_24121.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24121",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24121",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24121",
             },
             pdb: {
                 dbId: "7N1Q",
@@ -30654,7 +30654,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n1q_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n1q",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n1q",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n1q",
             },
         },
         {
@@ -30666,7 +30666,7 @@ export const data: Covid19Data = {
                 resolution: "3.11",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24122/400_24122.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24122",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24122",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24122",
             },
             pdb: {
                 dbId: "7N1T",
@@ -30687,7 +30687,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n1t_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n1t",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n1t",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n1t",
             },
         },
         {
@@ -30699,7 +30699,7 @@ export const data: Covid19Data = {
                 resolution: "3.14",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24123/400_24123.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24123",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24123",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24123",
             },
             pdb: {
                 dbId: "7N1U",
@@ -30720,7 +30720,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n1u_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n1u",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n1u",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n1u",
             },
         },
         {
@@ -30732,7 +30732,7 @@ export const data: Covid19Data = {
                 resolution: "3.21",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24124/400_24124.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24124",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24124",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24124",
             },
             pdb: {
                 dbId: "7N1V",
@@ -30753,7 +30753,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n1v_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n1v",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n1v",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n1v",
             },
         },
         {
@@ -30765,7 +30765,7 @@ export const data: Covid19Data = {
                 resolution: "3.33",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24125/400_24125.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24125",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24125",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24125",
             },
             pdb: {
                 dbId: "7N1W",
@@ -30786,7 +30786,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n1w_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n1w",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n1w",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n1w",
             },
         },
         {
@@ -30798,7 +30798,7 @@ export const data: Covid19Data = {
                 resolution: "4.00",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24126/400_24126.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24126",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24126",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24126",
             },
             pdb: {
                 dbId: "7N1X",
@@ -30819,7 +30819,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n1x_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n1x",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n1x",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n1x",
             },
         },
         {
@@ -30831,7 +30831,7 @@ export const data: Covid19Data = {
                 resolution: "4.30",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24127/400_24127.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24127",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24127",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24127",
             },
             pdb: {
                 dbId: "7N1Y",
@@ -30852,7 +30852,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n1y_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n1y",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n1y",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n1y",
             },
         },
         {
@@ -30863,7 +30863,7 @@ export const data: Covid19Data = {
                 resolution: "2.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24137/400_24137.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24137",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24137",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24137",
             },
             pdb: {
                 dbId: "7N33",
@@ -30893,7 +30893,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n33_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n33",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n33",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n33",
             },
         },
         {
@@ -30904,7 +30904,7 @@ export const data: Covid19Data = {
                 resolution: "4.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24192/400_24192.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24192",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24192",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24192",
             },
             pdb: {
                 dbId: "7N62",
@@ -30944,7 +30944,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n62_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n62",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n62",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n62",
             },
         },
         {
@@ -30956,7 +30956,7 @@ export const data: Covid19Data = {
                 resolution: "4.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24193/400_24193.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24193",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24193",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24193",
             },
             pdb: {
                 dbId: "7N64",
@@ -30996,7 +30996,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n64_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n64",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n64",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n64",
             },
         },
         {
@@ -31007,7 +31007,7 @@ export const data: Covid19Data = {
                 resolution: "2.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24236/400_24236.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24236",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24236",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24236",
             },
             pdb: {
                 dbId: "7N8H",
@@ -31065,7 +31065,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n8h_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n8h",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n8h",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n8h",
             },
         },
         {
@@ -31077,7 +31077,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24237/400_24237.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24237",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24237",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24237",
             },
             pdb: {
                 dbId: "7N8I",
@@ -31117,7 +31117,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n8i_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n8i",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n8i",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n8i",
             },
         },
         {
@@ -31129,7 +31129,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24253/400_24253.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24253",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24253",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24253",
             },
             pdb: {
                 dbId: "7N9A",
@@ -31159,7 +31159,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n9a_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n9a",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n9a",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n9a",
             },
         },
         {
@@ -31171,7 +31171,7 @@ export const data: Covid19Data = {
                 resolution: "3.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24255/400_24255.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24255",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24255",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24255",
             },
             pdb: {
                 dbId: "7N9B",
@@ -31201,7 +31201,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n9b_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n9b",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n9b",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n9b",
             },
         },
         {
@@ -31213,7 +31213,7 @@ export const data: Covid19Data = {
                 resolution: "3.71",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24256/400_24256.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24256",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24256",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24256",
             },
             pdb: {
                 dbId: "7N9C",
@@ -31243,7 +31243,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n9c_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n9c",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n9c",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n9c",
             },
         },
         {
@@ -31255,7 +31255,7 @@ export const data: Covid19Data = {
                 resolution: "3.52",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24257/400_24257.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24257",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24257",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24257",
             },
             pdb: {
                 dbId: "7N9E",
@@ -31285,7 +31285,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n9e_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n9e",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n9e",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n9e",
             },
         },
         {
@@ -31296,7 +31296,7 @@ export const data: Covid19Data = {
                 resolution: "3.18",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24262/400_24262.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24262",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24262",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24262",
             },
             pdb: {
                 dbId: "7N9T",
@@ -31327,7 +31327,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7n9t_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n9t",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n9t",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7n9t",
             },
         },
         {
@@ -31339,7 +31339,7 @@ export const data: Covid19Data = {
                 resolution: "3.95",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24299/400_24299.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24299",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24299",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24299",
             },
             pdb: {
                 dbId: "7R7N",
@@ -31379,7 +31379,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7r7n_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7r7n",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7r7n",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7r7n",
             },
         },
         {
@@ -31391,7 +31391,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24318/400_24318.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24318",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24318",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24318",
             },
             pdb: {
                 dbId: "7R8M",
@@ -31431,7 +31431,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7r8m_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7r8m",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7r8m",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7r8m",
             },
         },
         {
@@ -31443,7 +31443,7 @@ export const data: Covid19Data = {
                 resolution: "3.55",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24319/400_24319.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24319",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24319",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24319",
             },
             pdb: {
                 dbId: "7R8N",
@@ -31483,7 +31483,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7r8n_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7r8n",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7r8n",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7r8n",
             },
         },
         {
@@ -31495,7 +31495,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24320/400_24320.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24320",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24320",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24320",
             },
             pdb: {
                 dbId: "7R8O",
@@ -31541,7 +31541,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7r8o_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7r8o",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7r8o",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7r8o",
             },
         },
         {
@@ -31552,7 +31552,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24347/400_24347.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24347",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24347",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24347",
             },
             pdb: {
                 dbId: "7RA8",
@@ -31592,7 +31592,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ra8_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ra8",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ra8",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ra8",
             },
         },
         {
@@ -31604,7 +31604,7 @@ export const data: Covid19Data = {
                 resolution: "?",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24365/400_24365.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24365",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24365",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24365",
             },
             pdb: {
                 dbId: "7RAL",
@@ -31644,7 +31644,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ral_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ral",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ral",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ral",
             },
         },
         {
@@ -31655,7 +31655,7 @@ export const data: Covid19Data = {
                 resolution: "2.98",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24391/400_24391.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24391",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24391",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24391",
             },
             pdb: {
                 dbId: "7RB0",
@@ -31676,7 +31676,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7rb0_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7rb0",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7rb0",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7rb0",
             },
         },
         {
@@ -31687,7 +31687,7 @@ export const data: Covid19Data = {
                 resolution: "3.27",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24392/400_24392.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24392",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24392",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24392",
             },
             pdb: {
                 dbId: "7RB2",
@@ -31708,7 +31708,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7rb2_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7rb2",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7rb2",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7rb2",
             },
         },
         {
@@ -31720,7 +31720,7 @@ export const data: Covid19Data = {
                 resolution: "3.45",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24504/400_24504.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24504",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24504",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24504",
             },
             pdb: {
                 dbId: "7RKV",
@@ -31760,7 +31760,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7rkv_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7rkv",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7rkv",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7rkv",
             },
         },
         {
@@ -31771,7 +31771,7 @@ export const data: Covid19Data = {
                 resolution: "3.12",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24649/400_24649.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24649",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24649",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24649",
             },
             pdb: {
                 dbId: "7RR0",
@@ -31811,7 +31811,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7rr0_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7rr0",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7rr0",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7rr0",
             },
         },
         {
@@ -31823,7 +31823,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24708/400_24708.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24708",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24708",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24708",
             },
             pdb: {
                 dbId: "7RW2",
@@ -31863,7 +31863,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7rw2_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7rw2",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7rw2",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7rw2",
             },
         },
         {
@@ -31874,7 +31874,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24729/400_24729.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24729",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24729",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24729",
             },
             pdb: {
                 dbId: "7RXD",
@@ -31933,7 +31933,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7rxd_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7rxd",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7rxd",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7rxd",
             },
         },
         {
@@ -31945,7 +31945,7 @@ export const data: Covid19Data = {
                 resolution: "3.25",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24786/400_24786.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24786",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24786",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24786",
             },
             pdb: {
                 dbId: "7S0C",
@@ -31985,7 +31985,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7s0c_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7s0c",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7s0c",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7s0c",
             },
         },
         {
@@ -31997,7 +31997,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24787/400_24787.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24787",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24787",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24787",
             },
             pdb: {
                 dbId: "7S0D",
@@ -32037,7 +32037,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7s0d_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7s0d",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7s0d",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7s0d",
             },
         },
         {
@@ -32048,7 +32048,7 @@ export const data: Covid19Data = {
                 resolution: "4.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-24788/400_24788.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-24788",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-24788",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-24788",
             },
             pdb: {
                 dbId: "7S0E",
@@ -32088,7 +32088,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7s0e_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7s0e",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7s0e",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7s0e",
             },
         },
         {
@@ -32099,7 +32099,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30039/400_30039.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30039",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30039",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30039",
             },
             pdb: {
                 dbId: "6M17",
@@ -32141,7 +32141,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6m17_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6m17",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6m17",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6m17",
             },
         },
         {
@@ -32152,7 +32152,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30127/400_30127.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30127",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30127",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30127",
             },
             pdb: {
                 dbId: "6M71",
@@ -32192,7 +32192,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/6m71_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6m71",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6m71",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/6m71",
             },
         },
         {
@@ -32204,7 +32204,7 @@ export const data: Covid19Data = {
                 resolution: "2.95",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30178/400_30178.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30178",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30178",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30178",
             },
             pdb: {
                 dbId: "7BTF",
@@ -32244,7 +32244,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7btf_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7btf",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7btf",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7btf",
             },
         },
         {
@@ -32255,7 +32255,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30209/400_30209.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30209",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30209",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30209",
             },
             pdb: {
                 dbId: "7BV1",
@@ -32294,7 +32294,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7bv1_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7bv1",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7bv1",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7bv1",
             },
         },
         {
@@ -32306,7 +32306,7 @@ export const data: Covid19Data = {
                 resolution: "2.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30210/400_30210.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30210",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30210",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30210",
             },
             pdb: {
                 dbId: "7BV2",
@@ -32363,7 +32363,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7bv2_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7bv2",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7bv2",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7bv2",
             },
         },
         {
@@ -32374,7 +32374,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30226/400_30226.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30226",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30226",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30226",
             },
             pdb: {
                 dbId: "7BW4",
@@ -32413,7 +32413,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7bw4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7bw4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7bw4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7bw4",
             },
         },
         {
@@ -32424,7 +32424,7 @@ export const data: Covid19Data = {
                 resolution: "3.84",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30247/400_30247.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30247",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30247",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30247",
             },
             pdb: {
                 dbId: "7BYR",
@@ -32463,7 +32463,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7byr_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7byr",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7byr",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7byr",
             },
         },
         {
@@ -32474,7 +32474,7 @@ export const data: Covid19Data = {
                 resolution: "3.26",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30252/400_30252.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30252",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30252",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30252",
             },
             pdb: {
                 dbId: "7BZF",
@@ -32532,7 +32532,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7bzf_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7bzf",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7bzf",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7bzf",
             },
         },
         {
@@ -32543,7 +32543,7 @@ export const data: Covid19Data = {
                 resolution: "2.93",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30275/400_30275.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30275",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30275",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30275",
             },
             pdb: {
                 dbId: "7C2K",
@@ -32602,7 +32602,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7c2k_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7c2k",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7c2k",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7c2k",
             },
         },
         {
@@ -32613,7 +32613,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30276/400_30276.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30276",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30276",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30276",
             },
             pdb: {
                 dbId: "7C2L",
@@ -32653,7 +32653,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7c2l_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7c2l",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7c2l",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7c2l",
             },
         },
         {
@@ -32664,7 +32664,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30305/400_30305.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30305",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30305",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30305",
             },
             pdb: {
                 dbId: "7C8D",
@@ -32696,7 +32696,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7c8d_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7c8d",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7c8d",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7c8d",
             },
         },
         {
@@ -32708,7 +32708,7 @@ export const data: Covid19Data = {
                 resolution: "3.52",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30325/400_30325.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30325",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30325",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30325",
             },
             pdb: {
                 dbId: "7CAB",
@@ -32729,7 +32729,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cab_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cab",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cab",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cab",
             },
         },
         {
@@ -32741,7 +32741,7 @@ export const data: Covid19Data = {
                 resolution: "3.55",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30326/400_30326.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30326",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30326",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30326",
             },
             pdb: {
                 dbId: "7CAC",
@@ -32780,7 +32780,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cac_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cac",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cac",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cac",
             },
         },
         {
@@ -32791,7 +32791,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30331/400_30331.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30331",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30331",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30331",
             },
             pdb: {
                 dbId: "7CAH",
@@ -32830,7 +32830,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cah_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cah",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cah",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cah",
             },
         },
         {
@@ -32842,7 +32842,7 @@ export const data: Covid19Data = {
                 resolution: "3.49",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30332/400_30332.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30332",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30332",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30332",
             },
             pdb: {
                 dbId: "7CAI",
@@ -32881,7 +32881,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cai_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cai",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cai",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cai",
             },
         },
         {
@@ -32893,7 +32893,7 @@ export const data: Covid19Data = {
                 resolution: "3.58",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30333/400_30333.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30333",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30333",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30333",
             },
             pdb: {
                 dbId: "7CAK",
@@ -32932,7 +32932,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cak_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cak",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cak",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cak",
             },
         },
         {
@@ -32943,7 +32943,7 @@ export const data: Covid19Data = {
                 resolution: "3.49",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30374/400_30374.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30374",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30374",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30374",
             },
             pdb: {
                 dbId: "7CHH",
@@ -32983,7 +32983,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7chh_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7chh",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7chh",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7chh",
             },
         },
         {
@@ -32994,7 +32994,7 @@ export const data: Covid19Data = {
                 resolution: "4.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30419/400_30419.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30419",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30419",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30419",
             },
             pdb: {
                 dbId: "7CN9",
@@ -33015,7 +33015,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cn9_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cn9",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cn9",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cn9",
             },
         },
         {
@@ -33026,7 +33026,7 @@ export const data: Covid19Data = {
                 resolution: "4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30460/400_30460.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30460",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30460",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30460",
             },
             pdb: {
                 dbId: "7CT5",
@@ -33057,7 +33057,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ct5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ct5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ct5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ct5",
             },
         },
         {
@@ -33069,7 +33069,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30469/400_30469.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30469",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30469",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30469",
             },
             pdb: {
                 dbId: "7CTT",
@@ -33128,7 +33128,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ctt_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ctt",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ctt",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ctt",
             },
         },
         {
@@ -33139,7 +33139,7 @@ export const data: Covid19Data = {
                 resolution: "3.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30482/400_30482.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30482",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30482",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30482",
             },
             pdb: {
                 dbId: "7CWL",
@@ -33178,7 +33178,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cwl_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cwl",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cwl",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cwl",
             },
         },
         {
@@ -33190,7 +33190,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30483/400_30483.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30483",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30483",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30483",
             },
             pdb: {
                 dbId: "7CWM",
@@ -33229,7 +33229,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cwm_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cwm",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cwm",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cwm",
             },
         },
         {
@@ -33240,7 +33240,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30484/400_30484.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30484",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30484",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30484",
             },
             pdb: {
                 dbId: "7CWN",
@@ -33297,7 +33297,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cwn_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cwn",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cwn",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cwn",
             },
         },
         {
@@ -33308,7 +33308,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30485/400_30485.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30485",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30485",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30485",
             },
             pdb: {
                 dbId: "7CWO",
@@ -33347,7 +33347,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cwo_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cwo",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cwo",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cwo",
             },
         },
         {
@@ -33358,7 +33358,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30486/400_30486.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30486",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30486",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30486",
             },
             pdb: {
                 dbId: "7CWS",
@@ -33415,7 +33415,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cws_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cws",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cws",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cws",
             },
         },
         {
@@ -33426,7 +33426,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30487/400_30487.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30487",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30487",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30487",
             },
             pdb: {
                 dbId: "7CWT",
@@ -33483,7 +33483,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cwt_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cwt",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cwt",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cwt",
             },
         },
         {
@@ -33494,7 +33494,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30488/400_30488.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30488",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30488",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30488",
             },
             pdb: {
                 dbId: "7CWU",
@@ -33551,7 +33551,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cwu_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cwu",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cwu",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cwu",
             },
         },
         {
@@ -33562,7 +33562,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30492/400_30492.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30492",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30492",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30492",
             },
             pdb: {
                 dbId: "7CXM",
@@ -33637,7 +33637,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cxm_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cxm",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cxm",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cxm",
             },
         },
         {
@@ -33648,7 +33648,7 @@ export const data: Covid19Data = {
                 resolution: "3.84",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30493/400_30493.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30493",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30493",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30493",
             },
             pdb: {
                 dbId: "7CXN",
@@ -33723,7 +33723,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cxn_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cxn",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cxn",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cxn",
             },
         },
         {
@@ -33734,7 +33734,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30500/400_30500.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30500",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30500",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30500",
             },
             pdb: {
                 dbId: "7CYH",
@@ -33773,7 +33773,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cyh_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cyh",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cyh",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cyh",
             },
         },
         {
@@ -33784,7 +33784,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30503/400_30503.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30503",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30503",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30503",
             },
             pdb: {
                 dbId: "7CYP",
@@ -33823,7 +33823,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cyp_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cyp",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cyp",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cyp",
             },
         },
         {
@@ -33835,7 +33835,7 @@ export const data: Covid19Data = {
                 resolution: "2.83",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30504/400_30504.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30504",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30504",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30504",
             },
             pdb: {
                 dbId: "7CYQ",
@@ -33911,7 +33911,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7cyq_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7cyq",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7cyq",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7cyq",
             },
         },
         {
@@ -33922,7 +33922,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30512/400_30512.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30512",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30512",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30512",
             },
             pdb: {
                 dbId: "7CZP",
@@ -33962,7 +33962,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7czp_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7czp",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7czp",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7czp",
             },
         },
         {
@@ -33973,7 +33973,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30513/400_30513.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30513",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30513",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30513",
             },
             pdb: {
                 dbId: "7CZQ",
@@ -34013,7 +34013,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7czq_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7czq",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7czq",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7czq",
             },
         },
         {
@@ -34024,7 +34024,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30514/400_30514.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30514",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30514",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30514",
             },
             pdb: {
                 dbId: "7CZR",
@@ -34064,7 +34064,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7czr_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7czr",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7czr",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7czr",
             },
         },
         {
@@ -34075,7 +34075,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30515/400_30515.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30515",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30515",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30515",
             },
             pdb: {
                 dbId: "7CZS",
@@ -34114,7 +34114,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7czs_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7czs",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7czs",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7czs",
             },
         },
         {
@@ -34125,7 +34125,7 @@ export const data: Covid19Data = {
                 resolution: "2.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30516/400_30516.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30516",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30516",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30516",
             },
             pdb: {
                 dbId: "7CZT",
@@ -34166,7 +34166,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7czt_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7czt",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7czt",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7czt",
             },
         },
         {
@@ -34177,7 +34177,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30517/400_30517.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30517",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30517",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30517",
             },
             pdb: {
                 dbId: "7CZU",
@@ -34218,7 +34218,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7czu_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7czu",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7czu",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7czu",
             },
         },
         {
@@ -34229,7 +34229,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30518/400_30518.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30518",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30518",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30518",
             },
             pdb: {
                 dbId: "7CZV",
@@ -34269,7 +34269,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7czv_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7czv",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7czv",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7czv",
             },
         },
         {
@@ -34280,7 +34280,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30519/400_30519.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30519",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30519",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30519",
             },
             pdb: {
                 dbId: "7CZW",
@@ -34320,7 +34320,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7czw_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7czw",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7czw",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7czw",
             },
         },
         {
@@ -34331,7 +34331,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30520/400_30520.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30520",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30520",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30520",
             },
             pdb: {
                 dbId: "7CZX",
@@ -34370,7 +34370,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7czx_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7czx",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7czx",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7czx",
             },
         },
         {
@@ -34381,7 +34381,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30521/400_30521.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30521",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30521",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30521",
             },
             pdb: {
                 dbId: "7CZY",
@@ -34422,7 +34422,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7czy_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7czy",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7czy",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7czy",
             },
         },
         {
@@ -34433,7 +34433,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30522/400_30522.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30522",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30522",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30522",
             },
             pdb: {
                 dbId: "7CZZ",
@@ -34474,7 +34474,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7czz_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7czz",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7czz",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7czz",
             },
         },
         {
@@ -34485,7 +34485,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30523/400_30523.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30523",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30523",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30523",
             },
             pdb: {
                 dbId: "7D00",
@@ -34525,7 +34525,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7d00_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7d00",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7d00",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7d00",
             },
         },
         {
@@ -34536,7 +34536,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30524/400_30524.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30524",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30524",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30524",
             },
             pdb: {
                 dbId: "7D03",
@@ -34576,7 +34576,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7d03_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7d03",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7d03",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7d03",
             },
         },
         {
@@ -34587,7 +34587,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30529/400_30529.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30529",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30529",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30529",
             },
             pdb: {
                 dbId: "7D0B",
@@ -34627,7 +34627,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7d0b_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7d0b",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7d0b",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7d0b",
             },
         },
         {
@@ -34638,7 +34638,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30530/400_30530.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30530",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30530",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30530",
             },
             pdb: {
                 dbId: "7D0C",
@@ -34678,7 +34678,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7d0c_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7d0c",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7d0c",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7d0c",
             },
         },
         {
@@ -34689,7 +34689,7 @@ export const data: Covid19Data = {
                 resolution: "3.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30531/400_30531.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30531",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30531",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30531",
             },
             pdb: {
                 dbId: "7D0D",
@@ -34729,7 +34729,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7d0d_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7d0d",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7d0d",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7d0d",
             },
         },
         {
@@ -34740,7 +34740,7 @@ export const data: Covid19Data = {
                 resolution: "2.57",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30572/400_30572.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30572",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30572",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30572",
             },
             pdb: {
                 dbId: "7D4F",
@@ -34779,7 +34779,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7d4f_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7d4f",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7d4f",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7d4f",
             },
         },
         {
@@ -34791,7 +34791,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30573/400_30573.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30573",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30573",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30573",
             },
             pdb: {
                 dbId: "7D4G",
@@ -34830,7 +34830,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7d4g_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7d4g",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7d4g",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7d4g",
             },
         },
         {
@@ -34842,7 +34842,7 @@ export const data: Covid19Data = {
                 resolution: "4.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30635/400_30635.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30635",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30635",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30635",
             },
             pdb: {
                 dbId: "7DCC",
@@ -34881,7 +34881,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dcc_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dcc",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dcc",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dcc",
             },
         },
         {
@@ -34893,7 +34893,7 @@ export const data: Covid19Data = {
                 resolution: "5.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30641/400_30641.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30641",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30641",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30641",
             },
             pdb: {
                 dbId: "7DCX",
@@ -34932,7 +34932,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dcx_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dcx",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dcx",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dcx",
             },
         },
         {
@@ -34944,7 +34944,7 @@ export const data: Covid19Data = {
                 resolution: "5.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30642/400_30642.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30642",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30642",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30642",
             },
             pdb: {
                 dbId: "7DD2",
@@ -34983,7 +34983,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dd2_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dd2",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dd2",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dd2",
             },
         },
         {
@@ -34995,7 +34995,7 @@ export const data: Covid19Data = {
                 resolution: "7.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30649/400_30649.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30649",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30649",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30649",
             },
             pdb: {
                 dbId: "7DD8",
@@ -35034,7 +35034,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dd8_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dd8",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dd8",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dd8",
             },
         },
         {
@@ -35045,7 +35045,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30651/400_30651.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30651",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30651",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30651",
             },
             pdb: {
                 dbId: "7DDD",
@@ -35066,7 +35066,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ddd_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ddd",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ddd",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ddd",
             },
         },
         {
@@ -35077,7 +35077,7 @@ export const data: Covid19Data = {
                 resolution: "6.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30654/400_30654.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30654",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30654",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30654",
             },
             pdb: {
                 dbId: "7DDN",
@@ -35098,7 +35098,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ddn_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ddn",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ddn",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ddn",
             },
         },
         {
@@ -35109,7 +35109,7 @@ export const data: Covid19Data = {
                 resolution: "2.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30660/400_30660.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30660",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30660",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30660",
             },
             pdb: {
                 dbId: "7DF3",
@@ -35131,7 +35131,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7df3_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7df3",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7df3",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7df3",
             },
         },
         {
@@ -35142,7 +35142,7 @@ export const data: Covid19Data = {
                 resolution: "3.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30661/400_30661.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30661",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30661",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30661",
             },
             pdb: {
                 dbId: "7DF4",
@@ -35174,7 +35174,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7df4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7df4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7df4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7df4",
             },
         },
         {
@@ -35186,7 +35186,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30669/400_30669.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30669",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30669",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30669",
             },
             pdb: {
                 dbId: "7EJ4",
@@ -35225,7 +35225,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ej4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ej4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ej4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ej4",
             },
         },
         {
@@ -35237,7 +35237,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30670/400_30670.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30670",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30670",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30670",
             },
             pdb: {
                 dbId: "7EJ5",
@@ -35276,7 +35276,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ej5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ej5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ej5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ej5",
             },
         },
         {
@@ -35287,7 +35287,7 @@ export const data: Covid19Data = {
                 resolution: "6.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30701/400_30701.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30701",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30701",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30701",
             },
             pdb: {
                 dbId: "7DK3",
@@ -35309,7 +35309,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dk3_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dk3",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dk3",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dk3",
             },
         },
         {
@@ -35321,7 +35321,7 @@ export const data: Covid19Data = {
                 resolution: "3.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30702/400_30702.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30702",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30702",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30702",
             },
             pdb: {
                 dbId: "7DK4",
@@ -35360,7 +35360,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dk4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dk4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dk4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dk4",
             },
         },
         {
@@ -35372,7 +35372,7 @@ export const data: Covid19Data = {
                 resolution: "13.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30703/400_30703.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30703",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30703",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30703",
             },
             pdb: {
                 dbId: "7DK5",
@@ -35411,7 +35411,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dk5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dk5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dk5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dk5",
             },
         },
         {
@@ -35423,7 +35423,7 @@ export const data: Covid19Data = {
                 resolution: "4.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30704/400_30704.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30704",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30704",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30704",
             },
             pdb: {
                 dbId: "7DK6",
@@ -35462,7 +35462,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dk6_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dk6",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dk6",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dk6",
             },
         },
         {
@@ -35473,7 +35473,7 @@ export const data: Covid19Data = {
                 resolution: "9.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30705/400_30705.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30705",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30705",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30705",
             },
             pdb: {
                 dbId: "7DK7",
@@ -35512,7 +35512,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dk7_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dk7",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dk7",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dk7",
             },
         },
         {
@@ -35523,7 +35523,7 @@ export const data: Covid19Data = {
                 resolution: "8.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30888/400_30888.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30888",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30888",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30888",
             },
             pdb: {
                 dbId: "7DWX",
@@ -35564,7 +35564,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dwx_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dwx",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dwx",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dwx",
             },
         },
         {
@@ -35575,7 +35575,7 @@ export const data: Covid19Data = {
                 resolution: "2.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30889/400_30889.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30889",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30889",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30889",
             },
             pdb: {
                 dbId: "7DWY",
@@ -35596,7 +35596,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dwy_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dwy",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dwy",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dwy",
             },
         },
         {
@@ -35607,7 +35607,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30890/400_30890.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30890",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30890",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30890",
             },
             pdb: {
                 dbId: "7DWZ",
@@ -35628,7 +35628,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dwz_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dwz",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dwz",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dwz",
             },
         },
         {
@@ -35639,7 +35639,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30891/400_30891.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30891",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30891",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30891",
             },
             pdb: {
                 dbId: "7DX0",
@@ -35660,7 +35660,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dx0_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dx0",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dx0",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dx0",
             },
         },
         {
@@ -35671,7 +35671,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30892/400_30892.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30892",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30892",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30892",
             },
             pdb: {
                 dbId: "7DX1",
@@ -35692,7 +35692,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dx1_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dx1",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dx1",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dx1",
             },
         },
         {
@@ -35703,7 +35703,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30893/400_30893.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30893",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30893",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30893",
             },
             pdb: {
                 dbId: "7DX2",
@@ -35724,7 +35724,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dx2_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dx2",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dx2",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dx2",
             },
         },
         {
@@ -35736,7 +35736,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30894/400_30894.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30894",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30894",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30894",
             },
             pdb: {
                 dbId: "7DX3",
@@ -35757,7 +35757,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dx3_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dx3",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dx3",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dx3",
             },
         },
         {
@@ -35768,7 +35768,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30895/400_30895.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30895",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30895",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30895",
             },
             pdb: {
                 dbId: "7DX4",
@@ -35817,7 +35817,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dx4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dx4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dx4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dx4",
             },
         },
         {
@@ -35829,7 +35829,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30896/400_30896.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30896",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30896",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30896",
             },
             pdb: {
                 dbId: "7DX5",
@@ -35860,7 +35860,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dx5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dx5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dx5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dx5",
             },
         },
         {
@@ -35872,7 +35872,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30897/400_30897.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30897",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30897",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30897",
             },
             pdb: {
                 dbId: "7DX6",
@@ -35903,7 +35903,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dx6_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dx6",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dx6",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dx6",
             },
         },
         {
@@ -35915,7 +35915,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30898/400_30898.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30898",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30898",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30898",
             },
             pdb: {
                 dbId: "7DX7",
@@ -35946,7 +35946,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dx7_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dx7",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dx7",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dx7",
             },
         },
         {
@@ -35958,7 +35958,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30899/400_30899.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30899",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30899",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30899",
             },
             pdb: {
                 dbId: "7DX8",
@@ -35989,7 +35989,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dx8_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dx8",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dx8",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dx8",
             },
         },
         {
@@ -36001,7 +36001,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30900/400_30900.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30900",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30900",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30900",
             },
             pdb: {
                 dbId: "7DX9",
@@ -36032,7 +36032,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dx9_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dx9",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dx9",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dx9",
             },
         },
         {
@@ -36043,7 +36043,7 @@ export const data: Covid19Data = {
                 resolution: "3.45",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30915/400_30915.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30915",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30915",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30915",
             },
             pdb: {
                 dbId: "7DZW",
@@ -36064,7 +36064,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dzw_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dzw",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dzw",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dzw",
             },
         },
         {
@@ -36075,7 +36075,7 @@ export const data: Covid19Data = {
                 resolution: "3.53",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30918/400_30918.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30918",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30918",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30918",
             },
             pdb: {
                 dbId: "7DZX",
@@ -36114,7 +36114,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dzx_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dzx",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dzx",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dzx",
             },
         },
         {
@@ -36125,7 +36125,7 @@ export const data: Covid19Data = {
                 resolution: "3.60",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30921/400_30921.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30921",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30921",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30921",
             },
             pdb: {
                 dbId: "7DZY",
@@ -36164,7 +36164,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7dzy_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dzy",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dzy",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7dzy",
             },
         },
         {
@@ -36176,7 +36176,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30950/400_30950.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30950",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30950",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30950",
             },
             pdb: {
                 dbId: "7E23",
@@ -36215,7 +36215,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7e23_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7e23",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7e23",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7e23",
             },
         },
         {
@@ -36226,7 +36226,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30977/400_30977.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30977",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30977",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30977",
             },
             pdb: {
                 dbId: "7E39",
@@ -36266,7 +36266,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7e39_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7e39",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7e39",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7e39",
             },
         },
         {
@@ -36278,7 +36278,7 @@ export const data: Covid19Data = {
                 resolution: "4.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30978/400_30978.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30978",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30978",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30978",
             },
             pdb: {
                 dbId: "7E3B",
@@ -36318,7 +36318,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7e3b_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7e3b",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7e3b",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7e3b",
             },
         },
         {
@@ -36330,7 +36330,7 @@ export const data: Covid19Data = {
                 resolution: "4.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30979/400_30979.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30979",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30979",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30979",
             },
             pdb: {
                 dbId: "7E3C",
@@ -36370,7 +36370,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7e3c_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7e3c",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7e3c",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7e3c",
             },
         },
         {
@@ -36382,7 +36382,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30982/400_30982.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30982",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30982",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30982",
             },
             pdb: {
                 dbId: "7E3K",
@@ -36421,7 +36421,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7e3k_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7e3k",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7e3k",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7e3k",
             },
         },
         {
@@ -36433,7 +36433,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30983/400_30983.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30983",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30983",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30983",
             },
             pdb: {
                 dbId: "7E3L",
@@ -36472,7 +36472,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7e3l_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7e3l",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7e3l",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7e3l",
             },
         },
         {
@@ -36483,7 +36483,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30993/400_30993.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30993",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30993",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30993",
             },
             pdb: {
                 dbId: "7E5R",
@@ -36558,7 +36558,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7e5r_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7e5r",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7e5r",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7e5r",
             },
         },
         {
@@ -36570,7 +36570,7 @@ export const data: Covid19Data = {
                 resolution: "2.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30998/400_30998.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30998",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30998",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30998",
             },
             pdb: {
                 dbId: "7E7B",
@@ -36592,7 +36592,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7e7b_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7e7b",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7e7b",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7e7b",
             },
         },
         {
@@ -36604,7 +36604,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30999/400_30999.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-30999",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-30999",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-30999",
             },
             pdb: {
                 dbId: "7E7D",
@@ -36626,7 +36626,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7e7d_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7e7d",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7e7d",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7e7d",
             },
         },
         {
@@ -36637,7 +36637,7 @@ export const data: Covid19Data = {
                 resolution: "3.16",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31014/400_31014.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31014",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31014",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31014",
             },
             pdb: {
                 dbId: "7E8C",
@@ -36712,7 +36712,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7e8c_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7e8c",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7e8c",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7e8c",
             },
         },
         {
@@ -36723,7 +36723,7 @@ export const data: Covid19Data = {
                 resolution: "3.18",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31017/400_31017.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31017",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31017",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31017",
             },
             pdb: {
                 dbId: "7E8F",
@@ -36798,7 +36798,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7e8f_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7e8f",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7e8f",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7e8f",
             },
         },
         {
@@ -36809,7 +36809,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31047/400_31047.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31047",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31047",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31047",
             },
             pdb: {
                 dbId: "7EAZ",
@@ -36830,7 +36830,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7eaz_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7eaz",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7eaz",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7eaz",
             },
         },
         {
@@ -36841,7 +36841,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31048/400_31048.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31048",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31048",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31048",
             },
             pdb: {
                 dbId: "7EB0",
@@ -36862,7 +36862,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7eb0_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7eb0",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7eb0",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7eb0",
             },
         },
         {
@@ -36873,7 +36873,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31050/400_31050.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31050",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31050",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31050",
             },
             pdb: {
                 dbId: "7EB3",
@@ -36894,7 +36894,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7eb3_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7eb3",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7eb3",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7eb3",
             },
         },
         {
@@ -36905,7 +36905,7 @@ export const data: Covid19Data = {
                 resolution: "3.5",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31051/400_31051.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31051",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31051",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31051",
             },
             pdb: {
                 dbId: "7EB4",
@@ -36926,7 +36926,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7eb4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7eb4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7eb4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7eb4",
             },
         },
         {
@@ -36937,7 +36937,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31052/400_31052.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31052",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31052",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31052",
             },
             pdb: {
                 dbId: "7EB5",
@@ -36958,7 +36958,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7eb5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7eb5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7eb5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7eb5",
             },
         },
         {
@@ -36970,7 +36970,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31069/400_31069.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31069",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31069",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31069",
             },
             pdb: {
                 dbId: "7EDF",
@@ -36991,7 +36991,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7edf_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7edf",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7edf",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7edf",
             },
         },
         {
@@ -37003,7 +37003,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31070/400_31070.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31070",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31070",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31070",
             },
             pdb: {
                 dbId: "7EDG",
@@ -37024,7 +37024,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7edg_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7edg",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7edg",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7edg",
             },
         },
         {
@@ -37036,7 +37036,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31071/400_31071.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31071",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31071",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31071",
             },
             pdb: {
                 dbId: "7EDH",
@@ -37057,7 +37057,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7edh_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7edh",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7edh",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7edh",
             },
         },
         {
@@ -37069,7 +37069,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31072/400_31072.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31072",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31072",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31072",
             },
             pdb: {
                 dbId: "7EDI",
@@ -37090,7 +37090,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7edi_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7edi",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7edi",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7edi",
             },
         },
         {
@@ -37102,7 +37102,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31073/400_31073.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31073",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31073",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31073",
             },
             pdb: {
                 dbId: "7EDJ",
@@ -37132,7 +37132,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7edj_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7edj",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7edj",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7edj",
             },
         },
         {
@@ -37144,7 +37144,7 @@ export const data: Covid19Data = {
                 resolution: "4.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31074/400_31074.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31074",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31074",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31074",
             },
             pdb: {
                 dbId: "7EH5",
@@ -37201,7 +37201,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7eh5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7eh5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7eh5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7eh5",
             },
         },
         {
@@ -37213,7 +37213,7 @@ export const data: Covid19Data = {
                 resolution: "3.35",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31138/400_31138.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31138",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31138",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31138",
             },
             pdb: {
                 dbId: "7EGQ",
@@ -37309,7 +37309,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7egq_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7egq",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7egq",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7egq",
             },
         },
         {
@@ -37321,7 +37321,7 @@ export const data: Covid19Data = {
                 resolution: "?",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31146/400_31146.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31146",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31146",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31146",
             },
             pdb: {
                 dbId: "7EIZ",
@@ -37416,7 +37416,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7eiz_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7eiz",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7eiz",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7eiz",
             },
         },
         {
@@ -37427,7 +37427,7 @@ export const data: Covid19Data = {
                 resolution: "3.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31317/400_31317.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31317",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31317",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31317",
             },
             pdb: {
                 dbId: "7EYB",
@@ -37466,7 +37466,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7eyb_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7eyb",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7eyb",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7eyb",
             },
         },
         {
@@ -37477,7 +37477,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31319/400_31319.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31319",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31319",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31319",
             },
             pdb: {
                 dbId: "7EY9",
@@ -37516,7 +37516,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ey9_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ey9",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ey9",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ey9",
             },
         },
         {
@@ -37527,7 +37527,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31319/400_31319.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31319",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31319",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31319",
             },
             pdb: {
                 dbId: "7EY8",
@@ -37548,7 +37548,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ey8_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ey8",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ey8",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ey8",
             },
         },
         {
@@ -37559,7 +37559,7 @@ export const data: Covid19Data = {
                 resolution: "4.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31321/400_31321.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31321",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31321",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31321",
             },
             pdb: {
                 dbId: "7EY6",
@@ -37580,7 +37580,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ey6_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ey6",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ey6",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ey6",
             },
         },
         {
@@ -37591,7 +37591,7 @@ export const data: Covid19Data = {
                 resolution: "4.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31321/400_31321.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31321",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31321",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31321",
             },
             pdb: {
                 dbId: "7EY7",
@@ -37639,7 +37639,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ey7_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ey7",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ey7",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ey7",
             },
         },
         {
@@ -37651,7 +37651,7 @@ export const data: Covid19Data = {
                 resolution: "3.20",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31374/400_31374.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31374",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31374",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31374",
             },
             pdb: {
                 dbId: "7EY0",
@@ -37708,7 +37708,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ey0_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ey0",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ey0",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ey0",
             },
         },
         {
@@ -37719,7 +37719,7 @@ export const data: Covid19Data = {
                 resolution: "3.69",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31377/400_31377.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31377",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31377",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31377",
             },
             pdb: {
                 dbId: "7EY4",
@@ -37758,7 +37758,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ey4_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ey4",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ey4",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ey4",
             },
         },
         {
@@ -37770,7 +37770,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31378/400_31378.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31378",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31378",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31378",
             },
             pdb: {
                 dbId: "7EY5",
@@ -37827,7 +37827,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ey5_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ey5",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ey5",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ey5",
             },
         },
         {
@@ -37838,7 +37838,7 @@ export const data: Covid19Data = {
                 resolution: "3.77",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31380/400_31380.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31380",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31380",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31380",
             },
             pdb: {
                 dbId: "7EYA",
@@ -37877,7 +37877,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7eya_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7eya",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7eya",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7eya",
             },
         },
         {
@@ -37889,7 +37889,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31391/400_31391.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31391",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31391",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31391",
             },
             pdb: {
                 dbId: "7EZV",
@@ -37946,7 +37946,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7ezv_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ezv",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ezv",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7ezv",
             },
         },
         {
@@ -37958,7 +37958,7 @@ export const data: Covid19Data = {
                 resolution: "3.6",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31470/400_31470.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31470",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31470",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31470",
             },
             pdb: {
                 dbId: "7F62",
@@ -37997,7 +37997,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7f62_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7f62",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7f62",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7f62",
             },
         },
         {
@@ -38009,7 +38009,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31471/400_31471.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31471",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31471",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31471",
             },
             pdb: {
                 dbId: "7F63",
@@ -38048,7 +38048,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7f63_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7f63",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7f63",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7f63",
             },
         },
         {
@@ -38059,7 +38059,7 @@ export const data: Covid19Data = {
                 resolution: "3.69",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31542/400_31542.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31542",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31542",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31542",
             },
             pdb: {
                 dbId: "7FDG",
@@ -38091,7 +38091,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7fdg_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7fdg",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7fdg",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7fdg",
             },
         },
         {
@@ -38102,7 +38102,7 @@ export const data: Covid19Data = {
                 resolution: "3.72",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31543/400_31543.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31543",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31543",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31543",
             },
             pdb: {
                 dbId: "7FDH",
@@ -38133,7 +38133,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7fdh_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7fdh",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7fdh",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7fdh",
             },
         },
         {
@@ -38144,7 +38144,7 @@ export const data: Covid19Data = {
                 resolution: "3.12",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31544/400_31544.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31544",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31544",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31544",
             },
             pdb: {
                 dbId: "7FDI",
@@ -38175,7 +38175,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7fdi_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7fdi",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7fdi",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7fdi",
             },
         },
         {
@@ -38186,7 +38186,7 @@ export const data: Covid19Data = {
                 resolution: "3.69",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31546/400_31546.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31546",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31546",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31546",
             },
             pdb: {
                 dbId: "7FDK",
@@ -38217,7 +38217,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7fdk_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7fdk",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7fdk",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7fdk",
             },
         },
         {
@@ -38229,7 +38229,7 @@ export const data: Covid19Data = {
                 resolution: "4.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31574/400_31574.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31574",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31574",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31574",
             },
             pdb: {
                 dbId: "7FG2",
@@ -38259,7 +38259,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7fg2_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7fg2",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7fg2",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7fg2",
             },
         },
         {
@@ -38271,7 +38271,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31577/400_31577.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31577",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31577",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31577",
             },
             pdb: {
                 dbId: "7FG3",
@@ -38301,7 +38301,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7fg3_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7fg3",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7fg3",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7fg3",
             },
         },
         {
@@ -38312,7 +38312,7 @@ export const data: Covid19Data = {
                 resolution: "6.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31578/400_31578.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31578",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31578",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31578",
             },
             pdb: {
                 dbId: "7FG7",
@@ -38333,7 +38333,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7fg7_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7fg7",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7fg7",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7fg7",
             },
         },
         {
@@ -38345,7 +38345,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31760/400_31760.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31760",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31760",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31760",
             },
             pdb: {
                 dbId: "7V76",
@@ -38366,7 +38366,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v76_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v76",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v76",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v76",
             },
         },
         {
@@ -38378,7 +38378,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31761/400_31761.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31761",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31761",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31761",
             },
             pdb: {
                 dbId: "7V77",
@@ -38399,7 +38399,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v77_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v77",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v77",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v77",
             },
         },
         {
@@ -38411,7 +38411,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31762/400_31762.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31762",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31762",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31762",
             },
             pdb: {
                 dbId: "7V78",
@@ -38432,7 +38432,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v78_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v78",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v78",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v78",
             },
         },
         {
@@ -38444,7 +38444,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31763/400_31763.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31763",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31763",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31763",
             },
             pdb: {
                 dbId: "7V79",
@@ -38465,7 +38465,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v79_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v79",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v79",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v79",
             },
         },
         {
@@ -38476,7 +38476,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31764/400_31764.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31764",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31764",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31764",
             },
             pdb: {
                 dbId: "7V7A",
@@ -38497,7 +38497,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7a_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7a",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7a",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7a",
             },
         },
         {
@@ -38509,7 +38509,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31767/400_31767.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31767",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31767",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31767",
             },
             pdb: {
                 dbId: "7V7D",
@@ -38530,7 +38530,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7d_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7d",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7d",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7d",
             },
         },
         {
@@ -38542,7 +38542,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31768/400_31768.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31768",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31768",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31768",
             },
             pdb: {
                 dbId: "7V7E",
@@ -38563,7 +38563,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7e_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7e",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7e",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7e",
             },
         },
         {
@@ -38575,7 +38575,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31769/400_31769.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31769",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31769",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31769",
             },
             pdb: {
                 dbId: "7V7F",
@@ -38596,7 +38596,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7f_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7f",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7f",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7f",
             },
         },
         {
@@ -38608,7 +38608,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31770/400_31770.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31770",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31770",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31770",
             },
             pdb: {
                 dbId: "7V7G",
@@ -38629,7 +38629,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7g_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7g",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7g",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7g",
             },
         },
         {
@@ -38641,7 +38641,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31771/400_31771.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31771",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31771",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31771",
             },
             pdb: {
                 dbId: "7V7H",
@@ -38662,7 +38662,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7h_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7h",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7h",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7h",
             },
         },
         {
@@ -38674,7 +38674,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31772/400_31772.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31772",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31772",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31772",
             },
             pdb: {
                 dbId: "7V7I",
@@ -38695,7 +38695,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7i_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7i",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7i",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7i",
             },
         },
         {
@@ -38707,7 +38707,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31773/400_31773.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31773",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31773",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31773",
             },
             pdb: {
                 dbId: "7V7J",
@@ -38728,7 +38728,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7j_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7j",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7j",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7j",
             },
         },
         {
@@ -38740,7 +38740,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31775/400_31775.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31775",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31775",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31775",
             },
             pdb: {
                 dbId: "7V7N",
@@ -38761,7 +38761,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7n_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7n",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7n",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7n",
             },
         },
         {
@@ -38773,7 +38773,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31776/400_31776.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31776",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31776",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31776",
             },
             pdb: {
                 dbId: "7V7O",
@@ -38794,7 +38794,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7o_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7o",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7o",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7o",
             },
         },
         {
@@ -38806,7 +38806,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31777/400_31777.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31777",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31777",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31777",
             },
             pdb: {
                 dbId: "7V7P",
@@ -38827,7 +38827,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7p_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7p",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7p",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7p",
             },
         },
         {
@@ -38839,7 +38839,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31778/400_31778.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31778",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31778",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31778",
             },
             pdb: {
                 dbId: "7V7Q",
@@ -38860,7 +38860,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7q_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7q",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7q",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7q",
             },
         },
         {
@@ -38872,7 +38872,7 @@ export const data: Covid19Data = {
                 resolution: "2.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31779/400_31779.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31779",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31779",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31779",
             },
             pdb: {
                 dbId: "7V7R",
@@ -38893,7 +38893,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7r_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7r",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7r",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7r",
             },
         },
         {
@@ -38905,7 +38905,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31780/400_31780.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31780",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31780",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31780",
             },
             pdb: {
                 dbId: "7V7S",
@@ -38926,7 +38926,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7s_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7s",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7s",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7s",
             },
         },
         {
@@ -38938,7 +38938,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31781/400_31781.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31781",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31781",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31781",
             },
             pdb: {
                 dbId: "7V7T",
@@ -38959,7 +38959,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7t_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7t",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7t",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7t",
             },
         },
         {
@@ -38971,7 +38971,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31782/400_31782.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31782",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31782",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31782",
             },
             pdb: {
                 dbId: "7V7U",
@@ -38992,7 +38992,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7u_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7u",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7u",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7u",
             },
         },
         {
@@ -39004,7 +39004,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31783/400_31783.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31783",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31783",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31783",
             },
             pdb: {
                 dbId: "7V7V",
@@ -39025,7 +39025,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7v_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7v",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7v",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7v",
             },
         },
         {
@@ -39037,7 +39037,7 @@ export const data: Covid19Data = {
                 resolution: "3.1",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31784/400_31784.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31784",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31784",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31784",
             },
             pdb: {
                 dbId: "7V7Z",
@@ -39071,7 +39071,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v7z_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v7z",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v7z",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v7z",
             },
         },
         {
@@ -39083,7 +39083,7 @@ export const data: Covid19Data = {
                 resolution: "3.9",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31785/400_31785.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31785",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31785",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31785",
             },
             pdb: {
                 dbId: "7V80",
@@ -39117,7 +39117,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v80_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v80",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v80",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v80",
             },
         },
         {
@@ -39129,7 +39129,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31786/400_31786.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31786",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31786",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31786",
             },
             pdb: {
                 dbId: "7V81",
@@ -39163,7 +39163,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v81_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v81",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v81",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v81",
             },
         },
         {
@@ -39175,7 +39175,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31787/400_31787.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31787",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31787",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31787",
             },
             pdb: {
                 dbId: "7V82",
@@ -39209,7 +39209,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v82_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v82",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v82",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v82",
             },
         },
         {
@@ -39221,7 +39221,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31788/400_31788.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31788",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31788",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31788",
             },
             pdb: {
                 dbId: "7V83",
@@ -39255,7 +39255,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v83_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v83",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v83",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v83",
             },
         },
         {
@@ -39267,7 +39267,7 @@ export const data: Covid19Data = {
                 resolution: "3.0",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31789/400_31789.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31789",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31789",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31789",
             },
             pdb: {
                 dbId: "7V84",
@@ -39301,7 +39301,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v84_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v84",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v84",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v84",
             },
         },
         {
@@ -39313,7 +39313,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31790/400_31790.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31790",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31790",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31790",
             },
             pdb: {
                 dbId: "7V85",
@@ -39347,7 +39347,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v85_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v85",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v85",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v85",
             },
         },
         {
@@ -39359,7 +39359,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31791/400_31791.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31791",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31791",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31791",
             },
             pdb: {
                 dbId: "7V86",
@@ -39393,7 +39393,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v86_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v86",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v86",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v86",
             },
         },
         {
@@ -39405,7 +39405,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31792/400_31792.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31792",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31792",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31792",
             },
             pdb: {
                 dbId: "7V87",
@@ -39437,7 +39437,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v87_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v87",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v87",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v87",
             },
         },
         {
@@ -39449,7 +39449,7 @@ export const data: Covid19Data = {
                 resolution: "3.3",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31793/400_31793.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31793",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31793",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31793",
             },
             pdb: {
                 dbId: "7V88",
@@ -39481,7 +39481,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v88_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v88",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v88",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v88",
             },
         },
         {
@@ -39493,7 +39493,7 @@ export const data: Covid19Data = {
                 resolution: "2.8",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31794/400_31794.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31794",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31794",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31794",
             },
             pdb: {
                 dbId: "7V89",
@@ -39525,7 +39525,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v89_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v89",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v89",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v89",
             },
         },
         {
@@ -39537,7 +39537,7 @@ export const data: Covid19Data = {
                 resolution: "2.7",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31795/400_31795.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31795",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31795",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31795",
             },
             pdb: {
                 dbId: "7V8A",
@@ -39569,7 +39569,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v8a_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v8a",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v8a",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v8a",
             },
         },
         {
@@ -39581,7 +39581,7 @@ export const data: Covid19Data = {
                 resolution: "3.2",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31796/400_31796.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31796",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31796",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31796",
             },
             pdb: {
                 dbId: "7V8B",
@@ -39613,7 +39613,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v8b_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v8b",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v8b",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v8b",
             },
         },
         {
@@ -39625,7 +39625,7 @@ export const data: Covid19Data = {
                 resolution: "3.4",
                 imageLink: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-31798/400_31798.gif",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/emdb/EMD-31798",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=EMD-31798",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/EMD-31798",
             },
             pdb: {
                 dbId: "7V8C",
@@ -39646,7 +39646,7 @@ export const data: Covid19Data = {
                 imageLink:
                     "https://www.ebi.ac.uk/pdbe/static/entry/7v8c_deposited_chain_front_image-200x200.png",
                 externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7v8c",
-                queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7v8c",
+                queryLink: "http://rinchen-dos.cnb.csic.es:8882/ws/viewer#/7v8c",
             },
         },
     ],
