@@ -8,6 +8,7 @@ import i18n from "../../utils/i18n";
 import {
     DbItem,
     diffDbItems,
+    emptySelection,
     getItems,
     getItemSelector,
     getMainChanges,
@@ -114,9 +115,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
             }
 
             setPdbePlugin(plugin);
-            setPrevSelection({ ...newSelection, overlay: [] });
         },
-        [pdbePlugin, newSelection, setPrevSelection, prevSelectionRef, showLoading, hideLoading]
+        [pdbePlugin, newSelection, prevSelectionRef, showLoading, hideLoading]
     );
 
     const updatePluginOnNewSelection = React.useCallback(() => {
@@ -128,9 +128,9 @@ function usePdbePlugin(options: MolecularStructureProps) {
             setSelection(newSelection);
         }
 
-        const currentSelection = prevSelectionRef.current;
-        if (!(pdbePlugin && currentSelection)) return _.noop;
+        if (!pdbePlugin) return _.noop;
 
+        const currentSelection = prevSelectionRef.current || emptySelection;
         const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
 
         if (pdbId) {
