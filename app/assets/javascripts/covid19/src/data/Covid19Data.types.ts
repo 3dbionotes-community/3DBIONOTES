@@ -1,8 +1,5 @@
-import { W3Color } from "../domain/entities/Covid19Info";
-
 export interface Covid19Data {
     Organisms: Organism[];
-    Entities: Entity[];
     Ligands: Ligand[];
     Structures: Structure[];
 }
@@ -15,10 +12,10 @@ export interface Organism {
 }
 
 export interface Entity {
-    uniprotAcc: string | null;
+    uniprotAcc: Maybe<string>;
     name: string;
     organism: string;
-    details?: string;
+    details: string;
     altNames: string;
     isAntibody: boolean;
     isNanobody: boolean;
@@ -35,9 +32,8 @@ export interface Ligand {
 
 export interface Structure {
     title: string;
-    pdb: Pdb;
-    emdb: Emdb;
-    compModel?: Maybe<ComputationalModel>;
+    pdb: Maybe<Pdb>;
+    emdb: Maybe<Emdb>;
 }
 
 export type ComputationalModel =

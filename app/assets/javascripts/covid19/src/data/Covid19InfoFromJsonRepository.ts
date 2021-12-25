@@ -1,11 +1,9 @@
 import _ from "lodash";
 import {
-    ComputationalModel,
     Covid19Info,
     Emdb,
     Entity,
     Ligand,
-    Maybe,
     Organism,
     Pdb,
     Structure,
@@ -23,10 +21,10 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
                 id: getStructureId(structure),
                 pdb: structure.pdb ? getPdb(structure.pdb) : undefined,
                 emdb: structure.emdb ? getEmdb(structure.emdb) : undefined,
-                computationalModel: getComputationModel(structure.compModel),
-                entities: getEntitiesForStructure(data, structure),
+                entities: getEntitiesForStructure(structure),
                 organisms: getOrganismsForStructure(data, structure),
-                ligands: getLigands(data.Ligands, structure.pdb.ligands),
+                ligands:
+                    structure.pdb === null ? [] : getLigands(data.Ligands, structure.pdb.ligands),
                 details: "",
                 // Validations are filled on-the fly in the view
                 validations: { pdb: [], emdb: [] },
@@ -53,31 +51,6 @@ function getStructureId(structure: Data.Structure): string {
     return _(parts).compact().join("-");
 }
 
-function getComputationModel(
-    dataCompModel: Maybe<Data.ComputationalModel>
-): ComputationalModel | undefined {
-    if (!dataCompModel) return undefined;
-
-    switch (dataCompModel.source) {
-        case "SWISS-MODEL":
-            return {
-                ...dataCompModel,
-                name: [dataCompModel.project, dataCompModel.model].join("-"),
-                externalLink: dataCompModel.externalLink,
-                queryLink: dataCompModel.queryLink,
-                imageLink: dataCompModel.imageLink,
-            };
-        case "BSM-Arc":
-        case "AlphaFold":
-            return {
-                ...dataCompModel,
-                name: dataCompModel.model,
-                externalLink: dataCompModel.externalLink,
-                queryLink: dataCompModel.queryLink,
-            };
-    }
-}
-
 function getOrganismsForStructure(data: Data.Covid19Data, structure: Data.Structure): Organism[] {
     const organismsById = _(data.Organisms)
         .map(
@@ -90,7 +63,7 @@ function getOrganismsForStructure(data: Data.Covid19Data, structure: Data.Struct
         )
         .keyBy(getId);
 
-    return _(structure.pdb.entities)
+    return _(structure.pdb?.entities)
         .map(ref => (ref.organism ? organismsById.get(ref.organism) : null))
         .compact()
         .uniqBy(getId)
@@ -110,18 +83,16 @@ function getLigands(
         .compact()
         .value();
 }
-function getEntitiesForStructure(data: Data.Covid19Data, structure: Data.Structure): Entity[] {
-    const entitiesById = _(data.Entities)
-        .map(
-            (entity): Entity => ({
-                id: entity.uniprotAcc !== null ? entity.uniprotAcc : "",
-                ...entity,
-            })
+function getEntitiesForStructure(structure: Data.Structure): Entity[] {
+    return _(structure.pdb?.entities)
+        .map(ref =>
+            ref.uniprotAcc
+                ? {
+                      id: ref.uniprotAcc !== null ? ref.uniprotAcc : "",
+                      ...ref,
+                  }
+                : null
         )
-        .keyBy(getId);
-
-    return _(structure.pdb.entities)
-        .map(ref => (ref.uniprotAcc ? entitiesById.get(ref.uniprotAcc) : null))
         .compact()
         .uniqBy(getId)
         .value();

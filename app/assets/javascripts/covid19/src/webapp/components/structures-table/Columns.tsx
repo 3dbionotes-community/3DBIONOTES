@@ -14,7 +14,6 @@ import { EmdbCell } from "./cells/EmdbCell";
 import { EntityCell } from "./cells/EntityCell";
 import { LigandsCell } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
-import { ComputationalModelCell } from "./cells/ComputationalModelCell";
 
 type Row = Structure;
 export type Field = keyof Row;
@@ -80,19 +79,6 @@ export const columnsBase: Columns = [
         sortable: false,
         renderCell: OrganismCell,
         renderString: row => row.organisms.map(organism => organism.id).join(", "),
-    }),
-    column("computationalModel", {
-        headerName: i18n.t("Comp. Model"),
-        width: 180,
-        sortable: false,
-        sortComparator: compareIds,
-        renderCell: ComputationalModelCell,
-        renderString: row => {
-            const { computationalModel } = row;
-            return computationalModel
-                ? `${computationalModel?.source}: ${computationalModel?.name}`
-                : undefined;
-        },
     }),
     column("details", {
         headerName: i18n.t("Details"),
