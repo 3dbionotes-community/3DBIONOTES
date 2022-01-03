@@ -41,7 +41,9 @@
         "cy:e2e:run": "NODE_ENV=test CYPRESS_E2E=true cypress run --headless --browser chrome",
         "build-inline": "react-scripts build",
         "build": "INLINE_RUNTIME_CHUNK=false react-scripts build && yarn create-build-symlinks",
-        "create-build-symlinks": "ts-node -O '{\"module\":\"commonjs\"}' src/scripts/create-build-symlinks.ts"
+        "run-ts": "ts-node -P src/scripts/tsconfig.json",
+        "create-build-symlinks": "yarn run-ts src/scripts/create-build-symlinks.ts",
+        "generate-data-from-json": "yarn run-ts src/scripts/generate-data-from-json.ts"
     },
     "husky": {
         "hooks": {

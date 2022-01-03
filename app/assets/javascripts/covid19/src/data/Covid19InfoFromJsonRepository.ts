@@ -14,7 +14,7 @@ import * as Data from "./Covid19Data.types";
 
 export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     get(): Covid19Info {
-        const structures: Covid19Info["structures"] = data.Structures.map(
+        const structures: Covid19Info["structures"] = _.flatten(data.Structures).map(
             (structure): Structure => ({
                 ..._.omit(structure, ["ligand", "organism", "entities", "compModel"]),
                 title: structure.title,

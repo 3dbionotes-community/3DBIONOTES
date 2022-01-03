@@ -49,7 +49,6 @@ $ yarn build
 $ RAILS_ENV=production bundle exec rake assets:precompile
 ```
 
-
 ## Some development tips
 
 ### Structure
@@ -79,4 +78,8 @@ The file `src/contexts/app-context.ts` holds some general context so typical inf
 
 ### Scripts
 
-Check the example script, entry `"script-example"`in `package.json`->scripts and `src/scripts/example.ts`.
+Build `.ts` data file from JSON:
+
+```
+$ yarn generate-data-from-json src/data/cv-data.json
+```

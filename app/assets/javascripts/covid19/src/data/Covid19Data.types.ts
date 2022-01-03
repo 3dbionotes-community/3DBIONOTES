@@ -1,7 +1,7 @@
 export interface Covid19Data {
     Organisms: Organism[];
     Ligands: Ligand[];
-    Structures: Structure[];
+    Structures: Array<Structure[]>;
 }
 
 export interface Organism {
