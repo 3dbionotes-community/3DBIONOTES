@@ -43,7 +43,6 @@ export interface Structure {
     pdb: Maybe<Pdb>;
     emdb: Maybe<Emdb>;
     organisms: Organism[];
-    computationalModel: Maybe<ComputationalModel>;
     ligands: Ligand[];
     details: Maybe<string>;
     validations: {
