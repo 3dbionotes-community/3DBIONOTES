@@ -58,7 +58,7 @@
           %br/
         %p
           %em
-            CoVid-19 is causing the biggest pandemic in recent times, hitting the whole world. Currently, there are many scientists groups actively working to understand the biology of the virus responsible for this disease, SARS-CoV-2. So far, what we know about how the genome / proteome of the virus is organised can be summarised in this schema. Two major proteins are transcribed into two poly-proteins: R1a and R1ab that later self-precess to render a set of different non-structural proteins (NSP1 to NSP16). The S Glycoprotein forms the typical spikes in coronaviruses and is also responsible for recognition and attachment to the host cell surface. A set of auxiliary proteins are still under study and some (ORF10) have not even been characterised and remain as hypothetical.
+            CoVid-19 is causing the biggest pandemic in recent times, hitting the whole world. Currently, there are many scientists groups actively working to understand the biology of the virus responsible for this disease, SARS-CoV-2. So far, what we know about how the genome / proteome of the virus is organised can be summarised in this schema. Two major proteins are transcribed into two poly-proteins: R1a and R1ab that later self-process to render a set of different non-structural proteins (NSP1 to NSP16). The S Glycoprotein forms the typical spikes in coronaviruses and is also responsible for recognition and attachment to the host cell surface. A set of auxiliary proteins are still under study and some (ORF10) have not even been characterised and remain as hypothetical.
           %br/
         %p
           %span.badge.badge-primary.proteomeBadge.w3-blue-gray
@@ -118,3 +118,13 @@
 = javascript_include_tag('covid19/build/app/2.chunk.js')
 = javascript_include_tag('covid19/build/app/main.chunk.js')
 = javascript_include_tag('covid19/build/app/runtime-main.js')
+
+:javascript
+  #{@log}
+:javascript
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-93698320-1', 'auto');
+  ga('send', 'pageview');
