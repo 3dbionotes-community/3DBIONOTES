@@ -36,34 +36,6 @@ export interface Structure {
     emdb: Maybe<Emdb>;
 }
 
-export type ComputationalModel =
-    | SwissComputationalModel
-    | BSMArcComputationalModel
-    | AlphaFoldComputationalModel;
-
-export interface SwissComputationalModel {
-    source: "SWISS-MODEL";
-    project: string;
-    model: string;
-    externalLink: Url;
-    queryLink: Url;
-    imageLink?: Url;
-}
-
-export interface BSMArcComputationalModel {
-    source: "BSM-Arc";
-    model: string;
-    externalLink: Url;
-    queryLink: Url;
-}
-
-export interface AlphaFoldComputationalModel {
-    source: "AlphaFold";
-    model: string;
-    externalLink: Url;
-    queryLink: Url;
-}
-
 export interface DbItem {
     dbId: string;
     method?: string;

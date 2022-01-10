@@ -64,37 +64,6 @@ export interface IsoldeValidation {
     badgeColor: W3Color;
 }
 
-export type ComputationalModel =
-    | SwissComputationalModel
-    | BSMArcComputationalModel
-    | AlphaFoldComputationalModel;
-
-export interface SwissComputationalModel {
-    source: "SWISS-MODEL";
-    name: string;
-    project: string;
-    model: string;
-    externalLink: Url;
-    queryLink: Url;
-    imageLink?: Url;
-}
-
-export interface BSMArcComputationalModel {
-    source: "BSM-Arc";
-    name: string;
-    model: string;
-    externalLink: Url;
-    queryLink: Url;
-}
-
-export interface AlphaFoldComputationalModel {
-    source: "AlphaFold";
-    name: string;
-    model: string;
-    externalLink: Url;
-    queryLink: Url;
-}
-
 export interface DbItem {
     id: Id;
     method?: string;

@@ -16,7 +16,7 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     get(): Covid19Info {
         const structures: Covid19Info["structures"] = _.flatten(data.Structures).map(
             (structure): Structure => ({
-                ..._.omit(structure, ["ligand", "organism", "entities", "compModel"]),
+                ..._.omit(structure, ["ligand", "organism", "entities"]),
                 title: structure.title,
                 id: getStructureId(structure),
                 pdb: structure.pdb ? getPdb(structure.pdb) : undefined,
