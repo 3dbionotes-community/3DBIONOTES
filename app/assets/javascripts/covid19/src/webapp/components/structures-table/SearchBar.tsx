@@ -1,8 +1,9 @@
-import { TextField, TextFieldProps } from "@material-ui/core";
+import { TextField, TextFieldProps, InputAdornment } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 import i18n from "../../../utils/i18n";
-import { styles } from "./Toolbar";
 import { SearchExampleButton } from "./SearchExampleButton";
+import styled from "styled-components";
 
 export interface SearchBarProps {
     value: string;
@@ -21,12 +22,20 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
-            <TextField
+            <StyledTextField
                 type="search"
+                variant="outlined"
                 value={value || ""}
-                style={styles.search}
+                classes={{ root: "MuiTextField-root" }}
                 onChange={setValueFromEv}
-                placeholder={i18n.t("Search")}
+                placeholder={i18n.t("Search proteins")}
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <SearchIcon />
+                        </InputAdornment>
+                    ),
+                }}
             />
 
             <div style={searchBarStyle.exampleRow}>
@@ -39,6 +48,17 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     );
 });
 
+const StyledTextField = styled(TextField)`
+    &.MuiTextField-root {
+        .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+            border: 4px solid #607d8b;
+            border-radius: 12px;
+        }
+        .MuiOutlinedInput-root.Mui-focused fieldset {
+            border-color: #82a4b5;
+        }
+    }
+`;
 const searchBarStyle = {
     exampleRow: {
         display: "flex",
