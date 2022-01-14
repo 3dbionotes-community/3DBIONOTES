@@ -20,7 +20,7 @@ import {
 } from "../../view-models/Selection";
 
 import "./molstar.css";
-import "./molstar.scss";
+import "./molstar-light.css";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
@@ -73,7 +73,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
     React.useEffect(() => {
         if (!pluginLoad || !pdbePlugin) return;
         const ligands = getLigands(pdbePlugin, newSelection) || [];
-        debugVariable({ ligands });
+        debugVariable({ ligands: ligands.length });
         onLigandsLoaded(ligands);
 
         setVisibilityForSelection(pdbePlugin, newSelection);

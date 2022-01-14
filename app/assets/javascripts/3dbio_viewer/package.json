@@ -23,7 +23,6 @@
         "data-loader": "^3.0.0",
         "fluture": "^13.0.1",
         "hookrouter": "^1.2.5",
-        "node-sass": "^4.14.1",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
         "react-draggable": "4.4.3",
