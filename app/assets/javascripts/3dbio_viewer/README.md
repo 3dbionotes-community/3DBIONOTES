@@ -34,4 +34,4 @@ $ yarn link @3dbionotes/protvista-pdb
 $ yarn link @3dbionotes/pdbe-molstar
 ```
 
-And, finally, change the `<script src="..."` tags in `public/index.html` to the version you are using in the cloned repos.
+And, finally, change the `<script src="..."` tags in `public/index.html` to the version you are using in the cloned repos. Run `yarn run watch` on the repositories your are making changes.
