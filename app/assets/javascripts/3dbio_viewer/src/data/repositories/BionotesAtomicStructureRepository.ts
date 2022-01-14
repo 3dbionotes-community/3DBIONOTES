@@ -3,7 +3,7 @@ import { AtomicStructure, ChainObject } from "../../domain/entities/AtomicStruct
 import {
     AtomicStructureRepository,
     BuildOptions,
-} from "../../domain/entities/AtomicStructureRepository";
+} from "../../domain/repositories/AtomicStructureRepository";
 import { FutureData } from "../../domain/entities/FutureData";
 import { routes } from "../../routes";
 import { request } from "../request-utils";

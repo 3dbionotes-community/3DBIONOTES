@@ -16,6 +16,7 @@ export interface Fragment2 {
     subtrack: SubtrackDefinition;
     start: number;
     end: number;
+    chainId?: string;
     description?: string;
     color?: Color;
     legend?: Legend;
@@ -61,6 +62,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                         color: fragment.color || subtrack.color || "#200",
                         ...withoutUndefinedValues({
                             id: fragment.id,
+                            chainId: fragment.chainId,
                             evidences: fragment.evidences,
                             legend: fragment.legend,
                             alternativeSequence: fragment.alternativeSequence,
@@ -71,6 +73,8 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 }
             );
 
+            const slots = splitOverlappingFragments(fragments, { maxSlots: 5 });
+
             return {
                 accession: subtrack.dynamicSubtrack ? subtrack.dynamicSubtrack.id : subtrack.id,
                 type: subtrack.name,
@@ -79,8 +83,9 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 shape: subtrack.shape || "rectangle",
                 source: subtrack.source,
                 isBlast: subtrack.isBlast ?? true,
-                locations: [{ fragments }],
+                locations: slots.map(fragments => ({ fragments })),
                 subtype: subtrack.subtype,
+                overlapping: false,
             };
         }
     );
@@ -172,4 +177,69 @@ export function toNumericInterval<F extends LooseInterval>(
     const fragment = { ...looseFragment, start: startNum, end: endNum };
 
     return isNaN(startNum) || isNaN(endNum) ? undefined : fragment;
+}
+
+/* Split overlapping intervals (defined by start -> end) into non-overlapping groups.
+
+Example input: A (1->11), B (4->16), C (6->14), D (13->19), E (16->22), F (18->24)
+
+Output:
+
+<----A----> <--D-->
+   <----B------> <--F-->
+     <---C---> <--E-->
+*/
+function splitOverlappingFragments<Interval_ extends Interval>(
+    intervals: Interval_[],
+    options: { maxSlots: number }
+): Array<Interval_[]> {
+    type Event = { type: "start" | "end"; pos: number; interval: Interval_ };
+    type SlotState = {
+        current: Interval_ | undefined;
+        intervals: Interval_[];
+    };
+    type State = Record<number, SlotState>;
+
+    const { maxSlots } = options;
+    const events = _(intervals)
+        .flatMap((interval): Event[] => [
+            { type: "start", pos: interval.start, interval },
+            { type: "end", pos: interval.end, interval },
+        ])
+        .sortBy(({ pos }) => pos)
+        .value();
+
+    const state: State = {};
+
+    for (const event of events) {
+        const { type, interval } = event;
+
+        if (type === "start") {
+            const index = _.range(0, maxSlots).find(idx => !state[idx]?.current);
+
+            if (index !== undefined) {
+                const slot = state[index];
+
+                state[index] = {
+                    current: interval,
+                    intervals: slot ? slot.intervals.concat(interval) : [interval],
+                };
+            }
+        } else if (type === "end") {
+            const index = _.range(0, maxSlots).find(idx => state[idx]?.current === interval);
+            if (index !== undefined)
+                state[index] = {
+                    current: undefined,
+                    intervals: state[index]?.intervals || [],
+                };
+        }
+    }
+
+    return _(state)
+        .keys()
+        .map(key => parseInt(key))
+        .sortBy()
+        .map(idx => state[idx]?.intervals)
+        .compact()
+        .value();
 }

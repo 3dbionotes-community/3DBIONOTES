@@ -2,20 +2,26 @@ import _ from "lodash";
 
 export type Maybe<T> = T | undefined;
 
-export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
+export type Expand<T> = {} & { [P in keyof T]: T[P] };
 
-/* Define only the value type of an object and infer the keys:
+export type GetValue<T> = T[keyof T];
 
-    // values :: Record<"key1" | "key2", {value: string}>
+/* recordOf: Build a record with free typed keys and fixed value type:
+
+    // const values: Record<"key1" | "key2", {value: string}>
     const values = recordOf<{value: string}>()({
         key1: {value: "1"},
         key2: {value: "2"},
     })
 */
 export function recordOf<T>() {
-    return function <Obj>(obj: { [K in keyof Obj]: T }) {
+    return function <Obj>(obj: Record<keyof Obj, T>) {
         return obj;
     };
+}
+
+export function recordOfStyles<Obj>(obj: Record<keyof Obj, React.CSSProperties>) {
+    return obj;
 }
 
 export function assert<T>(value: T | undefined): T {
@@ -68,4 +74,23 @@ export function isElementOfUnion<Union extends string>(
 
 export function getKeys<K extends string>(obj: Record<K, unknown>): K[] {
     return Object.keys(obj) as K[];
+}
+
+/* idRecordOf: Similar to recordOf, but use to add an id field from the object key */
+
+type AddId<T> = Expand<{ [K in keyof T]: T[K] & { id: K } }>;
+
+export function idRecordOf<T>() {
+    return function <Obj extends Record<string, Omit<T, "id">>>(obj: Obj): AddId<Obj> {
+        return _.mapValues(obj, (value: Omit<T, "id">, id) => ({ ...value, id })) as AddId<Obj>;
+    };
+}
+
+export type GetRecordId<T extends Record<any, { id: unknown }>> = GetValue<T>["id"];
+
+export function fromPairs<Key extends string, Value>(
+    pairs: Array<[Key, Value]>
+): Record<Key, Value> {
+    const empty = {} as Record<Key, Value>;
+    return pairs.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), empty);
 }

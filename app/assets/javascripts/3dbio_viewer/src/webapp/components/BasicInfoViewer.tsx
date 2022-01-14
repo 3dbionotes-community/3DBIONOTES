@@ -1,26 +1,71 @@
 import React from "react";
-import { Pdb } from "../../domain/entities/Pdb";
+import { getEntityLinks, Pdb } from "../../domain/entities/Pdb";
+import { recordOfStyles } from "../../utils/ts-utils";
 import i18n from "../utils/i18n";
-import { SelectionState } from "../view-models/SelectionState";
+import { Selection } from "../view-models/Selection";
+import { Links } from "./Link";
 
 export interface BasicInfoProps {
     pdb: Pdb;
-    selection: SelectionState;
+    selection: Selection;
 }
 
-interface SubtrackItem {
+interface Item {
     name: string;
-    value: string | undefined;
+    value: React.ReactNode;
     isDisabled?: boolean;
     help?: string;
 }
 
 export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
-    const { pdb, selection } = props;
-    const emdbId = selection.main?.emdb?.id;
+    const { pdb } = props;
+    const items: Item[] = getItems(pdb);
+
+    return (
+        <Parent>
+            {items
+                .filter(item => !item.isDisabled)
+                .map(item => (
+                    <Child key={item.name} name={item.name} value={item.value} help={item.help} />
+                ))}
+        </Parent>
+    );
+});
+
+const Parent: React.FC = ({ children }) => {
+    return <ul style={styles.ul}>{children}</ul>;
+};
+
+interface ChildProps {
+    name: string;
+    value: React.ReactNode;
+    help?: string;
+}
+
+const Child: React.FC<ChildProps> = props => {
+    const { name, value, help } = props;
+
+    return (
+        <li>
+            {name}: {value ?? "-"}
+            {help && (
+                <span style={styles.help} title={help}>
+                    [?]
+                </span>
+            )}
+        </li>
+    );
+};
+
+const styles = recordOfStyles({
+    ul: { listStyleType: "none" },
+    help: { marginLeft: 10 },
+});
+
+function getItems(pdb: Pdb) {
     const resolution = pdb.experiment?.resolution;
 
-    const subtracks: SubtrackItem[] = [
+    const items: Item[] = [
         { name: i18n.t("Protein Name"), value: pdb.protein.name },
         { name: i18n.t("Gene Name"), value: pdb.protein.gene },
         { name: i18n.t("Organism"), value: pdb.protein.organism },
@@ -33,14 +78,22 @@ export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
             ),
         },
         { name: i18n.t("Obtaining method"), value: pdb.experiment?.method },
-        { name: i18n.t("Uniprot ID"), value: pdb.protein.id },
-        { name: i18n.t("PDB ID"), value: pdb.id },
+        {
+            name: i18n.t("Uniprot ID"),
+            value: <Links links={getEntityLinks(pdb, "uniprot")} />,
+        },
+        {
+            name: i18n.t("PDB ID"),
+            value: <Links links={getEntityLinks(pdb, "pdb")} />,
+        },
+        {
+            name: i18n.t("Chain"),
+            value: pdb.chainId,
+        },
         {
             name: i18n.t("EMDB ID"),
-            value: emdbId,
-            help: i18n.t(
-                "Do you want to load the associated map with this protein structure? (Pop-up window when loading the protein viewer or option here)"
-            ),
+            value: <Links links={getEntityLinks(pdb, "emdb")} emptyValue="-" />,
+            help: i18n.t("Do you want to load the associated map with this protein structure?"),
         },
         {
             name: i18n.t("Resolution"),
@@ -51,47 +104,5 @@ export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
         },
     ];
 
-    return (
-        <Parent>
-            {subtracks
-                .filter(subtrack => !subtrack.isDisabled)
-                .map(subtrack => (
-                    <Child
-                        key={subtrack.name}
-                        name={subtrack.name}
-                        value={subtrack.value}
-                        help={subtrack.help}
-                    />
-                ))}
-        </Parent>
-    );
-});
-
-const Parent: React.FC = ({ children }) => {
-    return <ul>{children}</ul>;
-};
-
-interface ChildProps {
-    name: string;
-    value: number | string | undefined;
-    help?: string;
+    return items;
 }
-
-const Child: React.FC<ChildProps> = props => {
-    const { name, value, help } = props;
-
-    return (
-        <ul>
-            {name}: {value ?? "-"}
-            {help && (
-                <span style={styles.help} title={help}>
-                    [?]
-                </span>
-            )}
-        </ul>
-    );
-};
-
-const styles = {
-    help: { marginLeft: 10 },
-};

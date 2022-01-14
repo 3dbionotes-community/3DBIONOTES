@@ -1,30 +1,39 @@
 import React from "react";
+import _ from "lodash";
 import i18n from "../../utils/i18n";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
+import { Profile, ProfileId, profiles } from "../../../domain/entities/Profile";
 
-export interface ProfilesButtonProps {}
+export interface ProfilesButtonProps {
+    profile: Profile;
+    onChange(newProfile: Profile): void;
+}
 
-export const ProfilesButton: React.FC<ProfilesButtonProps> = () => {
-    const items: DropdownProps["items"] = [
-        { text: i18n.t("General"), id: "general", selected: true },
-        { text: i18n.t("Structural"), id: "structural" },
-        { text: i18n.t("Validation (em-computational models)"), id: "validation" },
-        { text: i18n.t("Drug Design - Experimental"), id: "drug-design" },
-        { text: i18n.t("Omics"), id: "omics" },
-        { text: i18n.t("Biomedicine"), id: "biomedicine" },
-    ];
+export const ProfilesButton: React.FC<ProfilesButtonProps> = React.memo(props => {
+    const { profile, onChange } = props;
+
+    const dropdownItems: DropdownProps<ProfileId>["items"] = React.useMemo(() => {
+        return _.values(profiles).map(profile => {
+            return { text: profile.name, id: profile.id };
+        });
+    }, []);
+
+    const setProfile = React.useCallback(
+        (profileId: ProfileId) => {
+            onChange(profiles[profileId]);
+        },
+        [onChange]
+    );
+
+    const text = i18n.t("Profile") + ": " + profile.name;
 
     return (
-        <Dropdown
-            text={i18n.t("Profiles")}
-            items={items}
-            onClick={console.debug}
+        <Dropdown<ProfileId>
+            text={text}
+            selected={profile.id}
+            items={dropdownItems}
+            onClick={setProfile}
             showSelection={true}
         />
     );
-};
-
-/*
-{isSelected && <Done />}
-<span style={isSelected ? undefined : styles.menuItemSelected}>{item.text}</span>
-*/
+});

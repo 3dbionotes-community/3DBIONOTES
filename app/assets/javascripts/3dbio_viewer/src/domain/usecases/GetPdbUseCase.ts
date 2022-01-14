@@ -1,7 +1,6 @@
-import { UseCase } from "../../compositionRoot";
 import { PdbOptions, PdbRepository } from "../repositories/PdbRepository";
 
-export class GetPdbUseCase implements UseCase {
+export class GetPdbUseCase {
     constructor(private pdbRepository: PdbRepository) {}
 
     execute(options: PdbOptions) {

@@ -1,38 +1,40 @@
 import React from "react";
+import _ from "lodash";
 import { Pdb } from "../../domain/entities/Pdb";
+import { PdbInfo } from "../../domain/entities/PdbInfo";
 import { PdbOptions } from "../../domain/repositories/PdbRepository";
 import { debugVariable } from "../../utils/debug";
-import { throwError } from "../../utils/misc";
+import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
-import { useLoader } from "../components/Loader";
-import { SelectionState } from "../view-models/SelectionState";
+import { LoaderState, useLoader } from "../components/Loader";
+import { getChainId, getMainPdbId, getPdbOptions, Selection } from "../view-models/Selection";
+import i18n from "../utils/i18n";
 
-const proteinFromPdbId: Record<string, string> = {
-    "6zow": "P0DTC2",
-    "6lzg": "Q9BYF1",
-    "6w9c": "P0DTD1",
-    "1iyj": "P60896",
-    "2r5t": "O00141",
-    "2z62": "O00206",
-    "3brv": "O14920",
-    "1yyb": "O14737",
-    "7bv1": "P0DTD1",
-};
-
-export function usePdbLoader(selection: SelectionState) {
+export function usePdbLoader(
+    selection: Selection,
+    pdbInfo: Maybe<PdbInfo>
+): LoaderState<Pdb> | undefined {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
-    const pdbId = (selection.main?.pdb.id || "6zow").toLowerCase();
-    const pdbOptions: PdbOptions = React.useMemo(() => {
-        const protein = proteinFromPdbId[pdbId] || "P0DTC2";
-        return { pdb: pdbId, protein, chain: "A" };
-    }, [pdbId]);
-    if (!pdbOptions) throwError(`PDB not defined: ${pdbId}`);
+
+    const pdbId = getMainPdbId(selection);
+    const chainId = getChainId(selection);
+    const chains = pdbInfo?.chains;
+    const pdbOptions: PdbOptions | undefined = React.useMemo(() => {
+        return getPdbOptions(pdbId, chainId, chains);
+    }, [pdbId, chainId, chains]);
 
     React.useEffect(() => {
+        if (!pdbOptions) {
+            setLoader({
+                type: "error",
+                message: i18n.t("PDB has no protein"),
+            });
+            return;
+        }
         setLoader({ type: "loading" });
 
-        return compositionRoot.getPdb(pdbOptions).run(
+        return compositionRoot.getPdb.execute(pdbOptions).run(
             pdb => setLoader({ type: "loaded", data: pdb }),
             error => setLoader({ type: "error", message: error.message })
         );

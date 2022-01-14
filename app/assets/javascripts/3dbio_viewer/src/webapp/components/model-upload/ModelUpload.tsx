@@ -8,7 +8,7 @@ import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { AtomicStructure } from "../../../domain/entities/AtomicStructure";
 import { useAppContext } from "../AppContext";
 import { useBooleanState } from "../../hooks/use-boolean";
-import { UploadLoader } from "../upload-loader/UploadLoader";
+import { LoaderMask } from "../loader-mask/LoaderMask";
 import { UploadConfirmation } from "./UploadConfirmation";
 import { ErrorMessage } from "../error-message/ErrorMessage";
 
@@ -43,7 +43,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                 annotationsFile: getFile(annotationFileRef),
             };
             setOpen(true);
-            return compositionRoot.uploadAtomicStructure(uploadParams).run(
+            return compositionRoot.uploadAtomicStructure.execute(uploadParams).run(
                 result => {
                     setAtomicStructure(result);
                     setOpen(false);
@@ -124,7 +124,9 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                     <button className="uploadSubmit" onClick={submit}>
                         {i18n.t("Submit")}
                     </button>
-                    {open && <UploadLoader open={open} />}
+                    {open && (
+                        <LoaderMask open={open} title={i18n.t("Uploading Atomic Structure...")} />
+                    )}
                 </DialogContent>
             </Dialog>
 

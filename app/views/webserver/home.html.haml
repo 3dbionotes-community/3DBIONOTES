@@ -13,7 +13,7 @@
             %br/
         %p
           %a.btn.btn-primary.btn-lg{:href => ws_covid19_path, :role => "button"} CoVid-19 Edition
-          %a.btn.btn-secondary.btn-lg{:href => "/ws/viewer/EMD-21375", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
+          %a.btn.btn-secondary.btn-lg{:href => "/ws/viewer/#EMD-21375", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
     %div
       #videoWrapper
         %video#welcomeVideo{:autoplay => "", :height => "auto", :loop => "", :muted => "", :width => "540"}
@@ -25,7 +25,7 @@
         = hidden_field_tag(:viewer_type, @viewerType)
         #mainSearch.input-group.form-control-lg.md-form.form-sm.form-2.pl-0.justify-content-center
           %input.form-control.form-control-lg.my-0.py-1.amber-border{"aria-label" => "Search", :placeholder => "Site-wide search here", :name => "queryId"}/
-          %i.fa.fa-search.text-grey.searchIconMain{"aria-hidden" => "true"}
+          %i.fa.fa-search.text-grey.searchIconMain.margin{"aria-hidden" => "true"}
     .contentBox
       .contentTitle
         %h4

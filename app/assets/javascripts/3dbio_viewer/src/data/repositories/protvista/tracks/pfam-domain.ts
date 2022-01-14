@@ -3,7 +3,6 @@ import { subtracks } from "../../../../domain/definitions/subtracks";
 import { getEvidencesFrom } from "../../../../domain/entities/Evidence";
 import { Fragments, getFragments } from "../../../../domain/entities/Fragment2";
 import i18n from "../../../../domain/utils/i18n";
-import { Maybe } from "../../../../utils/ts-utils";
 import { getStringFromItems, Item } from "../utils";
 
 // Example: http://3dbionotes.cnb.csic.es/api/annotations/Pfam/Uniprot/P0DTC2
@@ -26,7 +25,7 @@ export interface PfamAnnotation {
 }
 
 export function getPfamDomainFragments(
-    pfamAnnotations: Maybe<PfamAnnotations>,
+    pfamAnnotations: PfamAnnotations,
     protein: string
 ): Fragments {
     const pfamEvidences = getEvidencesFrom("Pfam", {

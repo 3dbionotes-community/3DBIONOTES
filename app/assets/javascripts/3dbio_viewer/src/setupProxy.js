@@ -9,6 +9,15 @@ module.exports = function (app) {
         rewritePath: true,
     });
 
+    // Use by PPI Viewer
+    proxyRoutes(app, {
+        routes: ["/api"],
+        target: "https://3dbionotes.cnb.csic.es",
+        cache: false,
+        rewritePath: false,
+    });
+
+    // Use by PPI Viewer
     proxyRoutes(app, {
         routes: ["/assets"],
         target: "https://3dbionotes.cnb.csic.es",
@@ -18,6 +27,12 @@ module.exports = function (app) {
     proxyRoutes(app, {
         routes: ["/ebi"],
         target: "https://www.ebi.ac.uk",
+        rewritePath: true,
+    });
+
+    proxyRoutes(app, {
+        routes: ["/uniprot"],
+        target: "https://www.uniprot.org",
         rewritePath: true,
     });
 
@@ -39,7 +54,14 @@ function proxyRoutes(app, options) {
     const apiProxy = proxy.createProxyMiddleware(proxyOptions);
 
     if (cache) {
-        const cacheMidddleware = apicache.middleware("1 day");
+        const cacheMidddleware = apicache
+            .options({
+                debug: true,
+                statusCodes: {
+                    include: [200, 404],
+                },
+            })
+            .middleware("1 day");
         app.use(routes, cacheMidddleware, apiProxy);
     } else {
         app.use(routes, apiProxy);

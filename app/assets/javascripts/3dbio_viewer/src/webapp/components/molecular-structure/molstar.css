@@ -14,3 +14,19 @@
 .msp-pdbe-link {
     display: none !important;
 }
+
+.msp-viewport-controls-panel {
+    z-index: 1000;
+}
+
+/* Hide some floating control buttons */
+.msp-pdbe-control-toggle-controls-panel,
+.msp-pdbe-control-toggle-expanded-viewport,
+.msp-pdbe-control-toggle-selection-mode {
+    display: none;
+}
+
+/* Fix snapshot image size */
+.msp-image-preview img {
+    width: 100%;
+}

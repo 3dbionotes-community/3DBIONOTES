@@ -4,23 +4,28 @@ import { usePdbLoader } from "../../hooks/use-pdb";
 import { allTracksBlock } from "./protvista-blocks";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
-import { useViewerSelector } from "../viewer-selector/viewer-selector.hooks";
+import { useViewerState } from "../viewer-selector/viewer-selector.hooks";
+import i18n from "../../utils/i18n";
+import { usePdbInfo } from "../../hooks/loader-hooks";
 
-export interface ProtvistaGroupedProps {
-    selector: string;
-}
+export interface ProtvistaGroupedProps {}
 
-export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(props => {
-    const [selection] = useViewerSelector(props.selector);
-    const loader = usePdbLoader(selection);
+export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(() => {
+    const [viewerState] = useViewerState();
+    const { selection } = viewerState;
+    const { pdbInfo } = usePdbInfo(selection);
+    const loader = usePdbLoader(selection, pdbInfo);
     const block = allTracksBlock;
+    if (!loader) return null;
 
     return loader.type === "loaded" ? (
-        <ViewerBlock block={block}>
-            PDB: {loader.data.id} | Protein: {loader.data.protein.id}
+        <ViewerBlock block={block} namespace={namespace}>
+            Protein: {loader.data.protein.id} | PDB: {loader.data.id} | Chain: {loader.data.chainId}
             <ProtvistaPdb pdb={loader.data} block={block} showAllTracks={true} />
         </ViewerBlock>
     ) : (
-        <div>Loading...</div>
+        <div>{loader.type === "loading" ? i18n.t("Loading...") : loader.message}</div>
     );
 });
+
+const namespace = {};

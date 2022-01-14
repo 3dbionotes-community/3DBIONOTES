@@ -1,4 +1,5 @@
 import React from "react";
+import { noCancel } from "../../utils/future";
 
 // Use a wrap value so identical arguments still run a new effect
 type ArgsValue<Args extends any[]> = { value: Args };
@@ -6,15 +7,15 @@ type Effect = void;
 type EffectFn<Args extends any[]> = (...args: Args) => Effect;
 type Cancel = { (): void };
 
-/*  Merge the functionality of React.useCallback and React.useEffect to run a non-concurrent,
-    cancellable effect. Only one effect will be running at a given time. If a new effect is
-    requested when the previous one has not finished yet, it will be cancelled.
+/*  Merge the features of React.useCallback and React.useEffect to run a single, non-concurrent,
+    cancellable effect. Only one effect will be running concurrently. Thus, if a new effect is
+    requested when the previous one has not finished yet, that old effect will be cancelled.
 */
 
 export function useCallbackEffect<Args extends any[]>(
-    callback: (...args: Args) => Cancel
+    callback: (...args: Args) => Cancel | undefined
 ): EffectFn<Args> {
-    const cancelRef = React.useRef<Cancel>(noop);
+    const cancelRef = React.useRef<Cancel>(noCancel);
 
     const [args, setArgs] = React.useState<ArgsValue<Args>>();
 
@@ -29,12 +30,10 @@ export function useCallbackEffect<Args extends any[]>(
     React.useEffect(() => {
         if (args) {
             const cancelFn = callback(...args.value);
-            cancelRef.current = cancelFn;
+            cancelRef.current = cancelFn || noCancel;
             return cancelFn;
         }
     }, [callback, args]);
 
     return runEffect;
 }
-
-const noop = () => {};

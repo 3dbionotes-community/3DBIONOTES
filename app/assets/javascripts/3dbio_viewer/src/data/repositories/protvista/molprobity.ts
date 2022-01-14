@@ -8,9 +8,9 @@ import { SubtrackDefinition } from "../../../domain/entities/TrackDefinition";
 export interface MolprobityResponse {
     id: string;
     status: string;
-    rota: ItemsByChain[];
-    rama: ItemsByChain[];
-    omega: ItemsByChain[];
+    rota?: ItemsByChain[];
+    rama?: ItemsByChain[];
+    omega?: ItemsByChain[];
 }
 
 type ItemsByChain = Record<string, MolprobityItem[]>;
@@ -24,8 +24,8 @@ export interface MolprobityItem {
 
 export function getMolprobityFragments(response: MolprobityResponse, chain: string): Fragments {
     return _.concat(
-        getFragmentsFor(subtracks.rotamerOutlier, response.rota, chain),
-        getFragmentsFor(subtracks.phiPsiOutliers, response.rama, chain)
+        getFragmentsFor(subtracks.rotamerOutlier, response.rota || [], chain),
+        getFragmentsFor(subtracks.phiPsiOutliers, response.rama || [], chain)
     );
 }
 

@@ -24,15 +24,6 @@ export function loadPdbView(
 
     protvistaEl.viewerdata = pdbView;
 
-    if (protvistaEl.layoutHelper && !_.isEmpty(pdbView.tracks)) {
-        protvistaEl.layoutHelper.hideSubtracks(0);
-    }
-
-    // Collapse first track, which is expanded by default
-    protvistaEl.querySelectorAll(`.expanded`).forEach(trackSection => {
-        trackSection.classList.remove("expanded");
-    });
-
     if (options.onAction) {
         protvistaEl.addEventListener("protvista-pdb.action", (ev: any) => {
             if (isProtvistaPdbActionEvent(ev) && options.onAction) {

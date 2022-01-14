@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import _ from "lodash";
 import { Pdb } from "../../../domain/entities/Pdb";
-import { SelectionState } from "../../view-models/SelectionState";
+import { Selection } from "../../view-models/Selection";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
 import { BlockDef, TrackComponentProps } from "./Protvista.types";
@@ -15,7 +15,7 @@ import { GeneViewer } from "../gene-viewer/GeneViewer";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
-    selection: SelectionState;
+    selection: Selection;
     blocks: BlockDef[];
 }
 
@@ -43,13 +43,31 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         [openAnnotationTool]
     );
 
+    const namespace = {
+        alphaHelices: "TODO",
+        betaSheets: "TODO",
+        disorderedRegionRange: "TODO",
+        domains: "TODO",
+        modifiedOrRefinementAminoAcids: "TODO",
+        poorQualityRegionMax: "TODO",
+        poorQualityRegionMin: "TODO",
+        proteinInteractsMoreCount: "TODO",
+        proteinInteractsWith: "TODO",
+        proteinName: pdb.protein.name,
+        proteinPartners: "TODO",
+        resolution: pdb.experiment?.resolution,
+        transmembraneAlphaHelices: "TODO",
+        transmembraneExternalRegions: "TODO",
+        transmembraneResidues: "TODO",
+        turns: "TODO",
+    };
+
     return (
         <div>
             {blocks.map(block => {
-                if (!blockHasRelevantData(block, pdb)) return null;
                 const CustomComponent = block.component;
                 return (
-                    <ViewerBlock key={block.id} block={block}>
+                    <ViewerBlock key={block.id} block={block} namespace={namespace}>
                         {CustomComponent ? (
                             <CustomComponent pdb={pdb} selection={selection} />
                         ) : (
@@ -77,16 +95,3 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         </div>
     );
 };
-
-function blockHasRelevantData(block: BlockDef, pdb: Pdb): boolean {
-    const tracks = _(pdb.tracks)
-        .keyBy(track => track.id)
-        .at(...block.tracks.map(trackDef => trackDef.id))
-        .compact()
-        .value();
-    const trackIds = tracks.map(track => track.id);
-    const hasCustomComponent = Boolean(block.component);
-    const hasRelevantTracks = !_(tracks).isEmpty() && !_.isEqual(trackIds, ["structure-coverage"]);
-
-    return hasCustomComponent || hasRelevantTracks;
-}

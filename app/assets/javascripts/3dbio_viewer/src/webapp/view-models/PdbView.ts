@@ -28,6 +28,8 @@ export interface PdbView {
     tracks: TrackView[];
     variants?: VariantsView;
     sequenceConservation?: unknown;
+    // New flag in @3dbionotes/protvista-pdb
+    expandFirstTrack: boolean;
 }
 
 interface VariantsView extends Variants {
@@ -49,6 +51,7 @@ export interface TrackView {
 
 interface SubtrackView {
     accession: string;
+    bestChainId: string;
     type: string; // Displayed in tooltip title
     label: string; // Supports: text and html.
     labelTooltip: string; // Label tooltip content. Support text and HTML mark-up
@@ -78,7 +81,7 @@ export function getPdbView(
 
     const tracks = _(data)
         .map((pdbTrack): TrackView | undefined => {
-            const subtracks = getTrackData(pdb, pdbTrack);
+            const subtracks = getSubtracks(pdb, pdbTrack);
             if (_.isEmpty(subtracks)) return undefined;
 
             return {
@@ -96,6 +99,7 @@ export function getPdbView(
         displayNavigation: true,
         displaySequence: true,
         displayConservation: false,
+        expandFirstTrack: false,
         displayVariants: !!pdb.variants,
         tracks,
         variants: pdb.variants
@@ -110,7 +114,7 @@ export function getPdbView(
     };
 }
 
-function getTrackData(pdb: Pdb, track: Track): TrackView["data"] {
+function getSubtracks(pdb: Pdb, track: Track): TrackView["data"] {
     return _.flatMap(track.subtracks, subtrack => {
         return hasFragments(subtrack) ? [getSubtrack(pdb, subtrack)] : [];
     });
@@ -129,6 +133,7 @@ function getSubtrack(pdb: Pdb, subtrack: Subtrack): SubtrackView {
         label,
         help: subtrack.labelTooltip || "",
         labelTooltip,
+        bestChainId: pdb.chainId,
         locations: subtrack.locations.map(location => ({
             ...location,
             fragments: location.fragments.map(fragment => ({

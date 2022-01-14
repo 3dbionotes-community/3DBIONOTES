@@ -14,7 +14,7 @@ import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value"
 import { useDebounce } from "../../hooks/use-debounce";
 import { useBooleanState } from "../../hooks/use-boolean";
 import i18n from "../../utils/i18n";
-import { ActionType, DbItem } from "../../view-models/SelectionState";
+import { ActionType, DbItem } from "../../view-models/Selection";
 import { useAppContext } from "../AppContext";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import "./ModelSearch.css";
@@ -50,8 +50,8 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 
     const [modelType, setModelType] = React.useState<ModelSearchType>("all");
     const [isUploadOpen, { enable: openUpload, disable: closeUpload }] = useBooleanState(false);
-
     const [searchState, startSearch] = useDbModelSearch(modelType);
+
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
             <DialogTitle>
@@ -76,7 +76,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 
                     <Dropdown<ModelSearchType>
                         text={i18n.t("Model type")}
-                        value={modelType}
+                        selected={modelType}
                         items={modelTypes}
                         onClick={setModelType}
                         showExpandIcon
@@ -132,8 +132,8 @@ function useDbModelSearch(modelType: ModelSearchType) {
             setSearchState({ type: "searching" });
             const searchType = modelType === "all" ? undefined : modelType;
 
-            return compositionRoot
-                .searchDbModels({ query, type: searchType })
+            return compositionRoot.searchDbModels
+                .execute({ query, type: searchType })
                 .run(dbModelCollection => {
                     const newState: SearchState =
                         _.isEmpty(dbModelCollection) && !query
