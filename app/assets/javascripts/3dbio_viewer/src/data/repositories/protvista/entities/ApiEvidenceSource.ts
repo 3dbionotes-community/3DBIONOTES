@@ -10,7 +10,7 @@ export interface ApiEvidence {
 export interface ApiEvidenceSource {
     name: string;
     id: string;
-    url: string;
+    url?: string;
     alternativeUrl?: string;
 }
 
@@ -38,7 +38,7 @@ export function getEvidencesFromApiEvidence(
                     title,
                     sources: apiSourceEvidences.map(src => ({
                         name: src.name,
-                        links: [{ name: src.id, url: src.url }],
+                        links: [{ name: src.id, url: src.url || "" }],
                     })),
                 };
             }
@@ -59,7 +59,7 @@ export function getEvidenceFromDefaultSources(options: {
 
     const source: Reference = {
         name: mainSourceEvidence.name,
-        links: sourceEvidences.map(src => ({ name: src.id, url: src.url })),
+        links: sourceEvidences.map(src => ({ name: src.id, url: src.url || "" })),
     };
 
     const alternativeSourceLinks = _(sourceEvidences)
