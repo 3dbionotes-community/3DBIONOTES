@@ -3,7 +3,7 @@ import _ from "lodash";
 import { Link as LinkE } from "../../domain/entities/Link";
 import { renderJoin } from "../utils/react";
 
-interface LinkProps {
+export interface LinkProps {
     name: string;
     url: string | undefined;
 }

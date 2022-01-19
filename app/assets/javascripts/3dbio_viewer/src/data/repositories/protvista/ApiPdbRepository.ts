@@ -6,7 +6,7 @@ import { Future } from "../../../utils/future";
 import { getTotalFeaturesLength } from "../../../domain/entities/Track";
 import { debugVariable } from "../../../utils/debug";
 import { getEmValidationFragments, PdbAnnotations } from "./tracks/em-validation";
-import { EbiVariation, getVariants } from "./tracks/variants";
+import { EbiVariation, GenomicVariantsCNCBResponse, getVariants } from "./tracks/variants";
 import { getPhosphiteFragments, PhosphositeUniprot } from "./tracks/phosphite";
 import { Features, getFeatureFragments } from "./tracks/feature";
 import { Coverage, getStructureCoverageFragments } from "./tracks/structure-coverage";
@@ -30,6 +30,7 @@ import { getMolprobityFragments, MolprobityResponse } from "./molprobity";
 import { AntigenicResponse, getAntigenicFragments } from "./tracks/antigenic";
 import { Variants } from "../../../domain/entities/Variant";
 import { emdbsFromPdbUrl, getEmdbsFromMapping, PdbEmdbMapping } from "../mapping";
+import { MutagenesisResponse } from "./tracks/mutagenesis";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -52,6 +53,8 @@ interface Data {
     elmdbUniprot: ElmdbUniprot;
     molprobity: MolprobityResponse;
     antigenic: AntigenicResponse;
+    mutagenesis: MutagenesisResponse;
+    genomicVariantsCNCB: GenomicVariantsCNCBResponse;
 }
 
 type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K] | undefined> };
@@ -88,7 +91,13 @@ export class ApiPdbRepository implements PdbRepository {
             getElmdbUniprotFragments(elmdbUniprot, proteinId)
         );
 
-        const variants = on(data.ebiVariation, getVariants);
+        const variants = getVariants(
+            data.ebiVariation,
+            data.mutagenesis,
+            data.genomicVariantsCNCB,
+            proteinId
+        );
+
         const functionalMappingFragments = on(data.cv19Tracks, getFunctionalMappingFragments);
         const structureCoverageFragments = on(data.coverage, coverage =>
             getStructureCoverageFragments(coverage, options.chainId)
@@ -146,13 +155,11 @@ export class ApiPdbRepository implements PdbRepository {
         ];
 
         const sequence = data.features ? data.features.sequence : "";
-        const variantItems = (variants?.variants || []).filter(v => v.variant);
 
-        const testVariants: Variants = {
-            ...(variants || {}),
+        const pdbVariants: Variants = {
             sequence,
-            variants: variantItems,
-            filters: [],
+            variants: (variants?.variants || []).filter(v => v.variant),
+            filters: variants?.filters || [],
         };
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
         const emdbs = on(data.pdbEmdbMapping, mapping =>
@@ -168,7 +175,7 @@ export class ApiPdbRepository implements PdbRepository {
             chainId: options.chainId,
             length: getTotalFeaturesLength(tracks),
             tracks,
-            variants: testVariants,
+            variants: pdbVariants,
             experiment,
         };
     }
@@ -202,6 +209,10 @@ function getData(options: Options): FutureData<Partial<Data>> {
         elmdbUniprot: getJSON(`${bioUrl}/api/annotations/elmdb/Uniprot/${proteinId}`),
         molprobity: getJSON(`${bioUrl}/compute/molprobity/${pdbId}`),
         antigenic: getJSON(`${ebiProteinsApiUrl}/antigen/${proteinId}`),
+        mutagenesis: getJSON(`${bioUrl}/api/annotations/biomuta/Uniprot/${proteinId}`),
+        genomicVariantsCNCB: getJSON(
+            `${bioUrl}/ws/lrs/features/variants/Genomic_Variants_CNCB/${proteinId}/`
+        ),
     };
 
     return Future.joinObj(data$);

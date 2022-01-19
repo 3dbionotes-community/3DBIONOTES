@@ -155,13 +155,14 @@ export const blockDefs: BlockDef[] = [
     },
 ];
 
-export const allTracksBlock: BlockDef = {
-    id: "allTracksBlock",
-    title: "All Tracks Block",
+export const testblock: BlockDef = {
+    id: "testBlock",
+    title: "Test Block",
     description: "",
-    help: "Help message",
+    help: "Test Block",
     tracks: [
         tracks.structureCoverage,
+        /*
         tracks.domains,
         tracks.celullarRegions,
         tracks.secondaryStructure,
@@ -178,16 +179,19 @@ export const allTracksBlock: BlockDef = {
         tracks.emValidation,
         tracks.pockets,
         tracks.residueAccessibility,
-        // tracks.ppiViewer,
+        tracks.ppiViewer,
         tracks.functionalMappingPpi,
         tracks.ligands,
         tracks.functionalMappingLigands,
         tracks.geneViewer,
         tracks.mutagenesis,
+        */
         tracks.variants,
+        /*
         tracks.peptides,
         tracks.epitomes,
         tracks.antigenicSequence,
+        */
     ],
     profiles: [],
 };
