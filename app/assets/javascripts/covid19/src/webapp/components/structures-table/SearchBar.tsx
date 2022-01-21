@@ -14,32 +14,24 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const { value, setValue } = props;
 
     const setValueFromEv = React.useCallback<NonNullable<TextFieldProps["onChange"]>>(
-        ev => {
-            setValue(ev.target.value);
-        },
+        ev => setValue(ev.target.value),
         [setValue]
     );
 
     return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={styles.wrapper}>
             <StyledTextField
                 type="search"
                 variant="outlined"
                 value={value || ""}
-                classes={{ root: "MuiTextField-root" }}
+                classes={classes}
                 onChange={setValueFromEv}
                 placeholder={i18n.t("Search proteins")}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                            <SearchIcon />
-                        </InputAdornment>
-                    ),
-                }}
+                InputProps={inputProps}
             />
 
-            <div style={searchBarStyle.exampleRow}>
-                <p>Examples:</p>
+            <div style={styles.exampleRow}>
+                <p>{i18n.t("Examples")}:</p>
                 <SearchExampleButton setValue={setValue} exampleValue="6YOR" />
                 <SearchExampleButton setValue={setValue} exampleValue="Homo sapiens" />
                 <SearchExampleButton setValue={setValue} exampleValue="SARS-CoV-2" />
@@ -47,6 +39,16 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
         </div>
     );
 });
+
+const classes = { root: "MuiTextField-root" };
+
+const inputProps = {
+    endAdornment: (
+        <InputAdornment position="end">
+            <SearchIcon />
+        </InputAdornment>
+    ),
+};
 
 const StyledTextField = styled(TextField)`
     &.MuiTextField-root {
@@ -59,9 +61,8 @@ const StyledTextField = styled(TextField)`
         }
     }
 `;
-const searchBarStyle = {
-    exampleRow: {
-        display: "flex",
-        marginTop: 5,
-    },
+
+const styles = {
+    wrapper: { display: "flex" as const, flexDirection: "column" as const },
+    exampleRow: { display: "flex" as const, marginTop: 5 },
 };
