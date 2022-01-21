@@ -6,8 +6,9 @@ export function useEventDebounce(
     setValue: (newValue: string) => void,
     options: { delay: number }
 ) {
-    const [stateValue, updateStateValue] = React.useState(value || "");
     const { delay } = options;
+    const [stateValue, updateStateValue] = React.useState(value);
+    React.useEffect(() => updateStateValue(value), [value]);
 
     const onChangeDebounced = React.useMemo(() => {
         return _.debounce(setValue, delay);

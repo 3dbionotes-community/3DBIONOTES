@@ -23,7 +23,11 @@ export interface ToolbarProps {
     setPageSize: (param: number) => void;
 }
 
-export const Toolbar: React.FC<ToolbarProps> = props => {
+// Toolbar is called with empty object on initialization
+
+export const Toolbar: React.FC<ToolbarProps | {}> = props => {
+    if (!isNonEmptyObject<ToolbarProps>(props)) return null;
+
     const {
         search,
         setSearch,
@@ -64,3 +68,7 @@ export const styles = {
     container: { padding: 10 },
     columns: { marginLeft: "auto" },
 };
+
+function isNonEmptyObject<T>(obj: T | {}): obj is T {
+    return Object.keys(obj).length > 0;
+}
