@@ -41,7 +41,7 @@ msgstr ""
 msgid "Save as JSON"
 msgstr ""
 
-msgid "Search proteins"
+msgid "Search protein/ organism/ PDB ID/ EMDB ID/ UniProt ID)"
 msgstr ""
 
 msgid "Examples"

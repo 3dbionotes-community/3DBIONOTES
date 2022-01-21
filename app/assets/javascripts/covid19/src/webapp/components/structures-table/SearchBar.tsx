@@ -26,7 +26,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                 value={stateValue}
                 classes={classes}
                 onChange={setValueFromEv}
-                placeholder={i18n.t("Search proteins")}
+                placeholder={i18n.t("Search protein/ organism/ PDB ID/ EMDB ID/ UniProt ID)")}
                 InputProps={inputProps}
             />
 
