@@ -6,13 +6,14 @@ import { CustomGridToolbarExport } from "./CustomGridToolbarExport";
 import { CustomGridTopPagination } from "./CustomGridTopPagination";
 import { SearchBar } from "./SearchBar";
 import "./Toolbar.css";
-import { CustomCheckboxFilter, FilterModelBodies } from "./CustomCheckboxFilter";
+import { CustomCheckboxFilter } from "./CustomCheckboxFilter";
+import { EntityBodiesFilter } from "../../../domain/entities/Covid19Info";
 
 export interface ToolbarProps {
     search: string;
     setSearch(search: string): void;
-    filterState: FilterModelBodies;
-    setFilterState(filter: FilterModelBodies): void;
+    filterState: EntityBodiesFilter;
+    setFilterState(filter: EntityBodiesFilter): void;
     gridApi: GridApi;
     dataGrid: DataGrid;
     virtualScrollbarProps: VirtualScrollbarProps;

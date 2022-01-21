@@ -8,7 +8,7 @@ interface RootProps {}
 
 export const Root: React.FC<RootProps> = React.memo(() => {
     const { compositionRoot } = useAppContext();
-    const data = compositionRoot.getCovid19Info.execute();
+    const data = compositionRoot.getCovid19Info.execute({});
     window.app = { data };
 
     return (
@@ -21,7 +21,7 @@ export const Root: React.FC<RootProps> = React.memo(() => {
                 </Wrapper>
             </HeaderBanner>
 
-            <StructuresTable data={data} />
+            <StructuresTable />
         </Body>
     );
 });

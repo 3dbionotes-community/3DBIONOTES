@@ -1,5 +1,3 @@
-import { FilterModelBodies } from "../../webapp/components/structures-table/CustomCheckboxFilter";
-
 export interface Covid19Info {
     structures: Structure[];
 }
@@ -109,73 +107,18 @@ export type Url = string;
 
 export type Ref = { id: Id };
 
-export function searchAndFilterStructures(
-    structures: Structure[],
-    search: string,
-    filterState: FilterModelBodies
-): Structure[] {
-    const text = search.trim().toLocaleLowerCase();
-    if (!text && !filterState.antibody && !filterState.nanobody && !filterState.sybody)
-        return structures;
-
-    return structures.filter(
-        structure =>
-            (structure.title.toLocaleLowerCase().includes(text) ||
-                structure.pdb?.id.toLocaleLowerCase().includes(text) ||
-                structure.emdb?.id.toLocaleLowerCase().includes(text) ||
-                searchOrganismSubStructures(structure.organisms, text) ||
-                searchLigandSubStructures(structure.ligands, text) ||
-                searchEntitySubStructures(structure.entities, text) ||
-                structure.details?.toLocaleLowerCase().includes(text)) &&
-            (filterEntities(structure.entities, filterState).length > 0 ||
-                (structure.pdb && filterEntities(structure.pdb.entities, filterState).length > 0))
-    );
+export interface EntityBodiesFilter {
+    antibody: boolean;
+    nanobody: boolean;
+    sybody: boolean;
 }
 
-export function filterEntities(entities: Entity[], filterState: FilterModelBodies): Entity[] {
+export function filterEntities(entities: Entity[], filterState: EntityBodiesFilter): Entity[] {
     return entities.filter(
         entity =>
             entity.isAntibody === filterState.antibody &&
             entity.isNanobody === filterState.nanobody &&
             entity.isSybody === filterState.sybody
-    );
-}
-
-function searchOrganismSubStructures(subStructure: Organism[], text: string): boolean {
-    return (
-        subStructure.filter(structure => {
-            return (
-                structure.id.toLocaleLowerCase().includes(text) ||
-                structure.name.toLocaleLowerCase().includes(text) ||
-                (structure.commonName && structure.commonName.toLocaleLowerCase().includes(text))
-            );
-        }).length > 0
-    );
-}
-
-function searchLigandSubStructures(subStructure: Ligand[], text: string): boolean {
-    return (
-        subStructure.filter(structure => {
-            return (
-                structure.id.toLocaleLowerCase().includes(text) ||
-                structure.name.toLocaleLowerCase().includes(text) ||
-                (structure.details && structure.details.toLocaleLowerCase().includes(text))
-            );
-        }).length > 0
-    );
-}
-
-function searchEntitySubStructures(subStructure: Entity[], text: string): boolean {
-    return (
-        subStructure.filter(structure => {
-            return (
-                structure.id.toLocaleLowerCase().includes(text) ||
-                structure.name.toLocaleLowerCase().includes(text) ||
-                structure.altNames.toLocaleLowerCase().includes(text) ||
-                (structure.details && structure.details.toLocaleLowerCase().includes(text)) ||
-                structure.organism.toLocaleLowerCase().includes(text)
-            );
-        }).length > 0
     );
 }
 
