@@ -8,7 +8,7 @@ msgstr ""
 "POT-Creation-Date: 2022-01-21T08:49:24.324Z\n"
 "PO-Revision-Date: 2022-01-21T08:49:24.324Z\n"
 
-msgid "Known Proteins"
+msgid "SARS-CoV-2 in structure databases"
 msgstr ""
 
 msgid "Title"

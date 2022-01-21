@@ -16,7 +16,7 @@ export const Root: React.FC<RootProps> = React.memo(() => {
             <HeaderBanner>
                 <Wrapper>
                     <h1>
-                        <b>{i18n.t("Known Proteins")}</b>
+                        <b>{i18n.t("SARS-CoV-2 in structure databases")}</b>
                     </h1>
                 </Wrapper>
             </HeaderBanner>
