@@ -1,9 +1,12 @@
-import { TextField, TextFieldProps, InputAdornment } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
+import _ from "lodash";
+import { TextField, InputAdornment } from "@material-ui/core";
+import styled from "styled-components";
+import SearchIcon from "@material-ui/icons/Search";
+
 import i18n from "../../../utils/i18n";
 import { SearchExampleButton } from "./SearchExampleButton";
-import styled from "styled-components";
+import { useEventDebounce } from "../../hooks/useDebounce";
 
 export interface SearchBarProps {
     value: string;
@@ -13,17 +16,14 @@ export interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const { value, setValue } = props;
 
-    const setValueFromEv = React.useCallback<NonNullable<TextFieldProps["onChange"]>>(
-        ev => setValue(ev.target.value),
-        [setValue]
-    );
+    const [stateValue, setValueFromEv] = useEventDebounce(value, setValue, { delay: 500 });
 
     return (
         <div style={styles.wrapper}>
             <StyledTextField
                 type="search"
                 variant="outlined"
-                value={value || ""}
+                value={stateValue}
                 classes={classes}
                 onChange={setValueFromEv}
                 placeholder={i18n.t("Search proteins")}
