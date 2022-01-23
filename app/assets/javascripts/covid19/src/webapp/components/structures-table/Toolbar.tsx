@@ -19,6 +19,7 @@ export interface ToolbarProps {
     virtualScrollbarProps: VirtualScrollbarProps;
     page: number;
     pageSize: number | undefined;
+    pageSizes: number[];
     setPage: (param: number) => void;
     setPageSize: (param: number) => void;
 }
@@ -38,6 +39,7 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
         virtualScrollbarProps,
         page,
         pageSize,
+        pageSizes,
         setPage,
         setPageSize,
     } = props;
@@ -56,6 +58,7 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                 dataGrid={dataGrid}
                 page={page}
                 pageSize={pageSize}
+                pageSizes={pageSizes}
                 setPage={setPage}
                 setPageSize={setPageSize}
             />

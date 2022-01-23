@@ -51,6 +51,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
                       virtualScrollbarProps,
                       page,
                       pageSize,
+                      pageSizes,
                       setPage,
                       setPageSize,
                   },
@@ -118,7 +119,7 @@ const useStyles = makeStyles({
     wrapper: {},
 });
 
-const pageSizes = [25, 50, 75, 100];
+const pageSizes = [10, 25, 50, 75, 100];
 
 const sortingOrder = ["asc" as const, "desc" as const];
 

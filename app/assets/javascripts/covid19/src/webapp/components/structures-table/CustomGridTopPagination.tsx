@@ -6,13 +6,13 @@ export interface CustomGridTopPaginationProps {
     dataGrid: DataGrid;
     page: number;
     pageSize: number | undefined;
+    pageSizes: number[];
     setPage: (param: number) => void;
     setPageSize: (param: number) => void;
 }
 
 export const CustomGridTopPagination: React.FC<CustomGridTopPaginationProps> = React.memo(props => {
-    const { dataGrid, page, pageSize, setPage, setPageSize } = props;
-    const pageSizes = [25, 50, 75, 100];
+    const { dataGrid, page, pageSize, pageSizes, setPage, setPageSize } = props;
 
     const handleChangePage = React.useCallback(
         (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
