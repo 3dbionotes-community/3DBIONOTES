@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { getEntityLinks, Pdb } from "../../domain/entities/Pdb";
 import { recordOfStyles } from "../../utils/ts-utils";
 import i18n from "../utils/i18n";
 import { Selection } from "../view-models/Selection";
 import { Links } from "./Link";
+import { Tooltip, ClickAwayListener, Fade } from "@material-ui/core";
 
 export interface BasicInfoProps {
     pdb: Pdb;
@@ -44,14 +45,30 @@ interface ChildProps {
 
 const Child: React.FC<ChildProps> = props => {
     const { name, value, help } = props;
+    const [showTooltip, setShowTooltip] = useState(false);
+    const handleClose = () => setShowTooltip(false);
+    const handleOpen = () => setShowTooltip(true);
 
     return (
         <li>
             {name}: {value ?? "-"}
             {help && (
-                <span style={styles.help} title={help}>
-                    [?]
-                </span>
+                <ClickAwayListener onClickAway={handleClose}>
+                    <Tooltip
+                        title={help}
+                        placement="right-end"
+                        interactive
+                        TransitionComponent={Fade}
+                        TransitionProps={{ timeout: 600 }}
+                        open={showTooltip}
+                        onOpen={handleOpen}
+                        onClose={handleClose}
+                    >
+                        <span style={styles.help} onClick={() => setShowTooltip(!showTooltip)}>
+                            [?]
+                        </span>
+                    </Tooltip>
+                </ClickAwayListener>
             )}
         </li>
     );
