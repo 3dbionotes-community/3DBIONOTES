@@ -3,6 +3,7 @@ import _ from "lodash";
 import { TextField, InputAdornment, Tooltip } from "@material-ui/core";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
+
 import i18n from "../../../utils/i18n";
 import { SearchExampleButton } from "./SearchExampleButton";
 import { useEventDebounce } from "../../hooks/useDebounce";
@@ -19,7 +20,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
 
     return (
         <div style={styles.wrapper}>
-            <div style={{ display: "flex", flex: "auto" }}>
+            <div style={styles.searchBar}>
                 <StyledTextField
                     type="search"
                     variant="outlined"
@@ -73,7 +74,7 @@ const StyledTextField = styled(TextField)`
 const styles = {
     wrapper: { display: "flex" as const, flexDirection: "column" as const },
     exampleRow: { display: "flex" as const, marginTop: 5 },
-    help: { marginLeft: 10 },
+    searchBar: { display: "flex" as const },
     tooltip: {
         fontWeight: 700,
         padding: "7px 10px",
