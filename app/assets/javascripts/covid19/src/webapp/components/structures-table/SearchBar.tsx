@@ -39,7 +39,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                 </Tooltip>
             </div>
             <div style={styles.exampleRow}>
-                <p>{i18n.t("Examples")}:</p>
+                <p style={styles.examplesText}>{i18n.t("Examples")}:</p>
                 <SearchExampleButton setValue={setValue} exampleValue="6YOR" />
                 <SearchExampleButton setValue={setValue} exampleValue="Homo sapiens" />
                 <SearchExampleButton setValue={setValue} exampleValue="SARS-CoV-2" />
@@ -73,7 +73,8 @@ const StyledTextField = styled(TextField)`
 
 const styles = {
     wrapper: { display: "flex" as const, flexDirection: "column" as const },
-    exampleRow: { display: "flex" as const, marginTop: 5 },
+    exampleRow: { display: "flex" as const, alignItems: "center" },
+    examplesText: { margin: 0 },
     searchBar: { display: "flex" as const },
     tooltip: {
         fontWeight: 700,
