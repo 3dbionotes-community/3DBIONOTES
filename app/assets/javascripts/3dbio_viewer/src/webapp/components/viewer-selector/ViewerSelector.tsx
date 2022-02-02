@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import _ from "lodash";
 import { Search } from "@material-ui/icons";
 
@@ -22,6 +22,7 @@ import { SelectionItem } from "./SelectionItem";
 import { useUpdateActions } from "../../hooks/use-update-actions";
 import classnames from "classnames";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
+import { sendAnalytics } from "../../utils/analytics";
 
 interface ViewerSelectorProps {
     pdbInfo: PdbInfo | undefined;
@@ -48,6 +49,11 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
         },
         [selection, closeSearch, onSelectionChange]
     );
+
+    useEffect(() => {
+        if(isSearchOpen) sendAnalytics({ type: "event", category: "clickMenu", action: "search", label: "view" });
+        
+    }, [isSearchOpen]);
 
     return (
         <div id="viewer-selector">

@@ -4,6 +4,7 @@ import { Ligand } from "../../domain/entities/Ligand";
 import { PdbId } from "../../domain/entities/Pdb";
 import { PdbInfo } from "../../domain/entities/PdbInfo";
 import { Maybe } from "../../utils/ts-utils";
+import { sendAnalytics } from "../utils/analytics";
 
 /* Selection object from/to string.
 
@@ -226,6 +227,7 @@ export function getItemParam(item: DbItem | undefined): string | undefined {
 export function runAction(selection: Selection, action: ActionType, item: DbItem): Selection {
     switch (action) {
         case "select": {
+            sendAnalytics({ type: "event", category: "searchMenu", action: "select" });
             const newMain: Selection["main"] =
                 item.type === "pdb"
                     ? { ...selection.main, pdb: { type: "pdb", id: item.id, visible: true } }
@@ -234,6 +236,7 @@ export function runAction(selection: Selection, action: ActionType, item: DbItem
             return { main: newMain, overlay: [], chainId: undefined, ligandId: undefined };
         }
         case "append": {
+            sendAnalytics({ type: "event", category: "searchMenu", action: "append" });
             const newOverlay: Selection["overlay"] = _.uniqBy(
                 [...selection.overlay, { type: "pdb", id: item.id, visible: true }],
                 getDbItemUid

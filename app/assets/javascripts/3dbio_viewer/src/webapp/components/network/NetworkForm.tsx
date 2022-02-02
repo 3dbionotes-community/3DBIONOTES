@@ -8,6 +8,7 @@ import UniProtAccessionTextArea from "./UniProtAccessionTextArea";
 import SpeciesSelect from "./SpeciesSelect";
 import "./Network.css";
 import { ErrorMessage } from "../error-message/ErrorMessage";
+import { sendAnalytics } from "../../utils/analytics";
 
 interface NetworkForm {
     species: string;
@@ -33,6 +34,8 @@ const NetworkForm = React.memo(() => {
             );
         } else {
             setError("");
+            sendAnalytics({ type: "event", category: "network", action: "upload" });
+
             window.alert("TODO");
         }
     }, [networkForm]);

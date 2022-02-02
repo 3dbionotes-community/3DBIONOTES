@@ -10,6 +10,8 @@ interface FrameViewerProps {
 
 export const FrameViewer = React.forwardRef<HTMLIFrameElement, FrameViewerProps>((props, ref) => {
     const { title, src, children } = props;
+    console.log(children)
+    console.log(title)
 
     return (
         <div className="frame-viewer">

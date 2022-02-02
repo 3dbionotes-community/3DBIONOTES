@@ -18,7 +18,6 @@ export const PPIViewer: React.FC<PPiViewerProps> = props => {
     const { pdb, trackDef, selection } = props;
     const src = routes.bionotes + `/ppiIFrame?pdb=${pdb.id}`;
     const title = `${trackDef.name}: ${trackDef.description || "-"}`;
-
     const infoAlignment = React.useMemo<InfoAlignment | undefined>(() => {
         // TODO: Use real current selected chain
         const pdb = selection.main?.pdb;

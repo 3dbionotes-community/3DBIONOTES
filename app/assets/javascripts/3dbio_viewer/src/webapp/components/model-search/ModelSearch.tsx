@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     CircularProgress,
     Dialog,
@@ -20,6 +20,8 @@ import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import "./ModelSearch.css";
 import { ModelSearchItem } from "./ModelSearchItem";
 import { ModelUpload } from "../model-upload/ModelUpload";
+import { sendAnalytics } from "../../utils/analytics";
+
 
 export interface ModelSearchProps {
     title: string;
@@ -51,6 +53,11 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const [modelType, setModelType] = React.useState<ModelSearchType>("all");
     const [isUploadOpen, { enable: openUpload, disable: closeUpload }] = useBooleanState(false);
     const [searchState, startSearch] = useDbModelSearch(modelType);
+
+    useEffect(() => {
+        if(isUploadOpen) sendAnalytics({ type: "event", category: "searchMenu", action: "uploadModel", label: "open" });
+        
+    }, [isUploadOpen]);
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
@@ -130,8 +137,9 @@ function useDbModelSearch(modelType: ModelSearchType) {
     const search = React.useCallback(
         (query: string) => {
             setSearchState({ type: "searching" });
+            sendAnalytics({ type: "event", category: "search", action: "viewer", label: query });
+            
             const searchType = modelType === "all" ? undefined : modelType;
-
             return compositionRoot.searchDbModels
                 .execute({ query, type: searchType })
                 .run(dbModelCollection => {
