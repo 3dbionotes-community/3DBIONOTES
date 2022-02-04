@@ -2,31 +2,31 @@ import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps } from "@material-ui/data-grid";
-import { Covid19Info, searchAndFilterStructures } from "../../../domain/entities/Covid19Info";
+import { EntityBodiesFilter } from "../../../domain/entities/Covid19Info";
 import { getColumns } from "./Columns";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
 import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
+import { useAppContext } from "../../contexts/app-context";
 
-export interface StructuresTableProps {
-    data: Covid19Info;
-}
+export interface StructuresTableProps {}
 
-type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
-export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
-    const { data } = props;
+export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => {
+    const { compositionRoot } = useAppContext();
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(pageSizes[0]);
-    const columns = React.useMemo(() => getColumns(data), [data]);
     const classes = useStyles();
+
     const [search, setSearch] = React.useState("");
-    const [filterState, setFilterState] = React.useState({
-        antibody: false,
-        nanobody: false,
-        sybody: false,
-    });
-    const structures = searchAndFilterStructures(data.structures, search, filterState);
+    const [filterState, setFilterState] = React.useState(initialFilterState);
+
+    const data = React.useMemo(() => {
+        return compositionRoot.getCovid19Info.execute({ search, filter: filterState });
+    }, [compositionRoot, search, filterState]);
+
+    const columns = React.useMemo(() => getColumns(data), [data]);
     const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
+    const { structures } = data;
 
     const {
         gridApi,
@@ -51,6 +51,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                       virtualScrollbarProps,
                       page,
                       pageSize,
+                      pageSizes,
                       setPage,
                       setPageSize,
                   },
@@ -105,6 +106,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     );
 });
 
+type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
+
 const useStyles = makeStyles({
     root: {
         "&.MuiDataGrid-root .MuiDataGrid-cell": {
@@ -116,5 +119,12 @@ const useStyles = makeStyles({
     wrapper: {},
 });
 
-const pageSizes = [25, 50, 75, 100];
+const pageSizes = [10, 25, 50, 75, 100];
+
 const sortingOrder = ["asc" as const, "desc" as const];
+
+const initialFilterState: EntityBodiesFilter = {
+    antibody: false,
+    nanobody: false,
+    sybody: false,
+};

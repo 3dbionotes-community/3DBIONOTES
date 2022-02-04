@@ -1,14 +1,10 @@
 import * as React from "react";
 import { FormGroup, FormControlLabel, Checkbox } from "@material-ui/core";
+import { EntityBodiesFilter } from "../../../domain/entities/Covid19Info";
 
 export interface CustomCheckboxFilterProps {
-    filterState: FilterModelBodies;
-    setFilterState(filter: FilterModelBodies): void;
-}
-export interface FilterModelBodies {
-    antibody: boolean;
-    nanobody: boolean;
-    sybody: boolean;
+    filterState: EntityBodiesFilter;
+    setFilterState(filter: EntityBodiesFilter): void;
 }
 
 export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.memo(props => {

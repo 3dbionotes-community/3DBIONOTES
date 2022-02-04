@@ -6,30 +6,34 @@ export interface CustomGridTopPaginationProps {
     dataGrid: DataGrid;
     page: number;
     pageSize: number | undefined;
+    pageSizes: number[];
     setPage: (param: number) => void;
     setPageSize: (param: number) => void;
 }
 
 export const CustomGridTopPagination: React.FC<CustomGridTopPaginationProps> = React.memo(props => {
-    const { dataGrid, page, pageSize, setPage, setPageSize } = props;
-    const pageSizes = [25, 50, 75, 100];
+    const { dataGrid, page, pageSize, pageSizes, setPage, setPageSize } = props;
 
-    const handleChangePage = (
-        event: React.MouseEvent<HTMLButtonElement> | null,
-        newPage: number
-    ) => {
-        setPage(newPage);
-    };
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        setPageSize(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+    const handleChangePage = React.useCallback(
+        (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+            setPage(newPage);
+        },
+        [setPage]
+    );
+
+    const handleChangeRowsPerPage = React.useCallback(
+        (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            setPageSize(parseInt(event.target.value, 10));
+            setPage(0);
+        },
+        [setPageSize, setPage]
+    );
+
     return (
         <React.Fragment>
             <TablePagination
-                style={{ float: "right", borderBottom: "none", padding: 0 }}
+                component="div" /* Default component is td, but we the parent component is not a table */
+                style={styles.table}
                 count={dataGrid?.structures?.length}
                 page={page}
                 onChangePage={handleChangePage}
@@ -40,3 +44,7 @@ export const CustomGridTopPagination: React.FC<CustomGridTopPaginationProps> = R
         </React.Fragment>
     );
 });
+
+const styles = {
+    table: { float: "right" as const, borderBottom: "none" as const, padding: 0 },
+};
