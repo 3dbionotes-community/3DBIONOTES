@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import _ from "lodash";
 import styles from "./viewers/Viewers.module.css";
+import { ViewerTooltip } from "./viewer-tooltip/ViewerTooltip";
 
 export interface BlockProps {
     block: ViewerBlockModel;
@@ -16,6 +17,7 @@ export interface ViewerBlockModel {
 
 export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
     const { block, namespace, children } = props;
+    const [showTooltip, setShowTooltip] = useState(false);
     const { title, description, help } = block;
     const stringNamespace = _.mapValues(namespace, value => (value || "?").toString());
     const interpolatedDescription = _.template(description)(stringNamespace);
@@ -24,7 +26,15 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
         <div className={styles.section} id={block.id}>
             <div className={styles.title}>
                 {title}
-                {help && <button title={help}>?</button>}
+                {help && (
+                    <ViewerTooltip
+                        title={help}
+                        showTooltip={showTooltip}
+                        setShowTooltip={setShowTooltip}
+                    >
+                        <button onClick={() => setShowTooltip(!showTooltip)}>?</button>
+                    </ViewerTooltip>
+                )}
             </div>
 
             <div className="contents">{interpolatedDescription}</div>

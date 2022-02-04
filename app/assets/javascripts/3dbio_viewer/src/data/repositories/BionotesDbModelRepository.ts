@@ -5,12 +5,7 @@ import { EmdbId, PdbId } from "../../domain/entities/Pdb";
 import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
 import { routes } from "../../routes";
 import { getFromUrl } from "../request-utils";
-import {
-    EmdbPdbMapping,
-    getEmdbsFromMapping,
-    getPdbsFromMapping,
-    PdbEmdbMapping,
-} from "./mapping";
+import { EmdbPdbMapping, getEmdbsFromMapping, getPdbsFromMapping, PdbEmdbMapping } from "./mapping";
 
 export class BionotesDbModelRepository implements DbModelRepository {
     search(_options: SearchOptions): FutureData<DbModelCollection> {

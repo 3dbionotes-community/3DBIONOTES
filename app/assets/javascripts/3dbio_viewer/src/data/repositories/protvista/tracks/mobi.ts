@@ -19,10 +19,7 @@ interface MobiAnnotation {
     method: string | null;
 }
 
-export function getMobiUniprotFragments(
-    mobiUniprot: MobiUniprot,
-    protein: string
-): Fragments {
+export function getMobiUniprotFragments(mobiUniprot: MobiUniprot, protein: string): Fragments {
     const evidences = getEvidencesFrom("MobyDB", {
         name: protein,
         url: `https://mobidb.bio.unipd.it/entries/${protein}`,

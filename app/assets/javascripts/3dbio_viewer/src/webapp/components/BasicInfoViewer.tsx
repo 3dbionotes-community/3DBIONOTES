@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { getEntityLinks, Pdb } from "../../domain/entities/Pdb";
 import { recordOfStyles } from "../../utils/ts-utils";
 import i18n from "../utils/i18n";
 import { Selection } from "../view-models/Selection";
 import { Links } from "./Link";
+import { ViewerTooltip } from "./viewer-tooltip/ViewerTooltip";
 
 export interface BasicInfoProps {
     pdb: Pdb;
@@ -44,14 +45,21 @@ interface ChildProps {
 
 const Child: React.FC<ChildProps> = props => {
     const { name, value, help } = props;
+    const [showTooltip, setShowTooltip] = useState(false);
 
     return (
         <li>
             {name}: {value ?? "-"}
             {help && (
-                <span style={styles.help} title={help}>
-                    [?]
-                </span>
+                <ViewerTooltip
+                    title={help}
+                    showTooltip={showTooltip}
+                    setShowTooltip={setShowTooltip}
+                >
+                    <span style={styles.help} onClick={() => setShowTooltip(!showTooltip)}>
+                        [?]
+                    </span>
+                </ViewerTooltip>
             )}
         </li>
     );
