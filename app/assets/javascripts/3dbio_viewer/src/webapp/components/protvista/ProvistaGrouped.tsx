@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { usePdbLoader } from "../../hooks/use-pdb";
-import { allTracksBlock } from "./protvista-blocks";
+import { testblock } from "./protvista-blocks";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
 import { useViewerState } from "../viewer-selector/viewer-selector.hooks";
@@ -15,13 +15,13 @@ export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(() =
     const { selection } = viewerState;
     const { pdbInfo } = usePdbInfo(selection);
     const loader = usePdbLoader(selection, pdbInfo);
-    const block = allTracksBlock;
+    const block = testblock;
     if (!loader) return null;
 
     return loader.type === "loaded" ? (
         <ViewerBlock block={block} namespace={namespace}>
             Protein: {loader.data.protein.id} | PDB: {loader.data.id} | Chain: {loader.data.chainId}
-            <ProtvistaPdb pdb={loader.data} block={block} showAllTracks={true} />
+            <ProtvistaPdb pdb={loader.data} block={block} showAllTracks={false} />
         </ViewerBlock>
     ) : (
         <div>{loader.type === "loading" ? i18n.t("Loading...") : loader.message}</div>
