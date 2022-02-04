@@ -1,7 +1,23 @@
 import React from "react";
-import i18n from "../../utils/i18n";
 import { Backdrop, CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+
+interface LoaderProps {
+    open: boolean;
+    title?: string;
+}
+
+export const LoaderMask: React.FC<LoaderProps> = React.memo(props => {
+    const classes = useStyles();
+    const { open, title } = props;
+
+    return (
+        <Backdrop className={classes.backdrop} open={open}>
+            <CircularProgress />
+            {title && <div>{title}</div>}
+        </Backdrop>
+    );
+});
 
 const useStyles = makeStyles(theme => ({
     backdrop: {
@@ -9,18 +25,3 @@ const useStyles = makeStyles(theme => ({
         color: "#fff",
     },
 }));
-
-interface LoaderProps {
-    open: boolean;
-}
-
-export const UploadLoader: React.FC<LoaderProps> = React.memo(props => {
-    const classes = useStyles();
-    const { open } = props;
-    return (
-        <Backdrop className={classes.backdrop} open={open}>
-            <CircularProgress />
-            <div>{i18n.t("Uploading Atomic Structure...")}</div>
-        </Backdrop>
-    );
-});

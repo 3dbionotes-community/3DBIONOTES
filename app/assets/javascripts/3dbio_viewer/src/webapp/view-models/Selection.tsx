@@ -28,6 +28,13 @@ export interface Selection {
     ligandId: Maybe<string>;
 }
 
+export const emptySelection: Selection = {
+    main: {},
+    overlay: [],
+    chainId: undefined,
+    ligandId: undefined,
+};
+
 export interface WithVisibility<T> {
     item: T;
     visible: boolean;
@@ -42,9 +49,11 @@ export interface DbItem {
 export function getItemSelector(item: DbItem): Selector {
     switch (item.type) {
         case "pdb": // Example: label = "6w9c"
-            return { label: new RegExp("^" + item.id.toUpperCase() + "$") };
-        case "emdb": // Example: label = "RCSB PDB EMD Density Server: EMD-8650"
-            return { label: new RegExp(item.id.toUpperCase() + "$") };
+            return { label: new RegExp(`^${item.id}$`, "i") };
+        case "emdb":
+            // Example: with provider = "RCSB PDB EMD Density Server: EMD-8650"
+            // Example: with URL "https://maps.rcsb.org/em/EMD-21375/cell?detail=3"
+            return { label: new RegExp(`/${item.id}/`, "i") };
     }
 }
 
@@ -62,9 +71,19 @@ export function getChainId(selection: Selection): Maybe<string> {
 
 /* toString, fromString */
 
+function splitPdbIdb(main: string): Array<string | undefined> {
+    if (main.includes(mainSeparator)) {
+        return main.split(mainSeparator, 2);
+    } else if (main.startsWith("EMD")) {
+        return [undefined, main];
+    } else {
+        return [main, undefined];
+    }
+}
+
 export function getSelectionFromString(items: Maybe<string>): Selection {
     const [main = "", overlay = ""] = (items || "").split(overlaySeparator, 2);
-    const [mainPdbRich = "", mainEmdbRichId] = main.split(mainSeparator, 2);
+    const [mainPdbRich = "", mainEmdbRichId] = splitPdbIdb(main);
     const [mainPdbRichId, chainId, ligandId] = mainPdbRich.split(chainSeparator, 3);
     const overlayIds = overlay.split(mainSeparator);
 

@@ -1,7 +1,7 @@
 #viewer-selector {
     width: 40%;
     position: absolute;
-    top: 20px;
+    margin-top: 20px;
     left: 10px;
     z-index: 1000;
     display: flex;

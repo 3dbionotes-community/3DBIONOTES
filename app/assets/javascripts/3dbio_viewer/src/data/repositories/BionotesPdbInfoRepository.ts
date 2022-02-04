@@ -24,8 +24,11 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
             const emdbIds = getEmdbsFromMapping(emdbMapping, pdbId);
             const proteins = _(proteinsMapping).keys().join(",");
             const proteinsInfoUrl = `${routes.bionotes}/api/lengths/UniprotMulti/${proteins}`;
+            const proteinsInfo$ = proteins
+                ? getFromUrl<ProteinsInfo>(proteinsInfoUrl)
+                : Future.success<ProteinsInfo, Error>({});
 
-            return getFromUrl<ProteinsInfo>(proteinsInfoUrl).map(proteinsInfo => {
+            return proteinsInfo$.map(proteinsInfo => {
                 const proteins = _(proteinsInfo)
                     .toPairs()
                     .map(

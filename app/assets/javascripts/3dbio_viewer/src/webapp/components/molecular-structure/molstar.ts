@@ -91,4 +91,10 @@ export function getLigands(pdbePlugin: PDBeMolstarPlugin, newSelection: Selectio
     return ligands;
 }
 
-(window as any).Props = Props;
+export async function loadEmdb(pdbePlugin: PDBeMolstarPlugin, emdbId: string) {
+    await pdbePlugin.loadEmdbFromUrl({
+        url: `https://maps.rcsb.org/em/${emdbId}/cell?detail=3`,
+        isBinary: true,
+        format: "dscif",
+    });
+}

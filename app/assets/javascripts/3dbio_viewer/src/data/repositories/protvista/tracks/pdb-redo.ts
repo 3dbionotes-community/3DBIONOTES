@@ -35,8 +35,8 @@ const subtrackByType: Record<PdbRedoKnownType, SubtrackDefinition> = {
     h_bond_flip: subtracks.hBondFlip,
 };
 
-export function getPdbRedoFragments(pdbRedo: PdbRedo, chain: Chain): Fragments {
-    const items = pdbRedo[chain];
+export function getPdbRedoFragments(pdbRedo: PdbRedo, chainId: Chain): Fragments {
+    const items = pdbRedo[chainId];
     if (!items) return [];
 
     return getFragments(
@@ -51,6 +51,7 @@ export function getPdbRedoFragments(pdbRedo: PdbRedo, chain: Chain): Fragments {
                 end: item.end,
                 description: item.description,
                 evidences: getEvidences(item),
+                chainId,
             };
         }
     );
