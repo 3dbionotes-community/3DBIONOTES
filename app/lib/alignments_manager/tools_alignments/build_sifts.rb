@@ -10,6 +10,9 @@ module AlignmentsManager
         if not hash
           return siftSalida
         end
+        if not hash["entry"]
+          return siftSalida
+        end
         if hash["entry"]["entity"].class == Hash
           miEntity.push(hash["entry"]["entity"])
         elsif hash["entry"]["entity"].class == Array

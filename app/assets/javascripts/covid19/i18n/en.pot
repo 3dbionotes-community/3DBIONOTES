@@ -1,0 +1,90 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"POT-Creation-Date: 2022-02-04T07:04:43.269Z\n"
+"PO-Revision-Date: 2022-02-04T07:04:43.269Z\n"
+
+msgid "SARS-CoV-2 in structure databases"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "PDB"
+msgstr ""
+
+msgid "EMDB"
+msgstr ""
+
+msgid "Entities"
+msgstr ""
+
+msgid "Ligands"
+msgstr ""
+
+msgid "Organisms"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Save as CSV"
+msgstr ""
+
+msgid "Save as JSON"
+msgstr ""
+
+msgid "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
+msgstr ""
+
+msgid "Examples"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Method"
+msgstr ""
+
+msgid "Resolution"
+msgstr ""
+
+msgid "Alt Names"
+msgstr ""
+
+msgid "Organism"
+msgstr ""
+
+msgid "Entity is antibody"
+msgstr ""
+
+msgid "Entity is nanobody"
+msgstr ""
+
+msgid "Entity is sybody"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Scientific name"
+msgstr ""
+
+msgid "Common name"
+msgstr ""
+
+msgid "Keywords"
+msgstr ""
+
+msgid "PDB-Redo"
+msgstr ""
+
+msgid "Isolde"
+msgstr ""

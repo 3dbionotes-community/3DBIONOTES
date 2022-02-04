@@ -24,8 +24,8 @@
       = form_tag({controller: "main", action: "home"}, :method => :post) do
         = hidden_field_tag(:viewer_type, @viewerType)
         #mainSearch.input-group.form-control-lg.md-form.form-sm.form-2.pl-0.justify-content-center
-          %input.form-control.form-control-lg.my-0.py-1.amber-border{"aria-label" => "Search", :placeholder => "Site-wide search here", :name => "queryId"}/
-          %i.fa.fa-search.text-grey.searchIconMain{"aria-hidden" => "true"}
+          %input.form-control.form-control-lg.my-0.py-1.amber-border{"aria-label" => "Search", :placeholder => "Uniprot accession, PDB ID, EMDB code", :name => "queryId"}/
+          %i.fa.fa-search.text-grey.searchIconMain.margin{"aria-hidden" => "true"}
     .contentBox
       .contentTitle
         %h4
