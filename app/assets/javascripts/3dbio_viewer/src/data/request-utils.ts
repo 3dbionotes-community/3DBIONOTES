@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 import xml2js from "xml2js";
+import { FutureData } from "../domain/entities/FutureData";
 import { Future } from "../utils/future";
 import { axiosRequest, defaultBuilder } from "../utils/future-axios";
 
@@ -7,6 +8,10 @@ export type RequestError = { message: string };
 
 export function getFromUrl<Data>(url: string): Future<RequestError, Data> {
     return request<Data>({ method: "GET", url, timeout: 20e3 });
+}
+
+export function getJSONData<Data>(url: string): FutureData<Data> {
+    return getFromUrl<Data>(url);
 }
 
 export function getJSON<Data>(url: string): Future<RequestError, Data | undefined> {

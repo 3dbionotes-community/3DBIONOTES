@@ -6,6 +6,8 @@ import { PdbView } from "../../view-models/PdbView";
 import { Selection } from "../../view-models/Selection";
 import { ViewerBlockModel } from "../ViewerBlock";
 import { Profile, profiles } from "../../../domain/entities/Profile";
+import { UploadData } from "../../../domain/entities/UploadData";
+import { Maybe } from "../../../utils/ts-utils";
 
 export interface ProtvistaTrackElement extends HTMLDivElement {
     viewerdata: PdbView;
@@ -38,12 +40,16 @@ export interface ProtvistaBlock extends ViewerBlockModel {
 
 export function getVisibleBlocks(
     blocks: BlockDef[],
-    options: { pdb: Pdb; profile: Profile }
+    options: { pdb: Pdb; profile: Profile; uploadData: Maybe<UploadData> }
 ): BlockDef[] {
     const { pdb, profile } = options;
 
     return blocks
-        .filter(block => blockHasRelevantData(block, pdb))
+        .filter(
+            block =>
+                (block.id === "uploadData" && !_.isEmpty(options.uploadData?.tracks)) ||
+                blockHasRelevantData(block, pdb)
+        )
         .filter(block => profile === profiles.general || block.profiles.includes(profile));
 }
 

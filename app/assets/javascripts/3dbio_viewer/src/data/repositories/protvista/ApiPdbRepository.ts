@@ -31,6 +31,7 @@ import { AntigenicResponse, getAntigenicFragments } from "./tracks/antigenic";
 import { Variants } from "../../../domain/entities/Variant";
 import { emdbsFromPdbUrl, getEmdbsFromMapping, PdbEmdbMapping } from "../mapping";
 import { MutagenesisResponse } from "./tracks/mutagenesis";
+import { Maybe } from "../../../utils/ts-utils";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -61,7 +62,7 @@ type DataRequests = { [K in keyof Data]-?: Future<RequestError, Data[K] | undefi
 
 interface Options {
     proteinId: string;
-    pdbId: string;
+    pdbId: Maybe<string>;
     chainId: string;
 }
 
@@ -119,7 +120,7 @@ export class ApiPdbRepository implements PdbRepository {
 
         const protein = getProtein(proteinId, data.uniprot);
         const experiment = on(data.pdbExperiment, pdbExperiment =>
-            getExperiment(options.pdbId, pdbExperiment)
+            options.pdbId ? getExperiment(options.pdbId, pdbExperiment) : undefined
         );
 
         const phosphiteFragments = on(data.phosphositeUniprot, phosphositeUniprot =>
@@ -163,7 +164,7 @@ export class ApiPdbRepository implements PdbRepository {
         };
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
         const emdbs = on(data.pdbEmdbMapping, mapping =>
-            getEmdbsFromMapping(mapping, options.pdbId).map(id => ({ id }))
+            options.pdbId ? getEmdbsFromMapping(mapping, options.pdbId).map(id => ({ id })) : []
         );
         debugVariable({ tracks, variants });
 

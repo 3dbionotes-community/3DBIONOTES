@@ -4,6 +4,12 @@ import i18n from "../utils/i18n";
 import { subtracks } from "./subtracks";
 
 export const trackDefinitions = {
+    uploadData: definition({
+        id: "upload-data",
+        name: i18n.t("Uploaded data"),
+        description: i18n.t("External annotations from uploaded data"),
+        subtracks: [], // Automatic
+    }),
     structureCoverage: definition({
         id: "structure-coverage",
         name: i18n.t("Structure Coverage"),
@@ -24,7 +30,7 @@ export const trackDefinitions = {
             subtracks.cathDomains,
         ],
     }),
-    celullarRegions: definition({
+    cellularRegions: definition({
         id: "topology" as const,
         name: i18n.t("Cellular regions"),
         description: i18n.t("Cell space in which the protein is located"),

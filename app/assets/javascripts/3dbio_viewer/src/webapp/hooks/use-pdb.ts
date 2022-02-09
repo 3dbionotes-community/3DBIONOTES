@@ -26,10 +26,7 @@ export function usePdbLoader(
 
     React.useEffect(() => {
         if (!pdbOptions) {
-            setLoader({
-                type: "error",
-                message: i18n.t("PDB has no protein"),
-            });
+            setLoader({ type: "error", message: i18n.t("PDB has no protein") });
             return;
         }
         setLoader({ type: "loading" });

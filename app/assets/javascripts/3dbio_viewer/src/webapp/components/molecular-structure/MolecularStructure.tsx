@@ -30,6 +30,7 @@ import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { LoaderMask } from "../loader-mask/LoaderMask";
+import { routes } from "../../../routes";
 
 declare global {
     interface Window {
@@ -70,6 +71,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
     // on the plugin.
     const [prevSelectionRef, setPrevSelection] = useReference<Selection>();
 
+    debugVariable({ pdbePlugin });
+
     React.useEffect(() => {
         if (!pluginLoad || !pdbePlugin) return;
         const ligands = getLigands(pdbePlugin, newSelection) || [];
@@ -92,7 +95,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             const plugin = pdbePlugin || new window.PDBeMolstarPlugin();
             const initParams = getPdbePluginInitParams(plugin, newSelection);
-            debugVariable({ pdbeMolstar: plugin });
+            debugVariable({ pdbeMolstarPlugin: plugin });
 
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
             if (pluginAlreadyRendered) {
@@ -120,17 +123,25 @@ function usePdbePlugin(options: MolecularStructureProps) {
     );
 
     const updatePluginOnNewSelection = React.useCallback(() => {
+        if (!pdbePlugin) return _.noop;
+
         function updateSelection(currentSelection: Selection, newSelection: Selection): void {
             if (!pdbePlugin) return;
 
             applySelectionChangesToPlugin(pdbePlugin, currentSelection, newSelection, showLoading);
-            setPrevSelection(newSelection);
             setSelection(newSelection);
         }
 
-        if (!pdbePlugin) return _.noop;
-
         const currentSelection = prevSelectionRef.current || emptySelection;
+        setPrevSelection(newSelection);
+
+        const uploadDataRemoved =
+            currentSelection.main.type === "uploaded" && newSelection.main.type === "normal";
+
+        if (uploadDataRemoved) pdbePlugin.visual.remove({});
+
+        if (newSelection.main.type !== "normal") return _.noop;
+
         const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
 
         if (pdbId) {
@@ -157,6 +168,24 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
     const updatePluginOnNewSelectionEffect = useCallbackEffect(updatePluginOnNewSelection);
     React.useEffect(updatePluginOnNewSelectionEffect, [updatePluginOnNewSelectionEffect]);
+
+    const token = newSelection.main.type === "uploaded" ? newSelection.main.token : undefined;
+
+    React.useEffect(() => {
+        if (!pdbePlugin) return;
+
+        pdbePlugin.visual.remove({});
+
+        pdbePlugin.load(
+            {
+                url: `${routes.bionotesDev}/upload/${token}/structure_file.cif`,
+                format: "mmcif",
+                isBinary: false,
+                assemblyId: "1",
+            },
+            false
+        );
+    }, [pdbePlugin, token, compositionRoot]);
 
     return { pluginRef, pdbePlugin, isLoading };
 }
@@ -242,7 +271,7 @@ function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selec
     const ligandView = getLigandView(newSelection);
 
     return {
-        moleculeId: pdbId,
+        moleculeId: pdbId, // empty not to render on init (here URL is not fully configurable)
         pdbeUrl: "https://www.ebi.ac.uk/pdbe/",
         encoding: "cif",
         loadMaps: false,

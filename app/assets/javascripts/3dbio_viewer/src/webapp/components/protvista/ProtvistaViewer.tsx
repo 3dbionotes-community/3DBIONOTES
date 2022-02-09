@@ -12,11 +12,14 @@ import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
 import { PPIViewer } from "../ppi/PPIViewer";
 import { GeneViewer } from "../gene-viewer/GeneViewer";
+import { UploadData } from "../../../domain/entities/UploadData";
+import { Maybe } from "../../../utils/ts-utils";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
     selection: Selection;
     blocks: BlockDef[];
+    uploadData: Maybe<UploadData>;
 }
 
 const mapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
@@ -27,7 +30,7 @@ const mapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
 type OnActionCb = NonNullable<ProtvistaPdbProps["onAction"]>;
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
-    const { pdb, selection, blocks } = props;
+    const { pdb, selection, blocks, uploadData } = props;
     const [
         isAnnotationToolOpen,
         { enable: openAnnotationTool, disable: closeAnnotationTool },
@@ -71,8 +74,14 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                         {CustomComponent ? (
                             <CustomComponent pdb={pdb} selection={selection} />
                         ) : (
-                            <ProtvistaPdb pdb={pdb} block={block} onAction={onAction} />
+                            <ProtvistaPdb
+                                pdb={pdb}
+                                block={block}
+                                onAction={onAction}
+                                uploadData={uploadData}
+                            />
                         )}
+
                         {block.tracks.map((trackDef, idx) => {
                             const CustomTrackComponent = mapping[trackDef.id];
                             return (

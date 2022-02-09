@@ -7,7 +7,7 @@ import { Track } from "./Track";
 import { Variants } from "./Variant";
 
 export interface Pdb {
-    id: PdbId;
+    id: Maybe<PdbId>;
     experiment: Maybe<Experiment>;
     emdbs: Emdb[];
     protein: Protein;
@@ -37,6 +37,7 @@ type PdbEntity = "pdb" | "emdb" | "uniprot";
 export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
     switch (entity) {
         case "pdb": {
+            if (!pdb.id) return [];
             const pdbId = pdb.id.toUpperCase();
             return [{ name: pdbId, url: `https://www.ebi.ac.uk/pdbe/entry/pdb/${pdbId}` }];
         }

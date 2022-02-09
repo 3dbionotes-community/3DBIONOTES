@@ -22,14 +22,16 @@ export type Type = "pdb" | "emdb";
 export type ActionType = "select" | "append";
 
 export interface Selection {
-    main: { pdb?: DbItem; emdb?: DbItem };
+    main:
+        | { type: "normal"; pdb?: DbItem; emdb?: DbItem }
+        | { type: "uploaded"; token: string; pdb: undefined; emdb: undefined };
     overlay: Array<DbItem>;
     chainId: Maybe<string>;
     ligandId: Maybe<string>;
 }
 
 export const emptySelection: Selection = {
-    main: {},
+    main: { type: "normal" },
     overlay: [],
     chainId: undefined,
     ligandId: undefined,
@@ -88,10 +90,29 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
     const overlayIds = overlay.split(mainSeparator);
 
     const selection: Selection = {
-        main: { pdb: buildDbItem(mainPdbRichId), emdb: buildDbItem(mainEmdbRichId) },
+        main: {
+            type: "normal",
+            pdb: buildDbItem(mainPdbRichId),
+            emdb: buildDbItem(mainEmdbRichId),
+        },
         overlay: _.compact(overlayIds.map(buildDbItem)),
         chainId: chainId,
         ligandId: ligandId,
+    };
+
+    return selection;
+}
+
+export function getSelectionFromToken(token: string, chainId: Maybe<string>): Selection {
+    const selection: Selection = {
+        ...emptySelection,
+        main: {
+            type: "uploaded",
+            token,
+            pdb: undefined,
+            emdb: undefined,
+        },
+        chainId,
     };
 
     return selection;
@@ -120,6 +141,7 @@ export function setMainPdb(selection: Selection, pdbId: Maybe<string>): Selectio
         ...selection,
         main: {
             ...selection.main,
+            type: "normal",
             pdb: pdbId ? { type: "pdb", id: pdbId, visible: true } : undefined,
         },
     };
@@ -132,6 +154,7 @@ export function setMainEmdb(selection: Selection, emdbId: Maybe<string>): Select
         ...selection,
         main: {
             ...selection.main,
+            type: "normal",
             emdb: emdbId ? { type: "emdb", id: emdbId, visible: true } : undefined,
         },
     };
@@ -162,7 +185,7 @@ export function setMainItemVisibility(
     if (!main) return selection;
     const newMainPdb = main.pdb?.id === id ? { ...main.pdb, visible } : main.pdb;
     const newMainEmdb = main.emdb?.id === id ? { ...main.emdb, visible } : main.emdb;
-    return { ...selection, main: { pdb: newMainPdb, emdb: newMainEmdb } };
+    return { ...selection, main: { type: "normal", pdb: newMainPdb, emdb: newMainEmdb } };
 }
 
 export function setSelectionChain(selection: Selection, chainId: string): Selection {
@@ -228,8 +251,16 @@ export function runAction(selection: Selection, action: ActionType, item: DbItem
         case "select": {
             const newMain: Selection["main"] =
                 item.type === "pdb"
-                    ? { ...selection.main, pdb: { type: "pdb", id: item.id, visible: true } }
-                    : { ...selection.main, emdb: { type: "emdb", id: item.id, visible: true } };
+                    ? {
+                          ...selection.main,
+                          type: "normal",
+                          pdb: { type: "pdb", id: item.id, visible: true },
+                      }
+                    : {
+                          ...selection.main,
+                          type: "normal",
+                          emdb: { type: "emdb", id: item.id, visible: true },
+                      };
 
             return { main: newMain, overlay: [], chainId: undefined, ligandId: undefined };
         }
@@ -266,7 +297,7 @@ export function getPdbOptions(
     chainId: Maybe<string>,
     chains: Maybe<PdbInfo["chains"]>
 ) {
-    if (!pdbId || !chains) return;
+    if (!chains) return;
 
     const defaultChain = chains[0];
     const chain = chainId

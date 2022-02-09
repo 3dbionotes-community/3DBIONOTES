@@ -22,17 +22,20 @@ import { SelectionItem } from "./SelectionItem";
 import { useUpdateActions } from "../../hooks/use-update-actions";
 import classnames from "classnames";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
+import { UploadData } from "../../../domain/entities/UploadData";
+import { Maybe } from "../../../utils/ts-utils";
 
 interface ViewerSelectorProps {
     pdbInfo: PdbInfo | undefined;
     selection: Selection;
     onSelectionChange(newSelection: Selection): void;
+    uploadData: Maybe<UploadData>;
 }
 
 const actions = { setOverlayItemVisibility, removeOverlayItem, setMainItemVisibility };
 
 export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
-    const { selection, onSelectionChange } = props;
+    const { selection, onSelectionChange, uploadData } = props;
     const chainDropdownProps = useChainDropdown(props);
     const ligandsDropdownProps = useLigandsDropdown(props);
 
@@ -53,6 +56,8 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
         <div id="viewer-selector">
             <div className="db">
                 <div className="status">
+                    {uploadData && <div>{uploadData.title}</div>}
+
                     {selection.main && selection.main.pdb && (
                         <MainItemBox label={i18n.t("PDB")}>
                             <SelectionItem

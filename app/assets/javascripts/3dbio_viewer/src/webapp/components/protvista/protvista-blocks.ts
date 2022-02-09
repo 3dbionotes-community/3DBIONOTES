@@ -7,6 +7,14 @@ import { profiles } from "../../../domain/entities/Profile";
 
 export const blockDefs: BlockDef[] = [
     {
+        id: "uploadData",
+        title: i18n.t("Uploaded data"),
+        description: "",
+        help: i18n.t("This section contains the annotations in the uploaded data"),
+        tracks: [tracks.uploadData],
+        profiles: [profiles.general],
+    },
+    {
         id: "basicInfo",
         title: i18n.t("Basic information"),
         description: "",
@@ -38,7 +46,7 @@ export const blockDefs: BlockDef[] = [
         tracks: [
             tracks.structureCoverage,
             tracks.domains,
-            tracks.celullarRegions,
+            tracks.cellularRegions,
             tracks.secondaryStructure,
             tracks.disorderedRegions /* prediction (old: inferred) */,
             tracks.motifs /* Now it's a subtrack in Domains&Sites */,
@@ -164,7 +172,7 @@ export const testblock: BlockDef = {
         tracks.structureCoverage,
         /*
         tracks.domains,
-        tracks.celullarRegions,
+        tracks.cellularRegions,
         tracks.secondaryStructure,
         tracks.disorderedRegions,
         tracks.motifs,

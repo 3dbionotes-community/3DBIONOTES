@@ -1,10 +1,11 @@
 import _ from "lodash";
+import { Maybe } from "../../utils/ts-utils";
 import { Ligand } from "./Ligand";
 import { Emdb } from "./Pdb";
 import { ChainId, Protein, ProteinId } from "./Protein";
 
 export interface PdbInfo {
-    id: string;
+    id: Maybe<string>;
     emdbs: Emdb[];
     chains: Array<{
         id: string;
