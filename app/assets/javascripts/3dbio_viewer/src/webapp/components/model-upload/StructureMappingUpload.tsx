@@ -59,6 +59,11 @@ export const StructureMappingUpload: React.FC<UploadConfirmationProps> = React.m
                 rows.filter(row => row.id === String(selectedRow))
             );
 
+            if (_(chainObjects).isEmpty()) {
+                setError(i18n.t("Select at least one chain"));
+                return;
+            }
+
             return compositionRoot.uploadAtomicStructureMapping
                 .execute(atomicStructure, chainObjects)
                 .run(
