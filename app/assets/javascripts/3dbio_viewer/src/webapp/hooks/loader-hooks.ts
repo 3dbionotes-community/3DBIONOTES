@@ -7,7 +7,6 @@ import { Future } from "../../utils/future";
 import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
 import { getMainPdbId, Selection } from "../view-models/Selection";
-import { useCallbackEffect } from "./use-callback-effect";
 
 export function useStateFromFuture<Value>(
     getFutureValue: () => FutureData<Value> | undefined
@@ -18,9 +17,7 @@ export function useStateFromFuture<Value>(
         return getFutureValue()?.run(setValue, console.error);
     }, [getFutureValue, setValue]);
 
-    const getValueCancellable = useCallbackEffect(getValue);
-
-    React.useEffect(getValueCancellable, [getValueCancellable]);
+    React.useEffect(getValue, [getValue]);
 
     return value;
 }
