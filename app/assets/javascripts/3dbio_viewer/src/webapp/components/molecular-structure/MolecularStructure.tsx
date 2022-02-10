@@ -135,12 +135,11 @@ function usePdbePlugin(options: MolecularStructureProps) {
         const currentSelection = prevSelectionRef.current || emptySelection;
         setPrevSelection(newSelection);
 
-        const uploadDataRemoved =
-            currentSelection.main.type === "uploaded" && newSelection.main.type === "normal";
+        const uploadDataRemoved = currentSelection.main.token && !newSelection.main.token;
 
         if (uploadDataRemoved) pdbePlugin.visual.remove({});
 
-        if (newSelection.main.type !== "normal") return _.noop;
+        if (newSelection.main.token) return _.noop;
 
         const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
 
@@ -169,12 +168,13 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const updatePluginOnNewSelectionEffect = useCallbackEffect(updatePluginOnNewSelection);
     React.useEffect(updatePluginOnNewSelectionEffect, [updatePluginOnNewSelectionEffect]);
 
-    const token = newSelection.main.type === "uploaded" ? newSelection.main.token : undefined;
+    const { token } = newSelection.main;
 
     React.useEffect(() => {
         if (!pdbePlugin) return;
 
         pdbePlugin.visual.remove({});
+        if (!token) return;
 
         pdbePlugin.load(
             {

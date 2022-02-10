@@ -11,10 +11,7 @@ import {
 import { FutureData } from "../../domain/entities/FutureData";
 import { routes } from "../../routes";
 import { request } from "../request-utils";
-import {
-    annotationResponseExample,
-    BionotesAnnotationResponse,
-} from "./BionotesAnnotationResponse";
+import { BionotesAnnotationResponse } from "./BionotesAnnotationResponse";
 import { Future } from "../../utils/future";
 import { AxiosRequestConfig } from "axios";
 
@@ -100,11 +97,7 @@ function getAtomicStructureFromResponse(
         )
     );
 
-    const structure: AtomicStructure = {
-        token,
-        tracks,
-        mapping: res.mapping,
-    };
+    const structure: AtomicStructure = { token, tracks, mapping: res.mapping };
 
     return Future.success(structure);
 }

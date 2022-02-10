@@ -19,20 +19,18 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const [uploadData, setUploadData] = React.useState<UploadData>();
     const { pdbInfo, setLigands } = usePdbInfo(selection, uploadData);
     const [error, setError] = React.useState<string>();
+    const { token } = selection.main;
 
     React.useEffect(() => {
-        if (selection.main.type !== "uploaded") {
+        if (!token) {
             setUploadData(undefined);
-            return;
+        } else {
+            return compositionRoot.getUploadData.execute(token).run(setUploadData, err => {
+                const msg = _.compact([`Cannot get data token: ${token}`, err.message]).join(": ");
+                setError(msg);
+            });
         }
-
-        const { token } = selection.main;
-
-        return compositionRoot.getUploadData.execute(token).run(setUploadData, err => {
-            const msg = _.compact([`Cannot get data for token: ${token}`, err.message]).join(": ");
-            setError(msg);
-        });
-    }, [selection, compositionRoot]);
+    }, [token, compositionRoot]);
 
     return (
         <div id="viewer">

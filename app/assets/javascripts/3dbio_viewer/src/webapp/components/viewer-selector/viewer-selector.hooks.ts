@@ -43,13 +43,14 @@ export function useViewerState(section: Section): ViewerState {
     const location = useMemoObject(useLocation());
 
     const values = React.useMemo(() => {
+        const values = queryString.parse(location.search);
+
         if (section.type === "selector") {
-            const params2 = params as SelectorParams;
+            const params2 = { ...params, profile: values.profile } as SelectorParams;
             const selection = getSelectionFromString(params2.selection);
             const profile = getProfileFromString(params2.profile);
             return { selection, profile };
         } else {
-            const values = queryString.parse(location.search);
             const params2 = {
                 ...params,
                 chain: values.chain,
@@ -65,10 +66,11 @@ export function useViewerState(section: Section): ViewerState {
         (selection: Selection, profile: Profile) => {
             const profilePath = getStringFromProfile(profile);
 
-            if (selection.main.type === "normal") {
+            if (!selection.main.token) {
+                const params = { profile: profilePath };
                 const selectionPath = getStringFromSelection(selection);
-                const newPath = _([selectionPath, profilePath]).compact().join("/");
-                goTo("/" + newPath);
+                const query = queryString.stringify(params);
+                goTo("/" + selectionPath + (query ? `?${query}` : ""));
             } else {
                 const params = { chain: selection.chainId, profile: profilePath };
                 const query = queryString.stringify(params);

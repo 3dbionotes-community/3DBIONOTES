@@ -22,16 +22,14 @@ export type Type = "pdb" | "emdb";
 export type ActionType = "select" | "append";
 
 export interface Selection {
-    main:
-        | { type: "normal"; pdb?: DbItem; emdb?: DbItem }
-        | { type: "uploaded"; token: string; pdb: undefined; emdb: undefined };
+    main: { pdb?: DbItem; emdb?: DbItem; token?: string };
     overlay: Array<DbItem>;
     chainId: Maybe<string>;
     ligandId: Maybe<string>;
 }
 
 export const emptySelection: Selection = {
-    main: { type: "normal" },
+    main: {},
     overlay: [],
     chainId: undefined,
     ligandId: undefined,
@@ -91,9 +89,9 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
 
     const selection: Selection = {
         main: {
-            type: "normal",
             pdb: buildDbItem(mainPdbRichId),
             emdb: buildDbItem(mainEmdbRichId),
+            token: undefined,
         },
         overlay: _.compact(overlayIds.map(buildDbItem)),
         chainId: chainId,
@@ -107,10 +105,9 @@ export function getSelectionFromToken(token: string, chainId: Maybe<string>): Se
     const selection: Selection = {
         ...emptySelection,
         main: {
-            type: "uploaded",
-            token,
             pdb: undefined,
             emdb: undefined,
+            token,
         },
         chainId,
     };
@@ -141,8 +138,8 @@ export function setMainPdb(selection: Selection, pdbId: Maybe<string>): Selectio
         ...selection,
         main: {
             ...selection.main,
-            type: "normal",
             pdb: pdbId ? { type: "pdb", id: pdbId, visible: true } : undefined,
+            token: undefined,
         },
     };
 }
@@ -154,8 +151,8 @@ export function setMainEmdb(selection: Selection, emdbId: Maybe<string>): Select
         ...selection,
         main: {
             ...selection.main,
-            type: "normal",
             emdb: emdbId ? { type: "emdb", id: emdbId, visible: true } : undefined,
+            token: undefined,
         },
     };
 }
@@ -185,7 +182,7 @@ export function setMainItemVisibility(
     if (!main) return selection;
     const newMainPdb = main.pdb?.id === id ? { ...main.pdb, visible } : main.pdb;
     const newMainEmdb = main.emdb?.id === id ? { ...main.emdb, visible } : main.emdb;
-    return { ...selection, main: { type: "normal", pdb: newMainPdb, emdb: newMainEmdb } };
+    return { ...selection, main: { pdb: newMainPdb, emdb: newMainEmdb, token: undefined } };
 }
 
 export function setSelectionChain(selection: Selection, chainId: string): Selection {
@@ -247,30 +244,37 @@ export function getItemParam(item: DbItem | undefined): string | undefined {
 }
 
 export function runAction(selection: Selection, action: ActionType, item: DbItem): Selection {
-    switch (action) {
+    const hasMain = Boolean(selection.main[item.type]);
+    const action2 = action === "append" && !hasMain ? "select" : action;
+
+    switch (action2) {
         case "select": {
             const newMain: Selection["main"] =
                 item.type === "pdb"
                     ? {
                           ...selection.main,
-                          type: "normal",
                           pdb: { type: "pdb", id: item.id, visible: true },
+                          token: undefined,
                       }
                     : {
                           ...selection.main,
-                          type: "normal",
                           emdb: { type: "emdb", id: item.id, visible: true },
+                          token: undefined,
                       };
 
             return { main: newMain, overlay: [], chainId: undefined, ligandId: undefined };
         }
         case "append": {
             const newOverlay: Selection["overlay"] = _.uniqBy(
-                [...selection.overlay, { type: "pdb", id: item.id, visible: true }],
+                [...selection.overlay, { type: item.type, id: item.id, visible: true }],
                 getDbItemUid
             );
 
-            return { ...selection, overlay: newOverlay };
+            return {
+                ...selection,
+                overlay: newOverlay,
+                main: { ...selection.main, token: undefined },
+            };
         }
     }
 }

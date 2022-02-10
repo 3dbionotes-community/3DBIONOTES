@@ -18,10 +18,7 @@ function App() {
                 <Switch>
                     <Route path="/protvista-all/:selection" render={() => <ProtvistaGrouped />} />
                     <Route path="/uploaded/:token" render={() => <RootViewer from="uploaded" />} />
-                    <Route
-                        path="/:selection/:profile"
-                        render={() => <RootViewer from="selector" />}
-                    />
+                    <Route path="/:selection" render={() => <RootViewer from="selector" />} />
                     <Route path="/:selection" render={() => <RootViewer from="selector" />} />
                     <Route path="/">
                         <Redirect to="/6zow+EMD-21375" />
