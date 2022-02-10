@@ -25,10 +25,7 @@ export function usePdbLoader(
     }, [pdbId, chainId, chains]);
 
     React.useEffect(() => {
-        if (!pdbOptions) {
-            setLoader({ type: "error", message: i18n.t("PDB has no protein") });
-            return;
-        }
+        if (!pdbOptions) return;
         setLoader({ type: "loading" });
 
         return compositionRoot.getPdb.execute(pdbOptions).run(
