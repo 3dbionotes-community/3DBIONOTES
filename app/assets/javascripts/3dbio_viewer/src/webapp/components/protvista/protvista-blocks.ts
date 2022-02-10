@@ -7,14 +7,6 @@ import { profiles } from "../../../domain/entities/Profile";
 
 export const blockDefs: BlockDef[] = [
     {
-        id: "uploadData",
-        title: i18n.t("Uploaded data"),
-        description: "",
-        help: i18n.t("This section contains the annotations in the uploaded data"),
-        tracks: [tracks.uploadData],
-        profiles: [profiles.general],
-    },
-    {
         id: "basicInfo",
         title: i18n.t("Basic information"),
         description: "",
@@ -30,6 +22,14 @@ export const blockDefs: BlockDef[] = [
             profiles.biomedicine,
             profiles.omics,
         ],
+    },
+    {
+        id: "uploadData",
+        title: i18n.t("Uploaded data"),
+        description: "",
+        help: i18n.t("This section contains the annotations in the uploaded data"),
+        tracks: [tracks.uploadData],
+        profiles: [profiles.general],
     },
     {
         id: "structuralInfo",
