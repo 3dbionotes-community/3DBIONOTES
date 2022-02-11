@@ -12,7 +12,6 @@ import {
     getItems,
     getItemSelector,
     getMainChanges,
-    getMainEmdbId,
     getMainPdbId,
     Selection,
     setMainEmdb,
@@ -109,12 +108,6 @@ function usePdbePlugin(options: MolecularStructureProps) {
                 });
 
                 plugin.render(element, initParams);
-            }
-
-            const emdbId = getMainEmdbId(newSelection);
-            if (emdbId) {
-                showLoading();
-                loadEmdb(plugin, emdbId);
             }
 
             setPdbePlugin(plugin);
