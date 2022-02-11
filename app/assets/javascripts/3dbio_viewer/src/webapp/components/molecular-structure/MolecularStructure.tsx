@@ -23,7 +23,7 @@ import "./molstar-light.css";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
-import { getLigands, loadEmdb } from "./molstar";
+import { getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
 import { Ligand } from "../../../domain/entities/Ligand";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
@@ -214,7 +214,8 @@ async function applySelectionChangesToPlugin(
     for (const item of added) {
         if (item.type === "emdb") {
             showLoading();
-            loadEmdb(plugin, item.id);
+            await loadEmdb(plugin, item.id);
+            setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
         } else {
             const pdbId: string = item.id;
             const url = `https://www.ebi.ac.uk/pdbe/model-server/v1/${pdbId}/full?encoding=cif`;

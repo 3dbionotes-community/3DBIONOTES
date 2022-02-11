@@ -8,7 +8,6 @@ import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
 import { LoaderState, useLoader } from "../components/Loader";
 import { getChainId, getMainPdbId, getPdbOptions, Selection } from "../view-models/Selection";
-import i18n from "../utils/i18n";
 
 export function usePdbLoader(
     selection: Selection,
