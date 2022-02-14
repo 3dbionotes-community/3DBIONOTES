@@ -319,15 +319,35 @@ a:hover {
   max-width: 400px;
 }
 
-#mainSearch input,
+#mainSearch input {
+  width: 380px;
+  height: calc(1.5em + 1rem - 6px);
+  border: none;
+  border-radius: 12px 0 0 12px;
+  padding-right: 0px;
+  &:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: none;
+    outline: 0;
+    box-shadow: none;
+  }
+}
+
 .input-group-text {
-  max-width: 400px;
   border: 4px solid #607d8b;
   border-radius: 12px;
 }
 
 #mainSearch .input-group-text {
   background: #fff;
+  padding: 0;
+  &:focus-within {
+    color: #495057;
+    background-color: #fff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
 }
 
 .carousel-control-prev,
@@ -358,9 +378,7 @@ a:hover {
 }
 
 .searchIconMain {
-  position: relative;
-  right: 32px;
-  top: 14px;
+  font-size: 1.25rem !important;
   color: #575757;
 }
 
