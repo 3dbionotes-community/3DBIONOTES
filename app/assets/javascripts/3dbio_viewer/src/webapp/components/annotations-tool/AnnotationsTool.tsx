@@ -1,6 +1,13 @@
 import React, { useCallback, useState, useRef } from "react";
 import _ from "lodash";
-import { Dialog, DialogContent, DialogTitle, IconButton, Switch } from "@material-ui/core";
+import {
+    CircularProgress,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+    Switch,
+} from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import i18n from "../../utils/i18n";
 import { useBooleanState } from "../../hooks/use-boolean";
@@ -49,7 +56,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
 
     const addManualAnnotation = useCallback(() => {
         if (!annotationForm.start) {
-            setError(i18n.t("Error: Missing starting value - please fill in a starting value."));
+            setError(i18n.t("Missing starting value - please fill in a starting value."));
         } else if (!annotationForm.end) {
             setAnnotationForm({ ...annotationForm, end: annotationForm.start });
         } else {
@@ -58,22 +65,22 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
         }
     }, [annotationForm, openAnnotations]);
 
+    const [isLoading, loadingActions] = useBooleanState();
+
     const uploadAnnotationFile = useCallbackEffect(
         useCallback(() => {
             const file = annotationFileRef.current?.files[0];
 
             if (!file) {
-                setError(
-                    i18n.t(
-                        "Error: Missing file - please upload an annotations file in JSON format."
-                    )
-                );
+                const msg = i18n.t("File missing - please use an annotations file in JSON format");
+                setError(msg);
             } else {
+                loadingActions.open();
                 return compositionRoot.getAnnotations
                     .execute(file)
                     .run(openAnnotations, err => setError(err.message));
             }
-        }, [compositionRoot, openAnnotations])
+        }, [compositionRoot, openAnnotations, loadingActions])
     );
 
     const switchToggle = useCallback(() => {
@@ -100,7 +107,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                 <Switch value={isManual} onChange={switchToggle} color="primary" />
 
                 {isManual ? (
-                    <form className="annotationForm">
+                    <Form isDisabled={isLoading}>
                         <label htmlFor="trackName">{i18n.t("Track Name")}</label>
                         <input
                             aria-label={i18n.t("Track Name")}
@@ -218,7 +225,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                         >
                             {i18n.t("Add")}
                         </button>
-                    </form>
+                    </Form>
                 ) : (
                     <>
                         <Dropzone
@@ -232,15 +239,29 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             className="submitButton"
                             type="submit"
                             onClick={uploadAnnotationFile}
+                            disabled={isLoading}
                         >
                             {i18n.t("Upload")}
                         </button>
+
+                        {isLoading && <CircularProgress style={{ marginLeft: 20 }} size={20} />}
                     </>
                 )}
             </DialogContent>
         </Dialog>
     );
 });
+
+const Form: React.FC<{ isDisabled: boolean }> = props => {
+    const { isDisabled, children } = props;
+    return (
+        <form className="annotationForm">
+            <fieldset style={{ border: "none" }} disabled={isDisabled}>
+                {children}
+            </fieldset>
+        </form>
+    );
+};
 
 function getInitialAnnotationForm(): AnnotationWithTrack {
     return {
