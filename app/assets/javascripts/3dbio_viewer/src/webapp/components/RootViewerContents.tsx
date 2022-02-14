@@ -26,8 +26,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             setUploadData(undefined);
         } else {
             return compositionRoot.getUploadData.execute(token).run(setUploadData, err => {
-                const msg = _.compact([`Cannot get data token: ${token}`, err.message]).join(": ");
-                setError(msg);
+                setError(_.compact([`Cannot get data token: ${token}`, err.message]).join(" - "));
             });
         }
     }, [token, compositionRoot]);

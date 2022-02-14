@@ -13,8 +13,8 @@ interface UseBooleanActions {
     close: Callback;
 }
 
-export function useBooleanState(initialValue: boolean): UseBooleanReturn {
-    const [value, setValue] = React.useState(initialValue);
+export function useBooleanState(initialValue?: boolean): UseBooleanReturn {
+    const [value, setValue] = React.useState(initialValue || false);
 
     const actions = React.useMemo(() => {
         return {

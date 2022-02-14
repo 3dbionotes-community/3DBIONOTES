@@ -9,13 +9,13 @@ import { ToolsButton } from "../protvista/ToolsButton";
 import { Loader } from "../Loader";
 import { usePdbLoader } from "../../hooks/use-pdb";
 import { blockDefs } from "../protvista/protvista-blocks";
-import { getVisibleBlocks } from "../protvista/Protvista.types";
 import { addCustomAnnotationsToPdb, Pdb } from "../../../domain/entities/Pdb";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { ViewerState } from "../../view-models/ViewerState";
 import { UploadData } from "../../../domain/entities/UploadData";
 import { Maybe } from "../../../utils/ts-utils";
 import { Annotations } from "../../../domain/entities/Annotation";
+import { getVisibleBlocks } from "../protvista/Protvista.helpers";
 
 export interface ViewersProps {
     viewerState: ViewerState;
@@ -26,27 +26,44 @@ export interface ViewersProps {
 export const Viewers: React.FC<ViewersProps> = React.memo(props => {
     const { viewerState, pdbInfo, uploadData } = props;
     const { selection } = viewerState;
-    const [loader, setLoader] = usePdbLoader(selection, pdbInfo);
+    const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfo);
 
     const onAddAnnotations = React.useCallback(
         (annotations: Annotations) => {
-            if (loader.type === "loaded") {
-                const pdbUpdated = addCustomAnnotationsToPdb(loader.data, annotations);
-                setLoader({ type: "loaded", data: pdbUpdated });
-            }
+            setPdbLoader(pdbLoader => {
+                if (pdbLoader.type === "loaded") {
+                    const newPdb = addCustomAnnotationsToPdb(pdbLoader.data, annotations);
+                    return { type: "loaded", data: newPdb };
+                } else {
+                    return pdbLoader;
+                }
+            });
         },
-        [loader, setLoader]
+        [setPdbLoader]
     );
+
+    // Add custom annotations from uploadData
+    React.useEffect(() => {
+        if (pdbLoader.type !== "loaded") return;
+
+        setPdbLoader(pdbLoader => {
+            if (pdbLoader.type === "loaded" && uploadData) {
+                const newPdb = addCustomAnnotationsToPdb(pdbLoader.data, uploadData.annotations);
+                return { type: "loaded", data: newPdb };
+            } else {
+                return pdbLoader;
+            }
+        });
+    }, [uploadData, setPdbLoader, pdbLoader.type]);
 
     return (
         <React.Fragment>
-            <Loader state={loader} loadingMsg={i18n.t("Loading data...")} />
+            <Loader state={pdbLoader} loadingMsg={i18n.t("Loading data...")} />
 
-            {loader.type === "loaded" && (
+            {pdbLoader.type === "loaded" && (
                 <PdbViewer
-                    pdb={loader.data}
+                    pdb={pdbLoader.data}
                     viewerState={viewerState}
-                    uploadData={uploadData}
                     onAddAnnotations={onAddAnnotations}
                 />
             )}
@@ -57,17 +74,16 @@ export const Viewers: React.FC<ViewersProps> = React.memo(props => {
 export interface PdbViewerProps {
     pdb: Pdb;
     viewerState: ViewerState;
-    uploadData: Maybe<UploadData>;
     onAddAnnotations(annotations: Annotations): void;
 }
 
 export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
-    const { pdb, viewerState, uploadData, onAddAnnotations } = props;
+    const { pdb, viewerState, onAddAnnotations } = props;
     const { selection, profile, setProfile } = viewerState;
 
     const blocks = React.useMemo(() => {
-        return getVisibleBlocks(blockDefs, { pdb, profile, uploadData });
-    }, [pdb, profile, uploadData]);
+        return getVisibleBlocks(blockDefs, { pdb, profile });
+    }, [pdb, profile]);
 
     return (
         <React.Fragment>
@@ -79,12 +95,7 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
                 </div>
             </div>
 
-            <ProtvistaViewer
-                blocks={blocks}
-                pdb={pdb}
-                selection={selection}
-                uploadData={uploadData}
-            />
+            <ProtvistaViewer blocks={blocks} pdb={pdb} selection={selection} />
         </React.Fragment>
     );
 });

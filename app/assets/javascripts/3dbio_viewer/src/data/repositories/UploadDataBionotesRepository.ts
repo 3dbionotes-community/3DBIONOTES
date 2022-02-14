@@ -5,7 +5,11 @@ import { UploadDataRepository } from "../../domain/repositories/UploadDataReposi
 import { routes } from "../../routes";
 import { Future } from "../../utils/future";
 import { getJSON, getJSONData as getJSONOrError } from "../request-utils";
-import { Annotations, getTracksFromAnnotations } from "../../domain/entities/Annotation";
+import {
+    Annotations,
+    getTracksFromAnnotations,
+    TrackAnnotations,
+} from "../../domain/entities/Annotation";
 import { readFile } from "../../utils/files";
 
 interface RecoverData {
@@ -56,7 +60,7 @@ export class UploadDataBionotesRepository implements UploadDataRepository {
                     const uploadChain = JSON.parse(obj) as OptionArrayInfo;
                     return { name, ...uploadChain };
                 }),
-                tracks: getTracksFromAnnotations(annotations),
+                annotations,
             };
         });
     }
@@ -70,7 +74,7 @@ export class UploadDataBionotesRepository implements UploadDataRepository {
         });
     }
 
-    private getAnnotationTrack(repoAnnotationTrack: ExternalAnnotationTrack) {
+    private getAnnotationTrack(repoAnnotationTrack: ExternalAnnotationTrack): TrackAnnotations {
         return {
             trackName: repoAnnotationTrack.track_name,
             chain: repoAnnotationTrack.chain,

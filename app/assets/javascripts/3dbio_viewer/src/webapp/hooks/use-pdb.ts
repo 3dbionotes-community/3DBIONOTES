@@ -11,7 +11,7 @@ import { getChainId, getMainPdbId, getPdbOptions, Selection } from "../view-mode
 export function usePdbLoader(
     selection: Selection,
     pdbInfo: Maybe<PdbInfo>
-): [LoaderState<Pdb>, (newState: LoaderState<Pdb>) => void] {
+): [LoaderState<Pdb>, React.Dispatch<React.SetStateAction<LoaderState<Pdb>>>] {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
 

@@ -9,14 +9,11 @@ import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
 import { PPIViewer } from "../ppi/PPIViewer";
 import { GeneViewer } from "../gene-viewer/GeneViewer";
-import { UploadData } from "../../../domain/entities/UploadData";
-import { Maybe } from "../../../utils/ts-utils";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
     selection: Selection;
     blocks: BlockDef[];
-    uploadData: Maybe<UploadData>;
 }
 
 const mapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
@@ -25,7 +22,7 @@ const mapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
 };
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
-    const { pdb, selection, blocks, uploadData } = props;
+    const { pdb, selection, blocks } = props;
 
     const namespace = {
         alphaHelices: "TODO",
@@ -55,7 +52,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                         {CustomComponent ? (
                             <CustomComponent pdb={pdb} selection={selection} />
                         ) : (
-                            <ProtvistaPdb pdb={pdb} block={block} uploadData={uploadData} />
+                            <ProtvistaPdb pdb={pdb} block={block} />
                         )}
 
                         {block.tracks.map((trackDef, idx) => {

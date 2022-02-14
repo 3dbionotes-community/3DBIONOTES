@@ -6,9 +6,7 @@ import { Color } from "../../domain/entities/Color";
 import { Pdb } from "../../domain/entities/Pdb";
 import { Shape } from "../../domain/entities/Shape";
 import { hasFragments, Subtrack, Track } from "../../domain/entities/Track";
-import { UploadData } from "../../domain/entities/UploadData";
 import { Variant, Variants } from "../../domain/entities/Variant";
-import { Maybe } from "../../utils/ts-utils";
 import { GenericTooltip } from "../components/protvista/GenericTooltip";
 import { BlockDef } from "../components/protvista/Protvista.types";
 import { Tooltip } from "../components/protvista/Tooltip";
@@ -72,9 +70,9 @@ export interface FragmentView {
 
 export function getPdbView(
     pdb: Pdb,
-    options: { block: BlockDef; showAllTracks?: boolean; uploadData: Maybe<UploadData> }
+    options: { block: BlockDef; showAllTracks?: boolean }
 ): PdbView {
-    const { block, showAllTracks = false, uploadData } = options;
+    const { block, showAllTracks = false } = options;
     const pdbTracksById = _.keyBy(pdb.tracks, t => t.id);
 
     const data = showAllTracks
@@ -84,7 +82,6 @@ export function getPdbView(
     const customTracks = pdb.tracks.filter(track => track.isCustom);
 
     const tracks = _(data)
-        .concat(block.id === "uploadData" && uploadData ? uploadData.tracks : []) // TODO
         .concat(block.id === "uploadData" ? customTracks : [])
         .map((pdbTrack): TrackView | undefined => {
             const subtracks = getSubtracks(pdb, pdbTrack);

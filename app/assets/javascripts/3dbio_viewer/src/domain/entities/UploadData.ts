@@ -1,9 +1,9 @@
-import { Track } from "./Track";
+import { Annotations } from "./Annotation";
 
 export interface UploadData {
     title: string;
     chains: UploadDataChain[];
-    tracks: Track[];
+    annotations: Annotations;
 }
 
 export interface UploadDataChain {

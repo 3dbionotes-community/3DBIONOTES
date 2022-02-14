@@ -5,9 +5,7 @@ import { TrackDefinition } from "../../../domain/entities/TrackDefinition";
 import { PdbView } from "../../view-models/PdbView";
 import { Selection } from "../../view-models/Selection";
 import { ViewerBlockModel } from "../ViewerBlock";
-import { Profile, profiles } from "../../../domain/entities/Profile";
-import { UploadData } from "../../../domain/entities/UploadData";
-import { Maybe } from "../../../utils/ts-utils";
+import { Profile } from "../../../domain/entities/Profile";
 
 export interface ProtvistaTrackElement extends HTMLDivElement {
     viewerdata: PdbView;
@@ -36,36 +34,4 @@ export interface BlockDef extends ViewerBlockModel {
 export interface ProtvistaBlock extends ViewerBlockModel {
     tracks: TrackDef[];
     component?: React.FC<BlockComponentProps>;
-}
-
-export function getVisibleBlocks(
-    blocks: BlockDef[],
-    options: { pdb: Pdb; profile: Profile; uploadData: Maybe<UploadData> }
-): BlockDef[] {
-    const { pdb, profile } = options;
-
-    return blocks
-        .filter(
-            block =>
-                (block.id === "uploadData" && !_.isEmpty(options.uploadData?.tracks)) ||
-                blockHasRelevantData(block, pdb)
-        )
-        .filter(block => profile === profiles.general || block.profiles.includes(profile));
-}
-
-function blockHasRelevantData(block: BlockDef, pdb: Pdb): boolean {
-    const customTrackEnabled =
-        block.id === "uploadData" && _(pdb.tracks).some(track => track.isCustom);
-    if (customTrackEnabled) return true;
-
-    const tracks = _(pdb.tracks)
-        .keyBy(track => track.id)
-        .at(...block.tracks.map(trackDef => trackDef.id))
-        .compact()
-        .value();
-    const trackIds = tracks.map(track => track.id);
-    const hasCustomComponent = Boolean(block.component);
-    const hasRelevantTracks = !_(tracks).isEmpty() && !_.isEqual(trackIds, ["structure-coverage"]);
-
-    return hasCustomComponent || hasRelevantTracks;
 }
