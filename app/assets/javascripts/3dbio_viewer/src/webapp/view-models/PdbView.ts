@@ -3,7 +3,7 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 
 import { Color } from "../../domain/entities/Color";
-import { Pdb } from "../../domain/entities/Pdb";
+import { getCustomTracksFromPdb, Pdb } from "../../domain/entities/Pdb";
 import { Shape } from "../../domain/entities/Shape";
 import { hasFragments, Subtrack, Track } from "../../domain/entities/Track";
 import { Variant, Variants } from "../../domain/entities/Variant";
@@ -79,10 +79,8 @@ export function getPdbView(
         ? pdb.tracks
         : _.compact(block.tracks.map(trackDef => pdbTracksById[trackDef.id]));
 
-    const customTracks = pdb.tracks.filter(track => track.isCustom);
-
     const tracks = _(data)
-        .concat(block.id === "uploadData" ? customTracks : [])
+        .concat(getCustomTracksFromPdb(block, pdb))
         .map((pdbTrack): TrackView | undefined => {
             const subtracks = getSubtracks(pdb, pdbTrack);
             if (_.isEmpty(subtracks)) return undefined;

@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { BlockDef, ProtvistaTrackElement } from "./Protvista.types";
 import { PdbView } from "../../view-models/PdbView";
-import { Pdb } from "../../../domain/entities/Pdb";
+import { Pdb, pdbHasCustomTracks } from "../../../domain/entities/Pdb";
 import { Profile, profiles } from "../../../domain/entities/Profile";
 
 interface AddAction {
@@ -55,18 +55,19 @@ export function getVisibleBlocks(
 }
 
 function blockHasRelevantData(block: BlockDef, pdb: Pdb): boolean {
-    const customTrackEnabled =
-        block.id === "uploadData" && _(pdb.tracks).some(track => track.isCustom);
-    if (customTrackEnabled) return true;
+    if (pdbHasCustomTracks(block, pdb)) {
+        return true;
+    } else {
+        const tracks = _(pdb.tracks)
+            .keyBy(track => track.id)
+            .at(...block.tracks.map(trackDef => trackDef.id))
+            .compact()
+            .value();
+        const trackIds = tracks.map(track => track.id);
+        const hasCustomComponent = Boolean(block.component);
+        const hasRelevantTracks =
+            !_(tracks).isEmpty() && !_.isEqual(trackIds, ["structure-coverage"]);
 
-    const tracks = _(pdb.tracks)
-        .keyBy(track => track.id)
-        .at(...block.tracks.map(trackDef => trackDef.id))
-        .compact()
-        .value();
-    const trackIds = tracks.map(track => track.id);
-    const hasCustomComponent = Boolean(block.component);
-    const hasRelevantTracks = !_(tracks).isEmpty() && !_.isEqual(trackIds, ["structure-coverage"]);
-
-    return hasCustomComponent || hasRelevantTracks;
+        return hasCustomComponent || hasRelevantTracks;
+    }
 }

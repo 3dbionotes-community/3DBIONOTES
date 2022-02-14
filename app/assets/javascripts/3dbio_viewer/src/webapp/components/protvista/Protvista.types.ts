@@ -29,6 +29,7 @@ export interface BlockDef extends ViewerBlockModel {
     tracks: TrackDef[];
     component?: React.FC<BlockComponentProps>;
     profiles: Profile[];
+    hasUploadedTracks?: boolean;
 }
 
 export interface ProtvistaBlock extends ViewerBlockModel {

@@ -28,7 +28,8 @@ export const blockDefs: BlockDef[] = [
         title: i18n.t("Uploaded data"),
         description: "",
         help: i18n.t("This section contains the annotations in the uploaded data"),
-        tracks: [tracks.uploadData],
+        tracks: [],
+        hasUploadedTracks: true,
         profiles: [profiles.general],
     },
     {
