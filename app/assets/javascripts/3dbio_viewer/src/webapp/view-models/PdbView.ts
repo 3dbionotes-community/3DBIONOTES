@@ -12,7 +12,6 @@ import { Maybe } from "../../utils/ts-utils";
 import { GenericTooltip } from "../components/protvista/GenericTooltip";
 import { BlockDef } from "../components/protvista/Protvista.types";
 import { Tooltip } from "../components/protvista/Tooltip";
-import i18n from "../utils/i18n";
 
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
 
@@ -49,7 +48,7 @@ export interface TrackView {
     labelType?: "text" | "html";
     overlapping?: boolean;
     data: SubtrackView[];
-    actions: Record<"add", { title: string }>;
+    actions: { add?: { title: string } };
 }
 
 interface SubtrackView {
@@ -82,8 +81,11 @@ export function getPdbView(
         ? pdb.tracks
         : _.compact(block.tracks.map(trackDef => pdbTracksById[trackDef.id]));
 
+    const customTracks = pdb.tracks.filter(track => track.isCustom);
+
     const tracks = _(data)
-        .concat(block.id === "uploadData" && uploadData ? uploadData.tracks : [])
+        .concat(block.id === "uploadData" && uploadData ? uploadData.tracks : []) // TODO
+        .concat(block.id === "uploadData" ? customTracks : [])
         .map((pdbTrack): TrackView | undefined => {
             const subtracks = getSubtracks(pdb, pdbTrack);
             if (_.isEmpty(subtracks)) return undefined;
@@ -92,7 +94,7 @@ export function getPdbView(
                 ...pdbTrack,
                 data: subtracks,
                 help: pdbTrack.description || "",
-                actions: { add: { title: i18n.t("Upload custom annotations") } },
+                actions: {},
             };
         })
         .compact()

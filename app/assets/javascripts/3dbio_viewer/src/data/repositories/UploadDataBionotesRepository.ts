@@ -1,14 +1,12 @@
-import { Fragment2 } from "../../domain/entities/Fragment2";
 import _ from "lodash";
 import { FutureData } from "../../domain/entities/FutureData";
-import { Subtrack, Track } from "../../domain/entities/Track";
 import { UploadData } from "../../domain/entities/UploadData";
 import { UploadDataRepository } from "../../domain/repositories/UploadDataRepository";
 import { routes } from "../../routes";
 import { Future } from "../../utils/future";
 import { getJSON, getJSONData as getJSONOrError } from "../request-utils";
-import { getName } from "./protvista/utils";
-import { subtracks } from "./protvista/definitions";
+import { Annotations, getTracksFromAnnotations } from "../../domain/entities/Annotation";
+import { readFile } from "../../utils/files";
 
 interface RecoverData {
     title: string;
@@ -50,51 +48,38 @@ export class UploadDataBionotesRepository implements UploadDataRepository {
             annotations: getJSON<ExternalAnnotations>(`${basePath}/external_annotations.json`),
         };
 
-        return Future.joinObj(data$).map(
-            ({ recoverData, annotations }): UploadData => {
+        return Future.joinObj(data$).map(({ recoverData, annotations: extAnnotations }) => {
+            const annotations = (extAnnotations || []).map(this.getAnnotationTrack.bind(this));
+            return {
+                title: recoverData.title,
+                chains: recoverData.optionsArray.map(([name, obj]) => {
+                    const uploadChain = JSON.parse(obj) as OptionArrayInfo;
+                    return { name, ...uploadChain };
+                }),
+                tracks: getTracksFromAnnotations(annotations),
+            };
+        });
+    }
+
+    getAnnotations(file: File): FutureData<Annotations> {
+        return readFile(file).flatMap(contents => {
+            // TODO: Check with purify-ts Codec. unknown -> ExternalAnnotations
+            const repoAnnotations = JSON.parse(contents) as ExternalAnnotations;
+            const annotations = repoAnnotations.map(this.getAnnotationTrack.bind(this));
+            return Future.success(annotations);
+        });
+    }
+
+    private getAnnotationTrack(repoAnnotationTrack: ExternalAnnotationTrack) {
+        return {
+            trackName: repoAnnotationTrack.track_name,
+            chain: repoAnnotationTrack.chain,
+            annotations: repoAnnotationTrack.data.map(repoAnnotation => {
                 return {
-                    title: recoverData.title,
-                    chains: recoverData.optionsArray.map(([name, obj]) => {
-                        const uploadChain = JSON.parse(obj) as OptionArrayInfo;
-                        return { name, ...uploadChain };
-                    }),
-                    tracks: (annotations || []).map(
-                        (extTrack): Track => ({
-                            id: extTrack.track_name,
-                            label: getName(extTrack.track_name),
-                            subtracks: _(extTrack.data)
-                                .groupBy(o => o.type)
-                                .map(
-                                    (objs, type): Subtrack => {
-                                        return {
-                                            type: type,
-                                            accession: type,
-                                            label: getName(type),
-                                            shape: "rectangle",
-                                            locations: [
-                                                {
-                                                    fragments: objs.map(
-                                                        (obj): Fragment2 => {
-                                                            return {
-                                                                subtrack: subtracks.uploadData,
-                                                                start: obj.begin,
-                                                                end: obj.end,
-                                                                description: obj.description,
-                                                                color: obj.color,
-                                                                chainId: extTrack.chain,
-                                                            };
-                                                        }
-                                                    ),
-                                                },
-                                            ],
-                                        };
-                                    }
-                                )
-                                .value(),
-                        })
-                    ),
+                    ..._.omit(repoAnnotation, ["begin"]),
+                    start: repoAnnotation.begin,
                 };
-            }
-        );
+            }),
+        };
     }
 }

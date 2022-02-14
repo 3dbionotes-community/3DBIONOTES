@@ -54,6 +54,10 @@ export function getVisibleBlocks(
 }
 
 function blockHasRelevantData(block: BlockDef, pdb: Pdb): boolean {
+    const customTrackEnabled =
+        block.id === "uploadData" && _(pdb.tracks).some(track => track.isCustom);
+    if (customTrackEnabled) return true;
+
     const tracks = _(pdb.tracks)
         .keyBy(track => track.id)
         .at(...block.tracks.map(trackDef => trackDef.id))

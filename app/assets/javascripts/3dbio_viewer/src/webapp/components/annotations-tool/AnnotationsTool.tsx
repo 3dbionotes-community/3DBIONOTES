@@ -5,27 +5,22 @@ import { Close } from "@material-ui/icons";
 import i18n from "../../utils/i18n";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
-import { ProtvistaAction } from "../protvista/Protvista.helpers";
 import "./AnnotationsTool.css";
 import { isElementOfUnion } from "../../../utils/ts-utils";
 import { ErrorMessage } from "../error-message/ErrorMessage";
+import {
+    AnnotationIndex,
+    indexValues,
+    Annotations,
+    AnnotationWithTrack,
+    getAnnotationsFromAnnotationFromTrack,
+} from "../../../domain/entities/Annotation";
+import { useAppContext } from "../AppContext";
+import { useCallbackEffect } from "../../hooks/use-callback-effect";
 
 export interface AnnotationsToolProps {
     onClose(): void;
-    action: ProtvistaAction;
-}
-
-const indexValues = ["sequence", "structure"] as const;
-type AnnotationIndex = typeof indexValues[number];
-
-interface AnnotationForm {
-    trackName: string;
-    type: string;
-    description: string;
-    color: string;
-    index: AnnotationIndex;
-    startingValue: number;
-    endingValue: number;
+    onAdd(annotations: Annotations): void;
 }
 
 const indexTranslations: Record<AnnotationIndex, string> = {
@@ -34,35 +29,52 @@ const indexTranslations: Record<AnnotationIndex, string> = {
 };
 
 export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props => {
-    const { onClose, action } = props;
+    const { onClose, onAdd } = props;
+    const { compositionRoot } = useAppContext();
 
     const annotationFileRef = useRef<DropzoneRef>(null);
     const [error, setError] = useState<string>();
     const [isManual, { toggle: toggleIsManual }] = useBooleanState(false);
-    const [annotationForm, setAnnotationForm] = useState<AnnotationForm>(() =>
-        getInitialAnnotationForm(action)
+    const [annotationForm, setAnnotationForm] = useState<AnnotationWithTrack>(
+        getInitialAnnotationForm
+    );
+
+    const openAnnotations = React.useCallback(
+        (annotations: Annotations) => {
+            onAdd(annotations);
+            onClose();
+        },
+        [onAdd, onClose]
     );
 
     const addManualAnnotation = useCallback(() => {
-        setError("");
-        if (!annotationForm.startingValue) {
+        if (!annotationForm.start) {
             setError(i18n.t("Error: Missing starting value - please fill in a starting value."));
-        }
-        if (!annotationForm.endingValue) {
-            setAnnotationForm({ ...annotationForm, endingValue: annotationForm.startingValue });
-        }
-    }, [annotationForm]);
-
-    const uploadAnnotationFile = useCallback(() => {
-        if (annotationFileRef.current?.files.length === 0) {
-            setError(
-                i18n.t("Error: Missing file - please upload an annotations file in JSON format.")
-            );
+        } else if (!annotationForm.end) {
+            setAnnotationForm({ ...annotationForm, end: annotationForm.start });
         } else {
-            setError("");
-            window.alert("TODO");
+            const annotations = getAnnotationsFromAnnotationFromTrack(annotationForm);
+            openAnnotations(annotations);
         }
-    }, []);
+    }, [annotationForm, openAnnotations]);
+
+    const uploadAnnotationFile = useCallbackEffect(
+        useCallback(() => {
+            const file = annotationFileRef.current?.files[0];
+
+            if (!file) {
+                setError(
+                    i18n.t(
+                        "Error: Missing file - please upload an annotations file in JSON format."
+                    )
+                );
+            } else {
+                return compositionRoot.getAnnotations
+                    .execute(file)
+                    .run(openAnnotations, err => setError(err.message));
+            }
+        }, [compositionRoot, openAnnotations])
+    );
 
     const switchToggle = useCallback(() => {
         setError("");
@@ -95,7 +107,9 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             id="trackName"
                             type="text"
                             value={annotationForm.trackName}
-                            readOnly
+                            onChange={e =>
+                                setAnnotationForm({ ...annotationForm, trackName: e.target.value })
+                            }
                             className="form-control"
                         />
 
@@ -170,11 +184,11 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             aria-label={i18n.t("Starting value")}
                             id="startingValue"
                             type="number"
-                            value={annotationForm.startingValue}
+                            value={annotationForm.start}
                             onChange={e =>
                                 setAnnotationForm({
                                     ...annotationForm,
-                                    startingValue: Number(e.target.value),
+                                    start: Number(e.target.value),
                                 })
                             }
                             className="form-control"
@@ -185,11 +199,11 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             aria-label={i18n.t("Ending value")}
                             id="endingValue"
                             type="number"
-                            value={annotationForm.endingValue}
+                            value={annotationForm.end}
                             onChange={e =>
                                 setAnnotationForm({
                                     ...annotationForm,
-                                    endingValue: Number(e.target.value),
+                                    end: Number(e.target.value),
                                 })
                             }
                             className="form-control"
@@ -228,15 +242,15 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
     );
 });
 
-function getInitialAnnotationForm(action: ProtvistaAction): AnnotationForm {
+function getInitialAnnotationForm(): AnnotationWithTrack {
     return {
-        trackName: action.trackId,
+        trackName: "",
         type: "",
         description: "",
         color: "",
         index: "sequence",
-        startingValue: 0,
-        endingValue: 0,
+        start: 0,
+        end: 0,
     };
 }
 

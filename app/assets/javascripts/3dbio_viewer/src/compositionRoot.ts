@@ -11,6 +11,7 @@ import { GetRelatedModelsUseCase } from "./domain/usecases/GetRelatedModelsUseCa
 import { SearchDbModelsUseCase } from "./domain/usecases/SearchDbModelsUseCase";
 import { UploadAtomicStructureUseCase } from "./domain/usecases/UploadAtomicStructureUseCase";
 import { UploadAtomicStructureMappingUseCase } from "./domain/usecases/UploadAtomicStructureMappingUseCase";
+import { GetAnnotationsFromUploadData } from "./domain/usecases/GetAnnotationsFromUploadData";
 
 export function getCompositionRoot() {
     const pdbRepository = new ApiPdbRepository();
@@ -18,7 +19,7 @@ export function getCompositionRoot() {
     const dbModelRepositoryForRelatedModels = new BionotesDbModelRepository();
     const atomicStructureRepository = new BionotesAtomicStructureRepository();
     const pdbInfoRepository = new BionotesPdbInfoRepository();
-    const recoverDataRepository = new UploadDataBionotesRepository();
+    const uploadDataRepository = new UploadDataBionotesRepository();
 
     return {
         getPdb: new GetPdbUseCase(pdbRepository),
@@ -29,7 +30,8 @@ export function getCompositionRoot() {
             atomicStructureRepository
         ),
         getRelatedModels: new GetRelatedModelsUseCase(dbModelRepositoryForRelatedModels),
-        getUploadData: new GetUploadDataUseCase(recoverDataRepository),
+        getAnnotations: new GetAnnotationsFromUploadData(uploadDataRepository),
+        getUploadData: new GetUploadDataUseCase(uploadDataRepository),
     };
 }
 

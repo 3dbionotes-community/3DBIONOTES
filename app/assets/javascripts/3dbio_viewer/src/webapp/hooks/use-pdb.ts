@@ -3,7 +3,6 @@ import _ from "lodash";
 import { Pdb } from "../../domain/entities/Pdb";
 import { PdbInfo } from "../../domain/entities/PdbInfo";
 import { PdbOptions } from "../../domain/repositories/PdbRepository";
-import { debugVariable } from "../../utils/debug";
 import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
 import { LoaderState, useLoader } from "../components/Loader";
@@ -12,7 +11,7 @@ import { getChainId, getMainPdbId, getPdbOptions, Selection } from "../view-mode
 export function usePdbLoader(
     selection: Selection,
     pdbInfo: Maybe<PdbInfo>
-): LoaderState<Pdb> | undefined {
+): [LoaderState<Pdb>, (newState: LoaderState<Pdb>) => void] {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
 
@@ -33,9 +32,5 @@ export function usePdbLoader(
         );
     }, [compositionRoot, setLoader, pdbOptions]);
 
-    React.useEffect(() => {
-        if (loader.type === "loaded") debugVariable({ pdbData: loader.data });
-    }, [loader]);
-
-    return loader;
+    return [loader, setLoader];
 }

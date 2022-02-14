@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import _ from "lodash";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { Selection } from "../../view-models/Selection";
 import { ViewerBlock } from "../ViewerBlock";
-import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
+import { ProtvistaPdb } from "./ProtvistaPdb";
 import { BlockDef, TrackComponentProps } from "./Protvista.types";
-import { useBooleanState } from "../../hooks/use-boolean";
-import { AnnotationsTool } from "../annotations-tool/AnnotationsTool";
-import { ProtvistaAction } from "./Protvista.helpers";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
 import { PPIViewer } from "../ppi/PPIViewer";
@@ -27,24 +24,8 @@ const mapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
     "gene-viewer": GeneViewer,
 };
 
-type OnActionCb = NonNullable<ProtvistaPdbProps["onAction"]>;
-
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks, uploadData } = props;
-    const [
-        isAnnotationToolOpen,
-        { enable: openAnnotationTool, disable: closeAnnotationTool },
-    ] = useBooleanState(false);
-    const [action, setAction] = useState<ProtvistaAction>();
-
-    const onAction = React.useCallback<OnActionCb>(
-        action => {
-            setAction(action);
-            openAnnotationTool();
-            console.debug("TODO", "action", action);
-        },
-        [openAnnotationTool]
-    );
 
     const namespace = {
         alphaHelices: "TODO",
@@ -74,12 +55,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                         {CustomComponent ? (
                             <CustomComponent pdb={pdb} selection={selection} />
                         ) : (
-                            <ProtvistaPdb
-                                pdb={pdb}
-                                block={block}
-                                onAction={onAction}
-                                uploadData={uploadData}
-                            />
+                            <ProtvistaPdb pdb={pdb} block={block} uploadData={uploadData} />
                         )}
 
                         {block.tracks.map((trackDef, idx) => {
@@ -98,9 +74,6 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                     </ViewerBlock>
                 );
             })}
-            {isAnnotationToolOpen && action && (
-                <AnnotationsTool onClose={closeAnnotationTool} action={action} />
-            )}
         </div>
     );
 };

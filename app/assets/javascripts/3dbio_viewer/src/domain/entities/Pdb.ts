@@ -1,4 +1,6 @@
+import _ from "lodash";
 import { Maybe } from "../../utils/ts-utils";
+import { Annotations, getTracksFromAnnotations } from "./Annotation";
 import { Color } from "./Color";
 import { Experiment } from "./Experiment";
 import { Link } from "./Link";
@@ -52,4 +54,10 @@ export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
             return [{ name: proteinId, url: `https://www.uniprot.org/uniprot/${proteinId}` }];
         }
     }
+}
+
+export function addCustomAnnotationsToPdb(pdb: Pdb, annotations: Annotations): Pdb {
+    const newTracks = getTracksFromAnnotations(annotations);
+    const tracksUpdated = _.concat(pdb.tracks, newTracks);
+    return { ...pdb, tracks: tracksUpdated };
 }
