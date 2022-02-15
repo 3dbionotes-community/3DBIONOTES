@@ -20,10 +20,8 @@ export const PPIViewer: React.FC<PPiViewerProps> = props => {
     const title = `${trackDef.name}: ${trackDef.description || "-"}`;
 
     const infoAlignment = React.useMemo<InfoAlignment | undefined>(() => {
-        // TODO: Use real current selected chain
-        const pdb = selection.main?.pdb;
-        return pdb ? { origin: "PDB", pdb: pdb.id, chain: "A" } : undefined;
-    }, [selection.main]);
+        return pdb.id ? { origin: "PDB", pdb: pdb.id, chain: pdb.chainId } : undefined;
+    }, [pdb.id, pdb.chainId]);
 
     React.useEffect(() => {
         // Global variable accessed by PPI iframe
