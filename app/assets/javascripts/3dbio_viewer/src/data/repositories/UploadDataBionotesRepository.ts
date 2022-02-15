@@ -11,6 +11,8 @@ import { array, number, string, optional, exactly } from "purify-ts/Codec";
 import { Codec, GetType } from "purify-ts/Codec";
 import { parseFromCodec } from "../../utils/codec";
 import { Maybe } from "../../utils/ts-utils";
+import externalAnnotationsExample from "./external_annotations_example.json";
+import { downloadFile } from "../../utils/download";
 
 interface RecoverData {
     title: string;
@@ -74,6 +76,17 @@ export class UploadDataBionotesRepository implements UploadDataRepository {
             });
         });
     }
+
+    downloadAnnotationsExample(): void {
+        const json = JSON.stringify(externalAnnotationsExample, null, 4);
+        downloadFile({
+            data: json,
+            filename: "external_annotations.json",
+            mimeType: "application/json",
+        });
+    }
+
+    /* Private */
 
     private getTrackAnnotations(apiAnnotationTrack: ApiAnnotationTrack[]): TrackAnnotations[] {
         return _(apiAnnotationTrack)

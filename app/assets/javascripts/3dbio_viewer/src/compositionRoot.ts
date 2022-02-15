@@ -12,6 +12,7 @@ import { SearchDbModelsUseCase } from "./domain/usecases/SearchDbModelsUseCase";
 import { UploadAtomicStructureUseCase } from "./domain/usecases/UploadAtomicStructureUseCase";
 import { UploadAtomicStructureMappingUseCase } from "./domain/usecases/UploadAtomicStructureMappingUseCase";
 import { GetAnnotationsFromUploadData } from "./domain/usecases/GetAnnotationsFromUploadData";
+import { DownloadAnnotationsExampleUseCase } from "./domain/usecases/DownloadAnnotationsExampleUseCase";
 
 export function getCompositionRoot() {
     const pdbRepository = new ApiPdbRepository();
@@ -32,6 +33,7 @@ export function getCompositionRoot() {
         getRelatedModels: new GetRelatedModelsUseCase(dbModelRepositoryForRelatedModels),
         getAnnotations: new GetAnnotationsFromUploadData(uploadDataRepository),
         getUploadData: new GetUploadDataUseCase(uploadDataRepository),
+        downloadAnnotationsExample: new DownloadAnnotationsExampleUseCase(uploadDataRepository),
     };
 }
 

@@ -1,0 +1,54 @@
+[
+    {
+        "track_name": "Track 1",
+        "data": [
+            {
+                "begin": 5,
+                "end": 30,
+                "type": "Subtrack 1-1",
+                "color": "red",
+                "description": "My description text"
+            },
+            {
+                "begin": 40,
+                "end": 80,
+                "type": "Subtrack 1-2",
+                "color": "yellow",
+                "description": "My description text"
+            },
+            {
+                "begin": 100,
+                "end": 300,
+                "type": "Subtrack 1-3",
+                "color": "orange",
+                "description": "My description text"
+            }
+        ]
+    },
+    {
+        "track_name": "Track 2",
+        "data": [
+            {
+                "begin": 5,
+                "end": 100,
+                "type": "Subtrack 2-1",
+                "color": "red",
+                "description": "My description text"
+            },
+            {
+                "begin": 50,
+                "end": 80,
+                "type": "Subtrack 2-2",
+                "color": "yellow",
+                "description": "My description text"
+            },
+            {
+                "begin": 100,
+                "end": 200,
+                "type": "Subtrack 2-2",
+                "color": "orange",
+                "description": "My description text"
+            }
+        ]
+    }
+]

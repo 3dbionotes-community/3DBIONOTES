@@ -89,6 +89,15 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
         toggleIsManual();
     }, [toggleIsManual]);
 
+    const downloadExample = React.useCallback<React.MouseEventHandler<HTMLAnchorElement>>(
+        ev => {
+            ev.stopPropagation();
+            ev.preventDefault();
+            compositionRoot.downloadAnnotationsExample.execute();
+        },
+        [compositionRoot]
+    );
+
     return (
         <Dialog open={true} onClose={onClose} maxWidth="lg">
             <DialogTitle>
@@ -100,9 +109,17 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
 
             <DialogContent>
                 <label>
-                    {isManual
-                        ? i18n.t("Add annotation manually")
-                        : i18n.t("Upload annotation file in JSON format (*)")}
+                    {isManual ? (
+                        i18n.t("Add annotation manually")
+                    ) : (
+                        <span>
+                            {i18n.t("Upload annotation file in JSON format")} (
+                            <a href="#" onClick={downloadExample}>
+                                {i18n.t("example")}
+                            </a>
+                            )
+                        </span>
+                    )}
                 </label>
 
                 <Switch value={isManual} onChange={switchToggle} color="primary" />
