@@ -8,8 +8,18 @@ export interface AxiosBuilder<E, D = unknown> {
     mapNetworkError: (request: AxiosRequestConfig, message: string) => E;
 }
 
-export function axiosRequest<E, D>(builder: AxiosBuilder<E>, request: AxiosRequest): Future<E, D> {
-    return Future.fromComputation<E, D>((resolve, reject) => {
+export interface HttpResponse {
+    status: number;
+    location: string | undefined;
+}
+
+export type RequestResult<Data> = { data: Data; response: HttpResponse };
+
+export function axiosRequest<E, D>(
+    builder: AxiosBuilder<E>,
+    request: AxiosRequest
+): Future<E, RequestResult<D>> {
+    return Future.fromComputation<E, RequestResult<D>>((resolve, reject) => {
         const source = axios.CancelToken.source();
 
         const fullRequest: AxiosRequest = {
@@ -20,10 +30,14 @@ export function axiosRequest<E, D>(builder: AxiosBuilder<E>, request: AxiosReque
 
         axios
             .request(fullRequest)
-            .then(res => {
-                const result = builder.mapResponse(res);
+            .then(response => {
+                const result = builder.mapResponse(response);
                 if (result[0] === "success") {
-                    resolve(result[1] as D);
+                    const httpResponse: HttpResponse = {
+                        status: response.status,
+                        location: response.headers.location,
+                    };
+                    resolve({ response: httpResponse, data: result[1] as D });
                 } else {
                     reject(result[1]);
                 }

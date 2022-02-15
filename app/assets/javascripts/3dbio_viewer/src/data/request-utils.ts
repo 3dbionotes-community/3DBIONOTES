@@ -4,7 +4,7 @@ import xml2js from "xml2js";
 import { FutureData } from "../domain/entities/FutureData";
 import { parseFromCodec } from "../utils/codec";
 import { Future } from "../utils/future";
-import { axiosRequest, defaultBuilder } from "../utils/future-axios";
+import { axiosRequest, defaultBuilder, RequestResult } from "../utils/future-axios";
 import { Maybe } from "../utils/ts-utils";
 
 export type RequestError = { message: string };
@@ -12,7 +12,7 @@ export type RequestError = { message: string };
 const timeout = 20e3;
 
 export function getFromUrl<Data>(url: string): Future<RequestError, Data> {
-    return request<Data>({ method: "GET", url, timeout });
+    return request<Data>({ method: "GET", url, timeout }).map(res => res.data);
 }
 
 export function getTextFromUrl(url: string): Future<RequestError, string> {
@@ -22,7 +22,7 @@ export function getTextFromUrl(url: string): Future<RequestError, string> {
         timeout,
         responseType: "text",
         transformResponse: [data => data],
-    });
+    }).map(res => res.data);
 }
 
 export function getJSONData<Data>(url: string): FutureData<Data> {
@@ -77,6 +77,8 @@ function xmlToJs<Data>(xml: string): Future<RequestError, Data> {
     });
 }
 
-export function request<Data>(request: AxiosRequestConfig): Future<RequestError, Data> {
-    return axiosRequest<RequestError, Data>(defaultBuilder, request);
+export function request<Data>(
+    request: AxiosRequestConfig
+): Future<RequestError, RequestResult<Data>> {
+    return axiosRequest(defaultBuilder, request);
 }
