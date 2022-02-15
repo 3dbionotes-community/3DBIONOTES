@@ -15,8 +15,7 @@ interface PPiViewerProps {
 }
 
 export const PPIViewer: React.FC<PPiViewerProps> = props => {
-    const { pdb, trackDef, selection } = props;
-    const src = routes.bionotes + `/ppiIFrame?pdb=${pdb.id}`;
+    const { pdb, trackDef } = props;
     const title = `${trackDef.name}: ${trackDef.description || "-"}`;
 
     const infoAlignment = React.useMemo<InfoAlignment | undefined>(() => {
@@ -24,9 +23,10 @@ export const PPIViewer: React.FC<PPiViewerProps> = props => {
     }, [pdb.id, pdb.chainId]);
 
     React.useEffect(() => {
-        // Global variable accessed by PPI iframe
+        // global_infoAlignment: Global variable accessed by PPI iframe
         if (infoAlignment) window.global_infoAlignment = infoAlignment;
     }, [infoAlignment]);
+
     const iframeRef = React.useRef<HTMLIFrameElement>(null);
 
     const loadFeatures = React.useCallback((featureId: FeatureId) => {
@@ -39,6 +39,10 @@ export const PPIViewer: React.FC<PPiViewerProps> = props => {
         // app/assets/javascripts/main_frame/ppi_annotations.js
         contentWindow.cytoscape_graph.load_features(featureKey);
     }, []);
+
+    if (!pdb.id) return null;
+
+    const src = routes.bionotes + `/ppiIFrame?pdb=${pdb.id}`;
 
     return (
         <FrameViewer ref={iframeRef} title={title} src={src}>

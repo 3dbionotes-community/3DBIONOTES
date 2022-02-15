@@ -1,4 +1,6 @@
 import _ from "lodash";
+import { FutureData } from "../domain/entities/FutureData";
+import { Future } from "./future";
 
 export function on<Value, Result>(
     value: Value | undefined,
@@ -10,6 +12,22 @@ export function on<Value, Result>(
         } catch (err) {
             console.error("ERROR", mapper, err);
         }
+    }
+}
+
+export function onF<Value, Result>(
+    value: Value | undefined,
+    mapper: (value: Value) => FutureData<Result>
+): FutureData<Result | undefined> {
+    if (value !== undefined) {
+        try {
+            return mapper(value);
+        } catch (err) {
+            console.error("ERROR", mapper, err);
+            return Future.success(undefined);
+        }
+    } else {
+        return Future.success(undefined);
     }
 }
 

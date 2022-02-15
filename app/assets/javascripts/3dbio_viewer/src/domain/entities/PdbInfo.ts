@@ -30,13 +30,16 @@ export function buildPdbInfo(options: BuildPdbInfoOptions): PdbInfo {
             const protein = proteinById[proteinId];
             if (!protein) return [];
 
-            return chainIds.map(chainId => ({
-                id: [proteinId, chainId].join("-"),
-                shortName: `${chainId} - ${protein.gene}`,
-                name: `${chainId} - ${protein.gene}, ${protein.name}`,
-                chainId,
-                protein,
-            }));
+            return chainIds.map(chainId => {
+                const shortName = _([chainId, protein.gene]).compact().join(" - ");
+                return {
+                    id: [proteinId, chainId].join("-"),
+                    shortName,
+                    name: _([shortName, protein.name]).compact().join(", "),
+                    chainId,
+                    protein,
+                };
+            });
         })
         .sortBy(obj => obj.chainId)
         .value();
