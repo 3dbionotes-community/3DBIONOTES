@@ -76,9 +76,10 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                 setError(msg);
             } else {
                 loadingActions.open();
-                return compositionRoot.getAnnotations
-                    .execute(file)
-                    .run(openAnnotations, err => setError(err.message));
+                return compositionRoot.getAnnotations.execute(file).run(openAnnotations, err => {
+                    loadingActions.close();
+                    setError(err.message);
+                });
             }
         }, [compositionRoot, openAnnotations, loadingActions])
     );
@@ -185,11 +186,11 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             ))}
                         </select>
 
-                        <label htmlFor="startingValue">{i18n.t("Starting value (*)")}</label>
+                        <label htmlFor="start">{i18n.t("Starting value (*)")}</label>
 
                         <input
                             aria-label={i18n.t("Starting value")}
-                            id="startingValue"
+                            id="start"
                             type="number"
                             value={annotationForm.start}
                             onChange={e =>
@@ -201,10 +202,10 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             className="form-control"
                         />
 
-                        <label htmlFor="endingValue">{i18n.t("Ending value")}</label>
+                        <label htmlFor="end">{i18n.t("Ending value")}</label>
                         <input
                             aria-label={i18n.t("Ending value")}
-                            id="endingValue"
+                            id="end"
                             type="number"
                             value={annotationForm.end}
                             onChange={e =>

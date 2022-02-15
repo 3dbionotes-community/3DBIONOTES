@@ -4,13 +4,13 @@ import { UploadData } from "../../domain/entities/UploadData";
 import { UploadDataRepository } from "../../domain/repositories/UploadDataRepository";
 import { routes } from "../../routes";
 import { Future } from "../../utils/future";
-import { getJSON, getJSONData as getJSONOrError } from "../request-utils";
-import {
-    Annotations,
-    getTracksFromAnnotations,
-    TrackAnnotations,
-} from "../../domain/entities/Annotation";
+import { getJSONData as getJSONOrError, getValidatedJSON } from "../request-utils";
+import { Annotation, Annotations, TrackAnnotations } from "../../domain/entities/Annotation";
 import { readFile } from "../../utils/files";
+import { array, number, string, optional, exactly } from "purify-ts/Codec";
+import { Codec, GetType } from "purify-ts/Codec";
+import { parseFromCodec } from "../../utils/codec";
+import { Maybe } from "../../utils/ts-utils";
 
 interface RecoverData {
     title: string;
@@ -20,7 +20,7 @@ interface RecoverData {
 export interface OptionArrayInfo {
     pdb: string;
     chain: string;
-    uniprot: string; // protein
+    uniprot: string;
     uniprotLength: number;
     uniprotTitle: string;
     organism: string;
@@ -28,62 +28,80 @@ export interface OptionArrayInfo {
     path: string;
 }
 
-type ExternalAnnotations = ExternalAnnotationTrack[];
+const apiAnnotationDataC = Codec.interface({
+    begin: number,
+    end: optional(number),
+    type: optional(string),
+    color: optional(string),
+    description: optional(string),
+});
 
-interface ExternalAnnotationTrack {
-    track_name: string;
-    chain?: string;
-    data: ExternalAnnotationData[];
-}
+const apiAnnotationTrackC = Codec.interface({
+    track_name: string,
+    visualization_type: optional(exactly("continuous")),
+    chain: optional(string),
+    data: array(apiAnnotationDataC),
+});
 
-interface ExternalAnnotationData {
-    begin: number;
-    end: number;
-    type: string;
-    color: string;
-    description: string;
-}
+type ApiAnnotationTrack = GetType<typeof apiAnnotationTrackC>;
+
+const apiAnnotationsC = array(apiAnnotationTrackC);
 
 export class UploadDataBionotesRepository implements UploadDataRepository {
     get(token: string): FutureData<UploadData> {
         const basePath = `${routes.bionotesDev}/upload/${token}`;
         const data$ = {
             recoverData: getJSONOrError<RecoverData>(`${basePath}/recover_data.json`),
-            annotations: getJSON<ExternalAnnotations>(`${basePath}/external_annotations.json`),
+            annotations: getValidatedJSON(`${basePath}/external_annotations.json`, apiAnnotationsC),
         };
 
-        return Future.joinObj(data$).map(({ recoverData, annotations: extAnnotations }) => {
-            const annotations = (extAnnotations || []).map(this.getAnnotationTrack.bind(this));
+        return Future.joinObj(data$).map(({ recoverData, annotations: apiAnnotations }) => {
             return {
                 title: recoverData.title,
                 chains: recoverData.optionsArray.map(([name, obj]) => {
                     const uploadChain = JSON.parse(obj) as OptionArrayInfo;
                     return { name, ...uploadChain };
                 }),
-                annotations,
+                annotations: this.getTrackAnnotations(apiAnnotations || []),
             };
         });
     }
 
     getAnnotations(file: File): FutureData<Annotations> {
         return readFile(file).flatMap(contents => {
-            // TODO: Check with purify-ts Codec. unknown -> ExternalAnnotations
-            const repoAnnotations = JSON.parse(contents) as ExternalAnnotations;
-            const annotations = repoAnnotations.map(this.getAnnotationTrack.bind(this));
-            return Future.success(annotations);
+            return parseFromCodec(apiAnnotationsC, contents).map(apiAnnotations => {
+                return this.getTrackAnnotations(apiAnnotations);
+            });
         });
     }
 
-    private getAnnotationTrack(repoAnnotationTrack: ExternalAnnotationTrack): TrackAnnotations {
+    private getTrackAnnotations(apiAnnotationTrack: ApiAnnotationTrack[]): TrackAnnotations[] {
+        return _(apiAnnotationTrack)
+            .map(track => this.getTrackAnnotationsItem(track))
+            .compact()
+            .value();
+    }
+
+    private getTrackAnnotationsItem(
+        apiAnnotationTrack: ApiAnnotationTrack
+    ): Maybe<TrackAnnotations> {
+        // Only standard annotations are implemented
+        if (apiAnnotationTrack.visualization_type) return;
+
         return {
-            trackName: repoAnnotationTrack.track_name,
-            chain: repoAnnotationTrack.chain,
-            annotations: repoAnnotationTrack.data.map(repoAnnotation => {
-                return {
-                    ..._.omit(repoAnnotation, ["begin"]),
-                    start: repoAnnotation.begin,
-                };
-            }),
+            trackName: apiAnnotationTrack.track_name,
+            chain: apiAnnotationTrack.chain,
+            annotations: apiAnnotationTrack.data.map(
+                (repoAnnotation): Annotation => {
+                    return {
+                        start: repoAnnotation.begin,
+                        end: repoAnnotation.end || repoAnnotation.begin,
+                        type: repoAnnotation.type || "data",
+                        color: repoAnnotation.color || "#AAA",
+                        description: repoAnnotation.description || "",
+                    };
+                }
+            ),
         };
     }
 }

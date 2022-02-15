@@ -2168,6 +2168,11 @@
   resolved "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.6.tgz#f4c7ec43e81b319a9815115031709f26987891f0"
   integrity sha512-3c+yGKvVP5Y9TYBEibGNR+kLtijnj7mYrXRg+WpFb2X9xm04g/DXYkfg4hmzJQosc9snFNUPkbYIhu+KAm6jJw==
 
+"@types/json-schema@7.0.9":
+  version "7.0.9"
+  resolved "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
+  integrity sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
@@ -10400,6 +10405,13 @@ punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
+
+purify-ts@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/purify-ts/-/purify-ts-1.1.0.tgz#1a8fd7e85ec4c832ee1f6b43e443d38229352804"
+  integrity sha512-hfXuxs6hoRURvcBwHVGlLdeNp9R96z+l1sQQj5enqU1ZDqV1GGVPIr6wNw2rNKqhQemaaMERrqjqjzO2hVYZsg==
+  dependencies:
+    "@types/json-schema" "7.0.9"
 
 q@^1.1.2:
   version "1.5.1"
