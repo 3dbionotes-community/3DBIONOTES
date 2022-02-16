@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export interface Covid19Info {
     structures: Structure[];
 }
@@ -131,4 +133,25 @@ export function buildPdbRedoValidation(pdbId: Id): PdbRedoValidation {
         queryLink: `/pdb_redo/${pdbId}`,
         badgeColor: "w3-turq",
     };
+}
+
+export function addPdbValidationToStructure(
+    structure: Structure,
+    validation: PdbValidation
+): Structure {
+    const existingValidations = structure.validations.pdb;
+    const structureContainsValidation = _(existingValidations).some(existingValidation =>
+        _.isEqual(existingValidation, validation)
+    );
+
+    if (!structureContainsValidation) {
+        const pdbValidations = _.concat(existingValidations, [validation]);
+
+        return {
+            ...structure,
+            validations: { ...structure.validations, pdb: pdbValidations },
+        };
+    } else {
+        return structure;
+    }
 }
