@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps } from "@material-ui/data-grid";
-import { EntityBodiesFilter } from "../../../domain/entities/Covid19Info";
+import { Covid19Filter } from "../../../domain/entities/Covid19Info";
 import { getColumns } from "./Columns";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
@@ -123,8 +123,9 @@ const pageSizes = [10, 25, 50, 75, 100];
 
 const sortingOrder = ["asc" as const, "desc" as const];
 
-const initialFilterState: EntityBodiesFilter = {
+const initialFilterState: Covid19Filter = {
     antibody: false,
     nanobody: false,
     sybody: false,
+    pdbRedo: false,
 };

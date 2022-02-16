@@ -107,13 +107,14 @@ export type Url = string;
 
 export type Ref = { id: Id };
 
-export interface EntityBodiesFilter {
+export interface Covid19Filter {
     antibody: boolean;
     nanobody: boolean;
     sybody: boolean;
+    pdbRedo: boolean;
 }
 
-export function filterEntities(entities: Entity[], filterState: EntityBodiesFilter): Entity[] {
+export function filterEntities(entities: Entity[], filterState: Covid19Filter): Entity[] {
     return entities.filter(
         entity =>
             entity.isAntibody === filterState.antibody &&

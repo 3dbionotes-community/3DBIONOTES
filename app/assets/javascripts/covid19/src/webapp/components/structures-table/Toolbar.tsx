@@ -7,13 +7,15 @@ import { CustomGridTopPagination } from "./CustomGridTopPagination";
 import { SearchBar } from "./SearchBar";
 import "./Toolbar.css";
 import { CustomCheckboxFilter } from "./CustomCheckboxFilter";
-import { EntityBodiesFilter } from "../../../domain/entities/Covid19Info";
+import { SearchExamplesPopover } from "./SearchExamplesPopover";
+
+import { Covid19Filter } from "../../../domain/entities/Covid19Info";
 
 export interface ToolbarProps {
     search: string;
     setSearch(search: string): void;
-    filterState: EntityBodiesFilter;
-    setFilterState(filter: EntityBodiesFilter): void;
+    filterState: Covid19Filter;
+    setFilterState(filter: Covid19Filter): void;
     gridApi: GridApi;
     dataGrid: DataGrid;
     virtualScrollbarProps: VirtualScrollbarProps;
@@ -47,8 +49,9 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
     return (
         <React.Fragment>
             <GridToolbarContainer style={styles.container}>
-                <SearchBar value={search} setValue={setSearch} />
+                <SearchBar value={search} setValue={setSearch} filterState={filterState} setFilterState={setFilterState} />
                 <CustomCheckboxFilter filterState={filterState} setFilterState={setFilterState} />
+                <SearchExamplesPopover value={search} setValue={setSearch} />
                 <div style={styles.columns}>
                     <CustomGridToolbarExport dataGrid={dataGrid} gridApi={gridApi} />
                     <GridToolbarColumnsButton />

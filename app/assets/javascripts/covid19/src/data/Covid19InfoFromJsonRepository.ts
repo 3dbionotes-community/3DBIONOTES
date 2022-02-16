@@ -4,7 +4,7 @@ import {
     Covid19Info,
     Emdb,
     Entity,
-    EntityBodiesFilter,
+    Covid19Filter,
     filterEntities,
     Ligand,
     Organism,
@@ -42,18 +42,37 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
 
         return { structures: filteredStructures };
     }
-
+    private ContainsEbiLink = (pdb: Pdb) => {
+        //console.log(pdb.externalLinks.filter(link => link.text === "EBI").length > 0);
+        return pdb.externalLinks.filter(link => link.text === "EBI").length > 0;
+    }
     private filterStructures(
         structures: Structure[],
-        filterState: EntityBodiesFilter
+        filterState: Covid19Filter
     ): Structure[] {
+        console.log(structures)
         const isFilterStateEnabled =
             filterState && (filterState.antibody || filterState.nanobody || filterState.sybody);
-        if (!isFilterStateEnabled) return structures;
+        const isPdbRedoFilterEnabled = filterState && filterState.pdbRedo;
 
-        return structures.filter(
-            structure => filterEntities(structure.entities, filterState).length > 0
-        );
+        if (!isFilterStateEnabled && !isPdbRedoFilterEnabled) return structures;
+    //!this.ContainsEbiLink(structure.pdb) && 
+        const structuresToFilter = structures;
+        /*filterState.pdbRedo 
+        ? structures.filter(structure => structure.pdb && (structure.pdb.queryLink))
+        : structures;*/
+        
+        console.log(structuresToFilter)
+        if(isFilterStateEnabled) {
+            console.log(structuresToFilter.filter(
+                structure => filterEntities(structure.entities, filterState).length > 0
+            ));
+            return structuresToFilter.filter(
+                structure => filterEntities(structure.entities, filterState).length > 0
+            );
+        }
+        else return structuresToFilter;
+        
     }
 
     private searchStructures(search: string): Structure[] {
