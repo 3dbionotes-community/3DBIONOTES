@@ -21,13 +21,15 @@ export type Field = keyof Row;
 export interface CellProps {
     data: Covid19Info;
     row: Row;
+    moreDetails?: boolean;
+    onClickDetails?: (options: { row: Structure; field: Field }) => void;
 }
 
 export interface ColumnAttrs<F extends Field>
     extends Omit<GridColDef, "headerName" | "field" | "renderCell"> {
     headerName: string;
     field: F;
-    renderCell: React.FC<{ row: Row; data: Covid19Info }>;
+    renderCell: React.FC<CellProps>;
     renderString(row: Row): string | undefined;
 }
 
@@ -90,7 +92,10 @@ export const columnsBase: Columns = [
     }),
 ];
 
-export function getColumns(data: Covid19Info): { definition: GridColDef[]; base: Columns } {
+export function getColumns(
+    data: Covid19Info,
+    options: { onClickDetails: (options: { row: Structure; field: Field }) => void }
+): { definition: GridColDef[]; base: Columns } {
     const definition = columnsBase.map(
         (column): GridColDef => {
             return {
@@ -101,7 +106,11 @@ export function getColumns(data: Covid19Info): { definition: GridColDef[]; base:
 
                     return (
                         <div style={styles.column}>
-                            <CellComponent row={params.row as Row} data={data} />
+                            <CellComponent
+                                row={params.row as Row}
+                                data={data}
+                                onClickDetails={options.onClickDetails}
+                            />
                         </div>
                     );
                 },

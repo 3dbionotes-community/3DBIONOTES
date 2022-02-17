@@ -128,4 +128,5 @@ function usePdbRedoValidations(pdb: Pdb): PdbValidation[] {
 
 const PdbRedoBadges = styled.div`
     display: flex;
+    justify-content: center;
 `;
