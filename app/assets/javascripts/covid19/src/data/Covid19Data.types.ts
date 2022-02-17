@@ -49,6 +49,7 @@ export interface Pdb extends DbItem {
     keywords: string;
     entities: Entity[];
     ligands: LigandId[];
+    details?: Details[];
 }
 
 export interface Emdb extends DbItem {
@@ -62,3 +63,48 @@ type LigandId = string;
 export type EntityRef = { organism?: string; uniprotAcc?: string };
 
 export type Url = string;
+
+
+
+type Author = String;
+export interface RefDB {
+    title: string;
+    authors: Author[];
+    deposited?: string;
+    released?: string;
+}
+export interface RefEMDB extends RefDB {
+}
+export interface RefPDB {
+}
+export interface RefDoc {
+    pmID: string;
+    title: string;
+    authors: Author[];
+    abstract?: string;
+    journal: string;
+    pubDate: string;
+    pmidLink?: URL;
+    doi?: URL;
+}
+export interface Sample {
+    name: string;
+    exprSystem?: string;
+    assembly?: string;
+    macromolecules?: string;
+    uniProts?: string;
+    genes?: [];
+
+    bioFunction?: string;
+    bioProcess?: string;
+    cellComponent?: string;
+    domains?: [];
+    a?: string;
+
+}
+export interface Details {
+    refEMDB?: RefEMDB;
+    refPDB?: RefPDB;
+    sample?: Sample;
+    refdoc?: RefDoc[];
+}
