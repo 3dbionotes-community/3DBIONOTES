@@ -64,8 +64,6 @@ export type EntityRef = { organism?: string; uniprotAcc?: string };
 
 export type Url = string;
 
-
-
 type Author = String;
 export interface RefDB {
     title: string;
@@ -73,10 +71,8 @@ export interface RefDB {
     deposited?: string;
     released?: string;
 }
-export interface RefEMDB extends RefDB {
-}
-export interface RefPDB {
-}
+export interface RefEMDB extends RefDB {}
+export interface RefPDB {}
 export interface RefDoc {
     pmID: string;
     title: string;
@@ -98,7 +94,6 @@ export interface Sample {
     bioProcess?: string[];
     cellComponent?: string[];
     domains?: string[];
-
 }
 export interface Details {
     refEMDB?: RefEMDB;
