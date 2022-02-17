@@ -91,15 +91,13 @@ export interface Sample {
     name: string;
     exprSystem?: string;
     assembly?: string;
-    macromolecules?: string;
-    uniProts?: string;
-    genes?: [];
-
-    bioFunction?: string;
-    bioProcess?: string;
-    cellComponent?: string;
-    domains?: [];
-    a?: string;
+    macromolecules?: string[];
+    uniProts?: string[];
+    genes?: string[];
+    bioFunction?: string[];
+    bioProcess?: string[];
+    cellComponent?: string[];
+    domains?: string[];
 
 }
 export interface Details {
