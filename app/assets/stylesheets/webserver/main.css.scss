@@ -4,8 +4,9 @@ html {
 }
 
 body {
-    font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-        Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 0.9375rem;
     color: #212529;
     margin-bottom: 250px;
@@ -318,15 +319,35 @@ a:hover {
     max-width: 400px;
 }
 
-#mainSearch input,
+#mainSearch input {
+    width: 380px;
+    height: calc(1.5em + 1rem - 6px);
+    border: none;
+    border-radius: 12px 0 0 12px;
+    padding-right: 0px;
+    &:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: none;
+        outline: 0;
+        box-shadow: none;
+    }
+}
+
 .input-group-text {
-    max-width: 400px;
     border: 4px solid #607d8b;
     border-radius: 12px;
 }
 
 #mainSearch .input-group-text {
     background: #fff;
+    padding: 0;
+    &:focus-within {
+        color: #495057;
+        background-color: #fff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
 }
 
 .carousel-control-prev,
@@ -357,9 +378,7 @@ a:hover {
 }
 
 .searchIconMain {
-    position: relative;
-    right: 32px;
-    top: 14px;
+    font-size: 1.25rem !important;
     color: #575757;
 }
 
@@ -738,9 +757,27 @@ a i.margin {
 }
 
 .w3-gradient {
-    background: -moz-linear-gradient(left, #484848 0%, #ffc107 32%, #ff9800 69%, #7db9e8 100%);
-    background: -webkit-linear-gradient(left, #484848 0%, #ffc107 32%, #ff9800 69%, #7db9e8 100%);
-    background: linear-gradient(to right, #484848 0%, #ffc107 32%, #ff9800 69%, #7db9e8 100%);
+    background: -moz-linear-gradient(
+        left,
+        #484848 0%,
+        #ffc107 32%,
+        #ff9800 69%,
+        #7db9e8 100%
+    );
+    background: -webkit-linear-gradient(
+        left,
+        #484848 0%,
+        #ffc107 32%,
+        #ff9800 69%,
+        #7db9e8 100%
+    );
+    background: linear-gradient(
+        to right,
+        #484848 0%,
+        #ffc107 32%,
+        #ff9800 69%,
+        #7db9e8 100%
+    );
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#484848', endColorstr='#7db9e8', GradientType=1);
 }
 
@@ -837,7 +874,8 @@ a i.margin {
 }
 
 @media (min-width: 768px) {
-    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+    .carousel-inner
+        .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
     .carousel-inner
         .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)
         + .carousel-item,
@@ -858,7 +896,11 @@ a i.margin {
 }
 
 @media (min-width: 768px) {
-    .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    .carousel-inner
+        .active.carousel-item
+        + .carousel-item
+        + .carousel-item
+        + .carousel-item {
         position: absolute;
         top: 0;
         right: -33.3333%;
@@ -874,7 +916,10 @@ a i.margin {
     .active.carousel-item-left + .carousel-item-next.carousel-item-left,
     .carousel-item-next.carousel-item-left + .carousel-item,
     .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
-    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item {
+    .carousel-item-next.carousel-item-left
+        + .carousel-item
+        + .carousel-item
+        + .carousel-item {
         position: relative;
         transform: translate3d(-100%, 0, 0);
         visibility: visible;
@@ -900,7 +945,10 @@ a i.margin {
     .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
     .carousel-item-prev.carousel-item-right + .carousel-item,
     .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
-    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item {
+    .carousel-item-prev.carousel-item-right
+        + .carousel-item
+        + .carousel-item
+        + .carousel-item {
         position: relative;
         transform: translate3d(100%, 0, 0);
         visibility: visible;
@@ -934,9 +982,9 @@ a i.margin {
 /* END CAROUSEL STYLES */
 
 body {
-    font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-        Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-        "Noto Color Emoji";
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 /* hidden */
@@ -950,14 +998,16 @@ body {
 .hl {
     border: solid 2px rgb(107, 171, 208);
     border-radius: 10px;
-    box-shadow: 0 0px 10px rgba(107, 171, 208, 0.25), 0 0px 23px rgba(107, 171, 208, 0.4);
+    box-shadow: 0 0px 10px rgba(107, 171, 208, 0.25),
+        0 0px 23px rgba(107, 171, 208, 0.4);
 }
 
 .hl-label {
     position: relative;
     border: solid 2px #75a4bb;
     border-radius: 6px;
-    box-shadow: 0 0px 10px rgba(107, 171, 208, 0.5), 0 0px 23px rgba(107, 171, 208, 0.8);
+    box-shadow: 0 0px 10px rgba(107, 171, 208, 0.5),
+        0 0px 23px rgba(107, 171, 208, 0.8);
 }
 
 .hl-label:before {

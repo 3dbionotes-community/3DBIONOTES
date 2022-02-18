@@ -5,6 +5,7 @@ import { CellProps } from "../Columns";
 import { Thumbnail } from "../Thumbnail";
 import { BadgeLink } from "../BadgeLink";
 import { Pdb, Structure } from "../../../../domain/entities/Covid19Info";
+import styled from "styled-components";
 
 export const PdbCell: React.FC<CellProps> = React.memo(props => {
     const { pdb } = props.row;
@@ -47,7 +48,7 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
                         switch (pdbValidation.type) {
                             case "pdbRedo":
                                 return (
-                                    <React.Fragment key="pdb-redo">
+                                    <PdbRedoBadges key="pdb-redo">
                                         <BadgeLink
                                             key="pdb-redo-external"
                                             url={pdbValidation.externalLink}
@@ -59,11 +60,10 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
                                         <BadgeLink
                                             key="pdb-redo-viewer"
                                             url={pdbValidation.queryLink}
-                                            text={i18n.t("PDB-Redo")}
                                             icon="viewer"
                                             color={pdbValidation.badgeColor}
                                         />
-                                    </React.Fragment>
+                                    </PdbRedoBadges>
                                 );
                             case "isolde":
                                 return (
@@ -84,3 +84,7 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
         </React.Fragment>
     );
 });
+
+const PdbRedoBadges = styled.div`
+    display: flex;
+`;
