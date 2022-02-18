@@ -37,7 +37,7 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
             )}
         </React.Fragment>
     );
-                //console.log(pdbValidations)
+
     return (
         <React.Fragment>
             {pdb ? <Thumbnail type="pdb" value={pdb} tooltip={tooltip} /> : null}

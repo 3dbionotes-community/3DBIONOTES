@@ -37,7 +37,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                 aria-label="toolbarExportLabel"
                 aria-haspopup="menu"
                 endIcon={startIcon}
-                style={{margin: "auto 5px"}}
+                style={{ margin: "auto 5px" }}
             >
                 {i18n.t("Filter")}
             </StyledSearchExampleButton>

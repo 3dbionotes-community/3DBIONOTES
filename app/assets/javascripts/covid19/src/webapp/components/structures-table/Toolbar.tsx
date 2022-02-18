@@ -16,7 +16,6 @@ import i18n from "../../../utils/i18n";
 export interface ToolbarProps {
     search: string;
     setSearch(search: string): void;
-    //autoCompleteOptions: string[];
     filterState: Covid19Filter;
     setFilterState(filter: Covid19Filter): void;
     gridApi: GridApi;
@@ -37,7 +36,6 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
     const {
         search,
         setSearch,
-        //autoCompleteOptions,
         filterState,
         setFilterState,
         gridApi,
@@ -49,13 +47,12 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
         setPage,
         setPageSize,
     } = props;
-                    //autoCompleteOptions={autoCompleteOptions}
-//<SearchExamplesPopover value={search} setValue={setSearch} />
+
     return (
         <React.Fragment>
             <GridToolbarContainer style={styles.container}>
-                <div style={{display: "flex", flexDirection: "column"}}>
-                    <div style={{display: "flex"}}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ display: "flex" }}>
                         <SearchBar
                             value={search}
                             setValue={setSearch}
@@ -69,13 +66,16 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                         >
                             <span style={styles.tooltip}>?</span>
                         </Tooltip>
-                        <CustomCheckboxFilter filterState={filterState} setFilterState={setFilterState} />
+                        <CustomCheckboxFilter
+                            filterState={filterState}
+                            setFilterState={setFilterState}
+                        />
                     </div>
                     <div style={styles.exampleRow}>
-                    <p style={styles.examplesText}>{i18n.t("Examples")}:</p>
-                    <SearchExampleButton setValue={setSearch} exampleValue="6YOR" />
-                    <SearchExampleButton setValue={setSearch} exampleValue="Homo sapiens" />
-                    <SearchExampleButton setValue={setSearch} exampleValue="SARS-CoV-2" />
+                        <p style={styles.examplesText}>{i18n.t("Examples")}:</p>
+                        <SearchExampleButton setValue={setSearch} exampleValue="6YOR" />
+                        <SearchExampleButton setValue={setSearch} exampleValue="Homo sapiens" />
+                        <SearchExampleButton setValue={setSearch} exampleValue="SARS-CoV-2" />
                     </div>
                 </div>
 
