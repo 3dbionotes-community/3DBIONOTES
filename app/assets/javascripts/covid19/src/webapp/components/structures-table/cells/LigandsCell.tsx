@@ -70,7 +70,7 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
                         key={ligand.id}
                         tooltip={ligand.tooltip}
                         url={ligand.url}
-                        text={ligand.name + " (" + ligand.id + ")"}
+                        text={`${ligand.name} (${ligand.id})`}
                     />
                 ))}
             </ul>
