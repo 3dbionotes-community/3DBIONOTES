@@ -47,7 +47,7 @@ export const columnsBase: Columns = [
     }),
     column("pdb", {
         headerName: i18n.t("PDB"),
-        width: 120,
+        width: 140,
         renderCell: PdbCell,
         sortComparator: compareIds,
         renderString: row => row.pdb?.id,
