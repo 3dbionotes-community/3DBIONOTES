@@ -4,9 +4,11 @@ export interface Covid19InfoRepository {
     get(): Covid19Info;
     search(options: SearchOptions): Covid19Info;
     autoSuggestion(search: string): string[];
+    hasPdbRedoValidation(pdbId: string): Promise<boolean>;
 }
 
 export interface SearchOptions {
+    data: Covid19Info;
     search?: string;
     filter?: Covid19Filter;
 }

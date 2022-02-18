@@ -1,6 +1,7 @@
 import _ from "lodash";
 import MiniSearch, { Options } from "minisearch";
 import {
+    buildPdbRedoValidation,
     Covid19Info,
     Emdb,
     Entity,
@@ -17,13 +18,10 @@ import { data } from "./covid19-data";
 import * as Data from "./Covid19Data.types";
 
 export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
-    structuresById: Record<string, Structure>;
     info: Covid19Info;
 
     constructor() {
-        const structures = getStructures();
-        this.info = { structures };
-        this.structuresById = _.keyBy(structures, structure => structure.id);
+        this.info = { structures: getStructures() };
     }
 
     get(): Covid19Info {
@@ -31,16 +29,19 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     }
 
     search(options: SearchOptions): Covid19Info {
-        const { search = "", filter: filterState } = options;
-        const { structures } = this.info;
+        const { data, search = "", filter: filterState } = options;
+        const { structures } = data;
         const isTextFilterEnabled = Boolean(search.trim());
-        const structuresByText = isTextFilterEnabled ? this.searchStructures(search) : structures;
 
-        const filteredStructures = filterState
-            ? this.filterStructures(structuresByText, filterState)
-            : structuresByText;
+        const structuresFilteredByText = isTextFilterEnabled
+            ? this.searchByText(structures, search)
+            : structures;
 
-        return { structures: filteredStructures };
+        const structuresFilteredByTextAndBody = filterState
+            ? this.filterByBodies(structuresFilteredByText, filterState)
+            : structuresFilteredByText;
+
+        return { structures: structuresFilteredByTextAndBody };
     }
 
     autoSuggestion(search: string): string[] {
@@ -51,9 +52,18 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         return structuresByText;
     }
 
+    async hasPdbRedoValidation(pdbId: string): Promise<boolean> {
+        const validation = buildPdbRedoValidation(pdbId);
 
-    private filterStructures(structures: Structure[], filterState: Covid19Filter): Structure[] {
-        //console.log(structures);
+        try {
+            const res = await fetch(validation.externalLink, { method: "HEAD" });
+            return res.status === 200;
+        } catch (err) {
+            return false;
+        }
+    }
+
+    private filterByBodies(structures: Structure[], filterState: Covid19Filter): Structure[] {
         const isFilterStateEnabled =
             filterState && (filterState.antibody || filterState.nanobody || filterState.sybody);
         const isPdbRedoFilterEnabled = filterState && filterState.pdbRedo;
@@ -73,13 +83,10 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         } else return structures;
     }
 
-    private searchStructures(search: string): Structure[] {
+    private searchByText(structures: Structure[], search: string): Structure[] {
         const miniSearch = this.getMiniSearch();
-        console.log(search)
-        return _(this.structuresById)
-            .at(miniSearch.search(search, { combineWith: "AND" }).map(structure => structure.id))
-            .compact()
-            .value();
+        const matchingIds = miniSearch.search(search, { combineWith: "AND" }).map(getId);
+        return _(structures).keyBy(getId).at(matchingIds).compact().value();
     }
 
     @cache()
