@@ -66,9 +66,8 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
 
     private filterByBodies(structures: Structure[], filterState: Covid19Filter): Structure[] {
         const isFilterStateEnabled =
-            filterState &&
-            (filterState.antibodies || filterState.nanobodies || filterState.sybodies);
-        const isPdbRedoFilterEnabled = filterState && filterState.pdbRedo;
+            filterState.antibodies || filterState.nanobodies || filterState.sybodies;
+        const isPdbRedoFilterEnabled = filterState.pdbRedo;
 
         if (!isFilterStateEnabled && !isPdbRedoFilterEnabled) return structures;
         const structuresToFilter = isPdbRedoFilterEnabled
