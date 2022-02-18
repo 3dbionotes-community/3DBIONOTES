@@ -40,15 +40,12 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         const structuresFilteredByTextAndBody = filterState
             ? this.filterByBodies(structuresFilteredByText, filterState)
             : structuresFilteredByText;
-
         return { structures: structuresFilteredByTextAndBody };
     }
 
-    autoSuggestion(search: string): string[] {
+    autoSuggestions(search: string): string[] {
         const miniSearch = this.getMiniSearch();
         const structuresByText = miniSearch.autoSuggest(search, { combineWith: "AND" }).map(result => result.suggestion);
-
-
         return structuresByText;
     }
 
@@ -65,22 +62,13 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
 
     private filterByBodies(structures: Structure[], filterState: Covid19Filter): Structure[] {
         const isFilterStateEnabled =
-            filterState && (filterState.antibody || filterState.nanobody || filterState.sybody);
+            filterState && (filterState.antibodies || filterState.nanobodies || filterState.sybodies);
         const isPdbRedoFilterEnabled = filterState && filterState.pdbRedo;
 
         if (!isFilterStateEnabled && !isPdbRedoFilterEnabled) return structures;
-        //!this.ContainsEbiLink(structure.pdb) &&
-        //console.log(structuresToFilter);
-        if (isFilterStateEnabled) {
-            console.log(
-                structures.filter(
-                    structure => filterEntities(structure.entities, filterState).length > 0
-                )
-            );
-            return structures.filter(
-                structure => filterEntities(structure.entities, filterState).length > 0
-            );
-        } else return structures;
+        const structuresToFilter = isPdbRedoFilterEnabled ? structures.filter(structure => structure.validations.pdb.length > 0) : structures;
+        return isFilterStateEnabled ? structuresToFilter.filter(structure => filterEntities(structure.entities, filterState).length > 0) : structuresToFilter;
+
     }
 
     private searchByText(structures: Structure[], search: string): Structure[] {

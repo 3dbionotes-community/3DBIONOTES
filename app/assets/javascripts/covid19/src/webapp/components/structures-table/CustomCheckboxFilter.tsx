@@ -5,6 +5,7 @@ import { GridMenu } from "@material-ui/data-grid";
 import i18n from "../../../utils/i18n";
 import { StyledSearchExampleButton } from "./SearchExampleButton";
 import FilterListIcon from "@material-ui/icons/FilterList";
+import styled from "styled-components";
 
 export interface CustomCheckboxFilterProps {
     filterState: Covid19Filter;
@@ -49,32 +50,32 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
             >
                 <MenuList className="MuiDataGrid-gridMenuList" autoFocusItem={isOpen}>
                     <MenuItem>
-                        <Checkbox
-                            checked={filterState?.antibody || false}
+                        <StyledCheckbox
+                            checked={filterState?.antibodies || false}
                             onChange={handleChange}
-                            name="antibody"
+                            name="antibodies"
                         />
                         {i18n.t("Antibodies")}
                     </MenuItem>
                     <MenuItem>
-                        <Checkbox
-                            checked={filterState?.nanobody || false}
+                        <StyledCheckbox
+                            checked={filterState?.nanobodies || false}
                             onChange={handleChange}
-                            name="nanobody"
+                            name="nanobodies"
                         />
                         {i18n.t("Nanobodies")}
                     </MenuItem>
                     <MenuItem>
-                        <Checkbox
-                            checked={filterState?.sybody || false}
+                        <StyledCheckbox
+                            checked={filterState?.sybodies || false}
                             onChange={handleChange}
-                            name="sybody"
+                            name="sybodies"
                         />
                         {i18n.t("Sybodies")}
                     </MenuItem>
                     <Divider />
                     <MenuItem>
-                        <Checkbox
+                        <StyledCheckbox
                             checked={filterState?.pdbRedo || false}
                             onChange={handleChange}
                             name="pdbRedo"
@@ -86,3 +87,9 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
         </React.Fragment>
     );
 });
+
+const StyledCheckbox = styled(Checkbox)`
+    &.MuiCheckbox-colorSecondary.Mui-checked {
+        color: grey;
+    }
+`;
