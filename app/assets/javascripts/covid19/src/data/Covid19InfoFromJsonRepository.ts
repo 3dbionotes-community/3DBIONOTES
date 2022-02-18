@@ -42,42 +42,40 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
 
         return { structures: filteredStructures };
     }
-    private ContainsEbiLink = (pdb: Pdb) => {
-        //console.log(pdb.externalLinks.filter(link => link.text === "EBI").length > 0);
-        return pdb.externalLinks.filter(link => link.text === "EBI").length > 0;
+
+    autoSuggestion(search: string): string[] {
+        const miniSearch = this.getMiniSearch();
+        const structuresByText = miniSearch.autoSuggest(search, { combineWith: "AND" }).map(result => result.suggestion);
+
+
+        return structuresByText;
     }
-    private filterStructures(
-        structures: Structure[],
-        filterState: Covid19Filter
-    ): Structure[] {
-        console.log(structures)
+
+
+    private filterStructures(structures: Structure[], filterState: Covid19Filter): Structure[] {
+        //console.log(structures);
         const isFilterStateEnabled =
             filterState && (filterState.antibody || filterState.nanobody || filterState.sybody);
         const isPdbRedoFilterEnabled = filterState && filterState.pdbRedo;
 
         if (!isFilterStateEnabled && !isPdbRedoFilterEnabled) return structures;
-    //!this.ContainsEbiLink(structure.pdb) && 
-        const structuresToFilter = structures;
-        /*filterState.pdbRedo 
-        ? structures.filter(structure => structure.pdb && (structure.pdb.queryLink))
-        : structures;*/
-        
-        console.log(structuresToFilter)
-        if(isFilterStateEnabled) {
-            console.log(structuresToFilter.filter(
-                structure => filterEntities(structure.entities, filterState).length > 0
-            ));
-            return structuresToFilter.filter(
+        //!this.ContainsEbiLink(structure.pdb) &&
+        //console.log(structuresToFilter);
+        if (isFilterStateEnabled) {
+            console.log(
+                structures.filter(
+                    structure => filterEntities(structure.entities, filterState).length > 0
+                )
+            );
+            return structures.filter(
                 structure => filterEntities(structure.entities, filterState).length > 0
             );
-        }
-        else return structuresToFilter;
-        
+        } else return structures;
     }
 
     private searchStructures(search: string): Structure[] {
         const miniSearch = this.getMiniSearch();
-
+        console.log(search)
         return _(this.structuresById)
             .at(miniSearch.search(search, { combineWith: "AND" }).map(structure => structure.id))
             .compact()

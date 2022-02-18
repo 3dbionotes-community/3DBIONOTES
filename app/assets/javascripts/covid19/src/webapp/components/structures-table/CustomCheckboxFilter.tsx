@@ -4,7 +4,7 @@ import { MenuItem, MenuList, Divider, Checkbox } from "@material-ui/core";
 import { GridMenu } from "@material-ui/data-grid";
 import i18n from "../../../utils/i18n";
 import { StyledSearchExampleButton } from "./SearchExampleButton";
-import FilterListIcon from '@material-ui/icons/FilterList';
+import FilterListIcon from "@material-ui/icons/FilterList";
 
 export interface CustomCheckboxFilterProps {
     filterState: Covid19Filter;
@@ -36,6 +36,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                 aria-label="toolbarExportLabel"
                 aria-haspopup="menu"
                 endIcon={startIcon}
+                style={{margin: "auto 5px"}}
             >
                 {i18n.t("Filter")}
             </StyledSearchExampleButton>
@@ -48,28 +49,38 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
             >
                 <MenuList className="MuiDataGrid-gridMenuList" autoFocusItem={isOpen}>
                     <MenuItem>
-                    <Checkbox
-                        checked={filterState?.antibody || false}
-                        onChange={handleChange}
-                        name="antibody"
-                    />{i18n.t("Antibodies")}</MenuItem>
-                    <MenuItem><Checkbox
-                        checked={filterState?.nanobody || false}
-                        onChange={handleChange}
-                        name="nanobody"
-                    />{i18n.t("Nanobodies")}</MenuItem>
-                    <MenuItem><Checkbox
-                        checked={filterState?.sybody || false}
-                        onChange={handleChange}
-                        name="sybody"
-                    />{i18n.t("Sybodies")}</MenuItem>
+                        <Checkbox
+                            checked={filterState?.antibody || false}
+                            onChange={handleChange}
+                            name="antibody"
+                        />
+                        {i18n.t("Antibodies")}
+                    </MenuItem>
+                    <MenuItem>
+                        <Checkbox
+                            checked={filterState?.nanobody || false}
+                            onChange={handleChange}
+                            name="nanobody"
+                        />
+                        {i18n.t("Nanobodies")}
+                    </MenuItem>
+                    <MenuItem>
+                        <Checkbox
+                            checked={filterState?.sybody || false}
+                            onChange={handleChange}
+                            name="sybody"
+                        />
+                        {i18n.t("Sybodies")}
+                    </MenuItem>
                     <Divider />
-                    <MenuItem><Checkbox
-                        checked={filterState?.pdbRedo || false}
-                        onChange={handleChange}
-                        name="pdbRedo"
-                    />{i18n.t("PDB-REDO")}</MenuItem>
-
+                    <MenuItem>
+                        <Checkbox
+                            checked={filterState?.pdbRedo || false}
+                            onChange={handleChange}
+                            name="pdbRedo"
+                        />
+                        {i18n.t("PDB-REDO")}
+                    </MenuItem>
                 </MenuList>
             </GridMenu>
         </React.Fragment>
