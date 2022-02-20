@@ -1,6 +1,6 @@
 import * as React from "react";
 import _ from "lodash";
-import { Covid19Filter } from "../../../domain/entities/Covid19Info";
+import { Covid19Filter, FilterKey } from "../../../domain/entities/Covid19Info";
 import { MenuItem, MenuList, Divider, Checkbox } from "@material-ui/core";
 import { GridMenu } from "@material-ui/data-grid";
 import i18n from "../../../utils/i18n";
@@ -28,11 +28,11 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
     };
     const handleClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
         const filter = event.currentTarget.dataset.filter;
-        if (filter === undefined) return;
+        if(filter === undefined) return;
 
         setFilterState({
             ...filterState,
-            [filter]: !filterState[filter],
+            [filter]: !filterState[filter as FilterKey],
         });
     };
     const startIcon = React.useMemo(() => <FilterListIcon />, []);

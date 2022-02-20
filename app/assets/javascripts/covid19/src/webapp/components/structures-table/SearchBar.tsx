@@ -8,14 +8,14 @@ import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import i18n from "../../../utils/i18n";
 import { useEventDebounce } from "../../hooks/useDebounce";
-import { Covid19Filter } from "../../../domain/entities/Covid19Info";
+import { Covid19Filter, FilterKey, filterKeys } from "../../../domain/entities/Covid19Info";
 import { useAppContext } from "../../contexts/app-context";
 
 export interface SearchBarProps {
     value: string;
     setValue(search: string): void;
     filterState: Covid19Filter;
-    setFilterState(filter: Covid19Filter): void;
+    setFilterState: React.Dispatch<React.SetStateAction<Covid19Filter>>;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
@@ -29,8 +29,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
         "SARS-CoV-2",
     ]);
     const [loading, setLoading] = React.useState(false);
-
-    const selectedFilterNames = _.keys(_.omitBy(filterState, value => !value));
+    const selectedFilterNames = filterKeys.filter(key => filterState[key]);
 
     React.useEffect(() => {
         setLoading(true);
@@ -40,13 +39,13 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
         );
         setLoading(false);
     }, [stateValue, compositionRoot.getAutoSuggestions]);
-
-    const handleDelete = (chipToDelete: any) => () => {
-        setFilterState({
-            ...filterState,
-            [chipToDelete]: false,
-        });
-    };
+    
+    const removeChip = React.useCallback(
+        (chipToDelete: FilterKey) => {
+            setFilterState(prevFilterState => ({ ...prevFilterState, [chipToDelete]: false }));
+        },
+        [setFilterState]
+    );
 
     return (
         <React.Fragment>
@@ -61,7 +60,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                                         : data.charAt(0).toUpperCase() +
                                           data.substr(1).toLowerCase()
                                 }
-                                onDelete={handleDelete(data)}
+                                onDelete={() => removeChip(data)}
                                 style={styles.chip}
                             />
                         </li>

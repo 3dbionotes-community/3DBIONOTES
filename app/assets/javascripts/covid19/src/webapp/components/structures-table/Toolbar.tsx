@@ -17,7 +17,7 @@ export interface ToolbarProps {
     search: string;
     setSearch(search: string): void;
     filterState: Covid19Filter;
-    setFilterState(filter: Covid19Filter): void;
+    setFilterState: React.Dispatch<React.SetStateAction<Covid19Filter>>;
     gridApi: GridApi;
     dataGrid: DataGrid;
     virtualScrollbarProps: VirtualScrollbarProps;

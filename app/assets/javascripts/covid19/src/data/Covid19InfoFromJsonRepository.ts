@@ -13,12 +13,14 @@ import {
     Structure,
 } from "../domain/entities/Covid19Info";
 import { Covid19InfoRepository, SearchOptions } from "../domain/repositories/Covid19InfoRepository";
+import { SearchOptions as MiniSearchSearchOptions } from "minisearch";
 import { cache } from "../utils/cache";
 import { data } from "./covid19-data";
 import * as Data from "./Covid19Data.types";
 
 export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     info: Covid19Info;
+    searchOptions: MiniSearchSearchOptions = { combineWith: "AND" };
 
     constructor() {
         this.info = { structures: getStructures() };
@@ -46,7 +48,7 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     autoSuggestions(search: string): string[] {
         const miniSearch = this.getMiniSearch();
         const structuresByText = miniSearch
-            .autoSuggest(search, { combineWith: "AND" })
+            .autoSuggest(search, this.searchOptions)
             .map(result => result.suggestion);
         return structuresByText;
     }
@@ -64,9 +66,8 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
 
     private filterByBodies(structures: Structure[], filterState: Covid19Filter): Structure[] {
         const isFilterStateEnabled =
-            filterState &&
-            (filterState.antibodies || filterState.nanobodies || filterState.sybodies);
-        const isPdbRedoFilterEnabled = filterState && filterState.pdbRedo;
+            filterState.antibodies || filterState.nanobodies || filterState.sybodies;
+        const isPdbRedoFilterEnabled = filterState.pdbRedo;
 
         if (!isFilterStateEnabled && !isPdbRedoFilterEnabled) return structures;
         const structuresToFilter = isPdbRedoFilterEnabled
@@ -81,7 +82,7 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
 
     private searchByText(structures: Structure[], search: string): Structure[] {
         const miniSearch = this.getMiniSearch();
-        const matchingIds = miniSearch.search(search, { combineWith: "AND" }).map(getId);
+        const matchingIds = miniSearch.search(search, this.searchOptions).map(getId);
         return _(structures).keyBy(getId).at(matchingIds).compact().value();
     }
 
