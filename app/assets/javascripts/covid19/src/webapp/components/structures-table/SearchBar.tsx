@@ -2,6 +2,8 @@ import React from "react";
 import _ from "lodash";
 import { TextField, InputAdornment, Chip, CircularProgress } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import parse from "autosuggest-highlight/parse";
+import match from "autosuggest-highlight/match";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import i18n from "../../../utils/i18n";
@@ -26,19 +28,18 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
         "Homo sapiens",
         "SARS-CoV-2",
     ]);
-    const loading = open && autoSuggestionOptions.length === 0;
+    const [loading, setLoading] = React.useState(false);
+
     const selectedFilterNames = _.keys(_.omitBy(filterState, value => !value));
 
     React.useEffect(() => {
+        setLoading(true);
         const autoSuggestions = compositionRoot.getAutoSuggestions.execute(stateValue);
-        setAutoSuggestionOptions(autoSuggestions);
+        setAutoSuggestionOptions(
+            stateValue === "" ? ["6YOR", "Homo sapiens", "SARS-CoV-2"] : autoSuggestions
+        );
+        setLoading(false);
     }, [stateValue, compositionRoot.getAutoSuggestions]);
-
-    React.useEffect(() => {
-        if (!open) {
-            setAutoSuggestionOptions(["6YOR", "Homo sapiens", "SARS-CoV-2"]);
-        }
-    }, [open]);
 
     const handleDelete = (chipToDelete: any) => () => {
         setFilterState({
@@ -54,7 +55,12 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                     {selectedFilterNames.map(data => (
                         <li key={data}>
                             <Chip
-                                label={data.charAt(0).toUpperCase() + data.substr(1).toLowerCase()}
+                                label={
+                                    data === "pdbRedo"
+                                        ? "PDB-REDO"
+                                        : data.charAt(0).toUpperCase() +
+                                          data.substr(1).toLowerCase()
+                                }
                                 onDelete={handleDelete(data)}
                                 style={styles.chip}
                             />
@@ -66,14 +72,30 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                     options={autoSuggestionOptions}
                     loading={loading}
                     open={open}
+                    fullWidth={true}
                     onOpen={() => setOpen(true)}
                     onClose={() => setOpen(false)}
-                    value={stateValue}
-                    onChange={(event, newValue) =>
-                        newValue !== null && setValue(newValue as string)
+                    getOptionSelected={(option, value) =>
+                        (option as string).toUpperCase() === (value as string).toUpperCase()
                     }
                     inputValue={stateValue}
                     onInputChange={(event, newInputValue) => setValue(newInputValue)}
+                    renderOption={(option, { inputValue }) => {
+                        const matches = match(option as string, inputValue);
+                        const parts = parse(option as string, matches);
+                        return (
+                            <div>
+                                {parts.map((part, index) => (
+                                    <span
+                                        key={index}
+                                        style={{ fontWeight: part.highlight ? 700 : 400 }}
+                                    >
+                                        {part.text}
+                                    </span>
+                                ))}
+                            </div>
+                        );
+                    }}
                     renderInput={params => (
                         <StyledTextField
                             {...params}
@@ -114,7 +136,6 @@ const StyledAutocomplete = styled(Autocomplete)`
 
 const StyledTextField = styled(TextField)`
     &.MuiTextField-root {
-        min-width: 500px;
         .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
             border: none;
         }
@@ -122,7 +143,12 @@ const StyledTextField = styled(TextField)`
 `;
 
 const styles = {
-    searchBar: { display: "flex" as const, border: "4px solid #607d8b", borderRadius: 12 },
+    searchBar: {
+        display: "flex" as const,
+        border: "4px solid #607d8b",
+        borderRadius: 12,
+        width: 500,
+    },
     chip: { margin: 2 },
     chips: {
         display: "flex" as const,

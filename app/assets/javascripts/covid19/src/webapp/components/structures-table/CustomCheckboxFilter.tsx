@@ -1,4 +1,5 @@
 import * as React from "react";
+import _ from "lodash";
 import { Covid19Filter } from "../../../domain/entities/Covid19Info";
 import { MenuItem, MenuList, Divider, Checkbox } from "@material-ui/core";
 import { GridMenu } from "@material-ui/data-grid";
@@ -25,6 +26,15 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
             [event.target.name]: event.target.checked,
         });
     };
+    const handleClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+        const filter = event.currentTarget.dataset.filter;
+        if (filter === undefined) return;
+
+        setFilterState({
+            ...filterState,
+            [filter]: !filterState[filter],
+        });
+    };
     const startIcon = React.useMemo(() => <FilterListIcon />, []);
 
     return (
@@ -49,34 +59,34 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                 position="bottom-start"
             >
                 <MenuList className="MuiDataGrid-gridMenuList" autoFocusItem={isOpen}>
-                    <MenuItem>
+                    <MenuItem onClick={handleClick} data-filter={"antibodies"}>
                         <StyledCheckbox
-                            checked={filterState?.antibodies || false}
+                            checked={filterState.antibodies}
                             onChange={handleChange}
                             name="antibodies"
                         />
                         {i18n.t("Antibodies")}
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem onClick={handleClick} data-filter={"nanobodies"}>
                         <StyledCheckbox
-                            checked={filterState?.nanobodies || false}
+                            checked={filterState.nanobodies}
                             onChange={handleChange}
                             name="nanobodies"
                         />
                         {i18n.t("Nanobodies")}
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem onClick={handleClick} data-filter={"sybodies"}>
                         <StyledCheckbox
-                            checked={filterState?.sybodies || false}
+                            checked={filterState.sybodies}
                             onChange={handleChange}
                             name="sybodies"
                         />
                         {i18n.t("Sybodies")}
                     </MenuItem>
                     <Divider />
-                    <MenuItem>
+                    <MenuItem onClick={handleClick} data-filter={"pdbRedo"}>
                         <StyledCheckbox
-                            checked={filterState?.pdbRedo || false}
+                            checked={filterState.pdbRedo}
                             onChange={handleChange}
                             name="pdbRedo"
                         />
