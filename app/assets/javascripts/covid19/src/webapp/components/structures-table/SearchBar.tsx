@@ -39,7 +39,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
         );
         setLoading(false);
     }, [stateValue, compositionRoot.getAutoSuggestions]);
-    
+
     const removeChip = React.useCallback(
         (chipToDelete: FilterKey) => {
             setFilterState(prevFilterState => ({ ...prevFilterState, [chipToDelete]: false }));

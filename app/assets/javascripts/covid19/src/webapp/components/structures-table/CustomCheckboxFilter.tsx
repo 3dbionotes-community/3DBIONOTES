@@ -28,7 +28,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
     };
     const handleClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
         const filter = event.currentTarget.dataset.filter;
-        if(filter === undefined) return;
+        if (filter === undefined) return;
 
         setFilterState({
             ...filterState,
