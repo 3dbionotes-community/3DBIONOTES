@@ -14,7 +14,6 @@ export interface StructuresTableProps {}
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => {
     const { compositionRoot } = useAppContext();
     const [page, setPage] = React.useState(0);
-    console.log(page);
     const [pageSize, setPageSize] = React.useState(pageSizes[0]);
     const classes = useStyles();
 
