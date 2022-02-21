@@ -11,7 +11,6 @@ import styled from "styled-components";
 export interface CustomCheckboxFilterProps {
     filterState: Covid19Filter;
     setFilterState(filter: Covid19Filter): void;
-
 }
 
 export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.memo(props => {

@@ -29,7 +29,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
         setPage(0);
         setSearch0(value);
     }, []);
-    
+
     const {
         gridApi,
         virtualScrollbarProps,
@@ -99,8 +99,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
     ]);
 
     const setFirstPage = React.useCallback<GridProp<"onSortModelChange">>(() => setPage(0), []);
-    const setFirstPageFilter = React.useCallback<GridProp<"onFilterModelChange">>(() => setPage(0), []);
-
 
     const setPageFromParams = React.useCallback<GridProp<"onPageChange">>(params => {
         return setPage(params.page);
@@ -116,7 +114,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
                 page={page}
                 onStateChange={onStateChange}
                 onSortModelChange={setFirstPage}
-                onFilterModelChange={setFirstPageFilter}
                 className={classes.root}
                 rowHeight={220}
                 sortingOrder={sortingOrder}

@@ -69,7 +69,6 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                         <CustomCheckboxFilter
                             filterState={filterState}
                             setFilterState={setFilterState}
-
                         />
                     </div>
                     <div style={styles.exampleRow}>
