@@ -7,7 +7,7 @@ import match from "autosuggest-highlight/match";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import i18n from "../../../utils/i18n";
-import { useEventDebounce } from "../../hooks/useDebounce";
+import { useDebouncedSetter } from "../../hooks/useDebounce";
 import {
     Covid19Filter,
     FilterKey,
@@ -27,7 +27,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const { compositionRoot } = useAppContext();
     const { value, setValue, filterState, setFilterState } = props;
     const [open, setOpen] = React.useState(false);
-    const [stateValue, setValueFromEv] = useEventDebounce(value, setValue, { delay: 500 });
+    const [stateValue, setValueDebounced] = useDebouncedSetter(value, setValue, { delay: 500 });
     const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState<Array<string>>([
         "6YOR",
         "Homo sapiens",
@@ -80,7 +80,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                         option.toUpperCase() === value.toUpperCase()
                     }
                     inputValue={stateValue}
-                    onInputChange={(_event, newInputValue) => setValue(newInputValue)}
+                    onInputChange={(_event, newInputValue) => setValueDebounced(newInputValue)}
                     renderOption={(option, { inputValue }) => {
                         const matches = match(option, inputValue);
                         const parts = parse(option, matches);
@@ -102,7 +102,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                             {...params}
                             variant="outlined"
                             value={stateValue}
-                            onChange={setValueFromEv}
+                            onChange={ev => setValueDebounced(ev.target.value)}
                             placeholder={i18n.t(
                                 "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
                             )}
