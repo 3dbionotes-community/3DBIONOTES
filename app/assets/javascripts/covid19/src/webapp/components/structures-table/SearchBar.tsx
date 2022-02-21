@@ -68,7 +68,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                         </li>
                     ))}
                 </div>
-                <StyledAutocomplete
+                <StyledAutocomplete<string>
                     id="covid19-searchbar-autocomplete"
                     options={autoSuggestionOptions}
                     loading={loading}
@@ -77,13 +77,13 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                     onOpen={() => setOpen(true)}
                     onClose={() => setOpen(false)}
                     getOptionSelected={(option, value) =>
-                        (option as string).toUpperCase() === (value as string).toUpperCase()
+                        option.toUpperCase() === value.toUpperCase()
                     }
                     inputValue={stateValue}
-                    onInputChange={(event, newInputValue) => setValue(newInputValue)}
+                    onInputChange={(_event, newInputValue) => setValue(newInputValue)}
                     renderOption={(option, { inputValue }) => {
-                        const matches = match(option as string, inputValue);
-                        const parts = parse(option as string, matches);
+                        const matches = match(option, inputValue);
+                        const parts = parse(option, matches);
                         return (
                             <div>
                                 {parts.map((part, index) => (
@@ -133,7 +133,7 @@ const StyledAutocomplete = styled(Autocomplete)`
         .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
         padding-right: 10px;
     }
-`;
+` as typeof Autocomplete;
 
 const StyledTextField = styled(TextField)`
     &.MuiTextField-root {
