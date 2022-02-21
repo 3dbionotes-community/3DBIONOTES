@@ -11,6 +11,7 @@ import styled from "styled-components";
 export interface CustomCheckboxFilterProps {
     filterState: Covid19Filter;
     setFilterState(filter: Covid19Filter): void;
+
 }
 
 export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.memo(props => {
@@ -20,6 +21,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
 
     const openMenu = React.useCallback(event => setAnchorEl(event.currentTarget), []);
     const closeMenu = React.useCallback(() => setAnchorEl(null), []);
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFilterState({
             ...filterState,

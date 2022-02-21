@@ -14,12 +14,22 @@ export interface StructuresTableProps {}
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => {
     const { compositionRoot } = useAppContext();
     const [page, setPage] = React.useState(0);
+    console.log(page);
     const [pageSize, setPageSize] = React.useState(pageSizes[0]);
     const classes = useStyles();
 
-    const [search, setSearch] = React.useState("");
-    const [filterState, setFilterState] = React.useState(initialFilterState);
+    const [search, setSearch0] = React.useState("");
+    const [filterState, setFilterState0] = React.useState(initialFilterState);
+    const setFilterState = React.useCallback((value: Covid19Filter) => {
+        setPage(0);
+        setFilterState0(value);
+    }, []);
 
+    const setSearch = React.useCallback((value: string) => {
+        setPage(0);
+        setSearch0(value);
+    }, []);
+    
     const {
         gridApi,
         virtualScrollbarProps,
@@ -89,6 +99,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
     ]);
 
     const setFirstPage = React.useCallback<GridProp<"onSortModelChange">>(() => setPage(0), []);
+    const setFirstPageFilter = React.useCallback<GridProp<"onFilterModelChange">>(() => setPage(0), []);
+
 
     const setPageFromParams = React.useCallback<GridProp<"onPageChange">>(params => {
         return setPage(params.page);
@@ -104,6 +116,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
                 page={page}
                 onStateChange={onStateChange}
                 onSortModelChange={setFirstPage}
+                onFilterModelChange={setFirstPageFilter}
                 className={classes.root}
                 rowHeight={220}
                 sortingOrder={sortingOrder}

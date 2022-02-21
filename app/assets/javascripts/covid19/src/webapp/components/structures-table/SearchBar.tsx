@@ -20,7 +20,8 @@ export interface SearchBarProps {
     value: string;
     setValue(search: string): void;
     filterState: Covid19Filter;
-    setFilterState: React.Dispatch<React.SetStateAction<Covid19Filter>>;
+    setFilterState(filter: Covid19Filter): void;
+
 }
 
 export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
@@ -47,9 +48,9 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
 
     const removeChip = React.useCallback(
         (chipToDelete: FilterKey) => {
-            setFilterState(prevFilterState => ({ ...prevFilterState, [chipToDelete]: false }));
+            setFilterState(({ ...filterState, [chipToDelete]: false }));
         },
-        [setFilterState]
+        [setFilterState, filterState]
     );
 
     const t = React.useMemo(getTranslations, []);
