@@ -84,7 +84,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
-            if (!element || !newSelection.main) return;
+            if (!element) return;
             const currentSelection = prevSelectionRef.current;
             const pluginAlreadyRendered = Boolean(pdbePlugin);
             const ligandChanged =
@@ -128,11 +128,12 @@ function usePdbePlugin(options: MolecularStructureProps) {
         const currentSelection = prevSelectionRef.current || emptySelection;
         setPrevSelection(newSelection);
 
-        const uploadDataRemoved = currentSelection.main.token && !newSelection.main.token;
+        const uploadDataRemoved =
+            currentSelection.type === "uploadData" && newSelection.type !== "uploadData";
 
         if (uploadDataRemoved) pdbePlugin.visual.remove({});
 
-        if (newSelection.main.token) return _.noop;
+        if (newSelection.type !== "free") return _.noop;
 
         const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
 
@@ -161,24 +162,24 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const updatePluginOnNewSelectionEffect = useCallbackEffect(updatePluginOnNewSelection);
     React.useEffect(updatePluginOnNewSelectionEffect, [updatePluginOnNewSelectionEffect]);
 
-    const { token } = newSelection.main;
+    const uploadDataToken = newSelection.type === "uploadData" ? newSelection.token : undefined;
 
     React.useEffect(() => {
         if (!pdbePlugin) return;
 
         pdbePlugin.visual.remove({});
-        if (!token) return;
+        if (!uploadDataToken) return;
 
         pdbePlugin.load(
             {
-                url: `${routes.bionotesDev}/upload/${token}/structure_file.cif`,
+                url: `${routes.bionotesDev}/upload/${uploadDataToken}/structure_file.cif`,
                 format: "mmcif",
                 isBinary: false,
                 assemblyId: "1",
             },
             false
         );
-    }, [pdbePlugin, token, compositionRoot]);
+    }, [pdbePlugin, uploadDataToken, compositionRoot]);
 
     return { pluginRef, pdbePlugin, isLoading };
 }

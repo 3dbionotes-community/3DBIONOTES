@@ -1,14 +1,14 @@
 import { FutureData } from "../entities/FutureData";
 import {
-    BuildResponse,
-    NetworkDefinition,
+    BuildNetworkOptions,
+    BuildNetworkResult,
     NetworkRepository,
 } from "../repositories/NetworkRepository";
 
 export class BuildNetworkUseCase {
     constructor(private networkRepository: NetworkRepository) {}
 
-    execute(definition: NetworkDefinition): FutureData<BuildResponse> {
-        return this.networkRepository.build(definition);
+    execute(options: BuildNetworkOptions): FutureData<BuildNetworkResult> {
+        return this.networkRepository.build(options);
     }
 }

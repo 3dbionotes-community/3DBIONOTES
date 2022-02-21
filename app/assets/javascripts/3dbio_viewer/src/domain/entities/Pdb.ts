@@ -6,6 +6,7 @@ import { Color } from "./Color";
 import { Experiment } from "./Experiment";
 import { Link } from "./Link";
 import { Protein } from "./Protein";
+import { ProteinNetwork } from "./ProteinNetwork";
 import { Track } from "./Track";
 import { Variants } from "./Variant";
 
@@ -25,6 +26,9 @@ export interface Pdb {
         alignment: "left" | "right" | "center";
         data: Record<string, Array<{ color: Color[]; text: string }>>;
     };
+    proteinNetwork: Maybe<ProteinNetwork>;
+    file: Maybe<string>;
+    path: Maybe<string>;
 }
 
 export type PdbId = string;

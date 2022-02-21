@@ -1,6 +1,6 @@
 import { FutureData } from "../entities/FutureData";
 import { UploadData } from "../entities/UploadData";
-import { UploadDataRepository as UploadDataRepository } from "../repositories/UploadDataRepository";
+import { UploadDataRepository } from "../repositories/UploadDataRepository";
 
 export class GetUploadDataUseCase {
     constructor(private uploadDataRepository: UploadDataRepository) {}

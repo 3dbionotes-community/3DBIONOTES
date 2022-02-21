@@ -1,7 +1,12 @@
 import React from "react";
 import { FutureData } from "../../domain/entities/FutureData";
 import { Ligand } from "../../domain/entities/Ligand";
-import { PdbInfo, setPdbInfoLigands } from "../../domain/entities/PdbInfo";
+import {
+    getPdbInfoFromUploadData,
+    PdbInfo,
+    setPdbInfoLigands,
+} from "../../domain/entities/PdbInfo";
+import { ProteinNetwork } from "../../domain/entities/ProteinNetwork";
 import { UploadData } from "../../domain/entities/UploadData";
 import { Future } from "../../utils/future";
 import { Maybe } from "../../utils/ts-utils";
@@ -22,37 +27,24 @@ export function useStateFromFuture<Value>(
     return value;
 }
 
-export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) {
+export function usePdbInfo(
+    selection: Selection,
+    uploadData: Maybe<UploadData>,
+    proteinNetwork: Maybe<ProteinNetwork>
+) {
     const { compositionRoot } = useAppContext();
     const mainPdbId = getMainPdbId(selection);
     const [ligands, setLigands] = React.useState<Ligand[]>();
 
-    const getPdbInfo = React.useCallback(() => {
+    const getPdbInfo = React.useCallback((): Maybe<FutureData<PdbInfo>> => {
         if (mainPdbId) {
             return compositionRoot.getPdbInfo.execute(mainPdbId);
         } else if (uploadData) {
-            const pdbInfo: PdbInfo = {
-                id: undefined,
-                emdbs: [],
-                chains: uploadData.chains.map(chain => {
-                    return {
-                        id: chain.chain,
-                        name: chain.name,
-                        shortName: chain.name,
-                        chainId: chain.chain,
-                        protein: {
-                            id: chain.uniprot,
-                            name: chain.uniprotTitle,
-                            gene: chain.gene_symbol,
-                            organism: chain.organism,
-                        },
-                    };
-                }),
-                ligands: [],
-            };
-            return Future.success(pdbInfo) as FutureData<PdbInfo>;
+            return Future.success(getPdbInfoFromUploadData(uploadData));
+        } else if (proteinNetwork) {
+            return Future.success(getPdbInfoFromUploadData(proteinNetwork.uploadData));
         }
-    }, [mainPdbId, compositionRoot, uploadData]);
+    }, [mainPdbId, compositionRoot, uploadData, proteinNetwork]);
 
     const pdbInfo = useStateFromFuture(getPdbInfo);
 

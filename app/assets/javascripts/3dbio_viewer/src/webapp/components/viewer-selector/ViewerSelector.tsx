@@ -58,24 +58,28 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                 <div className="status">
                     {uploadData && <div>{uploadData.title}</div>}
 
-                    {selection.main && selection.main.pdb && (
-                        <MainItemBox label={i18n.t("PDB")}>
-                            <SelectionItem
-                                selection={selection}
-                                item={selection.main?.pdb}
-                                onVisibilityChange={update.setMainItemVisibility}
-                            />
-                        </MainItemBox>
-                    )}
+                    {selection.type === "free" && (
+                        <>
+                            {selection.main.pdb && (
+                                <MainItemBox label={i18n.t("PDB")}>
+                                    <SelectionItem
+                                        selection={selection}
+                                        item={selection.main?.pdb}
+                                        onVisibilityChange={update.setMainItemVisibility}
+                                    />
+                                </MainItemBox>
+                            )}
 
-                    {selection.main && selection.main.emdb && (
-                        <MainItemBox label={i18n.t("EMDB")} className="emdb">
-                            <SelectionItem
-                                selection={selection}
-                                item={selection.main.emdb}
-                                onVisibilityChange={update.setMainItemVisibility}
-                            />
-                        </MainItemBox>
+                            {selection.main.emdb && (
+                                <MainItemBox label={i18n.t("EMDB")} className="emdb">
+                                    <SelectionItem
+                                        selection={selection}
+                                        item={selection.main.emdb}
+                                        onVisibilityChange={update.setMainItemVisibility}
+                                    />
+                                </MainItemBox>
+                            )}
+                        </>
                     )}
 
                     <button onClick={openSearch}>
@@ -92,15 +96,16 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                 </div>
 
                 <div className="selection">
-                    {selection.overlay.map(item => (
-                        <SelectionItem
-                            key={item.id}
-                            selection={selection}
-                            item={item}
-                            onVisibilityChange={update.setOverlayItemVisibility}
-                            onRemove={update.removeOverlayItem}
-                        />
-                    ))}
+                    {selection.type === "free" &&
+                        selection.overlay.map(item => (
+                            <SelectionItem
+                                key={item.id}
+                                selection={selection}
+                                item={item}
+                                onVisibilityChange={update.setOverlayItemVisibility}
+                                onRemove={update.removeOverlayItem}
+                            />
+                        ))}
                 </div>
             </div>
 

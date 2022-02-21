@@ -4,9 +4,11 @@ import { AxiosRequestConfig } from "axios";
 import { request } from "../data/request-utils";
 import { RequestResult } from "./future-axios";
 
+type Params = Record<string, string | File | undefined>;
+
 export function postFormRequest<ResponseData>(options: {
     url: string;
-    params: Record<string, string | File | undefined>;
+    params: Params;
 }): FutureData<RequestResult<ResponseData>> {
     const { url, params } = options;
     const data = new FormData();

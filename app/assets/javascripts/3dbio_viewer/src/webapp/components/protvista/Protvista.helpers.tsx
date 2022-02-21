@@ -64,7 +64,7 @@ function blockHasRelevantData(block: BlockDef, pdb: Pdb): boolean {
             .compact()
             .value();
         const trackIds = tracks.map(track => track.id);
-        const hasCustomComponent = Boolean(block.component);
+        const hasCustomComponent = Boolean(block.component || block.id === "proteinInteraction");
         const hasRelevantTracks =
             !_(tracks).isEmpty() && !_.isEqual(trackIds, ["structure-coverage"]);
 

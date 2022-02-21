@@ -178,6 +178,9 @@ export class ApiPdbRepository implements PdbRepository {
             tracks,
             variants: pdbVariants,
             experiment,
+            proteinNetwork: undefined,
+            file: undefined,
+            path: undefined,
         };
     }
 }

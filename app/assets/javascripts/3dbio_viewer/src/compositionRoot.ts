@@ -15,6 +15,7 @@ import { GetAnnotationsFromUploadData } from "./domain/usecases/GetAnnotationsFr
 import { DownloadAnnotationsExampleUseCase } from "./domain/usecases/DownloadAnnotationsExampleUseCase";
 import { BuildNetworkUseCase } from "./domain/usecases/BuildNetworkUseCase";
 import { BionotesNetworkRepository } from "./data/repositories/BionotesNetworkRepository";
+import { GetProteinNetworkUseCase as GetNetworkUseCase } from "./domain/usecases/GetNetworkUseCase";
 
 export function getCompositionRoot() {
     const pdbRepository = new ApiPdbRepository();
@@ -38,6 +39,7 @@ export function getCompositionRoot() {
         getUploadData: new GetUploadDataUseCase(uploadDataRepository),
         downloadAnnotationsExample: new DownloadAnnotationsExampleUseCase(uploadDataRepository),
         buildNetwork: new BuildNetworkUseCase(networkRepository),
+        getNetwork: new GetNetworkUseCase(networkRepository),
     };
 }
 

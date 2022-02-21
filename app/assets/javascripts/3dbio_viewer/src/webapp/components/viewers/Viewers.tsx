@@ -16,15 +16,17 @@ import { UploadData } from "../../../domain/entities/UploadData";
 import { Maybe } from "../../../utils/ts-utils";
 import { Annotations } from "../../../domain/entities/Annotation";
 import { getVisibleBlocks } from "../protvista/Protvista.helpers";
+import { ProteinNetwork } from "../../../domain/entities/ProteinNetwork";
 
 export interface ViewersProps {
     viewerState: ViewerState;
     pdbInfo: Maybe<PdbInfo>;
     uploadData: Maybe<UploadData>;
+    proteinNetwork: Maybe<ProteinNetwork>;
 }
 
 export const Viewers: React.FC<ViewersProps> = React.memo(props => {
-    const { viewerState, pdbInfo, uploadData } = props;
+    const { viewerState, pdbInfo, uploadData, proteinNetwork } = props;
     const { selection } = viewerState;
     const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfo);
 
@@ -55,6 +57,20 @@ export const Viewers: React.FC<ViewersProps> = React.memo(props => {
             }
         });
     }, [uploadData, setPdbLoader, pdbLoader.type]);
+
+    // Add data from protein network
+    React.useEffect(() => {
+        if (pdbLoader.type !== "loaded") return;
+
+        setPdbLoader(pdbLoader => {
+            if (pdbLoader.type === "loaded") {
+                const newPdb = { ...pdbLoader.data, proteinNetwork };
+                return { type: "loaded", data: newPdb };
+            } else {
+                return pdbLoader;
+            }
+        });
+    }, [proteinNetwork, setPdbLoader, pdbLoader.type]);
 
     return (
         <React.Fragment>

@@ -7,6 +7,8 @@ import { ViewerState } from "../view-models/ViewerState";
 import { usePdbInfo } from "../hooks/loader-hooks";
 import { useAppContext } from "./AppContext";
 import { UploadData } from "../../domain/entities/UploadData";
+import { setFromError } from "../utils/error";
+import { ProteinNetwork } from "../../domain/entities/ProteinNetwork";
 
 export interface RootViewerContentsProps {
     viewerState: ViewerState;
@@ -17,19 +19,26 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const { compositionRoot } = useAppContext();
     const { selection, setSelection } = viewerState;
     const [uploadData, setUploadData] = React.useState<UploadData>();
-    const { pdbInfo, setLigands } = usePdbInfo(selection, uploadData);
+    const [proteinNetwork, setProteinNetwork] = React.useState<ProteinNetwork>();
+    const { pdbInfo, setLigands } = usePdbInfo(selection, uploadData, proteinNetwork);
     const [error, setError] = React.useState<string>();
-    const { token } = selection.main;
+
+    const uploadDataToken = selection.type === "uploadData" ? selection.token : undefined;
+    const networkToken = selection.type === "network" ? selection.token : undefined;
 
     React.useEffect(() => {
-        if (!token) {
-            setUploadData(undefined);
+        if (uploadDataToken) {
+            return compositionRoot.getUploadData
+                .execute(uploadDataToken)
+                .run(setUploadData, err => setFromError(setError, err, `Cannot get data`));
+        } else if (networkToken) {
+            return compositionRoot.getNetwork
+                .execute(networkToken)
+                .run(setProteinNetwork, err => setFromError(setError, err, `Cannot get data`));
         } else {
-            return compositionRoot.getUploadData.execute(token).run(setUploadData, err => {
-                setError(_.compact([`Cannot get data token: ${token}`, err.message]).join(" - "));
-            });
+            setUploadData(undefined);
         }
-    }, [token, compositionRoot]);
+    }, [uploadDataToken, networkToken, compositionRoot]);
 
     return (
         <div id="viewer">
@@ -39,7 +48,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                 pdbInfo={pdbInfo}
                 selection={selection}
                 onSelectionChange={setSelection}
-                uploadData={uploadData}
+                uploadData={uploadData || proteinNetwork?.uploadData}
             />
 
             <div id="left">
@@ -52,7 +61,14 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             </div>
 
             <div id="right">
-                {<Viewers viewerState={viewerState} pdbInfo={pdbInfo} uploadData={uploadData} />}
+                {
+                    <Viewers
+                        viewerState={viewerState}
+                        pdbInfo={pdbInfo}
+                        uploadData={uploadData}
+                        proteinNetwork={proteinNetwork}
+                    />
+                }
             </div>
         </div>
     );
