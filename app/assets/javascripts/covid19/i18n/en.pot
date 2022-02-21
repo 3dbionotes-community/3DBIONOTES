@@ -5,8 +5,20 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-02-18T09:22:11.336Z\n"
-"PO-Revision-Date: 2022-02-18T09:22:11.336Z\n"
+"POT-Creation-Date: 2022-02-21T09:54:55.429Z\n"
+"PO-Revision-Date: 2022-02-21T09:54:55.429Z\n"
+
+msgid "Antibodies"
+msgstr ""
+
+msgid "Nanobodies"
+msgstr ""
+
+msgid "Sybodies"
+msgstr ""
+
+msgid "PDB-REDO"
+msgstr ""
 
 msgid "SARS-CoV-2 in structure databases"
 msgstr ""
@@ -33,18 +45,6 @@ msgid "Details"
 msgstr ""
 
 msgid "Filter"
-msgstr ""
-
-msgid "Antibodies"
-msgstr ""
-
-msgid "Nanobodies"
-msgstr ""
-
-msgid "Sybodies"
-msgstr ""
-
-msgid "PDB-REDO"
 msgstr ""
 
 msgid "Export"
