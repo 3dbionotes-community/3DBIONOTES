@@ -8,7 +8,12 @@ import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import i18n from "../../../utils/i18n";
 import { useEventDebounce } from "../../hooks/useDebounce";
-import { Covid19Filter, FilterKey, filterKeys } from "../../../domain/entities/Covid19Info";
+import {
+    Covid19Filter,
+    FilterKey,
+    filterKeys,
+    getTranslations,
+} from "../../../domain/entities/Covid19Info";
 import { useAppContext } from "../../contexts/app-context";
 
 export interface SearchBarProps {
@@ -47,20 +52,17 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
         [setFilterState]
     );
 
+    const t = React.useMemo(getTranslations, []);
+
     return (
         <React.Fragment>
             <div style={styles.searchBar}>
                 <div style={styles.chips}>
-                    {selectedFilterNames.map(data => (
-                        <li key={data}>
+                    {selectedFilterNames.map(filterKey => (
+                        <li key={filterKey}>
                             <Chip
-                                label={
-                                    data === "pdbRedo"
-                                        ? "PDB-REDO"
-                                        : data.charAt(0).toUpperCase() +
-                                          data.substr(1).toLowerCase()
-                                }
-                                onDelete={() => removeChip(data)}
+                                label={t.filterKeys[filterKey]}
+                                onDelete={() => removeChip(filterKey)}
                                 style={styles.chip}
                             />
                         </li>

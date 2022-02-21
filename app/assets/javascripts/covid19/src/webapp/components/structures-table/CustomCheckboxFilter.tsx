@@ -1,6 +1,6 @@
 import * as React from "react";
 import _ from "lodash";
-import { Covid19Filter, FilterKey } from "../../../domain/entities/Covid19Info";
+import { Covid19Filter, FilterKey, getTranslations } from "../../../domain/entities/Covid19Info";
 import { MenuItem, MenuList, Divider, Checkbox } from "@material-ui/core";
 import { GridMenu } from "@material-ui/data-grid";
 import i18n from "../../../utils/i18n";
@@ -37,6 +37,8 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
     };
     const startIcon = React.useMemo(() => <FilterListIcon />, []);
 
+    const t = React.useMemo(getTranslations, []);
+
     return (
         <React.Fragment>
             <StyledSearchExampleButton
@@ -65,7 +67,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                             onChange={handleChange}
                             name="antibodies"
                         />
-                        {i18n.t("Antibodies")}
+                        {t.filterKeys.antibodies}
                     </MenuItem>
                     <MenuItem onClick={handleClick} data-filter={"nanobodies"}>
                         <StyledCheckbox
@@ -73,7 +75,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                             onChange={handleChange}
                             name="nanobodies"
                         />
-                        {i18n.t("Nanobodies")}
+                        {t.filterKeys.nanobodies}
                     </MenuItem>
                     <MenuItem onClick={handleClick} data-filter={"sybodies"}>
                         <StyledCheckbox
@@ -81,7 +83,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                             onChange={handleChange}
                             name="sybodies"
                         />
-                        {i18n.t("Sybodies")}
+                        {t.filterKeys.sybodies}
                     </MenuItem>
                     <Divider />
                     <MenuItem onClick={handleClick} data-filter={"pdbRedo"}>
@@ -90,7 +92,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                             onChange={handleChange}
                             name="pdbRedo"
                         />
-                        {i18n.t("PDB-REDO")}
+                        {t.filterKeys.pdbRedo}
                     </MenuItem>
                 </MenuList>
             </GridMenu>

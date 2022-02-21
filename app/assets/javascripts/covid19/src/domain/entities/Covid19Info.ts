@@ -1,4 +1,5 @@
 import _ from "lodash";
+import i18n from "../../utils/i18n";
 
 export interface Covid19Info {
     structures: Structure[];
@@ -154,4 +155,15 @@ export function addPdbValidationToStructure(
     } else {
         return structure;
     }
+}
+
+export function getTranslations() {
+    return {
+        filterKeys: {
+            antibodies: i18n.t("Antibodies"),
+            nanobodies: i18n.t("Nanobodies"),
+            sybodies: i18n.t("Sybodies"),
+            pdbRedo: i18n.t("PDB-REDO"),
+        } as Record<FilterKey, string>,
+    };
 }
