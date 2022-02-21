@@ -52,4 +52,7 @@ module.exports = {
             version: "16.6.0",
         },
     },
+    parserOptions: {
+        warnOnUnsupportedTypeScriptVersion: false,
+    },
 };
