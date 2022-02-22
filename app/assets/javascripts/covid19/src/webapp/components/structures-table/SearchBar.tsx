@@ -76,6 +76,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                     fullWidth={true}
                     onOpen={() => setOpen(true)}
                     onClose={() => setOpen(false)}
+                    clearOnBlur={false}
                     getOptionSelected={(option, value) =>
                         option.toUpperCase() === value.toUpperCase()
                     }
