@@ -5,10 +5,13 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-02-04T07:04:43.269Z\n"
-"PO-Revision-Date: 2022-02-04T07:04:43.269Z\n"
+"POT-Creation-Date: 2022-02-22T12:24:51.147Z\n"
+"PO-Revision-Date: 2022-02-22T12:24:51.147Z\n"
 
 msgid "SARS-CoV-2 in structure databases"
+msgstr ""
+
+msgid "View more"
 msgstr ""
 
 msgid "Title"
@@ -47,6 +50,24 @@ msgstr ""
 msgid "Examples"
 msgstr ""
 
+msgid "Macromolecules: "
+msgstr ""
+
+msgid "ID: {{id}}"
+msgstr ""
+
+msgid "Title: {{title}}"
+msgstr ""
+
+msgid "Authors: {{authors}}"
+msgstr ""
+
+msgid "Journal: {{journal}}"
+msgstr ""
+
+msgid "Abstract: {{abstract}}"
+msgstr ""
+
 msgid "ID"
 msgstr ""
 
@@ -54,6 +75,9 @@ msgid "Method"
 msgstr ""
 
 msgid "Resolution"
+msgstr ""
+
+msgid "UniProt"
 msgstr ""
 
 msgid "Alt Names"
@@ -87,4 +111,7 @@ msgid "PDB-Redo"
 msgstr ""
 
 msgid "Isolde"
+msgstr ""
+
+msgid " and {{overflow}} more..."
 msgstr ""
