@@ -66,7 +66,7 @@ export const columnsBase: Columns = [
         width: 180,
         sortable: false,
         renderCell: EntityCell,
-        renderString: row => row.entities.map(entity => entity.id).join(", "),
+        renderString: row => row.entities.map(entity => entity.name).join(", "),
     }),
     column("ligands", {
         headerName: i18n.t("Ligands"),
@@ -88,7 +88,7 @@ export const columnsBase: Columns = [
         width: 200,
         sortable: false,
         renderCell: DetailsCell,
-        renderString: row => row.details || "",
+        renderString: row => "",
     }),
 ];
 
