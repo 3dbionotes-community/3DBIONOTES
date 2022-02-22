@@ -10,7 +10,6 @@ export interface Organism {
 }
 
 export interface Entity {
-    id: string;
     uniprotAcc: string | null;
     name: string;
     organism: string;
@@ -42,7 +41,7 @@ export interface Structure {
     emdb: Maybe<Emdb>;
     organisms: Organism[];
     ligands: Ligand[];
-    details: Maybe<string>;
+    details: Maybe<Details>;
     validations: {
         pdb: PdbValidation[];
         emdb: EmdbValidation[];
@@ -106,6 +105,48 @@ export type Maybe<T> = T | undefined | null;
 export type Url = string;
 
 export type Ref = { id: Id };
+
+export interface RefDB {
+    title: string;
+    authors: string[];
+    deposited?: string;
+    released?: string;
+}
+
+export interface RefEMDB extends RefDB {}
+
+export interface RefPDB {}
+
+export interface RefDoc {
+    id: string;
+    title: string;
+    authors: string[];
+    abstract?: string;
+    journal: string;
+    pubDate: string;
+    idLink?: URL;
+    doi?: URL;
+}
+
+export interface Sample {
+    name: string;
+    exprSystem?: string;
+    assembly?: string;
+    macromolecules?: string[];
+    uniProts?: string[];
+    genes?: string[];
+    bioFunction?: string[];
+    bioProcess?: string[];
+    cellComponent?: string[];
+    domains?: string[];
+}
+
+export interface Details {
+    refEMDB?: RefEMDB;
+    refPDB?: RefPDB;
+    sample?: Sample;
+    refdoc?: RefDoc[];
+}
 
 export interface EntityBodiesFilter {
     antibody: boolean;

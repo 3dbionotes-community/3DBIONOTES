@@ -64,7 +64,7 @@ export type EntityRef = { organism?: string; uniprotAcc?: string };
 
 export type Url = string;
 
-type Author = String;
+type Author = string;
 export interface RefDB {
     title: string;
     authors: Author[];
