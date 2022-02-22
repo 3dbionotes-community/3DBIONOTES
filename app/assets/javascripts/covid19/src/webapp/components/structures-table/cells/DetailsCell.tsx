@@ -20,6 +20,7 @@ export const DetailsCell: React.FC<CellProps> = React.memo(props => {
     const Container = styled.div`
         display: flex;
         flex-direction: column;
+        line-height: 1.5;
         ul {
             ${moreDetails !== false ? "margin: 10px 0;" : "margin:0;"}
             ${moreDetails !== false &&
@@ -200,4 +201,8 @@ export const DetailsCell: React.FC<CellProps> = React.memo(props => {
 
 const ListItem = styled.li`
     font-size: 0.75rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
 `;
