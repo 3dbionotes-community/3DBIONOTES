@@ -18,13 +18,14 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
     const entities = React.useMemo(() => {
         return row.entities.map(entity => {
             return {
-                id: entity.id,
                 name: entity.name,
                 tooltip: (
                     <React.Fragment>
-                        <div>
-                            {i18n.t("ID")}: {entity.uniprotAcc}
-                        </div>
+                        {entity.uniprotAcc && (
+                            <div>
+                                {i18n.t("UniProt")}: {entity.uniprotAcc}
+                            </div>
+                        )}
 
                         {entity.altNames.length !== 0 && (
                             <div>
@@ -52,10 +53,9 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
         display: flex;
         flex-direction: column;
         ul {
-            margin-bottom: 10px;
-            max-height: ${rowHeight - 62}px;
-            overflow-x: hidden;
-            overflow-y: hidden;
+            ${moreDetails !== false ? "margin: 10px 0;" : "margin:0;"}
+            ${moreDetails !== false &&
+            "max-height: " + (rowHeight - 62) + "px; overflow-y: hidden; overflow-x: hidden;"}
         }
         div {
             text-align: center;
@@ -67,9 +67,9 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
 
     return (
         <Container>
-            <ul>
-                {entities.map(entity => (
-                    <Link key={entity.id} tooltip={entity.tooltip} text={entity.name} />
+            <ul ref={ref}>
+                {entities.map((entity, idx) => (
+                    <Link key={idx} tooltip={entity.tooltip} text={entity.name} />
                 ))}
             </ul>
             {height >= rowHeight - 62 && moreDetails !== false && (

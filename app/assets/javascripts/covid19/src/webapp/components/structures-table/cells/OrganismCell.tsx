@@ -48,10 +48,9 @@ export const OrganismCell: React.FC<CellProps> = React.memo(props => {
         display: flex;
         flex-direction: column;
         ul {
-            margin-bottom: 10px;
-            max-height: ${rowHeight - 62}px;
-            overflow-x: hidden;
-            overflow-y: hidden;
+            ${moreDetails !== false ? "margin: 10px 0;" : "margin:0;"}
+            ${moreDetails !== false &&
+            "max-height: " + (rowHeight - 62) + "px; overflow-y: hidden; overflow-x: hidden;"}
         }
         div {
             text-align: center;
@@ -63,7 +62,7 @@ export const OrganismCell: React.FC<CellProps> = React.memo(props => {
 
     return (
         <Container>
-            <ul>
+            <ul ref={ref}>
                 {organisms.map(entity => (
                     <Link
                         key={entity.id}

@@ -49,10 +49,9 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
         display: flex;
         flex-direction: column;
         ul {
-            margin: 10px 0;
-            max-height: ${rowHeight - 62}px;
-            overflow-x: hidden;
-            overflow-y: hidden;
+            ${moreDetails !== false ? "margin: 10px 0;" : "margin:0;"}
+            ${moreDetails !== false &&
+            "max-height: " + (rowHeight - 62) + "px; overflow-y: hidden; overflow-x: hidden;"}
         }
         div {
             text-align: center;
