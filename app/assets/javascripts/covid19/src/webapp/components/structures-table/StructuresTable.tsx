@@ -2,14 +2,18 @@ import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps } from "@material-ui/data-grid";
-import { EntityBodiesFilter } from "../../../domain/entities/Covid19Info";
-import { getColumns } from "./Columns";
+import { EntityBodiesFilter, Structure } from "../../../domain/entities/Covid19Info";
+import { Field, getColumns } from "./Columns";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
 import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
 import { useAppContext } from "../../contexts/app-context";
+import { ViewMoreDialog } from "./ViewMoreDialog";
+import { useBooleanState } from "../../hooks/useBoolean";
 
 export interface StructuresTableProps {}
+
+export const rowHeight = 220;
 
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => {
     const { compositionRoot } = useAppContext();
@@ -19,12 +23,40 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
 
     const [search, setSearch] = React.useState("");
     const [filterState, setFilterState] = React.useState(initialFilterState);
+    const [isDialogOpen, { enable: openDialog, disable: closeDialog }] = useBooleanState(false);
+    const [field, setField] = React.useState<Field>();
+    const [row, setRow] = React.useState<Structure>({
+        id: "",
+        title: "",
+        entities: [],
+        pdb: undefined,
+        emdb: undefined,
+        organisms: [],
+        ligands: [],
+        details: undefined,
+        validations: {
+            pdb: [],
+            emdb: [],
+        },
+    });
 
     const data = React.useMemo(() => {
         return compositionRoot.getCovid19Info.execute({ search, filter: filterState });
     }, [compositionRoot, search, filterState]);
 
-    const columns = React.useMemo(() => getColumns(data), [data]);
+    const showDetailsDialog = React.useCallback(
+        (options: { row: Structure; field: Field }) => {
+            openDialog();
+            setField(options.field);
+            setRow(options.row);
+        },
+        [openDialog]
+    );
+
+    const columns = React.useMemo(() => getColumns(data, { onClickDetails: showDetailsDialog }), [
+        data,
+        showDetailsDialog,
+    ]);
     const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
     const { structures } = data;
 
@@ -88,7 +120,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
                 onStateChange={updateScrollBarFromStateChange}
                 onSortModelChange={setFirstPage}
                 className={classes.root}
-                rowHeight={220}
+                rowHeight={rowHeight}
                 sortingOrder={sortingOrder}
                 rows={structures}
                 autoHeight
@@ -102,6 +134,14 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
                 components={components}
                 componentsProps={componentsProps}
             />
+            {isDialogOpen && (
+                <ViewMoreDialog
+                    onClose={closeDialog}
+                    expandedAccordion={field}
+                    row={row}
+                    data={data}
+                />
+            )}
         </div>
     );
 });
