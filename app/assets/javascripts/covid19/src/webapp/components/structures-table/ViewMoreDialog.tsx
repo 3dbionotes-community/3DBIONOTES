@@ -20,6 +20,7 @@ import { EmdbCell } from "./cells/EmdbCell";
 import { EntityCell } from "./cells/EntityCell";
 import { LigandsCell } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
+import { DetailsCell } from "./cells/DetailsCell";
 
 export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props => {
     const { onClose, expandedAccordion, row, data } = props;
@@ -48,7 +49,7 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                                 <Typography>{i18n.t("Entities")}</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <EntityCell data={data} row={row}></EntityCell>
+                                <EntityCell data={data} row={row} moreDetails={false}></EntityCell>
                             </AccordionDetails>
                         </Accordion>
                         <Accordion defaultExpanded={expandedAccordion === "ligands"}>
@@ -76,7 +77,11 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                                 <Typography>{i18n.t("Organisms")}</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <OrganismCell row={row} data={data}></OrganismCell>
+                                <OrganismCell
+                                    row={row}
+                                    data={data}
+                                    moreDetails={false}
+                                ></OrganismCell>
                             </AccordionDetails>
                         </Accordion>
                         <Accordion defaultExpanded={expandedAccordion === "details"}>
@@ -88,7 +93,11 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                                 <Typography>{i18n.t("Details")}</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <Typography>{row.details}</Typography>
+                                <DetailsCell
+                                    row={row}
+                                    data={data}
+                                    moreDetails={false}
+                                ></DetailsCell>
                             </AccordionDetails>
                         </Accordion>
                     </div>
