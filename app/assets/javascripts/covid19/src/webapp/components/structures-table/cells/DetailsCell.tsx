@@ -46,8 +46,8 @@ export const DetailsCell: React.FC<CellProps> = React.memo(props => {
                     <ListItem>
                         {i18n.t("Macromolecules: ", { nsSeparator: false })}
                         <ul>
-                            {details.sample?.macromolecules?.map(molecule => (
-                                <ListItem>{molecule}</ListItem>
+                            {details.sample?.macromolecules?.map((molecule, idx) => (
+                                <ListItem key={idx}>{molecule}</ListItem>
                             ))}
                         </ul>
                     </ListItem>
@@ -103,10 +103,10 @@ export const DetailsCell: React.FC<CellProps> = React.memo(props => {
                             </ListItem>
                         </>
                     )}
-                    {details?.refdoc?.map(ref => {
+                    {details?.refdoc?.map((ref, idx) => {
                         const abstractMaxLength = 190;
                         return (
-                            <ListItem>
+                            <ListItem key={idx}>
                                 Publication:
                                 <ul>
                                     {!moreDetails && (
@@ -150,7 +150,7 @@ export const DetailsCell: React.FC<CellProps> = React.memo(props => {
                                     </ListItem>
                                     {!moreDetails &&
                                         (ref.abstract ?? "").length < abstractMaxLength &&
-                                        (ref.abstract ?? "").length != 0 && (
+                                        (ref.abstract ?? "").length !== 0 && (
                                             <ListItem>
                                                 {i18n.t("Abstract: {{abstract}}", {
                                                     nsSeparator: false,
@@ -160,7 +160,7 @@ export const DetailsCell: React.FC<CellProps> = React.memo(props => {
                                         )}
                                     {!moreDetails &&
                                         (ref.abstract ?? "").length > abstractMaxLength &&
-                                        (ref.abstract ?? "").length != 0 && (
+                                        (ref.abstract ?? "").length !== 0 && (
                                             <HtmlTooltip
                                                 title={
                                                     <React.Fragment>
