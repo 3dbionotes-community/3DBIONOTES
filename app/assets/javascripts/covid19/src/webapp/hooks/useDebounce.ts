@@ -1,9 +1,9 @@
 import React from "react";
 import _ from "lodash";
 
-export function useEventDebounce(
-    value: string,
-    setValue: (newValue: string) => void,
+export function useDebouncedSetter<T>(
+    value: T,
+    setValue: (newValue: T) => void,
     options: { delay: number }
 ) {
     const { delay } = options;
@@ -14,14 +14,13 @@ export function useEventDebounce(
         return _.debounce(setValue, delay);
     }, [setValue, delay]);
 
-    const setFromEv = React.useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
-            const value = event.target.value;
+    const setValueDebounced = React.useCallback(
+        (value: T) => {
             updateStateValue(value);
             onChangeDebounced(value);
         },
         [onChangeDebounced, updateStateValue]
     );
 
-    return [stateValue, setFromEv] as const;
+    return [stateValue, setValueDebounced] as const;
 }
