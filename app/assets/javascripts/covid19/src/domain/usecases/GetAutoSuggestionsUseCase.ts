@@ -1,9 +1,9 @@
 import { Covid19InfoRepository } from "../repositories/Covid19InfoRepository";
 
-export class GetCovid19InfoUseCase {
+export class GetAutoSuggestionsUseCase {
     constructor(private covid19InfoRepository: Covid19InfoRepository) {}
 
-    execute() {
-        return this.covid19InfoRepository.get();
+    execute(search: string) {
+        return this.covid19InfoRepository.autoSuggestions(search);
     }
 }
