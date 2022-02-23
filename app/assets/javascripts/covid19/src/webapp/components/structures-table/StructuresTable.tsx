@@ -2,8 +2,9 @@ import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps } from "@material-ui/data-grid";
-import { EntityBodiesFilter, Structure } from "../../../domain/entities/Covid19Info";
+import { Structure } from "../../../domain/entities/Covid19Info";
 import { Field, getColumns } from "./Columns";
+import { Covid19Filter, Id } from "../../../domain/entities/Covid19Info";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
 import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
@@ -21,8 +22,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
     const [pageSize, setPageSize] = React.useState(pageSizes[0]);
     const classes = useStyles();
 
-    const [search, setSearch] = React.useState("");
-    const [filterState, setFilterState] = React.useState(initialFilterState);
     const [isDialogOpen, { enable: openDialog, disable: closeDialog }] = useBooleanState(false);
     const [field, setField] = React.useState<Field>();
     const [row, setRow] = React.useState<Structure>({
@@ -40,9 +39,46 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
         },
     });
 
-    const data = React.useMemo(() => {
-        return compositionRoot.getCovid19Info.execute({ search, filter: filterState });
-    }, [compositionRoot, search, filterState]);
+    const [search, setSearch0] = React.useState("");
+    const [filterState, setFilterState0] = React.useState(initialFilterState);
+    const setFilterState = React.useCallback((value: Covid19Filter) => {
+        setPage(0);
+        setFilterState0(value);
+    }, []);
+
+    const setSearch = React.useCallback((value: string) => {
+        setPage(0);
+        setSearch0(value);
+    }, []);
+
+    const {
+        gridApi,
+        virtualScrollbarProps,
+        updateScrollBarFromStateChange,
+    } = useVirtualScrollbarForDataGrid();
+
+    const [renderedRowIds, setRenderedRowsFromState] = useRenderedRows();
+
+    const onStateChange = React.useCallback<NonNullable<DataGridProps["onStateChange"]>>(
+        params => {
+            setRenderedRowsFromState(params);
+            updateScrollBarFromStateChange(params);
+        },
+        [setRenderedRowsFromState, updateScrollBarFromStateChange]
+    );
+
+    const [data, setData] = React.useState(() => compositionRoot.getCovid19Info.execute());
+    window.app = { data };
+
+    React.useEffect(() => {
+        compositionRoot.addDynamicInfo.execute(data, { ids: renderedRowIds }).then(setData);
+    }, [compositionRoot, data, renderedRowIds]);
+
+    const filteredData = React.useMemo(() => {
+        return compositionRoot.searchCovid19Info.execute({ data, search, filter: filterState });
+    }, [compositionRoot, data, search, filterState]);
+
+    const { structures } = filteredData;
 
     const showDetailsDialog = React.useCallback(
         (options: { row: Structure; field: Field }) => {
@@ -53,18 +89,11 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
         [openDialog]
     );
 
-    const columns = React.useMemo(() => getColumns(data, { onClickDetails: showDetailsDialog }), [
-        data,
-        showDetailsDialog,
-    ]);
-    const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
-    const { structures } = data;
+    const columns = React.useMemo(() => {
+        return getColumns(data, { onClickDetails: showDetailsDialog });
+    }, [data, showDetailsDialog]);
 
-    const {
-        gridApi,
-        virtualScrollbarProps,
-        updateScrollBarFromStateChange,
-    } = useVirtualScrollbarForDataGrid();
+    const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
 
     const dataGrid = React.useMemo<DataGridE>(() => {
         return { columns: columns.base, structures };
@@ -117,7 +146,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
         <div className={classes.wrapper}>
             <DataGrid
                 page={page}
-                onStateChange={updateScrollBarFromStateChange}
+                onStateChange={onStateChange}
                 onSortModelChange={setFirstPage}
                 className={classes.root}
                 rowHeight={rowHeight}
@@ -163,8 +192,33 @@ const pageSizes = [10, 25, 50, 75, 100];
 
 const sortingOrder = ["asc" as const, "desc" as const];
 
-const initialFilterState: EntityBodiesFilter = {
-    antibody: false,
-    nanobody: false,
-    sybody: false,
+const initialFilterState: Covid19Filter = {
+    antibodies: false,
+    nanobodies: false,
+    sybodies: false,
+    pdbRedo: false,
 };
+
+function useRenderedRows() {
+    const [renderedRowIds, setRenderedRowIds] = React.useState<Id[]>([]);
+
+    const setRenderedRowsFromState = React.useCallback<NonNullable<DataGridProps["onStateChange"]>>(
+        gridParams => {
+            const { api } = gridParams;
+            const { page, pageSize } = gridParams.state.pagination;
+            const sortedIds = api.getSortedRowIds() as Id[];
+            const visibleIds = Array.from(api.getVisibleRowModels().keys()) as string[];
+
+            const ids = _(sortedIds)
+                .intersection(visibleIds)
+                .drop(page * pageSize)
+                .take(pageSize)
+                .value();
+
+            setRenderedRowIds(prevIds => (_.isEqual(prevIds, ids) ? prevIds : ids));
+        },
+        []
+    );
+
+    return [renderedRowIds, setRenderedRowsFromState] as const;
+}
