@@ -24,21 +24,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
     const [search, setSearch] = React.useState("");
     const [filterState, setFilterState] = React.useState(initialFilterState);
     const [isDialogOpen, { enable: openDialog, disable: closeDialog }] = useBooleanState(false);
-    const [field, setField] = React.useState<Field>();
-    const [row, setRow] = React.useState<Structure>({
-        id: "",
-        title: "",
-        entities: [],
-        pdb: undefined,
-        emdb: undefined,
-        organisms: [],
-        ligands: [],
-        details: undefined,
-        validations: {
-            pdb: [],
-            emdb: [],
-        },
-    });
+    const [detailsOptions, setDetailsOptions] = React.useState<FieldStructure>();
 
     const data = React.useMemo(() => {
         return compositionRoot.getCovid19Info.execute({ search, filter: filterState });
@@ -47,8 +33,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
     const showDetailsDialog = React.useCallback(
         (options: { row: Structure; field: Field }) => {
             openDialog();
-            setField(options.field);
-            setRow(options.row);
+            setDetailsOptions({ field: options.field, structure: options.row });
         },
         [openDialog]
     );
@@ -134,11 +119,11 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
                 components={components}
                 componentsProps={componentsProps}
             />
-            {isDialogOpen && (
+            {isDialogOpen && detailsOptions && (
                 <ViewMoreDialog
                     onClose={closeDialog}
-                    expandedAccordion={field}
-                    row={row}
+                    expandedAccordion={detailsOptions.field}
+                    row={detailsOptions.structure}
                     data={data}
                 />
             )}
@@ -147,6 +132,11 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
 });
 
 type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
+
+interface FieldStructure {
+    field: Field;
+    structure: Structure;
+}
 
 const useStyles = makeStyles({
     root: {

@@ -64,10 +64,9 @@ export type EntityRef = { organism?: string; uniprotAcc?: string };
 
 export type Url = string;
 
-type Author = string;
 export interface RefDB {
     title: string;
-    authors: Author[];
+    authors: string[];
     deposited?: string;
     released?: string;
 }
@@ -76,7 +75,7 @@ export interface RefPDB {}
 export interface RefDoc {
     pmID: string;
     title: string;
-    authors: Author[];
+    authors: string[];
     abstract?: string;
     journal: string;
     pubDate: string;

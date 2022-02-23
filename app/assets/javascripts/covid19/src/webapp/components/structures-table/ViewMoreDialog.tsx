@@ -40,66 +40,21 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                         <EmdbCell data={data} row={row} />
                     </div>
                     <div>
-                        <Accordion defaultExpanded={expandedAccordion === "entities"}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="entities-content"
-                                id="entities-header"
-                            >
-                                <Typography>{i18n.t("Entities")}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <EntityCell data={data} row={row} moreDetails={false}></EntityCell>
-                            </AccordionDetails>
-                        </Accordion>
-                        <Accordion defaultExpanded={expandedAccordion === "ligands"}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="ligands-content"
-                                id="ligands-header"
-                            >
-                                <Typography>{i18n.t("Ligands")}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <LigandsCell
-                                    data={data}
-                                    row={row}
-                                    moreDetails={false}
-                                ></LigandsCell>
-                            </AccordionDetails>
-                        </Accordion>
-                        <Accordion defaultExpanded={expandedAccordion === "organisms"}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="organisms-content"
-                                id="organisms-header"
-                            >
-                                <Typography>{i18n.t("Organisms")}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <OrganismCell
-                                    row={row}
-                                    data={data}
-                                    moreDetails={false}
-                                ></OrganismCell>
-                            </AccordionDetails>
-                        </Accordion>
-                        <Accordion defaultExpanded={expandedAccordion === "details"}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="details-content"
-                                id="details-header"
-                            >
-                                <Typography>{i18n.t("Details")}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <DetailsCell
-                                    row={row}
-                                    data={data}
-                                    moreDetails={false}
-                                ></DetailsCell>
-                            </AccordionDetails>
-                        </Accordion>
+                        <ModifiedAccordion expandedAccordion={expandedAccordion} field={"entities"}>
+                            <EntityCell data={data} row={row} moreDetails={false}></EntityCell>
+                        </ModifiedAccordion>
+                        <ModifiedAccordion expandedAccordion={expandedAccordion} field={"ligands"}>
+                            <LigandsCell data={data} row={row} moreDetails={false}></LigandsCell>
+                        </ModifiedAccordion>
+                        <ModifiedAccordion
+                            expandedAccordion={expandedAccordion}
+                            field={"organisms"}
+                        >
+                            <OrganismCell row={row} data={data} moreDetails={false}></OrganismCell>
+                        </ModifiedAccordion>
+                        <ModifiedAccordion expandedAccordion={expandedAccordion} field={"details"}>
+                            <DetailsCell row={row} data={data} moreDetails={false}></DetailsCell>
+                        </ModifiedAccordion>
                     </div>
                 </Container>
             </DialogContent>
@@ -157,3 +112,25 @@ export interface ViewMoreDialogProps {
     row: Structure;
     data: Covid19Info;
 }
+
+interface ModifiedAccordionProps {
+    field: Field;
+    expandedAccordion: Field | undefined;
+}
+
+const ModifiedAccordion: React.FC<ModifiedAccordionProps> = React.memo(props => {
+    const { field, expandedAccordion } = props;
+
+    return (
+        <Accordion defaultExpanded={expandedAccordion === field}>
+            <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls={`${field}-content`}
+                id={`${field}-header`}
+            >
+                <Typography>{i18n.t(field.charAt(0).toUpperCase() + field.slice(1))}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>{props.children}</AccordionDetails>
+        </Accordion>
+    );
+});

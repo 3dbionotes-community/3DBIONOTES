@@ -185,17 +185,15 @@ function getEmdb<T extends Data.Emdb>(emdb: T): Emdb {
 }
 
 function getDetails(pdb: Data.Pdb): Maybe<Details> {
-    if (pdb.details == null) return;
+    if (!pdb.details) return;
     if (pdb.details.length <= 0) return;
-    const details: Details = {
-        refEMDB: pdb.details[0]?.refEMDB,
-        refPDB: pdb.details[0]?.refPDB,
-        sample: pdb.details[0]?.sample,
-        refdoc: pdb.details[0]?.refdoc?.map(ref => {
+    const details = pdb.details[0];
+    return {
+        ...details,
+        refdoc: details?.refdoc?.map(ref => {
             return { id: ref.pmID, idLink: ref.pmidLink, ...ref };
         }),
     };
-    return details;
 }
 
 /* Search */

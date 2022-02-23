@@ -15,16 +15,18 @@ export interface BadgeDetailsProps {
 export const BadgeDetails: React.FC<BadgeDetailsProps> = React.memo(props => {
     const { row, field, onClick } = props;
 
+    const onClickFn = React.useCallback(
+        e => {
+            e.preventDefault();
+            onClick?.({ row: row, field: field });
+        },
+        [onClick, row, field]
+    );
+
     return (
         <div>
-            <BadgeButton
-                onClick={e => {
-                    e.preventDefault();
-                    onClick && onClick({ row: row, field: field });
-                }}
-            >
-                {i18n.t("View more")}{" "}
-                <i className="fa fa-info-circle" style={{ marginLeft: "5px" }}></i>
+            <BadgeButton onClick={onClickFn}>
+                {i18n.t("View more")} <i className="fa fa-info-circle" style={styles.icon}></i>
             </BadgeButton>
         </div>
     );
@@ -38,3 +40,7 @@ export const BadgeButton = styled(Badge)`
     color: #ffffff;
     background-color: ${colors["w3-turq"]};
 `;
+
+const styles = {
+    icon: { marginLeft: "5px" },
+};

@@ -60,12 +60,10 @@ export const DetailsCell: React.FC<CellProps> = React.memo(props => {
                     </ListItem>
                     {!moreDetails && (
                         <>
-                            <ListItem>
-                                {i18n.t("Exp. System: {{exprSystem}}", {
-                                    nsSeparator: false,
-                                    exprSystem: details.sample?.exprSystem,
-                                })}
-                            </ListItem>
+                            <ListItem
+                                key={i18n.t("Exp. System")}
+                                value={details.sample?.exprSystem}
+                            />
                             <ListItem>
                                 {i18n.t("UniProt Ids: {{ids}}", {
                                     nsSeparator: false,

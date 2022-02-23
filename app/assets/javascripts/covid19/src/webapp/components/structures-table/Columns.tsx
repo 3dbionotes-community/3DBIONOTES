@@ -88,7 +88,7 @@ export const columnsBase: Columns = [
         width: 200,
         sortable: false,
         renderCell: DetailsCell,
-        renderString: row => "",
+        renderString: _row => "",
     }),
 ];
 
