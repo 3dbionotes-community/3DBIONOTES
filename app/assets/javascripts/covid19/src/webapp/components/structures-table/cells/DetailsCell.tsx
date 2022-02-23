@@ -62,7 +62,7 @@ export const DetailsCell: React.FC<CellProps> = React.memo(props => {
                         </>
                     )}
                     {details?.refdoc?.map((refDoc, idx) => (
-                        <RefDocLi refDoc={refDoc} idx={idx} moreDetails={moreDetails} />
+                        <RefDocLi refDoc={refDoc} key={idx} moreDetails={moreDetails} />
                     ))}
                 </>
             )}
@@ -93,11 +93,11 @@ const ListItem: React.FC<ListItemProps> = React.memo(props => {
 });
 
 const RefDocLi: React.FC<RefDocLiProps> = React.memo(props => {
-    const { refDoc, idx, moreDetails = true } = props;
+    const { refDoc, moreDetails = true } = props;
     const abstractMaxLength = 190;
     const abstract = refDoc.abstract ?? "";
     return (
-        <Li key={idx}>
+        <Li>
             Publication:
             <ul>
                 {!moreDetails && <ListItem name={i18n.t("ID")} value={refDoc.id} />}
@@ -134,6 +134,5 @@ interface ListItemProps {
 
 interface RefDocLiProps {
     refDoc: RefDoc;
-    idx: number;
     moreDetails?: boolean;
 }
