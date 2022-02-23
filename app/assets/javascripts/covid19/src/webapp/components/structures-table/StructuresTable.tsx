@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps } from "@material-ui/data-grid";
-import { Structure } from "../../../domain/entities/Covid19Info";
+import { Structure, updateStructures } from "../../../domain/entities/Covid19Info";
 import { Field, getColumns } from "./Columns";
 import { Covid19Filter, Id } from "../../../domain/entities/Covid19Info";
 import { Toolbar, ToolbarProps } from "./Toolbar";
@@ -71,7 +71,9 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
     window.app = { data };
 
     React.useEffect(() => {
-        compositionRoot.addDynamicInfo.execute(data, { ids: renderedRowIds }).then(setData);
+        compositionRoot.addDynamicInfo.execute(data, { ids: renderedRowIds }).then(structures => {
+            setData(data => updateStructures(data, structures));
+        });
     }, [compositionRoot, data, renderedRowIds]);
 
     const filteredData = React.useMemo(() => {

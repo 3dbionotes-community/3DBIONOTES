@@ -198,6 +198,16 @@ export function addPdbValidationToStructure(
     }
 }
 
+export function updateStructures(data: Covid19Info, structures: Structure[]): Covid19Info {
+    if (_.isEmpty(structures)) return data;
+    const structuresById = _.keyBy(structures, structure => structure.id);
+    const structures2 = data.structures.map(structure => structuresById[structure.id] || structure);
+    const hasChanges = _(data.structures)
+        .zip(structures2)
+        .some(([s1, s2]) => s1 !== s2);
+    return hasChanges ? { structures: structures2 } : data;
+}
+
 export function getTranslations() {
     return {
         filterKeys: {
