@@ -21,13 +21,15 @@ export const DetailsCell: React.FC<CellProps> = React.memo(props => {
             {details && (
                 <>
                     <ListItem name={i18n.t("Sample")} value={details.sample?.name} />
-                    <ListItem name={i18n.t("Macromolecules")}>
-                        <ul>
-                            {details.sample?.macromolecules?.map((molecule, idx) => (
-                                <Li key={idx}>{molecule}</Li>
-                            ))}
-                        </ul>
-                    </ListItem>
+                    {details.sample?.macromolecules && (
+                        <ListItem name={i18n.t("Macromolecules")}>
+                            <ul>
+                                {details.sample.macromolecules.map((molecule, idx) => (
+                                    <Li key={idx}>{molecule}</Li>
+                                ))}
+                            </ul>
+                        </ListItem>
+                    )}
                     <ListItem name={i18n.t("Assembly")} value={details.sample?.assembly} />
                     {!moreDetails && (
                         <>
