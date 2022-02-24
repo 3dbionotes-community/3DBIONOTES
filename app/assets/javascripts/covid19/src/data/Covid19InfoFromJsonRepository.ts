@@ -251,14 +251,23 @@ function extractField(structure: Structure, field: Field): string {
             return getFields(structure.organisms, ["id", "name", "commonName"]);
         case "ligands":
             return getFields(structure.ligands, ["id", "name", "details"]);
-        case "details":
-            return _(structure.details)
-                .values()
+        case "details": {
+            if (!structure.details) return "";
+            const { refEMDB, refPDB, sample, refdoc } = structure.details;
+
+            const valuesList = [
+                getValuesFromObject(refEMDB),
+                getValuesFromObject(refPDB),
+                _.flatMap(refdoc, getValuesFromObject),
+                getValuesFromObject(sample),
+            ];
+
+            return _(valuesList)
                 .flatten()
-                .flatMap((o: any) => _(o).values().flatten().value())
-                .compact()
-                .value()
-                .join(" - ");
+                .reject(value => value.startsWith("http"))
+                .uniq()
+                .join(" ");
+        }
         case "entities":
             return getFields(structure.entities, [
                 "uniprotAcc",
@@ -270,4 +279,8 @@ function extractField(structure: Structure, field: Field): string {
         default:
             return structure[field] || "";
     }
+}
+
+function getValuesFromObject(obj: object | undefined): string[] {
+    return _.compact(_.flatten(_.values(obj)));
 }
