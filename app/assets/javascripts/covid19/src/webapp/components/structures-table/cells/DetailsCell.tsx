@@ -100,23 +100,22 @@ const RefDocLi: React.FC<RefDocLiProps> = React.memo(props => {
     const abstract = refDoc.abstract ?? "";
     return (
         <Li>
-            Publication:
+            {i18n.t("Publication")}:
             <ul>
                 {!moreDetails && <ListItem name={i18n.t("ID")} value={refDoc.id} />}
+
                 <ListItem name={i18n.t("Title")} value={refDoc.title} />
-                <HtmlTooltip
-                    title={
-                        <React.Fragment>
-                            <div>{refDoc.authors.join(", ")}</div>
-                        </React.Fragment>
-                    }
-                >
+
+                <HtmlTooltip title={<div>{refDoc.authors.join(", ")}</div>}>
                     <Li>{`${i18n.t("Authors")}: ${ellipsizedList(refDoc.authors)}`}</Li>
                 </HtmlTooltip>
+
                 <ListItem name={i18n.t("Journal")} value={refDoc.journal} />
+
                 {!moreDetails && abstract.length < abstractMaxLength && abstract.length !== 0 && (
                     <ListItem name={i18n.t("Abstract")} value={refDoc.abstract} />
                 )}
+
                 {!moreDetails && abstract.length > abstractMaxLength && abstract.length !== 0 && (
                     <HtmlTooltip title={<>{refDoc.abstract}</>}>
                         <Li>{`${i18n.t("Abstract")}: ${

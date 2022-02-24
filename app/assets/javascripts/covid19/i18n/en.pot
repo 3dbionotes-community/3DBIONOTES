@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-02-23T18:41:45.671Z\n"
-"PO-Revision-Date: 2022-02-23T18:41:45.672Z\n"
+"POT-Creation-Date: 2022-02-24T08:21:48.477Z\n"
+"PO-Revision-Date: 2022-02-24T08:21:48.477Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -90,6 +90,9 @@ msgid "Biological Process"
 msgstr ""
 
 msgid "Cell Component"
+msgstr ""
+
+msgid "Publication"
 msgstr ""
 
 msgid "ID"

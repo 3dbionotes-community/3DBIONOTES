@@ -206,12 +206,12 @@ function getEmdb<T extends Data.Emdb>(emdb: T): Emdb {
 }
 
 function getDetails(pdb: Data.Pdb): Maybe<Details> {
-    if (!pdb.details) return;
-    if (pdb.details.length <= 0) return;
-    const details = pdb.details[0];
+    const details = pdb.details?.[0];
+    if (!details) return;
+
     return {
         ...details,
-        refdoc: details?.refdoc?.map(ref => {
+        refdoc: details.refdoc?.map(ref => {
             return { id: ref.pmID, idLink: ref.pmidLink, ...ref };
         }),
     };

@@ -6,6 +6,13 @@ import { BadgeDetails } from "../BadgeDetails";
 import { useHeightFromElement } from "../../../hooks/useHeightFromElement";
 import { Structure } from "../../../../domain/entities/Covid19Info";
 
+interface WrapperProps {
+    moreDetails?: boolean;
+    row: Structure;
+    onClickDetails?: (options: { row: Structure; field: Field }) => void;
+    field: Field;
+}
+
 export const Wrapper: React.FC<WrapperProps> = React.memo(props => {
     const { moreDetails = true, onClickDetails, row, field } = props;
     const { ref, height } = useHeightFromElement<HTMLUListElement>();
@@ -41,10 +48,3 @@ const Container = styled.div<{ moreDetails: boolean }>`
 `;
 
 const badgeHeight = 62;
-
-interface WrapperProps {
-    moreDetails?: boolean;
-    row: Structure;
-    onClickDetails?: (options: { row: Structure; field: Field }) => void;
-    field: Field;
-}

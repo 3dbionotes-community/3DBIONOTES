@@ -15,17 +15,17 @@ export interface BadgeDetailsProps {
 export const BadgeDetails: React.FC<BadgeDetailsProps> = React.memo(props => {
     const { row, field, onClick } = props;
 
-    const onClickFn = React.useCallback(
+    const notifyClick = React.useCallback(
         e => {
             e.preventDefault();
-            onClick?.({ row: row, field: field });
+            onClick?.({ row, field });
         },
         [onClick, row, field]
     );
 
     return (
         <div>
-            <BadgeButton onClick={onClickFn}>
+            <BadgeButton onClick={notifyClick}>
                 {i18n.t("View more")} <i className="fa fa-info-circle" style={styles.icon}></i>
             </BadgeButton>
         </div>

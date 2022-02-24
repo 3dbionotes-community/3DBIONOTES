@@ -22,6 +22,13 @@ import { LigandsCell } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
 import { DetailsCell } from "./cells/DetailsCell";
 
+export interface ViewMoreDialogProps {
+    onClose(): void;
+    expandedAccordion: Field | undefined;
+    row: Structure;
+    data: Covid19Info;
+}
+
 export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props => {
     const { onClose, expandedAccordion, row, data } = props;
 
@@ -33,26 +40,28 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                     <Close />
                 </IconButton>
             </DialogTitle>
+
             <DialogContent>
                 <Container>
                     <div style={{ marginRight: "10px" }}>
                         <PdbCell data={data} row={row} />
                         <EmdbCell data={data} row={row} />
                     </div>
+
                     <div>
-                        <ModifiedAccordion expandedAccordion={expandedAccordion} field={"entities"}>
+                        <ModifiedAccordion expandedAccordion={expandedAccordion} field="entities">
                             <EntityCell data={data} row={row} moreDetails={false}></EntityCell>
                         </ModifiedAccordion>
-                        <ModifiedAccordion expandedAccordion={expandedAccordion} field={"ligands"}>
+
+                        <ModifiedAccordion expandedAccordion={expandedAccordion} field="ligands">
                             <LigandsCell data={data} row={row} moreDetails={false}></LigandsCell>
                         </ModifiedAccordion>
-                        <ModifiedAccordion
-                            expandedAccordion={expandedAccordion}
-                            field={"organisms"}
-                        >
+
+                        <ModifiedAccordion expandedAccordion={expandedAccordion} field="organisms">
                             <OrganismCell row={row} data={data} moreDetails={false}></OrganismCell>
                         </ModifiedAccordion>
-                        <ModifiedAccordion expandedAccordion={expandedAccordion} field={"details"}>
+
+                        <ModifiedAccordion expandedAccordion={expandedAccordion} field="details">
                             <DetailsCell row={row} data={data} moreDetails={false}></DetailsCell>
                         </ModifiedAccordion>
                     </div>
@@ -105,13 +114,6 @@ const Title = styled.span`
     overflow: hidden;
     text-overflow: ellipsis;
 `;
-
-export interface ViewMoreDialogProps {
-    onClose(): void;
-    expandedAccordion: Field | undefined;
-    row: Structure;
-    data: Covid19Info;
-}
 
 interface ModifiedAccordionProps {
     field: Field;
