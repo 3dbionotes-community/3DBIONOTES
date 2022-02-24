@@ -1,3 +1,6 @@
+import _ from "lodash";
+import i18n from "../../utils/i18n";
+
 export interface Covid19Info {
     structures: Structure[];
 }
@@ -124,8 +127,8 @@ export interface RefDoc {
     abstract?: string;
     journal: string;
     pubDate: string;
-    idLink?: URL;
-    doi?: URL;
+    idLink?: Url;
+    doi?: Url;
 }
 
 export interface Sample {
@@ -148,18 +151,18 @@ export interface Details {
     refdoc?: RefDoc[];
 }
 
-export interface EntityBodiesFilter {
-    antibody: boolean;
-    nanobody: boolean;
-    sybody: boolean;
-}
+export const filterKeys = ["antibodies", "nanobodies", "sybodies", "pdbRedo"] as const;
 
-export function filterEntities(entities: Entity[], filterState: EntityBodiesFilter): Entity[] {
+export type FilterKey = typeof filterKeys[number];
+
+export type Covid19Filter = Record<FilterKey, boolean>;
+
+export function filterEntities(entities: Entity[], filterState: Covid19Filter): Entity[] {
     return entities.filter(
         entity =>
-            entity.isAntibody === filterState.antibody &&
-            entity.isNanobody === filterState.nanobody &&
-            entity.isSybody === filterState.sybody
+            entity.isAntibody === filterState.antibodies &&
+            entity.isNanobody === filterState.nanobodies &&
+            entity.isSybody === filterState.sybodies
     );
 }
 
@@ -171,5 +174,47 @@ export function buildPdbRedoValidation(pdbId: Id): PdbRedoValidation {
         externalLink: pdbRedoUrl,
         queryLink: `/pdb_redo/${pdbId}`,
         badgeColor: "w3-turq",
+    };
+}
+
+export function addPdbValidationToStructure(
+    structure: Structure,
+    validation: PdbValidation
+): Structure {
+    const existingValidations = structure.validations.pdb;
+    const structureContainsValidation = _(existingValidations).some(existingValidation =>
+        _.isEqual(existingValidation, validation)
+    );
+
+    if (!structureContainsValidation) {
+        const pdbValidations = _.concat(existingValidations, [validation]);
+
+        return {
+            ...structure,
+            validations: { ...structure.validations, pdb: pdbValidations },
+        };
+    } else {
+        return structure;
+    }
+}
+
+export function updateStructures(data: Covid19Info, structures: Structure[]): Covid19Info {
+    if (_.isEmpty(structures)) return data;
+    const structuresById = _.keyBy(structures, structure => structure.id);
+    const structures2 = data.structures.map(structure => structuresById[structure.id] || structure);
+    const hasChanges = _(data.structures)
+        .zip(structures2)
+        .some(([s1, s2]) => s1 !== s2);
+    return hasChanges ? { structures: structures2 } : data;
+}
+
+export function getTranslations() {
+    return {
+        filterKeys: {
+            antibodies: i18n.t("Antibodies"),
+            nanobodies: i18n.t("Nanobodies"),
+            sybodies: i18n.t("Sybodies"),
+            pdbRedo: i18n.t("PDB-REDO"),
+        } as Record<FilterKey, string>,
     };
 }
