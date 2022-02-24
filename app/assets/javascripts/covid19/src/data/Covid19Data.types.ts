@@ -103,7 +103,7 @@ export interface Details {
     sample: Sample;
     refdoc: RefDoc[];
 }
-export interface RefModel{
+export interface RefModel {
     method?: string;
     externalLink: Url;
     queryLink: Url;

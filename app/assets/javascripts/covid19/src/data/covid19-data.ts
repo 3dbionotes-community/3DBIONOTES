@@ -5970,76 +5970,77 @@ export const data: Covid19Data = {
     Structures: [
         [
             {
-                "title": "Crystal structure of SARS-CoV-2 receptor binding domain in complex with neutralizing human antibody WRAIR-2173.",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7N4J",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Neutralizing antibody, SARS-CoV-2, WRAIR-2173, receptor binding domain, ANTIVIRAL PROTEIN, VIRAL PROTEIN-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of SARS-CoV-2 receptor binding domain in complex with neutralizing human antibody WRAIR-2173.",
+                emdb: null,
+                pdb: {
+                    dbId: "7N4J",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "Neutralizing antibody, SARS-CoV-2, WRAIR-2173, receptor binding domain, ANTIVIRAL PROTEIN, VIRAL PROTEIN-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7n4j",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7n4j"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7n4j",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7n4j",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "WRAIR-2173 antibody Fab heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "WRAIR-2173 antibody Fab heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "WRAIR-2173 antibody Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "WRAIR-2173 antibody Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG-NAG-BMA"
-                    ],
-                    "dbauthors": [
+                    ligands: ["NAG-NAG-BMA"],
+                    dbauthors: [
                         "Sankhala, R.S. (0000-0001-8639-5290)",
-                        "Joyce, M.G. (0000-0002-6808-7232)"
+                        "Joyce, M.G. (0000-0002-6808-7232)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34716452",
-                                    "title": "Low-dose in vivo protection and neutralization across SARS-CoV-2 variants by monoclonal antibody combinations.",
-                                    "journal": "Nat.Immunol. 22: 1503-1514 (2021), 1529-2916",
-                                    "doi": "https://doi.org/10.1038/s41590-021-01068-z",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34716452",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34716452",
+                                    title:
+                                        "Low-dose in vivo protection and neutralization across SARS-CoV-2 variants by monoclonal antibody combinations.",
+                                    journal: "Nat.Immunol. 22: 1503-1514 (2021), 1529-2916",
+                                    doi: "https://doi.org/10.1038/s41590-021-01068-z",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34716452",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Dussupt, V. (0000-0002-8579-6356)",
                                         "Sankhala, R.S.",
                                         "Mendez-Rivera, L.",
@@ -6085,95 +6086,98 @@ export const data: Covid19Data = {
                                         "Michael, N.L. (0000-0001-5882-5548)",
                                         "Modjarrad, K.",
                                         "Joyce, M.G. (0000-0002-6808-7232)",
-                                        "Krebs, S.J. (0000-0003-1136-1760)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Krebs, S.J. (0000-0003-1136-1760)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7n4j_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7n4j",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7n4j"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7n4j_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n4j",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n4j",
+                },
             },
             {
-                "title": "Crystal structure of SARS-CoV-2 S NTD bound to S2M28 Fab",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7LY3",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Antibody, VIRAL PROTEIN, Structural Genomics, Seattle Structural Genomics Center for Infectious Disease, SSGCID, VIRAL PROTEIN-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title: "Crystal structure of SARS-CoV-2 S NTD bound to S2M28 Fab",
+                emdb: null,
+                pdb: {
+                    dbId: "7LY3",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "Antibody, VIRAL PROTEIN, Structural Genomics, Seattle Structural Genomics Center for Infectious Disease, SSGCID, VIRAL PROTEIN-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ly3",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ly3"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ly3",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ly3",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "S2M28 Fab Heavy Chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "S2M28 Fab Heavy Chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "S2M28 Fab Light Chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "S2M28 Fab Light Chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
+                    ligands: [
                         "NAG-NAG-BMA-FUC",
                         "NAG-FUC",
                         "NAG-NAG-BMA-MAN-FUC",
                         "NAG",
                         "UNX",
                         "XYL",
-                        "SO4"
+                        "SO4",
                     ],
-                    "dbauthors": [
+                    dbauthors: [
                         "McCallum, M.",
                         "Veesler, D.",
-                        "Seattle Structural Genomics Center for Infectious Disease (SSGCID)"
+                        "Seattle Structural Genomics Center for Infectious Disease (SSGCID)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33761326",
-                                    "title": "N-terminal domain antigenic mapping reveals a site of vulnerability for SARS-CoV-2.",
-                                    "journal": "Cell 184 (2021), 1097-4172",
-                                    "doi": "https://doi.org/10.1016/j.cell.2021.03.028",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33761326",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33761326",
+                                    title:
+                                        "N-terminal domain antigenic mapping reveals a site of vulnerability for SARS-CoV-2.",
+                                    journal: "Cell 184 (2021), 1097-4172",
+                                    doi: "https://doi.org/10.1016/j.cell.2021.03.028",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33761326",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "McCallum, M.",
                                         "De Marco, A.",
                                         "Lempp, F.A.",
@@ -6207,70 +6211,67 @@ export const data: Covid19Data = {
                                         "Virgin, H.W.",
                                         "Corti, D.",
                                         "Pizzuto, M.S.",
-                                        "Veesler, D."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Veesler, D.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ly3_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ly3",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ly3"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ly3_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ly3",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ly3",
+                },
             },
             {
-                "title": "AALALL SEGMENT FROM THE NUCLEOPROTEIN OF SARS-COV-2, RESIDUES 217-222, CRYSTAL FORM 1",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7LTU",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "amyloid fibril, PROTEIN FIBRIL",
-                    "refModels": [
+                title:
+                    "AALALL SEGMENT FROM THE NUCLEOPROTEIN OF SARS-COV-2, RESIDUES 217-222, CRYSTAL FORM 1",
+                emdb: null,
+                pdb: {
+                    dbId: "7LTU",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "amyloid fibril, PROTEIN FIBRIL",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ltu",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ltu"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ltu",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ltu",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "",
-                            "name": "AALALL SEGMENT FROM THE NUCLEOPROTEIN OF SARS-COV-2,RESIDUES 217-222",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "",
+                            name:
+                                "AALALL SEGMENT FROM THE NUCLEOPROTEIN OF SARS-COV-2,RESIDUES 217-222",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "TFA"
-                    ],
-                    "dbauthors": [
-                        "Zee, C.-T.",
-                        "Sawaya, M.R.",
-                        "Rodriguez, J.A.",
-                        "Eisenberg, D.S."
-                    ],
-                    "details": [
+                    ligands: ["TFA"],
+                    dbauthors: ["Zee, C.-T.", "Sawaya, M.R.", "Rodriguez, J.A.", "Eisenberg, D.S."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "",
-                                "assembly": "",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "",
+                                assembly: "",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33688654",
-                                    "title": "Inhibition of amyloid formation of the Nucleoprotein of SARS-CoV-2.",
-                                    "journal": "Biorxiv (2021)",
-                                    "doi": "https://doi.org/10.1101/2021.03.05.434000",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33688654",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33688654",
+                                    title:
+                                        "Inhibition of amyloid formation of the Nucleoprotein of SARS-CoV-2.",
+                                    journal: "Biorxiv (2021)",
+                                    doi: "https://doi.org/10.1101/2021.03.05.434000",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33688654",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Tayeb-Fligelman, E.",
                                         "Cheng, X.",
                                         "Tai, C.",
@@ -6294,113 +6295,107 @@ export const data: Covid19Data = {
                                         "Saelices, L.",
                                         "Damoiseaux, R.",
                                         "Guo, F.",
-                                        "Eisenberg, D.S."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Eisenberg, D.S.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ltu_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ltu",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ltu"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ltu_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ltu",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ltu",
+                },
             },
             {
-                "title": "Crystal structure of the receptor binding domain of SARS-CoV-2 beta variant spike glycoprotein in complex with Beta-44 and Beta-54 Fabs",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7PS6",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-COV-2 B.1.1.7 (Alpha) VARIANT, B.1.351 (Beta) VARIANT, P.1 (Gamma) VARIANT, B.1.617.2 (Delta) VARIANT, ANTIBODY, RECEPTOR-BINDING-DOMAIN, SPIKE, NEUTRALISATION, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN, IMMUNE SYSTEM, VIRAL PROTEIN-IMMUNE SYSTEM COMPLEX",
-                    "refModels": [
+                title:
+                    "Crystal structure of the receptor binding domain of SARS-CoV-2 beta variant spike glycoprotein in complex with Beta-44 and Beta-54 Fabs",
+                emdb: null,
+                pdb: {
+                    dbId: "7PS6",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-COV-2 B.1.1.7 (Alpha) VARIANT, B.1.351 (Beta) VARIANT, P.1 (Gamma) VARIANT, B.1.617.2 (Delta) VARIANT, ANTIBODY, RECEPTOR-BINDING-DOMAIN, SPIKE, NEUTRALISATION, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN, IMMUNE SYSTEM, VIRAL PROTEIN-IMMUNE SYSTEM COMPLEX",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ps6",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ps6"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ps6",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ps6",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "Beta-54 Fab heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "Beta-54 Fab heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "Beta-54 Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "Beta-54 Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "Beta-44 Fab heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "Beta-44 Fab heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "Beta-44 Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "Beta-44 Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG-FUC",
-                        "PG0",
-                        "GOL",
-                        "PEG",
-                        "CL"
-                    ],
-                    "dbauthors": [
-                        "Zhou, D.",
-                        "Ren, J.",
-                        "Stuart, D.I."
-                    ],
-                    "details": [
+                    ligands: ["NAG-FUC", "PG0", "GOL", "PEG", "CL"],
+                    dbauthors: ["Zhou, D.", "Ren, J.", "Stuart, D.I."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "pentameric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "pentameric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34921776",
-                                    "title": "The antibody response to SARS-CoV-2 Beta underscores the antigenic distance to other variants.",
-                                    "journal": "Cell Host Microbe 30 (2022), 1934-6069",
-                                    "doi": "https://doi.org/10.1016/j.chom.2021.11.013",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34921776",
-                                    "pubDate": "2022",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34921776",
+                                    title:
+                                        "The antibody response to SARS-CoV-2 Beta underscores the antigenic distance to other variants.",
+                                    journal: "Cell Host Microbe 30 (2022), 1934-6069",
+                                    doi: "https://doi.org/10.1016/j.chom.2021.11.013",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34921776",
+                                    pubDate: "2022",
+                                    abstract: "",
+                                    authors: [
                                         "Liu, C.",
                                         "Zhou, D.",
                                         "Nutalai, R.",
@@ -6432,79 +6427,76 @@ export const data: Covid19Data = {
                                         "Ren, J.",
                                         "Stuart, D.I.",
                                         "Screaton, G.R.",
-                                        "Afonine, P.V."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Afonine, P.V.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ps6_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ps6",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ps6"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ps6_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ps6",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ps6",
+                },
             },
             {
-                "title": "Crystal structure of the receptor binding domain of SARS-CoV-2 P.1 variant Spike glycoprotein in complex with ACE2",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7NXC",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2 B.1.1.7 variant, B.1.351 variant, P.1 variant, antibody, receptor-binding-domain, spike, neutralisation, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN, HYDROLASE, VIRAL PROTEIN-HYDROLASE complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of the receptor binding domain of SARS-CoV-2 P.1 variant Spike glycoprotein in complex with ACE2",
+                emdb: null,
+                pdb: {
+                    dbId: "7NXC",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2 B.1.1.7 variant, B.1.351 variant, P.1 variant, antibody, receptor-binding-domain, spike, neutralisation, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN, HYDROLASE, VIRAL PROTEIN-HYDROLASE complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7nxc",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7nxc"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7nxc",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7nxc",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "Q9BYF1",
-                            "organism": "9606",
-                            "name": "Processed angiotensin-converting enzyme 2",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "Q9BYF1",
+                            organism: "9606",
+                            name: "Processed angiotensin-converting enzyme 2",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG"
-                    ],
-                    "dbauthors": [
-                        "Zhou, D.",
-                        "Ren, J.",
-                        "Stuart, D."
-                    ],
-                    "details": [
+                    ligands: ["NAG"],
+                    dbauthors: ["Zhou, D.", "Ren, J.", "Stuart, D."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33852911",
-                                    "title": "Antibody evasion by the P.1 strain of SARS-CoV-2.",
-                                    "journal": "Cell 184 (2021), 1097-4172",
-                                    "doi": "https://doi.org/10.1016/j.cell.2021.03.055",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33852911",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33852911",
+                                    title: "Antibody evasion by the P.1 strain of SARS-CoV-2.",
+                                    journal: "Cell 184 (2021), 1097-4172",
+                                    doi: "https://doi.org/10.1016/j.cell.2021.03.055",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33852911",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Dejnirattisai, W.",
                                         "Zhou, D.",
                                         "Supasa, P.",
@@ -6558,18 +6550,19 @@ export const data: Covid19Data = {
                                         "Duyvesteyn, H.M.",
                                         "Paesen, G.C.",
                                         "Clemens, S.A.C.",
-                                        "Gilbert, S."
-                                    ]
+                                        "Gilbert, S.",
+                                    ],
                                 },
                                 {
-                                    "pmID": "",
-                                    "title": "Antibody evasion by the Brazilian P.1 strain of SARS-CoV-2",
-                                    "journal": "Biorxiv (2021)",
-                                    "doi": "https://doi.org/10.1101/2021.03.12.435194",
-                                    "pmidLink": "",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "Antibody evasion by the Brazilian P.1 strain of SARS-CoV-2",
+                                    journal: "Biorxiv (2021)",
+                                    doi: "https://doi.org/10.1101/2021.03.12.435194",
+                                    pmidLink: "",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Dejnirattisai, W.",
                                         "Zhou, D.",
                                         "Supasa, P.",
@@ -6623,81 +6616,78 @@ export const data: Covid19Data = {
                                         "Duyvesteyn, H.M.",
                                         "Paesen, G.C.",
                                         "Clemens, S.A.C.",
-                                        "Gilbert, S."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gilbert, S.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7nxc_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7nxc",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7nxc"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7nxc_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nxc",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nxc",
+                },
             },
             {
-                "title": "Crystal structure of the SARS-CoV-2 (COVID-19) main protease in complex with inhibitor UAW247",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "6XBH",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "COVID, COVID19, COVID-19, SARS, SARS COV2, COV, NCOV 19, CORONAVIRUS, MAIN PROTEASE, 3CL, MPRO, PRO, VIRAL PROTEIN, GC376, calpain inhibitor II, leupeptin, calpain, aldehyde, GC-376, 3cl-like, a-ketoamide, UAW41, UAW246, UAW247, UAW248, 246, 247, 248, alpheketoamide, alpha, ketoamide, PEPTIDOMIMETIC, PROTEASE, CYSTEINE, HYDROLASE-HYDROLASE INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of the SARS-CoV-2 (COVID-19) main protease in complex with inhibitor UAW247",
+                emdb: null,
+                pdb: {
+                    dbId: "6XBH",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "COVID, COVID19, COVID-19, SARS, SARS COV2, COV, NCOV 19, CORONAVIRUS, MAIN PROTEASE, 3CL, MPRO, PRO, VIRAL PROTEIN, GC376, calpain inhibitor II, leupeptin, calpain, aldehyde, GC-376, 3cl-like, a-ketoamide, UAW41, UAW246, UAW247, UAW248, 246, 247, 248, alpheketoamide, alpha, ketoamide, PEPTIDOMIMETIC, PROTEASE, CYSTEINE, HYDROLASE-HYDROLASE INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/6xbh",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/6xbh"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/6xbh",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/6xbh",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "",
-                            "name": "inhibitor UAW247",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "",
+                            name: "inhibitor UAW247",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "GOL",
-                        "NA"
-                    ],
-                    "dbauthors": [
-                        "Chen, Y.",
-                        "Sacco, M.",
-                        "Ma, C.",
-                        "Wang, J."
-                    ],
-                    "details": [
+                    ligands: ["GOL", "NA"],
+                    dbauthors: ["Chen, Y.", "Sacco, M.", "Ma, C.", "Wang, J."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "tetrameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "tetrameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33158912",
-                                    "title": "Structure and inhibition of the SARS-CoV-2 main protease reveal strategy for developing dual inhibitors against M pro and cathepsin L.",
-                                    "journal": "Sci Adv 6 (2020), 2375-2548",
-                                    "doi": "https://doi.org/10.1126/sciadv.abe0751",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33158912",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33158912",
+                                    title:
+                                        "Structure and inhibition of the SARS-CoV-2 main protease reveal strategy for developing dual inhibitors against M pro and cathepsin L.",
+                                    journal: "Sci Adv 6 (2020), 2375-2548",
+                                    doi: "https://doi.org/10.1126/sciadv.abe0751",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33158912",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Sacco, M.D.",
                                         "Ma, C.",
                                         "Lagarias, P.",
@@ -6714,75 +6704,74 @@ export const data: Covid19Data = {
                                         "Kolocouris, A.",
                                         "Xiang, Y.",
                                         "Chen, Y.",
-                                        "Wang, J."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Wang, J.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/6xbh_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/6xbh",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=6xbh"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/6xbh_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xbh",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xbh",
+                },
             },
             {
-                "title": "Crystal structure of CoV-2 Nsp3 Macrodomain",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7KG3",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "HYDROLASE, SARS-CoV-2, macrodomain",
-                    "refModels": [
+                title: "Crystal structure of CoV-2 Nsp3 Macrodomain",
+                emdb: null,
+                pdb: {
+                    dbId: "7KG3",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "HYDROLASE, SARS-CoV-2, macrodomain",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7kg3",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7kg3"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7kg3",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7kg3",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 3",
-                            "details": "",
-                            "altNames": "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 3",
+                            details: "",
+                            altNames:
+                                "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "MLI",
-                        "MES",
-                        "GOL",
-                        "SO4"
-                    ],
-                    "dbauthors": [
+                    ligands: ["MLI", "MES", "GOL", "SO4"],
+                    dbauthors: [
                         "Arvai, A. (0000-0002-5376-3728)",
                         "Brosey, C.A. (0000-0002-0990-0262)",
                         "Link, T.",
                         "Jones, D.E. (0000-0003-1581-3453)",
                         "Ahmed, Z. (0000-0003-3400-6577)",
-                        "Tainer, J.A. (0000-0003-1659-2429)"
+                        "Tainer, J.A. (0000-0003-1659-2429)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33636189",
-                                    "title": "Targeting SARS-CoV-2 Nsp3 macrodomain structure with insights from human poly(ADP-ribose) glycohydrolase (PARG) structures with inhibitors.",
-                                    "journal": "Prog.Biophys.Mol.Biol. 163: 171-186 (2021), 0079-6107",
-                                    "doi": "https://doi.org/10.1016/j.pbiomolbio.2021.02.002",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33636189",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33636189",
+                                    title:
+                                        "Targeting SARS-CoV-2 Nsp3 macrodomain structure with insights from human poly(ADP-ribose) glycohydrolase (PARG) structures with inhibitors.",
+                                    journal:
+                                        "Prog.Biophys.Mol.Biol. 163: 171-186 (2021), 0079-6107",
+                                    doi: "https://doi.org/10.1016/j.pbiomolbio.2021.02.002",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33636189",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Brosey, C.A.",
                                         "Houl, J.H.",
                                         "Katsonis, P.",
@@ -6796,171 +6785,170 @@ export const data: Covid19Data = {
                                         "Lichtarge, O.",
                                         "Jones, D.E.",
                                         "Ahmed, Z.",
-                                        "Tainer, J.A."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Tainer, J.A.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7kg3_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7kg3",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7kg3"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7kg3_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kg3",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kg3",
+                },
             },
             {
-                "title": "Crystal structure of SARS-CoV-2 spike RBD in complex with human monoclonal antibody AZD8895",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7L7D",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, spike protein, receptor binding domain, human monoclonal antibody, VIRAL PROTEIN-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of SARS-CoV-2 spike RBD in complex with human monoclonal antibody AZD8895",
+                emdb: null,
+                pdb: {
+                    dbId: "7L7D",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2, spike protein, receptor binding domain, human monoclonal antibody, VIRAL PROTEIN-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7l7d",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7l7d"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7l7d",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7l7d",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "heavy chain of human monoclonal antibody Fab AZD8895",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "heavy chain of human monoclonal antibody Fab AZD8895",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "light chain of human monoclonal antibody Fab AZD8895",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "light chain of human monoclonal antibody Fab AZD8895",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "GOL",
-                        "NAG"
-                    ],
-                    "dbauthors": [
-                        "Dong, J. (0000-0003-4542-7756)",
-                        "Crowe, J.E."
-                    ],
-                    "details": [
+                    ligands: ["GOL", "NAG"],
+                    dbauthors: ["Dong, J. (0000-0003-4542-7756)", "Crowe, J.E."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Crystal structure of SARS-CoV-2 spike RBD in complex with human monoclonal antibody AZD8895",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
-                                        "Dong, J. (0000-0003-4542-7756)"
-                                    ]
-                                }
-                            ]
-                        }
+                                    pmID: "",
+                                    title:
+                                        "Crystal structure of SARS-CoV-2 spike RBD in complex with human monoclonal antibody AZD8895",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: ["Dong, J. (0000-0003-4542-7756)"],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7l7d_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7l7d",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7l7d"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7l7d_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l7d",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l7d",
+                },
             },
             {
-                "title": "Crystal Structure of HLA-A*0201in complex with SARS-CoV-2 N159-167",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7KGR",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "HLA-A*0201, T cell, SARS-CoV-2, COVID-19, viral peptide, TCR, IMMUNE SYSTEM",
-                    "refModels": [
+                title: "Crystal Structure of HLA-A*0201in complex with SARS-CoV-2 N159-167",
+                emdb: null,
+                pdb: {
+                    dbId: "7KGR",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "HLA-A*0201, T cell, SARS-CoV-2, COVID-19, viral peptide, TCR, IMMUNE SYSTEM",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7kgr",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7kgr"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7kgr",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7kgr",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "A0A5B8RNS7",
-                            "organism": "9606",
-                            "name": "MHC class I antigen",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "A0A5B8RNS7",
+                            organism: "9606",
+                            name: "MHC class I antigen",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P61769",
-                            "organism": "9606",
-                            "name": "Beta-2-microglobulin",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P61769",
+                            organism: "9606",
+                            name: "Beta-2-microglobulin",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC9",
-                            "organism": "2697049",
-                            "name": "Nucleoprotein",
-                            "details": "",
-                            "altNames": "Nucleocapsid protein,Protein N,N,NC",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC9",
+                            organism: "2697049",
+                            name: "Nucleoprotein",
+                            details: "",
+                            altNames: "Nucleocapsid protein,Protein N,N,NC",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
+                    ligands: [],
+                    dbauthors: [
                         "Szeto, C.",
                         "Chatzileontiadou, D.S.M.",
                         "Riboldi-Tunnicliffe, A.",
-                        "Gras, S."
+                        "Gras, S.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "trimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "trimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33521593",
-                                    "title": "The presentation of SARS-CoV-2 peptides by the common HLA-A * 02:01 molecule.",
-                                    "journal": "Iscience 24: 102096-102096 (2021), 2589-0042",
-                                    "doi": "https://doi.org/10.1016/j.isci.2021.102096",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33521593",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33521593",
+                                    title:
+                                        "The presentation of SARS-CoV-2 peptides by the common HLA-A * 02:01 molecule.",
+                                    journal: "Iscience 24: 102096-102096 (2021), 2589-0042",
+                                    doi: "https://doi.org/10.1016/j.isci.2021.102096",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33521593",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Szeto, C.",
                                         "Chatzileontiadou, D.S.M.",
                                         "Nguyen, A.T.",
@@ -6971,90 +6959,92 @@ export const data: Covid19Data = {
                                         "Smith, C.",
                                         "Riboldi-Tunnicliffe, A.",
                                         "Grant, E.J.",
-                                        "Gras, S."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gras, S.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7kgr_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7kgr",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7kgr"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7kgr_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kgr",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kgr",
+                },
             },
             {
-                "title": "Structural basis for a germline-biased antibody response to SARS-CoV-2 (RBD:C1A-B12 Fab)",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7KFV",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "COVID-19, SARS-CoV-2, neutralizing antibody, affinity maturation, IMMUNE SYSTEM, IMMUNE SYSTEM-Viral protein complex",
-                    "refModels": [
+                title:
+                    "Structural basis for a germline-biased antibody response to SARS-CoV-2 (RBD:C1A-B12 Fab)",
+                emdb: null,
+                pdb: {
+                    dbId: "7KFV",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "COVID-19, SARS-CoV-2, neutralizing antibody, affinity maturation, IMMUNE SYSTEM, IMMUNE SYSTEM-Viral protein complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7kfv",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7kfv"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7kfv",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7kfv",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike glycoprotein",
-                            "details": "",
-                            "altNames": "S glycoprotein,E2,Peplomer protein",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike glycoprotein",
+                            details: "",
+                            altNames: "S glycoprotein,E2,Peplomer protein",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "Heavy chain of antibody C1A-B12 Fab",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "Heavy chain of antibody C1A-B12 Fab",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "light chain of antibody C1A-B3 Fab",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "light chain of antibody C1A-B3 Fab",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG"
-                    ],
-                    "dbauthors": [
+                    ligands: ["NAG"],
+                    dbauthors: [
                         "Pan, J. (0000-0002-0070-955X)",
                         "Abraham, J. (0000-0002-7937-3920)",
                         "Clark, L. (0000-0002-6093-7597)",
-                        "Clark, S. (0000-0001-9944-0919)"
+                        "Clark, S. (0000-0001-9944-0919)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33200128",
-                                    "title": "Molecular basis for a germline-biased neutralizing antibody response to SARS-CoV-2.",
-                                    "journal": "Biorxiv (2020)",
-                                    "doi": "https://doi.org/10.1101/2020.11.13.381533",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33200128",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33200128",
+                                    title:
+                                        "Molecular basis for a germline-biased neutralizing antibody response to SARS-CoV-2.",
+                                    journal: "Biorxiv (2020)",
+                                    doi: "https://doi.org/10.1101/2020.11.13.381533",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33200128",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Clark, S.A.",
                                         "Clark, L.E.",
                                         "Pan, J. (0000-0002-0070-955X)",
@@ -7063,48 +7053,49 @@ export const data: Covid19Data = {
                                         "Shankar, S.",
                                         "Johnson, R.I.",
                                         "Griffiths, A.",
-                                        "Abraham, J. (0000-0002-7937-3920)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Abraham, J. (0000-0002-7937-3920)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7kfv_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7kfv",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7kfv"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7kfv_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kfv",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kfv",
+                },
             },
             {
-                "title": "1.65 A resolution structure of SARS-CoV-2 3CL protease in complex with a deuterated GC376 alpha-ketoamide analog (compound 5)",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7K0F",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "COVID-19, PROTEASE, severe acute respiratory syndrome coronavirus 2, SARS-CoV-2 3CL protease Inhhibitors, hydrolase, deuterated hydrolase inhibitor",
-                    "refModels": [
+                title:
+                    "1.65 A resolution structure of SARS-CoV-2 3CL protease in complex with a deuterated GC376 alpha-ketoamide analog (compound 5)",
+                emdb: null,
+                pdb: {
+                    dbId: "7K0F",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "COVID-19, PROTEASE, severe acute respiratory syndrome coronavirus 2, SARS-CoV-2 3CL protease Inhhibitors, hydrolase, deuterated hydrolase inhibitor",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7k0f",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7k0f"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7k0f",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7k0f",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "VR4",
-                        "PG4"
-                    ],
-                    "dbauthors": [
+                    ligands: ["VR4", "PG4"],
+                    dbauthors: [
                         "Lovell, S.",
                         "Kashipathy, M.M.",
                         "Battaile, K.P.",
@@ -7112,26 +7103,27 @@ export const data: Covid19Data = {
                         "Nguyen, H.N.",
                         "Kim, Y.",
                         "Chang, K.O.",
-                        "Groutas, W.C."
+                        "Groutas, W.C.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34210738",
-                                    "title": "Postinfection treatment with a protease inhibitor increases survival of mice with a fatal SARS-CoV-2 infection.",
-                                    "journal": "Proc.Natl.Acad.Sci.USA 118 (2021), 1091-6490",
-                                    "doi": "https://doi.org/10.1073/pnas.2101555118",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34210738",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34210738",
+                                    title:
+                                        "Postinfection treatment with a protease inhibitor increases survival of mice with a fatal SARS-CoV-2 infection.",
+                                    journal: "Proc.Natl.Acad.Sci.USA 118 (2021), 1091-6490",
+                                    doi: "https://doi.org/10.1073/pnas.2101555118",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34210738",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Dampalla, C.S.",
                                         "Zheng, J.",
                                         "Perera, K.D.",
@@ -7144,47 +7136,48 @@ export const data: Covid19Data = {
                                         "Kim, Y.",
                                         "Perlman, S.",
                                         "Groutas, W.C.",
-                                        "Chang, K.O."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Chang, K.O.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7k0f_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7k0f",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7k0f"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7k0f_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k0f",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k0f",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with Z239136710",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5SA4",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE-HYDROLASE inhibitor complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with Z239136710",
+                emdb: null,
+                pdb: {
+                    dbId: "5SA4",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE-HYDROLASE inhibitor complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5sa4",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5sa4"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5sa4",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5sa4",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Uridylate-specific endoribonuclease",
-                            "details": "",
-                            "altNames": "NSP15 endoribnuclease",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Uridylate-specific endoribonuclease",
+                            details: "",
+                            altNames: "NSP15 endoribnuclease",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "K3A"
-                    ],
-                    "dbauthors": [
+                    ligands: ["K3A"],
+                    dbauthors: [
                         "Godoy, A.S.",
                         "Douangamath, A.",
                         "Nakamura, A.M.",
@@ -7201,26 +7194,26 @@ export const data: Covid19Data = {
                         "Brandao-Neto, J.",
                         "Skyner, R.",
                         "von Delft, F.",
-                        "Oliva, G."
+                        "Oliva, G.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "hexameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "hexameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "PanDDA analysis group deposition",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "PanDDA analysis group deposition",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Godoy, A.S.",
                                         "Douangamath, A.",
                                         "Nakamura, A.M.",
@@ -7253,69 +7246,70 @@ export const data: Covid19Data = {
                                         "Arrowsmith, C.H.",
                                         "Edwards, A.",
                                         "Bountra, C.",
-                                        "Gileadi, O."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gileadi, O.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5sa4_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5sa4",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5sa4"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5sa4_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5sa4",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5sa4",
+                },
             },
             {
-                "title": "Crystal structure of SARS-CoV-2 main protease treated with ebselen derivative of MR6-31-2",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7BAL",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, main protease, COVID19, ebselen, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "Crystal structure of SARS-CoV-2 main protease treated with ebselen derivative of MR6-31-2",
+                emdb: null,
+                pdb: {
+                    dbId: "7BAL",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "SARS-CoV-2, main protease, COVID19, ebselen, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7bal",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7bal"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7bal",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7bal",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Main Protease",
-                            "details": "",
-                            "altNames": "pp1ab,ORF1ab polyprotein",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Main Protease",
+                            details: "",
+                            altNames: "pp1ab,ORF1ab polyprotein",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "SE"
-                    ],
-                    "dbauthors": [
+                    ligands: ["SE"],
+                    dbauthors: [
                         "Amporndanai, K. (0000-0001-8527-9394)",
                         "O'Neill, P.M. (0000-0003-4338-0317)",
-                        "Hasnain, S.S. (0000-0002-2854-4718)"
+                        "Hasnain, S.S. (0000-0002-2854-4718)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34031399",
-                                    "title": "Inhibition mechanism of SARS-CoV-2 main protease by ebselen and its derivatives.",
-                                    "journal": "Nat Commun 12: 3061-3061 (2021), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-021-23313-7",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34031399",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34031399",
+                                    title:
+                                        "Inhibition mechanism of SARS-CoV-2 main protease by ebselen and its derivatives.",
+                                    journal: "Nat Commun 12: 3061-3061 (2021), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-021-23313-7",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34031399",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Amporndanai, K.",
                                         "Meng, X. (0000-0002-7774-2075)",
                                         "Shang, W.",
@@ -7327,48 +7321,48 @@ export const data: Covid19Data = {
                                         "Yang, H. (0000-0002-1875-3268)",
                                         "Zhang, L. (0000-0002-2593-2571)",
                                         "O'Neill, P.M. (0000-0003-4338-0317)",
-                                        "Samar Hasnain, S. (0000-0002-2854-4718)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Samar Hasnain, S. (0000-0002-2854-4718)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7bal_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7bal",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7bal"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7bal_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7bal",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7bal",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with Z31504642",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5SAB",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE-HYDROLASE inhibitor complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with Z31504642",
+                emdb: null,
+                pdb: {
+                    dbId: "5SAB",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE-HYDROLASE inhibitor complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5sab",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5sab"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5sab",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5sab",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Uridylate-specific endoribonuclease",
-                            "details": "",
-                            "altNames": "NSP15 endoribnuclease",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Uridylate-specific endoribonuclease",
+                            details: "",
+                            altNames: "NSP15 endoribnuclease",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "CIT",
-                        "WJD"
-                    ],
-                    "dbauthors": [
+                    ligands: ["CIT", "WJD"],
+                    dbauthors: [
                         "Godoy, A.S.",
                         "Douangamath, A.",
                         "Nakamura, A.M.",
@@ -7385,26 +7379,26 @@ export const data: Covid19Data = {
                         "Brandao-Neto, J.",
                         "Skyner, R.",
                         "von Delft, F.",
-                        "Oliva, G."
+                        "Oliva, G.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "hexameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "hexameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "PanDDA analysis group deposition",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "PanDDA analysis group deposition",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Godoy, A.S.",
                                         "Douangamath, A.",
                                         "Nakamura, A.M.",
@@ -7437,45 +7431,49 @@ export const data: Covid19Data = {
                                         "Arrowsmith, C.H.",
                                         "Edwards, A.",
                                         "Bountra, C.",
-                                        "Gileadi, O."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gileadi, O.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5sab_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5sab",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5sab"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5sab_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5sab",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5sab",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition of ground-state model of SARS-CoV-2 Nsp3 macrodomain",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5S73",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, SARS-CoV-2 Nsp3 macrodomain, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition of ground-state model of SARS-CoV-2 Nsp3 macrodomain",
+                emdb: null,
+                pdb: {
+                    dbId: "5S73",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, SARS-CoV-2 Nsp3 macrodomain, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5s73",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5s73"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5s73",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5s73",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 3",
-                            "details": "",
-                            "altNames": "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 3",
+                            details: "",
+                            altNames:
+                                "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
+                    ligands: [],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Dias, A.",
                         "Krojer, T.",
@@ -7492,26 +7490,27 @@ export const data: Covid19Data = {
                         "Gorrie-Stone, T.J.",
                         "Powell, A.J.",
                         "Thompson, W.",
-                        "Ahel, I."
+                        "Ahel, I.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "PanDDA analysis group deposition of ground-state model of SARS-CoV-2 Nsp3 macrodomain",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "PanDDA analysis group deposition of ground-state model of SARS-CoV-2 Nsp3 macrodomain",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Fearon, D.",
                                         "Schuller, M.",
                                         "Rangel, V.L.",
@@ -7528,47 +7527,49 @@ export const data: Covid19Data = {
                                         "Rack, J.G.M.",
                                         "Zhu, K.",
                                         "Ahel, I.",
-                                        "von Delft, F."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "von Delft, F.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5s73_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5s73",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5s73"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5s73_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5s73",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5s73",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 Nsp3 macrodomain in complex with SF051",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5S4I",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, SARS-CoV-2 Nsp3 macrodomain, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 Nsp3 macrodomain in complex with SF051",
+                emdb: null,
+                pdb: {
+                    dbId: "5S4I",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, SARS-CoV-2 Nsp3 macrodomain, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5s4i",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5s4i"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5s4i",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5s4i",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 3",
-                            "details": "",
-                            "altNames": "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 3",
+                            details: "",
+                            altNames:
+                                "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "W3Y"
-                    ],
-                    "dbauthors": [
+                    ligands: ["W3Y"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Dias, A.",
                         "Krojer, T.",
@@ -7585,26 +7586,27 @@ export const data: Covid19Data = {
                         "Gorrie-Stone, T.J.",
                         "Powell, A.J.",
                         "Thompson, W.",
-                        "Ahel, I."
+                        "Ahel, I.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33853786",
-                                    "title": "Fragment binding to the Nsp3 macrodomain of SARS-CoV-2 identified through crystallographic screening and computational docking.",
-                                    "journal": "Sci Adv 7 (2021), 2375-2548",
-                                    "doi": "https://doi.org/10.1126/sciadv.abf8711",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33853786",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33853786",
+                                    title:
+                                        "Fragment binding to the Nsp3 macrodomain of SARS-CoV-2 identified through crystallographic screening and computational docking.",
+                                    journal: "Sci Adv 7 (2021), 2375-2548",
+                                    doi: "https://doi.org/10.1126/sciadv.abf8711",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33853786",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Schuller, M. (0000-0002-1551-0359)",
                                         "Correy, G.J. (0000-0001-5155-7325)",
                                         "Gahbauer, S. (0000-0002-3115-9757)",
@@ -7674,18 +7676,19 @@ export const data: Covid19Data = {
                                         "Vajda, S.",
                                         "Gerencser, J. (0000-0002-1928-0650)",
                                         "Pallai, P.",
-                                        "Keseru, G.M. (0000-0003-1039-7809)"
-                                    ]
+                                        "Keseru, G.M. (0000-0003-1039-7809)",
+                                    ],
                                 },
                                 {
-                                    "pmID": "34045440",
-                                    "title": "Exploring protein hotspots by optimized fragment pharmacophores.",
-                                    "journal": "Nat Commun 12: 3201-3201 (2021), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-021-23443-y",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34045440",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34045440",
+                                    title:
+                                        "Exploring protein hotspots by optimized fragment pharmacophores.",
+                                    journal: "Nat Commun 12: 3201-3201 (2021), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-021-23443-y",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34045440",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Schuller, M. (0000-0002-1551-0359)",
                                         "Correy, G.J. (0000-0001-5155-7325)",
                                         "Gahbauer, S. (0000-0002-3115-9757)",
@@ -7783,86 +7786,85 @@ export const data: Covid19Data = {
                                         "Waring, M.J. (0000-0002-9110-8783)",
                                         "Wild, C.",
                                         "London, N. (0000-0003-2687-0699)",
-                                        "Walsh, M.A. (0000-0001-5683-1151)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Walsh, M.A. (0000-0001-5683-1151)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5s4i_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5s4i",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5s4i"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5s4i_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5s4i",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5s4i",
+                },
             },
             {
-                "title": "Crystal structure of the SARS-CoV-2 S RBD in complex with BD-629 Fab",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7CH5",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Complex, PROTEIN BINDING-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title: "Crystal structure of the SARS-CoV-2 S RBD in complex with BD-629 Fab",
+                emdb: null,
+                pdb: {
+                    dbId: "7CH5",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Complex, PROTEIN BINDING-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ch5",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ch5"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ch5",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ch5",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "BD-629 Fab H",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "BD-629 Fab H",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "BD-629 Fab L",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "BD-629 Fab L",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
-                        "Du, S.",
-                        "Xiao, J.Y."
-                    ],
-                    "details": [
+                    ligands: [],
+                    dbauthors: ["Du, S.", "Xiao, J.Y."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "32970990",
-                                    "title": "Structurally Resolved SARS-CoV-2 Antibody Shows High Efficacy in Severely Infected Hamsters and Provides a Potent Cocktail Pairing Strategy.",
-                                    "journal": "Cell 183: 1013-1023.e13 (2020), 1097-4172",
-                                    "doi": "https://doi.org/10.1016/j.cell.2020.09.035",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/32970990",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "32970990",
+                                    title:
+                                        "Structurally Resolved SARS-CoV-2 Antibody Shows High Efficacy in Severely Infected Hamsters and Provides a Potent Cocktail Pairing Strategy.",
+                                    journal: "Cell 183: 1013-1023.e13 (2020), 1097-4172",
+                                    doi: "https://doi.org/10.1016/j.cell.2020.09.035",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/32970990",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Du, S.",
                                         "Cao, Y.",
                                         "Zhu, Q.",
@@ -7897,90 +7899,90 @@ export const data: Covid19Data = {
                                         "Xie, X.S.",
                                         "Su, X.D.",
                                         "Xiao, J.",
-                                        "Qin, C."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Qin, C.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ch5_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ch5",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ch5"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ch5_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ch5",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ch5",
+                },
             },
             {
-                "title": "Crystal structure of SARS-CoV-2 receptor binding domain in complex with neutralizing antibody 47D1",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7MF1",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "COVID-19, IMMUNE SYSTEM-VIRAL PROTEIN complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of SARS-CoV-2 receptor binding domain in complex with neutralizing antibody 47D1",
+                emdb: null,
+                pdb: {
+                    dbId: "7MF1",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "COVID-19, IMMUNE SYSTEM-VIRAL PROTEIN complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7mf1",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7mf1"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7mf1",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7mf1",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "47D1 Fab heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "47D1 Fab heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "47D1 Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "47D1 Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG-NAG-FUC",
-                        "NAG"
-                    ],
-                    "dbauthors": [
+                    ligands: ["NAG-NAG-FUC", "NAG"],
+                    dbauthors: [
                         "Yuan, M. (0000-0001-9754-4503)",
                         "Zhu, X. (0000-0002-6021-3740)",
-                        "Wilson, I.A. (0000-0002-6469-2419)"
+                        "Wilson, I.A. (0000-0002-6469-2419)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Trichoplusia ni",
-                                "assembly": "trimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Trichoplusia ni",
+                                assembly: "trimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33932326",
-                                    "title": "Diverse immunoglobulin gene usage and convergent epitope targeting in neutralizing antibody responses to SARS-CoV-2.",
-                                    "journal": "Cell Rep 35: 109109-109109 (2021), 2211-1247",
-                                    "doi": "https://doi.org/10.1016/j.celrep.2021.109109",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33932326",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33932326",
+                                    title:
+                                        "Diverse immunoglobulin gene usage and convergent epitope targeting in neutralizing antibody responses to SARS-CoV-2.",
+                                    journal: "Cell Rep 35: 109109-109109 (2021), 2211-1247",
+                                    doi: "https://doi.org/10.1016/j.celrep.2021.109109",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33932326",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Zhou, X.",
                                         "Ma, F.",
                                         "Xie, J.",
@@ -8004,106 +8006,106 @@ export const data: Covid19Data = {
                                         "Teijaro, J.R.",
                                         "Wilson, I.A.",
                                         "Xiao, C.",
-                                        "Huang, Z."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Huang, Z.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7mf1_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7mf1",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7mf1"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7mf1_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mf1",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mf1",
+                },
             },
             {
-                "title": "Crystal structure of the SARS-CoV-2 S RBD in complex with BD-629 Fab and BD-368-2 Fab",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7CHC",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Complex, PROTEIN BINDING-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of the SARS-CoV-2 S RBD in complex with BD-629 Fab and BD-368-2 Fab",
+                emdb: null,
+                pdb: {
+                    dbId: "7CHC",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Complex, PROTEIN BINDING-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7chc",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7chc"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7chc",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7chc",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "BD-629 Fab H",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "BD-629 Fab H",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "Q6PIL8",
-                            "organism": "9606",
-                            "name": "IGK@ protein",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "Q6PIL8",
+                            organism: "9606",
+                            name: "IGK@ protein",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "BD-368-2 Fab H",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "BD-368-2 Fab H",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "BD-368-2 Fab L",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "BD-368-2 Fab L",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
-                        "Du, S.",
-                        "Xiao, J.Y."
-                    ],
-                    "details": [
+                    ligands: [],
+                    dbauthors: ["Du, S.", "Xiao, J.Y."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "pentameric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "pentameric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "32970990",
-                                    "title": "Structurally Resolved SARS-CoV-2 Antibody Shows High Efficacy in Severely Infected Hamsters and Provides a Potent Cocktail Pairing Strategy.",
-                                    "journal": "Cell 183: 1013-1023.e13 (2020), 1097-4172",
-                                    "doi": "https://doi.org/10.1016/j.cell.2020.09.035",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/32970990",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "32970990",
+                                    title:
+                                        "Structurally Resolved SARS-CoV-2 Antibody Shows High Efficacy in Severely Infected Hamsters and Provides a Potent Cocktail Pairing Strategy.",
+                                    journal: "Cell 183: 1013-1023.e13 (2020), 1097-4172",
+                                    doi: "https://doi.org/10.1016/j.cell.2020.09.035",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/32970990",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Du, S.",
                                         "Cao, Y.",
                                         "Zhu, Q.",
@@ -8138,48 +8140,49 @@ export const data: Covid19Data = {
                                         "Xie, X.S.",
                                         "Su, X.D.",
                                         "Xiao, J.",
-                                        "Qin, C."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Qin, C.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7chc_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7chc",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7chc"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7chc_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7chc",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7chc",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with POB0073",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5RF0",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with POB0073",
+                emdb: null,
+                pdb: {
+                    dbId: "5RF0",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rf0",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rf0"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rf0",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rf0",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS",
-                        "T5D"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS", "T5D"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Krojer, T.",
                         "Aimon, A.",
@@ -8198,26 +8201,27 @@ export const data: Covid19Data = {
                         "Dunnett, L.",
                         "Snee, M.",
                         "London, N.",
-                        "Walsh, M.A."
+                        "Walsh, M.A.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33028810",
-                                    "title": "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
-                                    "journal": "Nat Commun 11: 5047-5047 (2020), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-020-18709-w",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33028810",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33028810",
+                                    title:
+                                        "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
+                                    journal: "Nat Commun 11: 5047-5047 (2020), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-020-18709-w",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33028810",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Douangamath, A. (0000-0002-9196-8644)",
                                         "Fearon, D. (0000-0003-3529-7863)",
                                         "Gehrtz, P.",
@@ -8267,48 +8271,49 @@ export const data: Covid19Data = {
                                         "Vajda, S.",
                                         "Gerencser, J. (0000-0002-1928-0650)",
                                         "Pallai, P.",
-                                        "Keseru, G.M. (0000-0003-1039-7809)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Keseru, G.M. (0000-0003-1039-7809)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rf0_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rf0",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rf0"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rf0_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rf0",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rf0",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with PCM-0102241",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5REJ",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with PCM-0102241",
+                emdb: null,
+                pdb: {
+                    dbId: "5REJ",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rej",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rej"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rej",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rej",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS",
-                        "T1V"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS", "T1V"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Krojer, T.",
                         "Aimon, A.",
@@ -8327,26 +8332,27 @@ export const data: Covid19Data = {
                         "Dunnett, L.",
                         "Snee, M.",
                         "London, N.",
-                        "Walsh, M.A."
+                        "Walsh, M.A.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33028810",
-                                    "title": "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
-                                    "journal": "Nat Commun 11: 5047-5047 (2020), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-020-18709-w",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33028810",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33028810",
+                                    title:
+                                        "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
+                                    journal: "Nat Commun 11: 5047-5047 (2020), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-020-18709-w",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33028810",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Douangamath, A. (0000-0002-9196-8644)",
                                         "Fearon, D. (0000-0003-3529-7863)",
                                         "Gehrtz, P.",
@@ -8396,48 +8402,49 @@ export const data: Covid19Data = {
                                         "Vajda, S.",
                                         "Gerencser, J. (0000-0002-1928-0650)",
                                         "Pallai, P.",
-                                        "Keseru, G.M. (0000-0003-1039-7809)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Keseru, G.M. (0000-0003-1039-7809)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rej_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rej",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rej"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rej_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rej",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rej",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with PCM-0102179",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5RFQ",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with PCM-0102179",
+                emdb: null,
+                pdb: {
+                    dbId: "5RFQ",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rfq",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rfq"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rfq",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rfq",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS",
-                        "T7Y"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS", "T7Y"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Krojer, T.",
                         "Aimon, A.",
@@ -8456,26 +8463,27 @@ export const data: Covid19Data = {
                         "Dunnett, L.",
                         "Snee, M.",
                         "London, N.",
-                        "Walsh, M.A."
+                        "Walsh, M.A.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33028810",
-                                    "title": "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
-                                    "journal": "Nat Commun 11: 5047-5047 (2020), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-020-18709-w",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33028810",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33028810",
+                                    title:
+                                        "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
+                                    journal: "Nat Commun 11: 5047-5047 (2020), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-020-18709-w",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33028810",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Douangamath, A. (0000-0002-9196-8644)",
                                         "Fearon, D. (0000-0003-3529-7863)",
                                         "Gehrtz, P.",
@@ -8525,68 +8533,72 @@ export const data: Covid19Data = {
                                         "Vajda, S.",
                                         "Gerencser, J. (0000-0002-1928-0650)",
                                         "Pallai, P.",
-                                        "Keseru, G.M. (0000-0003-1039-7809)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Keseru, G.M. (0000-0003-1039-7809)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rfq_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rfq",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rfq"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rfq_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rfq",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rfq",
+                },
             },
             {
-                "title": "Product structure of SARS-CoV-2 Mpro C145A mutant in complex with its C-terminal autoprocessing sequence.",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7JOY",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Protease, SARS-CoV-2, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "Product structure of SARS-CoV-2 Mpro C145A mutant in complex with its C-terminal autoprocessing sequence.",
+                emdb: null,
+                pdb: {
+                    dbId: "7JOY",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Protease, SARS-CoV-2, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7joy",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7joy"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7joy",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7joy",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
+                    ligands: [],
+                    dbauthors: [
                         "Lee, J.",
                         "Worrall, L.J. (0000-0003-4966-7175)",
                         "Paetzel, M.",
-                        "Strynadka, N.C.J. (0000-0002-4058-9425)"
+                        "Strynadka, N.C.J. (0000-0002-4058-9425)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33208735",
-                                    "title": "Crystallographic structure of wild-type SARS-CoV-2 main protease acyl-enzyme intermediate with physiological C-terminal autoprocessing site.",
-                                    "journal": "Nat Commun 11: 5877-5877 (2020), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-020-19662-4",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33208735",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33208735",
+                                    title:
+                                        "Crystallographic structure of wild-type SARS-CoV-2 main protease acyl-enzyme intermediate with physiological C-terminal autoprocessing site.",
+                                    journal: "Nat Commun 11: 5877-5877 (2020), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-020-19662-4",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33208735",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Lee, J.",
                                         "Worrall, L.J.",
                                         "Vuckovic, M.",
@@ -8597,48 +8609,49 @@ export const data: Covid19Data = {
                                         "Ban, F.",
                                         "Cherkasov, A. (0000-0002-1599-1439)",
                                         "Paetzel, M. (0000-0002-7408-5487)",
-                                        "Strynadka, N.C.J. (0000-0002-4058-9425)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Strynadka, N.C.J. (0000-0002-4058-9425)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7joy_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7joy",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7joy"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7joy_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7joy",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7joy",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition SARS-CoV-2 main protease fragment screen -- Crystal Structure of SARS-CoV-2 main protease in complex with Z4444622180 (Mpro-x2562)",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5RGU",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition SARS-CoV-2 main protease fragment screen -- Crystal Structure of SARS-CoV-2 main protease in complex with Z4444622180 (Mpro-x2562)",
+                emdb: null,
+                pdb: {
+                    dbId: "5RGU",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rgu",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rgu"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rgu",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rgu",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "UGD",
-                        "DMS"
-                    ],
-                    "dbauthors": [
+                    ligands: ["UGD", "DMS"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Krojer, T.",
                         "Aimon, A.",
@@ -8657,26 +8670,27 @@ export const data: Covid19Data = {
                         "Dunnett, L.",
                         "Snee, M.",
                         "London, N.",
-                        "Walsh, M.A."
+                        "Walsh, M.A.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "PanDDA analysis group deposition SARS-CoV-2 main protease fragment screen",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "PanDDA analysis group deposition SARS-CoV-2 main protease fragment screen",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Fearon, D.",
                                         "Owen, C.D.",
                                         "Douangamath, A.",
@@ -8695,118 +8709,118 @@ export const data: Covid19Data = {
                                         "Snee, M.",
                                         "London, N.",
                                         "Walsh, M.A.",
-                                        "von Delft, F."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "von Delft, F.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rgu_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rgu",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rgu"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rgu_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rgu",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rgu",
+                },
             },
             {
-                "title": "Crystal structure of SARS-CoV-2 Papain-like protease C111S",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7D47",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Protease, PLpro, SARS-CoV-2, VIRAL PROTEIN",
-                    "refModels": [
+                title: "Crystal structure of SARS-CoV-2 Papain-like protease C111S",
+                emdb: null,
+                pdb: {
+                    dbId: "7D47",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Protease, PLpro, SARS-CoV-2, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7d47",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7d47"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7d47",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7d47",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 3",
-                            "details": "",
-                            "altNames": "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 3",
+                            details: "",
+                            altNames:
+                                "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "ZN",
-                        "CA"
-                    ],
-                    "dbauthors": [
+                    ligands: ["ZN", "CA"],
+                    dbauthors: [
                         "Wu, K.-P. (0000-0002-1525-6004)",
                         "Chen, S.-K.",
                         "Lu, Y.-C.",
                         "Huang, Y.-C.J.",
-                        "Lee, M.-H."
+                        "Lee, M.-H.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli K-12",
-                                "assembly": "monomeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli K-12",
+                                assembly: "monomeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Crystal structure of SARS-CoV-2 Papain-like protease",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "Crystal structure of SARS-CoV-2 Papain-like protease",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Wu, K.-P. (0000-0002-1525-6004)",
                                         "Chen, S.-K.",
                                         "Lu, Y.-C.",
                                         "Huang, Y.-C.J.",
-                                        "Lee, M.-H."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Lee, M.-H.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7d47_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7d47",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7d47"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7d47_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7d47",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7d47",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with PCM-0102704",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5RFF",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with PCM-0102704",
+                emdb: null,
+                pdb: {
+                    dbId: "5RFF",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rff",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rff"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rff",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rff",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS",
-                        "T6M"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS", "T6M"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Krojer, T.",
                         "Aimon, A.",
@@ -8825,26 +8839,27 @@ export const data: Covid19Data = {
                         "Dunnett, L.",
                         "Snee, M.",
                         "London, N.",
-                        "Walsh, M.A."
+                        "Walsh, M.A.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33028810",
-                                    "title": "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
-                                    "journal": "Nat Commun 11: 5047-5047 (2020), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-020-18709-w",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33028810",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33028810",
+                                    title:
+                                        "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
+                                    journal: "Nat Commun 11: 5047-5047 (2020), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-020-18709-w",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33028810",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Douangamath, A. (0000-0002-9196-8644)",
                                         "Fearon, D. (0000-0003-3529-7863)",
                                         "Gehrtz, P.",
@@ -8894,51 +8909,48 @@ export const data: Covid19Data = {
                                         "Vajda, S.",
                                         "Gerencser, J. (0000-0002-1928-0650)",
                                         "Pallai, P.",
-                                        "Keseru, G.M. (0000-0003-1039-7809)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Keseru, G.M. (0000-0003-1039-7809)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rff_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rff",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rff"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rff_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rff",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rff",
+                },
             },
             {
-                "title": "Non-structural protein 10 (nsp10) from SARS CoV-2 in complex with fragment VT00265",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7ORW",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Fragment, complex, small molecule, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "Non-structural protein 10 (nsp10) from SARS CoV-2 in complex with fragment VT00265",
+                emdb: null,
+                pdb: {
+                    dbId: "7ORW",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Fragment, complex, small molecule, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7orw",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7orw"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7orw",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7orw",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 10",
-                            "details": "",
-                            "altNames": "pp1ab,ORF1ab polyprotein,nsp10,Growth factor-like peptide,GFL,Replicase polyprotein 1ab",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 10",
+                            details: "",
+                            altNames:
+                                "pp1ab,ORF1ab polyprotein,nsp10,Growth factor-like peptide,GFL,Replicase polyprotein 1ab",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "ZN",
-                        "7WA",
-                        "GOL",
-                        "DMS",
-                        "CL"
-                    ],
-                    "dbauthors": [
+                    ligands: ["ZN", "7WA", "GOL", "DMS", "CL"],
+                    dbauthors: [
                         "Wang, Q.",
                         "Krojer, T.",
                         "Talibov, V.O.",
@@ -8950,26 +8962,27 @@ export const data: Covid19Data = {
                         "Nyblom, M.",
                         "Rogstam, A.",
                         "Knecht, W.",
-                        "Fisher, S.Z."
+                        "Fisher, S.Z.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Identification of fragments binding to SARS-CoV-2 nsp10 reveals ligand-binding sites in conserved interfaces between nsp10 and nsp14/nsp16",
-                                    "journal": "Rsc Chem Biol (2021), 2633-0679",
-                                    "doi": "https://doi.org/10.1039/D1CB00135C",
-                                    "pmidLink": "",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "Identification of fragments binding to SARS-CoV-2 nsp10 reveals ligand-binding sites in conserved interfaces between nsp10 and nsp14/nsp16",
+                                    journal: "Rsc Chem Biol (2021), 2633-0679",
+                                    doi: "https://doi.org/10.1039/D1CB00135C",
+                                    pmidLink: "",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Kozielski, F.",
                                         "Sele, C.",
                                         "Talibov, V.O.",
@@ -8981,220 +8994,226 @@ export const data: Covid19Data = {
                                         "Rogstam, A.",
                                         "Krojer, T.",
                                         "Fisher, Z.",
-                                        "Knecht, W."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Knecht, W.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7orw_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7orw",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7orw"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7orw_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7orw",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7orw",
+                },
             },
             {
-                "title": "A neutralizing MAb targeting receptor-binding-domain of SARS-CoV-2",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7D6I",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Netralizing antibody, ANTIVIRAL PROTEIN, IMMUNE SYSTEM",
-                    "refModels": [
+                title: "A neutralizing MAb targeting receptor-binding-domain of SARS-CoV-2",
+                emdb: null,
+                pdb: {
+                    dbId: "7D6I",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Netralizing antibody, ANTIVIRAL PROTEIN, IMMUNE SYSTEM",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7d6i",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7d6i"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7d6i",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7d6i",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "Heavy chain of GH12-Fab",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "Heavy chain of GH12-Fab",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "Light chain of GH12-Fab",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "Light chain of GH12-Fab",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG-NAG"
-                    ],
-                    "dbauthors": [
+                    ligands: ["NAG-NAG"],
+                    dbauthors: [
                         "Shi, R. (0000-0001-8469-8730)",
                         "Qi, J.X. (0000-0002-9358-4732)",
                         "Gao, G.F. (0000-0002-3869-615X)",
-                        "Yan, J.H. (0000-0003-0502-3829)"
+                        "Yan, J.H. (0000-0003-0502-3829)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "A neutralizing MAb targeting receptor-binding-domain of SARS-CoV-2",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "A neutralizing MAb targeting receptor-binding-domain of SARS-CoV-2",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Shi, R. (0000-0001-8469-8730)",
                                         "Qi, J.X. (0000-0002-9358-4732)",
                                         "Gao, G.F. (0000-0002-3869-615X)",
-                                        "Yan, J.H. (0000-0003-0502-3829)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Yan, J.H. (0000-0003-0502-3829)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7d6i_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7d6i",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7d6i"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7d6i_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7d6i",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7d6i",
+                },
             },
             {
-                "title": "Ensemble refinement structure of apo/unliganded SARS-CoV-2 main protease (Mpro) at 100 K",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7MHL",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, Coronavirus, main protease, 3CLpro, Mpro, hydrolase, apo, unliganded, ensemble refinement, temperature series, temperature, multitemperature",
-                    "refModels": [],
-                    "entities": [
+                title:
+                    "Ensemble refinement structure of apo/unliganded SARS-CoV-2 main protease (Mpro) at 100 K",
+                emdb: null,
+                pdb: {
+                    dbId: "7MHL",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2, Coronavirus, main protease, 3CLpro, Mpro, hydrolase, apo, unliganded, ensemble refinement, temperature series, temperature, multitemperature",
+                    refModels: [],
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS"],
+                    dbauthors: [
                         "Fuchs, M.R. (0000-0001-9784-0927)",
                         "Ebrahim, A. (0000-0003-2661-381X)",
                         "Riley, B.T. (0000-0003-2176-0503)",
                         "Kumaran, D.",
                         "Andi, B. (0000-0002-7666-639X)",
                         "McSweeney, S. (0000-0002-3758-3161)",
-                        "Keedy, D.A. (0000-0002-9184-7586)"
+                        "Keedy, D.A. (0000-0002-9184-7586)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "dimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "dimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33972941",
-                                    "title": "The temperature-dependent conformational ensemble of SARS-CoV-2 main protease (M pro ).",
-                                    "journal": "Biorxiv (2021)",
-                                    "doi": "https://doi.org/10.1101/2021.05.03.437411",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33972941",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33972941",
+                                    title:
+                                        "The temperature-dependent conformational ensemble of SARS-CoV-2 main protease (M pro ).",
+                                    journal: "Biorxiv (2021)",
+                                    doi: "https://doi.org/10.1101/2021.05.03.437411",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33972941",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Ebrahim, A.",
                                         "Riley, B.T.",
                                         "Kumaran, D.",
                                         "Andi, B.",
                                         "Fuchs, M.R.",
                                         "McSweeney, S.",
-                                        "Keedy, D.A."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Keedy, D.A.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7mhl_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7mhl",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7mhl"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7mhl_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mhl",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mhl",
+                },
             },
             {
-                "title": "Crystal Structure of SARS-CoV-2 Mpro at 2.25 A resolution-13",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7VK6",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, main protease, SFX, VIRAL PROTEIN",
-                    "refModels": [
+                title: "Crystal Structure of SARS-CoV-2 Mpro at 2.25 A resolution-13",
+                emdb: null,
+                pdb: {
+                    dbId: "7VK6",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "SARS-CoV-2, main protease, SFX, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7vk6",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7vk6"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7vk6",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7vk6",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
+                    ligands: [],
+                    dbauthors: [
                         "DeMirci, H. (0000-0002-9135-5397)",
-                        "Yuksel, B. (0000-0003-4396-7142)"
+                        "Yuksel, B. (0000-0003-4396-7142)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Case Study of High-Throughput Drug Screening and Remote Data Collection for SARS-CoV-2 Main Protease by Using Serial Femtosecond X-ray Crystallography",
-                                    "journal": "Crystals 11 (2021), 2073-4352",
-                                    "doi": "https://doi.org/10.3390/cryst11121579",
-                                    "pmidLink": "",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "Case Study of High-Throughput Drug Screening and Remote Data Collection for SARS-CoV-2 Main Protease by Using Serial Femtosecond X-ray Crystallography",
+                                    journal: "Crystals 11 (2021), 2073-4352",
+                                    doi: "https://doi.org/10.3390/cryst11121579",
+                                    pmidLink: "",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Guven, O.",
                                         "Gul, M.",
                                         "Ayan, E.",
@@ -9216,67 +9235,71 @@ export const data: Covid19Data = {
                                         "Kupitz, C.",
                                         "Durdagi, S.",
                                         "Sierra, R.G.",
-                                        "DeMirci, H."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "DeMirci, H.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7vk6_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7vk6",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7vk6"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7vk6_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7vk6",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7vk6",
+                },
             },
             {
-                "title": "Structural Plasticity of the SARS-CoV-2 3CL Mpro Active Site Cavity Revealed by Room Temperature X-ray Crystallography",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "6WQF",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2 Main Protease, VIRAL PROTEIN, HYDROLASE",
-                    "refModels": [
+                title:
+                    "Structural Plasticity of the SARS-CoV-2 3CL Mpro Active Site Cavity Revealed by Room Temperature X-ray Crystallography",
+                emdb: null,
+                pdb: {
+                    dbId: "6WQF",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "SARS-CoV-2 Main Protease, VIRAL PROTEIN, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/6wqf",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/6wqf"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/6wqf",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/6wqf",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
+                    ligands: [],
+                    dbauthors: [
                         "Kneller, D.W. (0000-0002-5416-5789)",
                         "Kovalevsky, A. (0000-0003-4459-9142)",
-                        "Coates, L. (0000-0003-2342-049X)"
+                        "Coates, L. (0000-0003-2342-049X)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "32581217",
-                                    "title": "Structural plasticity of SARS-CoV-2 3CL Mproactive site cavity revealed by room temperature X-ray crystallography.",
-                                    "journal": "Nat Commun 11: 3202-3202 (2020), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-020-16954-7",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/32581217",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "32581217",
+                                    title:
+                                        "Structural plasticity of SARS-CoV-2 3CL Mproactive site cavity revealed by room temperature X-ray crystallography.",
+                                    journal: "Nat Commun 11: 3202-3202 (2020), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-020-16954-7",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/32581217",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Kneller, D.W. (0000-0002-5416-5789)",
                                         "Phillips, G. (0000-0001-5858-3825)",
                                         "O'Neill, H.M. (0000-0003-2966-5527)",
@@ -9285,116 +9308,112 @@ export const data: Covid19Data = {
                                         "Langan, P.",
                                         "Joachimiak, A.",
                                         "Coates, L. (0000-0003-2342-049X)",
-                                        "Kovalevsky, A. (0000-0003-4459-9142)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Kovalevsky, A. (0000-0003-4459-9142)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/6wqf_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/6wqf",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=6wqf"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/6wqf_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6wqf",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6wqf",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal structure of SARS-CoV-2 NSP3 macrodomain in complex with ZINC000002560357",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5RSP",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Macrodomain, ADP-ribose, SARS-CoV-2, VIRAL PROTEIN, HYDROLASE",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal structure of SARS-CoV-2 NSP3 macrodomain in complex with ZINC000002560357",
+                emdb: null,
+                pdb: {
+                    dbId: "5RSP",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Macrodomain, ADP-ribose, SARS-CoV-2, VIRAL PROTEIN, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rsp",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rsp"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rsp",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rsp",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 3",
-                            "details": "",
-                            "altNames": "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 3",
+                            details: "",
+                            altNames:
+                                "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "LSA"
-                    ],
-                    "dbauthors": [
-                        "Correy, G.J.",
-                        "Young, I.D.",
-                        "Thompson, M.C.",
-                        "Fraser, J.S."
-                    ],
-                    "details": [
+                    ligands: ["LSA"],
+                    dbauthors: ["Correy, G.J.", "Young, I.D.", "Thompson, M.C.", "Fraser, J.S."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Fragment screen against SARS-CoV-2 NSP macrodomain",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "Fragment screen against SARS-CoV-2 NSP macrodomain",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Correy, C.J.",
                                         "Fraser, J.S.",
                                         "Correy, G.J.",
-                                        "Correy, G.C."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Correy, G.C.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rsp_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rsp",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rsp"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rsp_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rsp",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rsp",
+                },
             },
             {
-                "title": "Crystal Structure of SARS-CoV-2 Main Protease (3CLpro/Mpro) in Complex with Covalent Inhibitor Narlaprevir",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7JYC",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, Main Protease, 3CLpro/Mpro, Narlaprevir, VIRAL PROTEIN, HYDROLASE-INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "Crystal Structure of SARS-CoV-2 Main Protease (3CLpro/Mpro) in Complex with Covalent Inhibitor Narlaprevir",
+                emdb: null,
+                pdb: {
+                    dbId: "7JYC",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2, Main Protease, 3CLpro/Mpro, Narlaprevir, VIRAL PROTEIN, HYDROLASE-INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7jyc",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7jyc"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7jyc",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7jyc",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NNA",
-                        "DMS",
-                        "NA"
-                    ],
-                    "dbauthors": [
+                    ligands: ["NNA", "DMS", "NA"],
+                    dbauthors: [
                         "Kumaran, D.",
                         "Andi, B. (0000-0002-7666-639X)",
                         "McSweeney, S. (0000-0002-3758-3161)",
@@ -9404,26 +9423,27 @@ export const data: Covid19Data = {
                         "Shi, W.",
                         "Jakoncic, J.",
                         "Keereetaweep, J.",
-                        "Shanklin, J."
+                        "Shanklin, J.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Hepatitis C Virus NSP3/NSP4A Inhibitors as Promising Lead Compounds for the Design of New Covalent Inhibitors for SARS-CoV-2 3CLpro/Mpro Protease",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "Hepatitis C Virus NSP3/NSP4A Inhibitors as Promising Lead Compounds for the Design of New Covalent Inhibitors for SARS-CoV-2 3CLpro/Mpro Protease",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Andi, B. (0000-0002-7666-639X)",
                                         "Kumaran, D.",
                                         "Kreitler, D.F.",
@@ -9433,49 +9453,48 @@ export const data: Covid19Data = {
                                         "Fuchs, M.R.",
                                         "Keereetaweep, J.",
                                         "Shanklin, J.",
-                                        "McSweeney, S. (0000-0002-3758-3161)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "McSweeney, S. (0000-0002-3758-3161)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7jyc_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7jyc",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7jyc"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7jyc_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jyc",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jyc",
+                },
             },
             {
-                "title": "Structure of SARS-CoV-2 Main Protease bound to Maleate.",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7AHA",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, MPro, COVID-19, PEPTIDE BINDING PROTEIN, virus protease, HYDROLASE",
-                    "refModels": [
+                title: "Structure of SARS-CoV-2 Main Protease bound to Maleate.",
+                emdb: null,
+                pdb: {
+                    dbId: "7AHA",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2, MPro, COVID-19, PEPTIDE BINDING PROTEIN, virus protease, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7aha",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7aha"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7aha",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7aha",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "CL",
-                        "DMS",
-                        "SIN"
-                    ],
-                    "dbauthors": [
+                    ligands: ["CL", "DMS", "SIN"],
+                    dbauthors: [
                         "Guenther, S. (0000-0002-7329-6653)",
                         "Reinke, P. (0000-0002-7354-0839)",
                         "Oberthuer, D. (0000-0002-0894-9590)",
@@ -9551,26 +9570,27 @@ export const data: Covid19Data = {
                         "Chapman, H.N.",
                         "Pearson, A.",
                         "Betzel, C.",
-                        "Meents, A."
+                        "Meents, A.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33811162",
-                                    "title": "X-ray screening identifies active site and allosteric inhibitors of SARS-CoV-2 main protease.",
-                                    "journal": "Science 372: 642-646 (2021), 1095-9203",
-                                    "doi": "https://doi.org/10.1126/science.abf7945",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33811162",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33811162",
+                                    title:
+                                        "X-ray screening identifies active site and allosteric inhibitors of SARS-CoV-2 main protease.",
+                                    journal: "Science 372: 642-646 (2021), 1095-9203",
+                                    doi: "https://doi.org/10.1126/science.abf7945",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33811162",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Gunther, S.",
                                         "Reinke, P.Y.A.",
                                         "Fernandez-Garcia, Y.",
@@ -9788,18 +9808,19 @@ export const data: Covid19Data = {
                                         "Feiler, C.",
                                         "Weiss, M.",
                                         "Fernandez Garcia, Y.",
-                                        "Pearson, A."
-                                    ]
+                                        "Pearson, A.",
+                                    ],
                                 },
                                 {
-                                    "pmID": "",
-                                    "title": "Inhibition of SARS-CoV-2 main protease by allosteric drug-binding",
-                                    "journal": "Biorxiv (2020)",
-                                    "doi": "https://doi.org/10.1101/2020.11.12.378422",
-                                    "pmidLink": "",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "Inhibition of SARS-CoV-2 main protease by allosteric drug-binding",
+                                    journal: "Biorxiv (2020)",
+                                    doi: "https://doi.org/10.1101/2020.11.12.378422",
+                                    pmidLink: "",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Gunther, S.",
                                         "Reinke, P.Y.A.",
                                         "Fernandez-Garcia, Y.",
@@ -10017,158 +10038,150 @@ export const data: Covid19Data = {
                                         "Feiler, C.",
                                         "Weiss, M.",
                                         "Fernandez Garcia, Y.",
-                                        "Pearson, A."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Pearson, A.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7aha_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7aha",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7aha"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7aha_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7aha",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7aha",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal structure of SARS-CoV-2 NSP3 macrodomain in complex with ZINC000263392672",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5RSG",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Macrodomain, ADP-ribose, SARS-CoV-2, VIRAL PROTEIN, HYDROLASE",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal structure of SARS-CoV-2 NSP3 macrodomain in complex with ZINC000263392672",
+                emdb: null,
+                pdb: {
+                    dbId: "5RSG",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Macrodomain, ADP-ribose, SARS-CoV-2, VIRAL PROTEIN, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rsg",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rsg"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rsg",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rsg",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 3",
-                            "details": "",
-                            "altNames": "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 3",
+                            details: "",
+                            altNames:
+                                "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "W5J"
-                    ],
-                    "dbauthors": [
-                        "Correy, G.J.",
-                        "Young, I.D.",
-                        "Thompson, M.C.",
-                        "Fraser, J.S."
-                    ],
-                    "details": [
+                    ligands: ["W5J"],
+                    dbauthors: ["Correy, G.J.", "Young, I.D.", "Thompson, M.C.", "Fraser, J.S."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Fragment screen against SARS-CoV-2 NSP macrodomain",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "Fragment screen against SARS-CoV-2 NSP macrodomain",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Correy, C.J.",
                                         "Fraser, J.S.",
                                         "Correy, G.J.",
-                                        "Correy, G.C."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Correy, G.C.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rsg_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rsg",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rsg"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rsg_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rsg",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rsg",
+                },
             },
             {
-                "title": "Complex between the Fab arm of AB-3467 and the SARS-CoV-2 receptor binding domain (RBD)",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7MSQ",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2 receptor binding domain AB-3467, ANTIVIRAL PROTEIN, VIRAL PROTEIN-ANTIVIRAL PROTEIN complex",
-                    "refModels": [
+                title:
+                    "Complex between the Fab arm of AB-3467 and the SARS-CoV-2 receptor binding domain (RBD)",
+                emdb: null,
+                pdb: {
+                    dbId: "7MSQ",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2 receptor binding domain AB-3467, ANTIVIRAL PROTEIN, VIRAL PROTEIN-ANTIVIRAL PROTEIN complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7msq",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7msq"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7msq",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7msq",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "AB-3467 Fab Heavy Chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "AB-3467 Fab Heavy Chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "AB-3467 Fab Light Chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "AB-3467 Fab Light Chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG-NAG-BMA-MAN-FUC",
-                        "CL",
-                        "SCN",
-                        "GOL"
-                    ],
-                    "dbauthors": [
-                        "Langley, D.B.",
-                        "Christ, D."
-                    ],
-                    "details": [
+                    ligands: ["NAG-NAG-BMA-MAN-FUC", "CL", "SCN", "GOL"],
+                    dbauthors: ["Langley, D.B.", "Christ, D."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Cricetulus griseus",
-                                "assembly": "trimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Cricetulus griseus",
+                                assembly: "trimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34788600",
-                                    "title": "Immunizations with diverse sarbecovirus receptor-binding domains elicit SARS-CoV-2 neutralizing antibodies against a conserved site of vulnerability.",
-                                    "journal": "Immunity 54: 2908-2921.e6 (2021), 1074-7613",
-                                    "doi": "https://doi.org/10.1016/j.immuni.2021.10.019",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34788600",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34788600",
+                                    title:
+                                        "Immunizations with diverse sarbecovirus receptor-binding domains elicit SARS-CoV-2 neutralizing antibodies against a conserved site of vulnerability.",
+                                    journal: "Immunity 54: 2908-2921.e6 (2021), 1074-7613",
+                                    doi: "https://doi.org/10.1016/j.immuni.2021.10.019",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34788600",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Burnett, D.L.",
                                         "Jackson, K.J.L.",
                                         "Langley, D.B.",
@@ -10207,57 +10220,59 @@ export const data: Covid19Data = {
                                         "Jack, H.M.",
                                         "Turville, S.",
                                         "Christ, D.",
-                                        "Goodnow, C.C."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Goodnow, C.C.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7msq_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7msq",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7msq"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7msq_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7msq",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7msq",
+                },
             },
             {
-                "title": "SARS-CoV-2 main protease in a covalent complex with SDZ 224015 derivative, compound 5",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7AEG",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "covid-19, inhibitor, protease, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "SARS-CoV-2 main protease in a covalent complex with SDZ 224015 derivative, compound 5",
+                emdb: null,
+                pdb: {
+                    dbId: "7AEG",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "covid-19, inhibitor, protease, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7aeg",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7aeg"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7aeg",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7aeg",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "",
-                            "name": "N-[(benzyloxy)carbonyl]-L-valyl-N-[(1S)-1-(carboxymethyl)-3-fluoro-2-oxopropyl]-L-alaninamide",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "",
+                            name:
+                                "N-[(benzyloxy)carbonyl]-L-valyl-N-[(1S)-1-(carboxymethyl)-3-fluoro-2-oxopropyl]-L-alaninamide",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS"],
+                    dbauthors: [
                         "Stuart, D.I.",
                         "Douangamath, A.",
                         "Fearon, D.",
@@ -10279,26 +10294,27 @@ export const data: Covid19Data = {
                         "Tumber, A.",
                         "Schofield, C.J.",
                         "Hallet, D.",
-                        "Hopkins, A.L."
+                        "Hopkins, A.L.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34168183",
-                                    "title": "Bispecific repurposed medicines targeting the viral and immunological arms of COVID-19.",
-                                    "journal": "Sci Rep 11: 13208-13208 (2021), 2045-2322",
-                                    "doi": "https://doi.org/10.1038/s41598-021-92416-4",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34168183",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34168183",
+                                    title:
+                                        "Bispecific repurposed medicines targeting the viral and immunological arms of COVID-19.",
+                                    journal: "Sci Rep 11: 13208-13208 (2021), 2045-2322",
+                                    doi: "https://doi.org/10.1038/s41598-021-92416-4",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34168183",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Redhead, M.A.",
                                         "Owen, C.D.",
                                         "Brewitz, L.",
@@ -10326,74 +10342,75 @@ export const data: Covid19Data = {
                                         "Schofield, C.J.",
                                         "Stuart, D.I.",
                                         "Hopkins, A.L.",
-                                        "Walsh, M.A."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Walsh, M.A.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7aeg_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7aeg",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7aeg"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7aeg_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7aeg",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7aeg",
+                },
             },
             {
-                "title": "The crystal structure of SARS-CoV-2 Main Protease in complex with masitinib",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7JU7",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, COVID-19, 3CL, main protease, masitinib, Structural Genomics, Center for Structural Genomics of Infectious Diseases, CSGID, HYDROLASE",
-                    "refModels": [
+                title:
+                    "The crystal structure of SARS-CoV-2 Main Protease in complex with masitinib",
+                emdb: null,
+                pdb: {
+                    dbId: "7JU7",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2, COVID-19, 3CL, main protease, masitinib, Structural Genomics, Center for Structural Genomics of Infectious Diseases, CSGID, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ju7",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ju7"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ju7",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ju7",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "G65",
-                        "DMS",
-                        "GOL"
-                    ],
-                    "dbauthors": [
+                    ligands: ["G65", "DMS", "GOL"],
+                    dbauthors: [
                         "Tan, K. (0000-0002-4003-7903)",
                         "Maltseva, N.I.",
                         "Welk, L.F.",
                         "Jedrzejczak, R.P.",
                         "Joachimiak, A. (0000-0003-2535-6209)",
-                        "Center for Structural Genomics of Infectious Diseases (CSGID)"
+                        "Center for Structural Genomics of Infectious Diseases (CSGID)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34285133",
-                                    "title": "Masitinib is a broad coronavirus 3CL inhibitor that blocks replication of SARS-CoV-2.",
-                                    "journal": "Science 373: 931-936 (2021), 1095-9203",
-                                    "doi": "https://doi.org/10.1126/science.abg5827",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34285133",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34285133",
+                                    title:
+                                        "Masitinib is a broad coronavirus 3CL inhibitor that blocks replication of SARS-CoV-2.",
+                                    journal: "Science 373: 931-936 (2021), 1095-9203",
+                                    doi: "https://doi.org/10.1126/science.abg5827",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34285133",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Drayman, N.",
                                         "DeMarco, J.K.",
                                         "Jones, K.A.",
@@ -10432,18 +10449,19 @@ export const data: Covid19Data = {
                                         "Joachimiak, A.",
                                         "Randall, G.",
                                         "Tay, S.",
-                                        "Jaochimiak, A."
-                                    ]
+                                        "Jaochimiak, A.",
+                                    ],
                                 },
                                 {
-                                    "pmID": "32908976",
-                                    "title": "Drug repurposing screen identifies masitinib as a 3CLpro inhibitor that blocks replication of SARS-CoV-2 in vitro .",
-                                    "journal": "Biorxiv (2020)",
-                                    "doi": "https://doi.org/10.1101/2020.08.31.274639",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/32908976",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "32908976",
+                                    title:
+                                        "Drug repurposing screen identifies masitinib as a 3CLpro inhibitor that blocks replication of SARS-CoV-2 in vitro .",
+                                    journal: "Biorxiv (2020)",
+                                    doi: "https://doi.org/10.1101/2020.08.31.274639",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/32908976",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Drayman, N.",
                                         "DeMarco, J.K.",
                                         "Jones, K.A.",
@@ -10482,69 +10500,65 @@ export const data: Covid19Data = {
                                         "Joachimiak, A.",
                                         "Randall, G.",
                                         "Tay, S.",
-                                        "Jaochimiak, A."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Jaochimiak, A.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ju7_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ju7",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ju7"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ju7_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ju7",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ju7",
+                },
             },
             {
-                "title": "SARS-CoV-2 ORF8 S84",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7F5F",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, ORF8, VIRAL PROTEIN",
-                    "refModels": [
+                title: "SARS-CoV-2 ORF8 S84",
+                emdb: null,
+                pdb: {
+                    dbId: "7F5F",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "SARS-CoV-2, ORF8, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7f5f",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7f5f"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7f5f",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7f5f",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC8",
-                            "organism": "2697049",
-                            "name": "ORF8 protein",
-                            "details": "",
-                            "altNames": "ORF8, Non-structural protein 8, ns8",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC8",
+                            organism: "2697049",
+                            name: "ORF8 protein",
+                            details: "",
+                            altNames: "ORF8, Non-structural protein 8, ns8",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "CA"
-                    ],
-                    "dbauthors": [
-                        "Chen, X.",
-                        "Chen, S.",
-                        "Zhou, Z."
-                    ],
-                    "details": [
+                    ligands: ["CA"],
+                    dbauthors: ["Chen, X.", "Chen, S.", "Zhou, Z."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34975921",
-                                    "title": "Crystal Structures of Bat and Human Coronavirus ORF8 Protein Ig-Like Domain Provide Insights Into the Diversity of Immune Responses.",
-                                    "journal": "Front Immunol 12: 807134-807134 (2021), 1664-3224",
-                                    "doi": "https://doi.org/10.3389/fimmu.2021.807134",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34975921",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34975921",
+                                    title:
+                                        "Crystal Structures of Bat and Human Coronavirus ORF8 Protein Ig-Like Domain Provide Insights Into the Diversity of Immune Responses.",
+                                    journal: "Front Immunol 12: 807134-807134 (2021), 1664-3224",
+                                    doi: "https://doi.org/10.3389/fimmu.2021.807134",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34975921",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Chen, X.",
                                         "Zhou, Z.",
                                         "Huang, C.",
@@ -10560,179 +10574,177 @@ export const data: Covid19Data = {
                                         "Li, K.",
                                         "Li, X.",
                                         "Liao, J.",
-                                        "Chen, S."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Chen, S.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7f5f_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7f5f",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7f5f"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7f5f_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7f5f",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7f5f",
+                },
             },
             {
-                "title": "SARS CoV-2 MAIN PROTEASE 3CLpro, ROOM TEMPERATURE, DAMAGE FREE XFEL MONOCLINIC STRUCTURE",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7JVZ",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "VIRAL PROTEIN, Hydrolase",
-                    "refModels": [
+                title:
+                    "SARS CoV-2 MAIN PROTEASE 3CLpro, ROOM TEMPERATURE, DAMAGE FREE XFEL MONOCLINIC STRUCTURE",
+                emdb: null,
+                pdb: {
+                    dbId: "7JVZ",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "VIRAL PROTEIN, Hydrolase",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7jvz",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7jvz"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7jvz",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7jvz",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
+                    ligands: [],
+                    dbauthors: [
                         "Schmidt, M. (0000-0002-0962-9468)",
-                        "Malla, T. (0000-0002-1387-0801)"
+                        "Malla, T. (0000-0002-1387-0801)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "SARS CoV-2 MAIN PROTEASE 3CLpro, ROOM TEMPERATURE, DAMAGE FREE XFEL MONOCLINIC STRUCTURE",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "SARS CoV-2 MAIN PROTEASE 3CLpro, ROOM TEMPERATURE, DAMAGE FREE XFEL MONOCLINIC STRUCTURE",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Schmidt, M. (0000-0002-0962-9468)",
-                                        "Malla, T. (0000-0002-1387-0801)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Malla, T. (0000-0002-1387-0801)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7jvz_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7jvz",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7jvz"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7jvz_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jvz",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jvz",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal structure of SARS-CoV-2 NSP3 macrodomain in complex with ZINC000026180281",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5RSF",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Macrodomain, ADP-ribose, SARS-CoV-2, VIRAL PROTEIN, HYDROLASE",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal structure of SARS-CoV-2 NSP3 macrodomain in complex with ZINC000026180281",
+                emdb: null,
+                pdb: {
+                    dbId: "5RSF",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Macrodomain, ADP-ribose, SARS-CoV-2, VIRAL PROTEIN, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rsf",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rsf"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rsf",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rsf",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 3",
-                            "details": "",
-                            "altNames": "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 3",
+                            details: "",
+                            altNames:
+                                "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "W5M"
-                    ],
-                    "dbauthors": [
-                        "Correy, G.J.",
-                        "Young, I.D.",
-                        "Thompson, M.C.",
-                        "Fraser, J.S."
-                    ],
-                    "details": [
+                    ligands: ["W5M"],
+                    dbauthors: ["Correy, G.J.", "Young, I.D.", "Thompson, M.C.", "Fraser, J.S."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Fragment screen against SARS-CoV-2 NSP macrodomain",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "Fragment screen against SARS-CoV-2 NSP macrodomain",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Correy, C.J.",
                                         "Fraser, J.S.",
                                         "Correy, G.J.",
-                                        "Correy, G.C."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Correy, G.C.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rsf_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rsf",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rsf"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rsf_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rsf",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rsf",
+                },
             },
             {
-                "title": "Structure of SARS-CoV-2 Papain-like protease PLpro in complex with 4-(2-hydroxyethyl)phenol",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7OFS",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Papain-like protease SARS-CoV-2 Hydrolase Zinc binding protein, HYDROLASE",
-                    "refModels": [
+                title:
+                    "Structure of SARS-CoV-2 Papain-like protease PLpro in complex with 4-(2-hydroxyethyl)phenol",
+                emdb: null,
+                pdb: {
+                    dbId: "7OFS",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "Papain-like protease SARS-CoV-2 Hydrolase Zinc binding protein, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ofs",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ofs"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ofs",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ofs",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Papain-like protease nsp3",
-                            "details": "",
-                            "altNames": "Non-structural protein 3,nsp3,PL2-PRO,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Papain-like protease nsp3",
+                            details: "",
+                            altNames:
+                                "Non-structural protein 3,nsp3,PL2-PRO,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "ZN",
-                        "CL",
-                        "YRL",
-                        "PO4",
-                        "GOL"
-                    ],
-                    "dbauthors": [
+                    ligands: ["ZN", "CL", "YRL", "PO4", "GOL"],
+                    dbauthors: [
                         "Yefanov, O.",
                         "Gelisio, L.",
                         "Ginn, H.",
@@ -10776,26 +10788,27 @@ export const data: Covid19Data = {
                         "Brings, L.",
                         "Perk, A.",
                         "Wahab, A.",
-                        "Choudary, I."
+                        "Choudary, I.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "SARS-CoV-2 Papain-like protease PLpro in complex with inhibitors",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "SARS-CoV-2 Papain-like protease PLpro in complex with inhibitors",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Srinivasan, V. (0000-0002-8895-5885)",
                                         "Werner, N.",
                                         "Falke, S.",
@@ -10839,208 +10852,199 @@ export const data: Covid19Data = {
                                         "Hinrichs, W.",
                                         "Chapman, H.N.",
                                         "Meents, A.",
-                                        "Betzel, C."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Betzel, C.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ofs_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ofs",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ofs"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ofs_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ofs",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ofs",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal structure of SARS-CoV-2 NSP3 macrodomain in complex with ZINC000000158490",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5RSQ",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Macrodomain, ADP-ribose, SARS-CoV-2, VIRAL PROTEIN, HYDROLASE",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal structure of SARS-CoV-2 NSP3 macrodomain in complex with ZINC000000158490",
+                emdb: null,
+                pdb: {
+                    dbId: "5RSQ",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Macrodomain, ADP-ribose, SARS-CoV-2, VIRAL PROTEIN, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rsq",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rsq"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rsq",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rsq",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 3",
-                            "details": "",
-                            "altNames": "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 3",
+                            details: "",
+                            altNames:
+                                "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "MOK"
-                    ],
-                    "dbauthors": [
-                        "Correy, G.J.",
-                        "Young, I.D.",
-                        "Thompson, M.C.",
-                        "Fraser, J.S."
-                    ],
-                    "details": [
+                    ligands: ["MOK"],
+                    dbauthors: ["Correy, G.J.", "Young, I.D.", "Thompson, M.C.", "Fraser, J.S."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Fragment screen against SARS-CoV-2 NSP macrodomain",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "Fragment screen against SARS-CoV-2 NSP macrodomain",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Correy, C.J.",
                                         "Fraser, J.S.",
                                         "Correy, G.J.",
-                                        "Correy, G.C."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Correy, G.C.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rsq_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rsq",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rsq"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rsq_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rsq",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rsq",
+                },
             },
             {
-                "title": "SARS-CoV-2 Mpro mutant (H41A) in complex with nsp15|16 peptidyl substrate",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7DW0",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "protease, VIRAL PROTEIN",
-                    "refModels": [
+                title: "SARS-CoV-2 Mpro mutant (H41A) in complex with nsp15|16 peptidyl substrate",
+                emdb: null,
+                pdb: {
+                    dbId: "7DW0",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "protease, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7dw0",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7dw0"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7dw0",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7dw0",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "",
-                            "name": "nsp15/16 peptidyl substrate",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "",
+                            name: "nsp15/16 peptidyl substrate",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
-                        "Rao, Z.",
-                        "Yang, H.",
-                        "Zhao, Y.",
-                        "Liu, X."
-                    ],
-                    "details": [
+                    ligands: [],
+                    dbauthors: ["Rao, Z.", "Yang, H.", "Zhao, Y.", "Liu, X."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "tetrameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "tetrameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Viral protease",
-                                    "journal": "To be published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
-                                        "Liu, X.",
-                                        "Zhao, Y.",
-                                        "Yang, H.",
-                                        "Rao, Z."
-                                    ]
-                                }
-                            ]
-                        }
+                                    pmID: "",
+                                    title: "Viral protease",
+                                    journal: "To be published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: ["Liu, X.", "Zhao, Y.", "Yang, H.", "Rao, Z."],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7dw0_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7dw0",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7dw0"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7dw0_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7dw0",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7dw0",
+                },
             },
             {
-                "title": "Crystal Structure of SARS-CoV-2 Mpro at 2.4 A resolution-11",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7VK7",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, main protease, SFX, VIRAL PROTEIN",
-                    "refModels": [
+                title: "Crystal Structure of SARS-CoV-2 Mpro at 2.4 A resolution-11",
+                emdb: null,
+                pdb: {
+                    dbId: "7VK7",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "SARS-CoV-2, main protease, SFX, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7vk7",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7vk7"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7vk7",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7vk7",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
+                    ligands: [],
+                    dbauthors: [
                         "DeMirci, H. (0000-0002-9135-5397)",
-                        "Dag, C. (0000-0003-1595-431X)"
+                        "Dag, C. (0000-0003-1595-431X)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Case Study of High-Throughput Drug Screening and Remote Data Collection for SARS-CoV-2 Main Protease by Using Serial Femtosecond X-ray Crystallography",
-                                    "journal": "Crystals 11 (2021), 2073-4352",
-                                    "doi": "https://doi.org/10.3390/cryst11121579",
-                                    "pmidLink": "",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "Case Study of High-Throughput Drug Screening and Remote Data Collection for SARS-CoV-2 Main Protease by Using Serial Femtosecond X-ray Crystallography",
+                                    journal: "Crystals 11 (2021), 2073-4352",
+                                    doi: "https://doi.org/10.3390/cryst11121579",
+                                    pmidLink: "",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Guven, O.",
                                         "Gul, M.",
                                         "Ayan, E.",
@@ -11062,91 +11066,93 @@ export const data: Covid19Data = {
                                         "Kupitz, C.",
                                         "Durdagi, S.",
                                         "Sierra, R.G.",
-                                        "DeMirci, H."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "DeMirci, H.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7vk7_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7vk7",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7vk7"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7vk7_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7vk7",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7vk7",
+                },
             },
             {
-                "title": "Crystal structure of SARS-CoV-2 receptor binding domain in complex with neutralizing antibody COVA2-39",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7JMP",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, COVID-19, RBD, Antibody, SARS, Spike, IMMUNE SYSTEM, Viral Protein-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of SARS-CoV-2 receptor binding domain in complex with neutralizing antibody COVA2-39",
+                emdb: null,
+                pdb: {
+                    dbId: "7JMP",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2, COVID-19, RBD, Antibody, SARS, Spike, IMMUNE SYSTEM, Viral Protein-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7jmp",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7jmp"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7jmp",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7jmp",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "COVA2-39 heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "COVA2-39 heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "COVA2-39 light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "COVA2-39 light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG"
-                    ],
-                    "dbauthors": [
+                    ligands: ["NAG"],
+                    dbauthors: [
                         "Yuan, M. (0000-0001-9754-4503)",
                         "Zhu, X. (0000-0002-6021-3740)",
                         "Wilson, I.A. (0000-0002-6469-2419)",
                         "Wu, N.C.",
-                        "Liu, H. (0000-0002-2412-7853)"
+                        "Liu, H. (0000-0002-2412-7853)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Trichoplusia ni",
-                                "assembly": "trimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Trichoplusia ni",
+                                assembly: "trimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "32743580",
-                                    "title": "An alternative binding mode of IGHV3-53 antibodies to the SARS-CoV-2 receptor binding domain.",
-                                    "journal": "Biorxiv (2020)",
-                                    "doi": "https://doi.org/10.1101/2020.07.26.222232",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/32743580",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "32743580",
+                                    title:
+                                        "An alternative binding mode of IGHV3-53 antibodies to the SARS-CoV-2 receptor binding domain.",
+                                    journal: "Biorxiv (2020)",
+                                    doi: "https://doi.org/10.1101/2020.07.26.222232",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/32743580",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Wu, N.C. (0000-0002-9078-6697)",
                                         "Yuan, M. (0000-0001-9754-4503)",
                                         "Liu, H. (0000-0002-2412-7853)",
@@ -11159,137 +11165,142 @@ export const data: Covid19Data = {
                                         "van Gils, M.J. (0000-0003-3422-8161)",
                                         "Sanders, R.W. (0000-0002-2324-8573)",
                                         "Ward, A.B. (0000-0001-7153-3769)",
-                                        "Wilson, I.A. (0000-0002-6469-2419)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Wilson, I.A. (0000-0002-6469-2419)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7jmp_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7jmp",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7jmp"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7jmp_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jmp",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jmp",
+                },
             },
             {
-                "title": "Ensemble refinement structure of apo/unliganded SARS-CoV-2 main protease (Mpro) at 240 K",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7MHM",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, Coronavirus, main protease, 3CLpro, Mpro, hydrolase, apo, unliganded, ensemble refinement, temperature series, temperature, multitemperature",
-                    "refModels": [],
-                    "entities": [
+                title:
+                    "Ensemble refinement structure of apo/unliganded SARS-CoV-2 main protease (Mpro) at 240 K",
+                emdb: null,
+                pdb: {
+                    dbId: "7MHM",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2, Coronavirus, main protease, 3CLpro, Mpro, hydrolase, apo, unliganded, ensemble refinement, temperature series, temperature, multitemperature",
+                    refModels: [],
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS"],
+                    dbauthors: [
                         "Fuchs, M.R. (0000-0001-9784-0927)",
                         "Ebrahim, A. (0000-0003-2661-381X)",
                         "Riley, B.T. (0000-0003-2176-0503)",
                         "Kumaran, D.",
                         "Andi, B. (0000-0002-7666-639X)",
                         "McSweeney, S. (0000-0002-3758-3161)",
-                        "Keedy, D.A. (0000-0002-9184-7586)"
+                        "Keedy, D.A. (0000-0002-9184-7586)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33972941",
-                                    "title": "The temperature-dependent conformational ensemble of SARS-CoV-2 main protease (M pro ).",
-                                    "journal": "Biorxiv (2021)",
-                                    "doi": "https://doi.org/10.1101/2021.05.03.437411",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33972941",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33972941",
+                                    title:
+                                        "The temperature-dependent conformational ensemble of SARS-CoV-2 main protease (M pro ).",
+                                    journal: "Biorxiv (2021)",
+                                    doi: "https://doi.org/10.1101/2021.05.03.437411",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33972941",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Ebrahim, A.",
                                         "Riley, B.T.",
                                         "Kumaran, D.",
                                         "Andi, B.",
                                         "Fuchs, M.R.",
                                         "McSweeney, S.",
-                                        "Keedy, D.A."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Keedy, D.A.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7mhm_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7mhm",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7mhm"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7mhm_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7mhm",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7mhm",
+                },
             },
             {
-                "title": "Crystal structure of the SARS-CoV-2 papain-like protease (PLPro) C112S mutant",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7D6H",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Protease, Deubiquitinase, VIRAL PROTEIN, HYDROLASE",
-                    "refModels": [
+                title:
+                    "Crystal structure of the SARS-CoV-2 papain-like protease (PLPro) C112S mutant",
+                emdb: null,
+                pdb: {
+                    dbId: "7D6H",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Protease, Deubiquitinase, VIRAL PROTEIN, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7d6h",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7d6h"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7d6h",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7d6h",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC1",
-                            "organism": "2697049",
-                            "name": "Papain-like protease",
-                            "details": "3 first residues, SNA , are cloning artifacts (expression tag)",
-                            "altNames": "Non-structural protein 3,nsp3, PL2-PRO, Papain-like proteinase, PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC1",
+                            organism: "2697049",
+                            name: "Papain-like protease",
+                            details:
+                                "3 first residues, SNA , are cloning artifacts (expression tag)",
+                            altNames:
+                                "Non-structural protein 3,nsp3, PL2-PRO, Papain-like proteinase, PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "ZN",
-                        "PO4"
-                    ],
-                    "dbauthors": [
+                    ligands: ["ZN", "PO4"],
+                    dbauthors: [
                         "Liu, J. (0000-0001-7090-2112)",
                         "Wang, Y. (0000-0001-8300-0847)",
-                        "Pan, L. (0000-0002-9229-6288)"
+                        "Pan, L. (0000-0002-9229-6288)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33979649",
-                                    "title": "Development of potent and selective inhibitors targeting the papain-like protease of SARS-CoV-2.",
-                                    "journal": "Cell Chem Biol 28 (2021), 2451-9456",
-                                    "doi": "https://doi.org/10.1016/j.chembiol.2021.04.020",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33979649",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33979649",
+                                    title:
+                                        "Development of potent and selective inhibitors targeting the papain-like protease of SARS-CoV-2.",
+                                    journal: "Cell Chem Biol 28 (2021), 2451-9456",
+                                    doi: "https://doi.org/10.1016/j.chembiol.2021.04.020",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33979649",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Shan, H.",
                                         "Liu, J.",
                                         "Shen, J.",
@@ -11307,51 +11318,48 @@ export const data: Covid19Data = {
                                         "Zhang, Z.",
                                         "Li, Y.",
                                         "Pan, L.",
-                                        "Tan, L."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Tan, L.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7d6h_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7d6h",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7d6h"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7d6h_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7d6h",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7d6h",
+                },
             },
             {
-                "title": "Non-structural protein 10 (nsp10) from SARS CoV-2 in complex with fragment VT00239",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7ORV",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Fragment, complex, small molecule, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "Non-structural protein 10 (nsp10) from SARS CoV-2 in complex with fragment VT00239",
+                emdb: null,
+                pdb: {
+                    dbId: "7ORV",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Fragment, complex, small molecule, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7orv",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7orv"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7orv",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7orv",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 10",
-                            "details": "",
-                            "altNames": "pp1ab,ORF1ab polyprotein,nsp10,Growth factor-like peptide,GFL,Replicase polyprotein 1ab",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 10",
+                            details: "",
+                            altNames:
+                                "pp1ab,ORF1ab polyprotein,nsp10,Growth factor-like peptide,GFL,Replicase polyprotein 1ab",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "ZN",
-                        "DMS",
-                        "X4V",
-                        "GOL",
-                        "CL"
-                    ],
-                    "dbauthors": [
+                    ligands: ["ZN", "DMS", "X4V", "GOL", "CL"],
+                    dbauthors: [
                         "Wang, Q.",
                         "Krojer, T.",
                         "Talibov, V.O.",
@@ -11363,26 +11371,27 @@ export const data: Covid19Data = {
                         "Nyblom, M.",
                         "Rogstam, A.",
                         "Knecht, W.",
-                        "Fisher, S.Z."
+                        "Fisher, S.Z.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Identification of fragments binding to SARS-CoV-2 nsp10 reveals ligand-binding sites in conserved interfaces between nsp10 and nsp14/nsp16",
-                                    "journal": "Rsc Chem Biol (2021), 2633-0679",
-                                    "doi": "https://doi.org/10.1039/D1CB00135C",
-                                    "pmidLink": "",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "Identification of fragments binding to SARS-CoV-2 nsp10 reveals ligand-binding sites in conserved interfaces between nsp10 and nsp14/nsp16",
+                                    journal: "Rsc Chem Biol (2021), 2633-0679",
+                                    doi: "https://doi.org/10.1039/D1CB00135C",
+                                    pmidLink: "",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Kozielski, F.",
                                         "Sele, C.",
                                         "Talibov, V.O.",
@@ -11394,48 +11403,49 @@ export const data: Covid19Data = {
                                         "Rogstam, A.",
                                         "Krojer, T.",
                                         "Fisher, Z.",
-                                        "Knecht, W."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Knecht, W.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7orv_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7orv",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7orv"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7orv_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7orv",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7orv",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with PCM-0102372",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5RFG",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with PCM-0102372",
+                emdb: null,
+                pdb: {
+                    dbId: "5RFG",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rfg",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rfg"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rfg",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rfg",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS",
-                        "T6V"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS", "T6V"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Krojer, T.",
                         "Aimon, A.",
@@ -11454,26 +11464,27 @@ export const data: Covid19Data = {
                         "Dunnett, L.",
                         "Snee, M.",
                         "London, N.",
-                        "Walsh, M.A."
+                        "Walsh, M.A.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33028810",
-                                    "title": "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
-                                    "journal": "Nat Commun 11: 5047-5047 (2020), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-020-18709-w",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33028810",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33028810",
+                                    title:
+                                        "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
+                                    journal: "Nat Commun 11: 5047-5047 (2020), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-020-18709-w",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33028810",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Douangamath, A. (0000-0002-9196-8644)",
                                         "Fearon, D. (0000-0003-3529-7863)",
                                         "Gehrtz, P.",
@@ -11523,74 +11534,72 @@ export const data: Covid19Data = {
                                         "Vajda, S.",
                                         "Gerencser, J. (0000-0002-1928-0650)",
                                         "Pallai, P.",
-                                        "Keseru, G.M. (0000-0003-1039-7809)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Keseru, G.M. (0000-0003-1039-7809)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rfg_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rfg",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rfg"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rfg_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rfg",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rfg",
+                },
             },
             {
-                "title": "The crystal structure of SARS-CoV-2 papain-like protease in complex with YM155",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7D7L",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "protease, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "The crystal structure of SARS-CoV-2 papain-like protease in complex with YM155",
+                emdb: null,
+                pdb: {
+                    dbId: "7D7L",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "protease, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7d7l",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7d7l"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7d7l",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7d7l",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 3",
-                            "details": "",
-                            "altNames": "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 3",
+                            details: "",
+                            altNames:
+                                "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "ZN",
-                        "CFF",
-                        "GXU",
-                        "SO4",
-                        "GOL"
-                    ],
-                    "dbauthors": [
+                    ligands: ["ZN", "CFF", "GXU", "SO4", "GOL"],
+                    dbauthors: [
                         "Zhao, Y. (0000-0002-2932-2164)",
                         "Sun, L. (0000-0001-8741-0202)",
                         "Yang, H.T. (0000-0002-1875-3268)",
-                        "Rao, Z.H. (0000-0001-9866-2384)"
+                        "Rao, Z.H. (0000-0001-9866-2384)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "monomeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "monomeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33864621",
-                                    "title": "High-throughput screening identifies established drugs as SARS-CoV-2 PLpro inhibitors.",
-                                    "journal": "Protein Cell 12: 877-888 (2021), 1674-8018",
-                                    "doi": "https://doi.org/10.1007/s13238-021-00836-9",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33864621",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33864621",
+                                    title:
+                                        "High-throughput screening identifies established drugs as SARS-CoV-2 PLpro inhibitors.",
+                                    journal: "Protein Cell 12: 877-888 (2021), 1674-8018",
+                                    doi: "https://doi.org/10.1007/s13238-021-00836-9",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33864621",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Zhao, Y.",
                                         "Du, X.",
                                         "Duan, Y.",
@@ -11616,77 +11625,79 @@ export const data: Covid19Data = {
                                         "Sun, L.",
                                         "Zhang, L.",
                                         "Rao, Z.",
-                                        "Yang, H."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Yang, H.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7d7l_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7d7l",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7d7l"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7d7l_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7d7l",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7d7l",
+                },
             },
             {
-                "title": "Crystal Structure of SARS-CoV-2 NSP7-NSP8 complex.",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7JLT",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "VIRAL PROTEIN",
-                    "refModels": [
+                title: "Crystal Structure of SARS-CoV-2 NSP7-NSP8 complex.",
+                emdb: null,
+                pdb: {
+                    dbId: "7JLT",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7jlt",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7jlt"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7jlt",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7jlt",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 7",
-                            "details": "",
-                            "altNames": "pp1a,ORF1a polyprotein,nsp7,SARS-CoV-2 nsp7",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC1",
+                            organism: "2697049",
+                            name: "Non-structural protein 7",
+                            details: "",
+                            altNames: "pp1a,ORF1a polyprotein,nsp7,SARS-CoV-2 nsp7",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 8",
-                            "details": "",
-                            "altNames": "pp1a,ORF1a polyprotein,nsp8,SARS-CoV-2 nsp8",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC1",
+                            organism: "2697049",
+                            name: "Non-structural protein 8",
+                            details: "",
+                            altNames: "pp1a,ORF1a polyprotein,nsp8,SARS-CoV-2 nsp8",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
+                    ligands: [],
+                    dbauthors: [
                         "Biswal, M. (0000-0002-8995-2635)",
                         "Hai, R.",
-                        "Song, J. (0000-0002-4958-1032)"
+                        "Song, J. (0000-0002-4958-1032)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "tetrameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "tetrameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33999154",
-                                    "title": "Two conserved oligomer interfaces of NSP7 and NSP8 underpin the dynamic assembly of SARS-CoV-2 RdRP.",
-                                    "journal": "Nucleic Acids Res. 49: 5956-5966 (2021), 1362-4962",
-                                    "doi": "https://doi.org/10.1093/nar/gkab370",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33999154",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33999154",
+                                    title:
+                                        "Two conserved oligomer interfaces of NSP7 and NSP8 underpin the dynamic assembly of SARS-CoV-2 RdRP.",
+                                    journal: "Nucleic Acids Res. 49: 5956-5966 (2021), 1362-4962",
+                                    doi: "https://doi.org/10.1093/nar/gkab370",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33999154",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Biswal, M.",
                                         "Diggs, S.",
                                         "Xu, D.",
@@ -11695,45 +11706,47 @@ export const data: Covid19Data = {
                                         "Fang, J.",
                                         "Blaha, G.",
                                         "Hai, R.",
-                                        "Song, J."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Song, J.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7jlt_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7jlt",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7jlt"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7jlt_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7jlt",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7jlt",
+                },
             },
             {
-                "title": "The crystal structure of COVID-19 main protease in the apo state",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7C2Q",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "COVID-2019, main protease, VIRAL PROTEIN",
-                    "refModels": [
+                title: "The crystal structure of COVID-19 main protease in the apo state",
+                emdb: null,
+                pdb: {
+                    dbId: "7C2Q",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "COVID-2019, main protease, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7c2q",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7c2q"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7c2q",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7c2q",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
+                    ligands: [],
+                    dbauthors: [
                         "Zhang, J.",
                         "Zhou, X.L.",
                         "Zhong, F.L.",
@@ -11741,26 +11754,27 @@ export const data: Covid19Data = {
                         "Hu, X.H.",
                         "Zhou, H.",
                         "Wang, Q.S.",
-                        "Li, j."
+                        "Li, j.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "32880863",
-                                    "title": "Structure of SARS-CoV-2 main protease in the apo state.",
-                                    "journal": "Sci China Life Sci 64: 656-659 (2021), 1869-1889",
-                                    "doi": "https://doi.org/10.1007/s11427-020-1791-3",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/32880863",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "32880863",
+                                    title:
+                                        "Structure of SARS-CoV-2 main protease in the apo state.",
+                                    journal: "Sci China Life Sci 64: 656-659 (2021), 1869-1889",
+                                    doi: "https://doi.org/10.1007/s11427-020-1791-3",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/32880863",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Zhou, X.",
                                         "Zhong, F.",
                                         "Lin, C.",
@@ -11776,48 +11790,49 @@ export const data: Covid19Data = {
                                         "McCormick, P.J.",
                                         "Wang, Q.",
                                         "Li, J.",
-                                        "Zhang, J."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Zhang, J.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7c2q_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7c2q",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7c2q"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7c2q_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7c2q",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7c2q",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition SARS-CoV-2 main protease fragment screen -- Crystal Structure of SARS-CoV-2 main protease in complex with Z4439011607 (Mpro-x2540)",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5RGT",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition SARS-CoV-2 main protease fragment screen -- Crystal Structure of SARS-CoV-2 main protease in complex with Z4439011607 (Mpro-x2540)",
+                emdb: null,
+                pdb: {
+                    dbId: "5RGT",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rgt",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rgt"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rgt",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rgt",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS",
-                        "UHS"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS", "UHS"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Krojer, T.",
                         "Aimon, A.",
@@ -11836,26 +11851,27 @@ export const data: Covid19Data = {
                         "Dunnett, L.",
                         "Snee, M.",
                         "London, N.",
-                        "Walsh, M.A."
+                        "Walsh, M.A.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "PanDDA analysis group deposition SARS-CoV-2 main protease fragment screen",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "PanDDA analysis group deposition SARS-CoV-2 main protease fragment screen",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Fearon, D.",
                                         "Owen, C.D.",
                                         "Douangamath, A.",
@@ -11874,48 +11890,49 @@ export const data: Covid19Data = {
                                         "Snee, M.",
                                         "London, N.",
                                         "Walsh, M.A.",
-                                        "von Delft, F."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "von Delft, F.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rgt_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rgt",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rgt"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rgt_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rgt",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rgt",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with PCM-0102190",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5RFP",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with PCM-0102190",
+                emdb: null,
+                pdb: {
+                    dbId: "5RFP",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rfp",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rfp"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rfp",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rfp",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS",
-                        "T7V"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS", "T7V"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Krojer, T.",
                         "Aimon, A.",
@@ -11934,26 +11951,27 @@ export const data: Covid19Data = {
                         "Dunnett, L.",
                         "Snee, M.",
                         "London, N.",
-                        "Walsh, M.A."
+                        "Walsh, M.A.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33028810",
-                                    "title": "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
-                                    "journal": "Nat Commun 11: 5047-5047 (2020), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-020-18709-w",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33028810",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33028810",
+                                    title:
+                                        "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
+                                    journal: "Nat Commun 11: 5047-5047 (2020), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-020-18709-w",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33028810",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Douangamath, A. (0000-0002-9196-8644)",
                                         "Fearon, D. (0000-0003-3529-7863)",
                                         "Gehrtz, P.",
@@ -12003,112 +12021,107 @@ export const data: Covid19Data = {
                                         "Vajda, S.",
                                         "Gerencser, J. (0000-0002-1928-0650)",
                                         "Pallai, P.",
-                                        "Keseru, G.M. (0000-0003-1039-7809)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Keseru, G.M. (0000-0003-1039-7809)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rfp_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rfp",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rfp"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rfp_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rfp",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rfp",
+                },
             },
             {
-                "title": "Crystal structure of the T478K mutant receptor binding domain of SARS-CoV-2 Spike glycoprotein in complex with COVOX-45 and COVOX-253 Fabs",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7ORA",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2 B.1.1.7 variant, B.1.351 variant, P.1 variant, B.1.617 variant, antibody, receptor-binding-domain, spike, neutralisation, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "Crystal structure of the T478K mutant receptor binding domain of SARS-CoV-2 Spike glycoprotein in complex with COVOX-45 and COVOX-253 Fabs",
+                emdb: null,
+                pdb: {
+                    dbId: "7ORA",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2 B.1.1.7 variant, B.1.351 variant, P.1 variant, B.1.617 variant, antibody, receptor-binding-domain, spike, neutralisation, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ora",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ora"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ora",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ora",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "COVOX-45 Fab heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "COVOX-45 Fab heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "COVOX-45 Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "COVOX-45 Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "COVOX-253 Fab heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "COVOX-253 Fab heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "COVOX-253 Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "COVOX-253 Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG-FUC",
-                        "NAG-NAG-FUC",
-                        "GOL",
-                        "CL"
-                    ],
-                    "dbauthors": [
-                        "Zhou, D.",
-                        "Ren, J.",
-                        "Stuart, D.I."
-                    ],
-                    "details": [
+                    ligands: ["NAG-FUC", "NAG-NAG-FUC", "GOL", "CL"],
+                    dbauthors: ["Zhou, D.", "Ren, J.", "Stuart, D.I."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "pentameric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "pentameric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34242578",
-                                    "title": "Reduced neutralization of SARS-CoV-2 B.1.617 by vaccine and convalescent serum.",
-                                    "journal": "Cell 184: 4220-4236.e13 (2021), 1097-4172",
-                                    "doi": "https://doi.org/10.1016/j.cell.2021.06.020",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34242578",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34242578",
+                                    title:
+                                        "Reduced neutralization of SARS-CoV-2 B.1.617 by vaccine and convalescent serum.",
+                                    journal: "Cell 184: 4220-4236.e13 (2021), 1097-4172",
+                                    doi: "https://doi.org/10.1016/j.cell.2021.06.020",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34242578",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Liu, C.",
                                         "Ginn, H.M.",
                                         "Dejnirattisai, W.",
@@ -12167,48 +12180,49 @@ export const data: Covid19Data = {
                                         "Mongkolsapaya, J.",
                                         "Ren, J.",
                                         "Stuart, D.I.",
-                                        "Screaton, G.R."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Screaton, G.R.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ora_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ora",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ora"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ora_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ora",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ora",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with PCM-0102327",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5REK",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with PCM-0102327",
+                emdb: null,
+                pdb: {
+                    dbId: "5REK",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rek",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rek"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rek",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rek",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS",
-                        "T1Y"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS", "T1Y"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Krojer, T.",
                         "Aimon, A.",
@@ -12227,26 +12241,27 @@ export const data: Covid19Data = {
                         "Dunnett, L.",
                         "Snee, M.",
                         "London, N.",
-                        "Walsh, M.A."
+                        "Walsh, M.A.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33028810",
-                                    "title": "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
-                                    "journal": "Nat Commun 11: 5047-5047 (2020), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-020-18709-w",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33028810",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33028810",
+                                    title:
+                                        "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
+                                    journal: "Nat Commun 11: 5047-5047 (2020), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-020-18709-w",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33028810",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Douangamath, A. (0000-0002-9196-8644)",
                                         "Fearon, D. (0000-0003-3529-7863)",
                                         "Gehrtz, P.",
@@ -12296,48 +12311,49 @@ export const data: Covid19Data = {
                                         "Vajda, S.",
                                         "Gerencser, J. (0000-0002-1928-0650)",
                                         "Pallai, P.",
-                                        "Keseru, G.M. (0000-0003-1039-7809)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Keseru, G.M. (0000-0003-1039-7809)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rek_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rek",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rek"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rek_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rek",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rek",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with NCL-00023830",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5RF1",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 main protease in complex with NCL-00023830",
+                emdb: null,
+                pdb: {
+                    dbId: "5RF1",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, HYDROLASE-HYDROLASE INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5rf1",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5rf1"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5rf1",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5rf1",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS",
-                        "T5G"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS", "T5G"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Krojer, T.",
                         "Aimon, A.",
@@ -12356,26 +12372,27 @@ export const data: Covid19Data = {
                         "Dunnett, L.",
                         "Snee, M.",
                         "London, N.",
-                        "Walsh, M.A."
+                        "Walsh, M.A.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33028810",
-                                    "title": "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
-                                    "journal": "Nat Commun 11: 5047-5047 (2020), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-020-18709-w",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33028810",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33028810",
+                                    title:
+                                        "Crystallographic and electrophilic fragment screening of the SARS-CoV-2 main protease.",
+                                    journal: "Nat Commun 11: 5047-5047 (2020), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-020-18709-w",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33028810",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Douangamath, A. (0000-0002-9196-8644)",
                                         "Fearon, D. (0000-0003-3529-7863)",
                                         "Gehrtz, P.",
@@ -12425,88 +12442,86 @@ export const data: Covid19Data = {
                                         "Vajda, S.",
                                         "Gerencser, J. (0000-0002-1928-0650)",
                                         "Pallai, P.",
-                                        "Keseru, G.M. (0000-0003-1039-7809)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Keseru, G.M. (0000-0003-1039-7809)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5rf1_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5rf1",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5rf1"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5rf1_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5rf1",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5rf1",
+                },
             },
             {
-                "title": "Crystal structure of the SARS-CoV-2 RBD in complex with BD-236 Fab",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7CHB",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-Cov-2, RBD, mAb, ANTIVIRAL PROTEIN, ANTIVIRAL PROTEIN-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title: "Crystal structure of the SARS-CoV-2 RBD in complex with BD-236 Fab",
+                emdb: null,
+                pdb: {
+                    dbId: "7CHB",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-Cov-2, RBD, mAb, ANTIVIRAL PROTEIN, ANTIVIRAL PROTEIN-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7chb",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7chb"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7chb",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7chb",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "BD-236 Fab heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "BD-236 Fab heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "BD-236 Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "BD-236 Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG-NAG"
-                    ],
-                    "dbauthors": [
-                        "Xiao, J. (0000-0003-1822-1701)",
-                        "Zhu, Q. (0000-0001-7020-2044)"
-                    ],
-                    "details": [
+                    ligands: ["NAG-NAG"],
+                    dbauthors: ["Xiao, J. (0000-0003-1822-1701)", "Zhu, Q. (0000-0001-7020-2044)"],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "32970990",
-                                    "title": "Structurally Resolved SARS-CoV-2 Antibody Shows High Efficacy in Severely Infected Hamsters and Provides a Potent Cocktail Pairing Strategy.",
-                                    "journal": "Cell 183: 1013-1023.e13 (2020), 1097-4172",
-                                    "doi": "https://doi.org/10.1016/j.cell.2020.09.035",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/32970990",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "32970990",
+                                    title:
+                                        "Structurally Resolved SARS-CoV-2 Antibody Shows High Efficacy in Severely Infected Hamsters and Provides a Potent Cocktail Pairing Strategy.",
+                                    journal: "Cell 183: 1013-1023.e13 (2020), 1097-4172",
+                                    doi: "https://doi.org/10.1016/j.cell.2020.09.035",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/32970990",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Du, S.",
                                         "Cao, Y.",
                                         "Zhu, Q.",
@@ -12541,86 +12556,85 @@ export const data: Covid19Data = {
                                         "Xie, X.S.",
                                         "Su, X.D.",
                                         "Xiao, J.",
-                                        "Qin, C."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Qin, C.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7chb_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7chb",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7chb"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7chb_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7chb",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7chb",
+                },
             },
             {
-                "title": "Crystal structure of the SARS-CoV-2 S RBD in complex with BD-604 Fab",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7CH4",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Complex, PROTEIN BINDING-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title: "Crystal structure of the SARS-CoV-2 S RBD in complex with BD-604 Fab",
+                emdb: null,
+                pdb: {
+                    dbId: "7CH4",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Complex, PROTEIN BINDING-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ch4",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ch4"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ch4",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ch4",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "BD-604 Fab H",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "BD-604 Fab H",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "BD-604 Fab L",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "BD-604 Fab L",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
-                        "Du, S. (0000-0003-0936-0785)",
-                        "Xiao, J.Y. (0000-0001-8224-1374)"
-                    ],
-                    "details": [
+                    ligands: [],
+                    dbauthors: ["Du, S. (0000-0003-0936-0785)", "Xiao, J.Y. (0000-0001-8224-1374)"],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "32970990",
-                                    "title": "Structurally Resolved SARS-CoV-2 Antibody Shows High Efficacy in Severely Infected Hamsters and Provides a Potent Cocktail Pairing Strategy.",
-                                    "journal": "Cell 183: 1013-1023.e13 (2020), 1097-4172",
-                                    "doi": "https://doi.org/10.1016/j.cell.2020.09.035",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/32970990",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "32970990",
+                                    title:
+                                        "Structurally Resolved SARS-CoV-2 Antibody Shows High Efficacy in Severely Infected Hamsters and Provides a Potent Cocktail Pairing Strategy.",
+                                    journal: "Cell 183: 1013-1023.e13 (2020), 1097-4172",
+                                    doi: "https://doi.org/10.1016/j.cell.2020.09.035",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/32970990",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Du, S.",
                                         "Cao, Y.",
                                         "Zhu, Q.",
@@ -12655,73 +12669,75 @@ export const data: Covid19Data = {
                                         "Xie, X.S.",
                                         "Su, X.D.",
                                         "Xiao, J.",
-                                        "Qin, C."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Qin, C.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ch4_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ch4",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ch4"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ch4_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ch4",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ch4",
+                },
             },
             {
-                "title": "Crystal structure of SARS CoV2 main protease in complex with DN_EG_002 (modelled using PanDDA event map)",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7NTV",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Protease, Complex, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "Crystal structure of SARS CoV2 main protease in complex with DN_EG_002 (modelled using PanDDA event map)",
+                emdb: null,
+                pdb: {
+                    dbId: "7NTV",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Protease, Complex, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ntv",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ntv"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ntv",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ntv",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "DMS",
-                        "US8"
-                    ],
-                    "dbauthors": [
+                    ligands: ["DMS", "US8"],
+                    dbauthors: [
                         "Oerlemans, R. (0000-0001-7114-3736)",
                         "Eris, D.",
                         "Wang, M. (0000-0002-5340-3036)",
                         "Sharpe, M.",
                         "Domling, A. (0000-0002-9923-8873)",
-                        "Groves, M.R. (0000-0001-9859-5177)"
+                        "Groves, M.R. (0000-0001-9859-5177)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34097796",
-                                    "title": "Combining High-Throughput Synthesis and High-Throughput Protein Crystallography for Accelerated Hit Identification.",
-                                    "journal": "Angew.Chem.Int.Ed.Engl. 60: 18231-18239 (2021), 1521-3773",
-                                    "doi": "https://doi.org/10.1002/anie.202105584",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34097796",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34097796",
+                                    title:
+                                        "Combining High-Throughput Synthesis and High-Throughput Protein Crystallography for Accelerated Hit Identification.",
+                                    journal:
+                                        "Angew.Chem.Int.Ed.Engl. 60: 18231-18239 (2021), 1521-3773",
+                                    doi: "https://doi.org/10.1002/anie.202105584",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34097796",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Sutanto, F.",
                                         "Shaabani, S. (0000-0001-5546-7140)",
                                         "Oerlemans, R.",
@@ -12731,48 +12747,48 @@ export const data: Covid19Data = {
                                         "Wang, M.",
                                         "Sharpe, M.E.",
                                         "Groves, M.R.",
-                                        "Domling, A. (0000-0002-9923-8873)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Domling, A. (0000-0002-9923-8873)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ntv_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ntv",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ntv"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ntv_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ntv",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ntv",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with Z59181945",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5SAC",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE-HYDROLASE inhibitor complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with Z59181945",
+                emdb: null,
+                pdb: {
+                    dbId: "5SAC",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE-HYDROLASE inhibitor complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5sac",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5sac"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5sac",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5sac",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Uridylate-specific endoribonuclease",
-                            "details": "",
-                            "altNames": "NSP15 endoribnuclease",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Uridylate-specific endoribonuclease",
+                            details: "",
+                            altNames: "NSP15 endoribnuclease",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "CIT",
-                        "VWG"
-                    ],
-                    "dbauthors": [
+                    ligands: ["CIT", "VWG"],
+                    dbauthors: [
                         "Godoy, A.S.",
                         "Douangamath, A.",
                         "Nakamura, A.M.",
@@ -12789,26 +12805,26 @@ export const data: Covid19Data = {
                         "Brandao-Neto, J.",
                         "Skyner, R.",
                         "von Delft, F.",
-                        "Oliva, G."
+                        "Oliva, G.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "hexameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "hexameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "PanDDA analysis group deposition",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "PanDDA analysis group deposition",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Godoy, A.S.",
                                         "Douangamath, A.",
                                         "Nakamura, A.M.",
@@ -12841,47 +12857,49 @@ export const data: Covid19Data = {
                                         "Arrowsmith, C.H.",
                                         "Edwards, A.",
                                         "Bountra, C.",
-                                        "Gileadi, O."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gileadi, O.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5sac_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5sac",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5sac"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5sac_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5sac",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5sac",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 Nsp3 macrodomain in complex with SF048",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5S4H",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, SARS-CoV-2 Nsp3 macrodomain, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 Nsp3 macrodomain in complex with SF048",
+                emdb: null,
+                pdb: {
+                    dbId: "5S4H",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, SARS-CoV-2 Nsp3 macrodomain, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5s4h",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5s4h"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5s4h",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5s4h",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 3",
-                            "details": "",
-                            "altNames": "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 3",
+                            details: "",
+                            altNames:
+                                "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "W3V"
-                    ],
-                    "dbauthors": [
+                    ligands: ["W3V"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Dias, A.",
                         "Krojer, T.",
@@ -12898,26 +12916,27 @@ export const data: Covid19Data = {
                         "Gorrie-Stone, T.J.",
                         "Powell, A.J.",
                         "Thompson, W.",
-                        "Ahel, I."
+                        "Ahel, I.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33853786",
-                                    "title": "Fragment binding to the Nsp3 macrodomain of SARS-CoV-2 identified through crystallographic screening and computational docking.",
-                                    "journal": "Sci Adv 7 (2021), 2375-2548",
-                                    "doi": "https://doi.org/10.1126/sciadv.abf8711",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33853786",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33853786",
+                                    title:
+                                        "Fragment binding to the Nsp3 macrodomain of SARS-CoV-2 identified through crystallographic screening and computational docking.",
+                                    journal: "Sci Adv 7 (2021), 2375-2548",
+                                    doi: "https://doi.org/10.1126/sciadv.abf8711",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33853786",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Schuller, M. (0000-0002-1551-0359)",
                                         "Correy, G.J. (0000-0001-5155-7325)",
                                         "Gahbauer, S. (0000-0002-3115-9757)",
@@ -12987,18 +13006,19 @@ export const data: Covid19Data = {
                                         "Vajda, S.",
                                         "Gerencser, J. (0000-0002-1928-0650)",
                                         "Pallai, P.",
-                                        "Keseru, G.M. (0000-0003-1039-7809)"
-                                    ]
+                                        "Keseru, G.M. (0000-0003-1039-7809)",
+                                    ],
                                 },
                                 {
-                                    "pmID": "34045440",
-                                    "title": "Exploring protein hotspots by optimized fragment pharmacophores.",
-                                    "journal": "Nat Commun 12: 3201-3201 (2021), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-021-23443-y",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34045440",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34045440",
+                                    title:
+                                        "Exploring protein hotspots by optimized fragment pharmacophores.",
+                                    journal: "Nat Commun 12: 3201-3201 (2021), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-021-23443-y",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34045440",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Schuller, M. (0000-0002-1551-0359)",
                                         "Correy, G.J. (0000-0001-5155-7325)",
                                         "Gahbauer, S. (0000-0002-3115-9757)",
@@ -13096,48 +13116,48 @@ export const data: Covid19Data = {
                                         "Waring, M.J. (0000-0002-9110-8783)",
                                         "Wild, C.",
                                         "London, N. (0000-0003-2687-0699)",
-                                        "Walsh, M.A. (0000-0001-5683-1151)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Walsh, M.A. (0000-0001-5683-1151)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5s4h_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5s4h",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5s4h"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5s4h_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5s4h",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5s4h",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with BBL029427",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5S72",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with BBL029427",
+                emdb: null,
+                pdb: {
+                    dbId: "5S72",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5s72",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5s72"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5s72",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5s72",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Uridylate-specific endoribonuclease",
-                            "details": "",
-                            "altNames": "NSP15 endoribnuclease",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Uridylate-specific endoribonuclease",
+                            details: "",
+                            altNames: "NSP15 endoribnuclease",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "CIT",
-                        "WUY"
-                    ],
-                    "dbauthors": [
+                    ligands: ["CIT", "WUY"],
+                    dbauthors: [
                         "Godoy, A.S.",
                         "Douangamath, A.",
                         "Nakamura, A.M.",
@@ -13154,26 +13174,26 @@ export const data: Covid19Data = {
                         "Brandao-Neto, J.",
                         "Skyner, R.",
                         "von Delft, F.",
-                        "Oliva, G."
+                        "Oliva, G.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "hexameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "hexameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "PanDDA analysis group deposition",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "PanDDA analysis group deposition",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Godoy, A.S.",
                                         "Douangamath, A.",
                                         "Nakamura, A.M.",
@@ -13206,48 +13226,48 @@ export const data: Covid19Data = {
                                         "Arrowsmith, C.H.",
                                         "Edwards, A.",
                                         "Bountra, C.",
-                                        "Gileadi, O."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gileadi, O.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5s72_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5s72",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5s72"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5s72_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5s72",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5s72",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with Z1530301542",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5SA5",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE-HYDROLASE inhibitor complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with Z1530301542",
+                emdb: null,
+                pdb: {
+                    dbId: "5SA5",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE-HYDROLASE inhibitor complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5sa5",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5sa5"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5sa5",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5sa5",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Uridylate-specific endoribonuclease",
-                            "details": "",
-                            "altNames": "NSP15 endoribnuclease",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Uridylate-specific endoribonuclease",
+                            details: "",
+                            altNames: "NSP15 endoribnuclease",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "CIT",
-                        "ZQA"
-                    ],
-                    "dbauthors": [
+                    ligands: ["CIT", "ZQA"],
+                    dbauthors: [
                         "Godoy, A.S.",
                         "Douangamath, A.",
                         "Nakamura, A.M.",
@@ -13264,26 +13284,26 @@ export const data: Covid19Data = {
                         "Brandao-Neto, J.",
                         "Skyner, R.",
                         "von Delft, F.",
-                        "Oliva, G."
+                        "Oliva, G.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "hexameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "hexameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "PanDDA analysis group deposition",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "PanDDA analysis group deposition",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Godoy, A.S.",
                                         "Douangamath, A.",
                                         "Nakamura, A.M.",
@@ -13316,47 +13336,48 @@ export const data: Covid19Data = {
                                         "Arrowsmith, C.H.",
                                         "Edwards, A.",
                                         "Bountra, C.",
-                                        "Gileadi, O."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gileadi, O.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5sa5_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5sa5",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5sa5"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5sa5_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5sa5",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5sa5",
+                },
             },
             {
-                "title": "SARS-CoV-2 Main Protease (Mpro) in Complex with Rupintrivir (P21212)",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7L8J",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, SARS2, COVID19, PROTEASE, PROTEASE INHIBITOR, COMPLEX, HYDROLASE INHIBITOR COMPLEX, HYDROLASE, HYDROLASE-HYDROLASE INHIBITOR COMPLEX, RUPINTRIVIR, HYDROLASE-INHIBITOR complex",
-                    "refModels": [
+                title: "SARS-CoV-2 Main Protease (Mpro) in Complex with Rupintrivir (P21212)",
+                emdb: null,
+                pdb: {
+                    dbId: "7L8J",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2, SARS2, COVID19, PROTEASE, PROTEASE INHIBITOR, COMPLEX, HYDROLASE INHIBITOR COMPLEX, HYDROLASE, HYDROLASE-HYDROLASE INHIBITOR COMPLEX, RUPINTRIVIR, HYDROLASE-INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7l8j",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7l8j"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7l8j",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7l8j",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "AG7"
-                    ],
-                    "dbauthors": [
+                    ligands: ["AG7"],
+                    dbauthors: [
                         "Lockbaum, G.J. (0000-0003-2720-6984)",
                         "Henes, M. (0000-0001-8667-541X)",
                         "Lee, J.M.",
@@ -13364,26 +13385,27 @@ export const data: Covid19Data = {
                         "Nalivaika, E.A.",
                         "Yilmaz, N.K. (0000-0002-5036-676X)",
                         "Thompson, P.R. (0000-0002-1621-3372)",
-                        "Schiffer, C.A. (0000-0003-2270-6613)"
+                        "Schiffer, C.A. (0000-0003-2270-6613)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34506130",
-                                    "title": "Pan-3C Protease Inhibitor Rupintrivir Binds SARS-CoV-2 Main Protease in a Unique Binding Mode.",
-                                    "journal": "Biochemistry 60: 2925-2931 (2021), 0006-2960",
-                                    "doi": "https://doi.org/10.1021/acs.biochem.1c00414",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34506130",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34506130",
+                                    title:
+                                        "Pan-3C Protease Inhibitor Rupintrivir Binds SARS-CoV-2 Main Protease in a Unique Binding Mode.",
+                                    journal: "Biochemistry 60: 2925-2931 (2021), 0006-2960",
+                                    doi: "https://doi.org/10.1021/acs.biochem.1c00414",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34506130",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Lockbaum, G.J. (0000-0003-2720-6984)",
                                         "Henes, M.",
                                         "Lee, J.M.",
@@ -13391,70 +13413,67 @@ export const data: Covid19Data = {
                                         "Nalivaika, E.A.",
                                         "Thompson, P.R. (0000-0002-1621-3372)",
                                         "Kurt Yilmaz, N. (0000-0002-5036-676X)",
-                                        "Schiffer, C.A. (0000-0003-2270-6613)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Schiffer, C.A. (0000-0003-2270-6613)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7l8j_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7l8j",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7l8j"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7l8j_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l8j",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l8j",
+                },
             },
             {
-                "title": "Structure of SARS-CoV-2 main protease in complex with a covalent inhibitor",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7RFU",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Protease SARS-CoV-2 Covalent complex inhibitor, HYDROLASE-INHIBITOR complex",
-                    "refModels": [
+                title: "Structure of SARS-CoV-2 main protease in complex with a covalent inhibitor",
+                emdb: null,
+                pdb: {
+                    dbId: "7RFU",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "Protease SARS-CoV-2 Covalent complex inhibitor, HYDROLASE-INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7rfu",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7rfu"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7rfu",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7rfu",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "4YG"
-                    ],
-                    "dbauthors": [
-                        "Greasley, S.E.",
-                        "Ferre, R.A.",
-                        "Liu, W.",
-                        "Stewart, A.E."
-                    ],
-                    "details": [
+                    ligands: ["4YG"],
+                    dbauthors: ["Greasley, S.E.", "Ferre, R.A.", "Liu, W.", "Stewart, A.E."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34726479",
-                                    "title": "An oral SARS-CoV-2 M pro inhibitor clinical candidate for the treatment of COVID-19.",
-                                    "journal": "Science 374: 1586-1593 (2021), 1095-9203",
-                                    "doi": "https://doi.org/10.1126/science.abl4784",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34726479",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34726479",
+                                    title:
+                                        "An oral SARS-CoV-2 M pro inhibitor clinical candidate for the treatment of COVID-19.",
+                                    journal: "Science 374: 1586-1593 (2021), 1095-9203",
+                                    doi: "https://doi.org/10.1126/science.abl4784",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34726479",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Owen, D.R.",
                                         "Allerton, C.M.N.",
                                         "Anderson, A.S.",
@@ -13497,50 +13516,47 @@ export const data: Covid19Data = {
                                         "Verhoest, P.R.",
                                         "Wei, L.",
                                         "Yang, Q.",
-                                        "Zhu, Y."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Zhu, Y.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7rfu_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7rfu",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7rfu"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7rfu_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7rfu",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7rfu",
+                },
             },
             {
-                "title": "Structure of SARS-CoV-2 Main Protease bound to pyrithione zinc",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7B83",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, mPro, COVID-!9, PEPTIDE BINDING PROTEIN",
-                    "refModels": [
+                title: "Structure of SARS-CoV-2 Main Protease bound to pyrithione zinc",
+                emdb: null,
+                pdb: {
+                    dbId: "7B83",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "SARS-CoV-2, mPro, COVID-!9, PEPTIDE BINDING PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7b83",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7b83"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7b83",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7b83",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "PK8",
-                        "IMD",
-                        "DMS",
-                        "CL"
-                    ],
-                    "dbauthors": [
+                    ligands: ["PK8", "IMD", "DMS", "CL"],
+                    dbauthors: [
                         "Yefanov, O.",
                         "Gelisio, L.",
                         "Ginn, H.",
@@ -13613,26 +13629,27 @@ export const data: Covid19Data = {
                         "Lieske, J.",
                         "Oberthuer, D.",
                         "Guenther, S.",
-                        "Reinke, P."
+                        "Reinke, P.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33811162",
-                                    "title": "X-ray screening identifies active site and allosteric inhibitors of SARS-CoV-2 main protease.",
-                                    "journal": "Science 372: 642-646 (2021), 1095-9203",
-                                    "doi": "https://doi.org/10.1126/science.abf7945",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33811162",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33811162",
+                                    title:
+                                        "X-ray screening identifies active site and allosteric inhibitors of SARS-CoV-2 main protease.",
+                                    journal: "Science 372: 642-646 (2021), 1095-9203",
+                                    doi: "https://doi.org/10.1126/science.abf7945",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33811162",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Gunther, S.",
                                         "Reinke, P.Y.A.",
                                         "Fernandez-Garcia, Y.",
@@ -13850,18 +13867,19 @@ export const data: Covid19Data = {
                                         "Feiler, C.",
                                         "Weiss, M.",
                                         "Fernandez Garcia, Y.",
-                                        "Pearson, A."
-                                    ]
+                                        "Pearson, A.",
+                                    ],
                                 },
                                 {
-                                    "pmID": "",
-                                    "title": "Inhibition of SARS-CoV-2 main protease by allosteric drug-binding",
-                                    "journal": "Biorxiv (2020)",
-                                    "doi": "https://doi.org/10.1101/2020.11.12.378422",
-                                    "pmidLink": "",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "Inhibition of SARS-CoV-2 main protease by allosteric drug-binding",
+                                    journal: "Biorxiv (2020)",
+                                    doi: "https://doi.org/10.1101/2020.11.12.378422",
+                                    pmidLink: "",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Gunther, S.",
                                         "Reinke, P.Y.A.",
                                         "Fernandez-Garcia, Y.",
@@ -14079,90 +14097,92 @@ export const data: Covid19Data = {
                                         "Feiler, C.",
                                         "Weiss, M.",
                                         "Fernandez Garcia, Y.",
-                                        "Pearson, A."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Pearson, A.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7b83_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7b83",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7b83"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7b83_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7b83",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7b83",
+                },
             },
             {
-                "title": "Structural basis for a germline-biased antibody response to SARS-CoV-2 (RBD:C1A-B3 Fab)",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7KFW",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "COVID-19, SARS-CoV-2, neutralizing antibody, affinity maturation, IMMUNE SYSTEM, IMMUNE SYSTEM-Viral protein complex",
-                    "refModels": [
+                title:
+                    "Structural basis for a germline-biased antibody response to SARS-CoV-2 (RBD:C1A-B3 Fab)",
+                emdb: null,
+                pdb: {
+                    dbId: "7KFW",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "COVID-19, SARS-CoV-2, neutralizing antibody, affinity maturation, IMMUNE SYSTEM, IMMUNE SYSTEM-Viral protein complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7kfw",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7kfw"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7kfw",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7kfw",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike glycoprotein",
-                            "details": "",
-                            "altNames": "S glycoprotein,E2,Peplomer protein",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike glycoprotein",
+                            details: "",
+                            altNames: "S glycoprotein,E2,Peplomer protein",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "heavy chain of antibody C1A-B3 Fab",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "heavy chain of antibody C1A-B3 Fab",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "light chain of antibody C1A-B3 Fab",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "light chain of antibody C1A-B3 Fab",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG"
-                    ],
-                    "dbauthors": [
+                    ligands: ["NAG"],
+                    dbauthors: [
                         "Pan, J. (0000-0002-0070-955X)",
                         "Abraham, J. (0000-0002-7937-3920)",
                         "Clark, L. (0000-0002-6093-7597)",
-                        "Clark, S. (0000-0001-9944-0919)"
+                        "Clark, S. (0000-0001-9944-0919)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33200128",
-                                    "title": "Molecular basis for a germline-biased neutralizing antibody response to SARS-CoV-2.",
-                                    "journal": "Biorxiv (2020)",
-                                    "doi": "https://doi.org/10.1101/2020.11.13.381533",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33200128",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33200128",
+                                    title:
+                                        "Molecular basis for a germline-biased neutralizing antibody response to SARS-CoV-2.",
+                                    journal: "Biorxiv (2020)",
+                                    doi: "https://doi.org/10.1101/2020.11.13.381533",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33200128",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Clark, S.A.",
                                         "Clark, L.E.",
                                         "Pan, J. (0000-0002-0070-955X)",
@@ -14171,164 +14191,166 @@ export const data: Covid19Data = {
                                         "Shankar, S.",
                                         "Johnson, R.I.",
                                         "Griffiths, A.",
-                                        "Abraham, J. (0000-0002-7937-3920)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Abraham, J. (0000-0002-7937-3920)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7kfw_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7kfw",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7kfw"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7kfw_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kfw",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kfw",
+                },
             },
             {
-                "title": "X-ray crystal structure of the SARS-CoV-2 main protease with Calpain I Inhibitor",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7LBN",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Protease-Inhibitor complex, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "X-ray crystal structure of the SARS-CoV-2 main protease with Calpain I Inhibitor",
+                emdb: null,
+                pdb: {
+                    dbId: "7LBN",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Protease-Inhibitor complex, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7lbn",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7lbn"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7lbn",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7lbn",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "",
-                            "name": "Calpain I Inhibitor",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "",
+                            name: "Calpain I Inhibitor",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "SO4"
-                    ],
-                    "dbauthors": [
+                    ligands: ["SO4"],
+                    dbauthors: [
                         "Narwal, M. (0000-0002-9718-5827)",
-                        "Murakami, K. (0000-0003-2244-0501)"
+                        "Murakami, K. (0000-0003-2244-0501)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "tetrameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "tetrameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "X-ray crystal structure of the SARS-CoV-2 main protease with Calpain I Inhibitor",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "X-ray crystal structure of the SARS-CoV-2 main protease with Calpain I Inhibitor",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Narwal, M. (0000-0003-2244-0501)",
-                                        "Murakami, K. (0000-0003-2244-0501)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Murakami, K. (0000-0003-2244-0501)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7lbn_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7lbn",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7lbn"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7lbn_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lbn",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lbn",
+                },
             },
             {
-                "title": "Crystal Structure of HLA-A*0201 in complex with SARS-CoV-2 N138-146",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7KGS",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "HLA-A*0201, T cell, SARS-CoV-2, COVID-19, viral peptide, TCR, IMMUNE SYSTEM",
-                    "refModels": [
+                title: "Crystal Structure of HLA-A*0201 in complex with SARS-CoV-2 N138-146",
+                emdb: null,
+                pdb: {
+                    dbId: "7KGS",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "HLA-A*0201, T cell, SARS-CoV-2, COVID-19, viral peptide, TCR, IMMUNE SYSTEM",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7kgs",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7kgs"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7kgs",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7kgs",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "A0A5B8RNS7",
-                            "organism": "9606",
-                            "name": "MHC class I antigen",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "A0A5B8RNS7",
+                            organism: "9606",
+                            name: "MHC class I antigen",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P61769",
-                            "organism": "9606",
-                            "name": "Beta-2-microglobulin",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P61769",
+                            organism: "9606",
+                            name: "Beta-2-microglobulin",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC9",
-                            "organism": "2697049",
-                            "name": "Nucleoprotein",
-                            "details": "",
-                            "altNames": "Nucleocapsid protein,Protein N,N,NC",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC9",
+                            organism: "2697049",
+                            name: "Nucleoprotein",
+                            details: "",
+                            altNames: "Nucleocapsid protein,Protein N,N,NC",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "CD",
-                        "ACT"
-                    ],
-                    "dbauthors": [
+                    ligands: ["CD", "ACT"],
+                    dbauthors: [
                         "Szeto, C.",
                         "Chatzileontiadou, D.S.M.",
                         "Riboldi-Tunnicliffe, A.",
-                        "Gras, S."
+                        "Gras, S.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "trimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "trimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33521593",
-                                    "title": "The presentation of SARS-CoV-2 peptides by the common HLA-A*02:01 molecule.",
-                                    "journal": "Iscience 24: 102096-102096 (2021), 2589-0042",
-                                    "doi": "https://doi.org/10.1016/j.isci.2021.102096",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33521593",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33521593",
+                                    title:
+                                        "The presentation of SARS-CoV-2 peptides by the common HLA-A*02:01 molecule.",
+                                    journal: "Iscience 24: 102096-102096 (2021), 2589-0042",
+                                    doi: "https://doi.org/10.1016/j.isci.2021.102096",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33521593",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Szeto, C.",
                                         "Chatzileontiadou, D.S.M.",
                                         "Nguyen, A.T.",
@@ -14339,185 +14361,186 @@ export const data: Covid19Data = {
                                         "Smith, C.",
                                         "Riboldi-Tunnicliffe, A.",
                                         "Grant, E.J.",
-                                        "Gras, S."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gras, S.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7kgs_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7kgs",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7kgs"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7kgs_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kgs",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kgs",
+                },
             },
             {
-                "title": "Crystal structure of SARS-CoV-2 spike RBD in complex with human monoclonal antibodies AZD8895 and AZD1061",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7L7E",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, spike protein, receptor binding domain, human monoclonal antibody, VIRAL PROTEIN-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of SARS-CoV-2 spike RBD in complex with human monoclonal antibodies AZD8895 and AZD1061",
+                emdb: null,
+                pdb: {
+                    dbId: "7L7E",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2, spike protein, receptor binding domain, human monoclonal antibody, VIRAL PROTEIN-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7l7e",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7l7e"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7l7e",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7l7e",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "heavy chain of human monoclonal antibody AZD8895",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "heavy chain of human monoclonal antibody AZD8895",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "light chain of human monoclonal antibody Fab AZD8895",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "light chain of human monoclonal antibody Fab AZD8895",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "heavy chain of human monoclonal antibody Fab AZD1061",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "heavy chain of human monoclonal antibody Fab AZD1061",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "light chain of human monoclonal antibody Fab AZD1061",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "light chain of human monoclonal antibody Fab AZD1061",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "PO4",
-                        "NAG"
-                    ],
-                    "dbauthors": [
+                    ligands: ["PO4", "NAG"],
+                    dbauthors: [
                         "Dong, J. (0000-0003-4542-7756)",
-                        "Crowe, J.E. (0000-0002-0049-1079)"
+                        "Crowe, J.E. (0000-0002-0049-1079)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "pentameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "pentameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Crystal structure of SARS-CoV-2 spike RBD in complex with human monoclonal antibodies AZD8895 and AZD1061",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
-                                        "Dong, J. (0000-0003-4542-7756)"
-                                    ]
-                                }
-                            ]
-                        }
+                                    pmID: "",
+                                    title:
+                                        "Crystal structure of SARS-CoV-2 spike RBD in complex with human monoclonal antibodies AZD8895 and AZD1061",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: ["Dong, J. (0000-0003-4542-7756)"],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7l7e_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7l7e",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7l7e"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7l7e_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l7e",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l7e",
+                },
             },
             {
-                "title": "Structure of SARS-CoV-2 spike receptor-binding domain Y453F mutation complexed with human ACE2",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7EKH",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, spike, RBD, Y453F, ACE2, VIRAL PROTEIN, HYDROLASE-VIRAL PROTEIN complex",
-                    "refModels": [
+                title:
+                    "Structure of SARS-CoV-2 spike receptor-binding domain Y453F mutation complexed with human ACE2",
+                emdb: null,
+                pdb: {
+                    dbId: "7EKH",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2, spike, RBD, Y453F, ACE2, VIRAL PROTEIN, HYDROLASE-VIRAL PROTEIN complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ekh",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ekh"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ekh",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ekh",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "Q9BYF1",
-                            "organism": "9606",
-                            "name": "Angiotensin-converting enzyme 2",
-                            "details": "",
-                            "altNames": "Angiotensin-converting enzyme homolog,ACEH,Angiotensin-converting enzyme-related carboxypeptidase,ACE-related carboxypeptidase,Metalloprotease MPROT15",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "Q9BYF1",
+                            organism: "9606",
+                            name: "Angiotensin-converting enzyme 2",
+                            details: "",
+                            altNames:
+                                "Angiotensin-converting enzyme homolog,ACEH,Angiotensin-converting enzyme-related carboxypeptidase,ACE-related carboxypeptidase,Metalloprotease MPROT15",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG",
-                        "ZN"
-                    ],
-                    "dbauthors": [
+                    ligands: ["NAG", "ZN"],
+                    dbauthors: [
                         "Qi, J.X. (0000-0002-9358-4732)",
                         "Gao, G.F. (0000-0002-3869-615X)",
                         "Han, P.C. (0000-0002-4551-6209)",
                         "Su, C. (0000-0002-5824-7968)",
-                        "Zhang, Y.F. (0000-0003-3026-3357)"
+                        "Zhang, Y.F. (0000-0003-3026-3357)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Trichoplusia ni",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Trichoplusia ni",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34671049",
-                                    "title": "Molecular insights into receptor binding of recent emerging SARS-CoV-2 variants.",
-                                    "journal": "Nat Commun 12: 6103-6103 (2021), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-021-26401-w",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34671049",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34671049",
+                                    title:
+                                        "Molecular insights into receptor binding of recent emerging SARS-CoV-2 variants.",
+                                    journal: "Nat Commun 12: 6103-6103 (2021), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-021-26401-w",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34671049",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Han, P.",
                                         "Su, C. (0000-0002-5824-7968)",
                                         "Zhang, Y.",
@@ -14540,87 +14563,87 @@ export const data: Covid19Data = {
                                         "Wang, Q. (0000-0003-3768-0401)",
                                         "Zhao, X. (0000-0002-2001-1343)",
                                         "Gao, G.F. (0000-0002-3869-615X)",
-                                        "Qi, J. (0000-0002-9358-4732)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Qi, J. (0000-0002-9358-4732)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ekh_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ekh",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ekh"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ekh_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ekh",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ekh",
+                },
             },
             {
-                "title": "Crystal structure of the receptor binding domain of SARS-CoV-2 beta variant spike glycoprotein in complex with Beta-40 Fab",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7PS7",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-COV-2 B.1.1.7 (Alpha) VARIANT, B.1.351 (Beta) VARIANT, P.1 (Gamma) VARIANT, B.1.617.2 (Delta) VARIANT, ANTIBODY, RECEPTOR-BINDING-DOMAIN, SPIKE, NEUTRALISATION, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN, IMMUNE SYSTEM, VIRAL PROTEIN-IMMUNE SYSTEM COMPLEX",
-                    "refModels": [
+                title:
+                    "Crystal structure of the receptor binding domain of SARS-CoV-2 beta variant spike glycoprotein in complex with Beta-40 Fab",
+                emdb: null,
+                pdb: {
+                    dbId: "7PS7",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-COV-2 B.1.1.7 (Alpha) VARIANT, B.1.351 (Beta) VARIANT, P.1 (Gamma) VARIANT, B.1.617.2 (Delta) VARIANT, ANTIBODY, RECEPTOR-BINDING-DOMAIN, SPIKE, NEUTRALISATION, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN, IMMUNE SYSTEM, VIRAL PROTEIN-IMMUNE SYSTEM COMPLEX",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ps7",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ps7"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ps7",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ps7",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "Beta-40 Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "Beta-40 Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "Beta-40 heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "Beta-40 heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
-                        "Zhou, D.",
-                        "Ren, J.",
-                        "Stuart, D.I."
-                    ],
-                    "details": [
+                    ligands: [],
+                    dbauthors: ["Zhou, D.", "Ren, J.", "Stuart, D.I."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34921776",
-                                    "title": "The antibody response to SARS-CoV-2 Beta underscores the antigenic distance to other variants.",
-                                    "journal": "Cell Host Microbe 30 (2022), 1934-6069",
-                                    "doi": "https://doi.org/10.1016/j.chom.2021.11.013",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34921776",
-                                    "pubDate": "2022",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34921776",
+                                    title:
+                                        "The antibody response to SARS-CoV-2 Beta underscores the antigenic distance to other variants.",
+                                    journal: "Cell Host Microbe 30 (2022), 1934-6069",
+                                    doi: "https://doi.org/10.1016/j.chom.2021.11.013",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34921776",
+                                    pubDate: "2022",
+                                    abstract: "",
+                                    authors: [
                                         "Liu, C.",
                                         "Zhou, D.",
                                         "Nutalai, R.",
@@ -14652,82 +14675,78 @@ export const data: Covid19Data = {
                                         "Ren, J.",
                                         "Stuart, D.I.",
                                         "Screaton, G.R.",
-                                        "Afonine, P.V."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Afonine, P.V.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ps7_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ps7",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ps7"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ps7_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ps7",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ps7",
+                },
             },
             {
-                "title": "Crystal structure of the SARS-CoV-2 (COVID-19) main protease in complex with inhibitor UAW248",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "6XBI",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "COVID, COVID19, COVID-19, SARS, SARS COV2, COV, NCOV 19, CORONAVIRUS, MAIN PROTEASE, 3CL, MPRO, PRO, VIRAL PROTEIN, GC376, calpain inhibitor II, leupeptin, calpain, aldehyde, GC-376, 3cl-like, a-ketoamide, UAW41, UAW246, UAW247, UAW248, 246, 247, 248, alpheketoamide, alpha, ketoamide, PEPTIDOMIMETIC, PROTEASE, CYSTEINE, HYDROLASE-HYDROLASE INHIBITOR complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of the SARS-CoV-2 (COVID-19) main protease in complex with inhibitor UAW248",
+                emdb: null,
+                pdb: {
+                    dbId: "6XBI",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "COVID, COVID19, COVID-19, SARS, SARS COV2, COV, NCOV 19, CORONAVIRUS, MAIN PROTEASE, 3CL, MPRO, PRO, VIRAL PROTEIN, GC376, calpain inhibitor II, leupeptin, calpain, aldehyde, GC-376, 3cl-like, a-ketoamide, UAW41, UAW246, UAW247, UAW248, 246, 247, 248, alpheketoamide, alpha, ketoamide, PEPTIDOMIMETIC, PROTEASE, CYSTEINE, HYDROLASE-HYDROLASE INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/6xbi",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/6xbi"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/6xbi",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/6xbi",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "",
-                            "name": "inhibitor UAW248",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "",
+                            name: "inhibitor UAW248",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "GOL",
-                        "NA",
-                        "DMS"
-                    ],
-                    "dbauthors": [
-                        "Chen, Y.",
-                        "Sacco, M.",
-                        "Ma, C.",
-                        "Wang, J."
-                    ],
-                    "details": [
+                    ligands: ["GOL", "NA", "DMS"],
+                    dbauthors: ["Chen, Y.", "Sacco, M.", "Ma, C.", "Wang, J."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "tetrameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "tetrameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33158912",
-                                    "title": "Structure and inhibition of the SARS-CoV-2 main protease reveal strategy for developing dual inhibitors against M pro and cathepsin L.",
-                                    "journal": "Sci Adv 6 (2020), 2375-2548",
-                                    "doi": "https://doi.org/10.1126/sciadv.abe0751",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33158912",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33158912",
+                                    title:
+                                        "Structure and inhibition of the SARS-CoV-2 main protease reveal strategy for developing dual inhibitors against M pro and cathepsin L.",
+                                    journal: "Sci Adv 6 (2020), 2375-2548",
+                                    doi: "https://doi.org/10.1126/sciadv.abe0751",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33158912",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Sacco, M.D.",
                                         "Ma, C.",
                                         "Lagarias, P.",
@@ -14744,112 +14763,106 @@ export const data: Covid19Data = {
                                         "Kolocouris, A.",
                                         "Xiang, Y.",
                                         "Chen, Y.",
-                                        "Wang, J."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Wang, J.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/6xbi_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/6xbi",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=6xbi"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/6xbi_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6xbi",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6xbi",
+                },
             },
             {
-                "title": "Crystal structure of the receptor binding domain of SARS-CoV-2 P.1 variant Spike glycoprotein in complex with COVOX-222 and EY6A Fabs",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7NXB",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2 B.1.1.7 variant, B.1.351 variant, P.1 variant, antibody, receptor-binding-domain, spike, neutralisation, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN, IMMUNE SYSTEM, VIRAL PROTEIN-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of the receptor binding domain of SARS-CoV-2 P.1 variant Spike glycoprotein in complex with COVOX-222 and EY6A Fabs",
+                emdb: null,
+                pdb: {
+                    dbId: "7NXB",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2 B.1.1.7 variant, B.1.351 variant, P.1 variant, antibody, receptor-binding-domain, spike, neutralisation, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN, IMMUNE SYSTEM, VIRAL PROTEIN-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7nxb",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7nxb"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7nxb",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7nxb",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "EY6A Fab heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "EY6A Fab heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "EY6A Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "EY6A Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "COVOX-222 Fab heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "COVOX-222 Fab heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "COVOX-222 Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "COVOX-222 Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "SO4",
-                        "GOL",
-                        "NAG",
-                        "PEG"
-                    ],
-                    "dbauthors": [
-                        "Zhou, D.",
-                        "Ren, J.",
-                        "Stuart, D."
-                    ],
-                    "details": [
+                    ligands: ["SO4", "GOL", "NAG", "PEG"],
+                    dbauthors: ["Zhou, D.", "Ren, J.", "Stuart, D."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "pentameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "pentameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33852911",
-                                    "title": "Antibody evasion by the P.1 strain of SARS-CoV-2.",
-                                    "journal": "Cell 184 (2021), 1097-4172",
-                                    "doi": "https://doi.org/10.1016/j.cell.2021.03.055",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33852911",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33852911",
+                                    title: "Antibody evasion by the P.1 strain of SARS-CoV-2.",
+                                    journal: "Cell 184 (2021), 1097-4172",
+                                    doi: "https://doi.org/10.1016/j.cell.2021.03.055",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33852911",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Dejnirattisai, W.",
                                         "Zhou, D.",
                                         "Supasa, P.",
@@ -14903,18 +14916,19 @@ export const data: Covid19Data = {
                                         "Duyvesteyn, H.M.",
                                         "Paesen, G.C.",
                                         "Clemens, S.A.C.",
-                                        "Gilbert, S."
-                                    ]
+                                        "Gilbert, S.",
+                                    ],
                                 },
                                 {
-                                    "pmID": "",
-                                    "title": "Antibody evasion by the Brazilian P.1 strain of SARS-CoV-2",
-                                    "journal": "Biorxiv (2021)",
-                                    "doi": "https://doi.org/10.1101/2021.03.12.435194",
-                                    "pmidLink": "",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "Antibody evasion by the Brazilian P.1 strain of SARS-CoV-2",
+                                    journal: "Biorxiv (2021)",
+                                    doi: "https://doi.org/10.1101/2021.03.12.435194",
+                                    pmidLink: "",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Dejnirattisai, W.",
                                         "Zhou, D.",
                                         "Supasa, P.",
@@ -14968,87 +14982,86 @@ export const data: Covid19Data = {
                                         "Duyvesteyn, H.M.",
                                         "Paesen, G.C.",
                                         "Clemens, S.A.C.",
-                                        "Gilbert, S."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gilbert, S.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7nxb_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7nxb",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7nxb"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7nxb_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nxb",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nxb",
+                },
             },
             {
-                "title": "Complex Structure of HLA-A*2402 with the Peptide from HCoV(CoV-2) spike protein",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7EJL",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "HLA-A*2402, MHC CLASS I, IMMUNE SYSTEM, coronavirus",
-                    "refModels": [
+                title:
+                    "Complex Structure of HLA-A*2402 with the Peptide from HCoV(CoV-2) spike protein",
+                emdb: null,
+                pdb: {
+                    dbId: "7EJL",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "HLA-A*2402, MHC CLASS I, IMMUNE SYSTEM, coronavirus",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ejl",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ejl"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ejl",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ejl",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "A0A5B8RNS7",
-                            "organism": "9606",
-                            "name": "MHC class I antigen",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "A0A5B8RNS7",
+                            organism: "9606",
+                            name: "MHC class I antigen",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P61769",
-                            "organism": "9606",
-                            "name": "Beta-2-microglobulin",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P61769",
+                            organism: "9606",
+                            name: "Beta-2-microglobulin",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "",
-                            "name": "9-mer peptide from the HCoV spike protein",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "",
+                            name: "9-mer peptide from the HCoV spike protein",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
-                        "Murayama, K.",
-                        "Kato-Murayama, M.",
-                        "Shirouzu, M."
-                    ],
-                    "details": [
+                    ligands: [],
+                    dbauthors: ["Murayama, K.", "Kato-Murayama, M.", "Shirouzu, M."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "trimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "trimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34857854",
-                                    "title": "Identification of TCR repertoires in functionally competent cytotoxic T cells cross-reactive to SARS-CoV-2.",
-                                    "journal": "Commun Biol 4: 1365-1365 (2021), 2399-3642",
-                                    "doi": "https://doi.org/10.1038/s42003-021-02885-6",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34857854",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34857854",
+                                    title:
+                                        "Identification of TCR repertoires in functionally competent cytotoxic T cells cross-reactive to SARS-CoV-2.",
+                                    journal: "Commun Biol 4: 1365-1365 (2021), 2399-3642",
+                                    doi: "https://doi.org/10.1038/s42003-021-02885-6",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34857854",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Shimizu, K.",
                                         "Iyoda, T.",
                                         "Sanpei, A.",
@@ -15060,88 +15073,92 @@ export const data: Covid19Data = {
                                         "Shirouzu, M.",
                                         "Harada, N.",
                                         "Hidaka, M.",
-                                        "Fujii, S.I. (0000-0003-3586-3976)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Fujii, S.I. (0000-0003-3586-3976)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ejl_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ejl",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ejl"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ejl_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ejl",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ejl",
+                },
             },
             {
-                "title": "Structure of SARS-CoV-2 chimeric receptor-binding domain complexed with its receptor human ACE2",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "6VW1",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "coronavirus, CELL INVASION",
-                    "refModels": [
+                title:
+                    "Structure of SARS-CoV-2 chimeric receptor-binding domain complexed with its receptor human ACE2",
+                emdb: null,
+                pdb: {
+                    dbId: "6VW1",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "coronavirus, CELL INVASION",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/6vw1",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/6vw1"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/6vw1",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/6vw1",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "Q9BYF1",
-                            "organism": "9606",
-                            "name": "Angiotensin-converting enzyme 2",
-                            "details": "",
-                            "altNames": "Angiotensin-converting enzyme homolog,ACEH,Angiotensin-converting enzyme-related carboxypeptidase,ACE-related carboxypeptidase,Metalloprotease MPROT15",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "Q9BYF1",
+                            organism: "9606",
+                            name: "Angiotensin-converting enzyme 2",
+                            details: "",
+                            altNames:
+                                "Angiotensin-converting enzyme homolog,ACEH,Angiotensin-converting enzyme-related carboxypeptidase,ACE-related carboxypeptidase,Metalloprotease MPROT15",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P59594",
-                            "organism": "694009",
-                            "name": "SARS-CoV-2 chimeric RBD",
-                            "details": "",
-                            "altNames": "S glycoprotein,E2,Peplomer protein",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P59594",
+                            organism: "694009",
+                            name: "SARS-CoV-2 chimeric RBD",
+                            details: "",
+                            altNames: "S glycoprotein,E2,Peplomer protein",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
+                    ligands: [
                         "NAG-NAG-BMA",
                         "NAG-NAG",
                         "NAG-NAG-BMA-NAG",
                         "ZN",
                         "CL",
                         "EDO",
-                        "NAG"
+                        "NAG",
                     ],
-                    "dbauthors": [
+                    dbauthors: [
                         "Shang, J.",
                         "Ye, G.",
                         "Shi, K. (0000-0003-4175-3714)",
                         "Wan, Y.S.",
                         "Aihara, H. (0000-0001-7508-6230)",
-                        "Li, F. (0000-0002-1958-366X)"
+                        "Li, F. (0000-0002-1958-366X)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Spodoptera frugiperda",
-                                "assembly": "dimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Spodoptera frugiperda",
+                                assembly: "dimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "32225175",
-                                    "title": "Structural basis of receptor recognition by SARS-CoV-2.",
-                                    "journal": "Nature 581: 221-224 (2020), 1476-4687",
-                                    "doi": "https://doi.org/10.1038/s41586-020-2179-y",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/32225175",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "32225175",
+                                    title:
+                                        "Structural basis of receptor recognition by SARS-CoV-2.",
+                                    journal: "Nature 581: 221-224 (2020), 1476-4687",
+                                    doi: "https://doi.org/10.1038/s41586-020-2179-y",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/32225175",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Shang, J.",
                                         "Ye, G.",
                                         "Shi, K.",
@@ -15150,68 +15167,72 @@ export const data: Covid19Data = {
                                         "Aihara, H.",
                                         "Geng, Q.",
                                         "Auerbach, A.",
-                                        "Li, F."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Li, F.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/6vw1_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/6vw1",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=6vw1"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/6vw1_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6vw1",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6vw1",
+                },
             },
             {
-                "title": "Crystal Structure of C-terminal Dimerization Domain of Nucleocapsid Phosphoprotein from SARS-CoV-2, crystal form II",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "6ZCO",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Nucleoprotein, SARS Coronavirus 2, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "Crystal Structure of C-terminal Dimerization Domain of Nucleocapsid Phosphoprotein from SARS-CoV-2, crystal form II",
+                emdb: null,
+                pdb: {
+                    dbId: "6ZCO",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Nucleoprotein, SARS Coronavirus 2, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/6zco",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/6zco"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/6zco",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/6zco",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC9",
-                            "organism": "2697049",
-                            "name": "Nucleoprotein",
-                            "details": "",
-                            "altNames": "Nucleocapsid protein,Protein N,N,NC",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC9",
+                            organism: "2697049",
+                            name: "Nucleoprotein",
+                            details: "",
+                            altNames: "Nucleocapsid protein,Protein N,N,NC",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
+                    ligands: [],
+                    dbauthors: [
                         "Zinzula, L.",
                         "Basquin, J.",
                         "Nagy, I.",
-                        "Bracher, A. (0000-0001-8530-7594)"
+                        "Bracher, A. (0000-0001-8530-7594)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33039147",
-                                    "title": "High-resolution structure and biophysical characterization of the nucleocapsid phosphoprotein dimerization domain from the Covid-19 severe acute respiratory syndrome coronavirus 2.",
-                                    "journal": "Biochem.Biophys.Res.Commun. 538: 54-62 (2021), 1090-2104",
-                                    "doi": "https://doi.org/10.1016/j.bbrc.2020.09.131",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33039147",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33039147",
+                                    title:
+                                        "High-resolution structure and biophysical characterization of the nucleocapsid phosphoprotein dimerization domain from the Covid-19 severe acute respiratory syndrome coronavirus 2.",
+                                    journal:
+                                        "Biochem.Biophys.Res.Commun. 538: 54-62 (2021), 1090-2104",
+                                    doi: "https://doi.org/10.1016/j.bbrc.2020.09.131",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33039147",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Zinzula, L.",
                                         "Basquin, J.",
                                         "Bohn, S.",
@@ -15221,90 +15242,91 @@ export const data: Covid19Data = {
                                         "Nagy, I.",
                                         "Bracher, A.",
                                         "Hartl, F.U.",
-                                        "Baumeister, W."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Baumeister, W.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/6zco_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/6zco",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=6zco"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/6zco_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zco",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zco",
+                },
             },
             {
-                "title": "Crystal structure of human neutralizing mAb CV3-25 binding to SARS-CoV-2 S MPER peptide 1140-1165",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7NAB",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "human neutralizing mAb, MPER-targeting, SARS-CoV-2, spike, VIRAL PROTEIN-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of human neutralizing mAb CV3-25 binding to SARS-CoV-2 S MPER peptide 1140-1165",
+                emdb: null,
+                pdb: {
+                    dbId: "7NAB",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "human neutralizing mAb, MPER-targeting, SARS-CoV-2, spike, VIRAL PROTEIN-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7nab",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7nab"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7nab",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7nab",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "CV3-25 Fab Heavy Chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "CV3-25 Fab Heavy Chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "CV3-25 Fab Light Chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "CV3-25 Fab Light Chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "",
-                            "name": "Spike protein S2",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC2",
+                            organism: "",
+                            name: "Spike protein S2",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NA",
-                        "CIT"
-                    ],
-                    "dbauthors": [
+                    ligands: ["NA", "CIT"],
+                    dbauthors: [
                         "Chen, Y. (0000-0001-5380-2339)",
                         "Tolbert, W.D. (0000-0001-7549-9596)",
-                        "Pazgier, M. (0000-0003-0594-5057)"
+                        "Pazgier, M. (0000-0003-0594-5057)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34971573",
-                                    "title": "Structural basis and mode of action for two broadly neutralizing antibodies against SARS-CoV-2 emerging variants of concern.",
-                                    "journal": "Cell Rep 38: 110210-110210 (2022), 2211-1247",
-                                    "doi": "https://doi.org/10.1016/j.celrep.2021.110210",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34971573",
-                                    "pubDate": "2022",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34971573",
+                                    title:
+                                        "Structural basis and mode of action for two broadly neutralizing antibodies against SARS-CoV-2 emerging variants of concern.",
+                                    journal: "Cell Rep 38: 110210-110210 (2022), 2211-1247",
+                                    doi: "https://doi.org/10.1016/j.celrep.2021.110210",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34971573",
+                                    pubDate: "2022",
+                                    abstract: "",
+                                    authors: [
                                         "Li, W.",
                                         "Chen, Y.",
                                         "Prevost, J.",
@@ -15357,18 +15379,19 @@ export const data: Covid19Data = {
                                         "Rogers, T.F.",
                                         "Wilson, I.A.",
                                         "Burton, D.R.",
-                                        "Andrabi, R."
-                                    ]
+                                        "Andrabi, R.",
+                                    ],
                                 },
                                 {
-                                    "pmID": "",
-                                    "title": "A protective broadly cross-reactive human antibody defines a conserved site of vulnerability on beta-coronavirus spikes.",
-                                    "journal": "bioRxiv (2021)",
-                                    "doi": "https://doi.org/10.1101/2021.03.30.437769",
-                                    "pmidLink": "",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "A protective broadly cross-reactive human antibody defines a conserved site of vulnerability on beta-coronavirus spikes.",
+                                    journal: "bioRxiv (2021)",
+                                    doi: "https://doi.org/10.1101/2021.03.30.437769",
+                                    pmidLink: "",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Li, W.",
                                         "Chen, Y.",
                                         "Prevost, J.",
@@ -15421,118 +15444,111 @@ export const data: Covid19Data = {
                                         "Rogers, T.F.",
                                         "Wilson, I.A.",
                                         "Burton, D.R.",
-                                        "Andrabi, R."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Andrabi, R.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7nab_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7nab",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7nab"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7nab_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nab",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nab",
+                },
             },
             {
-                "title": "Crystal structure of SU3327 (halicin) covalently bound to the main protease (3CLpro/Mpro) of SARS-CoV-2.",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7NBY",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2, Mpro, 3CLpro, EXSCALATE4COV, drug discovery, Elettra, VIRAL PROTEIN, halicin, SU3327",
-                    "refModels": [
+                title:
+                    "Crystal structure of SU3327 (halicin) covalently bound to the main protease (3CLpro/Mpro) of SARS-CoV-2.",
+                emdb: null,
+                pdb: {
+                    dbId: "7NBY",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2, Mpro, 3CLpro, EXSCALATE4COV, drug discovery, Elettra, VIRAL PROTEIN, halicin, SU3327",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7nby",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7nby"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7nby",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7nby",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Main Protease",
-                            "details": "",
-                            "altNames": "pp1ab,ORF1ab polyprotein",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Main Protease",
+                            details: "",
+                            altNames: "pp1ab,ORF1ab polyprotein",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "U88",
-                        "NO3",
-                        "CL",
-                        "SO4",
-                        "NA"
-                    ],
-                    "dbauthors": [
-                        "Costanzi, E.",
-                        "Demitri, N.",
-                        "Giabbai, B.",
-                        "Storici, P."
-                    ],
-                    "details": [
+                    ligands: ["U88", "NO3", "CL", "SO4", "NA"],
+                    dbauthors: ["Costanzi, E.", "Demitri, N.", "Giabbai, B.", "Storici, P."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Crystal structure of SU3327 (halicin) covalently bound to the main protease (3CLpro/Mpro) of SARS-CoV-2.",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "Crystal structure of SU3327 (halicin) covalently bound to the main protease (3CLpro/Mpro) of SARS-CoV-2.",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Costanzi, E.",
                                         "Demitri, N.",
                                         "Giabbai, B.",
-                                        "Storici, P."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Storici, P.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7nby_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7nby",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7nby"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7nby_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nby",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nby",
+                },
             },
             {
-                "title": "Crystal Structure of SARS-CoV-2 NendoU in complex with Z2472938267",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7N7R",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, VIRAL PROTEIN",
-                    "refModels": [
+                title: "Crystal Structure of SARS-CoV-2 NendoU in complex with Z2472938267",
+                emdb: null,
+                pdb: {
+                    dbId: "7N7R",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7n7r",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7n7r"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7n7r",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7n7r",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Uridylate-specific endoribonuclease",
-                            "details": "",
-                            "altNames": "NSP15 endoribnuclease",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Uridylate-specific endoribonuclease",
+                            details: "",
+                            altNames: "NSP15 endoribnuclease",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "S6V"
-                    ],
-                    "dbauthors": [
+                    ligands: ["S6V"],
+                    dbauthors: [
                         "Godoy, A.S.",
                         "Douangamath, A.",
                         "Nakamura, A.M.",
@@ -15549,26 +15565,26 @@ export const data: Covid19Data = {
                         "Brandao-Neto, J.",
                         "Skyner, R.",
                         "von Delft, F.",
-                        "Oliva, G."
+                        "Oliva, G.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "hexameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "hexameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "NSP15 Fragment screening",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "NSP15 Fragment screening",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Godoy, A.S.",
                                         "Douangamath, A.",
                                         "Nakamura, A.M.",
@@ -15585,89 +15601,90 @@ export const data: Covid19Data = {
                                         "Brandao-Neto, J.",
                                         "Skyner, R.",
                                         "von Delft, F.",
-                                        "Oliva, G."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Oliva, G.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7n7r_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7n7r",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7n7r"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7n7r_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n7r",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n7r",
+                },
             },
             {
-                "title": "Crystal structure of SARS-CoV-2 receptor binding domain in complex with neutralizing human antibody WRAIR-2057.",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7N4I",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Neutralizing antibody, SARS-CoV-2, WRAIR-2057, receptor binding domain, ANTIVIRAL PROTEIN, VIRAL PROTEIN-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of SARS-CoV-2 receptor binding domain in complex with neutralizing human antibody WRAIR-2057.",
+                emdb: null,
+                pdb: {
+                    dbId: "7N4I",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "Neutralizing antibody, SARS-CoV-2, WRAIR-2057, receptor binding domain, ANTIVIRAL PROTEIN, VIRAL PROTEIN-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7n4i",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7n4i"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7n4i",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7n4i",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "WRAIR-2057 Antibody Fab Heavy Chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "WRAIR-2057 Antibody Fab Heavy Chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "WRAIR-2057 Antibody Fab Light Chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "WRAIR-2057 Antibody Fab Light Chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG-NAG-BMA",
-                        "GOL"
-                    ],
-                    "dbauthors": [
+                    ligands: ["NAG-NAG-BMA", "GOL"],
+                    dbauthors: [
                         "Sankhala, R.S. (0000-0001-8639-5290)",
-                        "Joyce, M.G. (0000-0002-6808-7232)"
+                        "Joyce, M.G. (0000-0002-6808-7232)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34716452",
-                                    "title": "Low-dose in vivo protection and neutralization across SARS-CoV-2 variants by monoclonal antibody combinations.",
-                                    "journal": "Nat.Immunol. 22: 1503-1514 (2021), 1529-2916",
-                                    "doi": "https://doi.org/10.1038/s41590-021-01068-z",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34716452",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34716452",
+                                    title:
+                                        "Low-dose in vivo protection and neutralization across SARS-CoV-2 variants by monoclonal antibody combinations.",
+                                    journal: "Nat.Immunol. 22: 1503-1514 (2021), 1529-2916",
+                                    doi: "https://doi.org/10.1038/s41590-021-01068-z",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34716452",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Dussupt, V. (0000-0002-8579-6356)",
                                         "Sankhala, R.S.",
                                         "Mendez-Rivera, L.",
@@ -15713,45 +15730,47 @@ export const data: Covid19Data = {
                                         "Michael, N.L. (0000-0001-5882-5548)",
                                         "Modjarrad, K.",
                                         "Joyce, M.G. (0000-0002-6808-7232)",
-                                        "Krebs, S.J. (0000-0003-1136-1760)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Krebs, S.J. (0000-0003-1136-1760)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7n4i_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7n4i",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7n4i"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7n4i_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n4i",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n4i",
+                },
             },
             {
-                "title": "SARS-CoV-2 Main protease C145S mutant",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7N5Z",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "3CL, protease, SARS, SARS-CoV-2, covid, main protease, HYDROLASE",
-                    "refModels": [
+                title: "SARS-CoV-2 Main protease C145S mutant",
+                emdb: null,
+                pdb: {
+                    dbId: "7N5Z",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "3CL, protease, SARS, SARS-CoV-2, covid, main protease, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7n5z",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7n5z"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7n5z",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7n5z",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
+                    ligands: [],
+                    dbauthors: [
                         "Godoy, A.S.",
                         "Nakamura, A.M.",
                         "Noske, G.D.",
@@ -15759,26 +15778,27 @@ export const data: Covid19Data = {
                         "Gawriljuk, V.O.",
                         "Lima, G.M.A.",
                         "Zeri, A.C.M.",
-                        "Nascimento, A.F.Z."
+                        "Nascimento, A.F.Z.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34174328",
-                                    "title": "A Crystallographic Snapshot of SARS-CoV-2 Main Protease Maturation Process.",
-                                    "journal": "J.Mol.Biol. 433: 167118-167118 (2021), 1089-8638",
-                                    "doi": "https://doi.org/10.1016/j.jmb.2021.167118",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34174328",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34174328",
+                                    title:
+                                        "A Crystallographic Snapshot of SARS-CoV-2 Main Protease Maturation Process.",
+                                    journal: "J.Mol.Biol. 433: 167118-167118 (2021), 1089-8638",
+                                    doi: "https://doi.org/10.1016/j.jmb.2021.167118",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34174328",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Noske, G.D.",
                                         "Nakamura, A.M.",
                                         "Gawriljuk, V.O.",
@@ -15793,103 +15813,97 @@ export const data: Covid19Data = {
                                         "Douangamath, A.",
                                         "von Delft, F.",
                                         "Oliva, G.",
-                                        "Godoy, A.S."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Godoy, A.S.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7n5z_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7n5z",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7n5z"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7n5z_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7n5z",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7n5z",
+                },
             },
             {
-                "title": "Crystal structure of receptor binding domain of SARS-CoV-2 Spike glycoprotein in ternary complex with EY6A Fab and a nanobody.",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "6ZCZ",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "EY6a, RBD, Spike glycoprotein, SARS-CoV-2, human neutralizing antibody, VIRAL PROTEIN, IMMUNE SYSTEM",
-                    "refModels": [
+                title:
+                    "Crystal structure of receptor binding domain of SARS-CoV-2 Spike glycoprotein in ternary complex with EY6A Fab and a nanobody.",
+                emdb: null,
+                pdb: {
+                    dbId: "6ZCZ",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "EY6a, RBD, Spike glycoprotein, SARS-CoV-2, human neutralizing antibody, VIRAL PROTEIN, IMMUNE SYSTEM",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/6zcz",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/6zcz"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/6zcz",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/6zcz",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9844",
-                            "name": "Nanobody",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": true,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9844",
+                            name: "Nanobody",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: true,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "EY6A heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "EY6A heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "EY6A light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "EY6A light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG",
-                        "CL",
-                        "MG"
-                    ],
-                    "dbauthors": [
-                        "Zhou, D.",
-                        "Ren, J.",
-                        "Stuart, D.I.",
-                        "Zhao, Y.",
-                        "Fry, E.E."
-                    ],
-                    "details": [
+                    ligands: ["NAG", "CL", "MG"],
+                    dbauthors: ["Zhou, D.", "Ren, J.", "Stuart, D.I.", "Zhao, Y.", "Fry, E.E."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "tetrameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "tetrameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "32737466",
-                                    "title": "Structural basis for the neutralization of SARS-CoV-2 by an antibody from a convalescent patient.",
-                                    "journal": "Nat.Struct.Mol.Biol. 27: 950-958 (2020), 1545-9985",
-                                    "doi": "https://doi.org/10.1038/s41594-020-0480-y",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/32737466",
-                                    "pubDate": "2020",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "32737466",
+                                    title:
+                                        "Structural basis for the neutralization of SARS-CoV-2 by an antibody from a convalescent patient.",
+                                    journal: "Nat.Struct.Mol.Biol. 27: 950-958 (2020), 1545-9985",
+                                    doi: "https://doi.org/10.1038/s41594-020-0480-y",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/32737466",
+                                    pubDate: "2020",
+                                    abstract: "",
+                                    authors: [
                                         "Zhou, D.",
                                         "Duyvesteyn, H.M.E.",
                                         "Chen, C.P.",
@@ -15929,68 +15943,71 @@ export const data: Covid19Data = {
                                         "Zhao, Y. (0000-0001-8916-8552)",
                                         "Ren, J. (0000-0003-4015-1404)",
                                         "Stuart, D.I. (0000-0002-3426-4210)",
-                                        "Huang, K.A. (0000-0001-6891-6945)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Huang, K.A. (0000-0001-6891-6945)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/6zcz_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/6zcz",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=6zcz"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/6zcz_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/6zcz",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=6zcz",
+                },
             },
             {
-                "title": "Crystal structure of SARS-CoV-2 NSP3 macrodomain (C2 crystal form, 310 K)",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7KR1",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Macrodomain, ADP-ribose, SARS-CoV-2, VIRAL PROTEIN",
-                    "refModels": [
+                title: "Crystal structure of SARS-CoV-2 NSP3 macrodomain (C2 crystal form, 310 K)",
+                emdb: null,
+                pdb: {
+                    dbId: "7KR1",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "Macrodomain, ADP-ribose, SARS-CoV-2, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7kr1",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7kr1"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7kr1",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7kr1",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 3",
-                            "details": "",
-                            "altNames": "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 3",
+                            details: "",
+                            altNames:
+                                "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
+                    ligands: [],
+                    dbauthors: [
                         "Correy, G.J. (0000-0001-5155-7325)",
                         "Young, I.D. (0000-0003-4713-9504)",
                         "Thompson, M.C. (0000-0002-6099-2027)",
-                        "Fraser, J.S. (0000-0002-5080-2859)"
+                        "Fraser, J.S. (0000-0002-5080-2859)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33853786",
-                                    "title": "Fragment binding to the Nsp3 macrodomain of SARS-CoV-2 identified through crystallographic screening and computational docking.",
-                                    "journal": "Sci Adv 7 (2021), 2375-2548",
-                                    "doi": "https://doi.org/10.1126/sciadv.abf8711",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33853786",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33853786",
+                                    title:
+                                        "Fragment binding to the Nsp3 macrodomain of SARS-CoV-2 identified through crystallographic screening and computational docking.",
+                                    journal: "Sci Adv 7 (2021), 2375-2548",
+                                    doi: "https://doi.org/10.1126/sciadv.abf8711",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33853786",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Schuller, M. (0000-0002-1551-0359)",
                                         "Correy, G.J. (0000-0001-5155-7325)",
                                         "Gahbauer, S. (0000-0002-3115-9757)",
@@ -16060,90 +16077,87 @@ export const data: Covid19Data = {
                                         "Vajda, S.",
                                         "Gerencser, J. (0000-0002-1928-0650)",
                                         "Pallai, P.",
-                                        "Keseru, G.M. (0000-0003-1039-7809)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Keseru, G.M. (0000-0003-1039-7809)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7kr1_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7kr1",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7kr1"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7kr1_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kr1",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kr1",
+                },
             },
             {
-                "title": "Crystal structure of the receptor binding domain of SARS-CoV-2 beta variant spike glycoprotein in complex with Beta-47 Fab",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7PS5",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-COV-2 B.1.1.7 (Alpha) VARIANT, B.1.351 (Beta) VARIANT, P.1 (Gamma) VARIANT, B.1.617.2 (Delta) VARIANT, ANTIBODY, RECEPTOR-BINDING-DOMAIN, SPIKE, NEUTRALISATION, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN, IMMUNE SYSTEM, VIRAL PROTEIN-IMMUNE SYSTEM COMPLEX",
-                    "refModels": [
+                title:
+                    "Crystal structure of the receptor binding domain of SARS-CoV-2 beta variant spike glycoprotein in complex with Beta-47 Fab",
+                emdb: null,
+                pdb: {
+                    dbId: "7PS5",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-COV-2 B.1.1.7 (Alpha) VARIANT, B.1.351 (Beta) VARIANT, P.1 (Gamma) VARIANT, B.1.617.2 (Delta) VARIANT, ANTIBODY, RECEPTOR-BINDING-DOMAIN, SPIKE, NEUTRALISATION, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN, IMMUNE SYSTEM, VIRAL PROTEIN-IMMUNE SYSTEM COMPLEX",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7ps5",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7ps5"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7ps5",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7ps5",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "Beta-47 Fab heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "Beta-47 Fab heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "Beta-47 Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "Beta-47 Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "NAG-NAG-BMA-MAN-MAN-FUC",
-                        "NAG-NAG-BMA-MAN-FUC"
-                    ],
-                    "dbauthors": [
-                        "Zhou, D.",
-                        "Ren, J.",
-                        "Stuart, D.I."
-                    ],
-                    "details": [
+                    ligands: ["NAG-NAG-BMA-MAN-MAN-FUC", "NAG-NAG-BMA-MAN-FUC"],
+                    dbauthors: ["Zhou, D.", "Ren, J.", "Stuart, D.I."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "trimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "trimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34921776",
-                                    "title": "The antibody response to SARS-CoV-2 Beta underscores the antigenic distance to other variants.",
-                                    "journal": "Cell Host Microbe 30 (2022), 1934-6069",
-                                    "doi": "https://doi.org/10.1016/j.chom.2021.11.013",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34921776",
-                                    "pubDate": "2022",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34921776",
+                                    title:
+                                        "The antibody response to SARS-CoV-2 Beta underscores the antigenic distance to other variants.",
+                                    journal: "Cell Host Microbe 30 (2022), 1934-6069",
+                                    doi: "https://doi.org/10.1016/j.chom.2021.11.013",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34921776",
+                                    pubDate: "2022",
+                                    abstract: "",
+                                    authors: [
                                         "Liu, C.",
                                         "Zhou, D.",
                                         "Nutalai, R.",
@@ -16175,99 +16189,97 @@ export const data: Covid19Data = {
                                         "Ren, J.",
                                         "Stuart, D.I.",
                                         "Screaton, G.R.",
-                                        "Afonine, P.V."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Afonine, P.V.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7ps5_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7ps5",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7ps5"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7ps5_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7ps5",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7ps5",
+                },
             },
             {
-                "title": "Crystal Structure of SARS-CoV-2 Nsp16/10 Heterodimer in Complex with (m7GpppA2m)pUpUpApApA (Cap-1), S-Adenosyl-L-homocysteine (SAH) and two Magnesium (Mg) ions.",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7L6T",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Structural Genomics, Center for Structural Genomics of Infectious Diseases, CSGID, nsp16, nsp10, complex, VIRAL PROTEIN, SAH, Cap-1, VIRAL PROTEIN-RNA complex",
-                    "refModels": [
+                title:
+                    "Crystal Structure of SARS-CoV-2 Nsp16/10 Heterodimer in Complex with (m7GpppA2m)pUpUpApApA (Cap-1), S-Adenosyl-L-homocysteine (SAH) and two Magnesium (Mg) ions.",
+                emdb: null,
+                pdb: {
+                    dbId: "7L6T",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "Structural Genomics, Center for Structural Genomics of Infectious Diseases, CSGID, nsp16, nsp10, complex, VIRAL PROTEIN, SAH, Cap-1, VIRAL PROTEIN-RNA complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7l6t",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7l6t"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7l6t",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7l6t",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "2'-O-methyltransferase",
-                            "details": "",
-                            "altNames": "pp1ab,ORF1ab polyprotein,Non-structural protein 16,nsp16,Replicase polyprotein 1ab",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "2'-O-methyltransferase",
+                            details: "",
+                            altNames:
+                                "pp1ab,ORF1ab polyprotein,Non-structural protein 16,nsp16,Replicase polyprotein 1ab",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 10",
-                            "details": "",
-                            "altNames": "pp1ab,ORF1ab polyprotein,nsp10,Growth factor-like peptide,GFL,Replicase polyprotein 1ab",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 10",
+                            details: "",
+                            altNames:
+                                "pp1ab,ORF1ab polyprotein,nsp10,Growth factor-like peptide,GFL,Replicase polyprotein 1ab",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "",
-                            "name": "RNA (5'-D(*(M7G))-R(P*(A2M)P*UP*UP*A)-3')",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "",
+                            name: "RNA (5'-D(*(M7G))-R(P*(A2M)P*UP*UP*A)-3')",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "MG",
-                        "CL",
-                        "FMT",
-                        "SAH",
-                        "GLC",
-                        "ZN",
-                        "BDF"
-                    ],
-                    "dbauthors": [
+                    ligands: ["MG", "CL", "FMT", "SAH", "GLC", "ZN", "BDF"],
+                    dbauthors: [
                         "Center for Structural Genomics of Infectious Diseases (CSGID)",
                         "Minasov, G.",
                         "Shuvalova, L.",
                         "Rosas-Lemus, M.",
                         "Kiryukhina, O.",
                         "Brunzelle, J.S.",
-                        "Satchell, K.J.F."
+                        "Satchell, K.J.F.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "trimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "trimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34131072",
-                                    "title": "Mn 2+ coordinates Cap-0-RNA to align substrates for efficient 2'- O -methyl transfer by SARS-CoV-2 nsp16.",
-                                    "journal": "Sci.Signal. 14 (2021), 1937-9145",
-                                    "doi": "https://doi.org/10.1126/scisignal.abh2071",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34131072",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34131072",
+                                    title:
+                                        "Mn 2+ coordinates Cap-0-RNA to align substrates for efficient 2'- O -methyl transfer by SARS-CoV-2 nsp16.",
+                                    journal: "Sci.Signal. 14 (2021), 1937-9145",
+                                    doi: "https://doi.org/10.1126/scisignal.abh2071",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34131072",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Minasov, G. (0000-0001-5460-3462)",
                                         "Rosas-Lemus, M. (0000-0002-6243-0271)",
                                         "Shuvalova, L. (0000-0003-1702-6998)",
@@ -16276,112 +16288,106 @@ export const data: Covid19Data = {
                                         "Daczkowski, C.M.",
                                         "Hoover, P.",
                                         "Mesecar, A.D. (0000-0002-1241-2577)",
-                                        "Satchell, K.J.F. (0000-0003-3274-7611)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Satchell, K.J.F. (0000-0003-3274-7611)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7l6t_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7l6t",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7l6t"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7l6t_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7l6t",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7l6t",
+                },
             },
             {
-                "title": "Crystal structure of the receptor binding domain of SARS-CoV-2 Spike glycoprotein in complex with COVOX-222 and EY6A Fabs",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7NX6",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2 B.1.1.7 variant, B.1.351 variant, P.1 variant, antibody, receptor-binding-domain, spike, neutralisation, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN, IMMUNE SYSTEM, VIRAL PROTEIN-IMMUNE SYSTEM complex",
-                    "refModels": [
+                title:
+                    "Crystal structure of the receptor binding domain of SARS-CoV-2 Spike glycoprotein in complex with COVOX-222 and EY6A Fabs",
+                emdb: null,
+                pdb: {
+                    dbId: "7NX6",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS-CoV-2 B.1.1.7 variant, B.1.351 variant, P.1 variant, antibody, receptor-binding-domain, spike, neutralisation, VIRAL PROTEIN/IMMUNE SYSTEM, VIRAL PROTEIN, IMMUNE SYSTEM, VIRAL PROTEIN-IMMUNE SYSTEM complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7nx6",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7nx6"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7nx6",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7nx6",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "EY6A Fab heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "EY6A Fab heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "EY6A Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "EY6A Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC2",
-                            "organism": "2697049",
-                            "name": "Spike protein S1",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTC2",
+                            organism: "2697049",
+                            name: "Spike protein S1",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "COVOX-222 Fab Heavy chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "COVOX-222 Fab Heavy chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": null,
-                            "organism": "9606",
-                            "name": "COVOX-222 Fab light chain",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": true,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: null,
+                            organism: "9606",
+                            name: "COVOX-222 Fab light chain",
+                            details: "",
+                            altNames: "",
+                            isAntibody: true,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "CL",
-                        "SO4",
-                        "GOL",
-                        "NAG"
-                    ],
-                    "dbauthors": [
-                        "Zhou, D.",
-                        "Ren, J.",
-                        "Stuart, D."
-                    ],
-                    "details": [
+                    ligands: ["CL", "SO4", "GOL", "NAG"],
+                    dbauthors: ["Zhou, D.", "Ren, J.", "Stuart, D."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Homo sapiens",
-                                "assembly": "pentameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Homo sapiens",
+                                assembly: "pentameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33852911",
-                                    "title": "Antibody evasion by the P.1 strain of SARS-CoV-2.",
-                                    "journal": "Cell 184 (2021), 1097-4172",
-                                    "doi": "https://doi.org/10.1016/j.cell.2021.03.055",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33852911",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33852911",
+                                    title: "Antibody evasion by the P.1 strain of SARS-CoV-2.",
+                                    journal: "Cell 184 (2021), 1097-4172",
+                                    doi: "https://doi.org/10.1016/j.cell.2021.03.055",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33852911",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Dejnirattisai, W.",
                                         "Zhou, D.",
                                         "Supasa, P.",
@@ -16435,18 +16441,19 @@ export const data: Covid19Data = {
                                         "Duyvesteyn, H.M.",
                                         "Paesen, G.C.",
                                         "Clemens, S.A.C.",
-                                        "Gilbert, S."
-                                    ]
+                                        "Gilbert, S.",
+                                    ],
                                 },
                                 {
-                                    "pmID": "",
-                                    "title": "Antibody evasion by the Brazilian P.1 strain of SARS-CoV-2",
-                                    "journal": "Biorxiv (2021)",
-                                    "doi": "https://doi.org/10.1101/2021.03.12.435194",
-                                    "pmidLink": "",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "Antibody evasion by the Brazilian P.1 strain of SARS-CoV-2",
+                                    journal: "Biorxiv (2021)",
+                                    doi: "https://doi.org/10.1101/2021.03.12.435194",
+                                    pmidLink: "",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Dejnirattisai, W.",
                                         "Zhou, D.",
                                         "Supasa, P.",
@@ -16500,48 +16507,49 @@ export const data: Covid19Data = {
                                         "Duyvesteyn, H.M.",
                                         "Paesen, G.C.",
                                         "Clemens, S.A.C.",
-                                        "Gilbert, S."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gilbert, S.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7nx6_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7nx6",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7nx6"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7nx6_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nx6",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nx6",
+                },
             },
             {
-                "title": "1.90 A resolution structure of SARS-CoV-2 3CL protease in complex with deuterated GC376",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7K0E",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "COVID-19, PROTEASE, severe acute respiratory syndrome coronavirus 2, SARS-CoV-2 3CL protease Inhhibitors, hydrolase, deuterated hydrolase inhibitor, Hydrolase-Hydrolase Inhibitor complex",
-                    "refModels": [
+                title:
+                    "1.90 A resolution structure of SARS-CoV-2 3CL protease in complex with deuterated GC376",
+                emdb: null,
+                pdb: {
+                    dbId: "7K0E",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "COVID-19, PROTEASE, severe acute respiratory syndrome coronavirus 2, SARS-CoV-2 3CL protease Inhhibitors, hydrolase, deuterated hydrolase inhibitor, Hydrolase-Hydrolase Inhibitor complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7k0e",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7k0e"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7k0e",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7k0e",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "K36",
-                        "PG4"
-                    ],
-                    "dbauthors": [
+                    ligands: ["K36", "PG4"],
+                    dbauthors: [
                         "Lovell, S.",
                         "Kashipathy, M.M.",
                         "Battaile, K.P.",
@@ -16549,26 +16557,27 @@ export const data: Covid19Data = {
                         "Nguyen, H.N.",
                         "Kim, Y.",
                         "Chang, K.O.",
-                        "Groutas, W.C."
+                        "Groutas, W.C.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34210738",
-                                    "title": "Postinfection treatment with a protease inhibitor increases survival of mice with a fatal SARS-CoV-2 infection.",
-                                    "journal": "Proc.Natl.Acad.Sci.USA 118 (2021), 1091-6490",
-                                    "doi": "https://doi.org/10.1073/pnas.2101555118",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34210738",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34210738",
+                                    title:
+                                        "Postinfection treatment with a protease inhibitor increases survival of mice with a fatal SARS-CoV-2 infection.",
+                                    journal: "Proc.Natl.Acad.Sci.USA 118 (2021), 1091-6490",
+                                    doi: "https://doi.org/10.1073/pnas.2101555118",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34210738",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Dampalla, C.S.",
                                         "Zheng, J.",
                                         "Perera, K.D.",
@@ -16581,47 +16590,47 @@ export const data: Covid19Data = {
                                         "Kim, Y.",
                                         "Perlman, S.",
                                         "Groutas, W.C.",
-                                        "Chang, K.O."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Chang, K.O.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7k0e_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7k0e",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7k0e"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7k0e_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7k0e",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7k0e",
+                },
             },
             {
-                "title": "Crystal structure from SARS-CoV-2 NendoU NSP15",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7KF4",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "NSP15, NendoU, covid-19, covid, sars, sars-cov-2, endoribonuclease, VIRAL PROTEIN, HYDROLASE",
-                    "refModels": [
+                title: "Crystal structure from SARS-CoV-2 NendoU NSP15",
+                emdb: null,
+                pdb: {
+                    dbId: "7KF4",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "NSP15, NendoU, covid-19, covid, sars, sars-cov-2, endoribonuclease, VIRAL PROTEIN, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7kf4",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7kf4"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7kf4",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7kf4",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Uridylate-specific endoribonuclease",
-                            "details": "",
-                            "altNames": "NSP15 endoribnuclease",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Uridylate-specific endoribonuclease",
+                            details: "",
+                            altNames: "NSP15 endoribnuclease",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "CIT"
-                    ],
-                    "dbauthors": [
+                    ligands: ["CIT"],
+                    dbauthors: [
                         "Godoy, A.S.",
                         "Nakamura, A.M.",
                         "Noske, G.D.",
@@ -16629,113 +16638,109 @@ export const data: Covid19Data = {
                         "Oliva, G.",
                         "Gawriljuk, V.O.",
                         "Pereira, H.M.",
-                        "Oliveira, K.I.Z."
+                        "Oliveira, K.I.Z.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "hexameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "hexameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "Crystal structure from SARS-COV2 NendoU NSP15",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
-                                        "Godoy, A.S.",
-                                        "Oliva, G."
-                                    ]
-                                }
-                            ]
-                        }
+                                    pmID: "",
+                                    title: "Crystal structure from SARS-COV2 NendoU NSP15",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: ["Godoy, A.S.", "Oliva, G."],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7kf4_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7kf4",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7kf4"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7kf4_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kf4",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kf4",
+                },
             },
             {
-                "title": "Crystal Structure of HLA-A*0201in complex with SARS-CoV-2 N222-230",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7KGQ",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "HLA-A*0201, T cell, SARS-CoV-2, COVID-19, viral peptide, TCR, IMMUNE SYSTEM",
-                    "refModels": [
+                title: "Crystal Structure of HLA-A*0201in complex with SARS-CoV-2 N222-230",
+                emdb: null,
+                pdb: {
+                    dbId: "7KGQ",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "HLA-A*0201, T cell, SARS-CoV-2, COVID-19, viral peptide, TCR, IMMUNE SYSTEM",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7kgq",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7kgq"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7kgq",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7kgq",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "A0A5B8RNS7",
-                            "organism": "9606",
-                            "name": "MHC class I antigen",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "A0A5B8RNS7",
+                            organism: "9606",
+                            name: "MHC class I antigen",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P61769",
-                            "organism": "9606",
-                            "name": "Beta-2-microglobulin",
-                            "details": "",
-                            "altNames": "",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P61769",
+                            organism: "9606",
+                            name: "Beta-2-microglobulin",
+                            details: "",
+                            altNames: "",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTC9",
-                            "organism": "2697049",
-                            "name": "Nucleoprotein",
-                            "details": "",
-                            "altNames": "Nucleocapsid protein,Protein N,N,NC",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC9",
+                            organism: "2697049",
+                            name: "Nucleoprotein",
+                            details: "",
+                            altNames: "Nucleocapsid protein,Protein N,N,NC",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "CD",
-                        "CA",
-                        "EDO"
-                    ],
-                    "dbauthors": [
+                    ligands: ["CD", "CA", "EDO"],
+                    dbauthors: [
                         "Szeto, C.",
                         "Chatzileontiadou, D.S.M.",
                         "Riboldi-Tunnicliffe, A.",
-                        "Gras, S."
+                        "Gras, S.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli BL21(DE3)",
-                                "assembly": "trimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli BL21(DE3)",
+                                assembly: "trimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33521593",
-                                    "title": "The presentation of SARS-CoV-2 peptides by the common HLA-A * 02:01 molecule.",
-                                    "journal": "Iscience 24: 102096-102096 (2021), 2589-0042",
-                                    "doi": "https://doi.org/10.1016/j.isci.2021.102096",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33521593",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33521593",
+                                    title:
+                                        "The presentation of SARS-CoV-2 peptides by the common HLA-A * 02:01 molecule.",
+                                    journal: "Iscience 24: 102096-102096 (2021), 2589-0042",
+                                    doi: "https://doi.org/10.1016/j.isci.2021.102096",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33521593",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Szeto, C.",
                                         "Chatzileontiadou, D.S.M.",
                                         "Nguyen, A.T.",
@@ -16746,141 +16751,140 @@ export const data: Covid19Data = {
                                         "Smith, C.",
                                         "Riboldi-Tunnicliffe, A.",
                                         "Grant, E.J.",
-                                        "Gras, S."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gras, S.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7kgq_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7kgq",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7kgq"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7kgq_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7kgq",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7kgq",
+                },
             },
             {
-                "title": "SARS-COV2 NSP5 in the presence of Zn2+",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7NWX",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV2, NSP5, 3C-like proteinase, coronavirus, VIRAL PROTEIN",
-                    "refModels": [
+                title: "SARS-COV2 NSP5 in the presence of Zn2+",
+                emdb: null,
+                pdb: {
+                    dbId: "7NWX",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "SARS-CoV2, NSP5, 3C-like proteinase, coronavirus, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7nwx",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7nwx"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7nwx",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7nwx",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTC1",
-                            "organism": "2697049",
-                            "name": "Replicase polyprotein 1a",
-                            "details": "",
-                            "altNames": "pp1a,ORF1a polyprotein",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTC1",
+                            organism: "2697049",
+                            name: "Replicase polyprotein 1a",
+                            details: "",
+                            altNames: "pp1a,ORF1a polyprotein",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "ZN"
-                    ],
-                    "dbauthors": [
+                    ligands: ["ZN"],
+                    dbauthors: [
                         "Calderone, V. (0000-0002-7963-6241)",
                         "Grifagni, D.",
                         "Cantini, F.",
                         "Fragai, M.",
-                        "Banci, L."
+                        "Banci, L.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_defined_assembly)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_defined_assembly)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34278402",
-                                    "title": "SARS-CoV-2 M pro inhibition by a zinc ion: structural features and hints for drug design.",
-                                    "journal": "Chem.Commun.(Camb.) 57: 7910-7913 (2021), 1364-548X",
-                                    "doi": "https://doi.org/10.1039/d1cc02956h",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34278402",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34278402",
+                                    title:
+                                        "SARS-CoV-2 M pro inhibition by a zinc ion: structural features and hints for drug design.",
+                                    journal: "Chem.Commun.(Camb.) 57: 7910-7913 (2021), 1364-548X",
+                                    doi: "https://doi.org/10.1039/d1cc02956h",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34278402",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Grifagni, D. (0000-0001-5402-6781)",
                                         "Calderone, V. (0000-0002-7963-6241)",
                                         "Giuntini, S.",
                                         "Cantini, F. (0000-0003-0526-6732)",
                                         "Fragai, M. (0000-0002-8440-1690)",
-                                        "Banci, L. (0000-0003-0562-5774)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Banci, L. (0000-0003-0562-5774)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7nwx_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7nwx",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7nwx"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7nwx_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7nwx",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7nwx",
+                },
             },
             {
-                "title": "Crystal structure of SAR-CoV-2 3CL protease complex with inhibitor YH-53",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7E18",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS-CoV-2 3CL protease, HYDROLASE",
-                    "refModels": [
+                title: "Crystal structure of SAR-CoV-2 3CL protease complex with inhibitor YH-53",
+                emdb: null,
+                pdb: {
+                    dbId: "7E18",
+                    method: "X-RAY DIFFRACTION",
+                    keywords: "SARS-CoV-2 3CL protease, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7e18",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7e18"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7e18",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7e18",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Replicase polyprotein 1ab",
-                            "details": "",
-                            "altNames": "pp1ab,ORF1ab polyprotein",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Replicase polyprotein 1ab",
+                            details: "",
+                            altNames: "pp1ab,ORF1ab polyprotein",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "HUR",
-                        "EDO"
-                    ],
-                    "dbauthors": [
+                    ligands: ["HUR", "EDO"],
+                    dbauthors: [
                         "Senda, M. (0000-0003-3863-4503)",
                         "Konno, S.",
                         "Hayashi, Y.",
-                        "Senda, T. (0000-0002-5153-928X)"
+                        "Senda, T. (0000-0002-5153-928X)",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli 'BL21-Gold(DE3)pLysS AG'",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli 'BL21-Gold(DE3)pLysS AG'",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34313428",
-                                    "title": "3CL Protease Inhibitors with an Electrophilic Arylketone Moiety as Anti-SARS-CoV-2 Agents.",
-                                    "journal": "J.Med.Chem. (2021), 0022-2623",
-                                    "doi": "https://doi.org/10.1021/acs.jmedchem.1c00665",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34313428",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34313428",
+                                    title:
+                                        "3CL Protease Inhibitors with an Electrophilic Arylketone Moiety as Anti-SARS-CoV-2 Agents.",
+                                    journal: "J.Med.Chem. (2021), 0022-2623",
+                                    doi: "https://doi.org/10.1021/acs.jmedchem.1c00665",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34313428",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Konno, S.",
                                         "Kobayashi, K.",
                                         "Senda, M. (0000-0003-3863-4503)",
@@ -16901,70 +16905,67 @@ export const data: Covid19Data = {
                                         "Senda, T.",
                                         "Shirasaka, Y.",
                                         "Kamitani, W.",
-                                        "Hayashi, Y. (0000-0002-7010-6914)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Hayashi, Y. (0000-0002-7010-6914)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7e18_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7e18",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7e18"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7e18_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7e18",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7e18",
+                },
             },
             {
-                "title": "Structure of SARS-CoV-2 main protease in complex with a covalent inhibitor",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7RFW",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "Protease SARS-CoV-2 Covalent complex inhibitor, HYDROLASE-INHIBITOR complex",
-                    "refModels": [
+                title: "Structure of SARS-CoV-2 main protease in complex with a covalent inhibitor",
+                emdb: null,
+                pdb: {
+                    dbId: "7RFW",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "Protease SARS-CoV-2 Covalent complex inhibitor, HYDROLASE-INHIBITOR complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7rfw",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7rfw"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7rfw",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7rfw",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "4WI"
-                    ],
-                    "dbauthors": [
-                        "Greasley, S.E.",
-                        "Ferre, R.A.",
-                        "Liu, W.",
-                        "Stewart, A.E."
-                    ],
-                    "details": [
+                    ligands: ["4WI"],
+                    dbauthors: ["Greasley, S.E.", "Ferre, R.A.", "Liu, W.", "Stewart, A.E."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "dimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "dimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "34726479",
-                                    "title": "An oral SARS-CoV-2 M pro inhibitor clinical candidate for the treatment of COVID-19.",
-                                    "journal": "Science 374: 1586-1593 (2021), 1095-9203",
-                                    "doi": "https://doi.org/10.1126/science.abl4784",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34726479",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34726479",
+                                    title:
+                                        "An oral SARS-CoV-2 M pro inhibitor clinical candidate for the treatment of COVID-19.",
+                                    journal: "Science 374: 1586-1593 (2021), 1095-9203",
+                                    doi: "https://doi.org/10.1126/science.abl4784",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34726479",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Owen, D.R.",
                                         "Allerton, C.M.N.",
                                         "Anderson, A.S.",
@@ -17007,123 +17008,124 @@ export const data: Covid19Data = {
                                         "Verhoest, P.R.",
                                         "Wei, L.",
                                         "Yang, Q.",
-                                        "Zhu, Y."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Zhu, Y.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7rfw_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7rfw",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7rfw"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7rfw_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7rfw",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7rfw",
+                },
             },
             {
-                "title": "Structure of SARS CoV-2 main protease shows simultaneous processing of its N- and C-terminii",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "7LMC",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SARS, protease, coronavirus-2, COVID-19, auto-processing, maturation, HYDROLASE",
-                    "refModels": [
+                title:
+                    "Structure of SARS CoV-2 main protease shows simultaneous processing of its N- and C-terminii",
+                emdb: null,
+                pdb: {
+                    dbId: "7LMC",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SARS, protease, coronavirus-2, COVID-19, auto-processing, maturation, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/7lmc",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/7lmc"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/7lmc",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/7lmc",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 4 peptide",
-                            "details": "",
-                            "altNames": "nsp4",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 4 peptide",
+                            details: "",
+                            altNames: "nsp4",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
                         },
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "3C-like proteinase",
-                            "details": "",
-                            "altNames": "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "3C-like proteinase",
+                            details: "",
+                            altNames:
+                                "3CL-PRO, 3CLp, Main protease, Mpro1, Non-structural protein 5, nsp5, SARS coronavirus main proteinase",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [],
-                    "dbauthors": [
-                        "Ferre, R.A.",
-                        "Liu, W.",
-                        "Gajiwala, K.S.",
-                        "Ryan, K."
-                    ],
-                    "details": [
+                    ligands: [],
+                    dbauthors: ["Ferre, R.A.", "Liu, W.", "Gajiwala, K.S.", "Ryan, K."],
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "trimeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "trimeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "SARS coronavirus-2 main protease dimer auto-processes N-terminus in cis and C-terminus in trans",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title:
+                                        "SARS coronavirus-2 main protease dimer auto-processes N-terminus in cis and C-terminus in trans",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Ferre, R.A.",
                                         "Liu, W.",
                                         "Ryan, K.",
                                         "Grodsky, N.",
-                                        "Gajiwala, K.S."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gajiwala, K.S.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/7lmc_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/7lmc",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=7lmc"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/7lmc_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/7lmc",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=7lmc",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with Z1673618163",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5SA7",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE-HYDROLASE inhibitor complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with Z1673618163",
+                emdb: null,
+                pdb: {
+                    dbId: "5SA7",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE-HYDROLASE inhibitor complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5sa7",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5sa7"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5sa7",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5sa7",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Uridylate-specific endoribonuclease",
-                            "details": "",
-                            "altNames": "NSP15 endoribnuclease",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Uridylate-specific endoribonuclease",
+                            details: "",
+                            altNames: "NSP15 endoribnuclease",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "WL7"
-                    ],
-                    "dbauthors": [
+                    ligands: ["WL7"],
+                    dbauthors: [
                         "Godoy, A.S.",
                         "Douangamath, A.",
                         "Nakamura, A.M.",
@@ -17140,26 +17142,26 @@ export const data: Covid19Data = {
                         "Brandao-Neto, J.",
                         "Skyner, R.",
                         "von Delft, F.",
-                        "Oliva, G."
+                        "Oliva, G.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "hexameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "hexameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "PanDDA analysis group deposition",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "PanDDA analysis group deposition",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Godoy, A.S.",
                                         "Douangamath, A.",
                                         "Nakamura, A.M.",
@@ -17192,48 +17194,48 @@ export const data: Covid19Data = {
                                         "Arrowsmith, C.H.",
                                         "Edwards, A.",
                                         "Bountra, C.",
-                                        "Gileadi, O."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gileadi, O.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5sa7_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5sa7",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5sa7"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5sa7_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5sa7",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5sa7",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with EN300-181428",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5S70",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with EN300-181428",
+                emdb: null,
+                pdb: {
+                    dbId: "5S70",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5s70",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5s70"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5s70",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5s70",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Uridylate-specific endoribonuclease",
-                            "details": "",
-                            "altNames": "NSP15 endoribnuclease",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Uridylate-specific endoribonuclease",
+                            details: "",
+                            altNames: "NSP15 endoribnuclease",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "CIT",
-                        "WUS"
-                    ],
-                    "dbauthors": [
+                    ligands: ["CIT", "WUS"],
+                    dbauthors: [
                         "Godoy, A.S.",
                         "Douangamath, A.",
                         "Nakamura, A.M.",
@@ -17250,26 +17252,26 @@ export const data: Covid19Data = {
                         "Brandao-Neto, J.",
                         "Skyner, R.",
                         "von Delft, F.",
-                        "Oliva, G."
+                        "Oliva, G.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "hexameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "hexameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "PanDDA analysis group deposition",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "PanDDA analysis group deposition",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Godoy, A.S.",
                                         "Douangamath, A.",
                                         "Nakamura, A.M.",
@@ -17302,47 +17304,49 @@ export const data: Covid19Data = {
                                         "Arrowsmith, C.H.",
                                         "Edwards, A.",
                                         "Bountra, C.",
-                                        "Gileadi, O."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gileadi, O.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5s70_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5s70",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5s70"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5s70_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5s70",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5s70",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 Nsp3 macrodomain in complex with SF054",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5S4J",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, SARS-CoV-2 Nsp3 macrodomain, VIRAL PROTEIN",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 Nsp3 macrodomain in complex with SF054",
+                emdb: null,
+                pdb: {
+                    dbId: "5S4J",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, SARS-CoV-2 Nsp3 macrodomain, VIRAL PROTEIN",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5s4j",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5s4j"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5s4j",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5s4j",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Non-structural protein 3",
-                            "details": "",
-                            "altNames": "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Non-structural protein 3",
+                            details: "",
+                            altNames:
+                                "nsp3,PL2-PRO,Papain-like protease,Papain-like proteinase,PL-PRO",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "W41"
-                    ],
-                    "dbauthors": [
+                    ligands: ["W41"],
+                    dbauthors: [
                         "Douangamath, A.",
                         "Dias, A.",
                         "Krojer, T.",
@@ -17359,26 +17363,27 @@ export const data: Covid19Data = {
                         "Gorrie-Stone, T.J.",
                         "Powell, A.J.",
                         "Thompson, W.",
-                        "Ahel, I."
+                        "Ahel, I.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "monomeric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "monomeric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "33853786",
-                                    "title": "Fragment binding to the Nsp3 macrodomain of SARS-CoV-2 identified through crystallographic screening and computational docking.",
-                                    "journal": "Sci Adv 7 (2021), 2375-2548",
-                                    "doi": "https://doi.org/10.1126/sciadv.abf8711",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/33853786",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "33853786",
+                                    title:
+                                        "Fragment binding to the Nsp3 macrodomain of SARS-CoV-2 identified through crystallographic screening and computational docking.",
+                                    journal: "Sci Adv 7 (2021), 2375-2548",
+                                    doi: "https://doi.org/10.1126/sciadv.abf8711",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/33853786",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Schuller, M. (0000-0002-1551-0359)",
                                         "Correy, G.J. (0000-0001-5155-7325)",
                                         "Gahbauer, S. (0000-0002-3115-9757)",
@@ -17448,18 +17453,19 @@ export const data: Covid19Data = {
                                         "Vajda, S.",
                                         "Gerencser, J. (0000-0002-1928-0650)",
                                         "Pallai, P.",
-                                        "Keseru, G.M. (0000-0003-1039-7809)"
-                                    ]
+                                        "Keseru, G.M. (0000-0003-1039-7809)",
+                                    ],
                                 },
                                 {
-                                    "pmID": "34045440",
-                                    "title": "Exploring protein hotspots by optimized fragment pharmacophores.",
-                                    "journal": "Nat Commun 12: 3201-3201 (2021), 2041-1723",
-                                    "doi": "https://doi.org/10.1038/s41467-021-23443-y",
-                                    "pmidLink": "https://pubmed.ncbi.nlm.nih.gov/34045440",
-                                    "pubDate": "2021",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "34045440",
+                                    title:
+                                        "Exploring protein hotspots by optimized fragment pharmacophores.",
+                                    journal: "Nat Commun 12: 3201-3201 (2021), 2041-1723",
+                                    doi: "https://doi.org/10.1038/s41467-021-23443-y",
+                                    pmidLink: "https://pubmed.ncbi.nlm.nih.gov/34045440",
+                                    pubDate: "2021",
+                                    abstract: "",
+                                    authors: [
                                         "Schuller, M. (0000-0002-1551-0359)",
                                         "Correy, G.J. (0000-0001-5155-7325)",
                                         "Gahbauer, S. (0000-0002-3115-9757)",
@@ -17557,48 +17563,48 @@ export const data: Covid19Data = {
                                         "Waring, M.J. (0000-0002-9110-8783)",
                                         "Wild, C.",
                                         "London, N. (0000-0003-2687-0699)",
-                                        "Walsh, M.A. (0000-0001-5683-1151)"
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Walsh, M.A. (0000-0001-5683-1151)",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5s4j_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5s4j",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5s4j"
-                }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5s4j_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5s4j",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5s4j",
+                },
             },
             {
-                "title": "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with Z319891284",
-                "emdb": null,
-                "pdb": {
-                    "dbId": "5SAA",
-                    "method": "X-RAY DIFFRACTION",
-                    "keywords": "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE-HYDROLASE inhibitor complex",
-                    "refModels": [
+                title:
+                    "PanDDA analysis group deposition -- Crystal Structure of SARS-CoV-2 NendoU in complex with Z319891284",
+                emdb: null,
+                pdb: {
+                    dbId: "5SAA",
+                    method: "X-RAY DIFFRACTION",
+                    keywords:
+                        "SGC - Diamond I04-1 fragment screening, PanDDA, XChemExplorer, nsp15, nendoU, sars-cov-2, sars, covid, covid19, HYDROLASE-HYDROLASE inhibitor complex",
+                    refModels: [
                         {
-                            "method": "PDB-Redo",
-                            "externalLink": "https://pdb-redo.eu/db/5saa",
-                            "queryLink": "https://3dbionotes.cnb.csic.es/pdb_redo/5saa"
-                        }
+                            method: "PDB-Redo",
+                            externalLink: "https://pdb-redo.eu/db/5saa",
+                            queryLink: "https://3dbionotes.cnb.csic.es/pdb_redo/5saa",
+                        },
                     ],
-                    "entities": [
+                    entities: [
                         {
-                            "uniprotAcc": "P0DTD1",
-                            "organism": "2697049",
-                            "name": "Uridylate-specific endoribonuclease",
-                            "details": "",
-                            "altNames": "NSP15 endoribnuclease",
-                            "isAntibody": false,
-                            "isNanobody": false,
-                            "isSybody": false
-                        }
+                            uniprotAcc: "P0DTD1",
+                            organism: "2697049",
+                            name: "Uridylate-specific endoribonuclease",
+                            details: "",
+                            altNames: "NSP15 endoribnuclease",
+                            isAntibody: false,
+                            isNanobody: false,
+                            isSybody: false,
+                        },
                     ],
-                    "ligands": [
-                        "CIT",
-                        "ZQD"
-                    ],
-                    "dbauthors": [
+                    ligands: ["CIT", "ZQD"],
+                    dbauthors: [
                         "Godoy, A.S.",
                         "Douangamath, A.",
                         "Nakamura, A.M.",
@@ -17615,26 +17621,26 @@ export const data: Covid19Data = {
                         "Brandao-Neto, J.",
                         "Skyner, R.",
                         "von Delft, F.",
-                        "Oliva, G."
+                        "Oliva, G.",
                     ],
-                    "details": [
+                    details: [
                         {
-                            "sample": {
-                                "name": "",
-                                "exprSystem": "Escherichia coli",
-                                "assembly": "hexameric (author_and_software_defined_assembly, PISA)",
-                                "genes": []
+                            sample: {
+                                name: "",
+                                exprSystem: "Escherichia coli",
+                                assembly: "hexameric (author_and_software_defined_assembly, PISA)",
+                                genes: [],
                             },
-                            "refdoc": [
+                            refdoc: [
                                 {
-                                    "pmID": "",
-                                    "title": "PanDDA analysis group deposition",
-                                    "journal": "To Be Published",
-                                    "doi": "",
-                                    "pmidLink": "",
-                                    "pubDate": "",
-                                    "abstract": "",
-                                    "authors": [
+                                    pmID: "",
+                                    title: "PanDDA analysis group deposition",
+                                    journal: "To Be Published",
+                                    doi: "",
+                                    pmidLink: "",
+                                    pubDate: "",
+                                    abstract: "",
+                                    authors: [
                                         "Godoy, A.S.",
                                         "Douangamath, A.",
                                         "Nakamura, A.M.",
@@ -17667,17 +17673,18 @@ export const data: Covid19Data = {
                                         "Arrowsmith, C.H.",
                                         "Edwards, A.",
                                         "Bountra, C.",
-                                        "Gileadi, O."
-                                    ]
-                                }
-                            ]
-                        }
+                                        "Gileadi, O.",
+                                    ],
+                                },
+                            ],
+                        },
                     ],
-                    "imageLink": "https://www.ebi.ac.uk/pdbe/static/entry/5saa_deposited_chain_front_image-200x200.png",
-                    "externalLink": "https://www.ebi.ac.uk/pdbe/entry/pdb/5saa",
-                    "queryLink": "https://3dbionotes.cnb.csic.es/?queryId=5saa"
-                }
-            }
+                    imageLink:
+                        "https://www.ebi.ac.uk/pdbe/static/entry/5saa_deposited_chain_front_image-200x200.png",
+                    externalLink: "https://www.ebi.ac.uk/pdbe/entry/pdb/5saa",
+                    queryLink: "https://3dbionotes.cnb.csic.es/?queryId=5saa",
+                },
+            },
         ],
     ],
 };
