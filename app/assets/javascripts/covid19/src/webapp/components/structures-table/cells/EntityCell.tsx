@@ -1,19 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import i18n from "../../../../utils/i18n";
 import { CellProps } from "../Columns";
 import { Link } from "../Link";
-import { rowHeight } from "../StructuresTable";
-import styled from "styled-components";
-import { BadgeDetails } from "../BadgeDetails";
+import { Wrapper } from "./Wrapper";
 
 export const EntityCell: React.FC<CellProps> = React.memo(props => {
     const { row, onClickDetails, moreDetails } = props;
-    const [height, setHeight] = useState(0);
-    const ref = useRef<null | HTMLUListElement>(null);
-
-    useEffect(() => {
-        setHeight(ref.current?.getBoundingClientRect().height ?? 0);
-    }, []);
 
     const entities = React.useMemo(() => {
         return row.entities.map(entity => {
@@ -49,32 +41,16 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
         });
     }, [row.entities]);
 
-    const Container = styled.div`
-        display: flex;
-        flex-direction: column;
-        ul {
-            ${moreDetails !== false ? "margin: 10px 0;" : "margin:0;"}
-            ${moreDetails !== false &&
-            "max-height: " + (rowHeight - 62) + "px; overflow-y: hidden; overflow-x: hidden;"}
-        }
-        div {
-            text-align: center;
-        }
-        p {
-            overflow-wrap: anywhere;
-        }
-    `;
-
     return (
-        <Container>
-            <ul ref={ref}>
-                {entities.map((entity, idx) => (
-                    <Link key={idx} tooltip={entity.tooltip} text={entity.name} />
-                ))}
-            </ul>
-            {height >= rowHeight - 62 && moreDetails !== false && (
-                <BadgeDetails onClick={onClickDetails} row={row} field="entities" />
-            )}
-        </Container>
+        <Wrapper
+            onClickDetails={onClickDetails}
+            moreDetails={moreDetails}
+            row={row}
+            field="entities"
+        >
+            {entities.map((entity, idx) => (
+                <Link key={idx} tooltip={entity.tooltip} text={entity.name} />
+            ))}
+        </Wrapper>
     );
 });

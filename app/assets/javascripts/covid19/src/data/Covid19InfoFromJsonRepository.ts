@@ -1,11 +1,12 @@
 import _ from "lodash";
 import MiniSearch, { Options } from "minisearch";
 import {
+    buildPdbRedoValidation,
     Covid19Info,
     Details,
     Emdb,
     Entity,
-    EntityBodiesFilter,
+    Covid19Filter,
     filterEntities,
     Maybe,
     Ligand,
@@ -14,18 +15,17 @@ import {
     Structure,
 } from "../domain/entities/Covid19Info";
 import { Covid19InfoRepository, SearchOptions } from "../domain/repositories/Covid19InfoRepository";
+import { SearchOptions as MiniSearchSearchOptions } from "minisearch";
 import { cache } from "../utils/cache";
 import { data } from "./covid19-data";
 import * as Data from "./Covid19Data.types";
 
 export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
-    structuresById: Record<string, Structure>;
     info: Covid19Info;
+    searchOptions: MiniSearchSearchOptions = { combineWith: "AND" };
 
     constructor() {
-        const structures = getStructures();
-        this.info = { structures };
-        this.structuresById = _.keyBy(structures, structure => structure.id);
+        this.info = { structures: getStructures() };
     }
 
     get(): Covid19Info {
@@ -33,38 +33,59 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     }
 
     search(options: SearchOptions): Covid19Info {
-        const { search = "", filter: filterState } = options;
-        const { structures } = this.info;
+        const { data, search = "", filter: filterState } = options;
+        const { structures } = data;
         const isTextFilterEnabled = Boolean(search.trim());
-        const structuresByText = isTextFilterEnabled ? this.searchStructures(search) : structures;
 
-        const filteredStructures = filterState
-            ? this.filterStructures(structuresByText, filterState)
-            : structuresByText;
+        const structuresFilteredByText = isTextFilterEnabled
+            ? this.searchByText(structures, search)
+            : structures;
 
-        return { structures: filteredStructures };
+        const structuresFilteredByTextAndBody = filterState
+            ? this.filterByBodies(structuresFilteredByText, filterState)
+            : structuresFilteredByText;
+        return { structures: structuresFilteredByTextAndBody };
     }
 
-    private filterStructures(
-        structures: Structure[],
-        filterState: EntityBodiesFilter
-    ): Structure[] {
-        const isFilterStateEnabled =
-            filterState && (filterState.antibody || filterState.nanobody || filterState.sybody);
-        if (!isFilterStateEnabled) return structures;
-
-        return structures.filter(
-            structure => filterEntities(structure.entities, filterState).length > 0
-        );
-    }
-
-    private searchStructures(search: string): Structure[] {
+    autoSuggestions(search: string): string[] {
         const miniSearch = this.getMiniSearch();
+        const structuresByText = miniSearch
+            .autoSuggest(search, this.searchOptions)
+            .map(result => result.suggestion);
+        return structuresByText;
+    }
 
-        return _(this.structuresById)
-            .at(miniSearch.search(search, { combineWith: "AND" }).map(structure => structure.id))
-            .compact()
-            .value();
+    async hasPdbRedoValidation(pdbId: string): Promise<boolean> {
+        const validation = buildPdbRedoValidation(pdbId);
+
+        try {
+            const res = await fetch(validation.externalLink, { method: "HEAD" });
+            return res.status === 200;
+        } catch (err) {
+            return false;
+        }
+    }
+
+    private filterByBodies(structures: Structure[], filterState: Covid19Filter): Structure[] {
+        const isFilterStateEnabled =
+            filterState.antibodies || filterState.nanobodies || filterState.sybodies;
+        const isPdbRedoFilterEnabled = filterState.pdbRedo;
+
+        if (!isFilterStateEnabled && !isPdbRedoFilterEnabled) return structures;
+        const structuresToFilter = isPdbRedoFilterEnabled
+            ? structures.filter(structure => structure.validations.pdb.length > 0)
+            : structures;
+        return isFilterStateEnabled
+            ? structuresToFilter.filter(
+                  structure => filterEntities(structure.entities, filterState).length > 0
+              )
+            : structuresToFilter;
+    }
+
+    private searchByText(structures: Structure[], search: string): Structure[] {
+        const miniSearch = this.getMiniSearch();
+        const matchingIds = miniSearch.search(search, this.searchOptions).map(getId);
+        return _(structures).keyBy(getId).at(matchingIds).compact().value();
     }
 
     @cache()
@@ -185,17 +206,15 @@ function getEmdb<T extends Data.Emdb>(emdb: T): Emdb {
 }
 
 function getDetails(pdb: Data.Pdb): Maybe<Details> {
-    if (pdb.details == null) return;
-    if (pdb.details.length <= 0) return;
-    const details: Details = {
-        refEMDB: pdb.details[0]?.refEMDB,
-        refPDB: pdb.details[0]?.refPDB,
-        sample: pdb.details[0]?.sample,
-        refdoc: pdb.details[0]?.refdoc?.map(ref => {
+    const details = pdb.details?.[0];
+    if (!details) return;
+
+    return {
+        ...details,
+        refdoc: details.refdoc?.map(ref => {
             return { id: ref.pmID, idLink: ref.pmidLink, ...ref };
         }),
     };
-    return details;
 }
 
 /* Search */
@@ -232,8 +251,23 @@ function extractField(structure: Structure, field: Field): string {
             return getFields(structure.organisms, ["id", "name", "commonName"]);
         case "ligands":
             return getFields(structure.ligands, ["id", "name", "details"]);
-        case "details":
-            return "";
+        case "details": {
+            if (!structure.details) return "";
+            const { refEMDB, refPDB, sample, refdoc } = structure.details;
+
+            const valuesList = [
+                getValuesFromObject(refEMDB),
+                getValuesFromObject(refPDB),
+                _.flatMap(refdoc, getValuesFromObject),
+                getValuesFromObject(sample),
+            ];
+
+            return _(valuesList)
+                .flatten()
+                .reject(value => value.startsWith("http"))
+                .uniq()
+                .join(" ");
+        }
         case "entities":
             return getFields(structure.entities, [
                 "uniprotAcc",
@@ -245,4 +279,8 @@ function extractField(structure: Structure, field: Field): string {
         default:
             return structure[field] || "";
     }
+}
+
+function getValuesFromObject(obj: object | undefined): string[] {
+    return _.compact(_.flatten(_.values(obj)));
 }
