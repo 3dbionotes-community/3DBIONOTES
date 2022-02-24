@@ -178,9 +178,9 @@ function compareIds(
 
 export const styles = {
     link: { textDecoration: "none" },
-    column: { lineHeight: 0 }, // Allows multi-line values in cells
+    column: { lineHeight: 1 }, // Allows multi-line values in cells
     title: { lineHeight: "20px" },
-    thumbnailWrapper: { width: "100%", lineHeight: 0, fontSize: 14, textAlign: "center" as const },
+    thumbnailWrapper: { width: "100%", fontSize: 14, textAlign: "center" as const },
     image: {
         display: "block",
         marginLeft: "auto",
