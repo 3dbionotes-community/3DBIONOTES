@@ -6,6 +6,7 @@ import { ellipsizedList } from "../../../utils/ellipsizedList";
 import { HtmlTooltip } from "../HtmlTooltip";
 import { Wrapper } from "./Wrapper";
 import { RefDoc } from "../../../../domain/entities/Covid19Info";
+import { Link } from "../Link";
 
 export const DetailsCell: React.FC<CellProps> = React.memo(props => {
     const { row, moreDetails, onClickDetails } = props;
@@ -78,6 +79,9 @@ const Li = styled.li`
     font-weight: 400;
     line-height: 1.5;
     letter-spacing: 0.00938em;
+    p {
+        display: inline-block;
+    }
 `;
 
 const ListItem: React.FC<ListItemProps> = React.memo(props => {
@@ -86,7 +90,8 @@ const ListItem: React.FC<ListItemProps> = React.memo(props => {
         <>
             {(value || props.children) && (
                 <Li>
-                    {`${name}: ${value ?? ""}`}
+                    <strong>{`${name}:`}</strong>
+                    {` ${value ?? ""}`}
                     {props.children}
                 </Li>
             )}
@@ -100,14 +105,21 @@ const RefDocLi: React.FC<RefDocLiProps> = React.memo(props => {
     const abstract = refDoc.abstract ?? "";
     return (
         <Li>
-            {i18n.t("Publication")}:
+            <strong>{i18n.t("Publication")}:</strong>
             <ul>
-                {!moreDetails && <ListItem name={i18n.t("ID")} value={refDoc.id} />}
+                {!moreDetails && (
+                    <ListItem name={i18n.t("ID")}>
+                        <Link url={refDoc.idLink} text={refDoc.id}></Link>
+                    </ListItem>
+                )}
 
                 <ListItem name={i18n.t("Title")} value={refDoc.title} />
 
                 <HtmlTooltip title={<div>{refDoc.authors.join(", ")}</div>}>
-                    <Li>{`${i18n.t("Authors")}: ${ellipsizedList(refDoc.authors)}`}</Li>
+                    <Li>
+                        <strong>{`${i18n.t("Authors")}:`}</strong>
+                        {` ${ellipsizedList(refDoc.authors)}`}
+                    </Li>
                 </HtmlTooltip>
 
                 <ListItem name={i18n.t("Journal")} value={refDoc.journal} />
@@ -118,10 +130,19 @@ const RefDocLi: React.FC<RefDocLiProps> = React.memo(props => {
 
                 {!moreDetails && abstract.length > abstractMaxLength && abstract.length !== 0 && (
                     <HtmlTooltip title={<>{refDoc.abstract}</>}>
-                        <Li>{`${i18n.t("Abstract")}: ${
-                            refDoc.abstract?.substring(0, abstractMaxLength) + "..."
-                        }`}</Li>
+                        <Li>
+                            <strong>{`${i18n.t("Abstract")}:`}</strong>
+                            {` ${refDoc.abstract?.substring(0, abstractMaxLength) + "..."}`}
+                        </Li>
                     </HtmlTooltip>
+                )}
+
+                <ListItem name={i18n.t("Date")} value={refDoc.pubDate} />
+
+                {!moreDetails && refDoc.doi && (
+                    <ListItem name="DOI">
+                        <Link url={refDoc.doi} text={refDoc.doi}></Link>
+                    </ListItem>
                 )}
             </ul>
         </Li>

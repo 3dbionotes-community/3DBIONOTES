@@ -45,6 +45,7 @@ const Container = styled.div<{ moreDetails: boolean }>`
     p {
         overflow-wrap: anywhere;
     }
+    ${props => props.moreDetails && "strong {font-weight: inherit;}"}
 `;
 
 const badgeHeight = 62;
