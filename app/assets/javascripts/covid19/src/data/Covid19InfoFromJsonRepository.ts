@@ -252,7 +252,13 @@ function extractField(structure: Structure, field: Field): string {
         case "ligands":
             return getFields(structure.ligands, ["id", "name", "details"]);
         case "details":
-            return "";
+            return _(structure.details)
+                .values()
+                .flatten()
+                .flatMap((o: any) => _(o).values().flatten().value())
+                .compact()
+                .value()
+                .join(" - ");
         case "entities":
             return getFields(structure.entities, [
                 "uniprotAcc",
