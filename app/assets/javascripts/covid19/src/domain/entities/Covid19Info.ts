@@ -13,7 +13,6 @@ export interface Organism {
 }
 
 export interface Entity {
-    id: string;
     uniprotAcc: string | null;
     name: string;
     organism: string;
@@ -45,7 +44,7 @@ export interface Structure {
     emdb: Maybe<Emdb>;
     organisms: Organism[];
     ligands: Ligand[];
-    details: Maybe<string>;
+    details: Maybe<Details>;
     validations: {
         pdb: PdbValidation[];
         emdb: EmdbValidation[];
@@ -110,6 +109,48 @@ export type Url = string;
 
 export type Ref = { id: Id };
 
+export interface RefDB {
+    title: string;
+    authors: string[];
+    deposited?: string;
+    released?: string;
+}
+
+export interface RefEMDB extends RefDB {}
+
+export interface RefPDB {}
+
+export interface RefDoc {
+    id: string;
+    title: string;
+    authors: string[];
+    abstract?: string;
+    journal: string;
+    pubDate: string;
+    idLink?: Url;
+    doi?: Url;
+}
+
+export interface Sample {
+    name: string;
+    exprSystem?: string;
+    assembly?: string;
+    macromolecules?: string[];
+    uniProts?: string[];
+    genes?: string[];
+    bioFunction?: string[];
+    bioProcess?: string[];
+    cellComponent?: string[];
+    domains?: string[];
+}
+
+export interface Details {
+    refEMDB?: RefEMDB;
+    refPDB?: RefPDB;
+    sample?: Sample;
+    refdoc?: RefDoc[];
+}
+
 export const filterKeys = ["antibodies", "nanobodies", "sybodies", "pdbRedo"] as const;
 
 export type FilterKey = typeof filterKeys[number];
@@ -155,6 +196,16 @@ export function addPdbValidationToStructure(
     } else {
         return structure;
     }
+}
+
+export function updateStructures(data: Covid19Info, structures: Structure[]): Covid19Info {
+    if (_.isEmpty(structures)) return data;
+    const structuresById = _.keyBy(structures, structure => structure.id);
+    const structures2 = data.structures.map(structure => structuresById[structure.id] || structure);
+    const hasChanges = _(data.structures)
+        .zip(structures2)
+        .some(([s1, s2]) => s1 !== s2);
+    return hasChanges ? { structures: structures2 } : data;
 }
 
 export function getTranslations() {

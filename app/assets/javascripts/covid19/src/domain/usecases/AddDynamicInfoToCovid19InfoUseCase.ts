@@ -3,6 +3,7 @@ import {
     addPdbValidationToStructure,
     buildPdbRedoValidation,
     Covid19Info,
+    Structure,
 } from "../entities/Covid19Info";
 import { CacheRepository, fromCache } from "../repositories/CacheRepository";
 import { Covid19InfoRepository } from "../repositories/Covid19InfoRepository";
@@ -13,15 +14,15 @@ export class AddDynamicInfoToCovid19InfoUseCase {
         private cacheRepository: CacheRepository
     ) {}
 
-    execute(data: Covid19Info, options: { ids: string[] }) {
-        return this.addPdbRedoValidation(data, options);
+    execute(data: Covid19Info, options: { ids: string[] }): Promise<Structure[]> {
+        return this.getStructuresWithPdbRedoValidation(data, options);
     }
 
-    async addPdbRedoValidation(
+    async getStructuresWithPdbRedoValidation(
         data: Covid19Info,
         options: { ids: string[] }
-    ): Promise<Covid19Info> {
-        if (_.isEmpty(options.ids)) return data;
+    ): Promise<Structure[]> {
+        if (_.isEmpty(options.ids)) return [];
 
         const structuresById = _.keyBy(data.structures, structure => structure.id);
         const structuresToUpdate = _(structuresById).at(options.ids).compact().value();
@@ -40,12 +41,6 @@ export class AddDynamicInfoToCovid19InfoUseCase {
             return hasPdbRedo ? addPdbValidationToStructure(structure, validation) : structure;
         });
 
-        const structuresUpdated = await Promise.all(structuresUpdated$);
-        if (_.isEqual(structuresToUpdate, structuresUpdated)) return data;
-
-        const structuresUpdatedById = _.keyBy(structuresUpdated, structure => structure.id);
-        const structures2 = data.structures.map(st => structuresUpdatedById[st.id] || st);
-
-        return { structures: structures2 };
+        return Promise.all(structuresUpdated$);
     }
 }

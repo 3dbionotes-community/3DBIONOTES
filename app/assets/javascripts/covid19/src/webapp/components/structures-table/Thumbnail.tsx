@@ -6,7 +6,7 @@ import { Tooltip } from "./Link";
 import { HtmlTooltip } from "./HtmlTooltip";
 
 interface ThumbnailProps {
-    type: "pdb";
+    type: "pdb" | "emdb";
     value: DbItem;
     tooltip: Tooltip;
 }

@@ -2,9 +2,10 @@ import React from "react";
 import i18n from "../../../../utils/i18n";
 import { CellProps, styles } from "../Columns";
 import { Link } from "../Link";
+import { Wrapper } from "./Wrapper";
 
 export const LigandsCell: React.FC<CellProps> = React.memo(props => {
-    const { row } = props;
+    const { row, onClickDetails, moreDetails } = props;
 
     const ligands = React.useMemo(() => {
         return row.ligands.map(ligand => {
@@ -37,7 +38,12 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
     }, [row.ligands]);
 
     return (
-        <ul>
+        <Wrapper
+            onClickDetails={onClickDetails}
+            moreDetails={moreDetails}
+            row={row}
+            field="ligands"
+        >
             {ligands.map(ligand => (
                 <Link
                     key={ligand.id}
@@ -46,6 +52,6 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
                     text={`${ligand.name} (${ligand.id})`}
                 />
             ))}
-        </ul>
+        </Wrapper>
     );
 });

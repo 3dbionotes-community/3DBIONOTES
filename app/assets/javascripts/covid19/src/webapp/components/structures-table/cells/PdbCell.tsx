@@ -87,4 +87,5 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
 
 const PdbRedoBadges = styled.div`
     display: flex;
+    justify-content: center;
 `;
