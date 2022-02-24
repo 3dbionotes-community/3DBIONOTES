@@ -73,14 +73,14 @@ export const columnsBase: Columns = [
         width: 180,
         sortable: false,
         renderCell: LigandsCell,
-        renderString: row => row.ligands.map(ligand => ligand.id).join(", "),
+        renderString: row => row.ligands.map(ligand => ligand.name).join(", "),
     }),
     column("organisms", {
         headerName: i18n.t("Organisms"),
         width: 180,
         sortable: false,
         renderCell: OrganismCell,
-        renderString: row => row.organisms.map(organism => organism.id).join(", "),
+        renderString: row => row.organisms.map(organism => organism.name).join(", "),
     }),
     column("details", {
         headerName: i18n.t("Details"),
@@ -88,7 +88,37 @@ export const columnsBase: Columns = [
         width: 200,
         sortable: false,
         renderCell: DetailsCell,
-        renderString: _row => "",
+        renderString: row => {
+            const { details } = row;
+            let string = "";
+            if (details == null) return "";
+            string += details?.sample?.name ?? "";
+            string += details?.sample?.macromolecules?.join(", ") ?? "";
+            string += details?.sample?.assembly ?? "";
+            string += details?.sample?.exprSystem ?? "";
+            string += details?.sample?.uniProts?.join(", ") ?? "";
+            string += details?.sample?.genes?.join(", ") ?? "";
+            string += details?.sample?.bioFunction?.join(", ") ?? "";
+            string += details?.sample?.bioProcess?.join(", ") ?? "";
+            string += details?.sample?.cellComponent?.join(", ") ?? "";
+            string += details?.sample?.domains?.join(", ") ?? "";
+            string +=
+                details?.refdoc
+                    ?.map(
+                        ref =>
+                            ref.id +
+                            ", " +
+                            ref.title +
+                            ", " +
+                            ref.authors +
+                            ", " +
+                            ref.journal +
+                            ", " +
+                            ref.abstract
+                    )
+                    .join(", ") ?? "";
+            return string;
+        },
     }),
 ];
 
