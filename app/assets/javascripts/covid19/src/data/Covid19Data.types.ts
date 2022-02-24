@@ -79,8 +79,8 @@ export interface RefDoc {
     abstract?: string;
     journal: string;
     pubDate: string;
-    pmidLink?: URL;
-    doi?: URL;
+    pmidLink?: Url;
+    doi?: Url;
 }
 export interface Sample {
     name: string;

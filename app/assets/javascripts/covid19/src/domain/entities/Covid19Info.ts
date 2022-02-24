@@ -127,8 +127,8 @@ export interface RefDoc {
     abstract?: string;
     journal: string;
     pubDate: string;
-    idLink?: URL;
-    doi?: URL;
+    idLink?: Url;
+    doi?: Url;
 }
 
 export interface Sample {
