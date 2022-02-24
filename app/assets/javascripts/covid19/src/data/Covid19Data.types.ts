@@ -15,7 +15,7 @@ export interface Entity {
     uniprotAcc: Maybe<string>;
     name: string;
     organism: string;
-    details: string;
+    details?: string;
     altNames: string;
     isAntibody: boolean;
     isNanobody: boolean;
@@ -49,7 +49,9 @@ export interface Pdb extends DbItem {
     keywords: string;
     entities: Entity[];
     ligands: LigandId[];
-    details?: Details[];
+    details: Details[];
+    dbauthors?: string[];
+    refModels?: RefModel[];
 }
 
 export interface Emdb extends DbItem {
@@ -80,8 +82,8 @@ export interface RefDoc {
     abstract?: string;
     journal: string;
     pubDate: string;
-    pmidLink?: URL;
-    doi?: URL;
+    pmidLink?: Url;
+    doi?: Url;
 }
 export interface Sample {
     name: string;
@@ -98,6 +100,11 @@ export interface Sample {
 export interface Details {
     refEMDB?: RefEMDB;
     refPDB?: RefPDB;
-    sample?: Sample;
-    refdoc?: RefDoc[];
+    sample: Sample;
+    refdoc: RefDoc[];
+}
+export interface RefModel{
+    method?: string;
+    externalLink: Url;
+    queryLink: Url;
 }
