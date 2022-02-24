@@ -66,21 +66,23 @@ export const columnsBase: Columns = [
         width: 180,
         sortable: false,
         renderCell: EntityCell,
-        renderString: row => row.entities.map(entity => entity.name).join(", "),
+        renderString: row =>
+            row.entities.map(entity => entity.name + ` (${entity.altNames})`).join(", "),
     }),
     column("ligands", {
         headerName: i18n.t("Ligands"),
         width: 180,
         sortable: false,
         renderCell: LigandsCell,
-        renderString: row => row.ligands.map(ligand => ligand.name).join(", "),
+        renderString: row => row.ligands.map(ligand => ligand.name + ` (${ligand.id})`).join(", "),
     }),
     column("organisms", {
         headerName: i18n.t("Organisms"),
         width: 180,
         sortable: false,
         renderCell: OrganismCell,
-        renderString: row => row.organisms.map(organism => organism.name).join(", "),
+        renderString: row =>
+            row.organisms.map(organism => organism.name + ` (${organism.commonName})`).join(", "),
     }),
     column("details", {
         headerName: i18n.t("Details"),
