@@ -3,10 +3,12 @@ import MiniSearch, { Options } from "minisearch";
 import {
     buildPdbRedoValidation,
     Covid19Info,
+    Details,
     Emdb,
     Entity,
     Covid19Filter,
     filterEntities,
+    Maybe,
     Ligand,
     Organism,
     Pdb,
@@ -103,7 +105,7 @@ function getStructures(): Structure[] {
             entities: getEntitiesForStructure(structure),
             organisms: getOrganismsForStructure(data, structure),
             ligands: structure.pdb === null ? [] : getLigands(data.Ligands, structure.pdb.ligands),
-            details: "",
+            details: structure.pdb ? getDetails(structure.pdb) : undefined,
             validations: { pdb: [], emdb: [] }, // lazily populated on-the fly in the view
         })
     );
@@ -162,18 +164,7 @@ function getLigands(
 }
 
 function getEntitiesForStructure(structure: Data.Structure): Entity[] {
-    return _(structure.pdb?.entities)
-        .map(ref =>
-            ref.uniprotAcc
-                ? {
-                      id: ref.uniprotAcc !== null ? ref.uniprotAcc : "",
-                      ...ref,
-                  }
-                : null
-        )
-        .compact()
-        .uniqBy(getId)
-        .value();
+    return _(structure.pdb?.entities).compact().value();
 }
 
 function getId<T extends { id: string }>(obj: T): string {
@@ -214,6 +205,18 @@ function getEmdb<T extends Data.Emdb>(emdb: T): Emdb {
     return emdbE;
 }
 
+function getDetails(pdb: Data.Pdb): Maybe<Details> {
+    const details = pdb.details?.[0];
+    if (!details) return;
+
+    return {
+        ...details,
+        refdoc: details.refdoc?.map(ref => {
+            return { id: ref.pmID, idLink: ref.pmidLink, ...ref };
+        }),
+    };
+}
+
 /* Search */
 
 function getFields<Obj extends object>(objs: Obj[], keys: Array<keyof Obj>): string {
@@ -248,9 +251,36 @@ function extractField(structure: Structure, field: Field): string {
             return getFields(structure.organisms, ["id", "name", "commonName"]);
         case "ligands":
             return getFields(structure.ligands, ["id", "name", "details"]);
+        case "details": {
+            if (!structure.details) return "";
+            const { refEMDB, refPDB, sample, refdoc } = structure.details;
+
+            const valuesList = [
+                getValuesFromObject(refEMDB),
+                getValuesFromObject(refPDB),
+                _.flatMap(refdoc, getValuesFromObject),
+                getValuesFromObject(sample),
+            ];
+
+            return _(valuesList)
+                .flatten()
+                .reject(value => value.startsWith("http"))
+                .uniq()
+                .join(" ");
+        }
         case "entities":
-            return getFields(structure.entities, ["id", "name", "altNames", "details", "organism"]);
+            return getFields(structure.entities, [
+                "uniprotAcc",
+                "name",
+                "altNames",
+                "details",
+                "organism",
+            ]);
         default:
             return structure[field] || "";
     }
+}
+
+function getValuesFromObject(obj: object | undefined): string[] {
+    return _.compact(_.flatten(_.values(obj)));
 }
