@@ -103,6 +103,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
 
 const StyledCheckbox = styled(Checkbox)`
     &.MuiCheckbox-colorSecondary.Mui-checked {
-        color: grey;
+        color: #484848;
     }
+    padding: 0 8px 0 0 !important;
 `;
