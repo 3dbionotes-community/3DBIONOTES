@@ -53,8 +53,8 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
     return (
         <React.Fragment>
             <GridToolbarContainer style={styles.container}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ display: "flex" }}>
+                <div style={styles.toolbarRow}>
+                    <div style={{ display: "flex", flexGrow: 1 }}>
                         <SearchBar
                             value={search}
                             setValue={setSearch}
@@ -75,28 +75,29 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                             </span>
                         </Tooltip>
                     </div>
+                    <GridToolbarActions>
+                        <CustomGridToolbarExport dataGrid={dataGrid} gridApi={gridApi} />
+                        <GridToolbarColumnsButton />
+                    </GridToolbarActions>
+                </div>
+
+                <div style={styles.toolbarRow}>
                     <div style={styles.exampleRow}>
                         <p style={styles.examplesText}>{i18n.t("Examples")}:</p>
                         <SearchExampleButton setValue={setSearch} exampleValue="6YOR" />
                         <SearchExampleButton setValue={setSearch} exampleValue="Homo sapiens" />
                         <SearchExampleButton setValue={setSearch} exampleValue="SARS-CoV-2" />
                     </div>
+                    <CustomGridTopPagination
+                        dataGrid={dataGrid}
+                        page={page}
+                        pageSize={pageSize}
+                        pageSizes={pageSizes}
+                        setPage={setPage}
+                        setPageSize={setPageSize}
+                    />
                 </div>
-
-                <GridToolbarActions>
-                    <CustomGridToolbarExport dataGrid={dataGrid} gridApi={gridApi} />
-                    <GridToolbarColumnsButton />
-                </GridToolbarActions>
             </GridToolbarContainer>
-
-            <CustomGridTopPagination
-                dataGrid={dataGrid}
-                page={page}
-                pageSize={pageSize}
-                pageSizes={pageSizes}
-                setPage={setPage}
-                setPageSize={setPageSize}
-            />
 
             <VirtualScroll {...virtualScrollbarProps} />
         </React.Fragment>
@@ -104,12 +105,17 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
 };
 
 export const styles = {
-    container: { padding: 10, alignItems: "flex-start" },
-    containerPagination: {
+    container: {
         display: "flex",
-        justifyContent: "right",
         flexDirection: "column" as const,
-        marginLeft: "auto",
+        padding: 10,
+        alignItems: "flex-start",
+    },
+    toolbarRow: {
+        display: "flex",
+        flexDirection: "row" as const,
+        width: "100%",
+        alignItems: "center",
     },
     tooltip: {
         display: "flex",
@@ -126,7 +132,7 @@ export const styles = {
         outline: "none",
         cursor: "pointer",
     },
-    exampleRow: { display: "flex" as const, alignItems: "center" },
+    exampleRow: { display: "flex" as const, alignItems: "center", marginRight: "auto" },
     examplesText: { margin: 0 },
 };
 
