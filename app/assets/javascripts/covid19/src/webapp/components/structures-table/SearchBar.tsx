@@ -5,7 +5,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
 import styled from "styled-components";
-import SearchIcon from "@material-ui/icons/Search";
+import { Close as CloseIcon, Search as SearchIcon } from "@material-ui/icons";
 import i18n from "../../../utils/i18n";
 import { useDebouncedSetter } from "../../hooks/useDebounce";
 import {
@@ -59,13 +59,11 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
             <div style={styles.searchBar}>
                 <div style={styles.chips}>
                     {selectedFilterNames.map(filterKey => (
-                        <li key={filterKey}>
-                            <Chip
-                                label={t.filterKeys[filterKey]}
-                                onDelete={() => removeChip(filterKey)}
-                                style={styles.chip}
-                            />
-                        </li>
+                        <StyledChip
+                            deleteIcon={<CloseIcon />}
+                            label={t.filterKeys[filterKey]}
+                            onDelete={() => removeChip(filterKey)}
+                        />
                     ))}
                 </div>
                 <StyledAutocomplete<string>
@@ -144,6 +142,23 @@ const StyledTextField = styled(TextField)`
     }
 `;
 
+const StyledChip = styled(Chip)`
+    &.MuiChip-root {
+        height: 1.5rem !important;
+        background-color: #575757 !important;
+        color: #fff;
+        margin-left: 6px;
+        border-radius: 8px;
+    }
+    .MuiChip-deleteIcon {
+        width: 1rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    .MuiChip-deleteIcon:hover {
+        color: rgba(255, 255, 255, 1);
+    }
+`;
+
 const styles = {
     searchBar: {
         display: "flex" as const,
@@ -151,11 +166,9 @@ const styles = {
         borderRadius: 12,
         width: 500,
     },
-    chip: { margin: 2 },
     chips: {
         display: "flex" as const,
-        justifyContent: "center",
-        flexWrap: "wrap" as const,
+        alignItems: "center",
         listStyle: "none",
         margin: 0,
     },
