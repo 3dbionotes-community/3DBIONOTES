@@ -1,10 +1,9 @@
 import * as React from "react";
 import _ from "lodash";
 import { Covid19Filter, FilterKey, getTranslations } from "../../../domain/entities/Covid19Info";
-import { MenuItem, MenuList, Divider, Checkbox } from "@material-ui/core";
+import { MenuItem, MenuList, Divider, Checkbox, Button } from "@material-ui/core";
 import { GridMenu } from "@material-ui/data-grid";
 import i18n from "../../../utils/i18n";
-import { StyledSearchExampleButton } from "./SearchExampleButton";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import styled from "styled-components";
 
@@ -42,18 +41,17 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
 
     return (
         <React.Fragment>
-            <StyledSearchExampleButton
+            <FilterButton
                 color="primary"
-                size="small"
                 onClick={openMenu}
                 aria-expanded={Boolean(anchorEl)}
                 aria-label="toolbarExportLabel"
                 aria-haspopup="menu"
                 endIcon={startIcon}
-                style={{ margin: "auto 5px" }}
+                style={{ margin: "auto 5px auto 10px" }}
             >
                 {i18n.t("Filter")}
-            </StyledSearchExampleButton>
+            </FilterButton>
 
             <GridMenu
                 open={isOpen}
@@ -106,4 +104,27 @@ const StyledCheckbox = styled(Checkbox)`
         color: #484848;
     }
     padding: 0 8px 0 0 !important;
+`;
+
+const FilterButton = styled(Button)`
+    &.MuiButton-root {
+        padding: 6px 16px;
+        margin: 12px 6px;
+        color: #fff;
+        height: 45px;
+        font-weight: 500;
+        text-align: center;
+        border-radius: 0.75rem;
+        background-color: #607d8b;
+        border-color: #607d8b;
+        font-size: 0.875rem;
+        line-height: 45px;
+        &:focus {
+            outline: none;
+        }
+        &:hover {
+            border-color: #82a4b5;
+            background-color: #82a4b5;
+        }
+    }
 `;

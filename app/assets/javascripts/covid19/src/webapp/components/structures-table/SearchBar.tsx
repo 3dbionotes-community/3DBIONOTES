@@ -60,6 +60,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                 <div style={styles.chips}>
                     {selectedFilterNames.map(filterKey => (
                         <StyledChip
+                            key={filterKey}
                             deleteIcon={<CloseIcon />}
                             label={t.filterKeys[filterKey]}
                             onDelete={() => removeChip(filterKey)}
@@ -163,7 +164,7 @@ const styles = {
     searchBar: {
         display: "flex" as const,
         border: "4px solid #607d8b",
-        borderRadius: 12,
+        borderRadius: "0.75rem",
         width: 500,
     },
     chips: {
