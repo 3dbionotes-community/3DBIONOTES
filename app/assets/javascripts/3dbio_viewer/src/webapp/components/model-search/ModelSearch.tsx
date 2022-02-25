@@ -16,10 +16,10 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import i18n from "../../utils/i18n";
 import { ActionType, DbItem } from "../../view-models/Selection";
 import { useAppContext } from "../AppContext";
-import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import "./ModelSearch.css";
 import { ModelSearchItem } from "./ModelSearchItem";
 import { ModelUpload } from "../model-upload/ModelUpload";
+import { ModelSearchFilterMenu } from "./ModelSearchFilterMenu";
 
 export interface ModelSearchProps {
     title: string;
@@ -29,28 +29,31 @@ export interface ModelSearchProps {
 
 type ModelSearchType = DbModel["type"] | "all";
 
+type ModelTypeKey = typeof modelTypeKeys[number];
+
+type ModelTypeFilter = Record<ModelTypeKey, boolean>;
+
+const modelTypeKeys = ["emdb", "pdb"] as const;
+
 export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const { title, onClose, onSelect } = props;
 
-    const modelTypes = React.useMemo<DropdownProps<ModelSearchType>["items"]>(() => {
-        return [
-            { id: "all", text: i18n.t("EMDB/PDB") },
-            { id: "emdb", text: i18n.t("EMDB") },
-            { id: "pdb", text: i18n.t("PDB") },
-        ];
-    }, []);
-
     const placeholders = React.useMemo<Record<ModelSearchType, string>>(() => {
         return {
-            all: i18n.t("Search EMDB or PDB"),
             pdb: i18n.t("Search PDB"),
             emdb: i18n.t("Search EMDB "),
+            all: i18n.t("Search EMDB or PDB"),
         };
     }, []);
 
-    const [modelType, setModelType] = React.useState<ModelSearchType>("all");
+    const [modelTypeState, setModelTypeState] = React.useState<ModelTypeFilter>(
+        initialModelTypeState
+    );
+    const [searchState, startSearch] = useDbModelSearch(modelTypeState);
     const [isUploadOpen, { enable: openUpload, disable: closeUpload }] = useBooleanState(false);
-    const [searchState, startSearch] = useDbModelSearch(modelType);
+    const selectedFilterNames = modelTypeKeys.filter(key => modelTypeState[key]);
+    const whichPlaceholder =
+        selectedFilterNames.length === 1 && selectedFilterNames[0] ? selectedFilterNames[0] : "all";
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
@@ -67,19 +70,16 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         <input
                             aria-label={i18n.t("Search")}
                             className="form-control"
-                            placeholder={placeholders[modelType]}
+                            placeholder={placeholders[whichPlaceholder]}
                             type="text"
                             onChange={startSearch}
                         />
                         <Search />
                     </div>
 
-                    <Dropdown<ModelSearchType>
-                        text={i18n.t("Model type")}
-                        selected={modelType}
-                        items={modelTypes}
-                        onClick={setModelType}
-                        showExpandIcon
+                    <ModelSearchFilterMenu
+                        modelTypeState={modelTypeState}
+                        setModelTypeState={setModelTypeState}
                     />
                     <button className="upload-model" onClick={openUpload}>
                         {i18n.t("Upload model")}
@@ -123,15 +123,17 @@ type SearchDataState<Data> =
 
 type SearchState = SearchDataState<DbModelCollection>;
 
-function useDbModelSearch(modelType: ModelSearchType) {
+function useDbModelSearch(modelTypeState: ModelTypeFilter) {
     const { compositionRoot } = useAppContext();
     const [searchState, setSearchState] = React.useState<SearchState>({ type: "empty" });
+    const selectedFilterNames = modelTypeKeys.find(key => modelTypeState[key]);
 
     const search = React.useCallback(
         (query: string) => {
             setSearchState({ type: "searching" });
-            const searchType = modelType === "all" ? undefined : modelType;
-
+            //if they are both false or both true, then just show all
+            const searchType =
+                modelTypeState.emdb === modelTypeState.pdb ? undefined : selectedFilterNames;
             return compositionRoot.searchDbModels
                 .execute({ query, type: searchType })
                 .run(dbModelCollection => {
@@ -142,7 +144,7 @@ function useDbModelSearch(modelType: ModelSearchType) {
                     setSearchState(newState);
                 }, console.error);
         },
-        [compositionRoot, modelType]
+        [compositionRoot, modelTypeState, selectedFilterNames]
     );
 
     const searchFromString = useCallbackEffect(search);
@@ -151,3 +153,8 @@ function useDbModelSearch(modelType: ModelSearchType) {
 
     return [searchState, startSearch] as const;
 }
+
+const initialModelTypeState: ModelTypeFilter = {
+    emdb: false,
+    pdb: false,
+};
