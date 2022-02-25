@@ -5,10 +5,25 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-02-04T07:04:43.269Z\n"
-"PO-Revision-Date: 2022-02-04T07:04:43.269Z\n"
+"POT-Creation-Date: 2022-02-24T12:51:21.751Z\n"
+"PO-Revision-Date: 2022-02-24T12:51:21.751Z\n"
+
+msgid "Antibodies"
+msgstr ""
+
+msgid "Nanobodies"
+msgstr ""
+
+msgid "Sybodies"
+msgstr ""
+
+msgid "PDB-REDO"
+msgstr ""
 
 msgid "SARS-CoV-2 in structure databases"
+msgstr ""
+
+msgid "View more"
 msgstr ""
 
 msgid "Title"
@@ -32,6 +47,9 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
+msgid "Filter"
+msgstr ""
+
 msgid "Export"
 msgstr ""
 
@@ -47,13 +65,58 @@ msgstr ""
 msgid "Examples"
 msgstr ""
 
+msgid "Sample"
+msgstr ""
+
+msgid "Macromolecules"
+msgstr ""
+
+msgid "Assembly"
+msgstr ""
+
+msgid "Exp. System"
+msgstr ""
+
+msgid "UniProt Ids"
+msgstr ""
+
+msgid "Genes"
+msgstr ""
+
+msgid "Biological Function"
+msgstr ""
+
+msgid "Biological Process"
+msgstr ""
+
+msgid "Cell Component"
+msgstr ""
+
+msgid "Publication"
+msgstr ""
+
 msgid "ID"
+msgstr ""
+
+msgid "Authors"
+msgstr ""
+
+msgid "Journal"
+msgstr ""
+
+msgid "Abstract"
+msgstr ""
+
+msgid "Date"
 msgstr ""
 
 msgid "Method"
 msgstr ""
 
 msgid "Resolution"
+msgstr ""
+
+msgid "UniProt"
 msgstr ""
 
 msgid "Alt Names"
@@ -87,4 +150,7 @@ msgid "PDB-Redo"
 msgstr ""
 
 msgid "Isolde"
+msgstr ""
+
+msgid " and {{overflow}} more..."
 msgstr ""

@@ -21,13 +21,15 @@ export type Field = keyof Row;
 export interface CellProps {
     data: Covid19Info;
     row: Row;
+    moreDetails?: boolean;
+    onClickDetails?: (options: { row: Structure; field: Field }) => void;
 }
 
 export interface ColumnAttrs<F extends Field>
     extends Omit<GridColDef, "headerName" | "field" | "renderCell"> {
     headerName: string;
     field: F;
-    renderCell: React.FC<{ row: Row; data: Covid19Info }>;
+    renderCell: React.FC<CellProps>;
     renderString(row: Row): string | undefined;
 }
 
@@ -47,7 +49,7 @@ export const columnsBase: Columns = [
     }),
     column("pdb", {
         headerName: i18n.t("PDB"),
-        width: 120,
+        width: 140,
         renderCell: PdbCell,
         sortComparator: compareIds,
         renderString: row => row.pdb?.id,
@@ -64,21 +66,21 @@ export const columnsBase: Columns = [
         width: 180,
         sortable: false,
         renderCell: EntityCell,
-        renderString: row => row.entities.map(entity => entity.id).join(", "),
+        renderString: row => row.entities.map(entity => entity.name).join(", "),
     }),
     column("ligands", {
         headerName: i18n.t("Ligands"),
         width: 180,
         sortable: false,
         renderCell: LigandsCell,
-        renderString: row => row.ligands.map(ligand => ligand.id).join(", "),
+        renderString: row => row.ligands.map(ligand => ligand.name).join(", "),
     }),
     column("organisms", {
         headerName: i18n.t("Organisms"),
         width: 180,
         sortable: false,
         renderCell: OrganismCell,
-        renderString: row => row.organisms.map(organism => organism.id).join(", "),
+        renderString: row => row.organisms.map(organism => organism.name).join(", "),
     }),
     column("details", {
         headerName: i18n.t("Details"),
@@ -86,11 +88,44 @@ export const columnsBase: Columns = [
         width: 200,
         sortable: false,
         renderCell: DetailsCell,
-        renderString: row => row.details || "",
+        renderString: row => {
+            const { details } = row;
+            let string = "";
+            if (details == null) return "";
+            string += details?.sample?.name ?? "";
+            string += details?.sample?.macromolecules?.join(", ") ?? "";
+            string += details?.sample?.assembly ?? "";
+            string += details?.sample?.exprSystem ?? "";
+            string += details?.sample?.uniProts?.join(", ") ?? "";
+            string += details?.sample?.genes?.join(", ") ?? "";
+            string += details?.sample?.bioFunction?.join(", ") ?? "";
+            string += details?.sample?.bioProcess?.join(", ") ?? "";
+            string += details?.sample?.cellComponent?.join(", ") ?? "";
+            string += details?.sample?.domains?.join(", ") ?? "";
+            string +=
+                details?.refdoc
+                    ?.map(
+                        ref =>
+                            ref.id +
+                            ", " +
+                            ref.title +
+                            ", " +
+                            ref.authors +
+                            ", " +
+                            ref.journal +
+                            ", " +
+                            ref.abstract
+                    )
+                    .join(", ") ?? "";
+            return string;
+        },
     }),
 ];
 
-export function getColumns(data: Covid19Info): { definition: GridColDef[]; base: Columns } {
+export function getColumns(
+    data: Covid19Info,
+    options: { onClickDetails: (options: { row: Structure; field: Field }) => void }
+): { definition: GridColDef[]; base: Columns } {
     const definition = columnsBase.map(
         (column): GridColDef => {
             return {
@@ -101,7 +136,11 @@ export function getColumns(data: Covid19Info): { definition: GridColDef[]; base:
 
                     return (
                         <div style={styles.column}>
-                            <CellComponent row={params.row as Row} data={data} />
+                            <CellComponent
+                                row={params.row as Row}
+                                data={data}
+                                onClickDetails={options.onClickDetails}
+                            />
                         </div>
                     );
                 },
@@ -139,9 +178,9 @@ function compareIds(
 
 export const styles = {
     link: { textDecoration: "none" },
-    column: { lineHeight: 0 }, // Allows multi-line values in cells
+    column: { lineHeight: 1 }, // Allows multi-line values in cells
     title: { lineHeight: "20px" },
-    thumbnailWrapper: { width: "100%", lineHeight: 0, fontSize: 14, textAlign: "center" as const },
+    thumbnailWrapper: { width: "100%", fontSize: 14, textAlign: "center" as const },
     image: {
         display: "block",
         marginLeft: "auto",

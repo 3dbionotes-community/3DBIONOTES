@@ -21,7 +21,7 @@ export const SearchExampleButton: React.FC<SearchExampleButtonProps> = React.mem
     );
 });
 
-const StyledSearchExampleButton = styled(Button)`
+export const StyledSearchExampleButton = styled(Button)`
     &.MuiButton-root {
         padding: 6px 12px;
         margin: 12px 6px;

@@ -34,7 +34,7 @@ export const BadgeLink: React.FC<BadgeLinkProps> = React.memo(props => {
 });
 
 // https://www.w3schools.com/w3css/4/w3.css
-const colors: Record<W3Color, string> = {
+export const colors: Record<W3Color, string> = {
     "w3-cyan": "#00bcd4",
     "w3-turq": "#009688",
 };
