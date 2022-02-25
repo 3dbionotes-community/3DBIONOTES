@@ -25,7 +25,6 @@ export const ModelSearchFilterMenu: React.FC<{
             [event.target.name]: event.target.checked,
         });
     };
-    //https://stackoverflow.com/questions/50574062/material-ui-v-1-menuitem-passing-outer-index-onclick
     const handleClick = (modelType: string) => (
         _event: React.MouseEvent<HTMLLIElement, MouseEvent>
     ) => {
