@@ -108,7 +108,7 @@ export const styles = {
     container: {
         display: "flex",
         flexDirection: "column" as const,
-        padding: 10,
+        padding: "14px 14px 0px 14px",
         alignItems: "flex-start",
     },
     toolbarRow: {
