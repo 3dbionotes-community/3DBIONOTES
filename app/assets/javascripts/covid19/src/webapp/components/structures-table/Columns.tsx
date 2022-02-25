@@ -14,6 +14,7 @@ import { EmdbCell } from "./cells/EmdbCell";
 import { EntityCell } from "./cells/EntityCell";
 import { LigandsCell } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
+import _ from "lodash";
 
 type Row = Structure;
 export type Field = keyof Row;
@@ -92,38 +93,30 @@ export const columnsBase: Columns = [
         renderCell: DetailsCell,
         renderString: row => {
             const { details } = row;
-            let string = "";
-            if (details == null) return "";
-            string += details?.sample?.name ?? "";
-            string += details?.sample?.macromolecules?.join(", ") ?? "";
-            string += details?.sample?.assembly ?? "";
-            string += details?.sample?.exprSystem ?? "";
-            string += details?.sample?.uniProts?.join(", ") ?? "";
-            string += details?.sample?.genes?.join(", ") ?? "";
-            string += details?.sample?.bioFunction?.join(", ") ?? "";
-            string += details?.sample?.bioProcess?.join(", ") ?? "";
-            string += details?.sample?.cellComponent?.join(", ") ?? "";
-            string += details?.sample?.domains?.join(", ") ?? "";
-            string +=
-                details?.refdoc
-                    ?.map(
-                        ref =>
-                            ref.id +
-                            ", " +
-                            ref.title +
-                            ", " +
-                            ref.authors +
-                            ", " +
-                            ref.journal +
-                            ", " +
-                            ref.abstract +
-                            ", " +
-                            ref.pubDate +
-                            ", " +
-                            ref.doi
-                    )
-                    .join(", ") ?? "";
-            return string;
+            if (!details) return "";
+            return _.compact(
+                [
+                    details?.sample?.name,
+                    details?.sample?.macromolecules,
+                    details?.sample?.assembly,
+                    details?.sample?.exprSystem,
+                    details?.sample?.uniProts,
+                    details?.sample?.genes,
+                    details?.sample?.bioFunction,
+                    details?.sample?.bioProcess,
+                    details?.sample?.cellComponent,
+                    details?.sample?.domains,
+                    details?.refdoc?.map(ref => [
+                        ref.id,
+                        ref.idLink,
+                        ref.title,
+                        ref.authors,
+                        ref.journal,
+                        ref.pubDate,
+                        ref.doi,
+                    ]),
+                ].flat()
+            ).join(",");
         },
     }),
 ];
