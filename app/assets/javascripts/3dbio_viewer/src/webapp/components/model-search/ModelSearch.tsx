@@ -19,7 +19,7 @@ import { useAppContext } from "../AppContext";
 import "./ModelSearch.css";
 import { ModelSearchItem } from "./ModelSearchItem";
 import { ModelUpload } from "../model-upload/ModelUpload";
-import { ModelSearchFilterMenu } from "./ModelSearchFilterMenu";
+import { ModelSearchFilterMenu, ModelTypeFilter, modelTypeKeys  } from "./ModelSearchFilterMenu";
 
 export interface ModelSearchProps {
     title: string;
@@ -28,12 +28,6 @@ export interface ModelSearchProps {
 }
 
 type ModelSearchType = DbModel["type"] | "all";
-
-type ModelTypeKey = typeof modelTypeKeys[number];
-
-type ModelTypeFilter = Record<ModelTypeKey, boolean>;
-
-const modelTypeKeys = ["emdb", "pdb"] as const;
 
 export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const { title, onClose, onSelect } = props;
@@ -81,7 +75,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         modelTypeState={modelTypeState}
                         setModelTypeState={setModelTypeState}
                     />
-                    <button className="upload-model" onClick={openUpload}>
+                    <button className="model-search" onClick={openUpload}>
                         {i18n.t("Upload model")}
                     </button>
                     {isUploadOpen && (

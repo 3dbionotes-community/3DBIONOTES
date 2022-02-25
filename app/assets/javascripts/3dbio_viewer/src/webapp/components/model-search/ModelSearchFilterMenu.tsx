@@ -4,9 +4,9 @@ import { MenuItem, MenuList, Checkbox } from "@material-ui/core";
 import { GridMenu } from "@material-ui/data-grid";
 import styled from "styled-components";
 
-export const modelTypeKeys = ["emdb", "pdb"] as const;
+export const modelTypeKeys = ["emdb", "pdb" ] as const;
 
-export type ModelTypeKey = typeof modelTypeKeys[number];
+type ModelTypeKey = typeof modelTypeKeys[number];
 
 export type ModelTypeFilter = Record<ModelTypeKey, boolean>;
 
@@ -36,7 +36,7 @@ export const ModelSearchFilterMenu: React.FC<{
 
     return (
         <React.Fragment>
-            <button className="upload-model" onClick={openMenu}>
+            <button className="model-search" onClick={openMenu}>
                 {i18n.t("Filter")}
             </button>
             <GridMenu
