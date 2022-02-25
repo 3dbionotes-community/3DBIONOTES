@@ -59,6 +59,10 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                             filterState={filterState}
                             setFilterState={setFilterState}
                         />
+                        <CustomCheckboxFilter
+                            filterState={filterState}
+                            setFilterState={setFilterState}
+                        />
                         <Tooltip
                             title={
                                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas cursus pellentesque risus, nec accumsan turpis sagittis non. Duis hendrerit nec odio eu hendrerit. Morbi pellentesque ligula a dui malesuada, nec eleifend massa lacinia. Aliquam non efficitur tellus. Curabitur varius neque at mauris vulputate, eu mattis massa porta. Donec aliquet luctus augue, nec pulvinar enim pharetra a. Ut varius nibh mauris, quis finibus justo lobortis sed. In ultricies dolor et orci hendrerit, et commodo diam accumsan."
@@ -66,10 +70,6 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                         >
                             <span style={styles.tooltip}>?</span>
                         </Tooltip>
-                        <CustomCheckboxFilter
-                            filterState={filterState}
-                            setFilterState={setFilterState}
-                        />
                     </div>
                     <div style={styles.exampleRow}>
                         <p style={styles.examplesText}>{i18n.t("Examples")}:</p>
