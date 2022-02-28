@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+    - 12.13.0
+dist: bionic
+cache:
+    directories:
+        - "$HOME/.cache"
+before_install:
+    - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+install:
+    - yarn install --frozen-lockfile
+    - npx cypress verify
+script:
+    - PORT=3002 yarn start &
+    - yarn wait-on http-get://localhost:3002
+    - CYPRESS_ROOT_URL=http://localhost:3002 yarn cy:e2e:run --record --key $CYPRESS_KEY
+    - kill $(jobs -p) || true
+addons:
+    apt:
+        packages:
+            - libgconf-2-4

@@ -1,0 +1,10 @@
+.frame-viewer .title {
+    margin-left: 10px;
+    margin-top: 20px;
+    color: #123546;
+}
+
+.frame-viewer iframe {
+    border: none;
+    padding: 15px 5px;
+}

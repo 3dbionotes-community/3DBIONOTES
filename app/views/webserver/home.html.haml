@@ -1,17 +1,79 @@
-#welcome.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.align-items-md-center.align-items-lg-center.align-items-xl-center
-  .container
-    .jumbotron
-      %p
-        %strong> 3DBIONOTES-WS
-        = " "
-        is a web application designed to automatically annotate biochemical and biomedical information onto structural models. Current sources of information include post-translational modifications, genomic variations associated to diseases, short linear motifs, immune epitopes sites, disordered regions and domain families.
-        %br/
-      .alert.alert-warning{:role => "alert"}
-        %span
-          %em #{wip_texts[:title]}.
+#welcome.d-flex.align-items-xl-center
+  .container.d-flex.align-items-center
+    %div
+      .jumbotron
+        %p
+          %strong> 3DBIONOTES-WS
+          &nbsp;is a web application designed to automatically annotate biochemical and biomedical information onto structural models. Current sources of information include post-translational modifications, genomic
+          variations associated to diseases, short linear motifs, immune epitopes sites, disordered regions and domain families.
           %br/
-          %span #{wip_texts[:subtitle]}.
-      %p
-        %a.btn.btn-primary.btn-lg{:href => ws_covid19_path, :role => "button"} CoVid-19 Edition
-        %a.btn.btn-secondary.btn-lg{:href => "/?queryId=EMD-21375&viewer_type=ngl&button=#query", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
-        %a.btn.btn-secondary.btn-lg{:href => "/?queryId=6lzg&viewer_type=ngl&button=#query", :role => "button", :style => "margin-left: 10px;"} Example (6lzg)
+        .alert.alert-warning{:role => "alert"}
+          %span
+            %em Please, note this web site is work in progress. Feel free to report any missing or inconsistent data or behaviour.
+            %br/
+        %p
+          %a.btn.btn-primary.btn-lg{:href => ws_covid19_path, :role => "button"} CoVid-19 Edition
+          %a.btn.btn-secondary.btn-lg{:href => "/ws/viewer/#EMD-21375", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
+    %div
+      #videoWrapper
+        %video#welcomeVideo{:autoplay => "", :height => "auto", :loop => "", :muted => "", :width => "540"}
+          %source{:src => "https://www.oyasin.es/Window-mockup-web.mp4", :type => "video/mp4"}
+.d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
+  .container
+    .searchBox
+      = form_tag({controller: "main", action: "home"}, :method => :post) do
+        = hidden_field_tag(:viewer_type, @viewerType)
+        #mainSearch.input-group.form-control-lg.md-form.form-sm.form-2.pl-0.justify-content-center
+          %div.d-flex.justify-content-center.align-items-center.input-group-text
+            %input.form-control.form-control-lg.my-0.amber-border{"aria-label" => "Search", :placeholder => "Uniprot accession, PDB ID, EMDB code", :name => "queryId"}/
+            %button.btn.mt-0.py-2{:type => "submit", :title => "Search"}
+              %i.fa.fa-search.text-grey.searchIconMain{"aria-hidden" => "true"}
+    .contentBox
+      .contentTitle
+        %h4
+          %strong Selected entries
+          %br/
+      .contentData
+        .container-fluid.carouselContainer
+          #myCarousel.carousel.slide{"data-ride" => "carousel"}
+            .carousel-inner.row.w-100.mx-auto
+              - @selected_entries.each_with_index do |entry, idx|
+                %div{:class => ["carousel-item", "col-md-4", idx == 0 ? "active" : nil].compact}
+                  .card
+                    %a{:href => entry[:query_url]}
+                      %img.card-img-top.img-fluid{:alt => entry[:name], :src => entry[:image_url]}/
+                      .card-body
+                        %h4.card-title
+                          = entry[:name]
+                        %p.card-text
+                          = entry[:description]
+            %a.carousel-control-prev{"data-slide" => "prev", :href => "#myCarousel", :role => "button"}
+              %span.carousel-control-prev-icon{"aria-hidden" => "true"}
+              %span.sr-only Previous
+            %a.carousel-control-next{"data-slide" => "next", :href => "#myCarousel", :role => "button"}
+              %span.carousel-control-next-icon{"aria-hidden" => "true"}
+              %span.sr-only Next
+    .contentBox.Card2
+      .d-flex.align-items-xl-center.contentData
+        #CardImage.text-center{:style => "width: 50%;"}
+          %img{:src => "assets/icon_molecule.svg"}/
+        #CardText{:style => "width: 50%;"}
+          %p
+            %em Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            %br/
+    .contentBox.Card2.Alternate
+      .d-flex.flex-row-reverse.align-items-xl-center.contentData.Card2
+        #CardImage-1.text-center{:style => "width: 50%;"}
+          %img{:src => "assets/icon_tablet.svg"}/
+        #CardText-1{:style => "width: 50%;"}
+          %p
+            %em Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            %br/
+    .contentBox.Card2
+      .d-flex.align-items-xl-center.contentData.Card2
+        #CardImage-2.text-center{:style => "width: 50%;"}
+          %img{:src => "assets/icon_share.svg"}/
+        #CardText-2{:style => "width: 50%;"}
+          %p
+            %em Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            %br/

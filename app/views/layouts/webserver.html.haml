@@ -16,6 +16,7 @@
     = stylesheet_link_tag('application')
     = stylesheet_link_tag("https://fonts.googleapis.com/css?family=Lato:400,700,400italic&amp;display=swap")
     = stylesheet_link_tag('webserver/main.css')
+    = stylesheet_link_tag('webserver/viewer.css')
     = stylesheet_link_tag('webserver/ekko-lightbox.css')
     = stylesheet_link_tag('/font-awesome/css/font-awesome.min.css')
 
@@ -31,66 +32,12 @@
     = javascript_include_tag('covid19')
 
   %body
-    - if @layout_options && layout_header = @layout_options[:header]
+    - if @layout_options && (layout_header = @layout_options[:header])
       = render partial: layout_header
     - else
-      %header.mainHeader.d-flex.align-items-center
-        .container.text-center.text-sm-center.text-md-center.text-lg-left.text-xl-left
-          %img#mainLogo{:src => "/assets/3DBionotesLogo.jpg"}/
-          #partnersCovid19.d-inline-block.float-lg-right.float-xl-right
-            .row
-              .col
-                %img.partnerLogo{:src => "/assets/100_CSIC.jpg", :style => "width: 120px;"}/
-                %img.partnerLogo{:src => "/assets/CNB_logo-30fc3586b103c993eeacd7d1f9a0d02dbd445703f5ab29e8cc9e26a48d35ad0d.jpg", :style => "width: 90px;"}/
-            .row
-              .col
-                %img.partnerLogo{:src => "/assets/inbelixir.png"}/
-                %img.partnerLogo{:src => "/assets/instruct-eric-logo-noline.png"}/
-
-    %nav#menuBar.navbar.navbar-dark.navbar-expand-md.bg-primary
-      .container
-        %a.navbar-brand.d-print-none.d-md-none.d-lg-none.d-xl-none{:href => "#"}
-          %strong 3DBionotes-WS
-        %button.navbar-toggler{"data-target" => "#navcol-1", "data-toggle" => "collapse"}
-          %span.sr-only Toggle navigation
-          %span.navbar-toggler-icon
-        #navcol-1.collapse.navbar-collapse.navbarLinks
-          %ul.nav.navbar-nav.mx-auto
-            = menu_item("HOME", {controller: "webserver", action: "home"})
-            = menu_item("CoVid-19", {controller: "covid19", action: "index"}, css_class: "menuHL")
-            = menu_item("SUBMIT", {controller: "webserver", action: "submit"})
-            = menu_item("NETWORK", {controller: "webserver", action: "network"})
-            = menu_item("QUERY", {controller: "webserver", action: "query"})
-            = menu_item("API", {controller: "webserver", action: "api"})
-            = menu_item("HELP", {controller: "webserver", action: "help"})
-            = menu_item("CONTACT US", "mailto:3dbionotes@cnb.csic.es", target: "_blank")
+      = render partial: "layouts/header"
 
     = yield
 
-    .bg-primary.footer-dark#mainFooter
-      %footer
-        .container.text-center
-          .row
-            .col
-              %h4
-                %strong
-                  3DBIONOTES-
-                  %em WS
-                %br/
-              %p
-                %strong An ELIXIR Recommended Interoperability Resource
-                %br/
-                %a{:href => "https://drive.google.com/file/d/1mpHVIoblHdUw4zyu7jxdi-PDCQzB6C9Y/view?usp=sharing", :target => "_blank"} Terms of Use
-              .footerLinks
-                %p
-                  %a{:href => "http://biocomputingunit.es/", :target => "_blank"}> Biocomputing Unit
-                   @
-                  %a{:href => "http://www.cnb.csic.es/index.php/en", :target => "_blank"} CNB
-                  \-
-                  %a{:href => "http://www.csic.es/en", :target => "_blank"} CSIC
-              %p
-                %strong 3DBIONOTES web-server was developed and is maintained at the Biocomputing Unit - CNB
-                %br/
-                %strong Citing the web-server 
-                %a{:href => "https://doi.org/10.1093/bioinformatics/btz118", :target => "_blank"}
-                  %i.fa.fa-external-link
+    - unless @skip_footer
+      = render partial: "layouts/footer"

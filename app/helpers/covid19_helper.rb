@@ -25,7 +25,7 @@ module Covid19Helper
   end
 
   def link_icon
-    content_tag(:i, "", class: "fa fa-external-link-square")
+    content_tag(:i, "", class: "fa fa-external-link-square margin")
   end
 
   def description_text(item)
