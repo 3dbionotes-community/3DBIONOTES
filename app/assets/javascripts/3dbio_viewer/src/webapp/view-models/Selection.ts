@@ -120,22 +120,11 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
 }
 
 export function getSelectionFromUploadDataToken(token: string, chainId: Maybe<string>): Selection {
-    const selection: Selection = {
-        ...emptySelection,
-        type: "uploadData",
-        token,
-        chainId,
-    };
-
-    return selection;
+    return { ...emptySelection, type: "uploadData", token, chainId };
 }
 
-export function getSelectionFromNetworkToken(token: string): Selection {
-    return {
-        ...emptySelection,
-        type: "network",
-        token,
-    };
+export function getSelectionFromNetworkToken(token: string, chainId: Maybe<string>): Selection {
+    return { ...emptySelection, type: "network", token, chainId };
 }
 
 export function getStringFromSelection(selection: Selection): string {

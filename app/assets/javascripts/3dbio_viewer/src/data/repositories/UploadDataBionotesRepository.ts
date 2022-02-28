@@ -12,25 +12,14 @@ import { downloadFile } from "../../utils/download";
 import {
     bioAnnotationsC,
     getAnnotationsFromJson,
+    getAnnotationsFromTracks,
     getChainsFromOptionsArray,
-    getTrackAnnotations,
     OptionsArray,
 } from "../BionotesAnnotations";
 
 interface RecoverData {
     title: string;
     optionsArray: OptionsArray;
-}
-
-export interface OptionArrayInfo {
-    pdb: string;
-    chain: string;
-    uniprot: string;
-    uniprotLength: number;
-    uniprotTitle: string;
-    organism: string;
-    gene_symbol: string;
-    path: string;
 }
 
 export class UploadDataBionotesRepository implements UploadDataRepository {
@@ -42,11 +31,11 @@ export class UploadDataBionotesRepository implements UploadDataRepository {
         };
 
         return Future.joinObj(data$).map(
-            ({ recoverData, annotations: apiAnnotations }): UploadData => {
+            ({ recoverData, annotations: apiAnnotations = [] }): UploadData => {
                 return {
                     title: recoverData.title,
                     chains: getChainsFromOptionsArray(recoverData.optionsArray),
-                    annotations: getTrackAnnotations(apiAnnotations || []),
+                    annotations: getAnnotationsFromTracks(apiAnnotations),
                 };
             }
         );

@@ -14,4 +14,5 @@ export interface UploadDataChain {
     uniprotTitle: string;
     organism: string;
     gene_symbol: string;
+    pdbPath?: string;
 }

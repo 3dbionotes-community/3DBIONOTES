@@ -22,11 +22,9 @@ import {
 } from "../BionotesAnnotations";
 import { getFromUrl, request } from "../request-utils";
 
-/* Calculate Protein-protein interaction networks.
+/* Build Protein-protein interaction networks. Workflow:
 
-Workflow:
-
-(Check old endpoint http://rinchen-dos.cnb.csic.es:8882/ws/network)
+(For more details, check the old endpoint http://rinchen-dos.cnb.csic.es:8882/ws/network)
 
     POST http://3dbionotes.cnb.csic.es/network/build -> { jobId: string }
 
@@ -51,7 +49,7 @@ interface NetworkStatusResponse {
     status: Percentage | null;
     info: string | null;
     step: number | null;
-    outputs: Maybe<object>; // only filled when status == 100
+    outputs: Maybe<unknown>; // only filled when status is 100%
 }
 
 type Percentage = number;
@@ -95,7 +93,7 @@ export class BionotesNetworkRepository implements NetworkRepository {
 
         return postFormRequest<NetworkBuildResponse>({ url, params }).flatMap(res => {
             const { statusUrl, jobId } = res.data;
-            return this.waitCompletion(statusUrl, onProgress).map(() => {
+            return this.waitForCompletion(statusUrl, onProgress).map(() => {
                 return { token: jobId };
             });
         });
@@ -118,7 +116,7 @@ export class BionotesNetworkRepository implements NetworkRepository {
         });
     }
 
-    private waitCompletion(statusUrl: string, onProgress: OnProgress): FutureData<void> {
+    private waitForCompletion(statusUrl: string, onProgress: OnProgress): FutureData<void> {
         return getFromUrl<NetworkStatusResponse>(statusUrl).flatMap(data => {
             if (data.step === null || data.status === null) {
                 return Future.error({ message: i18n.t("Error on network job") });
@@ -128,8 +126,8 @@ export class BionotesNetworkRepository implements NetworkRepository {
                 if (data.step === 2 && data.outputs) {
                     return Future.success(undefined);
                 } else {
-                    return wait<Error>(2000).flatMap(() => {
-                        return this.waitCompletion(statusUrl, onProgress);
+                    return wait<Error>(2e3).flatMap(() => {
+                        return this.waitForCompletion(statusUrl, onProgress);
                     });
                 }
             }

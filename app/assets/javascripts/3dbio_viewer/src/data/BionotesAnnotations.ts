@@ -5,7 +5,6 @@ import { FutureData } from "../domain/entities/FutureData";
 import { UploadDataChain } from "../domain/entities/UploadData";
 import { parseFromCodec } from "../utils/codec";
 import { Maybe } from "../utils/ts-utils";
-import { OptionArrayInfo } from "./repositories/UploadDataBionotesRepository";
 
 const bioAnnotationDataC = Codec.interface({
     begin: number,
@@ -26,22 +25,38 @@ type BioAnnotationTrack = GetType<typeof bioAnnotationTrackC>;
 
 export type OptionsArray = Array<[proteinName: string, jsonInfo: string]>;
 
+interface OptionArrayInfo {
+    pdb: string;
+    chain: string;
+    uniprot: string;
+    uniprotLength: number;
+    uniprotTitle: string;
+    organism: string;
+    gene_symbol: string;
+    path: string;
+    pdbList?: string; // network-only
+}
+
 export const bioAnnotationsC = array(bioAnnotationTrackC);
 
 export type BioAnnotations = GetType<typeof bioAnnotationsC>;
 
 export function getAnnotationsFromJson(json: string): FutureData<Annotations> {
-    return parseFromCodec(bioAnnotationsC, json).map(bionotesAnnotations => {
-        return getTrackAnnotations(bionotesAnnotations);
+    return parseFromCodec(bioAnnotationsC, json).map(tracks => {
+        return { tracks: getTrackAnnotations(tracks), data: json };
     });
 }
 
-export function getTrackAnnotations(bioAnnotationTrack: BioAnnotationTrack[]): TrackAnnotations[] {
-    return _(bioAnnotationTrack).map(getTrackAnnotationsItem).compact().value();
+export function getAnnotationsFromTracks(bioTracks: BioAnnotationTrack[]): Annotations {
+    return { tracks: getTrackAnnotations(bioTracks), data: JSON.stringify(bioTracks) };
+}
+
+export function getTrackAnnotations(bioAnnotationTracks: BioAnnotationTrack[]): TrackAnnotations[] {
+    return _(bioAnnotationTracks).map(getTrackAnnotationsItem).compact().value();
 }
 
 function getTrackAnnotationsItem(bioAnnotationTrack: BioAnnotationTrack): Maybe<TrackAnnotations> {
-    // Only standard annotations are implemented
+    // TODO: implement continous annotations
     if (bioAnnotationTrack.visualization_type) return;
 
     return {
@@ -64,6 +79,6 @@ function getTrackAnnotationsItem(bioAnnotationTrack: BioAnnotationTrack): Maybe<
 export function getChainsFromOptionsArray(optionsArray: OptionsArray): UploadDataChain[] {
     return optionsArray.map(([name, obj]) => {
         const uploadChain = JSON.parse(obj) as OptionArrayInfo;
-        return { name, ...uploadChain };
+        return { name, pdbPath: uploadChain.pdbList, ...uploadChain };
     });
 }

@@ -38,6 +38,7 @@ interface UploadedParams {
 
 interface NetworkParams {
     token: string;
+    chain: Maybe<string>;
     profile?: string;
 }
 
@@ -69,8 +70,12 @@ export function useViewerState(section: Section): ViewerState {
                 return { selection, profile };
             }
             case "network": {
-                const params2 = { ...params, profile: values.profile } as NetworkParams;
-                const selection = getSelectionFromNetworkToken(params2.token);
+                const params2 = {
+                    ...params,
+                    chain: values.chain,
+                    profile: values.profile,
+                } as NetworkParams;
+                const selection = getSelectionFromNetworkToken(params2.token, params2.chain);
                 const profile = getProfileFromString(params2.profile);
                 return { selection, profile };
             }

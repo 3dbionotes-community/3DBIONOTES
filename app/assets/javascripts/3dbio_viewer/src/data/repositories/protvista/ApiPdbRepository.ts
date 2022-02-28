@@ -181,6 +181,7 @@ export class ApiPdbRepository implements PdbRepository {
             proteinNetwork: undefined,
             file: undefined,
             path: undefined,
+            customAnnotations: undefined,
         };
     }
 }

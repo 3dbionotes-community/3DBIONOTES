@@ -29,6 +29,7 @@ export interface Pdb {
     proteinNetwork: Maybe<ProteinNetwork>;
     file: Maybe<string>;
     path: Maybe<string>;
+    customAnnotations: Maybe<Annotations>;
 }
 
 export type PdbId = string;
@@ -64,7 +65,12 @@ export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
 export function addCustomAnnotationsToPdb(pdb: Pdb, annotations: Annotations): Pdb {
     const newTracks = getTracksFromAnnotations(annotations);
     const tracksUpdated = _.concat(pdb.tracks, newTracks);
-    return { ...pdb, tracks: tracksUpdated };
+    return { ...pdb, tracks: tracksUpdated, customAnnotations: annotations };
+}
+
+export function addProteinNetworkToPdb(pdb: Pdb, proteinNetwork: Maybe<ProteinNetwork>): Pdb {
+    const customAnnotations = proteinNetwork?.uploadData.annotations;
+    return { ...pdb, proteinNetwork, customAnnotations };
 }
 
 export function pdbHasCustomTracks(block: BlockDef, pdb: Pdb): boolean {

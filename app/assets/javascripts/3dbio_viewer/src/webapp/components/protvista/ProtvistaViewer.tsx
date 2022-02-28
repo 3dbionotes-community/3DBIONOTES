@@ -16,7 +16,7 @@ export interface ProtvistaViewerProps {
     blocks: BlockDef[];
 }
 
-const mapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
+const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
     "ppi-viewer": PPIViewer,
     "gene-viewer": GeneViewer,
 };
@@ -56,7 +56,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                         )}
 
                         {block.tracks.map((trackDef, idx) => {
-                            const CustomTrackComponent = mapping[trackDef.id];
+                            const CustomTrackComponent = trackComponentMapping[trackDef.id];
                             return (
                                 CustomTrackComponent && (
                                     <CustomTrackComponent

@@ -30,6 +30,7 @@ import { Maybe } from "../../../utils/ts-utils";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { LoaderMask } from "../loader-mask/LoaderMask";
 import { routes } from "../../../routes";
+import { ProteinNetwork } from "../../../domain/entities/ProteinNetwork";
 
 declare global {
     interface Window {
@@ -42,6 +43,7 @@ interface MolecularStructureProps {
     selection: Selection;
     onSelectionChange(newSelection: Selection): void;
     onLigandsLoaded(ligands: Ligand[]): void;
+    proteinNetwork: Maybe<ProteinNetwork>;
 }
 
 export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
@@ -60,6 +62,7 @@ export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
 
 function usePdbePlugin(options: MolecularStructureProps) {
     const { selection: newSelection, onSelectionChange: setSelection, onLigandsLoaded } = options;
+    const { proteinNetwork } = options;
     const { compositionRoot } = useAppContext();
     const [pdbePlugin, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
     const [pluginLoad, setPluginLoad] = React.useState<Date>();
@@ -180,6 +183,30 @@ function usePdbePlugin(options: MolecularStructureProps) {
             false
         );
     }, [pdbePlugin, uploadDataToken, compositionRoot]);
+
+    React.useEffect(() => {
+        if (!pdbePlugin) return;
+
+        pdbePlugin.visual.remove({});
+        if (!proteinNetwork) return;
+
+        const chainInNetwork =
+            proteinNetwork.uploadData.chains.find(chain => chain.chain === newSelection.chainId) ||
+            _.first(proteinNetwork.uploadData.chains);
+
+        const pdbPath = chainInNetwork?.pdbPath;
+        if (!pdbPath) return;
+
+        pdbePlugin.load(
+            {
+                url: `${routes.bionotes}/${pdbPath}`,
+                format: "pdb",
+                isBinary: false,
+                assemblyId: "1",
+            },
+            false
+        );
+    }, [pdbePlugin, newSelection.chainId, proteinNetwork, compositionRoot]);
 
     return { pluginRef, pdbePlugin, isLoading };
 }

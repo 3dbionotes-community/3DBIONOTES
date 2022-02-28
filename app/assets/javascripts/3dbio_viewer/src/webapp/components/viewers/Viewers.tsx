@@ -1,22 +1,16 @@
 import React from "react";
-import _ from "lodash";
-import { ProtvistaViewer } from "../protvista/ProtvistaViewer";
 import i18n from "../../utils/i18n";
-import styles from "./Viewers.module.css";
-import { JumpToButton } from "../protvista/JumpToButton";
-import { ProfilesButton } from "../protvista/ProfilesButton";
-import { ToolsButton } from "../protvista/ToolsButton";
 import { Loader } from "../Loader";
 import { usePdbLoader } from "../../hooks/use-pdb";
-import { blockDefs } from "../protvista/protvista-blocks";
-import { addCustomAnnotationsToPdb, Pdb } from "../../../domain/entities/Pdb";
+import { addCustomAnnotationsToPdb, addProteinNetworkToPdb } from "../../../domain/entities/Pdb";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { ViewerState } from "../../view-models/ViewerState";
 import { UploadData } from "../../../domain/entities/UploadData";
 import { Maybe } from "../../../utils/ts-utils";
 import { Annotations } from "../../../domain/entities/Annotation";
-import { getVisibleBlocks } from "../protvista/Protvista.helpers";
 import { ProteinNetwork } from "../../../domain/entities/ProteinNetwork";
+import { PdbViewer } from "./PdbViewer";
+import { goToElement } from "../protvista/JumpToButton";
 
 export interface ViewersProps {
     viewerState: ViewerState;
@@ -64,7 +58,8 @@ export const Viewers: React.FC<ViewersProps> = React.memo(props => {
 
         setPdbLoader(pdbLoader => {
             if (pdbLoader.type === "loaded") {
-                const newPdb = { ...pdbLoader.data, proteinNetwork };
+                if (proteinNetwork) goToElement("proteinInteraction");
+                const newPdb = addProteinNetworkToPdb(pdbLoader.data, proteinNetwork);
                 return { type: "loaded", data: newPdb };
             } else {
                 return pdbLoader;
@@ -83,35 +78,6 @@ export const Viewers: React.FC<ViewersProps> = React.memo(props => {
                     onAddAnnotations={onAddAnnotations}
                 />
             )}
-        </React.Fragment>
-    );
-});
-
-export interface PdbViewerProps {
-    pdb: Pdb;
-    viewerState: ViewerState;
-    onAddAnnotations(annotations: Annotations): void;
-}
-
-export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
-    const { pdb, viewerState, onAddAnnotations } = props;
-    const { selection, profile, setProfile } = viewerState;
-
-    const blocks = React.useMemo(() => {
-        return getVisibleBlocks(blockDefs, { pdb, profile });
-    }, [pdb, profile]);
-
-    return (
-        <React.Fragment>
-            <div className={styles.section}>
-                <div className={styles.actions}>
-                    <ToolsButton onAddAnnotations={onAddAnnotations} />
-                    <ProfilesButton profile={profile} onChange={setProfile} />
-                    <JumpToButton blocks={blocks} />
-                </div>
-            </div>
-
-            <ProtvistaViewer blocks={blocks} pdb={pdb} selection={selection} />
         </React.Fragment>
     );
 });

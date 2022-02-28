@@ -4,7 +4,10 @@ import { subtracks } from "../definitions/subtracks";
 import { Fragment2 } from "./Fragment2";
 import { Subtrack, Track } from "./Track";
 
-export type Annotations = TrackAnnotations[];
+export interface Annotations {
+    tracks: TrackAnnotations[];
+    data: string; // JSON representation, required by some external viewers
+}
 
 export interface TrackAnnotations {
     trackName: string;
@@ -30,7 +33,7 @@ export const indexValues = ["sequence", "structure"] as const;
 export type AnnotationIndex = typeof indexValues[number];
 
 export function getTracksFromAnnotations(annotationsCollection: Annotations): Track[] {
-    return annotationsCollection.map(
+    return annotationsCollection.tracks.map(
         (extTrack): Track => ({
             id: extTrack.trackName,
             label: getName(extTrack.trackName),
@@ -66,23 +69,4 @@ export function getTracksFromAnnotations(annotationsCollection: Annotations): Tr
                 .value(),
         })
     );
-}
-
-export function getAnnotationsFromAnnotationFromTrack(
-    annotation: AnnotationWithTrack
-): Annotations {
-    return [
-        {
-            trackName: annotation.trackName,
-            annotations: [
-                {
-                    type: annotation.type,
-                    start: annotation.start,
-                    end: annotation.end,
-                    color: annotation.color,
-                    description: annotation.description,
-                },
-            ],
-        },
-    ];
 }

@@ -20,7 +20,6 @@ import {
     indexValues,
     Annotations,
     AnnotationWithTrack,
-    getAnnotationsFromAnnotationFromTrack,
 } from "../../../domain/entities/Annotation";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
@@ -296,4 +295,22 @@ function getInitialAnnotationForm(): AnnotationWithTrack {
 function getAnnotationIndexFromEv(ev: React.ChangeEvent<HTMLSelectElement>): AnnotationIndex {
     const { value } = ev.target;
     return isElementOfUnion(value, indexValues) ? value : indexValues[0];
+}
+
+function getAnnotationsFromAnnotationFromTrack(annotation: AnnotationWithTrack): Annotations {
+    const tracks = [
+        {
+            trackName: annotation.trackName,
+            annotations: [
+                {
+                    type: annotation.type,
+                    start: annotation.start,
+                    end: annotation.end,
+                    color: annotation.color,
+                    description: annotation.description,
+                },
+            ],
+        },
+    ];
+    return { tracks, data: JSON.stringify(annotation) };
 }

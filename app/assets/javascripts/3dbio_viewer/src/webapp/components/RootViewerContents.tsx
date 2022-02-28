@@ -14,29 +14,38 @@ export interface RootViewerContentsProps {
     viewerState: ViewerState;
 }
 
+type ExternalData =
+    | { type: "none" }
+    | { type: "uploadData"; data: UploadData }
+    | { type: "network"; data: ProteinNetwork };
+
 export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(props => {
     const { viewerState } = props;
     const { compositionRoot } = useAppContext();
     const { selection, setSelection } = viewerState;
-    const [uploadData, setUploadData] = React.useState<UploadData>();
-    const [proteinNetwork, setProteinNetwork] = React.useState<ProteinNetwork>();
-    const { pdbInfo, setLigands } = usePdbInfo(selection, uploadData, proteinNetwork);
     const [error, setError] = React.useState<string>();
+
+    const [externalData, setExternalData] = React.useState<ExternalData>({ type: "none" });
+    const uploadData = getUploadData(externalData);
+    const { pdbInfo, setLigands } = usePdbInfo(selection, uploadData);
 
     const uploadDataToken = selection.type === "uploadData" ? selection.token : undefined;
     const networkToken = selection.type === "network" ? selection.token : undefined;
+    const proteinNetwork = externalData.type === "network" ? externalData.data : undefined;
 
     React.useEffect(() => {
         if (uploadDataToken) {
-            return compositionRoot.getUploadData
-                .execute(uploadDataToken)
-                .run(setUploadData, err => setFromError(setError, err, `Cannot get data`));
+            return compositionRoot.getUploadData.execute(uploadDataToken).run(
+                data => setExternalData({ type: "uploadData", data }),
+                err => setFromError(setError, err, `Cannot get upload data`)
+            );
         } else if (networkToken) {
-            return compositionRoot.getNetwork
-                .execute(networkToken)
-                .run(setProteinNetwork, err => setFromError(setError, err, `Cannot get data`));
+            return compositionRoot.getNetwork.execute(networkToken).run(
+                data => setExternalData({ type: "network", data }),
+                err => setFromError(setError, err, `Cannot get network data`)
+            );
         } else {
-            setUploadData(undefined);
+            setExternalData({ type: "none" });
         }
     }, [uploadDataToken, networkToken, compositionRoot]);
 
@@ -48,7 +57,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                 pdbInfo={pdbInfo}
                 selection={selection}
                 onSelectionChange={setSelection}
-                uploadData={uploadData || proteinNetwork?.uploadData}
+                uploadData={uploadData}
             />
 
             <div id="left">
@@ -57,6 +66,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                     selection={selection}
                     onSelectionChange={setSelection}
                     onLigandsLoaded={setLigands}
+                    proteinNetwork={proteinNetwork}
                 />
             </div>
 
@@ -73,3 +83,11 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
         </div>
     );
 });
+
+function getUploadData(externalData: ExternalData) {
+    return externalData.type === "uploadData"
+        ? externalData.data
+        : externalData.type === "network"
+        ? externalData.data.uploadData
+        : undefined;
+}

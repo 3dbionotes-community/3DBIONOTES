@@ -6,7 +6,6 @@ import {
     PdbInfo,
     setPdbInfoLigands,
 } from "../../domain/entities/PdbInfo";
-import { ProteinNetwork } from "../../domain/entities/ProteinNetwork";
 import { UploadData } from "../../domain/entities/UploadData";
 import { Future } from "../../utils/future";
 import { Maybe } from "../../utils/ts-utils";
@@ -27,11 +26,7 @@ export function useStateFromFuture<Value>(
     return value;
 }
 
-export function usePdbInfo(
-    selection: Selection,
-    uploadData: Maybe<UploadData>,
-    proteinNetwork: Maybe<ProteinNetwork>
-) {
+export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) {
     const { compositionRoot } = useAppContext();
     const mainPdbId = getMainPdbId(selection);
     const [ligands, setLigands] = React.useState<Ligand[]>();
@@ -41,10 +36,8 @@ export function usePdbInfo(
             return compositionRoot.getPdbInfo.execute(mainPdbId);
         } else if (uploadData) {
             return Future.success(getPdbInfoFromUploadData(uploadData));
-        } else if (proteinNetwork) {
-            return Future.success(getPdbInfoFromUploadData(proteinNetwork.uploadData));
         }
-    }, [mainPdbId, compositionRoot, uploadData, proteinNetwork]);
+    }, [mainPdbId, compositionRoot, uploadData]);
 
     const pdbInfo = useStateFromFuture(getPdbInfo);
 

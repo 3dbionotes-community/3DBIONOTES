@@ -1,6 +1,7 @@
 import i18n from "../../utils/i18n";
-import { GetValue } from "../../../utils/ts-utils";
+import { GetValue, Maybe } from "../../../utils/ts-utils";
 import { ProteinId } from "../../../domain/entities/Protein";
+import { Pdb } from "../../../domain/entities/Pdb";
 
 // See app/assets/javascripts/main_frame/ppi_annotations.js
 export const graphFeatures = {
@@ -24,9 +25,12 @@ export type FeatureId = keyof GraphFeatures;
 
 export type FeatureKey = GetValue<GraphFeatures>["featureKey"];
 
+/* Global variables used by PPI. Check app/assets/javascripts/ppi_frame/graph_class.js */
 declare global {
     interface Window {
         global_infoAlignment: InfoAlignment;
+        network_flag: boolean;
+        uploaded_annotations: { result: string }; // JSON containing the annotations
     }
 }
 
@@ -60,4 +64,25 @@ export interface InfoAlignmentFromNetwork {
     path: string; // "interactome3d:P01116-EXP-4obe_A__pdb"
     pdb: string; //  "P01116-EXP-4obe_A.pdb"
     chain: string; // "A"
+}
+
+export function getInfoAlignmentFromPdb(pdb: Pdb): Maybe<InfoAlignment> {
+    if (pdb.proteinNetwork) {
+        return {
+            origin: "interactome3d",
+            acc: pdb.protein.id,
+            file: pdb.file || "",
+            path: pdb.path || "",
+            pdb: pdb.file || "",
+            chain: pdb.chainId,
+        };
+    } else if (pdb.id) {
+        return {
+            origin: "PDB",
+            pdb: pdb.id,
+            chain: pdb.chainId,
+        };
+    } else {
+        return undefined;
+    }
 }
