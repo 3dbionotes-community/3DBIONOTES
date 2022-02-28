@@ -2,8 +2,9 @@
 
 const isDev = process.env.NODE_ENV === "development";
 
+// If empty, use relative requests.
 export const routes = {
-    bionotes: isDev ? "/3dbionotes" : "", // Use relative requests on 3dbionotes PRO
+    bionotes: isDev ? "/3dbionotes" : "",
     bionotesDev: isDev ? "/rinchen-dos" : "",
     ebi: isDev ? "/ebi" : "https://www.ebi.ac.uk",
     uniprot: isDev ? "/uniprot" : "https://www.uniprot.org",
