@@ -10,5 +10,6 @@ export interface DbModelRepository {
 
 export interface SearchOptions {
     query: string;
+    startIndex: number;
     type?: DbModelType;
 }

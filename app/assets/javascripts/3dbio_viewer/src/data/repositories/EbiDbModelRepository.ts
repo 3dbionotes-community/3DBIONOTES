@@ -7,7 +7,6 @@ import { assert } from "../../utils/ts-utils";
 import { request } from "../request-utils";
 
 const searchPageSize = 30;
-
 const config = {
     pdb: {
         type: "pdb" as const,
@@ -37,9 +36,9 @@ export class EbiDbModelRepository implements DbModelRepository {
         const searchAllTypes = !options.type;
         const searchPdb = searchAllTypes || options.type === "pdb";
         const searchEmdb = searchAllTypes || options.type === "emdb";
-        const pdbModels = getPdbModels(searchPdb, config.pdb, options.query);
-        const emdbModels = getPdbModels(searchEmdb, config.emdb, options.query);
-
+        console.log(options.startIndex)
+        const pdbModels = getPdbModels(searchPdb, config.pdb, options.query, options.startIndex);
+        const emdbModels = getPdbModels(searchEmdb, config.emdb, options.query, options.startIndex);
         return Future.join2(emdbModels, pdbModels).map(collections =>
             _(collections)
                 .flatten()
@@ -65,6 +64,7 @@ type ApiField = typeof apiFields[number];
 interface ApiSearchParams {
     format: "JSON";
     size?: number;
+    start?: number;
     requestFrom?: "queryBuilder";
     fieldurl?: boolean;
     fields?: string;
@@ -106,17 +106,18 @@ const emptySearchesByType: Record<DbModel["type"], string> = {
 function getPdbModels(
     performSearch: boolean,
     config: ItemConfig,
-    query: string
+    query: string,
+    startIndex: number
 ): FutureData<DbModel[]> {
     if (!performSearch) return Future.success([]);
-
     const searchQuery = query.trim() ? query : emptySearchesByType[config.type];
     const params: ApiSearchParams = {
         format: "JSON",
         // Get more records so we can do a more meaningful sorting by score on the grouped collection
         size: searchPageSize * 10,
+        start: startIndex,
         fields: apiFields.join(","),
-        query: searchQuery,
+        query: searchQuery.length >= 3 ? searchQuery.concat("*") : searchQuery,
         entryattrs: "score",
         fieldurl: true,
     };
