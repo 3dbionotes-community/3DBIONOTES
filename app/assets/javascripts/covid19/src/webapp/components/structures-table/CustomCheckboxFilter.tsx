@@ -48,7 +48,6 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                 aria-label="toolbarExportLabel"
                 aria-haspopup="menu"
                 endIcon={startIcon}
-                style={{ margin: "auto 5px auto 10px" }}
             >
                 {i18n.t("Filter")}
             </FilterButton>
@@ -109,7 +108,7 @@ const StyledCheckbox = styled(Checkbox)`
 const FilterButton = styled(Button)`
     &.MuiButton-root {
         padding: 6px 16px;
-        margin: 12px 6px;
+        margin: auto 5px auto 10px;
         color: #fff;
         height: 45px;
         font-weight: 500;

@@ -54,7 +54,7 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
         <React.Fragment>
             <GridToolbarContainer style={styles.container}>
                 <div style={styles.toolbarRow}>
-                    <div style={{ display: "flex", flexGrow: 1 }}>
+                    <div style={styles.searchBar}>
                         <SearchBar
                             value={search}
                             setValue={setSearch}
@@ -134,6 +134,7 @@ export const styles = {
     },
     exampleRow: { display: "flex" as const, alignItems: "center", marginRight: "auto" },
     examplesText: { margin: 0 },
+    searchBar: { display: "flex", flexGrow: 1 },
 };
 
 function isNonEmptyObject<T>(obj: T | {}): obj is T {

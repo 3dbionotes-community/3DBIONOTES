@@ -9,9 +9,12 @@ interface SearchExampleButtonProps {
 
 export const SearchExampleButton: React.FC<SearchExampleButtonProps> = React.memo(props => {
     const { exampleValue, setValue } = props;
-
+    const setValueExample = React.useCallback(() => setValue(exampleValue), [
+        setValue,
+        exampleValue,
+    ]);
     return (
-        <StyledSearchExampleButton onClick={() => setValue(exampleValue)}>
+        <StyledSearchExampleButton onClick={setValueExample}>
             {exampleValue}
         </StyledSearchExampleButton>
     );
