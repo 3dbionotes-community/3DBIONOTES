@@ -5,6 +5,7 @@ import {
     GridSortCellParams,
     GridStateApi,
 } from "@material-ui/data-grid";
+import _ from "lodash";
 import i18n from "../../../utils/i18n";
 import { Covid19Info, Structure } from "../../../domain/entities/Covid19Info";
 import { TitleCell } from "./cells/TitleCell";
@@ -14,7 +15,6 @@ import { EmdbCell } from "./cells/EmdbCell";
 import { EntityCell } from "./cells/EntityCell";
 import { LigandsCell } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
-import _ from "lodash";
 
 type Row = Structure;
 export type Field = keyof Row;
@@ -86,7 +86,7 @@ export const columnsBase: Columns = [
                 .map(
                     organism =>
                         organism.name +
-                        (organism.commonName || organism.commonName === "?"
+                        (!organism.commonName || organism.commonName === "?"
                             ? ""
                             : ` (${organism.commonName})`)
                 )
@@ -101,29 +101,32 @@ export const columnsBase: Columns = [
         renderString: row => {
             const { details } = row;
             if (!details) return "";
-            return _.compact(
-                [
-                    details?.sample?.name,
-                    details?.sample?.macromolecules,
-                    details?.sample?.assembly,
-                    details?.sample?.exprSystem,
-                    details?.sample?.uniProts,
-                    details?.sample?.genes,
-                    details?.sample?.bioFunction,
-                    details?.sample?.bioProcess,
-                    details?.sample?.cellComponent,
-                    details?.sample?.domains,
-                    details?.refdoc?.map(ref => [
+            const { sample } = details;
+            const array = (values: string[] | undefined) => values || [];
+            const values: string[] = _.compact([
+                sample?.name,
+                ...array(sample?.macromolecules),
+                sample?.assembly,
+                sample?.exprSystem,
+                ...array(sample?.uniProts),
+                ...array(sample?.genes),
+                ...array(sample?.bioFunction),
+                ...array(sample?.bioProcess),
+                ...array(sample?.cellComponent),
+                ...array(sample?.domains),
+                ..._.flatten(
+                    details.refdoc?.map(ref => [
                         ref.id,
                         ref.idLink,
                         ref.title,
-                        ref.authors,
+                        ...array(ref.authors),
                         ref.journal,
                         ref.pubDate,
                         ref.doi,
-                    ]),
-                ].flat()
-            ).join(",");
+                    ])
+                ),
+            ]);
+            return values.join();
         },
     }),
 ];
