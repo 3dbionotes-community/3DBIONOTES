@@ -126,7 +126,7 @@ export const columnsBase: Columns = [
                     ])
                 ),
             ]);
-            return values.join();
+            return values.join(", ");
         },
     }),
 ];
