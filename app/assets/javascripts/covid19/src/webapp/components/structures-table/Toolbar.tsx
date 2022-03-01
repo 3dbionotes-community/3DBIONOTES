@@ -11,7 +11,9 @@ import "./Toolbar.css";
 import { CustomCheckboxFilter } from "./CustomCheckboxFilter";
 import { Covid19Filter } from "../../../domain/entities/Covid19Info";
 import { SearchExampleButton } from "./SearchExampleButton";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import i18n from "../../../utils/i18n";
+import styled from "styled-components";
 
 export interface ToolbarProps {
     search: string;
@@ -51,11 +53,15 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
     return (
         <React.Fragment>
             <GridToolbarContainer style={styles.container}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ display: "flex" }}>
+                <div style={styles.toolbarRow}>
+                    <div style={styles.searchBar}>
                         <SearchBar
                             value={search}
                             setValue={setSearch}
+                            filterState={filterState}
+                            setFilterState={setFilterState}
+                        />
+                        <CustomCheckboxFilter
                             filterState={filterState}
                             setFilterState={setFilterState}
                         />
@@ -64,57 +70,88 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas cursus pellentesque risus, nec accumsan turpis sagittis non. Duis hendrerit nec odio eu hendrerit. Morbi pellentesque ligula a dui malesuada, nec eleifend massa lacinia. Aliquam non efficitur tellus. Curabitur varius neque at mauris vulputate, eu mattis massa porta. Donec aliquet luctus augue, nec pulvinar enim pharetra a. Ut varius nibh mauris, quis finibus justo lobortis sed. In ultricies dolor et orci hendrerit, et commodo diam accumsan."
                             }
                         >
-                            <span style={styles.tooltip}>?</span>
+                            <span style={styles.tooltip}>
+                                <HelpOutlineIcon />
+                            </span>
                         </Tooltip>
-                        <CustomCheckboxFilter
-                            filterState={filterState}
-                            setFilterState={setFilterState}
-                        />
                     </div>
+                    <GridToolbarActions>
+                        <CustomGridToolbarExport dataGrid={dataGrid} gridApi={gridApi} />
+                        <GridToolbarColumnsButton />
+                    </GridToolbarActions>
+                </div>
+
+                <div style={styles.toolbarRow}>
                     <div style={styles.exampleRow}>
                         <p style={styles.examplesText}>{i18n.t("Examples")}:</p>
                         <SearchExampleButton setValue={setSearch} exampleValue="6YOR" />
                         <SearchExampleButton setValue={setSearch} exampleValue="Homo sapiens" />
                         <SearchExampleButton setValue={setSearch} exampleValue="SARS-CoV-2" />
                     </div>
-                </div>
-
-                <div style={styles.columns}>
-                    <CustomGridToolbarExport dataGrid={dataGrid} gridApi={gridApi} />
-                    <GridToolbarColumnsButton />
+                    <CustomGridTopPagination
+                        dataGrid={dataGrid}
+                        page={page}
+                        pageSize={pageSize}
+                        pageSizes={pageSizes}
+                        setPage={setPage}
+                        setPageSize={setPageSize}
+                    />
                 </div>
             </GridToolbarContainer>
-            <CustomGridTopPagination
-                dataGrid={dataGrid}
-                page={page}
-                pageSize={pageSize}
-                pageSizes={pageSizes}
-                setPage={setPage}
-                setPageSize={setPageSize}
-            />
+
             <VirtualScroll {...virtualScrollbarProps} />
         </React.Fragment>
     );
 };
 
 export const styles = {
-    container: { padding: 10 },
-    columns: { marginLeft: "auto" },
+    container: {
+        display: "flex",
+        flexDirection: "column" as const,
+        padding: "14px 14px 0px 14px",
+        alignItems: "flex-start",
+    },
+    toolbarRow: {
+        display: "flex",
+        flexDirection: "row" as const,
+        width: "100%",
+        alignItems: "center",
+    },
     tooltip: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         fontWeight: 700,
-        padding: "7px 10px",
+        height: "45px",
+        width: "45px",
         margin: "auto 5px",
         color: "#ffffff",
         backgroundColor: "rgb(96, 125, 139)",
-        borderRadius: 8,
+        borderRadius: "0.75rem",
         border: "solid 0px rgb(96, 125, 139)",
         outline: "none",
         cursor: "pointer",
     },
-    exampleRow: { display: "flex" as const, alignItems: "center" },
+    exampleRow: { display: "flex" as const, alignItems: "center", marginRight: "auto" },
     examplesText: { margin: 0 },
+    searchBar: { display: "flex", flexGrow: 1 },
 };
 
 function isNonEmptyObject<T>(obj: T | {}): obj is T {
     return Object.keys(obj).length > 0;
 }
+
+const GridToolbarActions = styled.div`
+    display: flex;
+    align-items: center;
+    height: 45px;
+    margin-left: auto;
+    .MuiButton-textSizeSmall {
+        padding: 6px 8px;
+        font-size: 1rem;
+        color: #607d8b;
+        .MuiButton-iconSizeSmall > *:first-child {
+            font-size: 1.5rem;
+        }
+    }
+`;
