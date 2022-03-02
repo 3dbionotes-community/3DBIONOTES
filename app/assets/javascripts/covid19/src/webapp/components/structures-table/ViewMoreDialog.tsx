@@ -43,26 +43,54 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
 
             <DialogContent>
                 <Container>
-                    <div style={{ marginRight: "10px" }}>
+                    <ImgContainer>
                         <PdbCell data={data} row={row} />
                         <EmdbCell data={data} row={row} />
-                    </div>
+                    </ImgContainer>
 
                     <div>
                         <ModifiedAccordion expandedAccordion={expandedAccordion} field="entities">
-                            <EntityCell data={data} row={row} moreDetails={false}></EntityCell>
+                            {row.entities.length > 0 ? (
+                                <EntityCell data={data} row={row} moreDetails={false}></EntityCell>
+                            ) : (
+                                <Typography variant="caption">No entities found</Typography>
+                            )}
                         </ModifiedAccordion>
 
                         <ModifiedAccordion expandedAccordion={expandedAccordion} field="ligands">
-                            <LigandsCell data={data} row={row} moreDetails={false}></LigandsCell>
+                            {row.ligands.length > 0 ? (
+                                <LigandsCell
+                                    data={data}
+                                    row={row}
+                                    moreDetails={false}
+                                ></LigandsCell>
+                            ) : (
+                                <Typography variant="caption">No ligands found</Typography>
+                            )}
                         </ModifiedAccordion>
 
                         <ModifiedAccordion expandedAccordion={expandedAccordion} field="organisms">
-                            <OrganismCell row={row} data={data} moreDetails={false}></OrganismCell>
+                            {row.organisms.length > 0 ? (
+                                <OrganismCell
+                                    row={row}
+                                    data={data}
+                                    moreDetails={false}
+                                ></OrganismCell>
+                            ) : (
+                                <Typography variant="caption">No organisms found</Typography>
+                            )}
                         </ModifiedAccordion>
 
                         <ModifiedAccordion expandedAccordion={expandedAccordion} field="details">
-                            <DetailsCell row={row} data={data} moreDetails={false}></DetailsCell>
+                            {row.details ? (
+                                <DetailsCell
+                                    row={row}
+                                    data={data}
+                                    moreDetails={false}
+                                ></DetailsCell>
+                            ) : (
+                                <Typography variant="caption">No details found</Typography>
+                            )}
                         </ModifiedAccordion>
                     </div>
                 </Container>
@@ -93,17 +121,23 @@ const StyledDialog = styled(Dialog)`
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch;
     }
-
-    img {
-        max-height: unset !important;
-        max-width: unset !important;
-    }
 `;
 
 const Container = styled.div`
     display: flex;
-    & > div:nth-child(2) {
+    & > div: {
         flex-grow: 1;
+    }
+`;
+
+const ImgContainer = styled.div`
+    margin-right: 10px;
+    & > div:nth-of-type(2) {
+        padding-top: 20px;
+    }
+    img {
+        max-height: 200px !important;
+        max-width: 200px !important;
     }
 `;
 
