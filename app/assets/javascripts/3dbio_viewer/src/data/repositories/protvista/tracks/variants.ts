@@ -1,4 +1,33 @@
-import { Variant, VariantFilter, Variants } from "../../../../domain/entities/Variant";
+import _ from "lodash";
+import { Color } from "../../../../domain/entities/Color";
+import { Content, InfoItem } from "../../../../domain/entities/InfoItem";
+import { ProteinId } from "../../../../domain/entities/Protein";
+import {
+    KeywordConsequence,
+    getTranslations,
+    Keyword,
+    Variant,
+    Variants,
+    KeywordSource,
+    urls,
+    getVariantFilters,
+} from "../../../../domain/entities/Variant";
+import i18n from "../../../../domain/utils/i18n";
+import { Maybe } from "../../../../utils/ts-utils";
+import {
+    ApiEvidence,
+    ApiEvidenceSource,
+    getEvidencesFromApiEvidence,
+} from "../entities/ApiEvidenceSource";
+import { MutagenesisAnnotation, MutagenesisResponse } from "./mutagenesis";
+
+/*
+Example: https://www.ebi.ac.uk/proteins/api/variation/O14920
+
+Logic from:
+    - extendProtVista/add_biomuta.js
+    - myProtVista/src/VariantFilterDialog.js
+*/
 
 export interface EbiVariation {
     accession: string; // "P0DTC2";
@@ -19,10 +48,9 @@ export interface EbiVariationFeature {
     alternativeSequence: string; //"L",
     begin: string; //"2",
     end: string; // "2",
-    xrefs?: Array<{
-        name: string; // "ENA",
-        id: string; // "MN908947.3:21568:T:A"
-    }>;
+    xrefs?: ApiEvidenceSource[];
+    evidences?: ApiEvidence[];
+    cytogeneticBand?: string;
     genomicLocation: string; //"NC_045512.2:g.21568T>A";
     locations: Array<{
         loc: string; // "p.Phe2Leu";
@@ -33,104 +61,289 @@ export interface EbiVariationFeature {
     consequenceType: "missense" | "stop gained";
     wildType: string; //"F";
     mutatedType: string; // "L";
+    populationFrequencies: Array<{
+        populationName: string;
+        frequency: number;
+        source: string;
+    }>;
+    predictions?: Array<{
+        predictionValType: string;
+        predictorType: string;
+        score: number;
+        predAlgorithmNameType: string;
+        sources: string[];
+    }>;
     somaticStatus: number; // 0;
-    sourceType: string; // "large_scale_study";
+    clinicalSignificances: Array<{
+        type: string;
+        sources: string[];
+    }>;
+    sourceType: string; // "large_scale_study" | "mixed" | "uniprot";
 }
 
-export type VariantFilterType = "source" | "consequence";
+export type GenomicVariantsCNCBResponse = { features: GenomicVariantsAnnotation[] };
 
-export type VariantFilterConfig = {
-    type: VariantFilterType;
-    items: Array<{ label: string; color: string }>;
-    properties?: {
-        association?(variant: unknown): boolean;
-    };
+export interface GenomicVariantsAnnotation {
+    type: "VARIANT";
+    mutationType: string;
+    sourceType: KeywordSource;
+    mutationEffect: string;
+    begin: number;
+    end: number;
+    wildType: string;
+    alternativeSequence: string;
+    numberOfViruses: number;
+    reportedProtChange: string;
+    genomicPosition: number;
+    originalGenomic: string;
+    newGenomic: string;
+    evidenceLevel: string;
+    xrefs: ApiEvidenceSource[];
+}
+
+const keywordsFromSourceType: Record<string, Keyword[]> = {
+    large_scale_study: ["large_scale_studies"],
+    uniprot: ["uniprot"],
+    mixed: ["uniprot", "large_scale_studies"],
 };
 
-const variantsFiltersConfig: VariantFilterConfig[] = [
-    {
-        type: "consequence",
-        items: [{ label: "Disease (reviewed)", color: "#990000" }],
-        properties: {
-            association: _variant => {
-                // TODO
-                /*
-                return _.some(variant.association, function (association) {
-                    return association.disease === true;
-                });
-                */
-                return true;
+const colorByConsequence: Record<KeywordConsequence, Color> = {
+    disease: "#FF0000",
+    predicted: "#002594", // gradient?
+    nonDisease: "#99cc00",
+    other: "#FFCC00",
+};
+
+interface Info {
+    variant: string;
+    wildType: string;
+    position: number;
+}
+
+type Source =
+    | { type: "ebi"; info: Info; annotation: EbiVariationFeature }
+    | { type: "muta"; info: Info; annotation: MutagenesisAnnotation }
+    | { type: "genomic"; info: Info; annotation: GenomicVariantsAnnotation };
+
+export function getVariants(
+    ebiVariation: Maybe<EbiVariation>,
+    mutagenesis: Maybe<MutagenesisResponse>,
+    genomicVariants: Maybe<GenomicVariantsCNCBResponse>,
+    proteinId: ProteinId
+): Variants {
+    const annotations = _.concat<Source>(
+        (ebiVariation?.features || []).map(a => ({
+            type: "ebi" as const,
+            info: {
+                variant: a.alternativeSequence,
+                wildType: a.wildType,
+                position: parseInt(a.begin),
             },
-        },
-    },
-    {
-        type: "consequence",
-        items: [
-            { label: "Predicted deleterious", color: "#002594" },
-            { label: "Predicted benign", color: "#8FE3FF" },
-        ],
-    },
-    {
-        type: "consequence",
-        items: [{ label: "Non-disease (reviewed)", color: "#99cc00" }],
-    },
-    {
-        type: "consequence",
-        items: [{ label: "Init, stop loss or gain", color: "#FFCC00" }],
-    },
+            annotation: a,
+        })),
+        (mutagenesis || []).map(a => ({
+            type: "muta" as const,
+            info: { variant: a.variation, wildType: a.original, position: a.start },
+            annotation: a,
+        })),
+        (genomicVariants?.features || []).map(a => ({
+            type: "genomic" as const,
+            info: { variant: a.alternativeSequence, wildType: a.wildType, position: a.begin },
+            annotation: a,
+        }))
+    );
 
-    {
-        type: "source",
-        items: [{ label: "UniProt reviewed", color: "#808080" }],
-    },
-    {
-        type: "source",
-        items: [{ label: "Large scale studies", color: "#808080" }],
-    },
-    {
-        type: "source",
-        items: [{ label: "CNCB", color: "#808080" }],
-    },
-];
+    const getKey = (obj: Source) => [obj.info.variant, obj.info.position].join("-");
 
-const textByVariantFilterType: Record<VariantFilterType, string> = {
-    consequence: "Filter consequence",
-    source: "Filter data source",
-};
+    const annotationsGrouped = _(annotations).groupBy(getKey).values().value();
 
-export function getVariants(ebiVariation: EbiVariation): Variants {
     return {
-        sequence: ebiVariation.sequence,
+        sequence: ebiVariation?.sequence,
         filters: getVariantFilters(),
-        variants: ebiVariation.features.map(
-            (v): Variant => ({
-                accession: v.genomicLocation,
-                color: "#800", // TODO
-                start: v.begin,
-                end: v.end,
-                //polyphenScore: number,
-                //siftScore: number,
-                sourceType: v.sourceType,
-                description: "TODO",
-                variant: v.alternativeSequence,
-                xrefNames: (v.xrefs || []).map(xref => xref.name),
-            })
+        variants: annotationsGrouped.map(
+            (group): Variant => {
+                const mainAnnotation = group[0]!;
+                const { variant, position, wildType } = mainAnnotation.info;
+
+                const ebiAnnotation = _(group)
+                    .map(o => (o.type === "ebi" ? o.annotation : undefined))
+                    .compact()
+                    .last();
+
+                const mutaAnnotations = _(group)
+                    .map(o => (o.type === "muta" ? o.annotation : undefined))
+                    .compact()
+                    .value();
+
+                const genomicAnnotation = _(group)
+                    .map(o => (o.type === "genomic" ? o.annotation : undefined))
+                    .compact()
+                    .first();
+
+                const isDisease = !_.isEmpty(mutaAnnotations);
+                const consequence = getConsequence({
+                    variant,
+                    ebiAnnotation,
+                    genomicAnnotation,
+                    mutaAnnotations,
+                });
+
+                return {
+                    accession: getKey(mainAnnotation),
+                    variant,
+                    alternativeSequence: variant,
+                    wildType,
+                    color: consequence ? colorByConsequence[consequence] : "grey",
+                    start: position.toString(),
+                    end: position.toString(),
+                    association: isDisease ? associationWithDisease : [],
+                    keywords: getKeywords({ ebiAnnotation, genomicAnnotation, consequence }),
+                    info: getInfo({ proteinId, ebiAnnotation, mutaAnnotations, genomicAnnotation }),
+                };
+            }
         ),
     };
 }
 
-function getVariantFilters(): VariantFilter[] {
-    return variantsFiltersConfig.map(
-        (f, idx): VariantFilter => ({
-            name: "filter-" + idx,
-            type: {
-                name: f.type === "source" ? ("provenance" as const) : ("consequence" as const),
-                text: textByVariantFilterType[f.type],
-            },
-            options: {
-                labels: f.items.map(item => item.label),
-                colors: f.items.map(item => item.color),
-            },
-        })
-    );
+const associationWithDisease = [{ disease: true }];
+
+const sourceTypeFromEbiAnnotation: Record<string, KeywordSource> = {
+    uniprot: "uniprot",
+    large_scale_study: "large_scale_studies",
+    cncb: "cncb",
+};
+
+const translations = getTranslations();
+
+function getInfo(options: {
+    proteinId: ProteinId;
+    ebiAnnotation: Maybe<EbiVariationFeature>;
+    mutaAnnotations: MutagenesisAnnotation[];
+    genomicAnnotation: Maybe<GenomicVariantsAnnotation>;
+}): InfoItem[] {
+    const { proteinId, ebiAnnotation, genomicAnnotation, mutaAnnotations } = options;
+
+    const mainAnnotation = genomicAnnotation || ebiAnnotation;
+
+    const sourceType = mainAnnotation
+        ? sourceTypeFromEbiAnnotation[mainAnnotation.sourceType]
+        : undefined;
+
+    const firstMutation = _.first(mutaAnnotations);
+
+    const mutation = mainAnnotation
+        ? { from: mainAnnotation.wildType, to: mainAnnotation.alternativeSequence }
+        : firstMutation
+        ? { from: firstMutation.original, to: firstMutation.variation }
+        : undefined;
+
+    const diseasesAll = mutaAnnotations.map(muta => {
+        const diseaseName = _.capitalize(muta.disease.split(" / ").slice(1).join(" / "));
+        const polyphenText = (muta.polyphen || "").replace(/\<possibly\>/g, "probably");
+
+        const polyphenLinks = _(muta.evidence)
+            .flatMap(evidence => evidence.references)
+            .map(reference => reference.split(":", 2)[1])
+            .compact()
+            .without("null")
+            .map(ref => ({ name: ref, url: urls.ncbi(ref) }))
+            .concat([{ name: proteinId, url: urls.hive(proteinId) }])
+            .value();
+
+        return {
+            title: i18n.t("Disease"),
+            contents: [
+                { text: "", links: [{ name: diseaseName, url: urls.diseases(diseaseName) }] },
+                { text: `BioMuta DB - ${polyphenText}`, links: polyphenLinks },
+            ],
+        };
+    });
+
+    const diseases = _.uniqWith(diseasesAll, _.isEqual);
+    const evidences = getEvidencesFromApiEvidence(ebiAnnotation?.evidences || [], proteinId);
+    const crossReferences = getCrossReferencesAsContents(mainAnnotation?.xrefs);
+
+    return _.compact([
+        sourceType
+            ? {
+                  title: i18n.t("Source"),
+                  contents: [{ text: translations.sourceType[sourceType] || sourceType }],
+              }
+            : null,
+
+        mutation
+            ? {
+                  title: i18n.t("Variant"),
+                  contents: [{ text: `${mutation.from} > ${mutation.to}` }],
+              }
+            : null,
+
+        !_.isEmpty(evidences)
+            ? {
+                  title: i18n.t("Evidences"),
+                  contents: _.flatMap(evidences, evidence => [
+                      { text: evidence.title },
+                      ...evidence.sources.map(src => ({ text: src.name, links: src.links })),
+                  ]),
+              }
+            : null,
+
+        ...(!_.isEmpty(crossReferences)
+            ? _.compact([
+                  genomicAnnotation ? { title: i18n.t("CNCB") } : null,
+                  { title: i18n.t("Cross-references"), contents: crossReferences },
+              ])
+            : []),
+
+        ...(!_.isEmpty(diseases) ? [{ title: i18n.t("Disease Association") }, ...diseases] : []),
+    ]);
+}
+
+function getCrossReferencesAsContents(xrefs: Maybe<ApiEvidenceSource[]>): Content[] {
+    return _(xrefs)
+        .groupBy(xref => xref.id)
+        .toPairs()
+        .map(([xrefId, xrefs]) => ({
+            text: xrefId,
+            links: xrefs.map(xref => ({ url: "", ...xref })),
+        }))
+        .value();
+}
+
+function getConsequence(options: {
+    variant: string;
+    ebiAnnotation: Maybe<EbiVariationFeature>;
+    genomicAnnotation: Maybe<GenomicVariantsAnnotation>;
+    mutaAnnotations: MutagenesisAnnotation[];
+}): Maybe<KeywordConsequence> {
+    const { variant, ebiAnnotation, genomicAnnotation, mutaAnnotations } = options;
+    const mainAnnotation = genomicAnnotation || ebiAnnotation;
+    const isDisease = !_.isEmpty(mutaAnnotations);
+    const isReviewed = mainAnnotation && ["uniprot", "mixed"].includes(mainAnnotation.sourceType);
+    const isOther = variant === "*";
+
+    if (isOther) {
+        return "other";
+    } else if (isDisease) {
+        return "disease";
+    } else if (isReviewed) {
+        return "nonDisease";
+    } else {
+        return undefined;
+    }
+}
+
+function getKeywords(options: {
+    ebiAnnotation: Maybe<EbiVariationFeature>;
+    genomicAnnotation: Maybe<GenomicVariantsAnnotation>;
+    consequence: Maybe<KeywordConsequence>;
+}): Keyword[] {
+    const { ebiAnnotation, genomicAnnotation, consequence } = options;
+    const mainAnnotation = genomicAnnotation || ebiAnnotation;
+
+    const sourceKeywords = mainAnnotation
+        ? keywordsFromSourceType[mainAnnotation.sourceType] || []
+        : [];
+
+    return _.compact([consequence, genomicAnnotation ? "cncb" : null, ...sourceKeywords]);
 }

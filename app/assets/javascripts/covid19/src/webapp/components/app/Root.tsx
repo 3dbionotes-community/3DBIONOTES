@@ -1,27 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+
 import i18n from "../../../utils/i18n";
-import { useAppContext } from "../../contexts/app-context";
 import { StructuresTable } from "../structures-table/StructuresTable";
 
-interface RootProps {}
-
-export const Root: React.FC<RootProps> = React.memo(() => {
-    const { compositionRoot } = useAppContext();
-    const data = compositionRoot.getCovid19Info.execute();
-    window.app = { data };
-
+export const Root: React.FC = React.memo(() => {
     return (
         <Body>
             <HeaderBanner>
                 <Wrapper>
                     <h1>
-                        <b>{i18n.t("Known Proteins")}</b>
+                        <b>{i18n.t("SARS-CoV-2 in structure databases")}</b>
                     </h1>
                 </Wrapper>
             </HeaderBanner>
 
-            <StructuresTable data={data} />
+            <StructuresTable />
         </Body>
     );
 });

@@ -2,20 +2,22 @@ import React from "react";
 import i18n from "../../../../utils/i18n";
 import { CellProps } from "../Columns";
 import { Link } from "../Link";
+import { Wrapper } from "./Wrapper";
 
 export const EntityCell: React.FC<CellProps> = React.memo(props => {
-    const { row } = props;
+    const { row, onClickDetails, moreDetails } = props;
 
     const entities = React.useMemo(() => {
         return row.entities.map(entity => {
             return {
-                id: entity.id,
                 name: entity.name,
                 tooltip: (
                     <React.Fragment>
-                        <div>
-                            {i18n.t("ID")}: {entity.uniprotAcc}
-                        </div>
+                        {entity.uniprotAcc && (
+                            <div>
+                                {i18n.t("UniProt")}: {entity.uniprotAcc}
+                            </div>
+                        )}
 
                         {entity.altNames.length !== 0 && (
                             <div>
@@ -40,10 +42,15 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
     }, [row.entities]);
 
     return (
-        <ul>
-            {entities.map(entity => (
-                <Link key={entity.id} tooltip={entity.tooltip} text={entity.name} />
+        <Wrapper
+            onClickDetails={onClickDetails}
+            moreDetails={moreDetails}
+            row={row}
+            field="entities"
+        >
+            {entities.map((entity, idx) => (
+                <Link key={idx} tooltip={entity.tooltip} text={entity.name} />
             ))}
-        </ul>
+        </Wrapper>
     );
 });

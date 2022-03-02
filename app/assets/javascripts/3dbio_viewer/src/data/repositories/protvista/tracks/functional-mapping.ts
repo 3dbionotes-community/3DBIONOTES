@@ -34,11 +34,6 @@ interface Cv19FunctionalMappingPPITrack extends Cv19BaseTrack {
     data: Cv19FunctionalAnnotation[];
 }
 
-interface _Cv19GenomicVariantsTrack extends Cv19BaseTrack {
-    track_name: "Genomic_Variants_CNCB";
-    data: Cv19GenomicVariantsAnnotation[];
-}
-
 interface Cv19DiamondDrugScreeningTrack extends Cv19BaseTrack {
     track_name: "Diamond_drug_screening";
     data: Cv19DiamondDrugScreeningAnnotation[];
@@ -53,22 +48,6 @@ export interface Cv19FunctionalAnnotation {
     color: string;
     description: string;
     type: string;
-}
-
-export interface Cv19GenomicVariantsAnnotation {
-    mutationType: string;
-    mutationEffect: string;
-    begin: number;
-    end: number;
-    wildtype: string;
-    variation: string;
-    numberOfViruses: number;
-    reportedProtChange: string;
-    genomicPosition: number;
-    originalGenomic: string;
-    newGenomic: string;
-    evidenceLevel: string;
-    xrefs: Array<{ name: string; id: string; url: string }>;
 }
 
 export interface Cv19DiamondDrugScreeningAnnotation {

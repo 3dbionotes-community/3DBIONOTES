@@ -4,17 +4,17 @@
 
 "@3dbionotes/pdbe-molstar@1.2.1-beta.1":
   version "1.2.1-beta.1"
-  resolved "https://registry.yarnpkg.com/@3dbionotes/pdbe-molstar/-/pdbe-molstar-1.2.1-beta.1.tgz#d248aa37f45b9d68b7b6d72ced8f26efd2332bed"
+  resolved "https://registry.npmjs.org/@3dbionotes/pdbe-molstar/-/pdbe-molstar-1.2.1-beta.1.tgz#d248aa37f45b9d68b7b6d72ced8f26efd2332bed"
   integrity sha512-4zgA9fj6gbmHy/3NlTqxkUw9bvTLVA4RtFCTv8XCB2VOpoVktYSKjYJ79oKiKd4/AxqKk8F4MfPB2dmuOqCcCQ==
   dependencies:
     lit-element "^2.2.1"
     lodash "^4.17.21"
     molstar "^1.1.1"
 
-"@3dbionotes/protvista-pdb@2.0.1-beta.8":
-  version "2.0.1-beta.8"
-  resolved "https://registry.npmjs.org/@3dbionotes/protvista-pdb/-/protvista-pdb-2.0.1-beta.8.tgz#6e1a98b2a9c48c7b5215b707593dcd0073071c9c"
-  integrity sha512-gFEN8texfiniCs3YlLT9Dr72+zxbB+oZrtuAfAhax/jlZJO5B6lOeVT5JDtC76hUd4YRZQAF9bZbk/TWWqgwiA==
+"@3dbionotes/protvista-pdb@2.0.1-beta.9":
+  version "2.0.1-beta.9"
+  resolved "https://registry.npmjs.org/@3dbionotes/protvista-pdb/-/protvista-pdb-2.0.1-beta.9.tgz#331fd707abdaa7f1af429f7692e09447c913b01f"
+  integrity sha512-Xcp3xb9wYPBDxBnyASbBiy/Rxbz5jSeqcK6af2H49zhnp+4zD+HO90+y23/j191HG/BHB99XljvCDyHvcsKGBw==
   dependencies:
     lodash-es "^4.17.11"
     protvista-filter "2.0.0"

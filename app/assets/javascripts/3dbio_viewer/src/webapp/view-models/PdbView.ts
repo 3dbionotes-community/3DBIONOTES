@@ -7,6 +7,7 @@ import { Pdb } from "../../domain/entities/Pdb";
 import { Shape } from "../../domain/entities/Shape";
 import { hasFragments, Subtrack, Track } from "../../domain/entities/Track";
 import { Variant, Variants } from "../../domain/entities/Variant";
+import { GenericTooltip } from "../components/protvista/GenericTooltip";
 import { BlockDef } from "../components/protvista/Protvista.types";
 import { Tooltip } from "../components/protvista/Tooltip";
 import i18n from "../utils/i18n";
@@ -107,7 +108,9 @@ export function getPdbView(
                   ...pdb.variants,
                   variants: pdb.variants.variants.map(variant => ({
                       ...variant,
-                      tooltipContent: variant.description,
+                      tooltipContent: renderToString(
+                          React.createElement(GenericTooltip, { items: variant.info })
+                      ),
                   })),
               }
             : undefined,

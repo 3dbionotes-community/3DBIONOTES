@@ -5,19 +5,25 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-01-14T13:03:37.170Z\n"
-"PO-Revision-Date: 2022-01-14T13:03:37.170Z\n"
+"POT-Creation-Date: 2022-02-24T12:51:21.751Z\n"
+"PO-Revision-Date: 2022-02-24T12:51:21.751Z\n"
 
-msgid "Known Proteins"
+msgid "Antibodies"
 msgstr ""
 
-msgid "Authors"
+msgid "Nanobodies"
 msgstr ""
 
-msgid "Released"
+msgid "Sybodies"
 msgstr ""
 
-msgid "Go to Viewer"
+msgid "PDB-REDO"
+msgstr ""
+
+msgid "SARS-CoV-2 in structure databases"
+msgstr ""
+
+msgid "View more"
 msgstr ""
 
 msgid "Title"
@@ -29,40 +35,19 @@ msgstr ""
 msgid "EMDB"
 msgstr ""
 
-msgid "Entity"
+msgid "Entities"
 msgstr ""
 
 msgid "Ligands"
 msgstr ""
 
-msgid "Specimen"
-msgstr ""
-
-msgid "Comp. Model"
-msgstr ""
-
-msgid "PDB-Redo"
-msgstr ""
-
-msgid "Isolde"
-msgstr ""
-
-msgid "Refmac"
-msgstr ""
-
-msgid "Experiment"
-msgstr ""
-
-msgid "Pocket"
+msgid "Organisms"
 msgstr ""
 
 msgid "Details"
 msgstr ""
 
-msgid "Entities"
-msgstr ""
-
-msgid "Organisms"
+msgid "Filter"
 msgstr ""
 
 msgid "Export"
@@ -74,16 +59,64 @@ msgstr ""
 msgid "Save as JSON"
 msgstr ""
 
-msgid "Search proteins"
+msgid "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
+msgstr ""
+
+msgid "Examples"
+msgstr ""
+
+msgid "Sample"
+msgstr ""
+
+msgid "Macromolecules"
+msgstr ""
+
+msgid "Assembly"
+msgstr ""
+
+msgid "Exp. System"
+msgstr ""
+
+msgid "UniProt Ids"
+msgstr ""
+
+msgid "Genes"
+msgstr ""
+
+msgid "Biological Function"
+msgstr ""
+
+msgid "Biological Process"
+msgstr ""
+
+msgid "Cell Component"
+msgstr ""
+
+msgid "Publication"
 msgstr ""
 
 msgid "ID"
+msgstr ""
+
+msgid "Authors"
+msgstr ""
+
+msgid "Journal"
+msgstr ""
+
+msgid "Abstract"
+msgstr ""
+
+msgid "Date"
 msgstr ""
 
 msgid "Method"
 msgstr ""
 
 msgid "Resolution"
+msgstr ""
+
+msgid "UniProt"
 msgstr ""
 
 msgid "Alt Names"
@@ -111,4 +144,13 @@ msgid "Common name"
 msgstr ""
 
 msgid "Keywords"
+msgstr ""
+
+msgid "PDB-Redo"
+msgstr ""
+
+msgid "Isolde"
+msgstr ""
+
+msgid " and {{overflow}} more..."
 msgstr ""
