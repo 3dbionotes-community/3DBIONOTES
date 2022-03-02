@@ -11,6 +11,7 @@ import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
 import { useAppContext } from "../../contexts/app-context";
 import { ViewMoreDialog } from "./ViewMoreDialog";
 import { useBooleanState } from "../../hooks/useBoolean";
+import { sendAnalytics } from "../../../utils/analytics";
 
 export interface StructuresTableProps {}
 
@@ -34,6 +35,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
 
     const setSearch = React.useCallback((value: string) => {
         setPage(0);
+        sendAnalytics({ type: "event", category: "subsearch", action: value });
         setSearch0(value);
     }, []);
 
