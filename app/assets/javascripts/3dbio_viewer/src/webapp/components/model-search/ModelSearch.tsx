@@ -96,9 +96,10 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const searchFromEv = useCallbackFromEventValue(searchFromString);
     const startSearch = useDebounce(searchFromEv, 200);
     const setInputValue = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue0(event.target.value);
+        const changedInputValue = event.target.value;
+        setInputValue0(changedInputValue);
         setFormState({data: [], hasMore: true, startIndex: 0, itemsCount: 0});
-        if(event.target.value !== "") {
+        if(changedInputValue !== "") {
             startSearch(event);
         }
     }, [startSearch]);
@@ -114,6 +115,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         return acc;
                     }
                 }, []);
+
                 const newState = {
                     ...prevForm,
                     data: newItems,
@@ -122,10 +124,15 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                 if (newState.itemsCount >= 300) {
                     newState.hasMore = false;
                 }
-                return (newState)
+                return newState;
             });
         }
     }, [searchState]);
+
+    React.useEffect(() => {
+        //reset the infinite scroll and search when the filter is changed
+        setFormState({data: [], hasMore: true, startIndex: 0, itemsCount: 0});
+    }, [modelTypeState]);
 
     React.useEffect(() => {
         //this useEffect is so that if the startIndex changes (the user gets to the end of the scrollDiv), the search is triggered
@@ -185,7 +192,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                 </div>
 
                 <div className="results">
-                {formState.data.length > 0 && (
+                {formState.data.length > 0 && inputValue !== "" && (
                         <React.Fragment>
                             <InfiniteScroll
                               style={{flexDirection: "row", display: "flex", flexWrap: "wrap"}}
@@ -216,7 +223,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 });
 
 const initialModelTypeState: ModelTypeFilter = {
-    emdb: false,
-    pdb: false,
+    emdb: true,
+    pdb: true,
 };
 
