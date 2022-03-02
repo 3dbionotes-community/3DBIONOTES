@@ -4,7 +4,7 @@ import { MenuItem, MenuList, Checkbox } from "@material-ui/core";
 import { GridMenu } from "@material-ui/data-grid";
 import styled from "styled-components";
 
-export const modelTypeKeys = ["emdb", "pdb" ] as const;
+export const modelTypeKeys = ["emdb", "pdb"] as const;
 
 type ModelTypeKey = typeof modelTypeKeys[number];
 

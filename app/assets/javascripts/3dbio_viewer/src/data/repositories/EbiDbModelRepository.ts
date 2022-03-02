@@ -36,7 +36,6 @@ export class EbiDbModelRepository implements DbModelRepository {
         const searchAllTypes = !options.type;
         const searchPdb = searchAllTypes || options.type === "pdb";
         const searchEmdb = searchAllTypes || options.type === "emdb";
-        console.log(options.startIndex)
         const pdbModels = getPdbModels(searchPdb, config.pdb, options.query, options.startIndex);
         const emdbModels = getPdbModels(searchEmdb, config.emdb, options.query, options.startIndex);
         return Future.join2(emdbModels, pdbModels).map(collections =>

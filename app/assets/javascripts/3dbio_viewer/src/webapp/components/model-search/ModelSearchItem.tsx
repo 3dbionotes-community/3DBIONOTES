@@ -1,5 +1,5 @@
 import { withStyles, Tooltip } from "@material-ui/core";
-import InfoIcon from '@material-ui/icons/Info';
+import InfoIcon from "@material-ui/icons/Info";
 import classnames from "classnames";
 import React from "react";
 import ReactImageFallback from "react-image-fallback";
@@ -55,7 +55,7 @@ export const ModelSearchItem: React.FC<{
             </div>
 
             <div className="id">
-            {item.id}
+                {item.id}
                 <HtmlTooltip title={description} style={tooltipStyles.icon}>
                     <InfoIcon />
                 </HtmlTooltip>
@@ -104,5 +104,6 @@ const HtmlTooltip = withStyles(theme => ({
     },
 }))(Tooltip);
 
-const tooltipStyles = { 
-    icon: { color: "#123546", marginLeft: 5 }};
+const tooltipStyles = {
+    icon: { color: "#123546", marginLeft: 5 },
+};

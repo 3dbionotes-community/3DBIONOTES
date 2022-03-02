@@ -19,7 +19,7 @@ import { useAppContext } from "../AppContext";
 import "./ModelSearch.css";
 import { ModelSearchItem } from "./ModelSearchItem";
 import { ModelUpload } from "../model-upload/ModelUpload";
-import { ModelSearchFilterMenu, ModelTypeFilter, modelTypeKeys  } from "./ModelSearchFilterMenu";
+import { ModelSearchFilterMenu, ModelTypeFilter, modelTypeKeys } from "./ModelSearchFilterMenu";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export interface ModelSearchProps {
@@ -30,11 +30,18 @@ export interface ModelSearchProps {
 
 type ModelSearchType = DbModel["type"] | "all";
 
-interface FormState { 
+type SearchDataState<Data> =
+    | { type: "empty" }
+    | { type: "searching" }
+    | { type: "results"; data: Data };
+
+type SearchState = SearchDataState<DbModelCollection>;
+
+interface FormState {
     startIndex: number;
     hasMore: boolean;
     itemsCount: number;
-    data: DbModel[]; 
+    data: DbModel[];
 }
 
 export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
@@ -52,26 +59,19 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const [modelTypeState, setModelTypeState] = React.useState<ModelTypeFilter>(
         initialModelTypeState
     );
+    const [searchState, setSearchState] = React.useState<SearchState>({ type: "empty" });
+    const [inputValue, setInputValue0] = React.useState<string>("");
     const [isUploadOpen, { enable: openUpload, disable: closeUpload }] = useBooleanState(false);
     const selectedFilterNames = modelTypeKeys.filter(key => modelTypeState[key]);
     const whichPlaceholder =
         selectedFilterNames.length === 1 && selectedFilterNames[0] ? selectedFilterNames[0] : "all";
-    
+
     const [formState, setFormState] = React.useState<FormState>({
         startIndex: 0,
         hasMore: true,
         itemsCount: 0,
-        data: []
+        data: [],
     });
-
-     type SearchDataState<Data> =
-     | { type: "empty" }
-     | { type: "searching" }
-     | { type: "results"; data: Data };
- 
- type SearchState = SearchDataState<DbModelCollection>;
-    const [searchState, setSearchState] = React.useState<SearchState>({ type: "empty" });
-    const [inputValue, setInputValue0] = React.useState<string>("");
 
     const search = React.useCallback(
         (query: string) => {
@@ -95,26 +95,31 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const searchFromString = useCallbackEffect(search);
     const searchFromEv = useCallbackFromEventValue(searchFromString);
     const startSearch = useDebounce(searchFromEv, 200);
-    const setInputValue = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        const changedInputValue = event.target.value;
-        setInputValue0(changedInputValue);
-        setFormState({data: [], hasMore: true, startIndex: 0, itemsCount: 0});
-        if(changedInputValue !== "") {
-            startSearch(event);
-        }
-    }, [startSearch]);
+    const setInputValue = React.useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            const changedInputValue = event.target.value;
+            setInputValue0(changedInputValue);
+            setFormState({ data: [], hasMore: true, startIndex: 0, itemsCount: 0 });
+            if (changedInputValue !== "") {
+                startSearch(event);
+            }
+        },
+        [startSearch]
+    );
 
     React.useEffect(() => {
-        if(searchState.type === "results") {
+        if (searchState.type === "results") {
             setFormState((prevForm: any) => {
-                const newItems = prevForm.data.concat(searchState.data).reduce((acc: DbModelCollection, current: DbModel) => {
-                    const x = acc.find(item => item.id === current.id);
-                    if (!x) {
-                        return acc.concat([current]);
-                    } else {
-                        return acc;
-                    }
-                }, []);
+                const newItems = prevForm.data
+                    .concat(searchState.data)
+                    .reduce((acc: DbModelCollection, current: DbModel) => {
+                        const x = acc.find(item => item.id === current.id);
+                        if (!x) {
+                            return acc.concat([current]);
+                        } else {
+                            return acc;
+                        }
+                    }, []);
 
                 const newState = {
                     ...prevForm,
@@ -131,13 +136,13 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 
     React.useEffect(() => {
         //reset the infinite scroll and search when the filter is changed
-        setFormState({data: [], hasMore: true, startIndex: 0, itemsCount: 0});
+        setFormState({ data: [], hasMore: true, startIndex: 0, itemsCount: 0 });
     }, [modelTypeState]);
 
     React.useEffect(() => {
         //this useEffect is so that if the startIndex changes (the user gets to the end of the scrollDiv), the search is triggered
-        if(inputValue !== "") {
-            search(inputValue); 
+        if (inputValue !== "") {
+            search(inputValue);
         }
     }, [formState.startIndex, inputValue, search]);
 
@@ -145,7 +150,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
         if (formState.itemsCount <= 300) {
             setFormState(prevForm => ({ ...prevForm, startIndex: prevForm.startIndex + 30 }));
         }
-    }
+    };
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
@@ -188,34 +193,30 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                             <CircularProgress />
                         </div>
                     )}
-                   
                 </div>
 
                 <div className="results">
-                {formState.data.length > 0 && inputValue !== "" && (
+                    {formState.data.length > 0 && inputValue !== "" && (
                         <React.Fragment>
                             <InfiniteScroll
-                              style={{flexDirection: "row", display: "flex", flexWrap: "wrap"}}
-                              dataLength={formState.data.length} //This is important field to render the next data
-                              next={fetchMoreData}
-                              hasMore={formState.hasMore}
-                              scrollableTarget="scrollableDiv"
-                              loader={<p>Loading....</p>}
-                              endMessage={
-                                  <p style={{ textAlign: "center" }}>
-                                      <b>End of EMDBs/PDBs</b>
-                                  </p>
-                              }
-                          >
+                                style={{ flexDirection: "row", display: "flex", flexWrap: "wrap" }}
+                                dataLength={formState.data.length}
+                                next={fetchMoreData}
+                                hasMore={formState.hasMore}
+                                scrollableTarget="scrollableDiv"
+                                loader={<p>Loading....</p>}
+                                endMessage={
+                                    <p style={{ textAlign: "center" }}>
+                                        <b>End of EMDBs/PDBs</b>
+                                    </p>
+                                }
+                            >
                                 {formState.data.map((item, idx) => (
                                     <ModelSearchItem key={idx} item={item} onSelect={onSelect} />
                                 ))}
-
-                             
-                          </InfiniteScroll>
-                            
-
-                        </React.Fragment>)}
+                            </InfiniteScroll>
+                        </React.Fragment>
+                    )}
                 </div>
             </DialogContent>
         </Dialog>
@@ -226,4 +227,3 @@ const initialModelTypeState: ModelTypeFilter = {
     emdb: true,
     pdb: true,
 };
-
