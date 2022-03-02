@@ -118,7 +118,7 @@ export class BionotesNetworkRepository implements NetworkRepository {
 
     private waitForCompletion(statusUrl: string, onProgress: OnProgress): FutureData<void> {
         return getFromUrl<NetworkStatusResponse>(statusUrl).flatMap(data => {
-            if (data.step === null || data.status === null) {
+            if (data.step === null || data.status === null || data.status < 0) {
                 return Future.error({ message: i18n.t("Error on network job") });
             } else {
                 onProgress({ totalSteps: 2, currentStep: data.step, value: data.status });

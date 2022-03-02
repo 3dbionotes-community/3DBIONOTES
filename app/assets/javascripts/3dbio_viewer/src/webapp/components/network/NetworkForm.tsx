@@ -49,7 +49,6 @@ const NetworkForm: React.FC<NetworkFormProps> = React.memo(props => {
         const { currentStep, totalSteps, value } = progress;
         const newValue =
             currentStep < 1 ? 0 : 100 * ((currentStep - 1) / totalSteps) + value / totalSteps;
-        console.debug(progress);
         setState({ type: "uploading", progressValue: newValue });
     }, []);
 
@@ -110,8 +109,8 @@ const NetworkForm: React.FC<NetworkFormProps> = React.memo(props => {
                 }}
             />
             <IncludeNeighborsCheckbox
-                checkedValue={networkForm.includeNeighboursWithStructuralData}
-                onCheckboxChange={() =>
+                checked={networkForm.includeNeighboursWithStructuralData}
+                onChange={() =>
                     setNetworkForm({
                         ...networkForm,
                         includeNeighboursWithStructuralData: !networkForm.includeNeighboursWithStructuralData,
