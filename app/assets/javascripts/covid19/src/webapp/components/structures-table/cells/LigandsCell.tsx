@@ -1,6 +1,7 @@
 import React from "react";
 import i18n from "../../../../utils/i18n";
-import { CellProps, styles } from "../Columns";
+import { BadgeLink } from "../BadgeLink";
+import { CellProps, styles as columnsStyles } from "../Columns";
 import { Link } from "../Link";
 import { Wrapper } from "./Wrapper";
 
@@ -29,7 +30,11 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
                         )}
 
                         {ligand.imageLink && (
-                            <img alt={ligand.id} src={ligand.imageLink} style={styles.image} />
+                            <img
+                                alt={ligand.id}
+                                src={ligand.imageLink}
+                                style={columnsStyles.image}
+                            />
                         )}
                     </React.Fragment>
                 ),
@@ -45,13 +50,23 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
             field="ligands"
         >
             {ligands.map(ligand => (
-                <Link
-                    key={ligand.id}
-                    tooltip={ligand.tooltip}
-                    url={ligand.url}
-                    text={`${ligand.name} (${ligand.id})`}
-                />
+                <>
+                    <Link
+                        key={ligand.id}
+                        tooltip={ligand.tooltip}
+                        url={ligand.url}
+                        text={`${ligand.name} (${ligand.id})`}
+                    />
+                    <BadgeLink style={styles.badgeLink} key={""} url={""} icon="viewer" />
+                </>
             ))}
         </Wrapper>
     );
 });
+
+const styles = {
+    badgeLink: {
+        display: "inline-block",
+        marginLeft: 5,
+    },
+};
