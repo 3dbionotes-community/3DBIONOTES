@@ -131,7 +131,7 @@ const Container = styled.div`
 `;
 
 const ImgContainer = styled.div`
-    margin-right: 10px;
+    margin-right: 20px;
     & > div:nth-of-type(2) {
         padding-top: 20px;
     }
