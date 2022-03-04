@@ -3,37 +3,21 @@ import styled from "styled-components";
 import { HtmlTooltip } from "./HtmlTooltip";
 import { styles } from "./Columns";
 import { Typography } from "@material-ui/core";
-import { sendAnalytics } from "../../../utils/analytics";
 
 export const NoWrapTypography = styled(Typography)`
     &&& {
         font-size: 0.75rem;
     }
 `;
-/*
-I only want to track the google anayltics if the text is undefined meaning it's a PDB eye only 
-*/
+
 export const Link: React.FC<LinkProps> = React.memo(props => {
     const { text, url, tooltip, children, style } = props;
-  const sendPDBAnalytics = () => { 
-      console.log("hello")
-      console.log(text)
-      console.log(tooltip)
-      console.log(url)
-      console.log(children)
-      if(text === undefined && tooltip === undefined) {
-          //it's a pdb
-        sendAnalytics({ type: "event", category: "selectProteoma", action: "proteinId" });
-      }
-  }
-  //href={url}
     if (props.url) {
         if (tooltip === undefined || typeof tooltip === "string") {
             return (
                 <a
                     title={tooltip}
                     href={url}
-                    onClick={sendPDBAnalytics}
                     target="_blank"
                     rel="noreferrer"
                     style={{ ...styles.link, ...style }}
