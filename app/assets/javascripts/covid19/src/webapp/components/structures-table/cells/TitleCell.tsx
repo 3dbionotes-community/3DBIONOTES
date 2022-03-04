@@ -2,8 +2,9 @@ import React from "react";
 import { CellProps } from "../Columns";
 import { BadgeLink } from "../BadgeLink";
 
+export const urlPrefix = "/ws/viewer/#/";
+
 export const TitleCell: React.FC<CellProps> = React.memo(props => {
-    const urlPrefix = "/ws/viewer/#/";
     const structure = props.row;
     const queryLinkToUse =
         urlPrefix + (structure.emdb?.id.toUpperCase() || structure.pdb?.id.toLowerCase());
