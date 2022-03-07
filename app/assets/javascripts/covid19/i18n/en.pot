@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-02-24T12:51:21.751Z\n"
-"PO-Revision-Date: 2022-02-24T12:51:21.751Z\n"
+"POT-Creation-Date: 2022-03-07T10:52:22.655Z\n"
+"PO-Revision-Date: 2022-03-07T10:52:22.655Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -63,6 +63,9 @@ msgid "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
 msgstr ""
 
 msgid "Examples"
+msgstr ""
+
+msgid "No {{name}} found"
 msgstr ""
 
 msgid "Sample"
