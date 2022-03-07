@@ -2,7 +2,6 @@ import React from "react";
 import { useViewerState } from "./viewer-selector/viewer-selector.hooks";
 import { RootViewerContents } from "./RootViewerContents";
 import { sendAnalytics } from "../utils/analytics";
-import { useParams } from "react-router";
 
 export interface RootViewerProps {
     from: "selector" | "uploaded" | "network";

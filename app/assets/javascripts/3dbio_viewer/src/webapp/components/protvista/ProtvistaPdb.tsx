@@ -14,7 +14,6 @@ export interface ProtvistaPdbProps {
 
 export const ProtvistaPdb: React.FC<ProtvistaPdbProps> = React.memo(props => {
     const { pdb, block, showAllTracks, onAction } = props;
-    console.log(block);
     const elementRef = React.useRef<ProtvistaTrackElement>(null);
 
     const pdbView = React.useMemo(() => {
