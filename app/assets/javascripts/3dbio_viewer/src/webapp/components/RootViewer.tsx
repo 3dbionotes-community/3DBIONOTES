@@ -1,33 +1,14 @@
 import React from "react";
-import { Viewers } from "./viewers/Viewers";
-import { MolecularStructure } from "./molecular-structure/MolecularStructure";
-import { ViewerSelector } from "./viewer-selector/ViewerSelector";
 import { useViewerState } from "./viewer-selector/viewer-selector.hooks";
-import { usePdbInfo } from "../hooks/loader-hooks";
+import { RootViewerContents } from "./RootViewerContents";
 
-export const RootViewer: React.FC = React.memo(() => {
-    const [viewerState, { setSelection }] = useViewerState();
-    const { selection } = viewerState;
-    const { pdbInfo, setLigands } = usePdbInfo(selection);
+export interface RootViewerProps {
+    from: "selector" | "uploaded" | "network";
+}
 
-    return (
-        <div id="viewer">
-            <ViewerSelector
-                pdbInfo={pdbInfo}
-                selection={selection}
-                onSelectionChange={setSelection}
-            />
+export const RootViewer: React.FC<RootViewerProps> = React.memo(props => {
+    const { from } = props;
+    const viewerState = useViewerState({ type: from });
 
-            <div id="left">
-                <MolecularStructure
-                    pdbInfo={pdbInfo}
-                    selection={selection}
-                    onSelectionChange={setSelection}
-                    onLigandsLoaded={setLigands}
-                />
-            </div>
-
-            <div id="right">{pdbInfo && <Viewers pdbInfo={pdbInfo} selection={selection} />}</div>
-        </div>
-    );
+    return <RootViewerContents viewerState={viewerState} />;
 });

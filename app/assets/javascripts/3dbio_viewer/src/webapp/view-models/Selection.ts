@@ -1,7 +1,6 @@
 import { Selector } from "@3dbionotes/pdbe-molstar/lib";
 import _ from "lodash";
 import { Ligand } from "../../domain/entities/Ligand";
-import { PdbId } from "../../domain/entities/Pdb";
 import { PdbInfo } from "../../domain/entities/PdbInfo";
 import { Maybe } from "../../utils/ts-utils";
 
@@ -21,15 +20,34 @@ export type Type = "pdb" | "emdb";
 
 export type ActionType = "select" | "append";
 
-export interface Selection {
-    main: { pdb?: DbItem; emdb?: DbItem };
-    overlay: Array<DbItem>;
+export interface BaseSelection {
     chainId: Maybe<string>;
     ligandId: Maybe<string>;
 }
 
-export const emptySelection: Selection = {
-    main: {},
+export interface FreeSelection extends BaseSelection {
+    type: "free";
+    main: { pdb: Maybe<DbItem>; emdb: Maybe<DbItem> };
+    overlay: Array<DbItem>;
+}
+
+export interface UploadDataSelection extends BaseSelection {
+    type: "uploadData";
+    token: string;
+}
+
+export interface NetworkSelection extends BaseSelection {
+    type: "network";
+    token: string;
+}
+
+export type Selection = FreeSelection | UploadDataSelection | NetworkSelection;
+
+// main: { pdb?: DbItem; emdb?: DbItem; token?: string; networkId?: string };
+
+export const emptySelection: FreeSelection = {
+    type: "free",
+    main: { pdb: undefined, emdb: undefined },
     overlay: [],
     chainId: undefined,
     ligandId: undefined,
@@ -58,11 +76,11 @@ export function getItemSelector(item: DbItem): Selector {
 }
 
 export function getMainPdbId(selection: Selection): Maybe<string> {
-    return selection.main.pdb?.id;
+    return selection.type === "free" ? selection.main.pdb?.id : undefined;
 }
 
 export function getMainEmdbId(selection: Selection): Maybe<string> {
-    return selection.main.emdb?.id;
+    return selection.type === "free" ? selection.main.emdb?.id : undefined;
 }
 
 export function getChainId(selection: Selection): Maybe<string> {
@@ -88,7 +106,11 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
     const overlayIds = overlay.split(mainSeparator);
 
     const selection: Selection = {
-        main: { pdb: buildDbItem(mainPdbRichId), emdb: buildDbItem(mainEmdbRichId) },
+        type: "free",
+        main: {
+            pdb: buildDbItem(mainPdbRichId),
+            emdb: buildDbItem(mainEmdbRichId),
+        },
         overlay: _.compact(overlayIds.map(buildDbItem)),
         chainId: chainId,
         ligandId: ligandId,
@@ -97,7 +119,17 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
     return selection;
 }
 
+export function getSelectionFromUploadDataToken(token: string, chainId: Maybe<string>): Selection {
+    return { ...emptySelection, type: "uploadData", token, chainId };
+}
+
+export function getSelectionFromNetworkToken(token: string, chainId: Maybe<string>): Selection {
+    return { ...emptySelection, type: "network", token, chainId };
+}
+
 export function getStringFromSelection(selection: Selection): string {
+    if (selection.type !== "free") return "";
+
     const { main, overlay, chainId, ligandId } = selection;
     const pdb = getItemParam(main.pdb);
     const pdbWithChainAndLigand = _([pdb, chainId, ligandId])
@@ -114,7 +146,8 @@ export function getStringFromSelection(selection: Selection): string {
 /* Updaters */
 
 export function setMainPdb(selection: Selection, pdbId: Maybe<string>): Selection {
-    if (!selection.main || selection.main?.pdb?.id === pdbId) return selection;
+    if (selection.type !== "free" || !selection.main || selection.main?.pdb?.id === pdbId)
+        return selection;
 
     return {
         ...selection,
@@ -126,7 +159,8 @@ export function setMainPdb(selection: Selection, pdbId: Maybe<string>): Selectio
 }
 
 export function setMainEmdb(selection: Selection, emdbId: Maybe<string>): Selection {
-    if (!selection.main || selection.main?.emdb?.id === emdbId) return selection;
+    if (selection.type !== "free" || !selection.main || selection.main?.emdb?.id === emdbId)
+        return selection;
 
     return {
         ...selection,
@@ -138,6 +172,7 @@ export function setMainEmdb(selection: Selection, emdbId: Maybe<string>): Select
 }
 
 export function removeOverlayItem(selection: Selection, id: string): Selection {
+    if (selection.type !== "free") return selection;
     const newOverlay = selection.overlay.map(item => (item.id === id ? null : item));
     return { ...selection, overlay: _.compact(newOverlay) };
 }
@@ -147,6 +182,7 @@ export function setOverlayItemVisibility(
     id: string,
     visible: boolean
 ): Selection {
+    if (selection.type !== "free") return selection;
     const newOverlay = selection.overlay.map(item =>
         item.id === id ? { ...item, visible } : item
     );
@@ -158,6 +194,7 @@ export function setMainItemVisibility(
     id: string,
     visible: boolean
 ): Selection {
+    if (selection.type !== "free") return selection;
     const { main } = selection;
     if (!main) return selection;
     const newMainPdb = main.pdb?.id === id ? { ...main.pdb, visible } : main.pdb;
@@ -193,8 +230,8 @@ export function diffDbItems(newItems: DbItem[], oldItems: DbItem[]) {
     return { added, removed, updated };
 }
 
-export function getItems(selection: Selection | undefined): DbItem[] {
-    return selection
+export function getItems(selection: Maybe<Selection>): DbItem[] {
+    return selection && selection.type === "free"
         ? _.concat(
               selection.main ? _.compact([selection.main.pdb, selection.main.emdb]) : [],
               selection.overlay
@@ -224,22 +261,39 @@ export function getItemParam(item: DbItem | undefined): string | undefined {
 }
 
 export function runAction(selection: Selection, action: ActionType, item: DbItem): Selection {
-    switch (action) {
-        case "select": {
-            const newMain: Selection["main"] =
-                item.type === "pdb"
-                    ? { ...selection.main, pdb: { type: "pdb", id: item.id, visible: true } }
-                    : { ...selection.main, emdb: { type: "emdb", id: item.id, visible: true } };
+    const hasMain = Boolean(selection.type === "free" && selection.main[item.type]);
+    const action2 = action === "append" && !hasMain ? "select" : action;
+    const baseMain = selection.type === "free" ? selection.main : emptySelection.main;
+    const baseOverlay = selection.type === "free" ? selection.overlay : emptySelection.overlay;
 
-            return { main: newMain, overlay: [], chainId: undefined, ligandId: undefined };
+    switch (action2) {
+        case "select": {
+            const newMain: FreeSelection["main"] =
+                item.type === "pdb"
+                    ? {
+                          ...baseMain,
+                          pdb: { type: "pdb", id: item.id, visible: true },
+                      }
+                    : {
+                          ...baseMain,
+                          emdb: { type: "emdb", id: item.id, visible: true },
+                      };
+
+            return {
+                type: "free",
+                main: newMain,
+                overlay: [],
+                chainId: undefined,
+                ligandId: undefined,
+            };
         }
         case "append": {
-            const newOverlay: Selection["overlay"] = _.uniqBy(
-                [...selection.overlay, { type: "pdb", id: item.id, visible: true }],
+            const newOverlay: FreeSelection["overlay"] = _.uniqBy(
+                [...baseOverlay, { type: item.type, id: item.id, visible: true }],
                 getDbItemUid
             );
 
-            return { ...selection, overlay: newOverlay };
+            return { ...selection, type: "free", overlay: newOverlay, main: baseMain };
         }
     }
 }
@@ -259,23 +313,6 @@ export function getMainChanges(
         pdbId: newPdbId != getMainPdbId(prevSelection) ? newPdbId : undefined,
         emdbId: newEmdbId != getMainEmdbId(prevSelection) ? newEmdbId : undefined,
     };
-}
-
-export function getPdbOptions(
-    pdbId: Maybe<PdbId>,
-    chainId: Maybe<string>,
-    chains: Maybe<PdbInfo["chains"]>
-) {
-    if (!pdbId || !chains) return;
-
-    const defaultChain = chains[0];
-    const chain = chainId
-        ? _(chains)
-              .keyBy(chain => chain.chainId)
-              .get(chainId, defaultChain)
-        : defaultChain;
-
-    return chain ? { pdbId, proteinId: chain.protein.id, chainId: chain.chainId } : undefined;
 }
 
 export function getSelectedLigand(selection: Selection, pdbInfo: Maybe<PdbInfo>) {

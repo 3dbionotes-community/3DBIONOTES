@@ -127,7 +127,9 @@ function searchFor(
         fieldurl: true,
     };
 
-    const pdbResults = request<ApiSearchResponse>({ url: config.searchUrl, params });
+    const pdbResults = request<ApiSearchResponse>({ url: config.searchUrl, params }).map(
+        res => res.data
+    );
 
     return pdbResults
         .map(res => {

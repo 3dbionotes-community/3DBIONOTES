@@ -20,6 +20,7 @@ import { ModelUpload } from "../model-upload/ModelUpload";
 import { ModelSearchFilterMenu, ModelTypeFilter, modelTypeKeys } from "./ModelSearchFilterMenu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value";
+import { useGoto } from "../../hooks/use-goto";
 
 /* Search PDB/EMDB models from text and model type. As the search items to show are limited,
    we get all the matching models and use an infinite scroll just to render more items. Only a
@@ -101,6 +102,16 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 
     const hasMore = visibleItems.length < allItems.length;
 
+    const goTo = useGoto();
+
+    const goToLoaded = React.useCallback(
+        (options: { token: string }) => {
+            goTo(`/uploaded/${options.token}`);
+            onClose();
+        },
+        [goTo, onClose]
+    );
+
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
             <DialogTitle>
@@ -132,6 +143,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         <ModelUpload
                             title={i18n.t("Upload your atomic structure")}
                             onClose={closeUpload}
+                            onLoaded={goToLoaded}
                         />
                     )}
 

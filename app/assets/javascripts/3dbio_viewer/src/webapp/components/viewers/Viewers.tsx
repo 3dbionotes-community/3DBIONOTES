@@ -1,63 +1,83 @@
 import React from "react";
-import _ from "lodash";
-import { ProtvistaViewer } from "../protvista/ProtvistaViewer";
 import i18n from "../../utils/i18n";
-import styles from "./Viewers.module.css";
-import { JumpToButton } from "../protvista/JumpToButton";
-import { ProfilesButton } from "../protvista/ProfilesButton";
-import { ToolsButton } from "../protvista/ToolsButton";
-import { Selection } from "../../view-models/Selection";
 import { Loader } from "../Loader";
 import { usePdbLoader } from "../../hooks/use-pdb";
-import { blockDefs } from "../protvista/protvista-blocks";
-import { getVisibleBlocks } from "../protvista/Protvista.types";
-import { Pdb } from "../../../domain/entities/Pdb";
-import { useViewerState } from "../viewer-selector/viewer-selector.hooks";
+import { addCustomAnnotationsToPdb, addProteinNetworkToPdb } from "../../../domain/entities/Pdb";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
+import { ViewerState } from "../../view-models/ViewerState";
+import { UploadData } from "../../../domain/entities/UploadData";
+import { Maybe } from "../../../utils/ts-utils";
+import { Annotations } from "../../../domain/entities/Annotation";
+import { ProteinNetwork } from "../../../domain/entities/ProteinNetwork";
+import { PdbViewer } from "./PdbViewer";
+import { goToElement } from "../protvista/JumpToButton";
 
 export interface ViewersProps {
-    selection: Selection;
-    pdbInfo: PdbInfo;
+    viewerState: ViewerState;
+    pdbInfo: Maybe<PdbInfo>;
+    uploadData: Maybe<UploadData>;
+    proteinNetwork: Maybe<ProteinNetwork>;
 }
 
 export const Viewers: React.FC<ViewersProps> = React.memo(props => {
-    const { selection, pdbInfo } = props;
-    const loader = usePdbLoader(selection, pdbInfo);
-    if (!loader) return null;
+    const { viewerState, pdbInfo, uploadData, proteinNetwork } = props;
+    const { selection } = viewerState;
+    const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfo);
 
-    return (
-        <React.Fragment>
-            <Loader state={loader} loadingMsg={i18n.t("Loading data...")} />
-
-            {loader.type === "loaded" && <PdbViewer pdb={loader.data} selection={selection} />}
-        </React.Fragment>
+    const onAddAnnotations = React.useCallback(
+        (annotations: Annotations) => {
+            setPdbLoader(pdbLoader => {
+                if (pdbLoader.type === "loaded") {
+                    const newPdb = addCustomAnnotationsToPdb(pdbLoader.data, annotations);
+                    return { type: "loaded", data: newPdb };
+                } else {
+                    return pdbLoader;
+                }
+            });
+        },
+        [setPdbLoader]
     );
-});
 
-export interface PdbViewerProps {
-    pdb: Pdb;
-    selection: Selection;
-}
+    // Add custom annotations from uploadData
+    React.useEffect(() => {
+        if (pdbLoader.type !== "loaded") return;
 
-export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
-    const { pdb, selection } = props;
-    const [{ profile }, { setProfile }] = useViewerState();
+        setPdbLoader(pdbLoader => {
+            if (pdbLoader.type === "loaded" && uploadData) {
+                const newPdb = addCustomAnnotationsToPdb(pdbLoader.data, uploadData.annotations);
+                return { type: "loaded", data: newPdb };
+            } else {
+                return pdbLoader;
+            }
+        });
+    }, [uploadData, setPdbLoader, pdbLoader.type]);
 
-    const blocks = React.useMemo(() => {
-        return getVisibleBlocks(blockDefs, { pdb, profile });
-    }, [pdb, profile]);
+    // Add data from protein network
+    React.useEffect(() => {
+        if (pdbLoader.type !== "loaded") return;
+
+        setPdbLoader(pdbLoader => {
+            if (pdbLoader.type === "loaded") {
+                if (proteinNetwork) goToElement("proteinInteraction");
+                const newPdb = addProteinNetworkToPdb(pdbLoader.data, proteinNetwork);
+                return { type: "loaded", data: newPdb };
+            } else {
+                return pdbLoader;
+            }
+        });
+    }, [proteinNetwork, setPdbLoader, pdbLoader.type]);
 
     return (
         <React.Fragment>
-            <div className={styles.section}>
-                <div className={styles.actions}>
-                    <ToolsButton />
-                    <ProfilesButton profile={profile} onChange={setProfile} />
-                    <JumpToButton blocks={blocks} />
-                </div>
-            </div>
+            <Loader state={pdbLoader} loadingMsg={i18n.t("Loading data...")} />
 
-            <ProtvistaViewer blocks={blocks} pdb={pdb} selection={selection} />
+            {pdbLoader.type === "loaded" && (
+                <PdbViewer
+                    pdb={pdbLoader.data}
+                    viewerState={viewerState}
+                    onAddAnnotations={onAddAnnotations}
+                />
+            )}
         </React.Fragment>
     );
 });
