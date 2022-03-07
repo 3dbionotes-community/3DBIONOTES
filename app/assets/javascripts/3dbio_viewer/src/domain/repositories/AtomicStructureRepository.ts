@@ -1,8 +1,9 @@
-import { AtomicStructure } from "../entities/AtomicStructure";
+import { AtomicStructure, AtomicStructureMapping } from "../entities/AtomicStructure";
 import { FutureData } from "../entities/FutureData";
 
 export interface AtomicStructureRepository {
-    build(options: BuildOptions): FutureData<AtomicStructure>;
+    get(options: BuildOptions): FutureData<AtomicStructure>;
+    uploadMapping(mapping: AtomicStructureMapping): FutureData<void>;
 }
 
 export interface BuildOptions {

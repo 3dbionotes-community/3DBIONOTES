@@ -14,14 +14,18 @@ export interface ProtvistaPdbProps {
 
 export const ProtvistaPdb: React.FC<ProtvistaPdbProps> = React.memo(props => {
     const { pdb, block, showAllTracks, onAction } = props;
-    console.log(block)
+    console.log(block);
     const elementRef = React.useRef<ProtvistaTrackElement>(null);
 
+    const pdbView = React.useMemo(() => {
+        return getPdbView(pdb, { block, showAllTracks });
+    }, [pdb, block, showAllTracks]);
+
     React.useEffect(() => {
-        const pdbView = getPdbView(pdb, { block, showAllTracks });
-        console.log(pdbView)
         return loadPdbView(elementRef, pdbView, { onAction });
-    }, [pdb, block, showAllTracks, elementRef, onAction]);
+    }, [pdbView, elementRef, onAction]);
+
+    if (_(pdbView.tracks).isEmpty()) return null;
 
     return <protvista-pdb custom-data="true" ref={elementRef}></protvista-pdb>;
 });

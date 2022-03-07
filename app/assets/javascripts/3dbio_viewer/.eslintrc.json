@@ -36,7 +36,7 @@
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/ban-types": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/restrict-template-expressions": "off",
+        "@typescript-eslint/restrict-template-expressions": "warn",
         "react/prop-types": "off",
         "react/display-name": "off"
     },

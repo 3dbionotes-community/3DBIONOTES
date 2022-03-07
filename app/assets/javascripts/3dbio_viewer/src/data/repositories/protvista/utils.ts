@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 export function getName(s: string | undefined) {
-    return (s || "").replace(/_/g, " ");
+    return _.startCase(s || "");
 }
 
 export function getId(name: string): string {

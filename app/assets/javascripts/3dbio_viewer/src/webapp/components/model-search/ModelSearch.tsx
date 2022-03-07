@@ -21,7 +21,7 @@ import "./ModelSearch.css";
 import { ModelSearchItem } from "./ModelSearchItem";
 import { ModelUpload } from "../model-upload/ModelUpload";
 import { sendAnalytics } from "../../utils/analytics";
-
+import { useGoto } from "../../hooks/use-goto";
 
 export interface ModelSearchProps {
     title: string;
@@ -53,10 +53,24 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const [modelType, setModelType] = React.useState<ModelSearchType>("all");
     const [isUploadOpen, { enable: openUpload, disable: closeUpload }] = useBooleanState(false);
     const [searchState, startSearch] = useDbModelSearch(modelType);
+    const goTo = useGoto();
+
+    const goToLoaded = React.useCallback(
+        (options: { token: string }) => {
+            goTo(`/uploaded/${options.token}`);
+            onClose();
+        },
+        [goTo, onClose]
+    );
 
     useEffect(() => {
-        if(isUploadOpen) sendAnalytics({ type: "event", category: "searchMenu", action: "uploadModel", label: "open" });
-        
+        if (isUploadOpen)
+            sendAnalytics({
+                type: "event",
+                category: "searchMenu",
+                action: "uploadModel",
+                label: "open",
+            });
     }, [isUploadOpen]);
 
     return (
@@ -95,6 +109,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         <ModelUpload
                             title={i18n.t("Upload your atomic structure")}
                             onClose={closeUpload}
+                            onLoaded={goToLoaded}
                         />
                     )}
 
@@ -138,7 +153,7 @@ function useDbModelSearch(modelType: ModelSearchType) {
         (query: string) => {
             setSearchState({ type: "searching" });
             sendAnalytics({ type: "event", category: "search", action: "viewer", label: query });
-            
+
             const searchType = modelType === "all" ? undefined : modelType;
             return compositionRoot.searchDbModels
                 .execute({ query, type: searchType })

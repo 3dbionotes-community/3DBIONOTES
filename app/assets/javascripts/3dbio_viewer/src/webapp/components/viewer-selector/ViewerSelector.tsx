@@ -23,17 +23,20 @@ import { useUpdateActions } from "../../hooks/use-update-actions";
 import classnames from "classnames";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { sendAnalytics } from "../../utils/analytics";
+import { UploadData } from "../../../domain/entities/UploadData";
+import { Maybe } from "../../../utils/ts-utils";
 
 interface ViewerSelectorProps {
     pdbInfo: PdbInfo | undefined;
     selection: Selection;
     onSelectionChange(newSelection: Selection): void;
+    uploadData: Maybe<UploadData>;
 }
 
 const actions = { setOverlayItemVisibility, removeOverlayItem, setMainItemVisibility };
 
 export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
-    const { selection, onSelectionChange } = props;
+    const { selection, onSelectionChange, uploadData } = props;
     const chainDropdownProps = useChainDropdown(props);
     const ligandsDropdownProps = useLigandsDropdown(props);
 
@@ -51,32 +54,43 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     );
 
     useEffect(() => {
-        if(isSearchOpen) sendAnalytics({ type: "event", category: "clickMenu", action: "search", label: "view" });
-        
+        if (isSearchOpen)
+            sendAnalytics({
+                type: "event",
+                category: "clickMenu",
+                action: "search",
+                label: "view",
+            });
     }, [isSearchOpen]);
 
     return (
         <div id="viewer-selector">
             <div className="db">
                 <div className="status">
-                    {selection.main && selection.main.pdb && (
-                        <MainItemBox label={i18n.t("PDB")}>
-                            <SelectionItem
-                                selection={selection}
-                                item={selection.main?.pdb}
-                                onVisibilityChange={update.setMainItemVisibility}
-                            />
-                        </MainItemBox>
-                    )}
+                    {uploadData && <div>{uploadData.title}</div>}
 
-                    {selection.main && selection.main.emdb && (
-                        <MainItemBox label={i18n.t("EMDB")} className="emdb">
-                            <SelectionItem
-                                selection={selection}
-                                item={selection.main.emdb}
-                                onVisibilityChange={update.setMainItemVisibility}
-                            />
-                        </MainItemBox>
+                    {selection.type === "free" && (
+                        <>
+                            {selection.main.pdb && (
+                                <MainItemBox label={i18n.t("PDB")}>
+                                    <SelectionItem
+                                        selection={selection}
+                                        item={selection.main?.pdb}
+                                        onVisibilityChange={update.setMainItemVisibility}
+                                    />
+                                </MainItemBox>
+                            )}
+
+                            {selection.main.emdb && (
+                                <MainItemBox label={i18n.t("EMDB")} className="emdb">
+                                    <SelectionItem
+                                        selection={selection}
+                                        item={selection.main.emdb}
+                                        onVisibilityChange={update.setMainItemVisibility}
+                                    />
+                                </MainItemBox>
+                            )}
+                        </>
                     )}
 
                     <button onClick={openSearch}>
@@ -93,15 +107,16 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                 </div>
 
                 <div className="selection">
-                    {selection.overlay.map(item => (
-                        <SelectionItem
-                            key={item.id}
-                            selection={selection}
-                            item={item}
-                            onVisibilityChange={update.setOverlayItemVisibility}
-                            onRemove={update.removeOverlayItem}
-                        />
-                    ))}
+                    {selection.type === "free" &&
+                        selection.overlay.map(item => (
+                            <SelectionItem
+                                key={item.id}
+                                selection={selection}
+                                item={item}
+                                onVisibilityChange={update.setOverlayItemVisibility}
+                                onRemove={update.removeOverlayItem}
+                            />
+                        ))}
                 </div>
             </div>
 
