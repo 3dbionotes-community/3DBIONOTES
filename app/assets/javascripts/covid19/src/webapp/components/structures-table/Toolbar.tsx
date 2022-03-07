@@ -33,25 +33,8 @@ export interface ToolbarProps {
 // Toolbar is called with empty object on initialization
 
 export const Toolbar: React.FC<ToolbarProps | {}> = props => {
-    if (!isNonEmptyObject<ToolbarProps>(props)) return null;
-
-    const {
-        search,
-        setSearch,
-        filterState,
-        setFilterState,
-        gridApi,
-        dataGrid,
-        virtualScrollbarProps,
-        page,
-        pageSize,
-        pageSizes,
-        setPage,
-        setPageSize,
-    } = props;
-
-    const helpText = React.useMemo(
-        () => ({
+    const helpText = React.useMemo(() => {
+        return {
             p: i18n.t(`Write in the searching box one (example: spike) or several
         words in a row (example: spike SARS-CoV-2) to perform the
         search. If you write several words the searching result will
@@ -96,9 +79,25 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
         are included. Long lists contain also a VIEW MORE button
         to check the whole list.`),
             ],
-        }),
-        []
-    );
+        };
+    }, []);
+
+    if (!isNonEmptyObject<ToolbarProps>(props)) return null;
+
+    const {
+        search,
+        setSearch,
+        filterState,
+        setFilterState,
+        gridApi,
+        dataGrid,
+        virtualScrollbarProps,
+        page,
+        pageSize,
+        pageSizes,
+        setPage,
+        setPageSize,
+    } = props;
 
     return (
         <React.Fragment>
@@ -122,8 +121,8 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                                         {helpText.p}
                                     </StyledTypography>
                                     <OrderedList>
-                                        {helpText.ol.map(t => (
-                                            <li>{t}</li>
+                                        {helpText.ol.map((t, idx) => (
+                                            <li key={idx}>{t}</li>
                                         ))}
                                     </OrderedList>
                                 </>
