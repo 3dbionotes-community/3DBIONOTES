@@ -4,7 +4,7 @@ import { FutureData } from "../../domain/entities/FutureData";
 import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
 import { SearchResults } from "../../domain/entities/SearchResults";
 import { Future } from "../../utils/future";
-import { assert, Maybe } from "../../utils/ts-utils";
+import { assert } from "../../utils/ts-utils";
 import { request } from "../request-utils";
 
 const config = {
