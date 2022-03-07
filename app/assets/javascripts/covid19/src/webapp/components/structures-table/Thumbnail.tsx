@@ -4,6 +4,7 @@ import { styles } from "./Columns";
 import { BadgeLink } from "./BadgeLink";
 import { Tooltip } from "./Link";
 import { HtmlTooltip } from "./HtmlTooltip";
+import { urlPrefix } from "./cells/TitleCell";
 
 interface ThumbnailProps {
     type: "pdb" | "emdb";
@@ -12,16 +13,23 @@ interface ThumbnailProps {
 }
 
 export const Thumbnail: React.FC<ThumbnailProps> = React.memo(props => {
-    const { value, tooltip } = props;
+    const { value, tooltip, type } = props;
     const { imageUrl: imageSrc, id: name } = value;
+    const href = urlPrefix + (type === "emdb" ? value.id.toUpperCase() : value.id.toLowerCase());
 
     return (
         <div style={styles.thumbnailWrapper}>
             <HtmlTooltip title={tooltip}>
-                <img alt={name} src={imageSrc} loading="lazy" style={styles.image} />
+                <a href={href} target="_blank" rel="noreferrer">
+                    <img alt={name} src={imageSrc} loading="lazy" style={styles.image} />
+                </a>
             </HtmlTooltip>
 
-            <p>{name}</p>
+            <p>
+                <a href={href} target="_blank" rel="noreferrer" style={styles.link}>
+                    {name}
+                </a>
+            </p>
 
             {value.externalLinks.map(externalLink => (
                 <BadgeLink
