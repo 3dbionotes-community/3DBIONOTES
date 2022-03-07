@@ -3,14 +3,13 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 
 import { Color } from "../../domain/entities/Color";
-import { Pdb } from "../../domain/entities/Pdb";
+import { getCustomTracksFromPdb, Pdb } from "../../domain/entities/Pdb";
 import { Shape } from "../../domain/entities/Shape";
 import { hasFragments, Subtrack, Track } from "../../domain/entities/Track";
 import { Variant, Variants } from "../../domain/entities/Variant";
 import { GenericTooltip } from "../components/protvista/GenericTooltip";
 import { BlockDef } from "../components/protvista/Protvista.types";
 import { Tooltip } from "../components/protvista/Tooltip";
-import i18n from "../utils/i18n";
 
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
 
@@ -47,7 +46,7 @@ export interface TrackView {
     labelType?: "text" | "html";
     overlapping?: boolean;
     data: SubtrackView[];
-    actions: Record<"add", { title: string }>;
+    actions: { add?: { title: string } };
 }
 
 interface SubtrackView {
@@ -81,6 +80,7 @@ export function getPdbView(
         : _.compact(block.tracks.map(trackDef => pdbTracksById[trackDef.id]));
 
     const tracks = _(data)
+        .concat(getCustomTracksFromPdb(block, pdb))
         .map((pdbTrack): TrackView | undefined => {
             const subtracks = getSubtracks(pdb, pdbTrack);
             if (_.isEmpty(subtracks)) return undefined;
@@ -89,11 +89,13 @@ export function getPdbView(
                 ...pdbTrack,
                 data: subtracks,
                 help: pdbTrack.description || "",
-                actions: { add: { title: i18n.t("Upload custom annotations") } },
+                actions: {},
             };
         })
         .compact()
         .value();
+
+    const variants = getVariants(pdb);
 
     return {
         ...pdb,
@@ -101,19 +103,23 @@ export function getPdbView(
         displaySequence: true,
         displayConservation: false,
         expandFirstTrack: false,
-        displayVariants: !!pdb.variants,
+        displayVariants: Boolean(variants),
         tracks,
-        variants: pdb.variants
-            ? {
-                  ...pdb.variants,
-                  variants: pdb.variants.variants.map(variant => ({
-                      ...variant,
-                      tooltipContent: renderToString(
-                          React.createElement(GenericTooltip, { items: variant.info })
-                      ),
-                  })),
-              }
-            : undefined,
+        variants,
+    };
+}
+
+function getVariants(pdb: Pdb): VariantsView | undefined {
+    if (!pdb.variants || _.isEmpty(pdb.variants.variants)) return undefined;
+
+    return {
+        ...pdb.variants,
+        variants: pdb.variants.variants.map(variant => ({
+            ...variant,
+            tooltipContent: renderToString(
+                React.createElement(GenericTooltip, { items: variant.info })
+            ),
+        })),
     };
 }
 

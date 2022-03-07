@@ -10,6 +10,7 @@ export interface Track {
     overlapping?: boolean;
     subtracks: Subtrack[];
     description?: string;
+    isCustom: boolean;
 }
 
 // * @deprecated Should be replaced eventually by SubtrackDefinition
@@ -25,37 +26,6 @@ export interface Subtrack {
     source?: SubtrackDefinition["source"];
     isBlast?: SubtrackDefinition["isBlast"];
     subtype?: SubtrackDefinition["subtype"];
-}
-
-export function addToTrack(options: {
-    tracks: Track[];
-    trackInfo: Pick<Track, "id" | "label">;
-    subtracks: Subtrack[];
-}): Track[] {
-    const { tracks, trackInfo, subtracks } = options;
-    const trackExists = _.some(tracks, track => track.id === trackInfo.id);
-
-    if (trackExists) {
-        return tracks.map(track => {
-            if (track.id === trackInfo.id) {
-                const newSubtracks = _(track.subtracks)
-                    .concat(subtracks)
-                    .groupBy(subtrack => subtrack.type)
-                    .map(subtracks => {
-                        const subtrack = subtracks[0];
-                        if (!subtrack) throw "internal";
-                        return { ...subtrack, locations: _.flatMap(subtracks, st => st.locations) };
-                    })
-                    .value();
-                return { ...track, subtracks: newSubtracks };
-            } else {
-                return track;
-            }
-        });
-    } else {
-        const newTrack: Track = { ...trackInfo, subtracks };
-        return [...tracks, newTrack];
-    }
 }
 
 export function getTotalFeaturesLength(tracks: Track[]): number {

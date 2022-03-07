@@ -6,6 +6,6 @@ export class UploadAtomicStructureUseCase {
     constructor(private atomicStructureRepository: AtomicStructureRepository) {}
 
     execute(options: BuildOptions): FutureData<AtomicStructure> {
-        return this.atomicStructureRepository.build(options);
+        return this.atomicStructureRepository.get(options);
     }
 }

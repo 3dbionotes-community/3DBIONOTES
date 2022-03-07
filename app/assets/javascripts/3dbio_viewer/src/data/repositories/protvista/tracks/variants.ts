@@ -162,7 +162,8 @@ export function getVariants(
         filters: getVariantFilters(),
         variants: annotationsGrouped.map(
             (group): Variant => {
-                const mainAnnotation = group[0]!;
+                const mainAnnotation = group[0];
+                if (!mainAnnotation) throw new Error();
                 const { variant, position, wildType } = mainAnnotation.info;
 
                 const ebiAnnotation = _(group)
@@ -239,7 +240,7 @@ function getInfo(options: {
 
     const diseasesAll = mutaAnnotations.map(muta => {
         const diseaseName = _.capitalize(muta.disease.split(" / ").slice(1).join(" / "));
-        const polyphenText = (muta.polyphen || "").replace(/\<possibly\>/g, "probably");
+        const polyphenText = (muta.polyphen || "").replace(/\bpossibly\b/g, "probably");
 
         const polyphenLinks = _(muta.evidence)
             .flatMap(evidence => evidence.references)
