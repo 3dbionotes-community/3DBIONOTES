@@ -53,7 +53,9 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                             {row.entities.length > 0 ? (
                                 <EntityCell data={data} row={row} moreDetails={false}></EntityCell>
                             ) : (
-                                <Typography variant="caption">No entities found</Typography>
+                                <Typography variant="caption">
+                                    {i18n.t("No {{name}} found", { name: "entities" })}
+                                </Typography>
                             )}
                         </ModifiedAccordion>
 
@@ -65,7 +67,9 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                                     moreDetails={false}
                                 ></LigandsCell>
                             ) : (
-                                <Typography variant="caption">No ligands found</Typography>
+                                <Typography variant="caption">
+                                    {i18n.t("No {{name}} found", { name: "ligands" })}
+                                </Typography>
                             )}
                         </ModifiedAccordion>
 
@@ -77,7 +81,9 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                                     moreDetails={false}
                                 ></OrganismCell>
                             ) : (
-                                <Typography variant="caption">No organisms found</Typography>
+                                <Typography variant="caption">
+                                    {i18n.t("No {{name}} found", { name: "organisms" })}
+                                </Typography>
                             )}
                         </ModifiedAccordion>
 
@@ -89,7 +95,9 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                                     moreDetails={false}
                                 ></DetailsCell>
                             ) : (
-                                <Typography variant="caption">No details found</Typography>
+                                <Typography variant="caption">
+                                    {i18n.t("No {{name}} found", { name: "details" })}
+                                </Typography>
                             )}
                         </ModifiedAccordion>
                     </div>
