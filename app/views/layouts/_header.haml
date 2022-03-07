@@ -2,7 +2,7 @@
   %nav#Navbar.navbar.navbar-light.navbar-expand-md.text-sm-center.d-flex
     .container-fluid
       #Logo.d-flex
-        %a.navbar-brand{:href => "#"}
+        %a.navbar-brand{:href => ws_path}
           %img{:height => "72", :src => "/assets/3DBionotesLogo-small.jpg", :style => "height: auto;width: 260px;"}/
         %button.navbar-toggler{"data-target" => "#navcol-1", "data-toggle" => "collapse"}
           %span.sr-only Toggle navigation
@@ -15,7 +15,12 @@
               .dropdown-menu
                 %a.dropdown-item.active{:href => ws_path} HOME
                 %a.dropdown-item{:href => ws_covid19_path} CoVid-19
-                %a.dropdown-item{:href => ws_viewer_path} VIEWER
+                %a.dropdown-item{:href => ws_network_path} NETWORK
+                %a.dropdown-item{:href => ws_database_path} QUERY
+                %a.dropdown-item{:href => ws_api_path} API
+                %a.dropdown-item{:href => ws_submit_path} SUBMIT
+                %a.dropdown-item{:href => ws_help_path} HELP
+                %a.dropdown-item{:href => "mailto:3dbionotes@cnb.csic.es"} CONTACT US
       #Slogan.text-center.text-sm-center.text-md-center.text-lg-left.text-xl-left.d-sm-block.flex-grow-1
         %span#viewerSlogan
           An ELIXIR Recommended Interoperability Resource
