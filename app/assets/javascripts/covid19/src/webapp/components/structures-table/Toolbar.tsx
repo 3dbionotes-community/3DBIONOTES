@@ -50,6 +50,56 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
         setPageSize,
     } = props;
 
+    const helpText = React.useMemo(
+        () => ({
+            p: i18n.t(`Write in the searching box one (example: spike) or several
+        words in a row (example: spike SARS-CoV-2) to perform the
+        search. If you write several words the searching result will
+        be the intersection of independent searching results with
+        each one of the words. If you press any protein product of
+        the SARS-CoV-2 PROTEOME on the top of the page, this term
+        will be included automatically in the searching box. You can
+        also include one or several terms detailed in the FILTER on
+        the right by selecting them. This(These) term(s) will appear
+        in the searching box, where you can write additional words
+        to look for them as well. Disable it(them) by pressing the
+        “x”. To see an example of the results obtained press the
+        example buttons below the searching box (6YOR, Homo sapiens,
+        and SARS-CoV-2). For any of them you should see a table with
+        seven columns (Title, PDB, EMDB, Entities, Ligands,
+        Organisms and Details) that you can HIDE or SHOW
+        independently with the COLUMNS button located on the right
+        edge. The content of the table can be also exported with
+        EXPORT as a file of CSV or JSON format. The scope of the
+        search will cover the terms included in the seven columns.`),
+            ol: [
+                i18n.t(`Title: From PDBe or EMDB. The eye below the title opens
+        the 3DBionotes viewer.`),
+                i18n.t(`PDB: With an image of the atomic structure and the link
+        to EBI. In case there exists a structure improved by
+        PDB-Redo, Coronavirus Task Force or CERES a link to the
+        respective web pages should be included. The eye opens
+        that improved structure in 3DBionotes viewer.`),
+                i18n.t(`EMDB: With an image of the 3D map and the respective to EMDB.`),
+                i18n.t(`Entities: List detailing protein products and nucleic
+        acids present in the macromolecule. Long lists contain a
+        VIEW MORE button to check a pop up window containing the
+        whole list.`),
+                i18n.t(`Ligands: List detailing small molecules bound to the
+        macromolecule including drugs, ions, glycans, etc. Longs contain also a VIEW MORE button to check the whole.`),
+                i18n.t(`Organisms: To which at least one of the structural
+        entities belongs to.`),
+                i18n.t(`Details: Additional relevant info, including details of
+        the publication paper that describes the macromolecule
+        structure/map, and links to other databases or web
+        servers in which the structure/map or the bound ligands
+        are included. Long lists contain also a VIEW MORE button
+        to check the whole list.`),
+            ],
+        }),
+        []
+    );
+
     return (
         <React.Fragment>
             <GridToolbarContainer style={styles.container}>
@@ -69,67 +119,12 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                             title={
                                 <>
                                     <StyledTypography variant="body2">
-                                        Write in the searching box one (example: spike) or several
-                                        words in a row (example: spike SARS-CoV-2) to perform the
-                                        search. If you write several words the searching result will
-                                        be the intersection of independent searching results with
-                                        each one of the words. If you press any protein product of
-                                        the SARS-CoV-2 PROTEOME on the top of the page, this term
-                                        will be included automatically in the searching box. You can
-                                        also include one or several terms detailed in the FILTER on
-                                        the right by selecting them. This(These) term(s) will appear
-                                        in the searching box, where you can write additional words
-                                        to look for them as well. Disable it(them) by pressing the
-                                        “x”. To see an example of the results obtained press the
-                                        example buttons below the searching box (6YOR, Homo sapiens,
-                                        and SARS-CoV-2). For any of them you should see a table with
-                                        seven columns (Title, PDB, EMDB, Entities, Ligands,
-                                        Organisms and Details) that you can HIDE or SHOW
-                                        independently with the COLUMNS button located on the right
-                                        edge. The content of the table can be also exported with
-                                        EXPORT as a file of CSV or JSON format. The scope of the
-                                        search will cover the terms included in the seven columns.
+                                        {helpText.p}
                                     </StyledTypography>
                                     <OrderedList>
-                                        <li>
-                                            Title: From PDBe or EMDB. The eye below the title opens
-                                            the 3DBionotes viewer.
-                                        </li>
-                                        <li>
-                                            PDB: With an image of the atomic structure and the link
-                                            to EBI. In case there exists a structure improved by
-                                            PDB-Redo, Coronavirus Task Force or CERES a link to the
-                                            respective web pages should be included. The eye opens
-                                            that improved structure in 3DBionotes viewer.
-                                        </li>
-                                        <li>
-                                            EMDB: With an image of the 3D map and the respective
-                                            link to EMDB.
-                                        </li>
-                                        <li>
-                                            Entities: List detailing protein products and nucleic
-                                            acids present in the macromolecule. Long lists contain a
-                                            VIEW MORE button to check a pop up window containing the
-                                            whole list.
-                                        </li>
-                                        <li>
-                                            Ligands: List detailing small molecules bound to the
-                                            macromolecule including drugs, ions, glycans, etc. Long
-                                            lists contain also a VIEW MORE button to check the whole
-                                            list.
-                                        </li>
-                                        <li>
-                                            Organisms: To which at least one of the structural
-                                            entities belongs to.
-                                        </li>
-                                        <li>
-                                            Details: Additional relevant info, including details of
-                                            the publication paper that describes the macromolecule
-                                            structure/map, and links to other databases or web
-                                            servers in which the structure/map or the bound ligands
-                                            are included. Long lists contain also a VIEW MORE button
-                                            to check the whole list.
-                                        </li>
+                                        {helpText.ol.map(t => (
+                                            <li>{t}</li>
+                                        ))}
                                     </OrderedList>
                                 </>
                             }
