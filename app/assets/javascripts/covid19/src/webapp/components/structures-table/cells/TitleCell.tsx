@@ -11,7 +11,9 @@ export const TitleCell: React.FC<CellProps> = React.memo(props => {
 
     return (
         <>
-            <div style={styles.title}>{props.row.title}</div>
+            <div style={styles.title}>
+                <a href={queryLinkToUse}>{props.row.title}</a>
+            </div>
 
             <BadgeLink
                 style={styles.badgeLink}
