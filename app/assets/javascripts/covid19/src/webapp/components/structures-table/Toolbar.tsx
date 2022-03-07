@@ -35,7 +35,8 @@ export interface ToolbarProps {
 export const Toolbar: React.FC<ToolbarProps | {}> = props => {
     const helpText = React.useMemo(() => {
         return {
-            p: i18n.t(`Write in the searching box one (example: spike) or several
+            p: i18n.t(
+                `Write in the searching box one (example: spike) or several
         words in a row (example: spike SARS-CoV-2) to perform the
         search. If you write several words the searching result will
         be the intersection of independent searching results with
@@ -54,30 +55,52 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
         independently with the COLUMNS button located on the right
         edge. The content of the table can be also exported with
         EXPORT as a file of CSV or JSON format. The scope of the
-        search will cover the terms included in the seven columns.`),
+        search will cover the terms included in the seven columns.`,
+                { nsSeparator: false }
+            ),
             ol: [
-                i18n.t(`Title: From PDBe or EMDB. The eye below the title opens
-        the 3DBionotes viewer.`),
-                i18n.t(`PDB: With an image of the atomic structure and the link
+                i18n.t(
+                    `Title: From PDBe or EMDB. The eye below the title opens
+        the 3DBionotes viewer.`,
+                    { nsSeparator: false }
+                ),
+                i18n.t(
+                    `PDB: With an image of the atomic structure and the link
         to EBI. In case there exists a structure improved by
         PDB-Redo, Coronavirus Task Force or CERES a link to the
         respective web pages should be included. The eye opens
-        that improved structure in 3DBionotes viewer.`),
-                i18n.t(`EMDB: With an image of the 3D map and the respective to EMDB.`),
-                i18n.t(`Entities: List detailing protein products and nucleic
+        that improved structure in 3DBionotes viewer.`,
+                    { nsSeparator: false }
+                ),
+                i18n.t(`EMDB: With an image of the 3D map and the respective to EMDB.`, {
+                    nsSeparator: false,
+                }),
+                i18n.t(
+                    `Entities: List detailing protein products and nucleic
         acids present in the macromolecule. Long lists contain a
         VIEW MORE button to check a pop up window containing the
-        whole list.`),
-                i18n.t(`Ligands: List detailing small molecules bound to the
-        macromolecule including drugs, ions, glycans, etc. Longs contain also a VIEW MORE button to check the whole.`),
-                i18n.t(`Organisms: To which at least one of the structural
-        entities belongs to.`),
-                i18n.t(`Details: Additional relevant info, including details of
+        whole list.`,
+                    { nsSeparator: false }
+                ),
+                i18n.t(
+                    `Ligands: List detailing small molecules bound to the
+        macromolecule including drugs, ions, glycans, etc. Longs contain also a VIEW MORE button to check the whole.`,
+                    { nsSeparator: false }
+                ),
+                i18n.t(
+                    `Organisms: To which at least one of the structural
+        entities belongs to.`,
+                    { nsSeparator: false }
+                ),
+                i18n.t(
+                    `Details: Additional relevant info, including details of
         the publication paper that describes the macromolecule
         structure/map, and links to other databases or web
         servers in which the structure/map or the bound ligands
         are included. Long lists contain also a VIEW MORE button
-        to check the whole list.`),
+        to check the whole list.`,
+                    { nsSeparator: false }
+                ),
             ],
         };
     }, []);
