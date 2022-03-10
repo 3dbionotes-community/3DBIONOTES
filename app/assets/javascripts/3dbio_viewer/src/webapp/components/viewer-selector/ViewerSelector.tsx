@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import _ from "lodash";
 import { Search } from "@material-ui/icons";
 
@@ -40,7 +40,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     const chainDropdownProps = useChainDropdown(props);
     const ligandsDropdownProps = useLigandsDropdown(props);
 
-    const [isSearchOpen, { enable: openSearch, disable: closeSearch }] = useBooleanState(false);
+    const [isSearchOpen, { open: openSearch, close: closeSearch }] = useBooleanState(false);
 
     const update = useUpdateActions(onSelectionChange, actions);
 
@@ -53,13 +53,14 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
         [selection, closeSearch, onSelectionChange]
     );
 
-    useEffect(() => {
+    const openSearch2 = React.useCallback(() => {
+        openSearch();
         if (isSearchOpen)
             sendAnalytics({
                 type: "event",
-                category: "clickMenu",
-                action: "search",
-                label: "view",
+                category: "dialog",
+                action: "open_dialog",
+                label: "Search",
             });
     }, [isSearchOpen]);
 
@@ -93,7 +94,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                         </>
                     )}
 
-                    <button onClick={openSearch}>
+                    <button onClick={openSearch2}>
                         <Search />
                     </button>
 

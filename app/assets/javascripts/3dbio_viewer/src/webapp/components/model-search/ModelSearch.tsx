@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
     CircularProgress,
     Dialog,
@@ -51,7 +51,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     }, []);
 
     const [modelType, setModelType] = React.useState<ModelSearchType>("all");
-    const [isUploadOpen, { enable: openUpload, disable: closeUpload }] = useBooleanState(false);
+    const [isUploadOpen, { open: openUpload, close: closeUpload }] = useBooleanState(false);
     const [searchState, startSearch] = useDbModelSearch(modelType);
     const goTo = useGoto();
 
@@ -63,11 +63,12 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
         [goTo, onClose]
     );
 
-    useEffect(() => {
+    const openUpload2 = React.useCallback(() => {
+        openUpload();
         if (isUploadOpen)
             sendAnalytics({
                 type: "event",
-                category: "search_menu",
+                category: "dialog",
                 action: "open_dialog",
                 label: "Upload Model",
             });
@@ -102,7 +103,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         onClick={setModelType}
                         showExpandIcon
                     />
-                    <button className="upload-model" onClick={openUpload}>
+                    <button className="upload-model" onClick={openUpload2}>
                         {i18n.t("Upload model")}
                     </button>
                     {isUploadOpen && (

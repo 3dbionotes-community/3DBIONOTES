@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import i18n from "../../utils/i18n";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import { Network } from "../network/Network";
@@ -18,7 +18,7 @@ type Props = DropdownProps<ItemId>;
 export const ToolsButton: React.FC<ToolsButtonProps> = props => {
     const { onAddAnnotations } = props;
 
-    const [isNetworkOpen, networkActions] = useBooleanState(false);
+    const [isNetworkOpen, { open: openNetwork, close: closeNetwork }] = useBooleanState(false);
     const [isAnnotationToolOpen, annotationToolActions] = useBooleanState(false);
 
     const items = React.useMemo<Props["items"]>(() => {
@@ -34,19 +34,20 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
                 case "custom-annotations":
                     return annotationToolActions.open();
                 case "network":
-                    return networkActions.open();
+                    return openNetwork2();
             }
         },
-        [annotationToolActions, networkActions]
+        [annotationToolActions]
     );
 
-    useEffect(() => {
+    const openNetwork2 = React.useCallback(() => {
+        openNetwork();
         if (isNetworkOpen)
             sendAnalytics({
                 type: "event",
-                category: "clickMenu",
-                action: "network",
-                label: "view",
+                category: "dialog",
+                action: "open_dialog",
+                label: "Network",
             });
     }, [isNetworkOpen]);
 
@@ -54,7 +55,7 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
         <>
             <Dropdown<ItemId> text={i18n.t("Tools")} items={items} onClick={openMenuItem} />
 
-            {isNetworkOpen && <Network onClose={networkActions.close} />}
+            {isNetworkOpen && <Network onClose={closeNetwork} />}
 
             {isAnnotationToolOpen && (
                 <AnnotationsTool onClose={annotationToolActions.close} onAdd={onAddAnnotations} />
