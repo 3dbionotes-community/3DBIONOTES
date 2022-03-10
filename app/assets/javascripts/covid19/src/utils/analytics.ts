@@ -16,6 +16,7 @@ interface Event {
     category: string;
     action: string;
     label?: string;
+    value?: number;
 }
 
 interface PageView {
@@ -31,7 +32,12 @@ interface OutboundLink {
 export function sendAnalytics(data: AnalyticsData) {
     switch (data.type) {
         case "event":
-            ReactGA.event({ category: data.category, action: data.action, label: data.label });
+            ReactGA.event({
+                category: data.category,
+                action: data.action,
+                label: data.label,
+                value: data.value,
+            });
             break;
         case "pageView":
             ReactGA.set({ page: data.path });

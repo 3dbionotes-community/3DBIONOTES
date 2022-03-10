@@ -7,6 +7,7 @@ import { useAppContext } from "../../contexts/app-context";
 import { DataGrid } from "../../../domain/entities/DataGrid";
 import { CompositionRoot } from "../../../compositionRoot";
 import { sendAnalytics } from "../../../utils/analytics";
+import { ellipsizedList } from "../../utils/ellipsizedList";
 
 export interface CustomGridToolbarExportProps {
     gridApi: GridApi;
@@ -26,15 +27,19 @@ export const CustomGridToolbarExport: React.FC<CustomGridToolbarExportProps> = R
     const exportDataGrid = React.useCallback(
         (format: Format) => {
             exportStructures(compositionRoot, gridApi, dataGrid, format);
+            sendAnalytics({
+                type: "event",
+                category: "covid_table",
+                action: "export",
+                label: `Export ${format}: ${ellipsizedList(
+                    dataGrid.structures.map(row => row.id)
+                )}`,
+                value: gridApi.getRowsCount(),
+            });
             closeMenu();
         },
         [compositionRoot, gridApi, dataGrid, closeMenu]
     );
-
-    const clickExport = (type: "csv" | "json") => {
-        sendAnalytics({ type: "event", category: "covid_table", action: "export", label: "" });
-        return exportTo[type];
-    };
 
     const exportTo = React.useMemo(() => {
         return { csv: () => exportDataGrid("csv"), json: () => exportDataGrid("json") };
@@ -64,8 +69,8 @@ export const CustomGridToolbarExport: React.FC<CustomGridToolbarExportProps> = R
                 position="bottom-start"
             >
                 <MenuList className="MuiDataGrid-gridMenuList" autoFocusItem={isOpen}>
-                    <MenuItem onClick={clickExport("csv")}>{i18n.t("Save as CSV")}</MenuItem>
-                    <MenuItem onClick={clickExport("json")}>{i18n.t("Save as JSON")}</MenuItem>
+                    <MenuItem onClick={exportTo.csv}>{i18n.t("Save as CSV")}</MenuItem>
+                    <MenuItem onClick={exportTo.json}>{i18n.t("Save as JSON")}</MenuItem>
                 </MenuList>
             </GridMenu>
         </React.Fragment>
