@@ -12,8 +12,8 @@
             %em Please, note this web site is work in progress. Feel free to report any missing or inconsistent data or behaviour.
             %br/
         %p
-          %a.btn.btn-primary.btn-lg{:href => ws_covid19_path, :role => "button"} CoVid-19 Edition
-          %a.btn.btn-secondary.btn-lg{:href => "/?queryId=EMD-21375", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
+          %a#cta-covid.btn.btn-primary.btn-lg{:href => ws_covid19_path, :role => "button"} CoVid-19 Edition
+          %a#cta-example.btn.btn-secondary.btn-lg{"data-id" => "EMD-21375", :href => "/?queryId=EMD-21375", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
     %div
       #videoWrapper
         %video#welcomeVideo{:autoplay => "", :height => "auto", :loop => "", :muted => "", :width => "540"}
@@ -21,11 +21,11 @@
 .d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
   .container
     .searchBox
-      = form_tag({controller: "main", action: "home"}, :method => :post) do
+      = form_tag({controller: "main", action: "home"}, :method => :post, :id => "form-search") do
         = hidden_field_tag(:viewer_type, @viewerType)
         #mainSearch.input-group.form-control-lg.md-form.form-sm.form-2.pl-0.justify-content-center
           %div.d-flex.justify-content-center.align-items-center.input-group-text
-            %input.form-control.form-control-lg.my-0.amber-border{"aria-label" => "Search", :placeholder => "Uniprot accession, PDB ID, EMDB code", :name => "queryId"}/
+            %input#input-search.form-control.form-control-lg.my-0.amber-border{"aria-label" => "Search", :placeholder => "Uniprot accession, PDB ID, EMDB code", :name => "queryId"}/
             %button.btn.mt-0.py-2{:type => "submit", :title => "Search"}
               %i.fa.fa-search.text-grey.searchIconMain{"aria-hidden" => "true"}
     .contentBox
