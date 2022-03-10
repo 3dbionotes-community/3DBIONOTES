@@ -6,12 +6,16 @@ import { TrainingApp } from "../../../webapp/training-app";
 import { modules } from "../../../webapp/training-app/training-modules";
 import { ProtvistaGrouped } from "../../components/protvista/ProvistaGrouped";
 import { RootViewer } from "../../components/RootViewer";
+import { sendAnalytics } from "../../utils/analytics";
 
 import "./App.css";
 
 const showTraining = true;
 
 function App() {
+    React.useEffect(() => {
+        sendAnalytics({ type: "pageView", path: `/viewer/${window.location.hash}` });
+    }, []);
     return (
         <AppContext>
             <HashRouter>
