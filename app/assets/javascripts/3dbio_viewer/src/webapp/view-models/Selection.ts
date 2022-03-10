@@ -269,7 +269,7 @@ export function runAction(selection: Selection, action: ActionType, item: DbItem
 
     switch (action2) {
         case "select": {
-            sendAnalytics({ type: "event", category: "searchMenu", action: "select" });
+            sendAnalytics({ type: "event", category: "search_menu", action: "select" });
 
             const newMain: FreeSelection["main"] =
                 item.type === "pdb"
@@ -296,7 +296,7 @@ export function runAction(selection: Selection, action: ActionType, item: DbItem
                 getDbItemUid
             );
 
-            sendAnalytics({ type: "event", category: "searchMenu", action: "append" });
+            sendAnalytics({ type: "event", category: "search_menu", action: "append" });
 
             return { ...selection, type: "free", overlay: newOverlay, main: baseMain };
         }

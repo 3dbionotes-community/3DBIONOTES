@@ -7,9 +7,11 @@ import App from "./webapp/pages/app/App";
 
 const gaAppId = "UA-93698320-4";
 ReactGA.initialize(gaAppId, {
-    debug: true
-  });
-  
+    debug: true,
+    titleCase: false,
+    useExistingGa: process.env.NODE_ENV !== "development",
+});
+
 ReactDOM.render(<App />, document.getElementById("root"));
 
 reportWebVitals();

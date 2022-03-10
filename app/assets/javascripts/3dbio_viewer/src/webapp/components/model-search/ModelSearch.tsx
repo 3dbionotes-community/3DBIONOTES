@@ -67,9 +67,9 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
         if (isUploadOpen)
             sendAnalytics({
                 type: "event",
-                category: "searchMenu",
-                action: "uploadModel",
-                label: "open",
+                category: "search_menu",
+                action: "open_dialog",
+                label: "Upload Model",
             });
     }, [isUploadOpen]);
 
@@ -152,7 +152,12 @@ function useDbModelSearch(modelType: ModelSearchType) {
     const search = React.useCallback(
         (query: string) => {
             setSearchState({ type: "searching" });
-            sendAnalytics({ type: "event", category: "search", action: "viewer", label: query });
+            sendAnalytics({
+                type: "event",
+                category: "search_menu",
+                action: "search",
+                label: query,
+            });
 
             const searchType = modelType === "all" ? undefined : modelType;
             return compositionRoot.searchDbModels
