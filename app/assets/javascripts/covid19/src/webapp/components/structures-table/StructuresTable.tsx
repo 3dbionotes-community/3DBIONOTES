@@ -72,6 +72,12 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
 
     const showDetailsDialog = React.useCallback(
         (options: { row: Structure; field: Field }) => {
+            sendAnalytics({
+                type: "event",
+                action: "show_details",
+                category: "covid_table",
+                label: `Field: ${options.field}, PDB: ${options.row.pdb?.id}`,
+            });
             openDialog();
             setDetailsOptions({ field: options.field, structure: options.row });
         },
