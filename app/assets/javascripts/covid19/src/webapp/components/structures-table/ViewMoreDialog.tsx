@@ -140,9 +140,6 @@ const Container = styled.div`
 
 const ImgContainer = styled.div`
     margin-right: 20px;
-    & > div:nth-of-type(2) {
-        padding-top: 20px;
-    }
     img {
         max-height: 200px !important;
         max-width: 200px !important;
