@@ -13,6 +13,9 @@ import "./App.css";
 const showTraining = true;
 
 function App() {
+    React.useEffect(() => {
+        sendAnalytics({ type: "pageView", path: `/viewer/${window.location.hash}` });
+    }, []);
     return (
         <AppContext>
             <HashRouter>
