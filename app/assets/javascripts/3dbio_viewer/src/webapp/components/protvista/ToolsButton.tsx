@@ -28,18 +28,6 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
         ];
     }, []);
 
-    const openMenuItem = React.useCallback<Props["onClick"]>(
-        itemId => {
-            switch (itemId) {
-                case "custom-annotations":
-                    return annotationToolActions.open();
-                case "network":
-                    return openNetwork2();
-            }
-        },
-        [annotationToolActions]
-    );
-
     const openNetwork2 = React.useCallback(() => {
         openNetwork();
         if (isNetworkOpen)
@@ -49,7 +37,19 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
                 action: "open_dialog",
                 label: "Network",
             });
-    }, [isNetworkOpen]);
+    }, [isNetworkOpen, openNetwork]);
+
+    const openMenuItem = React.useCallback<Props["onClick"]>(
+        itemId => {
+            switch (itemId) {
+                case "custom-annotations":
+                    return annotationToolActions.open();
+                case "network":
+                    return openNetwork2();
+            }
+        },
+        [annotationToolActions, openNetwork2]
+    );
 
     return (
         <>

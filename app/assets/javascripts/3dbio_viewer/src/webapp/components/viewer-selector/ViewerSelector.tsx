@@ -62,7 +62,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                 action: "open_dialog",
                 label: "Search",
             });
-    }, [isSearchOpen]);
+    }, [isSearchOpen, openSearch]);
 
     return (
         <div id="viewer-selector">

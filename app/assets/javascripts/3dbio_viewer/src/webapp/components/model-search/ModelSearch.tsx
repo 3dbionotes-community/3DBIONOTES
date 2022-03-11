@@ -72,7 +72,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                 action: "open_dialog",
                 label: "Upload Model",
             });
-    }, [isUploadOpen]);
+    }, [isUploadOpen, openUpload]);
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
