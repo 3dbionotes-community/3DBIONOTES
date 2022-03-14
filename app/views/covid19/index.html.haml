@@ -7,55 +7,11 @@
 .d-flex.mt-2.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
   .container
     .contentBox
-      .contentTitle
-        %h4
-          %strong SARS-CoV-2 virus proteome
-          %br/
-      .contentData
-      .alert.alert-warning{:role => "alert"}
-        %span
-          %em
-            Please note this is an on-going effort to collect all possible relevant information from many diverse sources in a semi-automatic way, sometimes manually. If you spot something missing, misplaced, incorrect or misbehaving, please feel free to contact us (3dbionotes@cnb.csic.es).
-          %br/
-      = render partial: "proteome_table"
-      
-      %h5{:style => "margin-top: 20px;margin-bottom: 9px;font-weight: bold;"}
-        About the SARS-CoV-2 virus proteome
-        %br/
-      %p
+    .alert.alert-warning.mb-5{:role => "alert"}
+      %span
         %em
-          CoVid-19 is causing the biggest pandemic in recent times, hitting the whole world. Currently, there are many scientists groups actively working to understand the biology of the virus responsible for this disease, SARS-CoV-2. So far, what we know about how the genome / proteome of the virus is organised can be summarised in this schema. Two major proteins are transcribed into two poly-proteins: R1a and R1ab that later self-process to render a set of different non-structural proteins (NSP1 to NSP16). The S Glycoprotein forms the typical spikes in coronaviruses and is also responsible for recognition and attachment to the host cell surface. A set of auxiliary proteins are still under study and some (ORF10) have not even been characterised and remain as hypothetical.
+          Please note this is an on-going effort to collect all possible relevant information from many diverse sources in a semi-automatic way, sometimes manually. If you spot something missing, misplaced, incorrect or misbehaving, please feel free to contact us (3dbionotes@cnb.csic.es).
         %br/
-      %p
-        %span.badge.badge-primary.proteomeBadge.w3-blue-gray
-          %strong
-            %a{:href => "#NSP3", style: "color: white"} NSP3 | Papain-like proteinase | PL-Pro
-          %br/
-        %span.badge.badge-primary.proteomeBadge.w3-blue-gray
-          %strong
-            %a{:href => "#NSP5", style: "color: white"} NSP5 | Main Protease | 3CL-Pro
-          %br/
-        %span.badge.badge-primary.proteomeBadge.w3-cyan
-          %strong
-            %a{:href => "#S", style: "color: white"} Spike (S)
-          %br/
-        %span.badge.badge-primary.proteomeBadge.w3-purple
-          %strong
-            %a{:href => "#E", style: "color: white"} Envelope protein (E)
-          %br/
-        %span.badge.badge-primary.proteomeBadge.w3-lime
-          %strong
-            %a{:href => "#M", style: "color: white"} Membrane protein (M)
-          %br/
-        %span.badge.badge-primary.proteomeBadge.w3-green
-          %strong
-            %a{:href => "#N", style: "color: white"} Nucleo protein (N)
-          %br/
-        %span.badge.badge-primary.text-truncate.proteomeBadge.w3-gray
-          %strong
-            %a{:href => "#MISC", style: "color: white"} MISC - Miscellanea
-          %br/
-
     #root
       This component requires Javascript
 
