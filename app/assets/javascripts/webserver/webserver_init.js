@@ -43,16 +43,17 @@ $j(document).ready(function () {
     });
 
     const form = document.querySelector(".search_form");
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        gtag("event", "search", {
-            event_category: "home_page",
-            event_label: $j("#input-search").val(),
-            event_callback: createFunctionWithTimeout(function () {
-                form.submit();
-            }),
+    if (form)
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            gtag("event", "search", {
+                event_category: "home_page",
+                event_label: $j("#input-search").val(),
+                event_callback: createFunctionWithTimeout(function () {
+                    form.submit();
+                }),
+            });
         });
-    });
 
     $j(".submit_form").submit(function (event) {
         if (!$j("#structure_file").val()) {
