@@ -35,10 +35,13 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         setFilterState0(value);
     }, []);
 
-    const setSearch = React.useCallback((value: string) => {
-        setPage(0);
-        setSearch0(value);
-    }, []);
+    const setSearch = React.useCallback(
+        (value: string) => {
+            setPage(0);
+            setSearch0(value);
+        },
+        [setSearch0]
+    );
 
     const {
         gridApi,
