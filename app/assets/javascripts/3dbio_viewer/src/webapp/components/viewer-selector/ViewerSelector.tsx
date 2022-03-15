@@ -47,22 +47,22 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     const runModelSearchAction = React.useCallback<ModelSearchProps["onSelect"]>(
         (action, item) => {
             const newSelection = runAction(selection, action, item);
+            sendAnalytics({ type: "event", category: "search_menu", action: action });
             onSelectionChange(newSelection);
             closeSearch();
         },
         [selection, closeSearch, onSelectionChange]
     );
 
-    const openSearch2 = React.useCallback(() => {
+    const openSearchWithAnalytics = React.useCallback(() => {
         openSearch();
-        if (isSearchOpen)
-            sendAnalytics({
-                type: "event",
-                category: "dialog",
-                action: "open_dialog",
-                label: "Search",
-            });
-    }, [isSearchOpen, openSearch]);
+        sendAnalytics({
+            type: "event",
+            category: "dialog",
+            action: "open_dialog",
+            label: "Search",
+        });
+    }, [openSearch]);
 
     return (
         <div id="viewer-selector">
@@ -94,7 +94,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                         </>
                     )}
 
-                    <button onClick={openSearch2}>
+                    <button onClick={openSearchWithAnalytics}>
                         <Search />
                     </button>
 

@@ -28,16 +28,15 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
         ];
     }, []);
 
-    const openNetwork2 = React.useCallback(() => {
+    const openNetworkWithAnalytics = React.useCallback(() => {
         openNetwork();
-        if (isNetworkOpen)
-            sendAnalytics({
-                type: "event",
-                category: "dialog",
-                action: "open_dialog",
-                label: "Network",
-            });
-    }, [isNetworkOpen, openNetwork]);
+        sendAnalytics({
+            type: "event",
+            category: "dialog",
+            action: "open_dialog",
+            label: "Network",
+        });
+    }, [openNetwork]);
 
     const openMenuItem = React.useCallback<Props["onClick"]>(
         itemId => {
@@ -45,10 +44,10 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
                 case "custom-annotations":
                     return annotationToolActions.open();
                 case "network":
-                    return openNetwork2();
+                    return openNetworkWithAnalytics();
             }
         },
-        [annotationToolActions, openNetwork2]
+        [annotationToolActions, openNetworkWithAnalytics]
     );
 
     return (

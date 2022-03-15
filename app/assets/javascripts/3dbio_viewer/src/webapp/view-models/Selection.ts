@@ -3,7 +3,6 @@ import _ from "lodash";
 import { Ligand } from "../../domain/entities/Ligand";
 import { PdbInfo } from "../../domain/entities/PdbInfo";
 import { Maybe } from "../../utils/ts-utils";
-import { sendAnalytics } from "../utils/analytics";
 
 /* Selection object from/to string.
 
@@ -269,8 +268,6 @@ export function runAction(selection: Selection, action: ActionType, item: DbItem
 
     switch (action2) {
         case "select": {
-            sendAnalytics({ type: "event", category: "search_menu", action: "select" });
-
             const newMain: FreeSelection["main"] =
                 item.type === "pdb"
                     ? {
@@ -295,8 +292,6 @@ export function runAction(selection: Selection, action: ActionType, item: DbItem
                 [...baseOverlay, { type: item.type, id: item.id, visible: true }],
                 getDbItemUid
             );
-
-            sendAnalytics({ type: "event", category: "search_menu", action: "append" });
 
             return { ...selection, type: "free", overlay: newOverlay, main: baseMain };
         }

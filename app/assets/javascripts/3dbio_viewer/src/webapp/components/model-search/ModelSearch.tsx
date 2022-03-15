@@ -63,16 +63,15 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
         [goTo, onClose]
     );
 
-    const openUpload2 = React.useCallback(() => {
+    const openUploadWithAnalytics = React.useCallback(() => {
         openUpload();
-        if (isUploadOpen)
-            sendAnalytics({
-                type: "event",
-                category: "dialog",
-                action: "open_dialog",
-                label: "Upload Model",
-            });
-    }, [isUploadOpen, openUpload]);
+        sendAnalytics({
+            type: "event",
+            category: "dialog",
+            action: "open_dialog",
+            label: "Upload Model",
+        });
+    }, [openUpload]);
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
@@ -103,7 +102,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         onClick={setModelType}
                         showExpandIcon
                     />
-                    <button className="upload-model" onClick={openUpload2}>
+                    <button className="upload-model" onClick={openUploadWithAnalytics}>
                         {i18n.t("Upload model")}
                     </button>
                     {isUploadOpen && (

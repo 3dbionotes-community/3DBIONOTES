@@ -48,18 +48,3 @@ export function sendAnalytics(data: AnalyticsData) {
             break;
     }
 }
-
-export function sendMultiFilterAnalytics(
-    action: string,
-    prevValues: string[],
-    newSelection: Array<{ value: string }> | undefined
-) {
-    const currentValues = (newSelection || []).map(x => x.value);
-    const newValues = _.difference(currentValues, prevValues);
-
-    _(newValues)
-        .uniq()
-        .each(newValue => {
-            sendAnalytics({ type: "event", category: "filter", action, label: newValue });
-        });
-}

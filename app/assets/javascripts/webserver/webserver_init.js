@@ -42,7 +42,7 @@ $j(document).ready(function () {
         });
     });
 
-    const form = document.getElementById("form-search");
+    const form = document.querySelector(".search_form");
     form.addEventListener("submit", function (event) {
         event.preventDefault();
         gtag("event", "search", {
