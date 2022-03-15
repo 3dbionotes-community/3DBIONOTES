@@ -30,7 +30,11 @@
           %br/
       #partnersLogos.align-items-center
         %span Funded by:
-        %img{:height => "65", :src => "/assets/100_CSIC.jpg"}/
-        %img{:height => "45", :src => "/assets/CNB_logo-30fc3586b103c993eeacd7d1f9a0d02dbd445703f5ab29e8cc9e26a48d35ad0d.jpg"}/
-        %img{:height => "44", :src => "/assets/instruct-eric-logo-noline.png", :style => "margin-left: 19px;"}/
-        %img{:height => "53", :src => "/assets/inbelixir.png", :style => "margin-left: 24px;"}/
+        %a{:href=>"https://www.csic.es/", :target => "_blank", :title => "CSIC - Spanish National Research Council"}
+          %img{:height => "65", :src => "/assets/100_CSIC.jpg", :alt => "CSIC - Spanish National Research Council"}/
+        %a{:href=>"http://www.cnb.csic.es/index.php/", :target => "_blank", :title => "CNB - Spanish National Centre for Biotechnology"}
+          %img{:height => "45", :src => "/assets/CNB_logo-30fc3586b103c993eeacd7d1f9a0d02dbd445703f5ab29e8cc9e26a48d35ad0d.jpg", :alt => "CNB - Spanish National Centre for Biotechnology"}/
+        %a{:href=>"https://instruct-eric.org/", :target => "_blank", :title => "Instruct-ERIC"}
+          %img{:height => "44", :src => "/assets/instruct-eric-logo-noline.png", :alt => "Instruct-ERIC", :style => "margin-left: 19px;"}/
+        %a{:href=>"https://inb-elixir.es/", :target => "_blank", :title => "INB - Spanish National Bioinformatics Institute"}
+          %img{:height => "53", :src => "/assets/inbelixir.png", :alt => "INB - Spanish National Bioinformatics Institute", :style => "margin-left: 24px;"}/
