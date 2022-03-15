@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-03-07T11:33:11.042Z\n"
-"PO-Revision-Date: 2022-03-07T11:33:11.042Z\n"
+"POT-Creation-Date: 2022-03-14T13:28:45.529Z\n"
+"PO-Revision-Date: 2022-03-14T13:28:45.529Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -21,6 +21,12 @@ msgid "PDB-REDO"
 msgstr ""
 
 msgid "SARS-CoV-2 in structure databases"
+msgstr ""
+
+msgid "View proteome"
+msgstr ""
+
+msgid "SARS-CoV-2 virus proteome"
 msgstr ""
 
 msgid "View more"
