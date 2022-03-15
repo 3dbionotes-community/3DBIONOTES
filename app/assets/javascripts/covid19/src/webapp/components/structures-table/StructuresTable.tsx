@@ -12,11 +12,15 @@ import { useAppContext } from "../../contexts/app-context";
 import { ViewMoreDialog } from "./ViewMoreDialog";
 import { useBooleanState } from "../../hooks/useBoolean";
 
-export interface StructuresTableProps {}
+export interface StructuresTableProps {
+    search: string;
+    setSearch: (value: string) => void;
+}
 
 export const rowHeight = 220;
 
-export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => {
+export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
+    const { search, setSearch: setSearch0 } = props;
     const { compositionRoot } = useAppContext();
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(pageSizes[0]);
@@ -25,7 +29,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
     const [isDialogOpen, { enable: openDialog, disable: closeDialog }] = useBooleanState(false);
     const [detailsOptions, setDetailsOptions] = React.useState<FieldStructure>();
 
-    const [search, setSearch0] = React.useState("");
     const [filterState, setFilterState0] = React.useState(initialFilterState);
     const setFilterState = React.useCallback((value: Covid19Filter) => {
         setPage(0);

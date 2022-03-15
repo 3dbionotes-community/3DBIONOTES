@@ -1,16 +1,23 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "@material-ui/core/Button";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-
-import i18n from "../../../utils/i18n";
+import { Button, Accordion, AccordionDetails, AccordionSummary } from "@material-ui/core";
+import {
+    Visibility as VisibilityIcon,
+    VisibilityOff as VisibilityOffIcon,
+} from "@material-ui/icons";
 import { StructuresTable } from "../structures-table/StructuresTable";
-import { Dialog } from "../Dialog";
 import { SVGProteoma } from "../SVGProteoma";
 import { useBooleanState } from "../../hooks/useBoolean";
+import i18n from "../../../utils/i18n";
 
 export const Root: React.FC = React.memo(() => {
-    const [isDialogOpen, { enable: openDialog, disable: closeDialog }] = useBooleanState(false);
+    const [search, setSearch] = React.useState("");
+    const [title, setTitle] = React.useState<React.ReactNode>(<></>);
+    const [isAccordionExpanded, { toggle: toggleAccordion }] = useBooleanState(false);
+    const [visible, setVisible] = React.useState<{ orf1a?: boolean; orf1b?: boolean }>({
+        orf1a: false,
+        orf1b: false,
+    });
 
     return (
         <Body>
@@ -20,23 +27,36 @@ export const Root: React.FC = React.memo(() => {
                     <Button
                         variant="outlined"
                         color="inherit"
-                        startIcon={<VisibilityIcon />}
-                        onClick={openDialog}
+                        startIcon={isAccordionExpanded ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                        onClick={() => {
+                            toggleAccordion();
+                            setVisible({});
+                            setTitle(
+                                <span>
+                                    {i18n.t("SARS-CoV-2")}
+                                    <br />
+                                    {i18n.t("Proteome")}
+                                </span>
+                            );
+                        }}
                     >
-                        {i18n.t("View proteome")}
+                        {isAccordionExpanded ? i18n.t("Hide proteome") : i18n.t("View proteome")}
                     </Button>
                 </Wrapper>
             </HeaderBanner>
-
-            <StructuresTable />
-
-            {isDialogOpen && (
-                <Dialog title={i18n.t("SARS-CoV-2 virus proteome")} onClose={closeDialog}>
-                    <DialogContent>
-                        <SVGProteoma></SVGProteoma>
-                    </DialogContent>
-                </Dialog>
-            )}
+            <StyledAccordion expanded={isAccordionExpanded}>
+                <AccordionSummary></AccordionSummary>
+                <AccordionDetails>
+                    <SVGProteoma
+                        title={title}
+                        setTitle={setTitle}
+                        visible={visible}
+                        setVisible={setVisible}
+                        setSearch={setSearch}
+                    />
+                </AccordionDetails>
+            </StyledAccordion>
+            <StructuresTable search={search} setSearch={setSearch} />
         </Body>
     );
 });
@@ -70,13 +90,23 @@ const Body = styled.div`
     }
 `;
 
-const DialogContent = styled.div`
-    display: flex;
-    padding: 36px;
-    justify-content: center;
-    align-items: center;
-    min-width: 700px;
-    svg {
-        width: 500px;
+const StyledAccordion = styled(Accordion)`
+    &.MuiAccordion-root.Mui-expanded {
+        margin: 0;
+    }
+
+    .MuiAccordionSummary-root {
+        display: none;
+    }
+
+    .MuiAccordionDetails-root {
+        display: flex;
+        padding: 32px 0;
+        justify-content: center;
+        align-items: center;
+        min-width: 700px;
+        svg {
+            width: 650px;
+        }
     }
 `;
