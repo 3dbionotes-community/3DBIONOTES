@@ -363,6 +363,7 @@ const ProteomaPath: React.FC<ProteomaPathProps> = React.memo(props => {
             onClick={() => {
                 setLoading(true);
                 setSearch(name);
+                setLoading(false);
                 setProteomaSelected(true);
                 sendAnalytics({
                     type: "event",

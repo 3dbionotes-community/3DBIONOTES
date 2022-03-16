@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-03-15T20:58:02.379Z\n"
-"PO-Revision-Date: 2022-03-15T20:58:02.379Z\n"
+"POT-Creation-Date: 2022-03-16T11:17:38.390Z\n"
+"PO-Revision-Date: 2022-03-16T11:17:38.390Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -24,6 +24,9 @@ msgid "SARS-CoV-2"
 msgstr ""
 
 msgid "Proteome"
+msgstr ""
+
+msgid "Searching for {{search}} in databases..."
 msgstr ""
 
 msgid "SARS-CoV-2 in structure databases"
