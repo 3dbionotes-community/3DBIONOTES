@@ -101,7 +101,7 @@ const StyledAccordion = styled(Accordion)`
 
     .MuiAccordionDetails-root {
         display: flex;
-        padding: 32px 0;
+        padding: 0;
         justify-content: center;
         align-items: center;
         min-width: 700px;
