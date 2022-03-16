@@ -53,6 +53,7 @@ export const Root: React.FC = React.memo(() => {
                         setTitle={setTitle}
                         visible={visible}
                         setVisible={setVisible}
+                        search={search}
                         setSearch={setSearch}
                         setProteomaSelected={setProteomaSelected}
                     />
