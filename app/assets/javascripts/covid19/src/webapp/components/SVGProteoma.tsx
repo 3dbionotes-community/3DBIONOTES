@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import _ from "lodash";
 import i18n from "../../utils/i18n";
+import { sendAnalytics } from "../../utils/analytics";
 
 interface SVGProteomaProps {
     setSearch: (value: string) => void;
@@ -375,7 +376,15 @@ const Path: React.FC<PathProps> = React.memo(props => {
             className={classStyle}
             d={def}
             onMouseEnter={() => setTitle && setTitle(<span>{name}</span>)}
-            onClick={() => setSearch && setSearch(name)}
+            onClick={() => {
+                setSearch && setSearch(name);
+                sendAnalytics({
+                    type: "event",
+                    category: "proteoma",
+                    action: "select",
+                    label: name,
+                });
+            }}
         />
     );
 });
@@ -403,6 +412,12 @@ const Layer = styled.div`
     font-family: Lato-Semibold, Lato;
     font-weight: 600;
     text-align: center;
+    span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 2em;
+    }
 `;
 
 const SVG = styled.svg`
