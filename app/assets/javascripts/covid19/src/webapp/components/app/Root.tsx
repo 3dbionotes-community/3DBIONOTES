@@ -12,6 +12,7 @@ import i18n from "../../../utils/i18n";
 
 export const Root: React.FC = React.memo(() => {
     const [search, setSearch] = React.useState("");
+    const [isProteomaSelected, setProteomaSelected] = React.useState(false);
     const [title, setTitle] = React.useState<React.ReactNode>(<></>);
     const [isAccordionExpanded, { toggle: toggleAccordion }] = useBooleanState(false);
     const [visible, setVisible] = React.useState<{ orf1a?: boolean; orf1b?: boolean }>({
@@ -53,10 +54,16 @@ export const Root: React.FC = React.memo(() => {
                         visible={visible}
                         setVisible={setVisible}
                         setSearch={setSearch}
+                        setProteomaSelected={setProteomaSelected}
                     />
                 </AccordionDetails>
             </StyledAccordion>
-            <StructuresTable search={search} setSearch={setSearch} />
+            <StructuresTable
+                search={search}
+                setSearch={setSearch}
+                isProteomaSelected={isProteomaSelected}
+                setProteomaSelected={setProteomaSelected}
+            />
         </Body>
     );
 });

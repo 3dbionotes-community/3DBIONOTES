@@ -15,13 +15,15 @@ import { sendAnalytics } from "../../../utils/analytics";
 
 export interface StructuresTableProps {
     search: string;
+    isProteomaSelected: boolean;
     setSearch: (value: string) => void;
+    setProteomaSelected: (value: boolean) => void;
 }
 
 export const rowHeight = 220;
 
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
-    const { search, setSearch: setSearch0 } = props;
+    const { search, setSearch: setSearch0, isProteomaSelected, setProteomaSelected } = props;
     const { compositionRoot } = useAppContext();
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(pageSizes[0]);
@@ -106,6 +108,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                   toolbar: {
                       search,
                       setSearch,
+                      isProteomaSelected,
+                      setProteomaSelected,
                       filterState,
                       setFilterState,
                       gridApi,
@@ -122,6 +126,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     }, [
         search,
         setSearch,
+        isProteomaSelected,
+        setProteomaSelected,
         filterState,
         setFilterState,
         gridApi,
