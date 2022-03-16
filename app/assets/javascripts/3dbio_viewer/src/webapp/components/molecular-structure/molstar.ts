@@ -6,6 +6,7 @@ import { PluginContext } from "molstar/lib/mol-plugin/context";
 import { getMainPdbId, Selection } from "../../view-models/Selection";
 import { Maybe } from "../../../utils/ts-utils";
 import { buildLigand, Ligand } from "../../../domain/entities/Ligand";
+import { StateObjectCell } from "molstar/lib/mol-state/object";
 
 function getCellsWithPath(molstarPlugin: PluginContext) {
     const cells = Array.from(molstarPlugin.state.data.cells.values());
@@ -97,4 +98,59 @@ export async function loadEmdb(pdbePlugin: PDBeMolstarPlugin, emdbId: string) {
         isBinary: true,
         format: "dscif",
     });
+}
+
+interface CellNode {
+    ref: string;
+    cell: StateObjectCell;
+    children: CellNode[];
+}
+
+function findNode(
+    node: CellNode | undefined,
+    predicate: (node: CellNode) => boolean
+): CellNode | undefined {
+    if (!node) {
+        return;
+    } else if (predicate(node)) {
+        return node;
+    } else {
+        return _(node.children)
+            .map(childNode => findNode(childNode, predicate))
+            .compact()
+            .first();
+    }
+}
+
+function buildRootNode(plugin: PDBeMolstarPlugin): CellNode | undefined {
+    const cells = Array.from(plugin.state.cells.values());
+    const cellsByRef = _.keyBy(cells, cells => cells.transform.ref);
+    const rootCell = cellsByRef[StateTransform.RootRef];
+    if (!rootCell) return;
+
+    const cellsGroupedByParentRef = _(cells)
+        .reject(cell => cell.transform.ref === StateTransform.RootRef)
+        .groupBy(cell => cell.transform.parent)
+        .value();
+
+    function buildNode(cell: StateObjectCell): CellNode {
+        const childrenCells = cellsGroupedByParentRef[cell.transform.ref] || [];
+        const children = childrenCells.map(cell => buildNode(cell));
+        return { ref: cell.transform.ref, cell, children };
+    }
+
+    return buildNode(rootCell);
+}
+
+export function setEmdbOpacity(options: { plugin: PDBeMolstarPlugin; id: string; value: number }) {
+    const { plugin, id, value } = options;
+
+    const rootNode = buildRootNode(plugin);
+    const emdb = findNode(rootNode, node => Boolean(node.cell.obj?.label.includes(id)));
+    const surface = findNode(emdb, node => node.cell.params?.values.type?.name === "isosurface");
+    const values = surface?.cell.params?.values;
+    if (!values) return;
+
+    const valuesUpdated = _.set(_.cloneDeep(values), "type.params.alpha", value);
+    plugin.plugin.state.updateTransform(plugin.state, surface.ref, valuesUpdated);
 }

@@ -121,7 +121,9 @@ function getPdbModels(
         fieldurl: true,
     };
 
-    const pdbResults = request<ApiSearchResponse>({ url: config.searchUrl, params });
+    const pdbResults = request<ApiSearchResponse>({ url: config.searchUrl, params }).map(
+        res => res.data
+    );
 
     return pdbResults.map((res): DbModel[] => {
         return res.entries.map(entry => ({

@@ -1,3 +1,7 @@
+.menu {
+    z-index: 100;
+}
+
 .menu .MuiPaper-root {
     background-color: #e2e2e2 !important;
     margin-top: 10px;

@@ -2,25 +2,30 @@ const proxy = require("http-proxy-middleware");
 const apicache = require("apicache");
 const _ = require("lodash");
 
+const routes = {
+    pro: "https://3dbionotes.cnb.csic.es",
+    dev: "http://rinchen-dos.cnb.csic.es:8882",
+};
+
 module.exports = function (app) {
     proxyRoutes(app, {
         routes: ["/3dbionotes"],
-        target: "https://3dbionotes.cnb.csic.es",
+        target: routes.dev,
         rewritePath: true,
     });
 
-    // Use by PPI Viewer
+    // Used by PPI Viewer
     proxyRoutes(app, {
         routes: ["/api"],
-        target: "https://3dbionotes.cnb.csic.es",
+        target: routes.dev,
         cache: false,
         rewritePath: false,
     });
 
-    // Use by PPI Viewer
+    // Used by PPI Viewer
     proxyRoutes(app, {
         routes: ["/assets"],
-        target: "https://3dbionotes.cnb.csic.es",
+        target: routes.dev,
         rewritePath: false,
     });
 
@@ -38,7 +43,7 @@ module.exports = function (app) {
 
     proxyRoutes(app, {
         routes: ["/rinchen-dos"],
-        target: "http://rinchen-dos.cnb.csic.es:8882",
+        target: routes.dev,
         rewritePath: true,
         cache: false,
     });

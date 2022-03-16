@@ -5,7 +5,9 @@ export function useGoto() {
     const history = useHistory();
     const goTo = React.useCallback(
         (path: string) => {
-            history.push(path);
+            if (location.hash.substring(1) !== path) {
+                history.push(path);
+            }
         },
         [history]
     );

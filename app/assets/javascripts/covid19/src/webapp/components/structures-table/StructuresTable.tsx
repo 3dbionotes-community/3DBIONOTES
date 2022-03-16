@@ -11,6 +11,7 @@ import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
 import { useAppContext } from "../../contexts/app-context";
 import { ViewMoreDialog } from "./ViewMoreDialog";
 import { useBooleanState } from "../../hooks/useBoolean";
+import { sendAnalytics } from "../../../utils/analytics";
 
 export interface StructuresTableProps {
     search: string;
@@ -39,6 +40,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         (value: string) => {
             setPage(0);
             setSearch0(value);
+            sendAnalytics({ type: "event", category: "subsearch", action: value });
         },
         [setSearch0]
     );
@@ -76,6 +78,12 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
     const showDetailsDialog = React.useCallback(
         (options: { row: Structure; field: Field }) => {
+            sendAnalytics({
+                type: "event",
+                action: "show_details",
+                category: "covid_table",
+                label: `Field: ${options.field}, PDB: ${options.row.pdb?.id}`,
+            });
             openDialog();
             setDetailsOptions({ field: options.field, structure: options.row });
         },

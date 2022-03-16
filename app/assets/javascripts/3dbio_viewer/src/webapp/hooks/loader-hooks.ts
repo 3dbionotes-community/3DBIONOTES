@@ -1,10 +1,16 @@
 import React from "react";
 import { FutureData } from "../../domain/entities/FutureData";
 import { Ligand } from "../../domain/entities/Ligand";
-import { setPdbInfoLigands } from "../../domain/entities/PdbInfo";
+import {
+    getPdbInfoFromUploadData,
+    PdbInfo,
+    setPdbInfoLigands,
+} from "../../domain/entities/PdbInfo";
+import { UploadData } from "../../domain/entities/UploadData";
+import { Future } from "../../utils/future";
+import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
 import { getMainPdbId, Selection } from "../view-models/Selection";
-import { useCallbackEffect } from "./use-callback-effect";
 
 export function useStateFromFuture<Value>(
     getFutureValue: () => FutureData<Value> | undefined
@@ -15,21 +21,23 @@ export function useStateFromFuture<Value>(
         return getFutureValue()?.run(setValue, console.error);
     }, [getFutureValue, setValue]);
 
-    const getValueCancellable = useCallbackEffect(getValue);
-
-    React.useEffect(getValueCancellable, [getValueCancellable]);
+    React.useEffect(getValue, [getValue]);
 
     return value;
 }
 
-export function usePdbInfo(selection: Selection) {
+export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) {
     const { compositionRoot } = useAppContext();
     const mainPdbId = getMainPdbId(selection);
     const [ligands, setLigands] = React.useState<Ligand[]>();
 
-    const getPdbInfo = React.useCallback(() => {
-        return mainPdbId ? compositionRoot.getPdbInfo.execute(mainPdbId) : undefined;
-    }, [mainPdbId, compositionRoot]);
+    const getPdbInfo = React.useCallback((): Maybe<FutureData<PdbInfo>> => {
+        if (mainPdbId) {
+            return compositionRoot.getPdbInfo.execute(mainPdbId);
+        } else if (uploadData) {
+            return Future.success(getPdbInfoFromUploadData(uploadData));
+        }
+    }, [mainPdbId, compositionRoot, uploadData]);
 
     const pdbInfo = useStateFromFuture(getPdbInfo);
 
