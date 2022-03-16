@@ -16,9 +16,11 @@ export const SVGProteoma: React.FC<SVGProteomaProps> = React.memo(props => {
     const { setSearch, visible, setVisible, title, setTitle } = props;
     return (
         <Container>
+            {/*Using relative -> absolute for having svg above title. So the title can be easily put in center*/}
             <Layer>{title}</Layer>
             <Layer>
                 <SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+                    {/*Wraps all the graphics*/}
                     <g
                         onMouseLeave={() => {
                             setTitle(
@@ -32,95 +34,7 @@ export const SVGProteoma: React.FC<SVGProteomaProps> = React.memo(props => {
                         }}
                     >
                         <rect className="none" width="1000" height="1000" />
-
-                        <g
-                            onMouseEnter={() => {
-                                setVisible({ orf1a: false, orf1b: true });
-                            }}
-                        >
-                            <Path
-                                setSearch={setSearch}
-                                setTitle={setTitle}
-                                name="ORF1b"
-                                classStyle="orf1b"
-                                def="M738.33,587.77A254.31,254.31,0,0,1,500,754c-5.9,0-11.87-.21-17.76-.63a254,254,0,0,1-69.11-14.76c-2.89-1.05-5.68-2.12-8.31-3.18a248,248,0,0,1-70.7-43.14l31.45-36.17a205.07,205.07,0,0,0,120,49.38c4.78.33,9.62.5,14.39.5A206.18,206.18,0,0,0,693.3,571.37Z"
-                            />
-
-                            {visible.orf1b && (
-                                <>
-                                    <Path
-                                        setSearch={setSearch}
-                                        setTitle={setTitle}
-                                        name="NSP16"
-                                        classStyle="orf1b"
-                                        def="M399.38,746.3l-8.62,21.34a288,288,0,0,1-79.63-48.9l15.09-17.35A264.93,264.93,0,0,0,399.38,746.3Z"
-                                    />
-                                    <Path
-                                        setSearch={setSearch}
-                                        setTitle={setTitle}
-                                        name="NSP15"
-                                        classStyle="orf1b"
-                                        def="M480.43,765.29l-1.61,22.94a287,287,0,0,1-86.21-19.84l8.62-21.34A264.11,264.11,0,0,0,480.43,765.29Z"
-                                    />
-                                    <Path
-                                        setSearch={setSearch}
-                                        setTitle={setTitle}
-                                        name="NSP14"
-                                        classStyle="orf1b"
-                                        def="M573.83,779.47A289.49,289.49,0,0,1,500,789c-6.46,0-12.91-.21-19.18-.63l1.61-22.94c5.74.38,11.65.57,17.57.57a266.42,266.42,0,0,0,67.88-8.75Z"
-                                    />
-                                    <Path
-                                        setSearch={setSearch}
-                                        setTitle={setTitle}
-                                        name="ExoN"
-                                        classStyle="orf1b"
-                                        def="M582.89,813.29A324.35,324.35,0,0,1,500,824c-7.28,0-14.55-.24-21.62-.72l1.6-22.93c6.59.43,13.32.65,20,.65a301.78,301.78,0,0,0,76.94-9.93Z"
-                                    />
-                                    <Path
-                                        setSearch={setSearch}
-                                        setTitle={setTitle}
-                                        name="NendoU"
-                                        classStyle="orf1b"
-                                        def="M592,847.11A359.7,359.7,0,0,1,500,859c-8.05,0-16.14-.27-24.06-.8l1.6-22.94c7.4.49,14.95.74,22.46.74a337.08,337.08,0,0,0,86-11.11Z"
-                                    />
-                                    <Path
-                                        setSearch={setSearch}
-                                        setTitle={setTitle}
-                                        name="Endornase"
-                                        classStyle="orf1b"
-                                        def="M601,880.92A394.86,394.86,0,0,1,500,894c-8.82,0-17.73-.3-26.5-.88l1.6-22.94c8.24.54,16.61.82,24.9.82a371.89,371.89,0,0,0,95.06-12.3Z"
-                                    />
-                                    <Path
-                                        setSearch={setSearch}
-                                        setTitle={setTitle}
-                                        name="NSP13"
-                                        classStyle="orf1b"
-                                        def="M656.58,743a287,287,0,0,1-80.81,36l-6-22.21a264,264,0,0,0,74.24-33.09Z"
-                                    />
-                                    <Path
-                                        setSearch={setSearch}
-                                        setTitle={setTitle}
-                                        name="Helicase"
-                                        classStyle="orf1b"
-                                        def="M675.65,772.31a322.2,322.2,0,0,1-90.82,40.46l-6-22.21A299,299,0,0,0,663.12,753Z"
-                                    />
-                                    <Path
-                                        setSearch={setSearch}
-                                        setTitle={setTitle}
-                                        name="NSP12"
-                                        classStyle="orf1b"
-                                        def="M724,682.65a289.57,289.57,0,0,1-65.72,59.2l-12.53-19.29a266.34,266.34,0,0,0,60.38-54.39Z"
-                                    />
-                                    <Path
-                                        setSearch={setSearch}
-                                        setTitle={setTitle}
-                                        name="NSP11"
-                                        classStyle="orf1b"
-                                        def="M771.3,599.79a287.59,287.59,0,0,1-46.07,81.3l-17.87-14.47a264.77,264.77,0,0,0,42.33-74.7Z"
-                                    />
-                                </>
-                            )}
-                        </g>
+                        {/*Wraps ORF1a and its proteins*/}
                         <g
                             onMouseEnter={() => {
                                 setVisible({ orf1a: true, orf1b: false });
@@ -264,6 +178,96 @@ export const SVGProteoma: React.FC<SVGProteomaProps> = React.memo(props => {
                                 </>
                             )}
                         </g>
+                        {/*Wraps ORF1b and its proteins*/}
+                        <g
+                            onMouseEnter={() => {
+                                setVisible({ orf1a: false, orf1b: true });
+                            }}
+                        >
+                            <Path
+                                setSearch={setSearch}
+                                setTitle={setTitle}
+                                name="ORF1b"
+                                classStyle="orf1b"
+                                def="M738.33,587.77A254.31,254.31,0,0,1,500,754c-5.9,0-11.87-.21-17.76-.63a254,254,0,0,1-69.11-14.76c-2.89-1.05-5.68-2.12-8.31-3.18a248,248,0,0,1-70.7-43.14l31.45-36.17a205.07,205.07,0,0,0,120,49.38c4.78.33,9.62.5,14.39.5A206.18,206.18,0,0,0,693.3,571.37Z"
+                            />
+
+                            {visible.orf1b && (
+                                <>
+                                    <Path
+                                        setSearch={setSearch}
+                                        setTitle={setTitle}
+                                        name="NSP16"
+                                        classStyle="orf1b"
+                                        def="M399.38,746.3l-8.62,21.34a288,288,0,0,1-79.63-48.9l15.09-17.35A264.93,264.93,0,0,0,399.38,746.3Z"
+                                    />
+                                    <Path
+                                        setSearch={setSearch}
+                                        setTitle={setTitle}
+                                        name="NSP15"
+                                        classStyle="orf1b"
+                                        def="M480.43,765.29l-1.61,22.94a287,287,0,0,1-86.21-19.84l8.62-21.34A264.11,264.11,0,0,0,480.43,765.29Z"
+                                    />
+                                    <Path
+                                        setSearch={setSearch}
+                                        setTitle={setTitle}
+                                        name="NSP14"
+                                        classStyle="orf1b"
+                                        def="M573.83,779.47A289.49,289.49,0,0,1,500,789c-6.46,0-12.91-.21-19.18-.63l1.61-22.94c5.74.38,11.65.57,17.57.57a266.42,266.42,0,0,0,67.88-8.75Z"
+                                    />
+                                    <Path
+                                        setSearch={setSearch}
+                                        setTitle={setTitle}
+                                        name="ExoN"
+                                        classStyle="orf1b"
+                                        def="M582.89,813.29A324.35,324.35,0,0,1,500,824c-7.28,0-14.55-.24-21.62-.72l1.6-22.93c6.59.43,13.32.65,20,.65a301.78,301.78,0,0,0,76.94-9.93Z"
+                                    />
+                                    <Path
+                                        setSearch={setSearch}
+                                        setTitle={setTitle}
+                                        name="NendoU"
+                                        classStyle="orf1b"
+                                        def="M592,847.11A359.7,359.7,0,0,1,500,859c-8.05,0-16.14-.27-24.06-.8l1.6-22.94c7.4.49,14.95.74,22.46.74a337.08,337.08,0,0,0,86-11.11Z"
+                                    />
+                                    <Path
+                                        setSearch={setSearch}
+                                        setTitle={setTitle}
+                                        name="Endornase"
+                                        classStyle="orf1b"
+                                        def="M601,880.92A394.86,394.86,0,0,1,500,894c-8.82,0-17.73-.3-26.5-.88l1.6-22.94c8.24.54,16.61.82,24.9.82a371.89,371.89,0,0,0,95.06-12.3Z"
+                                    />
+                                    <Path
+                                        setSearch={setSearch}
+                                        setTitle={setTitle}
+                                        name="NSP13"
+                                        classStyle="orf1b"
+                                        def="M656.58,743a287,287,0,0,1-80.81,36l-6-22.21a264,264,0,0,0,74.24-33.09Z"
+                                    />
+                                    <Path
+                                        setSearch={setSearch}
+                                        setTitle={setTitle}
+                                        name="Helicase"
+                                        classStyle="orf1b"
+                                        def="M675.65,772.31a322.2,322.2,0,0,1-90.82,40.46l-6-22.21A299,299,0,0,0,663.12,753Z"
+                                    />
+                                    <Path
+                                        setSearch={setSearch}
+                                        setTitle={setTitle}
+                                        name="NSP12"
+                                        classStyle="orf1b"
+                                        def="M724,682.65a289.57,289.57,0,0,1-65.72,59.2l-12.53-19.29a266.34,266.34,0,0,0,60.38-54.39Z"
+                                    />
+                                    <Path
+                                        setSearch={setSearch}
+                                        setTitle={setTitle}
+                                        name="NSP11"
+                                        classStyle="orf1b"
+                                        def="M771.3,599.79a287.59,287.59,0,0,1-46.07,81.3l-17.87-14.47a264.77,264.77,0,0,0,42.33-74.7Z"
+                                    />
+                                </>
+                            )}
+                        </g>
+                        {/*Wraps the remaining gens*/}
                         <g
                             onMouseEnter={() => {
                                 setVisible({ orf1a: false, orf1b: false });
