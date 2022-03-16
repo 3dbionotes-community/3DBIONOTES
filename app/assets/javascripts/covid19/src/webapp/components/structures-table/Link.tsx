@@ -12,7 +12,6 @@ export const NoWrapTypography = styled(Typography)`
 
 export const Link: React.FC<LinkProps> = React.memo(props => {
     const { text, url, tooltip, children, style } = props;
-
     if (props.url) {
         if (tooltip === undefined || typeof tooltip === "string") {
             return (

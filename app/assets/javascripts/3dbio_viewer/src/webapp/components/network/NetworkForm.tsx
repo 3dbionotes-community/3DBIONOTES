@@ -8,6 +8,17 @@ import UniProtAccessionTextArea from "./UniProtAccessionTextArea";
 import SpeciesSelect from "./SpeciesSelect";
 import "./Network.css";
 import { ErrorMessage } from "../error-message/ErrorMessage";
+import { sendAnalytics } from "../../utils/analytics";
+import { useAppContext } from "../AppContext";
+import { useCallbackEffect } from "../../hooks/use-callback-effect";
+import { speciesList } from "../../../domain/entities/Species";
+import { isElementOfUnion } from "../../../utils/ts-utils";
+import {
+    BuildProgress,
+    BuildNetworkResult,
+    NetworkDefinition,
+} from "../../../domain/repositories/NetworkRepository";
+import { LinearProgressWithLabel } from "../ProgressBarWithValue";
 
 interface NetworkForm {
     species: string;
@@ -16,26 +27,63 @@ interface NetworkForm {
 }
 
 const initialNetworkForm: NetworkForm = {
-    species: "homoSapiens",
+    species: "human",
     uniProtAccession: "",
     includeNeighboursWithStructuralData: false,
 };
 
-const NetworkForm = React.memo(() => {
+type State = { type: "fill-data" } | { type: "uploading"; progressValue: number };
+
+export interface NetworkFormProps {
+    onData(data: BuildNetworkResult): void;
+}
+
+const NetworkForm: React.FC<NetworkFormProps> = React.memo(props => {
+    const { onData } = props;
+    const { compositionRoot } = useAppContext();
     const annotationFileRef = useRef<DropzoneRef>(null);
     const [error, setError] = useState<string>();
     const [networkForm, setNetworkForm] = useState(initialNetworkForm);
+    const [state, setState] = React.useState<State>({ type: "fill-data" });
 
-    const addNetwork = useCallback(() => {
-        if (networkForm.uniProtAccession === "") {
-            setError(
-                i18n.t("Error: Missing UniProt accession - please write down the UniProt accession")
-            );
-        } else {
-            setError("");
-            window.alert("TODO");
-        }
-    }, [networkForm]);
+    const onProgress = React.useCallback((progress: BuildProgress) => {
+        const { currentStep, totalSteps, value } = progress;
+        const newValue =
+            currentStep < 1 ? 0 : 100 * ((currentStep - 1) / totalSteps) + value / totalSteps;
+        setState({ type: "uploading", progressValue: newValue });
+    }, []);
+
+    const addNetwork = useCallbackEffect(
+        useCallback(() => {
+            if (!networkForm.uniProtAccession) {
+                setError(i18n.t("Error: Missing UniProt accession"));
+                return () => {};
+            } else if (!isElementOfUnion(networkForm.species, speciesList)) {
+                setError(i18n.t("Error: Invalid species"));
+            } else {
+                setError("");
+
+                const annotationsFile = annotationFileRef.current?.files[0];
+
+                const network: NetworkDefinition = {
+                    species: networkForm.species,
+                    proteins: networkForm.uniProtAccession,
+                    includeNeighboursWithStructuralData:
+                        networkForm.includeNeighboursWithStructuralData,
+                    annotationsFile,
+                };
+
+                sendAnalytics({ type: "event", category: "network", action: "upload" });
+
+                return compositionRoot.buildNetwork
+                    .execute({ network, onProgress })
+                    .run(onData, err => {
+                        setError(err.message);
+                        setState({ type: "fill-data" });
+                    });
+            }
+        }, [networkForm, compositionRoot, onData, onProgress])
+    );
 
     return (
         <div className="network-form">
@@ -43,10 +91,7 @@ const NetworkForm = React.memo(() => {
             <SpeciesSelect
                 value={networkForm.species}
                 onSpeciesChange={newSpecies =>
-                    setNetworkForm({
-                        ...networkForm,
-                        species: newSpecies,
-                    })
+                    setNetworkForm({ ...networkForm, species: newSpecies })
                 }
             />
             <Label
@@ -55,10 +100,7 @@ const NetworkForm = React.memo(() => {
             />
             <NetworkExample
                 onExampleClick={e => {
-                    setNetworkForm({
-                        ...networkForm,
-                        uniProtAccession: e,
-                    });
+                    setNetworkForm({ ...networkForm, uniProtAccession: e });
                     setError("");
                 }}
             />
@@ -70,8 +112,8 @@ const NetworkForm = React.memo(() => {
                 }}
             />
             <IncludeNeighborsCheckbox
-                checkedValue={networkForm.includeNeighboursWithStructuralData}
-                onCheckboxChange={() =>
+                checked={networkForm.includeNeighboursWithStructuralData}
+                onChange={() =>
                     setNetworkForm({
                         ...networkForm,
                         includeNeighboursWithStructuralData: !networkForm.includeNeighboursWithStructuralData,
@@ -83,10 +125,19 @@ const NetworkForm = React.memo(() => {
                 forText={i18n.t("uploadAnnotations")}
                 label={i18n.t("Upload your annotations in JSON format")}
             />
+
             <Dropzone ref={annotationFileRef} accept="application/json"></Dropzone>
+
             {error && <ErrorMessage message={error} />}
 
-            <button className="submit-button" type="submit" onClick={addNetwork}>
+            {state.type === "uploading" && <LinearProgressWithLabel value={state.progressValue} />}
+
+            <button
+                className="submit-button"
+                type="submit"
+                onClick={addNetwork}
+                disabled={state.type === "uploading"}
+            >
                 {i18n.t("Submit")}
             </button>
         </div>

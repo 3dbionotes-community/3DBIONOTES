@@ -11,20 +11,21 @@ import { usePdbInfo } from "../../hooks/loader-hooks";
 export interface ProtvistaGroupedProps {}
 
 export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(() => {
-    const [viewerState] = useViewerState();
+    const viewerState = useViewerState({ type: "selector" });
     const { selection } = viewerState;
-    const { pdbInfo } = usePdbInfo(selection);
-    const loader = usePdbLoader(selection, pdbInfo);
+    const { pdbInfo } = usePdbInfo(selection, undefined);
+    const [loader, _setLoader] = usePdbLoader(selection, pdbInfo);
     const block = testblock;
-    if (!loader) return null;
 
-    return loader.type === "loaded" ? (
+    if (loader.type !== "loaded")
+        return <div>{loader.type === "loading" ? i18n.t("Loading...") : loader.message}</div>;
+
+    return (
         <ViewerBlock block={block} namespace={namespace}>
-            Protein: {loader.data.protein.id} | PDB: {loader.data.id} | Chain: {loader.data.chainId}
+            {i18n.t("Protein")}: {loader.data.protein.id} | {i18n.t("PDB")}: {loader.data.id} |
+            {i18n.t("Chain")}: {loader.data.chainId}
             <ProtvistaPdb pdb={loader.data} block={block} showAllTracks={false} />
         </ViewerBlock>
-    ) : (
-        <div>{loader.type === "loading" ? i18n.t("Loading...") : loader.message}</div>
     );
 });
 

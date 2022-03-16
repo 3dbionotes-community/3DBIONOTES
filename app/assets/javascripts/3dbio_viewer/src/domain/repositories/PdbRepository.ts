@@ -1,3 +1,4 @@
+import { Maybe } from "../../utils/ts-utils";
 import { FutureData } from "../entities/FutureData";
 import { Pdb, PdbId } from "../entities/Pdb";
 import { ProteinId, ChainId } from "../entities/Protein";
@@ -8,6 +9,6 @@ export interface PdbRepository {
 
 export interface PdbOptions {
     proteinId: ProteinId;
-    pdbId: PdbId;
+    pdbId: Maybe<PdbId>;
     chainId: ChainId;
 }
