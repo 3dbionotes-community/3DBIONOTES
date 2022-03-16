@@ -22,6 +22,7 @@ import { SelectionItem } from "./SelectionItem";
 import { useUpdateActions } from "../../hooks/use-update-actions";
 import classnames from "classnames";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
+import { sendAnalytics } from "../../utils/analytics";
 import { UploadData } from "../../../domain/entities/UploadData";
 import { Maybe } from "../../../utils/ts-utils";
 
@@ -39,18 +40,29 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     const chainDropdownProps = useChainDropdown(props);
     const ligandsDropdownProps = useLigandsDropdown(props);
 
-    const [isSearchOpen, { enable: openSearch, disable: closeSearch }] = useBooleanState(false);
+    const [isSearchOpen, { open: openSearch, close: closeSearch }] = useBooleanState(false);
 
     const update = useUpdateActions(onSelectionChange, actions);
 
     const runModelSearchAction = React.useCallback<ModelSearchProps["onSelect"]>(
         (action, item) => {
             const newSelection = runAction(selection, action, item);
+            sendAnalytics({ type: "event", category: "search_menu", action: action });
             onSelectionChange(newSelection);
             closeSearch();
         },
         [selection, closeSearch, onSelectionChange]
     );
+
+    const openSearchWithAnalytics = React.useCallback(() => {
+        openSearch();
+        sendAnalytics({
+            type: "event",
+            category: "dialog",
+            action: "open_dialog",
+            label: "Search",
+        });
+    }, [openSearch]);
 
     return (
         <div id="viewer-selector">
@@ -82,7 +94,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                         </>
                     )}
 
-                    <button onClick={openSearch}>
+                    <button onClick={openSearchWithAnalytics}>
                         <Search />
                     </button>
 
