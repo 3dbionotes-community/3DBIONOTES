@@ -81,7 +81,7 @@ export interface Link {
 
 export type W3Color = "w3-cyan" | "w3-turq";
 export type PdbValidation = PdbRedoValidation | IsoldeValidation;
-export type EmdbValidation = "DeepRes" | "MonoRes" | "Map-Q" | "FSC-Q";
+export type EmdbValidation = "DeepRes" | "MonoRes" | "BlocRes" | "Map-Q" | "FSC-Q";
 
 export interface Pdb extends DbItem {
     keywords: string;
@@ -172,7 +172,7 @@ export function buildPdbRedoValidation(pdbId: Id): PdbRedoValidation {
     return {
         type: "pdbRedo",
         externalLink: pdbRedoUrl,
-        queryLink: `/pdb_redo/${pdbId}`,
+        queryLink: `/pdb_redo/${pdbId.toLowerCase()}`,
         badgeColor: "w3-turq",
     };
 }
