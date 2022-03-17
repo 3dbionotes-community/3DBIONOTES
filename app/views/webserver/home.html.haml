@@ -21,7 +21,7 @@
 .d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
   .container
     .searchBox
-      = form_tag({controller: "main", action: "home"}, :method => :post, :id => "form-search") do
+      = form_tag({controller: "main", action: "home"}, {:method => :post, :class => "search_form"}) do
         = hidden_field_tag(:viewer_type, @viewerType)
         #mainSearch.input-group.form-control-lg.md-form.form-sm.form-2.pl-0.justify-content-center
           %div.d-flex.justify-content-center.align-items-center.input-group-text
