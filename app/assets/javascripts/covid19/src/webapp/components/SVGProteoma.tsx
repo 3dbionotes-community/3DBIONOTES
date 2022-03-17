@@ -363,7 +363,6 @@ const ProteomaPath: React.FC<ProteomaPathProps> = React.memo(props => {
             onClick={() => {
                 setLoading(true);
                 setSearch(name);
-                setLoading(false);
                 setProteomaSelected(true);
                 sendAnalytics({
                     type: "event",
@@ -371,6 +370,9 @@ const ProteomaPath: React.FC<ProteomaPathProps> = React.memo(props => {
                     action: "select",
                     label: name,
                 });
+                setTimeout(() => {
+                    setLoading(false);
+                }, 700);
             }}
         />
     );
