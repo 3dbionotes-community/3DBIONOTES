@@ -18,8 +18,8 @@ import "./Toolbar.css";
 export interface ToolbarProps {
     search: string;
     setSearch(search: string): void;
-    isProteomaSelected: boolean;
-    setProteomaSelected: (value: boolean) => void;
+    isProteomeSelected: boolean;
+    setProteomeSelected: (value: boolean) => void;
     filterState: Covid19Filter;
     setFilterState(filter: Covid19Filter): void;
     gridApi: GridApi;
@@ -112,8 +112,8 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
     const {
         search,
         setSearch,
-        isProteomaSelected,
-        setProteomaSelected,
+        isProteomeSelected,
+        setProteomeSelected,
         filterState,
         setFilterState,
         gridApi,
@@ -134,8 +134,8 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                         <SearchBar
                             value={search}
                             setValue={setSearch}
-                            isProteomaSelected={isProteomaSelected}
-                            setProteomaSelected={setProteomaSelected}
+                            isProteomeSelected={isProteomeSelected}
+                            setProteomeSelected={setProteomeSelected}
                             filterState={filterState}
                             setFilterState={setFilterState}
                         />

@@ -19,8 +19,8 @@ import { useAppContext } from "../../contexts/app-context";
 export interface SearchBarProps {
     value: string;
     setValue(search: string): void;
-    isProteomaSelected: boolean;
-    setProteomaSelected: (value: boolean) => void;
+    isProteomeSelected: boolean;
+    setProteomeSelected: (value: boolean) => void;
     filterState: Covid19Filter;
     setFilterState(filter: Covid19Filter): void;
 }
@@ -30,8 +30,8 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const {
         value,
         setValue,
-        isProteomaSelected,
-        setProteomaSelected,
+        isProteomeSelected,
+        setProteomeSelected,
         filterState,
         setFilterState,
     } = props;
@@ -63,14 +63,17 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
 
     const t = React.useMemo(getTranslations, []);
 
+    const searchBarStyles = React.useMemo(
+        () => ({
+            ...styles.searchBar,
+            ...{ background: isProteomeSelected ? "#ffffdd" : undefined },
+        }),
+        [isProteomeSelected]
+    );
+
     return (
         <React.Fragment>
-            <div
-                style={{
-                    ...styles.searchBar,
-                    ...{ background: isProteomaSelected ? "#ffffdd" : undefined },
-                }}
-            >
+            <div style={searchBarStyles}>
                 <div style={styles.chips}>
                     {selectedFilterNames.map(filterKey => (
                         <StyledChip
@@ -116,7 +119,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                             {...params}
                             variant="outlined"
                             value={stateValue}
-                            onFocus={() => setProteomaSelected(false)}
+                            onFocus={() => setProteomeSelected(false)}
                             onChange={ev => setValueDebounced(ev.target.value)}
                             placeholder={i18n.t(
                                 "Search protein/organism/PDB ID/EMDB ID/UniProt ID"

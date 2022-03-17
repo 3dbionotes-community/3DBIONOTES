@@ -6,19 +6,16 @@ import {
     VisibilityOff as VisibilityOffIcon,
 } from "@material-ui/icons";
 import { StructuresTable } from "../structures-table/StructuresTable";
-import { SVGProteoma } from "../SVGProteoma";
+import { SVGProteome, VisibleGen } from "../proteome/SVGProteome";
 import { useBooleanState } from "../../hooks/useBoolean";
 import i18n from "../../../utils/i18n";
 
 export const Root: React.FC = React.memo(() => {
     const [search, setSearch] = React.useState("");
-    const [isProteomaSelected, setProteomaSelected] = React.useState(false);
+    const [isProteomeSelected, setProteomeSelected] = React.useState(false);
     const [title, setTitle] = React.useState<React.ReactNode>(<></>);
     const [isAccordionExpanded, { toggle: toggleAccordion }] = useBooleanState(false);
-    const [visible, setVisible] = React.useState<{ orf1a?: boolean; orf1b?: boolean }>({
-        orf1a: false,
-        orf1b: false,
-    });
+    const [visible, setVisible] = React.useState<VisibleGen>({});
 
     return (
         <Body>
@@ -48,22 +45,22 @@ export const Root: React.FC = React.memo(() => {
             <StyledAccordion expanded={isAccordionExpanded}>
                 <AccordionSummary></AccordionSummary>
                 <AccordionDetails>
-                    <SVGProteoma
+                    <SVGProteome
                         title={title}
                         setTitle={setTitle}
                         visible={visible}
                         setVisible={setVisible}
                         search={search}
                         setSearch={setSearch}
-                        setProteomaSelected={setProteomaSelected}
+                        setProteomeSelected={setProteomeSelected}
                     />
                 </AccordionDetails>
             </StyledAccordion>
             <StructuresTable
                 search={search}
                 setSearch={setSearch}
-                isProteomaSelected={isProteomaSelected}
-                setProteomaSelected={setProteomaSelected}
+                isProteomeSelected={isProteomeSelected}
+                setProteomeSelected={setProteomeSelected}
             />
         </Body>
     );
