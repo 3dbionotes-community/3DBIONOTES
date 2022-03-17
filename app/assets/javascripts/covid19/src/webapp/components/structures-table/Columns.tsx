@@ -5,6 +5,7 @@ import {
     GridSortCellParams,
     GridStateApi,
 } from "@material-ui/data-grid";
+import _ from "lodash";
 import i18n from "../../../utils/i18n";
 import { Covid19Info, Structure } from "../../../domain/entities/Covid19Info";
 import { TitleCell } from "./cells/TitleCell";
@@ -80,7 +81,16 @@ export const columnsBase: Columns = [
         width: 180,
         sortable: false,
         renderCell: OrganismCell,
-        renderString: row => row.organisms.map(organism => organism.name).join(", "),
+        renderString: row =>
+            row.organisms
+                .map(
+                    organism =>
+                        organism.name +
+                        (!organism.commonName || organism.commonName === "?"
+                            ? ""
+                            : ` (${organism.commonName})`)
+                )
+                .join(", "),
     }),
     column("details", {
         headerName: i18n.t("Details"),
@@ -90,34 +100,33 @@ export const columnsBase: Columns = [
         renderCell: DetailsCell,
         renderString: row => {
             const { details } = row;
-            let string = "";
-            if (details == null) return "";
-            string += details?.sample?.name ?? "";
-            string += details?.sample?.macromolecules?.join(", ") ?? "";
-            string += details?.sample?.assembly ?? "";
-            string += details?.sample?.exprSystem ?? "";
-            string += details?.sample?.uniProts?.join(", ") ?? "";
-            string += details?.sample?.genes?.join(", ") ?? "";
-            string += details?.sample?.bioFunction?.join(", ") ?? "";
-            string += details?.sample?.bioProcess?.join(", ") ?? "";
-            string += details?.sample?.cellComponent?.join(", ") ?? "";
-            string += details?.sample?.domains?.join(", ") ?? "";
-            string +=
-                details?.refdoc
-                    ?.map(
-                        ref =>
-                            ref.id +
-                            ", " +
-                            ref.title +
-                            ", " +
-                            ref.authors +
-                            ", " +
-                            ref.journal +
-                            ", " +
-                            ref.abstract
-                    )
-                    .join(", ") ?? "";
-            return string;
+            if (!details) return "";
+            const { sample } = details;
+            const array = (values: string[] | undefined) => values || [];
+            const values: string[] = _.compact([
+                sample?.name,
+                ...array(sample?.macromolecules),
+                sample?.assembly,
+                sample?.exprSystem,
+                ...array(sample?.uniProts),
+                ...array(sample?.genes),
+                ...array(sample?.bioFunction),
+                ...array(sample?.bioProcess),
+                ...array(sample?.cellComponent),
+                ...array(sample?.domains),
+                ..._.flatten(
+                    details.refdoc?.map(ref => [
+                        ref.id,
+                        ref.idLink,
+                        ref.title,
+                        ...array(ref.authors),
+                        ref.journal,
+                        ref.pubDate,
+                        ref.doi,
+                    ])
+                ),
+            ]);
+            return values.join(", ");
         },
     }),
 ];

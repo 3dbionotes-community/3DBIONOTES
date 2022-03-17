@@ -12,7 +12,6 @@ import {
     getItems,
     getItemSelector,
     getMainChanges,
-    getMainEmdbId,
     getMainPdbId,
     Selection,
     setMainEmdb,
@@ -24,12 +23,14 @@ import "./molstar-light.css";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
-import { getLigands, loadEmdb } from "./molstar";
+import { getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
 import { Ligand } from "../../../domain/entities/Ligand";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { LoaderMask } from "../loader-mask/LoaderMask";
+import { routes } from "../../../routes";
+import { ProteinNetwork } from "../../../domain/entities/ProteinNetwork";
 
 declare global {
     interface Window {
@@ -42,6 +43,7 @@ interface MolecularStructureProps {
     selection: Selection;
     onSelectionChange(newSelection: Selection): void;
     onLigandsLoaded(ligands: Ligand[]): void;
+    proteinNetwork: Maybe<ProteinNetwork>;
 }
 
 export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
@@ -60,6 +62,7 @@ export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
 
 function usePdbePlugin(options: MolecularStructureProps) {
     const { selection: newSelection, onSelectionChange: setSelection, onLigandsLoaded } = options;
+    const { proteinNetwork } = options;
     const { compositionRoot } = useAppContext();
     const [pdbePlugin, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
     const [pluginLoad, setPluginLoad] = React.useState<Date>();
@@ -69,6 +72,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
     // the new state against the old state and perform imperative operations (add/remove/update)
     // on the plugin.
     const [prevSelectionRef, setPrevSelection] = useReference<Selection>();
+
+    debugVariable({ pdbePlugin });
 
     React.useEffect(() => {
         if (!pluginLoad || !pdbePlugin) return;
@@ -82,7 +87,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
-            if (!element || !newSelection.main) return;
+            if (!element) return;
             const currentSelection = prevSelectionRef.current;
             const pluginAlreadyRendered = Boolean(pdbePlugin);
             const ligandChanged =
@@ -92,7 +97,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             const plugin = pdbePlugin || new window.PDBeMolstarPlugin();
             const initParams = getPdbePluginInitParams(plugin, newSelection);
-            debugVariable({ pdbeMolstar: plugin });
+            debugVariable({ pdbeMolstarPlugin: plugin });
 
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
             if (pluginAlreadyRendered) {
@@ -108,29 +113,31 @@ function usePdbePlugin(options: MolecularStructureProps) {
                 plugin.render(element, initParams);
             }
 
-            const emdbId = getMainEmdbId(newSelection);
-            if (emdbId) {
-                showLoading();
-                loadEmdb(plugin, emdbId);
-            }
-
             setPdbePlugin(plugin);
         },
         [pdbePlugin, newSelection, prevSelectionRef, showLoading, hideLoading]
     );
 
     const updatePluginOnNewSelection = React.useCallback(() => {
+        if (!pdbePlugin) return _.noop;
+
         function updateSelection(currentSelection: Selection, newSelection: Selection): void {
             if (!pdbePlugin) return;
 
             applySelectionChangesToPlugin(pdbePlugin, currentSelection, newSelection, showLoading);
-            setPrevSelection(newSelection);
             setSelection(newSelection);
         }
 
-        if (!pdbePlugin) return _.noop;
-
         const currentSelection = prevSelectionRef.current || emptySelection;
+        setPrevSelection(newSelection);
+
+        const uploadDataRemoved =
+            currentSelection.type === "uploadData" && newSelection.type !== "uploadData";
+
+        if (uploadDataRemoved) pdbePlugin.visual.remove({});
+
+        if (newSelection.type !== "free") return _.noop;
+
         const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
 
         if (pdbId) {
@@ -157,6 +164,49 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
     const updatePluginOnNewSelectionEffect = useCallbackEffect(updatePluginOnNewSelection);
     React.useEffect(updatePluginOnNewSelectionEffect, [updatePluginOnNewSelectionEffect]);
+
+    const uploadDataToken = newSelection.type === "uploadData" ? newSelection.token : undefined;
+
+    React.useEffect(() => {
+        if (!pdbePlugin) return;
+
+        pdbePlugin.visual.remove({});
+        if (!uploadDataToken) return;
+
+        pdbePlugin.load(
+            {
+                url: `${routes.bionotesDev}/upload/${uploadDataToken}/structure_file.cif`,
+                format: "mmcif",
+                isBinary: false,
+                assemblyId: "1",
+            },
+            false
+        );
+    }, [pdbePlugin, uploadDataToken, compositionRoot]);
+
+    React.useEffect(() => {
+        if (!pdbePlugin) return;
+
+        pdbePlugin.visual.remove({});
+        if (!proteinNetwork) return;
+
+        const chainInNetwork =
+            proteinNetwork.uploadData.chains.find(chain => chain.chain === newSelection.chainId) ||
+            _.first(proteinNetwork.uploadData.chains);
+
+        const pdbPath = chainInNetwork?.pdbPath;
+        if (!pdbPath) return;
+
+        pdbePlugin.load(
+            {
+                url: `${routes.bionotes}/${pdbPath}`,
+                format: "pdb",
+                isBinary: false,
+                assemblyId: "1",
+            },
+            false
+        );
+    }, [pdbePlugin, newSelection.chainId, proteinNetwork, compositionRoot]);
 
     return { pluginRef, pdbePlugin, isLoading };
 }
@@ -192,7 +242,8 @@ async function applySelectionChangesToPlugin(
     for (const item of added) {
         if (item.type === "emdb") {
             showLoading();
-            loadEmdb(plugin, item.id);
+            await loadEmdb(plugin, item.id);
+            setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
         } else {
             const pdbId: string = item.id;
             const url = `https://www.ebi.ac.uk/pdbe/model-server/v1/${pdbId}/full?encoding=cif`;
@@ -242,7 +293,7 @@ function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selec
     const ligandView = getLigandView(newSelection);
 
     return {
-        moleculeId: pdbId,
+        moleculeId: pdbId, // empty not to render on init (here URL is not fully configurable)
         pdbeUrl: "https://www.ebi.ac.uk/pdbe/",
         encoding: "cif",
         loadMaps: false,
