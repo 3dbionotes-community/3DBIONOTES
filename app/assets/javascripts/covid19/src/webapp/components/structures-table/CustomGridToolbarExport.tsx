@@ -6,6 +6,8 @@ import i18n from "../../../utils/i18n";
 import { useAppContext } from "../../contexts/app-context";
 import { DataGrid } from "../../../domain/entities/DataGrid";
 import { CompositionRoot } from "../../../compositionRoot";
+import { sendAnalytics } from "../../../utils/analytics";
+import { ellipsizedList } from "../../utils/ellipsizedList";
 
 export interface CustomGridToolbarExportProps {
     gridApi: GridApi;
@@ -25,6 +27,15 @@ export const CustomGridToolbarExport: React.FC<CustomGridToolbarExportProps> = R
     const exportDataGrid = React.useCallback(
         (format: Format) => {
             exportStructures(compositionRoot, gridApi, dataGrid, format);
+            sendAnalytics({
+                type: "event",
+                category: "covid_table",
+                action: "export",
+                label: `Export ${format}: ${ellipsizedList(
+                    dataGrid.structures.map(row => row.id)
+                )}`,
+                value: gridApi.getRowsCount(),
+            });
             closeMenu();
         },
         [compositionRoot, gridApi, dataGrid, closeMenu]
