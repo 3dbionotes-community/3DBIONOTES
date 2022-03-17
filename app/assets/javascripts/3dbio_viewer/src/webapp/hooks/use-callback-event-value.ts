@@ -1,8 +1,10 @@
 import React from "react";
 
-type Event = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
+type EventWithStringValue = React.ChangeEvent<
+    HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
+>;
 
 /* A React.useCallback that extracts the string value from a React target event */
-export function useCallbackFromEventValue(fn: (value: string) => void) {
-    return React.useCallback((ev: Event) => fn(ev.target.value.trim()), [fn]);
+export function useCallbackFromEventValue<Res>(fn: (value: string) => Res) {
+    return React.useCallback((ev: EventWithStringValue) => fn(ev.target.value), [fn]);
 }

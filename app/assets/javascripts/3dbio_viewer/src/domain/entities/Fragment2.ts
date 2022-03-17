@@ -101,6 +101,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 label: trackDef.name,
                 description: trackDef.description,
                 overlapping: false,
+                isCustom: false,
                 subtracks: _(subtracksById)
                     .at(...subtrackIds)
                     .flatten()

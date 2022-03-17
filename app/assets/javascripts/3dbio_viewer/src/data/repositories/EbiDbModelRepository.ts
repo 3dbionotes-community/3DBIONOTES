@@ -1,12 +1,11 @@
 import _ from "lodash";
-import { DbModel, DbModelCollection } from "../../domain/entities/DbModel";
+import { DbModel } from "../../domain/entities/DbModel";
 import { FutureData } from "../../domain/entities/FutureData";
 import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
+import { SearchResults } from "../../domain/entities/SearchResults";
 import { Future } from "../../utils/future";
 import { assert } from "../../utils/ts-utils";
 import { request } from "../request-utils";
-
-const searchPageSize = 30;
 
 const config = {
     pdb: {
@@ -24,6 +23,7 @@ const config = {
         },
     },
 };
+
 //http://rinchen-dos.cnb.csic.es:8882
 //http://3dbionotes.cnb.csic.es
 interface ItemConfig {
@@ -33,20 +33,24 @@ interface ItemConfig {
 }
 
 export class EbiDbModelRepository implements DbModelRepository {
-    search(options: SearchOptions): FutureData<DbModelCollection> {
-        const searchAllTypes = !options.type;
-        const searchPdb = searchAllTypes || options.type === "pdb";
-        const searchEmdb = searchAllTypes || options.type === "emdb";
-        const pdbModels = getPdbModels(searchPdb, config.pdb, options.query);
-        const emdbModels = getPdbModels(searchEmdb, config.emdb, options.query);
+    search(options: SearchOptions): FutureData<SearchResults> {
+        const { type, query: query0, limit } = options;
 
-        return Future.join2(emdbModels, pdbModels).map(collections =>
-            _(collections)
-                .flatten()
+        const query = query0.trim();
+        const searchAllTypes = !type;
+        const searchPdb = searchAllTypes || type === "pdb";
+        const searchEmdb = searchAllTypes || type === "emdb";
+        const pdbResults$ = searchFor(searchPdb, limit, config.pdb, query);
+        const emdbResults$ = searchFor(searchEmdb, limit, config.emdb, query);
+
+        return Future.join2(pdbResults$, emdbResults$).map(([pdbResults, emdbResults]) => {
+            const items = _(pdbResults.items)
+                .concat(emdbResults.items)
                 .sortBy(model => -model.score)
-                .take(searchPageSize)
-                .value()
-        );
+                .value();
+
+            return { query, items, totals: { pdb: pdbResults.total, emdb: emdbResults.total } };
+        });
     }
 
     getEmdbsFromPdb(_pdbId: string): FutureData<string[]> {
@@ -65,6 +69,7 @@ type ApiField = typeof apiFields[number];
 interface ApiSearchParams {
     format: "JSON";
     size?: number;
+    start?: number;
     requestFrom?: "queryBuilder";
     fieldurl?: boolean;
     fields?: string;
@@ -103,40 +108,52 @@ const emptySearchesByType: Record<DbModel["type"], string> = {
     emdb: `headerReleaseDate_date:[${startDate} TO ${endDate}]`,
 };
 
-function getPdbModels(
+function searchFor(
     performSearch: boolean,
+    limit: number,
     config: ItemConfig,
     query: string
-): FutureData<DbModel[]> {
-    if (!performSearch) return Future.success([]);
+): FutureData<{ items: DbModel[]; total: number }> {
+    if (!performSearch) return Future.success({ items: [], total: 0 });
 
     const searchQuery = query.trim() ? query : emptySearchesByType[config.type];
     const params: ApiSearchParams = {
         format: "JSON",
-        // Get more records so we can do a more meaningful sorting by score on the grouped collection
-        size: searchPageSize * 10,
+        size: limit,
+        start: 0,
         fields: apiFields.join(","),
-        query: searchQuery,
+        query: searchQuery.length >= 3 ? searchQuery.concat("*") : searchQuery,
         entryattrs: "score",
         fieldurl: true,
     };
 
-    const pdbResults = request<ApiSearchResponse>({ url: config.searchUrl, params });
+    const pdbResults = request<ApiSearchResponse>({ url: config.searchUrl, params }).map(
+        res => res.data
+    );
 
-    return pdbResults.map((res): DbModel[] => {
-        return res.entries.map(entry => ({
-            type: config.type,
-            id: entry.id,
-            score: entry.score,
-            url: getUrl(entry),
-            imageUrl: config.imageUrl(entry.id),
-            name: fromArray(entry.fields.name),
-            authors: fromArray(entry.fields.author),
-            method: fromArray(entry.fields.method),
-            resolution: fromArray(entry.fields.resolution),
-            specimenState: fromArray(entry.fields.specimenstate),
-        }));
-    });
+    return pdbResults
+        .map(res => {
+            const items = res.entries.map(
+                (entry): DbModel => ({
+                    type: config.type,
+                    id: entry.id,
+                    score: entry.score,
+                    url: getUrl(entry),
+                    imageUrl: config.imageUrl(entry.id),
+                    name: fromArray(entry.fields.name),
+                    authors: fromArray(entry.fields.author),
+                    method: fromArray(entry.fields.method),
+                    resolution: fromArray(entry.fields.resolution),
+                    specimenState: fromArray(entry.fields.specimenstate),
+                })
+            );
+
+            return { items, total: res.hitCount };
+        })
+        .flatMapError(err => {
+            console.error(err);
+            return Future.success({ items: [], total: 0 });
+        });
 }
 
 function fromArray(values: string[] | undefined): string | undefined {

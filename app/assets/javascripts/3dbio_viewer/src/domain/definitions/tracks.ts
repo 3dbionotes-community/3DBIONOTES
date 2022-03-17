@@ -24,7 +24,7 @@ export const trackDefinitions = {
             subtracks.cathDomains,
         ],
     }),
-    celullarRegions: definition({
+    cellularRegions: definition({
         id: "topology" as const,
         name: i18n.t("Cellular regions"),
         description: i18n.t("Cell space in which the protein is located"),

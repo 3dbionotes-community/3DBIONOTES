@@ -1,14 +1,14 @@
 import _ from "lodash";
-import { DbModelCollection } from "../../domain/entities/DbModel";
 import { FutureData } from "../../domain/entities/FutureData";
 import { EmdbId, PdbId } from "../../domain/entities/Pdb";
+import { SearchResults } from "../../domain/entities/SearchResults";
 import { DbModelRepository, SearchOptions } from "../../domain/repositories/DbModelRepository";
 import { routes } from "../../routes";
 import { getFromUrl } from "../request-utils";
 import { EmdbPdbMapping, getEmdbsFromMapping, getPdbsFromMapping, PdbEmdbMapping } from "./mapping";
 
 export class BionotesDbModelRepository implements DbModelRepository {
-    search(_options: SearchOptions): FutureData<DbModelCollection> {
+    search(_options: SearchOptions): FutureData<SearchResults> {
         throw new Error("Not implemented");
     }
 

@@ -1,7 +1,9 @@
 import React from "react";
 import _ from "lodash";
-import { ProtvistaTrackElement } from "./Protvista.types";
+import { BlockDef, ProtvistaTrackElement } from "./Protvista.types";
 import { PdbView } from "../../view-models/PdbView";
+import { Pdb, pdbHasCustomTracks } from "../../../domain/entities/Pdb";
+import { Profile, profiles } from "../../../domain/entities/Profile";
 
 interface AddAction {
     type: "add";
@@ -39,4 +41,33 @@ interface ProtvistaPdbActionEvent {
 
 function isProtvistaPdbActionEvent(ev: any): ev is ProtvistaPdbActionEvent {
     return ev.detail && ev.detail.type === "add" && ev.detail.trackId;
+}
+
+export function getVisibleBlocks(
+    blocks: BlockDef[],
+    options: { pdb: Pdb; profile: Profile }
+): BlockDef[] {
+    const { pdb, profile } = options;
+
+    return blocks
+        .filter(block => blockHasRelevantData(block, pdb))
+        .filter(block => profile === profiles.general || block.profiles.includes(profile));
+}
+
+function blockHasRelevantData(block: BlockDef, pdb: Pdb): boolean {
+    if (pdbHasCustomTracks(block, pdb)) {
+        return true;
+    } else {
+        const tracks = _(pdb.tracks)
+            .keyBy(track => track.id)
+            .at(...block.tracks.map(trackDef => trackDef.id))
+            .compact()
+            .value();
+        const trackIds = tracks.map(track => track.id);
+        const hasCustomComponent = Boolean(block.component || block.id === "proteinInteraction");
+        const hasRelevantTracks =
+            !_(tracks).isEmpty() && !_.isEqual(trackIds, ["structure-coverage"]);
+
+        return hasCustomComponent || hasRelevantTracks;
+    }
 }

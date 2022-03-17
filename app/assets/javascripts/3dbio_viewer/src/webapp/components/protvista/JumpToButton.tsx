@@ -17,7 +17,7 @@ export const JumpToButton: React.FC<JumpToButtonProps> = React.memo(props => {
     return <Dropdown text={i18n.t("Jump to")} items={items} onClick={goToElement} />;
 });
 
-function goToElement(DOMElementId: string) {
+export function goToElement(DOMElementId: string) {
     // Use document.getElementById for simplicity. The orthodox approach would be to use refs,
     // but we'd need to pass them to all components that have an anchor.
     const el = document.getElementById(DOMElementId);

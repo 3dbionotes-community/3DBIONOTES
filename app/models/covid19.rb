@@ -141,7 +141,7 @@ class Covid19
       items.push({
         name: pdb_key,
         description: pdb_hash["description"],
-        query_url: "/?queryId=#{pdb_key}&viewer_type=ngl&button=#query",
+        query_url: "/ws/viewer/#/#{pdb_key}&viewer_type=ngl&button=#query",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/#{pdb_key}_deposited_chain_front_image-200x200.png",
         external: {text: "EBI", url: "https://www.ebi.ac.uk/pdbe/entry/pdb/#{pdb_key}"},
         api: "https://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/#{pdb_key}",
@@ -174,7 +174,7 @@ class Covid19
       {
         name: emdb_key,
         description: emdb_hash["description"],
-        query_url: "/?queryId=#{emdb_key}&viewer_type=ngl&button=#query",
+        query_url: "/ws/viewer/#/#{emdb_key}&viewer_type=ngl&button=#query",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/#{emdb_key}/400_#{code}.gif",
         related: get_related_keys(emdb_hash["pdbs"] || emdb_hash["pdb"]),
         external: {text: "EBI", url: "https://www.ebi.ac.uk/pdbe/entry/emdb/#{emdb_key}"},
