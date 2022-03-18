@@ -73,7 +73,7 @@ const NetworkForm: React.FC<NetworkFormProps> = React.memo(props => {
                     annotationsFile,
                 };
 
-                sendAnalytics({ type: "event", category: "network", action: "upload" });
+                sendAnalytics({ type: "event", category: "viewer", action: "upload" });
 
                 return compositionRoot.buildNetwork
                     .execute({ network, onProgress })

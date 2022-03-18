@@ -35,7 +35,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
 
     const setSearch = React.useCallback((value: string) => {
         setPage(0);
-        sendAnalytics({ type: "event", category: "subsearch", action: value });
+        sendAnalytics({ type: "event", category: "covid_table", action: "search", label: value });
         setSearch0(value);
     }, []);
 
@@ -74,9 +74,9 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(() => 
         (options: { row: Structure; field: Field }) => {
             sendAnalytics({
                 type: "event",
-                action: "show_details",
-                category: "covid_table",
-                label: `Field: ${options.field}, PDB: ${options.row.pdb?.id}`,
+                action: "open",
+                category: "dialog",
+                label: `Details. Field: ${options.field}, PDB: ${options.row.pdb?.id}`,
             });
             openDialog();
             setDetailsOptions({ field: options.field, structure: options.row });

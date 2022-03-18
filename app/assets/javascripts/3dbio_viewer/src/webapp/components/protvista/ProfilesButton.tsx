@@ -24,7 +24,7 @@ export const ProfilesButton: React.FC<ProfilesButtonProps> = React.memo(props =>
             sendAnalytics({
                 type: "event",
                 action: "set_profile",
-                category: "profile",
+                category: "viewer",
                 label: profileId,
             });
             onChange(profiles[profileId]);
