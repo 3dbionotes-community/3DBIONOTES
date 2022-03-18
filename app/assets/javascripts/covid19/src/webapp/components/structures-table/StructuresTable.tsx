@@ -38,14 +38,11 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         setFilterState0(value);
     }, []);
 
-    const setSearch = React.useCallback(
-        (value: string) => {
-            setPage(0);
-            setSearch0(value);
-            sendAnalytics({ type: "event", category: "subsearch", action: value });
-        },
-        [setSearch0]
-    );
+    const setSearch = React.useCallback((value: string) => {
+        setPage(0);
+        sendAnalytics({ type: "event", category: "covid_table", action: "search", label: value });
+        setSearch0(value);
+    }, []);
 
     const {
         gridApi,
@@ -82,9 +79,9 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         (options: { row: Structure; field: Field }) => {
             sendAnalytics({
                 type: "event",
-                action: "show_details",
-                category: "covid_table",
-                label: `Field: ${options.field}, PDB: ${options.row.pdb?.id}`,
+                action: "open",
+                category: "dialog",
+                label: `Details. Field: ${options.field}, PDB: ${options.row.pdb?.id}`,
             });
             openDialog();
             setDetailsOptions({ field: options.field, structure: options.row });

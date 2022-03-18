@@ -1,5 +1,5 @@
 #welcome.d-flex.align-items-xl-center
-  .container.d-flex.align-items-center
+  .container.d-flex.align-items-center.justify-content-between
     %div
       .jumbotron
         %p
@@ -12,8 +12,8 @@
             %em Please, note this web site is work in progress. Feel free to report any missing or inconsistent data or behaviour.
             %br/
         %p
-          %a#cta-covid.btn.btn-primary.btn-lg{:href => ws_covid19_path, :role => "button"} CoVid-19 Edition
-          %a#cta-example.btn.btn-secondary.btn-lg{"data-id" => "EMD-21375", :href => "/?queryId=EMD-21375", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
+          %a.cta-covid.btn.btn-primary.btn-lg{:href => ws_covid19_path, :role => "button"} CoVid-19 Edition
+          %a.cta-example.btn.btn-secondary.btn-lg{"data-id" => "EMD-21375", :href => "/?queryId=EMD-21375", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
     %div
       #videoWrapper
         %video#welcomeVideo{:autoplay => "", :height => "auto", :loop => "", :muted => "", :width => "540"}
