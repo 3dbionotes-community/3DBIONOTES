@@ -133,6 +133,10 @@ const Container = styled.div`
         background: none;
         color: inherit;
     }
+    & > span {
+        font-weight: bold;
+        font-size: 1.125em;
+    }
 `;
 
 const Layer = styled.div`

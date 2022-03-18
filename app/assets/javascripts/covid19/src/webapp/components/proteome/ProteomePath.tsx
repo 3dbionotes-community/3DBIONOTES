@@ -40,7 +40,7 @@ export const ProteomePath: React.FC<ProteomePathProps> = React.memo(props => {
                 });
                 setTimeout(() => {
                     setLoading(false);
-                }, 700);
+                }, 1500);
             }}
         />
     );
