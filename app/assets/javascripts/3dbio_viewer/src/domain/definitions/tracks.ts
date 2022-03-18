@@ -139,7 +139,7 @@ export const trackDefinitions = {
         description: i18n.t(
             "Different validation methods and local quality of models and maps in cryo-EM"
         ),
-        subtracks: [subtracks.deepRes, subtracks.mapQ, subtracks.fscQ, subtracks.monoRes],
+        subtracks: [subtracks.deepRes, subtracks.monoRes, subtracks.blocRes, subtracks.mapQ, subtracks.fscQ],
     }),
     pockets: definition({
         id: "pockets" as const,
