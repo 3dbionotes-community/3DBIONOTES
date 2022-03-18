@@ -23,7 +23,7 @@ export function goToElement(DOMElementId: string) {
     // but we'd need to pass them to all components that have an anchor.
     sendAnalytics({
         type: "event",
-        action: "visit_section",
+        action: "jump_to",
         category: "viewer",
         label: DOMElementId,
     });
