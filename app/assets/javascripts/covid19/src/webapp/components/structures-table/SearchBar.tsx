@@ -19,13 +19,22 @@ import { useAppContext } from "../../contexts/app-context";
 export interface SearchBarProps {
     value: string;
     setValue(search: string): void;
+    isProteomeSelected: boolean;
+    setProteomeSelected: (value: boolean) => void;
     filterState: Covid19Filter;
     setFilterState(filter: Covid19Filter): void;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const { compositionRoot } = useAppContext();
-    const { value, setValue, filterState, setFilterState } = props;
+    const {
+        value,
+        setValue,
+        isProteomeSelected,
+        setProteomeSelected,
+        filterState,
+        setFilterState,
+    } = props;
     const [open, setOpen] = React.useState(false);
     const [stateValue, setValueDebounced] = useDebouncedSetter(value, setValue, { delay: 500 });
     const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState<Array<string>>([
@@ -54,9 +63,21 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
 
     const t = React.useMemo(getTranslations, []);
 
+    const searchBarStyles = React.useMemo(
+        () => ({
+            ...styles.searchBar,
+            ...{ background: isProteomeSelected ? "#ffffdd" : undefined },
+        }),
+        [isProteomeSelected]
+    );
+
+    const removeHighlight = React.useCallback(() => setProteomeSelected(false), [
+        setProteomeSelected,
+    ]);
+
     return (
         <React.Fragment>
-            <div style={styles.searchBar}>
+            <div style={searchBarStyles}>
                 <div style={styles.chips}>
                     {selectedFilterNames.map(filterKey => (
                         <StyledChip
@@ -102,6 +123,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                             {...params}
                             variant="outlined"
                             value={stateValue}
+                            onFocus={removeHighlight}
                             onChange={ev => setValueDebounced(ev.target.value)}
                             placeholder={i18n.t(
                                 "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
