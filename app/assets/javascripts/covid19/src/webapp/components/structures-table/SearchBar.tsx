@@ -71,6 +71,10 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
         [isProteomeSelected]
     );
 
+    const removeHighlight = React.useCallback(() => setProteomeSelected(false), [
+        setProteomeSelected,
+    ]);
+
     return (
         <React.Fragment>
             <div style={searchBarStyles}>
@@ -119,7 +123,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                             {...params}
                             variant="outlined"
                             value={stateValue}
-                            onFocus={() => setProteomeSelected(false)}
+                            onFocus={removeHighlight}
                             onChange={ev => setValueDebounced(ev.target.value)}
                             placeholder={i18n.t(
                                 "Search protein/organism/PDB ID/EMDB ID/UniProt ID"

@@ -23,25 +23,27 @@ export const ProteomePath: React.FC<ProteomePathProps> = React.memo(props => {
         stateSetters: { setTitle, setSearch, setProteomeSelected, setLoading },
     } = props;
 
+    const triggerSearch = React.useCallback(() => {
+        setLoading(true);
+        setSearch(name);
+        setProteomeSelected(true);
+        sendAnalytics({
+            type: "event",
+            category: "proteome",
+            action: "select",
+            label: name,
+        });
+        setTimeout(() => {
+            setLoading(false);
+        }, 1500);
+    }, [name, setLoading, setProteomeSelected, setSearch]);
+
     return (
         <path
             className={classStyle}
             d={def}
             onMouseEnter={() => setTitle(<span>{name}</span>)}
-            onClick={() => {
-                setLoading(true);
-                setSearch(name);
-                setProteomeSelected(true);
-                sendAnalytics({
-                    type: "event",
-                    category: "proteome",
-                    action: "select",
-                    label: name,
-                });
-                setTimeout(() => {
-                    setLoading(false);
-                }, 1500);
-            }}
+            onClick={triggerSearch}
         />
     );
 });

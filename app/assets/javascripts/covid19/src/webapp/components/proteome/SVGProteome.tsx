@@ -44,10 +44,10 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
         );
         restoreVisible();
     }, [setTitle, restoreVisible]);
-    const onClickOrf1a = React.useCallback(() => {
+    const setOrf1aVisible = React.useCallback(() => {
         setVisible({ orf1a: true, orf1b: false });
     }, [setVisible]);
-    const onClickOrf1b = React.useCallback(() => {
+    const setOrf1bVisible = React.useCallback(() => {
         setVisible({ orf1a: false, orf1b: true });
     }, [setVisible]);
 
@@ -59,7 +59,7 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                 <SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
                     <g onMouseLeave={onMouseLeave}>
                         <rect className="none" width="1000" height="1000" />
-                        <g onMouseEnter={onClickOrf1a}>
+                        <g onMouseEnter={setOrf1aVisible}>
                             <ProteomePath
                                 stateSetters={stateSetters}
                                 name="ORF1a"
@@ -77,7 +77,7 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                     />
                                 ))}
                         </g>
-                        <g onMouseEnter={onClickOrf1b}>
+                        <g onMouseEnter={setOrf1bVisible}>
                             <ProteomePath
                                 stateSetters={stateSetters}
                                 name="ORF1b"

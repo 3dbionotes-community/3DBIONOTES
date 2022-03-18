@@ -17,6 +17,18 @@ export const Root: React.FC = React.memo(() => {
     const [isAccordionExpanded, { toggle: toggleAccordion }] = useBooleanState(false);
     const [visible, setVisible] = React.useState<VisibleGen>({});
 
+    const toggleProteome = React.useCallback(() => {
+        toggleAccordion();
+        setVisible({});
+        setTitle(
+            <span>
+                {i18n.t("SARS-CoV-2")}
+                <br />
+                {i18n.t("Proteome")}
+            </span>
+        );
+    }, [toggleAccordion]);
+
     return (
         <Body>
             <HeaderBanner>
@@ -26,17 +38,7 @@ export const Root: React.FC = React.memo(() => {
                         variant="outlined"
                         color="inherit"
                         startIcon={isAccordionExpanded ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                        onClick={() => {
-                            toggleAccordion();
-                            setVisible({});
-                            setTitle(
-                                <span>
-                                    {i18n.t("SARS-CoV-2")}
-                                    <br />
-                                    {i18n.t("Proteome")}
-                                </span>
-                            );
-                        }}
+                        onClick={toggleProteome}
                     >
                         {isAccordionExpanded ? i18n.t("Hide proteome") : i18n.t("View proteome")}
                     </Button>
