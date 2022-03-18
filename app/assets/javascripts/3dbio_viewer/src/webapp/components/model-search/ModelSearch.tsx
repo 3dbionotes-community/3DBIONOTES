@@ -20,6 +20,7 @@ import { ModelUpload } from "../model-upload/ModelUpload";
 import { ModelSearchFilterMenu, ModelTypeFilter, modelTypeKeys } from "./ModelSearchFilterMenu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value";
+import { sendAnalytics } from "../../utils/analytics";
 import { useGoto } from "../../hooks/use-goto";
 
 /* Search PDB/EMDB models from text and model type. As the search items to show are limited,
@@ -112,6 +113,16 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
         [goTo, onClose]
     );
 
+    const openUploadWithAnalytics = React.useCallback(() => {
+        openUpload();
+        sendAnalytics({
+            type: "event",
+            category: "dialog",
+            action: "open_dialog",
+            label: "Upload Model",
+        });
+    }, [openUpload]);
+
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
             <DialogTitle>
@@ -136,7 +147,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                     </div>
 
                     <ModelSearchFilterMenu modelTypeState={models} setModelTypeState={setModels} />
-                    <button className="model-search" onClick={openUpload}>
+                    <button className="model-search" onClick={openUploadWithAnalytics}>
                         {i18n.t("Upload model")}
                     </button>
                     {isUploadOpen && (
@@ -222,6 +233,12 @@ function useSearch(
             }
 
             updateState({ type: "searching" });
+            sendAnalytics({
+                type: "event",
+                category: "search_menu",
+                action: "search",
+                label: query,
+            });
 
             return compositionRoot.searchDbModels.execute({ query, limit: maxRenderedItems }).run(
                 results => {

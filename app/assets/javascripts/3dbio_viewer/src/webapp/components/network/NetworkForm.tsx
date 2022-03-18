@@ -8,6 +8,7 @@ import UniProtAccessionTextArea from "./UniProtAccessionTextArea";
 import SpeciesSelect from "./SpeciesSelect";
 import "./Network.css";
 import { ErrorMessage } from "../error-message/ErrorMessage";
+import { sendAnalytics } from "../../utils/analytics";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { speciesList } from "../../../domain/entities/Species";
@@ -71,6 +72,8 @@ const NetworkForm: React.FC<NetworkFormProps> = React.memo(props => {
                         networkForm.includeNeighboursWithStructuralData,
                     annotationsFile,
                 };
+
+                sendAnalytics({ type: "event", category: "network", action: "upload" });
 
                 return compositionRoot.buildNetwork
                     .execute({ network, onProgress })
