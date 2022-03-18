@@ -1,74 +1,74 @@
 #videoWrapper {
-    width: 536px;
-    overflow: hidden;
-    display: block;
+  width: 536px;
+  overflow: hidden;
+  display: block;
 }
 
 #welcome {
-    padding-top: 40px;
-    padding-bottom: 0px;
-    margin-bottom: -40px;
+  padding-top: 40px;
+  padding-bottom: 0px;
+  margin-bottom: -40px;
 }
 
 #welcomeVideo {
-    margin-left: -2px;
+  margin-left: -2px;
 }
 
 #Navbar {
-    background: #ffffff;
-    width: 100%;
-    padding: 0px 10px;
-    border-bottom: solid 6px #123546;
+  background: #ffffff;
+  width: 100%;
+  padding: 0px 10px;
+  border-bottom: solid 6px #123546;
 }
 
 #viewerMenuButton {
-    padding: 10px 20px;
-    margin: 0px 10px;
-    /*color: #ffffff;*/
-    border-radius: 8px;
+  padding: 10px 20px;
+  margin: 0px 10px;
+  /*color: #ffffff;*/
+  border-radius: 8px;
 }
 
 #navcol-1 .dropdown-menu {
-    background-color: #123546;
-    border-radius: 8px;
-    top: 77%;
-    left: auto;
+  background-color: #123546;
+  border-radius: 8px;
+  top: 77%;
+  left: auto;
 }
 
 #navcol-1 .dropdown-item.active {
-    color: #fff;
-    text-decoration: none;
-    background-color: #123546;
+  color: #fff;
+  text-decoration: none;
+  background-color: #123546;
 }
 
 #navcol-1 .dropdown-item {
-    color: #a2becb;
-    text-decoration: none;
-    background-color: initial;
+  color: #a2becb;
+  text-decoration: none;
+  background-color: initial;
 }
 
 #viewerSlogan {
-    color: #268bbe;
-    font-weight: 600;
+  color: #268bbe;
+  font-weight: 600;
 }
 
 #viewerSlogan a {
-    display: contents;
-    color: #123546;
+  display: contents;
+  color: #123546;
 }
 
 #partnersLogos {
-    float: right;
-    color: #268bbe;
+  float: right;
+  color: #268bbe;
 }
 
 .dropdown-toggle.active {
-    color: #ffffff;
-    text-decoration: none;
+  color: #ffffff;
+  text-decoration: none;
 }
 
 .dropdown-toggle.active:after {
-    display: none;
+  display: none;
 }
 
 .dropdown-toggle.active {
@@ -89,36 +89,36 @@
 */
 
 .modal-header {
-    color: #123546;
-    background: #fff;
+  color: #123546;
+  background: #fff;
 }
 
 .modal-footer {
-    border-top: none;
-    margin-top: -30px;
-    padding-bottom: 30px;
+  border-top: none;
+  margin-top: -30px;
+  padding-bottom: 30px;
 }
 
 .modal-header {
-    margin-bottom: -20px;
+  margin-bottom: -20px;
 }
 
 .modal-header button {
-    margin-left: 0px !important;
+  margin-left: 0px !important;
 }
 
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:focus {
-    color: #fff;
-    background-color: #268bbe;
-    border-color: #268bbe;
+  color: #fff;
+  background-color: #268bbe;
+  border-color: #268bbe;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active,
 .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
-    color: #fff;
-    background-color: #268bbe;
-    border-color: #268bbe;
+  color: #fff;
+  background-color: #268bbe;
+  border-color: #268bbe;
 }
