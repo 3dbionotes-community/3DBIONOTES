@@ -22,23 +22,22 @@ function createFunctionWithTimeout(callback, opt_timeout) {
 }
 
 $j(document).ready(function () {
-    $j("#btn-contact").bind("click", () => {
+    $j(".btn-contact").bind("click", () => {
         gtag("event", "contact", {
             event_category: "home_page",
-            event_label: "Clicked contact",
         });
     });
-    $j("#cta-covid").bind("click", () => {
+    $j(".cta-covid").bind("click", () => {
         gtag("event", "view_page", {
             event_category: "call_to_action",
             event_label: "/covid19",
         });
         e.preventDefault();
     });
-    $j("#cta-example").bind("click", () => {
-        gtag("event", "view_item", {
+    $j(".cta-example").bind("click", () => {
+        gtag("event", "view_example", {
             event_category: "call_to_action",
-            event_label: $j("#cta-example").data("id"),
+            event_label: $j(".cta-example").data("id"),
         });
     });
 
