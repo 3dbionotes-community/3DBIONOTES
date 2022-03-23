@@ -1,14 +1,6 @@
 import React, { useCallback, useState, useRef } from "react";
 import _ from "lodash";
-import {
-    CircularProgress,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-    Switch,
-} from "@material-ui/core";
-import { Close } from "@material-ui/icons";
+import { CircularProgress, Dialog, DialogContent, Switch } from "@material-ui/core";
 import i18n from "../../utils/i18n";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
@@ -23,6 +15,8 @@ import {
 } from "../../../domain/entities/Annotation";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
+import { TooltipTypography } from "../HtmlTooltip";
+import { DialogTitleHelp } from "../DialogTitleHelp";
 
 export interface AnnotationsToolProps {
     onClose(): void;
@@ -99,13 +93,17 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="lg">
-            <DialogTitle>
-                {i18n.t("Add annotation")}
-                <IconButton onClick={onClose}>
-                    <Close />
-                </IconButton>
-            </DialogTitle>
-
+            <DialogTitleHelp
+                title={i18n.t("Add annotation")}
+                onClose={onClose}
+                tooltip={
+                    <TooltipTypography variant="body2">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur eaque
+                        aspernatur, adipisci harum dolor neque dicta voluptas a asperiores sequi
+                        atque quibusdam cumque. At excepturi nobis ea, tempora omnis eum
+                    </TooltipTypography>
+                }
+            />
             <DialogContent>
                 <label>
                     {isManual ? (
