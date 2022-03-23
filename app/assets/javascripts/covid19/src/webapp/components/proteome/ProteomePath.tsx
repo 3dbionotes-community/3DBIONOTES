@@ -6,6 +6,7 @@ export interface StateSetters {
     setTitle: (value: React.ReactNode) => void;
     setProteomeSelected: (value: boolean) => void;
     setLoading: (value: boolean) => void;
+    toggleProteome: () => void;
 }
 
 interface ProteomePathProps {
@@ -20,13 +21,14 @@ export const ProteomePath: React.FC<ProteomePathProps> = React.memo(props => {
         name,
         classStyle,
         def,
-        stateSetters: { setTitle, setSearch, setProteomeSelected, setLoading },
+        stateSetters: { setTitle, setSearch, setProteomeSelected, setLoading, toggleProteome },
     } = props;
 
     const triggerSearch = React.useCallback(() => {
         setLoading(true);
         setSearch(name);
         setProteomeSelected(true);
+        toggleProteome();
         sendAnalytics({
             type: "event",
             category: "proteome",
@@ -36,7 +38,7 @@ export const ProteomePath: React.FC<ProteomePathProps> = React.memo(props => {
         setTimeout(() => {
             setLoading(false);
         }, 1500);
-    }, [name, setLoading, setProteomeSelected, setSearch]);
+    }, [name, setLoading, setProteomeSelected, setSearch, toggleProteome]);
 
     return (
         <path
