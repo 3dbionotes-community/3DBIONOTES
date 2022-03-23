@@ -15,6 +15,16 @@ import { HtmlTooltip } from "./HtmlTooltip";
 import i18n from "../../../utils/i18n";
 import "./Toolbar.css";
 
+export const searchExamples = [
+    "EMD-21375",
+    "Glycoprotein",
+    "Remdesivir",
+    "3CL-Pro",
+    "Mouse",
+    "PanDDA",
+    "Martinez",
+];
+
 export interface ToolbarProps {
     search: string;
     setSearch(search: string): void;
@@ -171,9 +181,13 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                 <div style={styles.toolbarRow}>
                     <div style={styles.exampleRow}>
                         <p style={styles.examplesText}>{i18n.t("Examples")}:</p>
-                        <SearchExampleButton setValue={setSearch} exampleValue="6YOR" />
-                        <SearchExampleButton setValue={setSearch} exampleValue="Homo sapiens" />
-                        <SearchExampleButton setValue={setSearch} exampleValue="SARS-CoV-2" />
+                        {searchExamples.map((example, idx) => (
+                            <SearchExampleButton
+                                key={idx}
+                                setValue={setSearch}
+                                exampleValue={example}
+                            />
+                        ))}
                     </div>
                     <CustomGridTopPagination
                         dataGrid={dataGrid}

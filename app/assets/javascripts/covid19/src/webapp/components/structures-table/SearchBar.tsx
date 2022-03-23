@@ -15,6 +15,7 @@ import {
     getTranslations,
 } from "../../../domain/entities/Covid19Info";
 import { useAppContext } from "../../contexts/app-context";
+import { searchExamples } from "./Toolbar";
 
 export interface SearchBarProps {
     value: string;
@@ -37,20 +38,16 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     } = props;
     const [open, setOpen] = React.useState(false);
     const [stateValue, setValueDebounced] = useDebouncedSetter(value, setValue, { delay: 500 });
-    const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState<Array<string>>([
-        "6YOR",
-        "Homo sapiens",
-        "SARS-CoV-2",
-    ]);
+    const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState<Array<string>>(
+        searchExamples
+    );
     const [loading, setLoading] = React.useState(false);
     const selectedFilterNames = filterKeys.filter(key => filterState[key]);
 
     React.useEffect(() => {
         setLoading(true);
         const autoSuggestions = compositionRoot.getAutoSuggestions.execute(stateValue);
-        setAutoSuggestionOptions(
-            stateValue === "" ? ["6YOR", "Homo sapiens", "SARS-CoV-2"] : autoSuggestions
-        );
+        setAutoSuggestionOptions(stateValue === "" ? searchExamples : autoSuggestions);
         setLoading(false);
     }, [stateValue, compositionRoot.getAutoSuggestions]);
 
