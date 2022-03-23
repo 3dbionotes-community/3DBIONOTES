@@ -33,7 +33,7 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
         sendAnalytics({
             type: "event",
             category: "dialog",
-            action: "open_dialog",
+            action: "open",
             label: "Network",
         });
     }, [openNetwork]);

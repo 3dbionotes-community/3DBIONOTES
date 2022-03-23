@@ -47,7 +47,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     const runModelSearchAction = React.useCallback<ModelSearchProps["onSelect"]>(
         (action, item) => {
             const newSelection = runAction(selection, action, item);
-            sendAnalytics({ type: "event", category: "search_menu", action: action });
+            sendAnalytics({ type: "event", category: "viewer_search_menu", action: action });
             onSelectionChange(newSelection);
             closeSearch();
         },
@@ -59,7 +59,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
         sendAnalytics({
             type: "event",
             category: "dialog",
-            action: "open_dialog",
+            action: "open",
             label: "Search",
         });
     }, [openSearch]);

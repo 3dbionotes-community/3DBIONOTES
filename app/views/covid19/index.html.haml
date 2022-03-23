@@ -5,7 +5,7 @@
   $(function() { initLiveSearch(proteinsData, {maxItems: #{max_items}}) });
 
 .d-flex.mt-2.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
-  .container
+  .container.mb-5
     .contentBox
     .alert.alert-warning.mb-5{:role => "alert"}
       %span
@@ -15,38 +15,9 @@
     #root
       This component requires Javascript
 
-    .contentBox
-      .contentTitle
-        %h4
-          %strong External data sources and collaborations
-          %br/
-      .contentData
-        = reference({"UniProt" => "https://covid-19.uniprot.org/uniprotkb?query=*"})
-        = reference({"Protein Data Bank (PDB) - EBI" => "https://www.ebi.ac.uk/pdbe/", "Protein Data Bank (PDB) - RCSB" => "https://www.rcsb.org/", "Protein Data Bank (PDB)- PDBJ " => "https://pdbj.org/featured/covid-19"})
-        = reference({"PDBe-KB COVID-19 Data Portal" => "https://www.ebi.ac.uk/pdbe/covid-19"})
-        = reference({"The Electron Microscopy Data Bank (EMDB) - EBI" => "https://www.ebi.ac.uk/pdbe/emdb/", "The Electron Microscopy Data Bank (EMDB) - RCSB" => "http://www.rcsb.org/", "EMDataResource" => "http://www.emdataresource.org/"})
-        = reference({"ELIXIR support to COVID-19 research" => "https://elixir-europe.org/services/covid-19"})
-        = reference({"CORONAVIRUS STRUCTURAL TASKFORCE. Dr. Andrea Thorn Lab" => "https://elixir-europe.org/services/covid-19"})
-        = reference({"EMBL-EBI COVID-19 Data Portal - EBI" => "https://www.ebi.ac.uk/covid-19", "EMBL-EBI COVID-19 Data Portal - EBI-ENA" => "https://www.ebi.ac.uk/ena/pathogens/covid-19"})
-        = reference({"European COVID-19 Data Portal" => "https://www.covid19dataportal.org/"})
-        = reference({"China National Center for Bioinformation. 2019 Novel Coronavirus Resource. (2019nCoVR)" => "https://bigd.big.ac.cn/ncov/variation/annotation?lang=en"})
-        = reference({"Structural genomics and interactomics of SARS-CoV-2 novel coronavirus" => "http://draco.cs.wpi.edu/wuhan/"})
-        = reference({"SWISS-MODEL" => "https://swissmodel.expasy.org/repository/species/2697049"})
-        = reference({"Diamond: Main protease structure and XChem fragment screen" => "https://www.diamond.ac.uk/covid-19/for-scientists/Main-protease-structure-and-XChem"})
-        = reference({"John Jumper, Kathryn Tunyasuvunakool, Pushmeet Kohli, Demis Hassabis, and the AlphaFold Team, “Computational predictions of protein structures associated with COVID-19”, Version 2, DeepMind website, 8 April 2020" => "https://deepmind.com/research/open-source/computational-predictions-of-protein-structures-associated-with-COVID-19"})
-        = reference({"Knowledge‐based structural models of SARS‐CoV‐2 proteins and their complexes with potential drugs. Atsushi Hijikata, Clara Shionyu-Mitsuyama, Setsu Nakae, Masafumi Shionyu, Motonori Ota, Shigehiko Kanaya, Tsuyoshi Shirai" => "https://doi.org/https://doi.org/10.1002/1873-3468.13806"})
-
-
 = javascript_include_tag('covid19/build/app/2.chunk.js')
 = javascript_include_tag('covid19/build/app/main.chunk.js')
 = javascript_include_tag('covid19/build/app/runtime-main.js')
 
 :javascript
   #{@log}
-:javascript
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-93698320-1', 'auto');
-  ga('send', 'pageview');

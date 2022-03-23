@@ -1,44 +1,51 @@
 //= require jquery
-window.dataLayer = window.dataLayer || [];
-function gtag() {
-    dataLayer.push(arguments);
-}
-gtag("js", new Date());
-
-gtag("config", "UA-93698320-4");
+(function (i, s, o, g, r, a, m) {
+    i["GoogleAnalyticsObject"] = r;
+    (i[r] =
+        i[r] ||
+        function () {
+            (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+    (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m);
+})(
+    window,
+    document,
+    "script",
+    "https://www.google-analytics.com/analytics.js",
+    "ga"
+);
+ga("create", "UA-93698320-4", "auto");
+ga("send", "pageview");
 
 var $j = jQuery.noConflict();
 
-function createFunctionWithTimeout(callback, opt_timeout) {
-    var called = false;
-    function fn() {
-        if (!called) {
-            called = true;
-            callback();
-        }
-    }
-    setTimeout(fn, opt_timeout || 1000);
-    return fn;
-}
-
 $j(document).ready(function () {
-    $j("#btn-contact").bind("click", () => {
-        gtag("event", "contact", {
-            event_category: "home_page",
-            event_label: "Clicked contact",
+    $j(".btn-contact").bind("click", () => {
+        ga("send", {
+            hitType: "event",
+            eventCategory: "home_page",
+            eventAction: "contact",
+            transport: "beacon",
         });
     });
-    $j("#cta-covid").bind("click", () => {
-        gtag("event", "view_page", {
-            event_category: "call_to_action",
-            event_label: "/covid19",
+    $j(".cta-covid").bind("click", () => {
+        ga("send", {
+            hitType: "event",
+            eventCategory: "call_to_action",
+            eventAction: "view_page",
+            eventLabel: "/covid19",
         });
-        e.preventDefault();
     });
-    $j("#cta-example").bind("click", () => {
-        gtag("event", "view_item", {
-            event_category: "call_to_action",
-            event_label: $j("#cta-example").data("id"),
+    $j(".cta-example").bind("click", () => {
+        ga("send", {
+            hitType: "event",
+            eventCategory: "call_to_action",
+            eventAction: "view_example",
+            eventLabel: $j(".cta-example").data("id"),
         });
     });
 
@@ -46,13 +53,14 @@ $j(document).ready(function () {
     if (form)
         form.addEventListener("submit", function (event) {
             event.preventDefault();
-            gtag("event", "search", {
-                event_category: "home_page",
-                event_label: $j("#input-search").val(),
-                event_callback: createFunctionWithTimeout(function () {
-                    form.submit();
-                }),
+            ga("send", {
+                hitType: "event",
+                eventCategory: "home_page",
+                eventAction: "search",
+                eventLabel: $j("#input-search").val(),
+                transport: "beacon",
             });
+            form.submit();
         });
 
     $j(".submit_form").submit(function (event) {

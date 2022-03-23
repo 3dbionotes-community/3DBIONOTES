@@ -47,8 +47,9 @@ export interface ToolbarProps {
 export const Toolbar: React.FC<ToolbarProps | {}> = props => {
     const helpText = React.useMemo(() => {
         return {
-            p: i18n.t(
-                `Write in the searching box one (example: spike) or several
+            p: [
+                i18n.t(
+                    `Write in the searching box one word (example: spike) or several
         words in a row (example: spike SARS-CoV-2) to perform the
         search. If you write several words the searching result will
         be the intersection of independent searching results with
@@ -59,7 +60,11 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
         the right by selecting them. This(These) term(s) will appear
         in the searching box, where you can write additional words
         to look for them as well. Disable it(them) by pressing the
-        “x”. To see an example of the results obtained press the
+        “x”.`,
+                    { nsSeparator: false }
+                ),
+                i18n.t(
+                    `To see an example of the results obtained, press the
         example buttons below the searching box (6YOR, Homo sapiens,
         and SARS-CoV-2). For any of them you should see a table with
         seven columns (Title, PDB, EMDB, Entities, Ligands,
@@ -68,8 +73,9 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
         edge. The content of the table can be also exported with
         EXPORT as a file of CSV or JSON format. The scope of the
         search will cover the terms included in the seven columns.`,
-                { nsSeparator: false }
-            ),
+                    { nsSeparator: false }
+                ),
+            ],
             ol: [
                 i18n.t(
                     `Title: From PDBe or EMDB. The eye below the title opens
@@ -79,12 +85,12 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                 i18n.t(
                     `PDB: With an image of the atomic structure and the link
         to EBI. In case there exists a structure improved by
-        PDB-Redo, Coronavirus Task Force or CERES a link to the
+        PDB-Redo, Coronavirus Task Force or CERES, a link to the
         respective web pages should be included. The eye opens
         that improved structure in 3DBionotes viewer.`,
                     { nsSeparator: false }
                 ),
-                i18n.t(`EMDB: With an image of the 3D map and the respective to EMDB.`, {
+                i18n.t(`EMDB: With an image of the 3D map and the respective link to EBI/EMDB.`, {
                     nsSeparator: false,
                 }),
                 i18n.t(
@@ -96,7 +102,7 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                 ),
                 i18n.t(
                     `Ligands: List detailing small molecules bound to the
-        macromolecule including drugs, ions, glycans, etc. Longs contain also a VIEW MORE button to check the whole.`,
+        macromolecule including drugs, ions, glycans, etc. Longs lists contain also a VIEW MORE button to check the whole.`,
                     { nsSeparator: false }
                 ),
                 i18n.t(
@@ -157,7 +163,10 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                             title={
                                 <>
                                     <StyledTypography variant="body2">
-                                        {helpText.p}
+                                        {helpText.p[0]}
+                                    </StyledTypography>
+                                    <StyledTypography variant="body2">
+                                        {helpText.p[1]}
                                     </StyledTypography>
                                     <OrderedList>
                                         {helpText.ol.map((t, idx) => (
@@ -257,6 +266,7 @@ const GridToolbarActions = styled.div`
 `;
 
 const OrderedList = styled.ol`
+    margin: 1em 0;
     padding: 0 2em;
     li {
         line-height: 1.4;
@@ -268,7 +278,7 @@ const StyledTypography = styled(Typography)`
     &.MuiTypography-body2 {
         font-size: 0.75rem;
         color: rgba(0, 0, 0, 0.87);
-        padding: 12px 12px 0 12px;
+        padding: 1em 1em 0 1em;
         word-wrap: break-word;
         font-family: "Roboto", "Helvetica", "Arial", sans-serif;
         font-weight: 500;
