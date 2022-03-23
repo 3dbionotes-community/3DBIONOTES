@@ -1,14 +1,6 @@
 import React, { useCallback, useState, useRef } from "react";
 import _ from "lodash";
-import {
-    CircularProgress,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-    Switch,
-} from "@material-ui/core";
-import { Close, HelpOutline as HelpOutlineIcon } from "@material-ui/icons";
+import { CircularProgress, Dialog, DialogContent, Switch } from "@material-ui/core";
 import i18n from "../../utils/i18n";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
@@ -23,8 +15,8 @@ import {
 } from "../../../domain/entities/Annotation";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
-import { HtmlTooltip, StyledTypography, styles } from "../HtmlTooltip";
-import styled from "styled-components";
+import { TooltipTypography } from "../HtmlTooltip";
+import { DialogTitleHelp } from "../DialogTitleHelp";
 
 export interface AnnotationsToolProps {
     onClose(): void;
@@ -101,26 +93,17 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="lg">
-            <StyledDialogTitle>
-                {i18n.t("Add annotation")}
-                <HtmlTooltip
-                    title={
-                        <StyledTypography variant="body2">
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur eaque
-                            aspernatur, adipisci harum dolor neque dicta voluptas a asperiores sequi
-                            atque quibusdam cumque. At excepturi nobis ea, tempora omnis eum
-                        </StyledTypography>
-                    }
-                >
-                    <span style={styles.tooltip}>
-                        <HelpOutlineIcon />
-                    </span>
-                </HtmlTooltip>
-                <IconButton onClick={onClose}>
-                    <Close />
-                </IconButton>
-            </StyledDialogTitle>
-
+            <DialogTitleHelp
+                title={i18n.t("Add annotation")}
+                onClose={onClose}
+                tooltip={
+                    <TooltipTypography variant="body2">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur eaque
+                        aspernatur, adipisci harum dolor neque dicta voluptas a asperiores sequi
+                        atque quibusdam cumque. At excepturi nobis ea, tempora omnis eum
+                    </TooltipTypography>
+                }
+            />
             <DialogContent>
                 <label>
                     {isManual ? (
@@ -329,15 +312,3 @@ function getAnnotationsFromAnnotationFromTrack(annotation: AnnotationWithTrack):
     ];
     return { tracks, data: JSON.stringify(annotation) };
 }
-
-export const StyledDialogTitle = styled(DialogTitle)`
-    .MuiTypography-root {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        width: 100%;
-        .MuiButtonBase-root.MuiIconButton-root {
-            margin-left: auto;
-        }
-    }
-`;

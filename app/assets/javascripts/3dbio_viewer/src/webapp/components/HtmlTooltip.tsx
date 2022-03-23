@@ -12,7 +12,7 @@ export const HtmlTooltip = withStyles((theme: Theme) => ({
     },
 }))(Tooltip);
 
-export const StyledTypography = styled(Typography)`
+export const TooltipTypography = styled(Typography)`
     &.MuiTypography-body2 {
         font-size: 0.75rem;
         color: rgba(0, 0, 0, 0.87);
