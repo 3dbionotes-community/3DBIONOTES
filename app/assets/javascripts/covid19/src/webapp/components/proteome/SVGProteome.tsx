@@ -17,10 +17,20 @@ interface SVGProteomeProps {
     title: React.ReactNode;
     setTitle: (value: React.ReactNode) => void;
     setProteomeSelected: (value: boolean) => void;
+    toggleProteome: () => void;
 }
 
 export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
-    const { search, setSearch, visible, setVisible, title, setTitle, setProteomeSelected } = props;
+    const {
+        search,
+        setSearch,
+        visible,
+        setVisible,
+        title,
+        setTitle,
+        setProteomeSelected,
+        toggleProteome,
+    } = props;
     const [loading, setLoading] = React.useState(false);
 
     const stateSetters = React.useMemo(
@@ -29,8 +39,9 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
             setTitle,
             setProteomeSelected,
             setLoading,
+            toggleProteome,
         }),
-        [setSearch, setTitle, setProteomeSelected]
+        [setSearch, setTitle, setProteomeSelected, toggleProteome]
     );
 
     const restoreVisible = React.useCallback(() => setVisible({}), [setVisible]);
@@ -64,7 +75,7 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                 stateSetters={stateSetters}
                                 name="ORF1a"
                                 classStyle="orf1a"
-                                def="M754,500a256.17,256.17,0,0,1-2.84,39.79A243.33,243.33,0,0,1,739,585.89l-45-16.4a204.32,204.32,0,0,0,9.52-37.28A208.29,208.29,0,0,0,706,500c0-2.5,0-4.92-.13-7.21A205.82,205.82,0,0,0,501,294V246a255.53,255.53,0,0,1,47.43,4.61,252.48,252.48,0,0,1,89.88,36.32A253.31,253.31,0,0,1,753.84,491.11C754,493.94,754,496.92,754,500Z"
+                                def="M408.31,151.89l24.58,88.52-.18.05a276.34,276.34,0,0,0-86.93,41.71A278.93,278.93,0,0,0,275.68,355,276.14,276.14,0,0,0,230.4,491.15q-.5,8.22-.49,16.56a279.07,279.07,0,0,0,1.8,31.7A276.12,276.12,0,0,0,259,631.6a277.46,277.46,0,0,0,25.27,41.12.7.7,0,0,0,.13.17L210.05,728a2.09,2.09,0,0,0-.14-.17,372.72,372.72,0,0,1-33.68-54.86,369.2,369.2,0,0,1,62.6-419.16A370.36,370.36,0,0,1,287.2,211c1.7-1.26,3.41-2.5,5.11-3.71a361.87,361.87,0,0,1,55.41-32.89,369.15,369.15,0,0,1,60.41-22.47Z"
                             />
                             {visible.orf1a &&
                                 Orf1aProts.map((prot, idx) => (
@@ -72,7 +83,7 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                         key={idx}
                                         stateSetters={stateSetters}
                                         classStyle="orf1a"
-                                        name={prot.name}
+                                        name={prot.name ?? ""}
                                         def={prot.def}
                                     />
                                 ))}
@@ -82,7 +93,7 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                 stateSetters={stateSetters}
                                 name="ORF1b"
                                 classStyle="orf1b"
-                                def="M738.33,587.77A254.31,254.31,0,0,1,500,754c-5.9,0-11.87-.21-17.76-.63a254,254,0,0,1-69.11-14.76c-2.89-1.05-5.68-2.12-8.31-3.18a248,248,0,0,1-70.7-43.14l31.45-36.17a205.07,205.07,0,0,0,120,49.38c4.78.33,9.62.5,14.39.5A206.18,206.18,0,0,0,693.3,571.37Z"
+                                def="M819.07,706.39c-1.13,1.8-2.3,3.6-3.49,5.38A369.58,369.58,0,0,1,313.86,823c-3.58-2.2-7.12-4.45-10.64-6.78-38.84-25.66-65.47-50.89-93.17-88.29l74.39-55.07a279,279,0,0,0,77.73,71.27,277,277,0,0,0,145.14,41,279.17,279.17,0,0,0,59.74-6.45,275.75,275.75,0,0,0,97.19-42.19,279,279,0,0,0,74.36-75.58q1.33-2,2.63-4Z"
                             />
                             {visible.orf1b &&
                                 Orf1bProts.map((prot, idx) => (
@@ -90,7 +101,7 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                         key={idx}
                                         stateSetters={stateSetters}
                                         classStyle="orf1b"
-                                        name={prot.name}
+                                        name={prot.name ?? ""}
                                         def={prot.def}
                                     />
                                 ))}
@@ -101,12 +112,18 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                     key={idx}
                                     stateSetters={stateSetters}
                                     classStyle={prot.classStyle}
-                                    name={prot.name}
+                                    name={prot.name ?? ""}
                                     def={prot.def}
                                 />
                             ))}
                         </g>
                     </g>
+                    <text x="442" y="200">
+                        5&rsquo;
+                    </text>
+                    <text x="542" y="200">
+                        3&rsquo;
+                    </text>
                 </SVG>
             </Layer>
             <span>
@@ -124,11 +141,12 @@ const Container = styled.div`
     position: relative;
     display: flex;
     justify-content: right;
+    margin: 16px 0;
     padding: 32px 64px;
     box-sizing: border-box;
     align-items: end;
     width: 100vw;
-    height: 650px;
+    height: 500px;
     *::selection {
         background: none;
         color: inherit;
@@ -142,12 +160,12 @@ const Container = styled.div`
 const Layer = styled.div`
     position: absolute;
     top: 0;
-    left: calc(50% - 325px);
+    left: calc(50% - 250px);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 650px;
-    height: 650px;
+    width: 500px;
+    height: 500px;
     font-size: 24px;
     font-family: Lato-Semibold, Lato;
     font-weight: 600;
@@ -165,80 +183,83 @@ const SVG = styled.svg`
     path {
         cursor: pointer;
     }
+    text {
+        font-size: 42px;
+    }
     .none {
         fill: none;
         pointer-events: all;
     }
-    .orf1b {
-        fill: #5f666a;
+    .orf1a {
+        fill: #2c79a8;
         &:hover {
-            fill: #6f767a;
+            fill: #3c89b8;
         }
         &:active {
-            fill: #7f868a;
+            fill: #4c99c8;
         }
     }
-    .orf1a {
-        fill: #2f3335;
+    .orf1b {
+        fill: #3692cc;
         &:hover {
-            fill: #4f5355;
+            fill: #46a2dc;
         }
         &:active {
-            fill: #5f6365;
+            fill: #56b2ec;
         }
     }
     .blue {
         fill: #3fa9f5;
         &:hover {
-            fill: #4fb9f5;
+            fill: #4fb9ff;
         }
         &:active {
             fill: #5fc9ff;
         }
     }
     .pink {
-        fill: #ff7bac;
+        fill: #d93387;
         &:hover {
-            fill: #ff8bbc;
+            fill: #e94397;
         }
         &:active {
-            fill: #ff9bcc;
+            fill: #f953a7;
         }
     }
     .red {
-        fill: #ff1d25;
+        fill: #ff4322;
         &:hover {
-            fill: #ff3d55;
+            fill: #ff6342;
         }
         &:active {
-            fill: #ff5d75;
+            fill: #ff7352;
         }
     }
     .orange {
-        fill: #ff931e;
+        fill: #f9c321;
         &:hover {
-            fill: #ffa33e;
+            fill: #f9d331;
         }
         &:active {
-            fill: #ffb34e;
+            fill: #f9e341;
         }
     }
     .gray {
-        fill: #8e999f;
+        fill: #929292;
         &:hover {
-            fill: #aeb9bf;
+            fill: #a2a2a2;
         }
         &:active {
-            fill: #bec9cf;
+            fill: #b2b2b2;
         }
     }
     .green {
-        fill: #7ac943;
+        fill: #60d836;
         &:hover {
-            fill: #8ad953;
+            fill: #70e846;
         }
         &:active {
-            fill: #9ae963;
+            fill: #80f856;
         }
     }
 `;

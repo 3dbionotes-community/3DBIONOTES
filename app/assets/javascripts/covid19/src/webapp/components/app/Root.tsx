@@ -55,6 +55,7 @@ export const Root: React.FC = React.memo(() => {
                         search={search}
                         setSearch={setSearch}
                         setProteomeSelected={setProteomeSelected}
+                        toggleProteome={toggleProteome}
                     />
                 </AccordionDetails>
             </StyledAccordion>
@@ -111,9 +112,8 @@ const StyledAccordion = styled(Accordion)`
         padding: 0;
         justify-content: center;
         align-items: center;
-        min-width: 700px;
         svg {
-            width: 650px;
+            width: 500px;
         }
     }
 `;
