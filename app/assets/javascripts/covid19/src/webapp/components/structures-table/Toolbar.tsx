@@ -17,10 +17,10 @@ import "./Toolbar.css";
 
 export const searchExamples = [
     "EMD-21375",
-    "Glycoprotein",
+    "glycoprotein",
     "Remdesivir",
     "3CL-Pro",
-    "Mouse",
+    "mouse",
     "PanDDA",
     "Martinez",
 ];
