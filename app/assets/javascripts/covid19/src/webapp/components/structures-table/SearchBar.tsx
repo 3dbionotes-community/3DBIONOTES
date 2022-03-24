@@ -38,9 +38,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     } = props;
     const [open, setOpen] = React.useState(false);
     const [stateValue, setValueDebounced] = useDebouncedSetter(value, setValue, { delay: 500 });
-    const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState<string[]>(
-        searchExamples
-    );
+    const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState(searchExamples);
     const [loading, setLoading] = React.useState(false);
     const selectedFilterNames = filterKeys.filter(key => filterState[key]);
 
