@@ -378,7 +378,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         shape: shapes.region,
     },
 
-    // em validation
+    // cryo-EM validation
     deepRes: {
         id: "deep-res" as const,
         name: i18n.t("DeepRes"),
