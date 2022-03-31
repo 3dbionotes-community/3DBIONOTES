@@ -221,8 +221,8 @@ const categories: Config["categories"] = [
         visualizationType: "continuous",
     },
     {
-        name: "CRYO-EM_VALIDATION",
-        label: "cryo-EM validation",
+        name: "CRYO-EM_MAP_VALIDATION",
+        label: "Cryo-EM Map Validation",
         visualizationType: "basic",
     },
     {
