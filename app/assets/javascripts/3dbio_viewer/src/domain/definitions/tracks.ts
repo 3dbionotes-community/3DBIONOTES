@@ -24,7 +24,7 @@ export const trackDefinitions = {
             subtracks.cathDomains,
         ],
     }),
-    celullarRegions: definition({
+    cellularRegions: definition({
         id: "topology" as const,
         name: i18n.t("Cellular regions"),
         description: i18n.t("Cell space in which the protein is located"),
@@ -139,7 +139,7 @@ export const trackDefinitions = {
         description: i18n.t(
             "Different validation methods and local quality of models and maps in cryo-EM"
         ),
-        subtracks: [subtracks.deepRes, subtracks.mapQ, subtracks.fscQ, subtracks.monoRes],
+        subtracks: [subtracks.deepRes, subtracks.monoRes, subtracks.blocRes, subtracks.mapQ, subtracks.fscQ],
     }),
     pockets: definition({
         id: "pockets" as const,

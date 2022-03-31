@@ -26,13 +26,14 @@ export interface PdbAnnotation {
     data: Array<{ begin: string; value: number }>;
 }
 
-type KnownAlgorithm = "deepres" | "mapq" | "fscq" | "monores";
+type KnownAlgorithm = "deepres" | "monores" | "blocres" | "mapq" | "fscq";
 
 const subtrackByAlgorithm: Record<KnownAlgorithm, SubtrackDefinition> = {
     deepres: subtracks.deepRes,
+    monores: subtracks.monoRes,
+    blocres: subtracks.blocRes,
     mapq: subtracks.mapQ,
     fscq: subtracks.fscQ,
-    monores: subtracks.monoRes,
 };
 
 const MAXQ_COLOR_UPPPER_THRESHOLD = 0.8;

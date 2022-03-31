@@ -1,90 +1,193 @@
 import React from "react";
 import _ from "lodash";
-import { TextField, InputAdornment, Tooltip } from "@material-ui/core";
+import { TextField, InputAdornment, Chip, CircularProgress } from "@material-ui/core";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import parse from "autosuggest-highlight/parse";
+import match from "autosuggest-highlight/match";
 import styled from "styled-components";
-import SearchIcon from "@material-ui/icons/Search";
-
+import { Close as CloseIcon, Search as SearchIcon } from "@material-ui/icons";
 import i18n from "../../../utils/i18n";
-import { SearchExampleButton } from "./SearchExampleButton";
-import { useEventDebounce } from "../../hooks/useDebounce";
+import { useDebouncedSetter } from "../../hooks/useDebounce";
+import {
+    Covid19Filter,
+    FilterKey,
+    filterKeys,
+    getTranslations,
+} from "../../../domain/entities/Covid19Info";
+import { useAppContext } from "../../contexts/app-context";
+import { searchExamples } from "./Toolbar";
 
 export interface SearchBarProps {
     value: string;
     setValue(search: string): void;
+    isProteomeSelected: boolean;
+    setProteomeSelected: (value: boolean) => void;
+    filterState: Covid19Filter;
+    setFilterState(filter: Covid19Filter): void;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
-    const { value, setValue } = props;
+    const { compositionRoot } = useAppContext();
+    const {
+        value,
+        setValue,
+        isProteomeSelected,
+        setProteomeSelected,
+        filterState,
+        setFilterState,
+    } = props;
+    const [open, setOpen] = React.useState(false);
+    const [stateValue, setValueDebounced] = useDebouncedSetter(value, setValue, { delay: 500 });
+    const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState(searchExamples);
+    const [loading, setLoading] = React.useState(false);
+    const selectedFilterNames = filterKeys.filter(key => filterState[key]);
 
-    const [stateValue, setValueFromEv] = useEventDebounce(value, setValue, { delay: 500 });
+    React.useEffect(() => {
+        setLoading(true);
+        const autoSuggestions = compositionRoot.getAutoSuggestions.execute(stateValue);
+        setAutoSuggestionOptions(stateValue === "" ? searchExamples : autoSuggestions);
+        setLoading(false);
+    }, [stateValue, compositionRoot.getAutoSuggestions]);
+
+    const removeChip = React.useCallback(
+        (chipToDelete: FilterKey) => {
+            setFilterState({ ...filterState, [chipToDelete]: false });
+        },
+        [setFilterState, filterState]
+    );
+
+    const t = React.useMemo(getTranslations, []);
+
+    const searchBarStyles = React.useMemo(
+        () => ({
+            ...styles.searchBar,
+            ...{ background: isProteomeSelected ? "#ffffdd" : undefined },
+        }),
+        [isProteomeSelected]
+    );
+
+    const removeHighlight = React.useCallback(() => setProteomeSelected(false), [
+        setProteomeSelected,
+    ]);
 
     return (
-        <div style={styles.wrapper}>
-            <div style={styles.searchBar}>
-                <StyledTextField
-                    type="search"
-                    variant="outlined"
-                    value={stateValue}
-                    classes={classes}
-                    onChange={setValueFromEv}
-                    placeholder={i18n.t("Search protein/organism/PDB ID/EMDB ID/UniProt ID")}
-                    InputProps={inputProps}
-                />
-                <Tooltip
-                    title={
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas cursus pellentesque risus, nec accumsan turpis sagittis non. Duis hendrerit nec odio eu hendrerit. Morbi pellentesque ligula a dui malesuada, nec eleifend massa lacinia. Aliquam non efficitur tellus. Curabitur varius neque at mauris vulputate, eu mattis massa porta. Donec aliquet luctus augue, nec pulvinar enim pharetra a. Ut varius nibh mauris, quis finibus justo lobortis sed. In ultricies dolor et orci hendrerit, et commodo diam accumsan."
+        <React.Fragment>
+            <div style={searchBarStyles}>
+                <div style={styles.chips}>
+                    {selectedFilterNames.map(filterKey => (
+                        <StyledChip
+                            key={filterKey}
+                            deleteIcon={<CloseIcon />}
+                            label={t.filterKeys[filterKey]}
+                            onDelete={() => removeChip(filterKey)}
+                        />
+                    ))}
+                </div>
+                <StyledAutocomplete<string>
+                    id="covid19-searchbar-autocomplete"
+                    options={autoSuggestionOptions}
+                    loading={loading}
+                    open={open}
+                    fullWidth={true}
+                    onOpen={() => setOpen(true)}
+                    onClose={() => setOpen(false)}
+                    clearOnBlur={false}
+                    getOptionSelected={(option, value) =>
+                        option.toUpperCase() === value.toUpperCase()
                     }
-                >
-                    <span style={styles.tooltip}>?</span>
-                </Tooltip>
+                    inputValue={stateValue}
+                    onInputChange={(_event, newInputValue) => setValueDebounced(newInputValue)}
+                    renderOption={(option, { inputValue }) => {
+                        const matches = match(option, inputValue);
+                        const parts = parse(option, matches);
+                        return (
+                            <div>
+                                {parts.map((part, index) => (
+                                    <span
+                                        key={index}
+                                        style={{ fontWeight: part.highlight ? 700 : 400 }}
+                                    >
+                                        {part.text}
+                                    </span>
+                                ))}
+                            </div>
+                        );
+                    }}
+                    renderInput={params => (
+                        <StyledTextField
+                            {...params}
+                            variant="outlined"
+                            value={stateValue}
+                            onFocus={removeHighlight}
+                            onChange={ev => setValueDebounced(ev.target.value)}
+                            placeholder={i18n.t(
+                                "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
+                            )}
+                            InputProps={{
+                                ...params.InputProps,
+                                endAdornment: (
+                                    <React.Fragment>
+                                        {loading ? (
+                                            <CircularProgress color="inherit" size={20} />
+                                        ) : null}
+                                        <InputAdornment position="end">
+                                            <SearchIcon />
+                                        </InputAdornment>
+                                    </React.Fragment>
+                                ),
+                                type: "search",
+                            }}
+                        />
+                    )}
+                />
             </div>
-            <div style={styles.exampleRow}>
-                <p style={styles.examplesText}>{i18n.t("Examples")}:</p>
-                <SearchExampleButton setValue={setValue} exampleValue="6YOR" />
-                <SearchExampleButton setValue={setValue} exampleValue="Homo sapiens" />
-                <SearchExampleButton setValue={setValue} exampleValue="SARS-CoV-2" />
-            </div>
-        </div>
+        </React.Fragment>
     );
 });
 
-const classes = { root: "MuiTextField-root" };
-
-const inputProps = {
-    endAdornment: (
-        <InputAdornment position="end">
-            <SearchIcon />
-        </InputAdornment>
-    ),
-};
+const StyledAutocomplete = styled(Autocomplete)`
+    &.MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon
+        .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
+        padding-right: 10px;
+    }
+` as typeof Autocomplete;
 
 const StyledTextField = styled(TextField)`
     &.MuiTextField-root {
         .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
-            border: 4px solid #607d8b;
-            border-radius: 12px;
-        }
-        .MuiOutlinedInput-root.Mui-focused fieldset {
-            border-color: #82a4b5;
+            border: none;
         }
     }
-    flex: 2 1 auto;
+`;
+
+const StyledChip = styled(Chip)`
+    &.MuiChip-root {
+        height: 1.5rem !important;
+        background-color: #575757 !important;
+        color: #fff;
+        margin-left: 6px;
+        border-radius: 8px;
+    }
+    .MuiChip-deleteIcon {
+        width: 1rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    .MuiChip-deleteIcon:hover {
+        color: rgba(255, 255, 255, 1);
+    }
 `;
 
 const styles = {
-    wrapper: { display: "flex" as const, flexDirection: "column" as const },
-    exampleRow: { display: "flex" as const, alignItems: "center" },
-    examplesText: { margin: 0 },
-    searchBar: { display: "flex" as const },
-    tooltip: {
-        fontWeight: 700,
-        padding: "7px 10px",
-        marginLeft: 10,
-        color: "#ffffff",
-        backgroundColor: "rgb(96, 125, 139)",
-        borderRadius: 8,
-        border: "solid 0px rgb(96, 125, 139)",
-        outline: "none",
-        cursor: "pointer",
+    searchBar: {
+        display: "flex" as const,
+        border: "4px solid #607d8b",
+        borderRadius: "0.75rem",
+        width: 500,
+    },
+    chips: {
+        display: "flex" as const,
+        alignItems: "center",
+        listStyle: "none",
+        margin: 0,
     },
 };

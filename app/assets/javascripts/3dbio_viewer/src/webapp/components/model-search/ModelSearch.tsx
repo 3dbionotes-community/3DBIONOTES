@@ -20,6 +20,8 @@ import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import "./ModelSearch.css";
 import { ModelSearchItem } from "./ModelSearchItem";
 import { ModelUpload } from "../model-upload/ModelUpload";
+import { sendAnalytics } from "../../utils/analytics";
+import { useGoto } from "../../hooks/use-goto";
 
 export interface ModelSearchProps {
     title: string;
@@ -49,8 +51,27 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     }, []);
 
     const [modelType, setModelType] = React.useState<ModelSearchType>("all");
-    const [isUploadOpen, { enable: openUpload, disable: closeUpload }] = useBooleanState(false);
+    const [isUploadOpen, { open: openUpload, close: closeUpload }] = useBooleanState(false);
     const [searchState, startSearch] = useDbModelSearch(modelType);
+    const goTo = useGoto();
+
+    const goToLoaded = React.useCallback(
+        (options: { token: string }) => {
+            goTo(`/uploaded/${options.token}`);
+            onClose();
+        },
+        [goTo, onClose]
+    );
+
+    const openUploadWithAnalytics = React.useCallback(() => {
+        openUpload();
+        sendAnalytics({
+            type: "event",
+            category: "dialog",
+            action: "open",
+            label: "Upload Model",
+        });
+    }, [openUpload]);
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
@@ -81,13 +102,14 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         onClick={setModelType}
                         showExpandIcon
                     />
-                    <button className="upload-model" onClick={openUpload}>
+                    <button className="upload-model" onClick={openUploadWithAnalytics}>
                         {i18n.t("Upload model")}
                     </button>
                     {isUploadOpen && (
                         <ModelUpload
                             title={i18n.t("Upload your atomic structure")}
                             onClose={closeUpload}
+                            onLoaded={goToLoaded}
                         />
                     )}
 
@@ -130,8 +152,14 @@ function useDbModelSearch(modelType: ModelSearchType) {
     const search = React.useCallback(
         (query: string) => {
             setSearchState({ type: "searching" });
-            const searchType = modelType === "all" ? undefined : modelType;
+            sendAnalytics({
+                type: "event",
+                category: "viewer_search_menu",
+                action: "search",
+                label: query,
+            });
 
+            const searchType = modelType === "all" ? undefined : modelType;
             return compositionRoot.searchDbModels
                 .execute({ query, type: searchType })
                 .run(dbModelCollection => {

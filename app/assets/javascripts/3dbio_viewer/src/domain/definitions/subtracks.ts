@@ -66,7 +66,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         ),
     },
 
-    // Celullar Regions
+    // Cellular Regions
     cytolosic: {
         id: "cytolosic" as const,
         name: i18n.t("Cytolosic/Extracellular region"),
@@ -368,6 +368,16 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         shape: shapes.rama,
     },
 
+    // Uploaded data
+
+    uploadData: {
+        id: "uploadData" as const,
+        name: i18n.t("Upload data"),
+        description: i18n.t("Data from uploaded annotations"),
+        color: colors.region,
+        shape: shapes.region,
+    },
+
     // em validation
     deepRes: {
         id: "deep-res" as const,
@@ -375,6 +385,23 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         source: "Local server",
         description: i18n.t(
             "Local quality method of the map based on the detection of 3D characteristics through Deep Learning. This method can be applied to any cryo-EM map and detects subtle changes in local quality after applying isotropic filters or other map processing methods."
+        ),
+    },
+    monoRes: {
+        id: "mono-res" as const,
+        name: i18n.t("MonoRes"),
+        source: "Local server",
+        description: i18n.t(
+            "Local resolution method of the map based on the use of monogenic signals."
+        ),
+    },
+    blocRes: {
+        id: "bloc-res" as const,
+        name: i18n.t("BlocRes"),
+        source: "Local server",
+        // ToDo check if this description is correct
+        description: i18n.t(
+            "A space-frequency representation, the short-space Fourier transform, to assess the quality of a density map, voxel-by-voxel."
         ),
     },
     mapQ: {
@@ -391,14 +418,6 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         source: "Local server",
         description: i18n.t(
             "Method that measures the local quality of the fit between the atomic model and the cryo-EM map, being a quantitative measure of how the experimental data supports the structural model"
-        ),
-    },
-    monoRes: {
-        id: "mono-res" as const,
-        name: i18n.t("MonoRes"),
-        source: "Local server",
-        description: i18n.t(
-            "Local resolution method of the map based on the use of monogenic signals."
         ),
     },
 

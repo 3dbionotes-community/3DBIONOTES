@@ -154,12 +154,12 @@ class MainController < ApplicationController
   end
 
   def pdb_redo
-    pdb = params[:pdbId]
+    pdb = params[:pdbId].downcase
     querytype = "PDB-Redo"
     logger.info("  PDB-Redo quey " + pdb)
     rand_path = "pdb_redo_" + pdb
     file_name = pdb + "_final.pdb"
-    url = PDB_REDO + "/" + pdb + "/" + file_name
+    url = PDB_REDO + pdb + "/" + file_name
 
     validations(querytype, pdb, url, rand_path, file_name)
   end

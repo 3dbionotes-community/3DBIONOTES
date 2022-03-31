@@ -9,16 +9,17 @@ import { AtomicStructure } from "../../../domain/entities/AtomicStructure";
 import { useAppContext } from "../AppContext";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { LoaderMask } from "../loader-mask/LoaderMask";
-import { UploadConfirmation } from "./UploadConfirmation";
+import { StructureMappingUpload } from "./StructureMappingUpload";
 import { ErrorMessage } from "../error-message/ErrorMessage";
 
 export interface ModelUploadProps {
     title: string;
     onClose(): void;
+    onLoaded(options: { token: string }): void;
 }
 
 export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
-    const { title, onClose } = props;
+    const { title, onClose, onLoaded } = props;
     const [open, setOpen] = useState<boolean>(false);
     const { compositionRoot } = useAppContext();
     const [
@@ -61,6 +62,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     }, [compositionRoot, jobTitle, openUploadConfirmation]);
 
     const submit = useCallbackEffect(submitCb);
+
     return (
         <>
             <Dialog open={true} onClose={onClose} maxWidth="md">
@@ -131,9 +133,10 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
             </Dialog>
 
             {isUploadConfirmationOpen && atomicStructure ? (
-                <UploadConfirmation
+                <StructureMappingUpload
                     atomicStructure={atomicStructure}
                     onClose={closeUploadConfirmation}
+                    onLoaded={onLoaded}
                 />
             ) : null}
         </>

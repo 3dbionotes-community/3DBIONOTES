@@ -92,3 +92,10 @@ export type Cancel = { (): void };
 export const noCancel: Cancel = () => {};
 
 export type Computation<E, D> = (resolve: Fn<D>, reject: Fn<E>) => fluture.Cancel;
+
+export function wait<E>(ms: number): Future<E, void> {
+    return Future.fromComputation(resolve => {
+        const timeoutId = setTimeout(resolve, ms);
+        return () => clearTimeout(timeoutId);
+    });
+}

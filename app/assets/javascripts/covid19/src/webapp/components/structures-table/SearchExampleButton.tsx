@@ -9,29 +9,29 @@ interface SearchExampleButtonProps {
 
 export const SearchExampleButton: React.FC<SearchExampleButtonProps> = React.memo(props => {
     const { exampleValue, setValue } = props;
-
+    const setValueExample = React.useCallback(() => setValue(exampleValue), [
+        setValue,
+        exampleValue,
+    ]);
     return (
-        <StyledSearchExampleButton
-            variant="contained"
-            size="small"
-            onClick={() => setValue(exampleValue)}
-        >
+        <StyledSearchExampleButton onClick={setValueExample}>
             {exampleValue}
         </StyledSearchExampleButton>
     );
 });
 
-const StyledSearchExampleButton = styled(Button)`
+export const StyledSearchExampleButton = styled(Button)`
     &.MuiButton-root {
-        padding: 6px 12px;
+        padding: 6px 16px;
         margin: 12px 6px;
         color: #fff;
-        font-weight: 700;
+        font-weight: 500;
+        text-transform: unset;
         text-align: center;
-        border-radius: 0.25rem;
+        border-radius: 0.75rem;
         background-color: #607d8b;
         border-color: #607d8b;
-        font-size: 11px;
+        font-size: 0.75rem;
         &:focus {
             outline: none;
         }

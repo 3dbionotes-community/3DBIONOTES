@@ -3,9 +3,10 @@ import _ from "lodash";
 import { CellProps } from "../Columns";
 import { Link } from "../Link";
 import i18n from "../../../../utils/i18n";
+import { Wrapper } from "./Wrapper";
 
 export const OrganismCell: React.FC<CellProps> = React.memo(props => {
-    const { row } = props;
+    const { row, onClickDetails, moreDetails } = props;
 
     const organisms = React.useMemo(() => {
         return _(row.organisms)
@@ -36,7 +37,12 @@ export const OrganismCell: React.FC<CellProps> = React.memo(props => {
     }, [row.organisms]);
 
     return (
-        <ul>
+        <Wrapper
+            onClickDetails={onClickDetails}
+            moreDetails={moreDetails}
+            row={row}
+            field="organisms"
+        >
             {organisms.map(entity => (
                 <Link
                     key={entity.id}
@@ -45,6 +51,6 @@ export const OrganismCell: React.FC<CellProps> = React.memo(props => {
                     text={entity.name}
                 />
             ))}
-        </ul>
+        </Wrapper>
     );
 });
