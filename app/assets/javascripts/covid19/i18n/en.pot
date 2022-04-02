@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-03-21T09:45:28.931Z\n"
-"PO-Revision-Date: 2022-03-21T09:45:28.931Z\n"
+"POT-Creation-Date: 2022-04-02T03:15:27.192Z\n"
+"PO-Revision-Date: 2022-04-02T03:15:27.192Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -33,9 +33,6 @@ msgid "Hide proteome"
 msgstr ""
 
 msgid "View proteome"
-msgstr ""
-
-msgid "Searching for {{search}} in databases..."
 msgstr ""
 
 msgid "View more"
