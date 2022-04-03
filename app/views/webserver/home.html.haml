@@ -63,7 +63,7 @@
                       .card-body
                         %h4.card-title
                           = entry[:name]
-                        %p.card-text
+                        %p.card-text{:title => entry[:description]}
                           = entry[:description]
             %a.carousel-control-prev{"data-slide" => "prev", :href => "#myCarousel", :role => "button"}
               %span.carousel-control-prev-icon{"aria-hidden" => "true"}
