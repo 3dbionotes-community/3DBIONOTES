@@ -32,7 +32,7 @@ export const Orf1aProts = [
             "M340.91,162.45a382.64,382.64,0,0,0-55.8,33.05L264.78,167a416.57,416.57,0,0,1,61.05-36.15Z",
     },
     {
-        name: "Y3 domain",
+        name: "Y1+CoV-Y",
         details: {
             description: "Y3 domain of Nsp3.",
             pdb: {
@@ -126,7 +126,7 @@ export const Orf1aProts = [
             "M162.54,181.47l-13.42-12.71a495.28,495.28,0,0,1,71.27-62.17l10.74,15A477.16,477.16,0,0,0,162.54,181.47Z",
     },
     {
-        name: "MacroDomain",
+        name: "Macrodomain",
         details: {
             description:
                 "Macrodomain of Nsp3 (Mac1). Function: It recognizes and hydrolizes the ADP-ribose label from proteins associated with the host innate immune response.",
@@ -172,7 +172,7 @@ export const Orf1aProts = [
             "M228.25,245.11A384.78,384.78,0,0,0,188,295.88l-29.19-19.29a419.74,419.74,0,0,1,44.08-55.54Z",
     },
     {
-        name: "NSP5",
+        name: "MPro",
         details: {
             description:
                 "NSP5. Main Protease. MPro. 3C-like protease. 3CL-Pro. Part of Replicase polyprotein 1a and 1ab. Cleaves the C-terminus of replicase polyprotein at 11 sites.",
@@ -299,7 +299,7 @@ export const Orf1bProts = [
             "M306.06,833.85l-18.29,29.84a418,418,0,0,1-116-106.4l28.13-20.83A382.74,382.74,0,0,0,306.06,833.85Z",
     },
     {
-        name: "NSP13",
+        name: "Helicase",
         details: {
             description:
                 "NSP13 | Helicase. Part of Replicase polyprotein 1ab. Multi-functional protein with a zinc-binding domain in N-terminus displaying RNA and DNA duplex-unwinding activities with 5' to 3' polarity. Activity of helicase is dependent on magnesium.",
@@ -313,7 +313,7 @@ export const Orf1bProts = [
             "M442.76,885.49,437,920a414,414,0,0,1-147.51-55.26l18.28-29.84A379.27,379.27,0,0,0,442.76,885.49Z",
     },
     {
-        name: "NSP14",
+        name: "ExoN",
         details: {
             description:
                 "NSP14. Proofreading exoribonuclease. 3'-5' exoribonuclease. Guanine-N7 methyltransferase. ExoN/nsp14. Part of Replicase polyprotein 1ab. Enzyme possessing two different activities: an exoribonuclease activity acting on both ssRNA and dsRNA in a 3' to 5' direction and a N7-guanine methyltransferase activity. Acts as a proofreading exoribonuclease for RNA replication, thereby lowering The sensitivity of the virus to RNA mutagens.",
@@ -327,7 +327,7 @@ export const Orf1bProts = [
             "M596.58,916.33a422.15,422.15,0,0,1-157.62,4l5.77-34.51A386.94,386.94,0,0,0,589,882.16Z",
     },
     {
-        name: "NSP15",
+        name: "NendoU",
         details: {
             description:
                 "NSP15. Non-structural protein 15. Endoribonuclease. Uridylate-specific endoribonuclease. Endornase. NendoU/nsp15. Part of Replicase polyprotein 1ab. Mn(2+)-dependent, uridylate-specific enzyme, which leaves 2'-3'-cyclic phosphates 5' to the cleaved bond.",

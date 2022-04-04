@@ -47,7 +47,7 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
 
     const onMouseLeave = React.useCallback(() => {
         setVisible({});
-    }, [setTitle, setVisible, setDetailsVisible]);
+    }, [setVisible]);
 
     const setOrf1aVisible = React.useCallback(() => {
         setDetailsVisible(true);
@@ -62,46 +62,6 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
     return (
         <Container>
             {/*Using relative -> absolute for having svg above title. So the title can be easily put in center*/}
-            {detailsVisible && details && (
-                <div>
-                    <img
-                        alt={details.pdb.id}
-                        src={details.pdb.img}
-                        loading="lazy"
-                        style={!details.emdb ? styles.pdbOnly : styles.img}
-                    />
-                    {details.emdb && (
-                        <img
-                            alt={details.emdb.id}
-                            src={details.emdb.img}
-                            loading="lazy"
-                            style={styles.img}
-                        />
-                    )}
-                </div>
-            )}
-            {detailsVisible && details && (
-                <div>
-                    <Typography style={styles.title} variant="h6">
-                        {title}
-                    </Typography>
-                    <Typography style={styles.subtitle}>
-                        PDB:&#160;
-                        <a href={"/?queryId=" + details.pdb.id.toLowerCase()}>{details.pdb.id}</a>
-                        {details.emdb && (
-                            <>
-                                , EMDB:&#160;
-                                <a href={"/?queryId=" + details.emdb.id.toLowerCase()}>
-                                    {details.emdb.id}
-                                </a>
-                            </>
-                        )}
-                    </Typography>
-                    <Typography style={styles.description}>
-                        Description: {details.description}
-                    </Typography>
-                </div>
-            )}
             <div className="relative">
                 <Layer className="center title">{title}</Layer>
                 <Layer className="center">
@@ -167,8 +127,51 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                         </text>
                     </SVG>
                 </Layer>
+                {detailsVisible && details && (
+                    <>
+                        <Layer className="left">
+                            <img
+                                alt={details.pdb.id}
+                                src={details.pdb.img}
+                                loading="lazy"
+                                style={!details.emdb ? styles.pdbOnly : styles.img}
+                            />
+                            {details.emdb && (
+                                <img
+                                    alt={details.emdb.id}
+                                    src={details.emdb.img}
+                                    loading="lazy"
+                                    style={styles.img}
+                                />
+                            )}
+                        </Layer>
+                        <Layer className="right">
+                            <div>
+                                <Typography style={styles.title} variant="h6">
+                                    {title}
+                                </Typography>
+                                <Typography style={styles.subtitle}>
+                                    PDB:&#160;
+                                    <a href={"/?queryId=" + details.pdb.id.toLowerCase()}>
+                                        {details.pdb.id}
+                                    </a>
+                                    {details.emdb && (
+                                        <>
+                                            , EMDB:&#160;
+                                            <a href={"/?queryId=" + details.emdb.id.toLowerCase()}>
+                                                {details.emdb.id}
+                                            </a>
+                                        </>
+                                    )}
+                                </Typography>
+                                <Typography style={styles.description}>
+                                    Description: {details.description}
+                                </Typography>
+                            </div>
+                        </Layer>
+                    </>
+                )}
             </div>
-            <div></div>
         </Container>
     );
 });
@@ -189,15 +192,12 @@ const styles = {
 const Container = styled.div`
     .relative {
         position: relative;
+        height: 500px;
     }
-    display: flex;
-    justify-content: center;
     margin: 16px 0;
     padding: 32px 64px;
     box-sizing: border-box;
-    align-items: center;
     width: 100vw;
-    height: 500px;
     *::selection {
         background: none;
         color: inherit;
