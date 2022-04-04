@@ -6,32 +6,18 @@ import { Orf1aProts, Orf1bProts, RemainingGens } from "./PathGroups";
 import { ProteomePath, Details } from "./ProteomePath";
 
 interface SVGProteomeProps {
-    search: string;
     setSearch: (value: string) => void;
-    visible: VisibleGen;
-    setVisible: (visible: VisibleGen) => void;
-    title: React.ReactNode;
-    detailsVisible: boolean;
-    setDetailsVisible: (value: boolean) => void;
-    setTitle: (value: React.ReactNode) => void;
     setProteomeSelected: (value: boolean) => void;
     toggleProteome: () => void;
 }
 
 export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
-    const {
-        setSearch,
-        visible,
-        setVisible,
-        title,
-        detailsVisible,
-        setDetailsVisible,
-        setTitle,
-        setProteomeSelected,
-        toggleProteome,
-    } = props;
+    const { setSearch, setProteomeSelected, toggleProteome } = props;
 
+    const [title, setTitle] = React.useState("");
+    const [visible, setVisible] = React.useState<VisibleGen>({});
     const [details, setDetails] = React.useState<Details>();
+    const [detailsVisible, setDetailsVisible] = React.useState(false);
 
     const stateSetters = React.useMemo(
         () => ({
@@ -67,7 +53,13 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
         <Container>
             {/*Using relative -> absolute for having svg above title. So the title can be easily put in center*/}
             <div className="relative">
-                <Layer className="center title">{title}</Layer>
+                <Layer className="center title">
+                    <span>
+                        {i18n.t("SARS-CoV-2")}
+                        <br />
+                        {i18n.t("Proteome")}
+                    </span>
+                </Layer>
                 <Layer className="center">
                     <SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
                         <g onMouseLeave={onMouseLeave}>

@@ -9,27 +9,12 @@ import { StructuresTable } from "../structures-table/StructuresTable";
 import { SVGProteome, VisibleGen } from "../proteome/SVGProteome";
 import { useBooleanState } from "../../hooks/useBoolean";
 import i18n from "../../../utils/i18n";
+import { Proteome } from "../proteome/Proteome";
 
 export const Root: React.FC = React.memo(() => {
     const [search, setSearch] = React.useState("");
     const [isProteomeSelected, setProteomeSelected] = React.useState(false);
-    const [title, setTitle] = React.useState<React.ReactNode>(<></>);
-    const [isAccordionExpanded, { toggle: toggleAccordion }] = useBooleanState(false);
-    const [visible, setVisible] = React.useState<VisibleGen>({});
-    const [detailsVisible, setDetailsVisible] = React.useState(false);
-
-    const toggleProteome = React.useCallback(() => {
-        toggleAccordion();
-        setVisible({});
-        setDetailsVisible(false);
-        setTitle(
-            <span>
-                {i18n.t("SARS-CoV-2")}
-                <br />
-                {i18n.t("Proteome")}
-            </span>
-        );
-    }, [toggleAccordion]);
+    const [proteomeExpanded, { toggle: toggleProteome }] = useBooleanState(false);
 
     return (
         <Body>
@@ -39,35 +24,24 @@ export const Root: React.FC = React.memo(() => {
                     <Button
                         variant="outlined"
                         color="inherit"
-                        startIcon={isAccordionExpanded ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                        startIcon={proteomeExpanded ? <VisibilityOffIcon /> : <VisibilityIcon />}
                         onClick={toggleProteome}
                     >
-                        {isAccordionExpanded ? i18n.t("Hide proteome") : i18n.t("View proteome")}
+                        {proteomeExpanded ? i18n.t("Hide proteome") : i18n.t("View proteome")}
                     </Button>
                 </Wrapper>
             </HeaderBanner>
-            <StyledAccordion expanded={isAccordionExpanded}>
-                <AccordionSummary></AccordionSummary>
-                <AccordionDetails>
-                    <SVGProteome
-                        title={title}
-                        setTitle={setTitle}
-                        visible={visible}
-                        setVisible={setVisible}
-                        search={search}
-                        setSearch={setSearch}
-                        setProteomeSelected={setProteomeSelected}
-                        detailsVisible={detailsVisible}
-                        setDetailsVisible={setDetailsVisible}
-                        toggleProteome={toggleProteome}
-                    />
-                </AccordionDetails>
-            </StyledAccordion>
+            <Proteome
+                expanded={proteomeExpanded}
+                setSearch={setSearch}
+                setProteomeSelected={setProteomeSelected}
+                toggleProteome={toggleProteome}
+            />
             <StructuresTable
                 search={search}
                 setSearch={setSearch}
-                isProteomeSelected={isProteomeSelected}
-                setProteomeSelected={setProteomeSelected}
+                highlighted={isProteomeSelected}
+                setHighlight={setProteomeSelected}
             />
         </Body>
     );
@@ -99,25 +73,5 @@ const Body = styled.div`
         Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     button:focus {
         outline: none;
-    }
-`;
-
-const StyledAccordion = styled(Accordion)`
-    &.MuiAccordion-root.Mui-expanded {
-        margin: 0;
-    }
-
-    .MuiAccordionSummary-root {
-        display: none;
-    }
-
-    .MuiAccordionDetails-root {
-        display: flex;
-        padding: 0;
-        justify-content: center;
-        align-items: center;
-        svg {
-            width: 500px;
-        }
     }
 `;

@@ -28,8 +28,8 @@ export const searchExamples = [
 export interface ToolbarProps {
     search: string;
     setSearch(search: string): void;
-    isProteomeSelected: boolean;
-    setProteomeSelected: (value: boolean) => void;
+    highlighted: boolean;
+    setHighlight: (value: boolean) => void;
     filterState: Covid19Filter;
     setFilterState(filter: Covid19Filter): void;
     gridApi: GridApi;
@@ -128,8 +128,8 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
     const {
         search,
         setSearch,
-        isProteomeSelected,
-        setProteomeSelected,
+        highlighted,
+        setHighlight,
         filterState,
         setFilterState,
         gridApi,
@@ -150,8 +150,8 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                         <SearchBar
                             value={search}
                             setValue={setSearch}
-                            isProteomeSelected={isProteomeSelected}
-                            setProteomeSelected={setProteomeSelected}
+                            highlighted={highlighted}
+                            setHighlight={setHighlight}
                             filterState={filterState}
                             setFilterState={setFilterState}
                         />

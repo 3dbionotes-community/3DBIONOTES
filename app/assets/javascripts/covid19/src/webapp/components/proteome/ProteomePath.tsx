@@ -31,7 +31,7 @@ export const ProteomePath: React.FC<ProteomePathProps> = React.memo(props => {
     }, [name, setProteomeSelected, setSearch, toggleProteome]);
 
     const showProteinInfo = React.useCallback(() => {
-        setTitle(<span>{name}</span>);
+        setTitle(name);
         setDetails(details);
     }, [name, details, setTitle, setDetails]);
 
@@ -60,7 +60,7 @@ export interface Details {
 
 export interface StateSetters {
     setSearch: (value: string) => void;
-    setTitle: (value: React.ReactNode) => void;
+    setTitle: (value: string) => void;
     setProteomeSelected: (value: boolean) => void;
     setDetails: (value: Details | undefined) => void;
     toggleProteome: () => void;
