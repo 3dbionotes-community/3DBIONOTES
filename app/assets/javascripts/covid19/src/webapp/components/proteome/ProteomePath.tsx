@@ -30,13 +30,18 @@ export const ProteomePath: React.FC<ProteomePathProps> = React.memo(props => {
         });
     }, [name, setProteomeSelected, setSearch, toggleProteome]);
 
-    const onMouseEnter = React.useCallback(() => {
+    const showProteinInfo = React.useCallback(() => {
         setTitle(<span>{name}</span>);
         setDetails(details);
     }, [name, details, setTitle, setDetails]);
 
     return (
-        <path className={classStyle} d={def} onMouseEnter={onMouseEnter} onClick={triggerSearch} />
+        <path
+            className={classStyle}
+            d={def}
+            onMouseEnter={showProteinInfo}
+            onClick={triggerSearch}
+        />
     );
 });
 

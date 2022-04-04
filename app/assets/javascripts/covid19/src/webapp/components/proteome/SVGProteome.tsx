@@ -1,6 +1,7 @@
 import { Typography } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
+import i18n from "../../../utils/i18n";
 import { Orf1aProts, Orf1bProts, RemainingGens } from "./PathGroups";
 import { ProteomePath, Details } from "./ProteomePath";
 
@@ -114,7 +115,7 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                     <ProteomePath
                                         key={idx}
                                         stateSetters={stateSetters}
-                                        classStyle={prot.classStyle}
+                                        classStyle={prot.classStyle ?? ""}
                                         name={prot.name ?? ""}
                                         def={prot.def}
                                         details={prot.details}
@@ -135,14 +136,22 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                         <Layer className="left">
                             <img
                                 alt={details.pdb.id}
-                                src={details.pdb.img}
+                                src={
+                                    details.pdb.img ??
+                                    `https://www.ebi.ac.uk/pdbe/static/entry/${details.pdb.id.toLowerCase()}_deposited_chain_front_image-200x200.png`
+                                }
                                 loading="lazy"
                                 style={!details.emdb ? styles.pdbOnly : styles.img}
                             />
                             {details.emdb && (
                                 <img
                                     alt={details.emdb.id}
-                                    src={details.emdb.img}
+                                    src={
+                                        details.emdb.img ??
+                                        `https://www.ebi.ac.uk/pdbe/static/entry/${
+                                            details.emdb.id
+                                        }/400_${details.emdb.id.replace("EMD-", "")}.gif`
+                                    }
                                     loading="lazy"
                                     style={styles.img}
                                 />
@@ -168,7 +177,7 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                     )}
                                 </Typography>
                                 <Typography style={styles.description}>
-                                    Description: {details.description}
+                                    {i18n.t(`Description: ${details.description}`)}
                                 </Typography>
                             </div>
                         </Layer>

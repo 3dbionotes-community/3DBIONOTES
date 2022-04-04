@@ -1,4 +1,21 @@
-export const Orf1aProts = [
+interface PDB {
+    id: string;
+    img: string;
+}
+interface EMDB extends PDB {}
+
+interface Protein {
+    name: string;
+    details?: {
+        description: string;
+        pdb: PDB;
+        emdb?: EMDB;
+    };
+    def: string;
+    classStyle?: string;
+}
+
+export const Orf1aProts: Protein[] = [
     {
         name: "NSP1",
         details: {
@@ -279,7 +296,7 @@ export const Orf1aProts = [
     },
 ];
 
-export const Orf1bProts = [
+export const Orf1bProts: Protein[] = [
     {
         name: "NSP12",
         details: {
@@ -356,7 +373,7 @@ export const Orf1bProts = [
     },
 ];
 
-export const RemainingGens = [
+export const RemainingGens: Protein[] = [
     {
         name: "Spike",
         classStyle: "green",
