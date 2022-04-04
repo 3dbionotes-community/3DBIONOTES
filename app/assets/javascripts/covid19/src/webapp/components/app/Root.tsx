@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Accordion, AccordionDetails, AccordionSummary } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import {
     Visibility as VisibilityIcon,
     VisibilityOff as VisibilityOffIcon,
 } from "@material-ui/icons";
 import { StructuresTable } from "../structures-table/StructuresTable";
-import { SVGProteome, VisibleGen } from "../proteome/SVGProteome";
 import { useBooleanState } from "../../hooks/useBoolean";
 import i18n from "../../../utils/i18n";
 import { Proteome } from "../proteome/Proteome";
