@@ -16,10 +16,12 @@ export const Root: React.FC = React.memo(() => {
     const [title, setTitle] = React.useState<React.ReactNode>(<></>);
     const [isAccordionExpanded, { toggle: toggleAccordion }] = useBooleanState(false);
     const [visible, setVisible] = React.useState<VisibleGen>({});
+    const [detailsVisible, setDetailsVisible] = React.useState(false);
 
     const toggleProteome = React.useCallback(() => {
         toggleAccordion();
         setVisible({});
+        setDetailsVisible(false);
         setTitle(
             <span>
                 {i18n.t("SARS-CoV-2")}
@@ -55,6 +57,8 @@ export const Root: React.FC = React.memo(() => {
                         search={search}
                         setSearch={setSearch}
                         setProteomeSelected={setProteomeSelected}
+                        detailsVisible={detailsVisible}
+                        setDetailsVisible={setDetailsVisible}
                         toggleProteome={toggleProteome}
                     />
                 </AccordionDetails>

@@ -10,6 +10,8 @@ interface SVGProteomeProps {
     visible: VisibleGen;
     setVisible: (visible: VisibleGen) => void;
     title: React.ReactNode;
+    detailsVisible: boolean;
+    setDetailsVisible: (value: boolean) => void;
     setTitle: (value: React.ReactNode) => void;
     setProteomeSelected: (value: boolean) => void;
     toggleProteome: () => void;
@@ -21,13 +23,14 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
         visible,
         setVisible,
         title,
+        detailsVisible,
+        setDetailsVisible,
         setTitle,
         setProteomeSelected,
         toggleProteome,
     } = props;
 
     const [details, setDetails] = React.useState<Details>();
-    const [detailsVisible, setDetailsVisible] = React.useState(false);
 
     const stateSetters = React.useMemo(
         () => ({
