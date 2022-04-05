@@ -320,6 +320,14 @@ a:hover {
     text-decoration: none;
 }
 
+.citation {
+    font-size: 1rem;
+    .authors {
+        font-size: 0.75rem;
+        color: #212529 !important;
+    }
+}
+
 .form-check-input {
     margin-top: 22px;
 }
@@ -569,9 +577,6 @@ a i.margin {
     color: #fff;
 }
 
-.modal-close {
-}
-
 .popover {
     border: 0px;
     box-shadow: 0 0px 20px rgba(0, 0, 0, 0.2), 0 0px 23px rgba(0, 0, 0, 0.2);
@@ -811,9 +816,6 @@ a i.margin {
     padding: 9px;
     text-align: center;
     vertical-align: middle;
-}
-
-.badge.badge-primary.proteomeBadge.w3-lime {
 }
 
 #proteomeTable a,
