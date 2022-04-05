@@ -234,7 +234,7 @@ function getMiniSearch(structures: Structure[]): MiniSearch {
     const miniSearch = new MiniSearch<Structure>({
         fields: Array.from(fields),
         storeFields: [],
-        searchOptions: { prefix: true, fuzzy: 0.1 },
+        searchOptions: { prefix: true, fuzzy: 0 },
         extractField: extractField as Options["extractField"],
     });
     miniSearch.addAll(structures);
