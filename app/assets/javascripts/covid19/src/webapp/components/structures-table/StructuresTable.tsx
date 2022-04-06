@@ -15,15 +15,15 @@ import { sendAnalytics } from "../../../utils/analytics";
 
 export interface StructuresTableProps {
     search: string;
-    isProteomeSelected: boolean;
+    highlighted: boolean;
     setSearch: (value: string) => void;
-    setProteomeSelected: (value: boolean) => void;
+    setHighlight: (value: boolean) => void;
 }
 
 export const rowHeight = 220;
 
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
-    const { search, setSearch: setSearch0, isProteomeSelected, setProteomeSelected } = props;
+    const { search, setSearch: setSearch0, highlighted, setHighlight } = props;
     const { compositionRoot } = useAppContext();
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(pageSizes[0]);
@@ -113,8 +113,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                   toolbar: {
                       search,
                       setSearch,
-                      isProteomeSelected,
-                      setProteomeSelected,
+                      highlighted,
+                      setHighlight,
                       filterState,
                       setFilterState,
                       gridApi,
@@ -131,8 +131,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     }, [
         search,
         setSearch,
-        isProteomeSelected,
-        setProteomeSelected,
+        highlighted,
+        setHighlight,
         filterState,
         setFilterState,
         gridApi,

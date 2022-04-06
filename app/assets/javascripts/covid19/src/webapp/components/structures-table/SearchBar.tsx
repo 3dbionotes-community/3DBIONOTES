@@ -20,22 +20,15 @@ import { searchExamples } from "./Toolbar";
 export interface SearchBarProps {
     value: string;
     setValue(search: string): void;
-    isProteomeSelected: boolean;
-    setProteomeSelected: (value: boolean) => void;
+    highlighted: boolean;
+    setHighlight: (value: boolean) => void;
     filterState: Covid19Filter;
     setFilterState(filter: Covid19Filter): void;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const { compositionRoot } = useAppContext();
-    const {
-        value,
-        setValue,
-        isProteomeSelected,
-        setProteomeSelected,
-        filterState,
-        setFilterState,
-    } = props;
+    const { value, setValue, highlighted, setHighlight, filterState, setFilterState } = props;
     const [open, setOpen] = React.useState(false);
     const [stateValue, setValueDebounced] = useDebouncedSetter(value, setValue, { delay: 500 });
     const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState(searchExamples);
@@ -61,14 +54,12 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const searchBarStyles = React.useMemo(
         () => ({
             ...styles.searchBar,
-            ...{ background: isProteomeSelected ? "#ffffdd" : undefined },
+            ...{ background: highlighted ? "#ffffdd" : undefined },
         }),
-        [isProteomeSelected]
+        [highlighted]
     );
 
-    const removeHighlight = React.useCallback(() => setProteomeSelected(false), [
-        setProteomeSelected,
-    ]);
+    const removeHighlight = React.useCallback(() => setHighlight(false), [setHighlight]);
 
     return (
         <React.Fragment>
