@@ -79,7 +79,7 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                 .map(prot => prot.details.pdb?.id ?? "")
                 .filter(id => id && id !== "N/A"),
         }),
-        []
+        [childrenProts]
     );
 
     return (
