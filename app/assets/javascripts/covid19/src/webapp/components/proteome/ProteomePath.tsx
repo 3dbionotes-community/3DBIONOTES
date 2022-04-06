@@ -45,17 +45,18 @@ export const ProteomePath: React.FC<ProteomePathProps> = React.memo(props => {
     );
 });
 
-interface PDB {
+export interface DB {
     id: string;
     img: string;
 }
 
-interface EMDB extends PDB {}
-
 export interface Details {
-    description: string;
-    pdb: PDB;
-    emdb?: EMDB;
+    synonyms?: string;
+    domain?: string;
+    description?: string;
+    pdb?: DB;
+    emdb?: DB;
+    childrenPDB?: string[];
 }
 
 export interface StateSetters {
