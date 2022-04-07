@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-04-06T12:11:41.899Z\n"
-"PO-Revision-Date: 2022-04-06T12:11:41.899Z\n"
+"POT-Creation-Date: 2022-04-07T12:41:08.380Z\n"
+"PO-Revision-Date: 2022-04-07T12:41:08.380Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -33,6 +33,9 @@ msgid "SARS-CoV-2"
 msgstr ""
 
 msgid "Proteome"
+msgstr ""
+
+msgid "Structures"
 msgstr ""
 
 msgid "No structures found."

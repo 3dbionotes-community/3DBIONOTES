@@ -254,8 +254,8 @@ const Details: React.FC<DetailsProps> = React.memo(props => {
                     <Typography style={styles.description}>
                         {details.description &&
                             (details.description.length <= 1000
-                                ? i18n.t(`Description: ${details.description}`)
-                                : i18n.t(`Description: ${details.description.slice(0, 1000)}...`))}
+                                ? details.description
+                                : `${details.description.slice(0, 1000)}...`)}
                     </Typography>
                 </div>
             </Layer>
