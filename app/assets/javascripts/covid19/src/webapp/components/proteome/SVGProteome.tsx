@@ -121,7 +121,7 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                                 name={prot.name}
                                                 def={prot.def ?? ""}
                                                 details={
-                                                    prot.name === "NSP3"
+                                                    prot.name === "NSP3" && !prot.details.domain
                                                         ? { childrenPDB: childrenPDB.nsp3 }
                                                         : prot.details
                                                 }
@@ -217,6 +217,10 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                         </>
                                     )}
                                 </Typography>
+                                <Typography style={styles.description}>
+                                    {details.synonyms && i18n.t(`Synonyms: ${details.synonyms}`)}
+                                </Typography>
+                                <br />
                                 <Typography style={styles.description}>
                                     {details.description &&
                                         i18n.t(`Description: ${details.description}`)}
