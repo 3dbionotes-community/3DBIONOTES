@@ -21,7 +21,7 @@ export const searchExamples = [
     "Remdesivir",
     "3CL-Pro",
     "mouse",
-    "PanDDA",
+    "PanDDA Helicase",
     "Martinez",
 ];
 
