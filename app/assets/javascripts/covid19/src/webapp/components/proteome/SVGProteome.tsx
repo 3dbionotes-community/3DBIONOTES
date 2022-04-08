@@ -162,10 +162,10 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                 />
                             ))}
                         </g>
-                        <text x="442" y="200">
+                        <text x="436" y="210">
                             5&rsquo;
                         </text>
-                        <text x="542" y="200">
+                        <text x="535" y="210">
                             3&rsquo;
                         </text>
                     </SVG>
@@ -239,7 +239,7 @@ const Details: React.FC<DetailsProps> = React.memo(props => {
                                 ))}
                             </>
                         ) : (
-                            <span>{i18n.t("No structures found.")}</span>
+                            <span>{i18n.t("No models found yet.")}</span>
                         )}
                         {details.emdb && (
                             <>
