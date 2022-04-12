@@ -8,15 +8,9 @@ class Covid19
         query_url: "/?queryId=7k7p"
       },
       {
-        name: "7MSW",
+        name: "7MSW + EMD-23970",
         description: "NSP2. Non-structural protein 2. May play a role in the modulation of host cell survival signaling pathway by interacting with host PHB and PHB2. Indeed, these two proteins play a role in maintaining the functional integrity of the mitochondria and protecting cells from various stresses.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7msw_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=7msw"
-      },
-      {
-        name: "EMD-23970",
-        description: "NSP2. Non-structural protein 2. May play a role in the modulation of host cell survival signaling pathway by interacting with host PHB and PHB2. Indeed, these two proteins play a role in maintaining the functional integrity of the mitochondria and protecting cells from various stresses.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-23970/400_23970.gif",
         query_url: "/?queryId=emd-23970"
       },
       {
@@ -68,27 +62,15 @@ class Covid19
         query_url: "/?queryId=5r8t"
       },
       {
-        name: "7C2K",
+        name: "7C2K + EMD-30275",
         description: "NSP7. Non-structural protein 7. Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp8 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7c2k_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=7c2k"
-      },
-      {
-        name: "EMD-30275",
-        description: "NSP7. Non-structural protein 7. Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp8 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30275/400_30275.gif",
         query_url: "/?queryId=emd-30275"
       },
       {
-        name: "7C2K",
+        name: "7C2K + EMD-30275",
         description: "NSP8. Non-structural protein 8. Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp7 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7c2k_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=7c2k"
-      },
-      {
-        name: "EMD-30275",
-        description: "NSP8. Non-structural protein 8. Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp7 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30275/400_30275.gif",
         query_url: "/?queryId=emd-30275"
       },
       {
@@ -104,15 +86,9 @@ class Covid19
         query_url: "/?queryId=6zct"
       },
       {
-        name: "7C2K",
+        name: "7C2K + EMD-30275",
         description: "NSP12. RNA-directed RNA polymerase. RNA-dependent RNA polymerase. Part of Replicase polyprotein 1ab. Responsible for replication and transcription of the viral RNA genome.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7c2k_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=7c2k"
-      },
-      {
-        name: "EMD-30275",
-        description: "NSP12. RNA-directed RNA polymerase. RNA-dependent RNA polymerase. Part of Replicase polyprotein 1ab. Responsible for replication and transcription of the viral RNA genome.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-30275/400_30275.gif",
         query_url: "/?queryId=emd-30275"
       },
       {
@@ -140,27 +116,15 @@ class Covid19
         query_url: "/?queryId=7l6t"
       },
       {
-        name: "6VSB",
+        name: "6VSB + EMD-21375",
         description: "Spike. Protein S. Spike glycoprotein. Surface Glycoprotein. Spike protein, trimeric complex S1-S2-S2': Attaches the virion to the cell membrane by interacting with host receptor, initiating the infection. Binding to human ACE2 receptor and internalization of the virus into the endosomes of the host cell induces conformational changes in the Spike glycoprotein. Uses also human TMPRSS2 for priming in human lung cells which is an essential step for viral entry. Proteolysis by cathepsin CTSL may unmask the fusion peptide of S2 and activate membranes fusion within endosomes.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6vsb_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=6vsb"
-      },
-      {
-        name: "EMD-21375",
-        description: "Spike. Protein S. Spike glycoprotein. Surface Glycoprotein. Spike protein, trimeric complex S1-S2-S2': Attaches the virion to the cell membrane by interacting with host receptor, initiating the infection. Binding to human ACE2 receptor and internalization of the virus into the endosomes of the host cell induces conformational changes in the Spike glycoprotein. Uses also human TMPRSS2 for priming in human lung cells which is an essential step for viral entry. Proteolysis by cathepsin CTSL may unmask the fusion peptide of S2 and activate membranes fusion within endosomes.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-21375/400_21375.gif",
         query_url: "/?queryId=emd-21375"
       },
       {
-        name: "6XCD",
+        name: "6XCD + EMD-22136",
         description: "ORF3. Protein 3. Accessory protein 3a. Protein U274. Protein X1. Forms homotetrameric potassium sensitive ion channels (viroporin) and may modulate virus release. Up-regulates expression of fibrinogen subunits FGA, FGB and FGG in host lung epithelial cells. Induces apoptosis in cell culture. Downregulates the type 1 interferon receptor by inducing serine phosphorylation within the IFN alpha-receptor subunit 1 (IFNAR1) degradation motif and increasing IFNAR1 ubiquitination.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6xcd_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=6xcd"
-      },
-      {
-        name: "EMD-22136",
-        description: "ORF3. Protein 3. Accessory protein 3a. Protein U274. Protein X1. Forms homotetrameric potassium sensitive ion channels (viroporin) and may modulate virus release. Up-regulates expression of fibrinogen subunits FGA, FGB and FGG in host lung epithelial cells. Induces apoptosis in cell culture. Downregulates the type 1 interferon receptor by inducing serine phosphorylation within the IFN alpha-receptor subunit 1 (IFNAR1) degradation motif and increasing IFNAR1 ubiquitination.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22136/400_22136.gif",
         query_url: "/?queryId=emd-22136"
       },
       {
@@ -200,15 +164,9 @@ class Covid19
         query_url: "/?queryId=7ce0"
       },
       {
-        name: "7KDT",
+        name: "7KDT + EMD-22829",
         description: "ORF9b. Protein 9b. The gene encoding this protein is included within the N gene (alternative ORF). Forms homotetrameric potassium sensitive ion channels (viroporin) and may modulate virus release. Up-regulates expression of fibrinogen subunits FGA, FGB and FGG in host lung epithelial cells. Induces apoptosis in cell culture. Downregulates the type 1 interferon receptor by inducing serine phosphorylation within the IFN alpha-receptor subunit 1 (IFNAR1) degradation motif and increasing IFNAR1 ubiquitination.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7kdt_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=7kdt"
-      },
-      {
-        name: "EMD-22829",
-        description: "ORF9b. Protein 9b. The gene encoding this protein is included within the N gene (alternative ORF). Forms homotetrameric potassium sensitive ion channels (viroporin) and may modulate virus release. Up-regulates expression of fibrinogen subunits FGA, FGB and FGG in host lung epithelial cells. Induces apoptosis in cell culture. Downregulates the type 1 interferon receptor by inducing serine phosphorylation within the IFN alpha-receptor subunit 1 (IFNAR1) degradation motif and increasing IFNAR1 ubiquitination.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/EMD-22829/400_22829.gif",
         query_url: "/?queryId=emd-22829"
       },
     ]
