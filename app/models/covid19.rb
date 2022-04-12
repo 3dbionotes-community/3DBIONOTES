@@ -10,7 +10,7 @@ class Covid19
       {
         name: "7MSW + EMD-23970",
         description: "NSP2. Non-structural protein 2. May play a role in the modulation of host cell survival signaling pathway by interacting with host PHB and PHB2. Indeed, these two proteins play a role in maintaining the functional integrity of the mitochondria and protecting cells from various stresses.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7msw_deposited_chain_front_image-200x200.png",
+        image_url: "images/entries/7msw.png",
         query_url: "/?queryId=emd-23970"
       },
       {
@@ -63,14 +63,8 @@ class Covid19
       },
       {
         name: "7C2K + EMD-30275",
-        description: "NSP7. Non-structural protein 7. Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp8 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7c2k_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=emd-30275"
-      },
-      {
-        name: "7C2K + EMD-30275",
         description: "NSP8. Non-structural protein 8. Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp7 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7c2k_deposited_chain_front_image-200x200.png",
+        image_url: "images/entries/7c2k.png",
         query_url: "/?queryId=emd-30275"
       },
       {
@@ -84,12 +78,6 @@ class Covid19
         description: "NSP10. Non-structural protein 10. Part of Replicase polyprotein 1a and 1ab. Plays a pivotal role in viral transcription by stimulating both nsp14 3'-5' exoribonuclease and nsp16 2'-O-methyltransferase activities. Therefore plays an essential role in viral mRNAs cap methylation.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6zct_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=6zct"
-      },
-      {
-        name: "7C2K + EMD-30275",
-        description: "NSP12. RNA-directed RNA polymerase. RNA-dependent RNA polymerase. Part of Replicase polyprotein 1ab. Responsible for replication and transcription of the viral RNA genome.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7c2k_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=emd-30275"
       },
       {
         name: "5ROB",
@@ -118,13 +106,13 @@ class Covid19
       {
         name: "6VSB + EMD-21375",
         description: "Spike. Protein S. Spike glycoprotein. Surface Glycoprotein. Spike protein, trimeric complex S1-S2-S2': Attaches the virion to the cell membrane by interacting with host receptor, initiating the infection. Binding to human ACE2 receptor and internalization of the virus into the endosomes of the host cell induces conformational changes in the Spike glycoprotein. Uses also human TMPRSS2 for priming in human lung cells which is an essential step for viral entry. Proteolysis by cathepsin CTSL may unmask the fusion peptide of S2 and activate membranes fusion within endosomes.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6vsb_deposited_chain_front_image-200x200.png",
+        image_url: "images/entries/6vsb.png",
         query_url: "/?queryId=emd-21375"
       },
       {
         name: "6XCD + EMD-22136",
         description: "ORF3. Protein 3. Accessory protein 3a. Protein U274. Protein X1. Forms homotetrameric potassium sensitive ion channels (viroporin) and may modulate virus release. Up-regulates expression of fibrinogen subunits FGA, FGB and FGG in host lung epithelial cells. Induces apoptosis in cell culture. Downregulates the type 1 interferon receptor by inducing serine phosphorylation within the IFN alpha-receptor subunit 1 (IFNAR1) degradation motif and increasing IFNAR1 ubiquitination.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6xcd_deposited_chain_front_image-200x200.png",
+        image_url: "images/entries/6xcd.png",
         query_url: "/?queryId=emd-22136"
       },
       {
@@ -166,7 +154,7 @@ class Covid19
       {
         name: "7KDT + EMD-22829",
         description: "ORF9b. Protein 9b. The gene encoding this protein is included within the N gene (alternative ORF). Forms homotetrameric potassium sensitive ion channels (viroporin) and may modulate virus release. Up-regulates expression of fibrinogen subunits FGA, FGB and FGG in host lung epithelial cells. Induces apoptosis in cell culture. Downregulates the type 1 interferon receptor by inducing serine phosphorylation within the IFN alpha-receptor subunit 1 (IFNAR1) degradation motif and increasing IFNAR1 ubiquitination.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7kdt_deposited_chain_front_image-200x200.png",
+        image_url: "images/entries/7kdt.png",
         query_url: "/?queryId=emd-22829"
       },
     ]
