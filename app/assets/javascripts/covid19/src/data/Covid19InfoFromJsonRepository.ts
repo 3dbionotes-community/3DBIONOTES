@@ -221,7 +221,7 @@ function getPdbValidations(pdb: Data.Pdb): PdbValidation[] {
                   case "PDB-Redo":
                       return {
                           type: "pdbRedo",
-                          badgeColor: "w3-turq",
+                          badgeColor: "w3-orange",
                           externalLink: refModel.externalLink,
                           queryLink: refModel.queryLink,
                       };

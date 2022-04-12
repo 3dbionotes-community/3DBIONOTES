@@ -79,7 +79,41 @@ export interface Link {
     tooltip?: string;
 }
 
-export type W3Color = "w3-cyan" | "w3-turq";
+export type W3Color =
+    | "w3-cyan"
+    | "w3-turq"
+    | "w3-turq"
+    | "w3-amber"
+    | "w3-aqua"
+    | "w3-blue"
+    | "w3-light-blue"
+    | "w3-brown"
+    | "w3-cyan"
+    | "w3-blue-grey"
+    | "w3-green"
+    | "w3-light-green"
+    | "w3-indigo"
+    | "w3-khaki"
+    | "w3-lime"
+    | "w3-orange"
+    | "w3-deep-orange"
+    | "w3-pink"
+    | "w3-purple"
+    | "w3-deep-purple"
+    | "w3-red"
+    | "w3-sand"
+    | "w3-teal"
+    | "w3-yellow"
+    | "w3-white"
+    | "w3-black"
+    | "w3-grey"
+    | "w3-light-grey"
+    | "w3-dark-grey"
+    | "w3-pale-red"
+    | "w3-pale-green"
+    | "w3-pale-yellow"
+    | "w3-pale-blue";
+
 export type PdbValidation = PdbRedoValidation | IsoldeValidation | undefined;
 export type EmdbValidation = "DeepRes" | "MonoRes" | "BlocRes" | "Map-Q" | "FSC-Q";
 
