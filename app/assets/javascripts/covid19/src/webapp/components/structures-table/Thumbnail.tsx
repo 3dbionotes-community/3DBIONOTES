@@ -1,7 +1,7 @@
 import React from "react";
 import { DbItem } from "../../../domain/entities/Covid19Info";
 import { styles } from "./Columns";
-import { BadgeLink } from "./BadgeLink";
+import { BadgeLink } from "./badge/BadgeLink";
 import { Tooltip } from "./Link";
 import { HtmlTooltip } from "./HtmlTooltip";
 import { urlPrefix } from "./cells/TitleCell";

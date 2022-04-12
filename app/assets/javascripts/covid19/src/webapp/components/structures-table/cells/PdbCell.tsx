@@ -5,11 +5,11 @@ import { ClickAwayListener, Grid } from "@material-ui/core";
 import { HtmlTooltip } from "../HtmlTooltip";
 import { CellProps } from "../Columns";
 import { Thumbnail } from "../Thumbnail";
-import { BadgeLink } from "../BadgeLink";
-import { Pdb, Structure } from "../../../../domain/entities/Covid19Info";
+import { colors } from "../badge/Badge";
+import { BadgeLink } from "../badge/BadgeLink";
+import { Pdb, PdbValidation, Structure } from "../../../../domain/entities/Covid19Info";
+import { Badge } from "../badge/Badge";
 import i18n from "../../../../utils/i18n";
-import { Badge } from "../Badge";
-import { BadgeButton } from "../BadgeDetails";
 
 export const PdbCell: React.FC<CellProps> = React.memo(props => {
     const { pdb } = props.row;
@@ -21,6 +21,44 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
     const [open, setOpen] = React.useState(false);
 
     const pdbValidations = structure.validations.pdb;
+
+    const getValidation = React.useCallback((pdbValidation: PdbValidation) => {
+        switch (pdbValidation?.type) {
+            case "pdbRedo":
+                return (
+                    <GroupBadges key="pdb-redo">
+                        <BadgeLink
+                            key="pdb-redo-external"
+                            url={pdbValidation.externalLink}
+                            text={i18n.t("PDB-Redo")}
+                            icon="external"
+                            backgroundColor={pdbValidation.badgeColor}
+                        />
+                        <BadgeLink
+                            key="pdb-redo-viewer"
+                            url={pdbValidation.queryLink}
+                            icon="viewer"
+                            backgroundColor={pdbValidation.badgeColor}
+                        />
+                    </GroupBadges>
+                );
+            case "isolde":
+                return (
+                    <GroupBadges key="isolde">
+                        <BadgeLink
+                            key="isolde-viewer"
+                            url={pdbValidation.queryLink}
+                            text={i18n.t("Isolde")}
+                            icon="viewer"
+                            backgroundColor={pdbValidation.badgeColor}
+                            style={styles.grow}
+                        />
+                    </GroupBadges>
+                );
+            default:
+                throw new Error("Unsupported");
+        }
+    }, []);
 
     const propertiesTooltip = (
         <React.Fragment>
@@ -46,40 +84,7 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
 
     const validationsTooltip = (
         <React.Fragment>
-            {pdbValidations.map(pdbValidation => {
-                switch (pdbValidation?.type) {
-                    case "pdbRedo":
-                        return (
-                            <GroupBadges key="pdb-redo">
-                                <BadgeLink
-                                    key="pdb-redo-external"
-                                    url={pdbValidation.externalLink}
-                                    text={i18n.t("PDB-Redo")}
-                                    icon="external"
-                                    color={pdbValidation.badgeColor}
-                                />
-                                <BadgeLink
-                                    key="pdb-redo-viewer"
-                                    url={pdbValidation.queryLink}
-                                    icon="viewer"
-                                    color={pdbValidation.badgeColor}
-                                />
-                            </GroupBadges>
-                        );
-                    case "isolde":
-                        return (
-                            <BadgeLink
-                                key="pdb-isolde-viewer"
-                                url={pdbValidation.queryLink}
-                                text={i18n.t("Isolde")}
-                                icon="viewer"
-                                color={pdbValidation.badgeColor}
-                            />
-                        );
-                    default:
-                        throw new Error("Unsupported");
-                }
-            })}
+            {pdbValidations.map(pdbValidation => getValidation(pdbValidation))}
         </React.Fragment>
     );
 
@@ -96,28 +101,39 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
             {pdb ? <Thumbnail type="pdb" value={pdb} tooltip={propertiesTooltip} /> : null}
 
             {!_.isEmpty(pdbValidations) ? (
-                <Grid container justify="center">
-                    <ClickAwayListener onClickAway={handleTooltipClose}>
-                        <HtmlTooltip
-                            onClose={handleTooltipClose}
-                            open={open}
-                            disableFocusListener
-                            disableHoverListener
-                            disableTouchListener
-                            title={validationsTooltip}
-                            placement="bottom"
-                            arrow
-                        >
-                            <BadgeButton onClick={handleTooltipOpen}>
-                                {i18n.t("Show validations")}
-                            </BadgeButton>
-                        </HtmlTooltip>
-                    </ClickAwayListener>
-                </Grid>
+                pdbValidations.length == 1 ? (
+                    getValidation(pdbValidations[0])
+                ) : (
+                    <Grid container justify="center">
+                        <ClickAwayListener onClickAway={handleTooltipClose}>
+                            <HtmlTooltip
+                                onClose={handleTooltipClose}
+                                open={open}
+                                disableFocusListener
+                                disableHoverListener
+                                disableTouchListener
+                                title={validationsTooltip}
+                                placement="bottom"
+                                arrow
+                            >
+                                <Badge onClick={handleTooltipOpen} backgroundColor={"w3-turq"}>
+                                    {i18n.t("Show validations")}
+                                </Badge>
+                            </HtmlTooltip>
+                        </ClickAwayListener>
+                    </Grid>
+                )
             ) : null}
         </React.Fragment>
     );
 });
+
+const styles = {
+    grow: {
+        display: "inline-flex",
+        flexGrow: 1,
+    },
+};
 
 const GroupBadges = styled.div`
     display: flex;

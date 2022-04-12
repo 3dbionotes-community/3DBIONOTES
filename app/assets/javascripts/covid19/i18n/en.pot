@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-04-12T08:23:36.331Z\n"
-"PO-Revision-Date: 2022-04-12T08:23:36.331Z\n"
+"POT-Creation-Date: 2022-04-12T09:54:00.434Z\n"
+"PO-Revision-Date: 2022-04-12T09:54:00.434Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -42,9 +42,6 @@ msgid "Structures"
 msgstr ""
 
 msgid "No models found yet."
-msgstr ""
-
-msgid "View more"
 msgstr ""
 
 msgid "Title"
@@ -157,6 +154,9 @@ msgid "Examples"
 msgstr ""
 
 msgid "No {{name}} found"
+msgstr ""
+
+msgid "View more"
 msgstr ""
 
 msgid "Sample"
