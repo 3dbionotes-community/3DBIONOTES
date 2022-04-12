@@ -35,7 +35,6 @@ export const BadgeDetails: React.FC<BadgeDetailsProps> = React.memo(props => {
 export const BadgeButton = styled(Badge)`
     display: inline-flex;
     justify-content: center;
-    margin-bottom: 12.5px;
     cursor: pointer;
     color: #ffffff;
     background-color: ${colors["w3-turq"]};

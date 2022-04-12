@@ -189,12 +189,18 @@ export const styles = {
     link: { textDecoration: "none" },
     column: { lineHeight: 1 }, // Allows multi-line values in cells
     title: { lineHeight: "20px" },
-    thumbnailWrapper: { width: "100%", fontSize: 14, textAlign: "center" as const },
+    thumbnailWrapper: {
+        width: "100%",
+        fontSize: 14,
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column" as const,
+        alignItems: "center",
+    },
     image: {
         display: "block",
         marginLeft: "auto",
         marginRight: "auto",
-        marginBottom: 10,
         maxHeight: 110,
         maxWidth: 110,
     },

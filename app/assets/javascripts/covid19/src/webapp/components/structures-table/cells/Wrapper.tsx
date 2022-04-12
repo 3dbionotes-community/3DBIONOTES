@@ -32,7 +32,7 @@ const Container = styled.div<{ moreDetails: boolean }>`
     flex-direction: column;
     line-height: 1.5;
     ul {
-        ${props => (props.moreDetails ? "margin: 10px 0;" : "margin:0;")}
+        ${props => (props.moreDetails ? "margin: 5px 0 5px;" : "margin:0;")}
         ${props =>
             props.moreDetails &&
             "max-height: " +
@@ -48,4 +48,4 @@ const Container = styled.div<{ moreDetails: boolean }>`
     ${props => props.moreDetails && "strong {font-weight: inherit;}"}
 `;
 
-const badgeHeight = 62;
+const badgeHeight = 50;

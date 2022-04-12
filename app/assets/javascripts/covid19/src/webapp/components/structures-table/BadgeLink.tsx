@@ -41,8 +41,9 @@ export const colors: Record<W3Color, string> = {
 
 export const styles = {
     badge: {
+        display: "inline-block",
         backgroundColor: "#607d8b",
         borderColor: "#607d8b",
-        marginRight: 5,
+        margin: 4,
     },
 };

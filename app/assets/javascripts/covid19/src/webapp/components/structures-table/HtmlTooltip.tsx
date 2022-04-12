@@ -9,4 +9,5 @@ export const HtmlTooltip = withStyles((theme: Theme) => ({
         fontSize: theme.typography.pxToRem(12),
         border: "1px solid #dadde9",
     },
+    arrow: { color: "#dadde9" },
 }))(Tooltip);
