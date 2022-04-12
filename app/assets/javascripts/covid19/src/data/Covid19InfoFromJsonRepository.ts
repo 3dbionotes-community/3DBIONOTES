@@ -59,7 +59,8 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     private filter(structures: Structure[], filterState: Covid19Filter): Structure[] {
         const isFilterStateEnabled =
             filterState.antibodies || filterState.nanobodies || filterState.sybodies;
-        const isPdbValidationsFilterEnabled = filterState.pdbRedo || filterState.isolde;
+        const isPdbValidationsFilterEnabled =
+            filterState.pdbRedo || filterState.isolde || filterState.refmac;
 
         if (!isFilterStateEnabled && !isPdbValidationsFilterEnabled) return structures;
         const structuresToFilter = isPdbValidationsFilterEnabled
@@ -229,6 +230,12 @@ function getPdbValidations(pdb: Data.Pdb): PdbValidation[] {
                       return {
                           type: "isolde",
                           badgeColor: "w3-cyan",
+                          queryLink: refModel.queryLink,
+                      };
+                  case "Refmac":
+                      return {
+                          type: "refmac",
+                          badgeColor: "w3-blue",
                           queryLink: refModel.queryLink,
                       };
                   default:

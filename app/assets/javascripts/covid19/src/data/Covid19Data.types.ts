@@ -107,17 +107,10 @@ export interface Details {
     refdoc: RefDoc[];
 }
 
-export interface PdbRedoValidation {
-    method: "PDB-Redo";
-    externalLink: Url;
+export interface PdbValidation {
+    method: "PDB-Redo" | "Isolde" | "Refmac";
+    externalLink?: Url;
     queryLink?: Url;
 }
-
-export interface IsoldeValidation {
-    method: "Isolde";
-    queryLink?: Url;
-}
-
-export type PdbValidation = PdbRedoValidation | IsoldeValidation;
 
 export interface RefModels extends Array<PdbValidation> {}

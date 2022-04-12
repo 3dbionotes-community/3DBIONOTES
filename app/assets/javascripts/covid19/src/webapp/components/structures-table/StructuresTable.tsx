@@ -215,6 +215,7 @@ const initialFilterState: Covid19Filter = {
     sybodies: false,
     pdbRedo: false,
     isolde: false,
+    refmac: false,
 };
 
 function useRenderedRows() {

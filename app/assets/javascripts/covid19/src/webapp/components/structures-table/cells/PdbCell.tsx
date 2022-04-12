@@ -5,9 +5,13 @@ import { ClickAwayListener, Grid } from "@material-ui/core";
 import { HtmlTooltip } from "../HtmlTooltip";
 import { CellProps } from "../Columns";
 import { Thumbnail } from "../Thumbnail";
-import { colors } from "../badge/Badge";
 import { BadgeLink } from "../badge/BadgeLink";
-import { Pdb, PdbValidation, Structure } from "../../../../domain/entities/Covid19Info";
+import {
+    getTranslations,
+    Pdb,
+    PdbValidation,
+    Structure,
+} from "../../../../domain/entities/Covid19Info";
 import { Badge } from "../badge/Badge";
 import i18n from "../../../../utils/i18n";
 
@@ -19,8 +23,8 @@ export const PdbCell: React.FC<CellProps> = React.memo(props => {
 const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props => {
     const { pdb, structure } = props;
     const [open, setOpen] = React.useState(false);
-
     const pdbValidations = structure.validations.pdb;
+    const t = React.useMemo(getTranslations, []);
 
     const getValidation = React.useCallback((pdbValidation: PdbValidation) => {
         switch (pdbValidation?.type) {
@@ -30,7 +34,7 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
                         <BadgeLink
                             key="pdb-redo-external"
                             url={pdbValidation.externalLink}
-                            text={i18n.t("PDB-Redo")}
+                            text={t.filterKeys.pdbRedo}
                             icon="external"
                             backgroundColor={pdbValidation.badgeColor}
                         />
@@ -48,7 +52,20 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
                         <BadgeLink
                             key="isolde-viewer"
                             url={pdbValidation.queryLink}
-                            text={i18n.t("Isolde")}
+                            text={t.filterKeys.isolde}
+                            icon="viewer"
+                            backgroundColor={pdbValidation.badgeColor}
+                            style={styles.grow}
+                        />
+                    </GroupBadges>
+                );
+            case "refmac":
+                return (
+                    <GroupBadges key="refmac">
+                        <BadgeLink
+                            key="refmac-viewer"
+                            url={pdbValidation.queryLink}
+                            text={t.filterKeys.refmac}
                             icon="viewer"
                             backgroundColor={pdbValidation.badgeColor}
                             style={styles.grow}

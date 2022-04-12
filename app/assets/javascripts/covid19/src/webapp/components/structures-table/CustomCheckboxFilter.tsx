@@ -72,6 +72,11 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                         filterState={filterState}
                         setFilterState={setFilterState}
                     />
+                    <FilterItem
+                        filterKey="refmac"
+                        filterState={filterState}
+                        setFilterState={setFilterState}
+                    />
                 </MenuList>
             </GridMenu>
         </React.Fragment>

@@ -51,15 +51,9 @@ export interface Structure {
     };
 }
 
-export interface PdbRedoValidation {
-    type: "pdbRedo";
-    externalLink: Url;
-    queryLink?: Url;
-    badgeColor: W3Color;
-}
-
-export interface IsoldeValidation {
-    type: "isolde";
+export interface Validation {
+    type: "pdbRedo" | "isolde" | "refmac";
+    externalLink?: Url;
     queryLink?: Url;
     badgeColor: W3Color;
 }
@@ -114,7 +108,7 @@ export type W3Color =
     | "w3-pale-yellow"
     | "w3-pale-blue";
 
-export type PdbValidation = PdbRedoValidation | IsoldeValidation | undefined;
+export type PdbValidation = Validation | undefined;
 export type EmdbValidation = "DeepRes" | "MonoRes" | "BlocRes" | "Map-Q" | "FSC-Q";
 
 export interface Pdb extends DbItem {
@@ -125,12 +119,6 @@ export interface Pdb extends DbItem {
 
 export interface Emdb extends DbItem {
     emMethod: string;
-}
-
-export interface Validation {
-    externalLink?: Url[];
-    queryLink: Url[];
-    badgeColor: string;
 }
 
 export type Id = string;
@@ -185,7 +173,14 @@ export interface Details {
     refdoc?: RefDoc[];
 }
 
-export const filterKeys = ["antibodies", "nanobodies", "sybodies", "pdbRedo", "isolde"] as const;
+export const filterKeys = [
+    "antibodies",
+    "nanobodies",
+    "sybodies",
+    "pdbRedo",
+    "isolde",
+    "refmac",
+] as const;
 
 export type FilterKey = typeof filterKeys[number];
 
@@ -204,9 +199,12 @@ export function filterPdbValidations(
     pdbValidations: PdbValidation[],
     filterState: Covid19Filter
 ): boolean {
-    return filterState.pdbRedo && filterState.isolde
-        ? _.some(pdbValidations, ["type", "pdbRedo"]) && _.some(pdbValidations, ["type", "isolde"])
+    return filterState.pdbRedo && filterState.isolde && filterState.refmac
+        ? _.some(pdbValidations, ["type", "pdbRedo"]) &&
+              _.some(pdbValidations, ["type", "isolde"]) &&
+              _.some(pdbValidations, ["type", "refmac"])
         : (filterState.pdbRedo && _.some(pdbValidations, ["type", "pdbRedo"])) ||
+              (filterState.refmac && _.some(pdbValidations, ["type", "refmac"])) ||
               (filterState.isolde && _.some(pdbValidations, ["type", "isolde"]));
 }
 
@@ -228,6 +226,7 @@ export function getTranslations() {
             sybodies: i18n.t("Sybodies"),
             pdbRedo: i18n.t("PDB-Redo"),
             isolde: i18n.t("Isolde"),
+            refmac: i18n.t("Refmac"),
         } as Record<FilterKey, string>,
     };
 }
