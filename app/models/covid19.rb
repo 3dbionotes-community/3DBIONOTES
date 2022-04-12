@@ -3,13 +3,13 @@ class Covid19
     [
       {
         name: "7K7P",
-        description: "NSP1. Leader protein. Host translation inhibitor. Part of Replicase polyprotein 1a and 1ab. Inhibits host translation by interacting with the 40S ribosomal subunit. The nsp1-40S ribosome complex further induces an endonucleolytic cleavage near the 5'UTR of host mRNAs, targeting them for degradation. Viral mRNAs are not susceptible to nsp1-mediated endonucleolytic RNA cleavage thanks to the presence of a 5'-end leader sequence and are therefore protected from degradation. By suppressing host gene expression, nsp1 facilitates efficient viral gene expression in infected cells and evasion from host immune response.",
+        description: "NSP1: Leader protein of 1a and 1ab polyproteins. NSP1 inhibits host cell translation by interacting with the 40S small ribosomal subunit. Slowing down infected host protein production, NSP1 facilitates efficient viral protein translation and evasion from host immune response, thus helping the virus to proliferate.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7k7p_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=7k7p"
       },
       {
         name: "7MSW + EMD-23970",
-        description: "NSP2. Non-structural protein 2. May play a role in the modulation of host cell survival signaling pathway by interacting with host PHB and PHB2. Indeed, these two proteins play a role in maintaining the functional integrity of the mitochondria and protecting cells from various stresses.",
+        description: "NSP2: Although its function is still unknown, NSP2 has been involved in several viral processes. Its highly-conserved Zn2+ binding site suggests that nsp2 binds RNA. It also seems to interact with host infected cell endosomes through cytoskeletal elements and with modulators of translation. ",
         image_url: "images/entries/7msw.png",
         query_url: "/?queryId=emd-23970"
       },
@@ -20,32 +20,26 @@ class Covid19
         query_url: "/?queryId=7ti9"
       },
       {
-        name: "7CZ4",
-        description: "Macrodomain of Nsp3 (Mac1). Function: It recognizes and hydrolizes the ADP-ribose label from proteins associated with the host innate immune response.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7cz4_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=7cz4"
+        name: "5S73",
+        description: "MacroDomain I of NSP3 (Mac1): Domain that recognizes and hydrolizes the ADP-ribose label from proteins associated with the host innate immune response.",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5s73_deposited_chain_front_image-200x200.png",
+        query_url: "/?queryId=5s73"
       },
       {
         name: "7THH",
-        description: "SARS-unique domain C of Nsp3 (renamed as domain preceding Ubl-2 and PL-Pro, DPUP https://doi.org/10.15252/embj.2019102277).",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7thh_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=7thh"
-      },
-      {
-        name: "7THH",
-        description: "Ubiquitin-like domain 2 of Nsp3.",
+        description: "SARS-unique domain C of NSP3 (DPUP).",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7thh_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=7thh"
       },
       {
         name: "7NFV",
-        description: "NSP3. PL-Pro. Papain-like proteinase. Part of Replicase polyprotein 1a and 1ab. Responsible for the cleavages located at the N-terminus of the replicase polyprotein. In addition, PL-PRO possesses a deubiquitinating/deISGylating activity and processes both 'Lys-48'- and 'Lys-63'-linked polyubiquitin chains from cellular substrates. Participates together with nsp4 in the assembly of virally-induced cytoplasmic double-membrane vesicles necessary for viral replication. Antagonizes innate immune induction of type I interferon by blocking the phosphorylation, dimerization and subsequent nuclear translocation of host IRF3. Prevents also host NF-kappa-B signaling.",
+        description: "PL-Pro: Domain Papain-like proteinase of NSP3. PL-Pro processes proteolytically three cleavage sites located at the N-terminus of the polyproteins 1a and 1ab. In addition, PL-Pro possesses a deubiquitinating/deISGylating activity and processes polyubiquitin chains from cellular substrates. It participates together with NSP4 in the assembly of virally-induced cytoplasmic double-membrane vesicles necessary for viral replication. It also antagonizes innate immune induction of type I interferon by blocking phosphorylation, dimerization and subsequent nuclear translocation of host IRF3. It prevents host cell NF-kappa-B signaling as well.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7nfv_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=7nfv"
       },
       {
         name: "7LGO",
-        description: "Nucleic acid binding domain of Nsp3.",
+        description: "NAB: Nucleic acid binding domain of NSP3.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7lgo_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=7lgo"
       },
@@ -57,103 +51,103 @@ class Covid19
       },
       {
         name: "5R8T",
-        description: "NSP5. Main Protease. MPro. 3C-like protease. 3CL-Pro. Part of Replicase polyprotein 1a and 1ab. Cleaves the C-terminus of replicase polyprotein at 11 sites.",
+        description: "NSP5: Protease that processes proteolytically the C-terminus of the polyproteins 1a and 1ab at seven and twelve sites, respectively.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5r8t_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=5r8t"
       },
       {
         name: "7C2K + EMD-30275",
-        description: "NSP8. Non-structural protein 8. Part of Replicase polyprotein 1a and 1ab. Forms a hexadecamer with nsp7 (8 subunits of each) that may participate in viral replication by acting as a primase. Alternatively, may synthesize substantially longer products than oligonucleotide primers.",
+        description: "NSP7: As cofactor of NSP12, NSP7 contributes to accomodate the template-product RNA, together with NSP8, in the RNA-dependent RNA polymerase (RdRp) catalytic complex.",
         image_url: "images/entries/7c2k.png",
         query_url: "/?queryId=emd-30275"
       },
       {
-        name: "7BWQ",
-        description: "NSP9. Non-structural protein 9. ssRNA binding protein. Part of Replicase polyprotein 1a and 1ab. May participate in viral replication by acting as a ssRNA-binding protein.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7bwq_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=7bwq"
+        name: "6WXD",
+        description: "NSP9: Able to bind ssRNA, NSP9 forms a covalent RNA-protein intermediate. This RNA is first transferred by the NiRAN domain of NSP12 to NSP9 . Then, the NiRAN NSP12 domain transfers the RNA to GDP to start the building process of the RNA cap structure. Bound to the NSP12 NiRAN domain, NSP9 inhibits the guanylyl tranferase enzymatic activity of NSP12.",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6wxd_deposited_chain_front_image-200x200.png",
+        query_url: "/?queryId=6wxd"
       },
       {
-        name: "6ZCT",
-        description: "NSP10. Non-structural protein 10. Part of Replicase polyprotein 1a and 1ab. Plays a pivotal role in viral transcription by stimulating both nsp14 3'-5' exoribonuclease and nsp16 2'-O-methyltransferase activities. Therefore plays an essential role in viral mRNAs cap methylation.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6zct_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=6zct"
+        name: "6ZPE",
+        description: "NSP10: Stimulating both NSP14 exoribonuclease and NSP16 methyltransferase activities, NSP10 plays an essential role in viral mRNA proofreading and cap methylation.",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6zpe_deposited_chain_front_image-200x200.png",
+        query_url: "/?queryId=6zpe"
       },
       {
         name: "5ROB",
-        description: "NSP13 | Helicase. Part of Replicase polyprotein 1ab. Multi-functional protein with a zinc-binding domain in N-terminus displaying RNA and DNA duplex-unwinding activities with 5' to 3' polarity. Activity of helicase is dependent on magnesium.",
+        description: "NSP13: Its helicase RNA duplex-unwinding activity contributes to elongate the RNA product. Additionally, its fosfatase activity catalizes the first step of the mRNA cap synthesis.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5rob_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=5rob"
       },
       {
         name: "5SMK",
-        description: "NSP14. Proofreading exoribonuclease. 3'-5' exoribonuclease. Guanine-N7 methyltransferase. ExoN/nsp14. Part of Replicase polyprotein 1ab. Enzyme possessing two different activities: an exoribonuclease activity acting on both ssRNA and dsRNA in a 3' to 5' direction and a N7-guanine methyltransferase activity. Acts as a proofreading exoribonuclease for RNA replication, thereby lowering The sensitivity of the virus to RNA mutagens.",
+        description: "NSP14: Enzyme with two different catalytic activities: Exoribonuclease activity in its N-terminal end, and N7-methyltransferase activity in its C-terminal end. Its proofreading exoribonuclease lowers viral sensitivity to nucleoside analogs.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5smk_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=5smk"
       },
       {
         name: "5SBF",
-        description: "NSP15. Non-structural protein 15. Endoribonuclease. Uridylate-specific endoribonuclease. Endornase. NendoU/nsp15. Part of Replicase polyprotein 1ab. Mn(2+)-dependent, uridylate-specific enzyme, which leaves 2'-3'-cyclic phosphates 5' to the cleaved bond.",
+        description: "NSP15: As uridylate-specific enzyme, NSP15 hydrolizes both ssRNA and dsRNA, probably to avoid trigger the host inmune response.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5sbf_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=5sbf"
       },
       {
         name: "7L6T",
-        description: "NSP16. Methyltransferase. 2'-O-methyltransferase. 2'-O-ribose methyltransferase. Part of Replicase polyprotein 1ab. Methyltransferase that mediates mRNA cap 2'-O-ribose methylation to the 5'-cap structure of viral mRNAs. N7-methyl guanosine cap is a prerequisite for binding of nsp16. Therefore plays an essential role in viral mRNAs cap methylation which is essential to evade immune system.",
+        description: "NSP16: Methyltransferase that catalyzes the last reaction to build the viral mRNA cap, the methylation of the ribose 2'-OH.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7l6t_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=7l6t"
       },
       {
         name: "6VSB + EMD-21375",
-        description: "Spike. Protein S. Spike glycoprotein. Surface Glycoprotein. Spike protein, trimeric complex S1-S2-S2': Attaches the virion to the cell membrane by interacting with host receptor, initiating the infection. Binding to human ACE2 receptor and internalization of the virus into the endosomes of the host cell induces conformational changes in the Spike glycoprotein. Uses also human TMPRSS2 for priming in human lung cells which is an essential step for viral entry. Proteolysis by cathepsin CTSL may unmask the fusion peptide of S2 and activate membranes fusion within endosomes.",
+        description: "Spike: Decorating surface glycoprotein that protrudes from the viral outer membrane. Several conformational changes allow its interaction with the host receptor ACE2 and membrane fusion, thus initiating the infection.",
         image_url: "images/entries/6vsb.png",
         query_url: "/?queryId=emd-21375"
       },
       {
         name: "6XCD + EMD-22136",
-        description: "ORF3. Protein 3. Accessory protein 3a. Protein U274. Protein X1. Forms homotetrameric potassium sensitive ion channels (viroporin) and may modulate virus release. Up-regulates expression of fibrinogen subunits FGA, FGB and FGG in host lung epithelial cells. Induces apoptosis in cell culture. Downregulates the type 1 interferon receptor by inducing serine phosphorylation within the IFN alpha-receptor subunit 1 (IFNAR1) degradation motif and increasing IFNAR1 ubiquitination.",
+        description: "ORF3: As a viroporin, ORF3 forms cellular dimeric nonselective Ca2+ permeable cation channels that become active by oligomerizing into tetramers or higher-order oligomers. This channel activity in cells could be relevant to promote viral maturation through inhibition of autophagy and disruption of lysosomes.",
         image_url: "images/entries/6xcd.png",
         query_url: "/?queryId=emd-22136"
       },
       {
         name: "7NTK",
-        description: "E. Envelope small membrane protein. Plays a central role in virus morphogenesis and assembly. Acts as a viroporin and self-assembles in host membranes forming pentameric protein-lipid pores that allow ion transport. Also plays a role in the induction of apoptosis.",
+        description: "Protein E: Envelope small membrane protein. As a viroporin, it self-assembles in host membranes forming pentameric protein pores that can affect the integrity of the lipid bilayer or disrupt the membrane potential, thus facilitating the release of viral particles from host cells.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7ntk_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=7ntk"
       },
       {
         name: "7VPH",
-        description: "ORF6. Accessory Protein 6. Accessory Factor 6. Disrupts cell nuclear import complex formation by tethering karyopherin alpha 2 and karyopherin beta 1 to the membrane. Retention of import factors at the ER/Golgi membrane leads to a loss of transport into the nucleus. Thereby prevents STAT1 nuclear translocation in response to interferon signaling, thus blocking the expression of interferon stimulated genes (ISGs) that display multiple antiviral activities.",
+        description: "ORF6: Although it is ot necessary for viral invasion and replication, ORF6 plays a relevant role in immune evasion. It directly interacts with the host complex Rae1-Nup98 preventing the nuclear export of host mRNA, antagonizing interferon signaling.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7vph_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=7vph"
       },
       {
         name: "7CI3",
-        description: "ORF7a Protein. Non-structural protein which is dispensable for virus replication in cell culture.",
+        description: "ORF7a: Although dispensable for virus replication in cell culture, ORF7a acts as a immunomodulator factor that binds to immune cells and triggers inflammatory responses.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7ci3_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=7ci3"
       },
       {
-        name: "7JTL",
-        description: "ORF8. Non-structural protein 8. May play a role in host-virus interaction. Simnilar to some Bat coronavirus ns8 genes, but is entirely different from SARS ns8a or Ns8b.",
+        name: "7F5F",
+        description: "ORF8: With a core fold similar to ORF7a, the structure of ORF8 reveals two novel dimer interfaces that allow forming host large-scale assemblies, potentially mediating immune suppression and evasion activities.",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7jtl_deposited_chain_front_image-200x200.png",
-        query_url: "/?queryId=7jtl"
+        query_url: "/?queryId=7f5f"
       },
       {
         name: "7CDZ",
-        description: "Protein N. Nucleoprotein. Nucleocapsid protein. Packages the positive strand viral genome RNA into a helical ribonucleocapsid (RNP) and plays a fundamental role during virion assembly through its interactions with the viral genome and membrane protein M. Plays an important role in enhancing the efficiency of subgenomic viral RNA transcription as well as viral replication (By similarity). May modulate transforming growth factor-beta signaling by binding host smad3 (By similarity).",
+        description: "Nucleoprotein N-terminal domain: The nucleoprotein (N protein) is involved in viral assembly, replication and host immune response regulation. Its N-terminal domain (N-NTD) is responsible for RNA binding and packaging of the positive strand viral genome RNA into a helical ribonucleocapsid (RNP).",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7cdz_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=7cdz"
       },
       {
         name: "7CE0",
-        description: "",
+        description: "Nucleoprotein C-terminal domain: The nucleoprotein (N protein) is involved in viral assembly, replication and host immune response regulation. Its C-terminal domain (N-CTD) is responsible for RNA binding and packaging of the positive strand viral genome RNA into a helical ribonucleocapsid (RNP).",
         image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7ce0_deposited_chain_front_image-200x200.png",
         query_url: "/?queryId=7ce0"
       },
       {
         name: "7KDT + EMD-22829",
-        description: "ORF9b. Protein 9b. The gene encoding this protein is included within the N gene (alternative ORF). Forms homotetrameric potassium sensitive ion channels (viroporin) and may modulate virus release. Up-regulates expression of fibrinogen subunits FGA, FGB and FGG in host lung epithelial cells. Induces apoptosis in cell culture. Downregulates the type 1 interferon receptor by inducing serine phosphorylation within the IFN alpha-receptor subunit 1 (IFNAR1) degradation motif and increasing IFNAR1 ubiquitination.",
+        description: "ORF9b: The gene encoding this small protein overlaps the N gene. ORF9b protein interacts and blocks the substrate binding site of the host Tom70, import receptor of the translocase from the mitochondrial outer membrane (TOM) complex, involved in the activation of the mitochondrial antiviral signaling leading to apoptosis upon viral infection. In addition, ORF9b may modulate interferon and apoptosis signaling avoiding the interaction between Tom70 and Hsp70 and Hsp90 chaperones.",
         image_url: "images/entries/7kdt.png",
         query_url: "/?queryId=emd-22829"
       },
