@@ -80,7 +80,7 @@ export interface Link {
 }
 
 export type W3Color = "w3-cyan" | "w3-turq";
-export type PdbValidation = PdbRedoValidation | IsoldeValidation;
+export type PdbValidation = PdbRedoValidation | IsoldeValidation | undefined;
 export type EmdbValidation = "DeepRes" | "MonoRes" | "BlocRes" | "Map-Q" | "FSC-Q";
 
 export interface Pdb extends DbItem {
@@ -151,7 +151,7 @@ export interface Details {
     refdoc?: RefDoc[];
 }
 
-export const filterKeys = ["antibodies", "nanobodies", "sybodies", "pdbRedo"] as const;
+export const filterKeys = ["antibodies", "nanobodies", "sybodies", "pdbRedo", "isolde"] as const;
 
 export type FilterKey = typeof filterKeys[number];
 
@@ -166,36 +166,14 @@ export function filterEntities(entities: Entity[], filterState: Covid19Filter): 
     );
 }
 
-export function buildPdbRedoValidation(pdbId: Id): PdbRedoValidation {
-    const pdbRedoUrl = `https://pdb-redo.eu/db/${pdbId.toLowerCase()}`;
-
-    return {
-        type: "pdbRedo",
-        externalLink: pdbRedoUrl,
-        queryLink: `/pdb_redo/${pdbId.toLowerCase()}`,
-        badgeColor: "w3-turq",
-    };
-}
-
-export function addPdbValidationToStructure(
-    structure: Structure,
-    validation: PdbValidation
-): Structure {
-    const existingValidations = structure.validations.pdb;
-    const structureContainsValidation = _(existingValidations).some(existingValidation =>
-        _.isEqual(existingValidation, validation)
-    );
-
-    if (!structureContainsValidation) {
-        const pdbValidations = _.concat(existingValidations, [validation]);
-
-        return {
-            ...structure,
-            validations: { ...structure.validations, pdb: pdbValidations },
-        };
-    } else {
-        return structure;
-    }
+export function filterPdbValidations(
+    pdbValidations: PdbValidation[],
+    filterState: Covid19Filter
+): boolean {
+    return filterState.pdbRedo && filterState.isolde
+        ? _.some(pdbValidations, ["type", "pdbRedo"]) && _.some(pdbValidations, ["type", "isolde"])
+        : (filterState.pdbRedo && _.some(pdbValidations, ["type", "pdbRedo"])) ||
+              (filterState.isolde && _.some(pdbValidations, ["type", "isolde"]));
 }
 
 export function updateStructures(data: Covid19Info, structures: Structure[]): Covid19Info {
@@ -214,7 +192,8 @@ export function getTranslations() {
             antibodies: i18n.t("Antibodies"),
             nanobodies: i18n.t("Nanobodies"),
             sybodies: i18n.t("Sybodies"),
-            pdbRedo: i18n.t("PDB-REDO"),
+            pdbRedo: i18n.t("PDB-Redo"),
+            isolde: i18n.t("Isolde"),
         } as Record<FilterKey, string>,
     };
 }
