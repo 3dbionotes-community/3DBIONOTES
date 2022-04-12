@@ -12,7 +12,7 @@ export const External: React.FC<ExternalProps> = React.memo(props => {
         () =>
             (icon === "external" ? "fa-external-link-square" : "fa-eye") +
             (text ? " icon-right" : ""),
-        []
+        [icon, text]
     );
 
     return (

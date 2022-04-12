@@ -24,58 +24,61 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
     const { pdb, structure } = props;
     const [open, setOpen] = React.useState(false);
     const pdbValidations = structure.validations.pdb;
-    const t = React.useMemo(getTranslations, []);
+    const translations = React.useMemo(getTranslations, []);
 
-    const getValidation = React.useCallback((pdbValidation: PdbValidation) => {
-        switch (pdbValidation?.type) {
-            case "pdbRedo":
-                return (
-                    <GroupBadges key="pdb-redo">
-                        <BadgeLink
-                            key="pdb-redo-external"
-                            url={pdbValidation.externalLink}
-                            text={t.filterKeys.pdbRedo}
-                            icon="external"
-                            backgroundColor={pdbValidation.badgeColor}
-                        />
-                        <BadgeLink
-                            key="pdb-redo-viewer"
-                            url={pdbValidation.queryLink}
-                            icon="viewer"
-                            backgroundColor={pdbValidation.badgeColor}
-                        />
-                    </GroupBadges>
-                );
-            case "isolde":
-                return (
-                    <GroupBadges key="isolde">
-                        <BadgeLink
-                            key="isolde-viewer"
-                            url={pdbValidation.queryLink}
-                            text={t.filterKeys.isolde}
-                            icon="viewer"
-                            backgroundColor={pdbValidation.badgeColor}
-                            style={styles.grow}
-                        />
-                    </GroupBadges>
-                );
-            case "refmac":
-                return (
-                    <GroupBadges key="refmac">
-                        <BadgeLink
-                            key="refmac-viewer"
-                            url={pdbValidation.queryLink}
-                            text={t.filterKeys.refmac}
-                            icon="viewer"
-                            backgroundColor={pdbValidation.badgeColor}
-                            style={styles.grow}
-                        />
-                    </GroupBadges>
-                );
-            default:
-                throw new Error("Unsupported");
-        }
-    }, []);
+    const getValidation = React.useCallback(
+        (pdbValidation: PdbValidation) => {
+            switch (pdbValidation?.type) {
+                case "pdbRedo":
+                    return (
+                        <GroupBadges key="pdb-redo">
+                            <BadgeLink
+                                key="pdb-redo-external"
+                                url={pdbValidation.externalLink}
+                                text={translations.filterKeys.pdbRedo}
+                                icon="external"
+                                backgroundColor={pdbValidation.badgeColor}
+                            />
+                            <BadgeLink
+                                key="pdb-redo-viewer"
+                                url={pdbValidation.queryLink}
+                                icon="viewer"
+                                backgroundColor={pdbValidation.badgeColor}
+                            />
+                        </GroupBadges>
+                    );
+                case "isolde":
+                    return (
+                        <GroupBadges key="isolde">
+                            <BadgeLink
+                                key="isolde-viewer"
+                                url={pdbValidation.queryLink}
+                                text={translations.filterKeys.isolde}
+                                icon="viewer"
+                                backgroundColor={pdbValidation.badgeColor}
+                                style={styles.grow}
+                            />
+                        </GroupBadges>
+                    );
+                case "refmac":
+                    return (
+                        <GroupBadges key="refmac">
+                            <BadgeLink
+                                key="refmac-viewer"
+                                url={pdbValidation.queryLink}
+                                text={translations.filterKeys.refmac}
+                                icon="viewer"
+                                backgroundColor={pdbValidation.badgeColor}
+                                style={styles.grow}
+                            />
+                        </GroupBadges>
+                    );
+                default:
+                    throw new Error("Unsupported");
+            }
+        },
+        [translations]
+    );
 
     const propertiesTooltip = (
         <React.Fragment>
@@ -118,7 +121,7 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
             {pdb ? <Thumbnail type="pdb" value={pdb} tooltip={propertiesTooltip} /> : null}
 
             {!_.isEmpty(pdbValidations) ? (
-                pdbValidations.length == 1 ? (
+                pdbValidations.length === 1 ? (
                     getValidation(pdbValidations[0])
                 ) : (
                     <Grid container justify="center">

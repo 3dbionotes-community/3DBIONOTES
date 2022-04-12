@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { Covid19Info, Structure } from "../entities/Covid19Info";
-import { CacheRepository, fromCache } from "../repositories/CacheRepository";
+import { CacheRepository } from "../repositories/CacheRepository";
 import { Covid19InfoRepository } from "../repositories/Covid19InfoRepository";
 
 export class AddDynamicInfoToCovid19InfoUseCase {
