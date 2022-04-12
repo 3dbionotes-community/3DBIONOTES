@@ -205,7 +205,7 @@ const Details: React.FC<DetailsProps> = React.memo(props => {
                     <Typography style={styles.title} variant="h6">
                         {details.domain ? (
                             <>
-                                {details.domain} ({title})
+                                {title} ({details.domain})
                             </>
                         ) : details.gen && details.gen !== "Remaining" && details.gen !== title ? (
                             <>

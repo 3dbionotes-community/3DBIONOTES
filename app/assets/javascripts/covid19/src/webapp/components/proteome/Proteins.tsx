@@ -57,8 +57,8 @@ const proteins: Protein[] = [
     },
     {
         gen: "ORF1a",
-        name: "NSP3",
-        domain: "Ubl-1",
+        name: "Ubl-1",
+        domain: "NSP3",
         synonyms: "Ubl-1, Ubiquitin-like domain 1",
         pdb: build("pdb", "7TI9"),
         def:
@@ -67,8 +67,8 @@ const proteins: Protein[] = [
     },
     {
         gen: "ORF1a",
-        name: "NSP3",
-        domain: "MacroDomain",
+        name: "MacroDomain",
+        domain: "NSP3",
         synonyms: "MacroDomain, Macrodomain I, Mac1",
         pdb: build("pdb", "5S73"),
         def:
@@ -78,8 +78,8 @@ const proteins: Protein[] = [
     },
     {
         gen: "ORF1a",
-        name: "NSP3",
-        domain: "SUD-N",
+        name: "SUD-N",
+        domain: "NSP3",
         synonyms: "SUD-N, SARS-unique domain N, Macrodomain II, Mac2",
         pdb: build("pdb", "N/A"),
         def:
@@ -89,8 +89,8 @@ const proteins: Protein[] = [
     },
     {
         gen: "ORF1a",
-        name: "NSP3",
-        domain: "SUD-M",
+        name: "SUD-M",
+        domain: "NSP3",
         synonyms: "SUD-M, SARS-unique domain M, Macrodomain III, Mac3",
         pdb: build("pdb", "N/A"),
         def:
@@ -100,8 +100,8 @@ const proteins: Protein[] = [
     },
     {
         gen: "ORF1a",
-        name: "NSP3",
-        domain: "SUD-C",
+        name: "SUD-C",
+        domain: "NSP3",
         synonyms: "SUD-C, SARS-unique domain C, domain preceding Ubl-2 and PL-Pro, DPUP",
         pdb: build("pdb", "7THH"),
         def:
@@ -110,8 +110,8 @@ const proteins: Protein[] = [
     },
     {
         gen: "ORF1a",
-        name: "NSP3",
-        domain: "Ubl-2",
+        name: "Ubl-2",
+        domain: "NSP3",
         synonyms: "Ubl-2, Ubiquitin-like domain 2",
         pdb: build("pdb", "7THH"),
         def:
@@ -120,8 +120,8 @@ const proteins: Protein[] = [
     },
     {
         gen: "ORF1a",
-        name: "NSP3",
-        domain: "PL-Pro",
+        name: "PL-Pro",
+        domain: "NSP3",
         synonyms: "NSP3, PL-Pro, Papain-like proteinase, Papain-like protease",
         pdb: build("pdb", "7NFV"),
         def:
@@ -131,8 +131,8 @@ const proteins: Protein[] = [
     },
     {
         gen: "ORF1a",
-        name: "NSP3",
-        domain: "NAB",
+        name: "NAB",
+        domain: "NSP3",
         synonyms: "NAB, Nucleic acid binding domain",
         pdb: build("pdb", "7LGO"),
         def:
@@ -141,8 +141,8 @@ const proteins: Protein[] = [
     },
     {
         gen: "ORF1a",
-        name: "NSP3",
-        domain: "Y3 domain",
+        name: "Y3 domain",
+        domain: "NSP3",
         synonyms: "Y3 domain",
         pdb: build("pdb", "7RQG"),
         def:
@@ -381,8 +381,8 @@ const proteins: Protein[] = [
     },
     {
         gen: "Nucleoprotein",
-        name: "Nucleoprotein",
-        domain: "NTD",
+        name: "NTD",
+        domain: "Nucleoprotein",
         synonyms:
             "Nucleoprotein N-terminal domain, Nucleocapsid N-terminal domain, N-NTD, ribonucleocapsid N-terminal domain , RNP N-terminal domain, Nucleoprotein RNA binding domain, Nucleocapsid RNA binding domain",
         pdb: build("pdb", "7CDZ"),
@@ -393,8 +393,8 @@ const proteins: Protein[] = [
     },
     {
         gen: "Nucleoprotein",
-        name: "Nucleoprotein",
-        domain: "CTD",
+        name: "CTD",
+        domain: "Nucleoprotein",
         synonyms:
             "Nucleoprotein C-terminal domain, Nucleocapsid C-terminal domain, N-CTD, ribonucleocapsid C-terminal domain , RNP C-terminal domain, Nucleoprotein dimerization domain, Nucleocapsid dimerization domain",
         pdb: build("pdb", "7CE0"),
