@@ -217,8 +217,8 @@ function getDetails(pdb: Data.Pdb): Maybe<Details> {
 
 function getPdbValidations(pdb: Data.Pdb): PdbValidation[] {
     return pdb.refModels
-        ? pdb.refModels?.map(
-              (refModel): PdbValidation => {
+        ? _.compact(
+              pdb.refModels?.map((refModel): PdbValidation | undefined => {
                   switch (refModel.method) {
                       case "PDB-Redo":
                           return {
@@ -239,8 +239,11 @@ function getPdbValidations(pdb: Data.Pdb): PdbValidation[] {
                               badgeColor: "w3-blue",
                               queryLink: refModel.queryLink,
                           };
+                      default:
+                          console.error(`Validation not supported: "${refModel.method}"`);
+                          return undefined;
                   }
-              }
+              })
           )
         : [];
 }
