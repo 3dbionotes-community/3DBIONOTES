@@ -8,6 +8,7 @@ export const HtmlTooltip = withStyles((theme: Theme) => ({
         maxWidth: 600,
         fontSize: theme.typography.pxToRem(12),
         border: "1px solid #dadde9",
+        pointerEvents: "all",
     },
     arrow: { color: "#dadde9" },
 }))(Tooltip);

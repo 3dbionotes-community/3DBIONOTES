@@ -113,4 +113,4 @@ export interface PdbValidation {
     queryLink?: Url;
 }
 
-export interface RefModels extends Array<PdbValidation> {}
+export type RefModels = PdbValidation[];

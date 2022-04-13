@@ -51,13 +51,6 @@ export interface Structure {
     };
 }
 
-export interface Validation {
-    type: "pdbRedo" | "isolde" | "refmac";
-    externalLink?: Url;
-    queryLink?: Url;
-    badgeColor: W3Color;
-}
-
 export interface DbItem {
     id: Id;
     method?: string;
@@ -108,7 +101,13 @@ export type W3Color =
     | "w3-pale-yellow"
     | "w3-pale-blue";
 
-export type PdbValidation = Validation | undefined;
+export interface PdbValidation {
+    type: "pdbRedo" | "isolde" | "refmac";
+    externalLink?: Url;
+    queryLink?: Url;
+    badgeColor: W3Color;
+}
+
 export type EmdbValidation = "DeepRes" | "MonoRes" | "BlocRes" | "Map-Q" | "FSC-Q";
 
 export interface Pdb extends DbItem {
@@ -199,13 +198,11 @@ export function filterPdbValidations(
     pdbValidations: PdbValidation[],
     filterState: Covid19Filter
 ): boolean {
-    return filterState.pdbRedo && filterState.isolde && filterState.refmac
-        ? _.some(pdbValidations, ["type", "pdbRedo"]) &&
-              _.some(pdbValidations, ["type", "isolde"]) &&
-              _.some(pdbValidations, ["type", "refmac"])
-        : (filterState.pdbRedo && _.some(pdbValidations, ["type", "pdbRedo"])) ||
-              (filterState.refmac && _.some(pdbValidations, ["type", "refmac"])) ||
-              (filterState.isolde && _.some(pdbValidations, ["type", "isolde"]));
+    return (
+        (!filterState.pdbRedo || _.some(pdbValidations, v => v?.type === "pdbRedo")) &&
+        (!filterState.isolde || _.some(pdbValidations, v => v?.type === "isolde")) &&
+        (!filterState.refmac || _.some(pdbValidations, v => v?.type === "refmac"))
+    );
 }
 
 export function updateStructures(data: Covid19Info, structures: Structure[]): Covid19Info {

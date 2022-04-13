@@ -217,7 +217,7 @@ function getDetails(pdb: Data.Pdb): Maybe<Details> {
 
 function getPdbValidations(pdb: Data.Pdb): PdbValidation[] {
     return pdb.refModels
-        ? pdb.refModels?.map(refModel => {
+        ? pdb.refModels?.map((refModel: Data.PdbValidation) => {
               switch (refModel.method) {
                   case "PDB-Redo":
                       return {
@@ -238,8 +238,6 @@ function getPdbValidations(pdb: Data.Pdb): PdbValidation[] {
                           badgeColor: "w3-blue",
                           queryLink: refModel.queryLink,
                       };
-                  default:
-                      return undefined;
               }
           })
         : [];
