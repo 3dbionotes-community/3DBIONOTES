@@ -217,29 +217,33 @@ function getDetails(pdb: Data.Pdb): Maybe<Details> {
 
 function getPdbValidations(pdb: Data.Pdb): PdbValidation[] {
     return pdb.refModels
-        ? pdb.refModels?.map((refModel: Data.PdbValidation) => {
-              switch (refModel.method) {
-                  case "PDB-Redo":
-                      return {
-                          type: "pdbRedo",
-                          badgeColor: "w3-orange",
-                          externalLink: refModel.externalLink,
-                          queryLink: refModel.queryLink,
-                      };
-                  case "Isolde":
-                      return {
-                          type: "isolde",
-                          badgeColor: "w3-cyan",
-                          queryLink: refModel.queryLink,
-                      };
-                  case "Refmac":
-                      return {
-                          type: "refmac",
-                          badgeColor: "w3-blue",
-                          queryLink: refModel.queryLink,
-                      };
-              }
-          })
+        ? _.compact(
+              pdb.refModels?.map((refModel: Data.PdbValidation) => {
+                  switch (refModel.method) {
+                      case "PDB-Redo":
+                          return {
+                              type: "pdbRedo",
+                              badgeColor: "w3-orange",
+                              externalLink: refModel.externalLink,
+                              queryLink: refModel.queryLink,
+                          };
+                      case "Isolde":
+                          return {
+                              type: "isolde",
+                              badgeColor: "w3-cyan",
+                              queryLink: refModel.queryLink,
+                          };
+                      case "Refmac":
+                          return {
+                              type: "refmac",
+                              badgeColor: "w3-blue",
+                              queryLink: refModel.queryLink,
+                          };
+                      default:
+                          return undefined;
+                  }
+              })
+          )
         : [];
 }
 
