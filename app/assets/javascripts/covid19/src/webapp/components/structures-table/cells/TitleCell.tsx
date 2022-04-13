@@ -1,6 +1,6 @@
 import React from "react";
 import { CellProps } from "../Columns";
-import { BadgeLink } from "../BadgeLink";
+import { BadgeLink } from "../badge/BadgeLink";
 
 export const urlPrefix = "/?queryId=";
 

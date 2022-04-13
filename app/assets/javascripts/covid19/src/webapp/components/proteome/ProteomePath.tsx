@@ -1,18 +1,11 @@
 import React from "react";
 import { sendAnalytics } from "../../../utils/analytics";
 
-export interface StateSetters {
-    setSearch: (value: string) => void;
-    setTitle: (value: React.ReactNode) => void;
-    setProteomeSelected: (value: boolean) => void;
-    setLoading: (value: boolean) => void;
-    toggleProteome: () => void;
-}
-
 interface ProteomePathProps {
     name: string;
     classStyle: string;
     def: string;
+    details?: ProtDetails;
     stateSetters: StateSetters;
 }
 
@@ -21,11 +14,11 @@ export const ProteomePath: React.FC<ProteomePathProps> = React.memo(props => {
         name,
         classStyle,
         def,
-        stateSetters: { setTitle, setSearch, setProteomeSelected, setLoading, toggleProteome },
+        details,
+        stateSetters: { setTitle, setSearch, setProteomeSelected, setDetails, toggleProteome },
     } = props;
 
     const triggerSearch = React.useCallback(() => {
-        setLoading(true);
         setSearch(name);
         setProteomeSelected(true);
         toggleProteome();
@@ -35,17 +28,42 @@ export const ProteomePath: React.FC<ProteomePathProps> = React.memo(props => {
             action: "select",
             label: name,
         });
-        setTimeout(() => {
-            setLoading(false);
-        }, 1500);
-    }, [name, setLoading, setProteomeSelected, setSearch, toggleProteome]);
+    }, [name, setProteomeSelected, setSearch, toggleProteome]);
+
+    const showProteinInfo = React.useCallback(() => {
+        setTitle(name);
+        setDetails(details);
+    }, [name, details, setTitle, setDetails]);
 
     return (
         <path
             className={classStyle}
             d={def}
-            onMouseEnter={() => setTitle(<span>{name}</span>)}
+            onMouseEnter={showProteinInfo}
             onClick={triggerSearch}
         />
     );
 });
+
+export interface DB {
+    id: string;
+    img: string;
+}
+
+export interface ProtDetails {
+    gen?: string;
+    synonyms?: string;
+    domain?: string;
+    description?: string;
+    pdb?: DB;
+    emdb?: DB;
+    childrenPDB?: string[];
+}
+
+export interface StateSetters {
+    setSearch: (value: string) => void;
+    setTitle: (value: string) => void;
+    setProteomeSelected: (value: boolean) => void;
+    setDetails: (value: ProtDetails | undefined) => void;
+    toggleProteome: () => void;
+}
