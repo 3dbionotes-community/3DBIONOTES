@@ -50,7 +50,7 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
     const validationsTooltip = (
         <React.Fragment>
             {pdbValidations.map(pdbValidation => (
-                <Validation pdbValidation={pdbValidation} />
+                <Validation key={pdbValidation.type} pdbValidation={pdbValidation} />
             ))}
         </React.Fragment>
     );
