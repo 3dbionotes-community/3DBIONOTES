@@ -1,7 +1,6 @@
 import _ from "lodash";
 import MiniSearch, { Options } from "minisearch";
 import {
-    buildPdbRedoValidation,
     Covid19Info,
     Details,
     Emdb,
@@ -13,6 +12,8 @@ import {
     Organism,
     Pdb,
     Structure,
+    PdbValidation,
+    filterPdbValidations,
 } from "../domain/entities/Covid19Info";
 import { Covid19InfoRepository, SearchOptions } from "../domain/repositories/Covid19InfoRepository";
 import { SearchOptions as MiniSearchSearchOptions } from "minisearch";
@@ -42,7 +43,7 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
             : structures;
 
         const structuresFilteredByTextAndBody = filterState
-            ? this.filterByBodies(structuresFilteredByText, filterState)
+            ? this.filter(structuresFilteredByText, filterState)
             : structuresFilteredByText;
         return { structures: structuresFilteredByTextAndBody };
     }
@@ -55,25 +56,19 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         return structuresByText;
     }
 
-    async hasPdbRedoValidation(pdbId: string): Promise<boolean> {
-        const validation = buildPdbRedoValidation(pdbId);
-
-        try {
-            const res = await fetch(validation.externalLink, { method: "HEAD" });
-            return res.status === 200;
-        } catch (err) {
-            return false;
-        }
-    }
-
-    private filterByBodies(structures: Structure[], filterState: Covid19Filter): Structure[] {
+    private filter(structures: Structure[], filterState: Covid19Filter): Structure[] {
         const isFilterStateEnabled =
             filterState.antibodies || filterState.nanobodies || filterState.sybodies;
-        const isPdbRedoFilterEnabled = filterState.pdbRedo;
+        const isPdbValidationsFilterEnabled =
+            filterState.pdbRedo || filterState.isolde || filterState.refmac;
 
-        if (!isFilterStateEnabled && !isPdbRedoFilterEnabled) return structures;
-        const structuresToFilter = isPdbRedoFilterEnabled
-            ? structures.filter(structure => structure.validations.pdb.length > 0)
+        if (!isFilterStateEnabled && !isPdbValidationsFilterEnabled) return structures;
+        const structuresToFilter = isPdbValidationsFilterEnabled
+            ? structures.filter(structure =>
+                  structure.validations.pdb.length > 0
+                      ? filterPdbValidations(structure.validations.pdb, filterState)
+                      : false
+              )
             : structures;
         return isFilterStateEnabled
             ? structuresToFilter.filter(
@@ -106,7 +101,10 @@ function getStructures(): Structure[] {
             organisms: getOrganismsForStructure(data, structure),
             ligands: structure.pdb === null ? [] : getLigands(data.Ligands, structure.pdb.ligands),
             details: structure.pdb ? getDetails(structure.pdb) : undefined,
-            validations: { pdb: [], emdb: [] }, // lazily populated on-the fly in the view
+            validations: {
+                pdb: structure.pdb === null ? [] : getPdbValidations(structure.pdb),
+                emdb: [],
+            },
         })
     );
 
@@ -215,6 +213,39 @@ function getDetails(pdb: Data.Pdb): Maybe<Details> {
             return { id: ref.pmID, idLink: ref.pmidLink, ...ref };
         }),
     };
+}
+
+function getPdbValidations(pdb: Data.Pdb): PdbValidation[] {
+    return pdb.refModels
+        ? _.compact(
+              pdb.refModels?.map((refModel): PdbValidation | undefined => {
+                  switch (refModel.method) {
+                      case "PDB-Redo":
+                          return {
+                              type: "pdbRedo",
+                              badgeColor: "w3-orange",
+                              externalLink: refModel.externalLink,
+                              queryLink: refModel.queryLink,
+                          };
+                      case "Isolde":
+                          return {
+                              type: "isolde",
+                              badgeColor: "w3-cyan",
+                              queryLink: refModel.queryLink,
+                          };
+                      case "Refmac":
+                          return {
+                              type: "refmac",
+                              badgeColor: "w3-blue",
+                              queryLink: refModel.queryLink,
+                          };
+                      default:
+                          console.error(`Validation not supported: "${refModel.method}"`);
+                          return undefined;
+                  }
+              })
+          )
+        : [];
 }
 
 /* Search */

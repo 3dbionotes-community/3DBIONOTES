@@ -5,7 +5,7 @@ interface ProteomePathProps {
     name: string;
     classStyle: string;
     def: string;
-    details?: Details;
+    details?: ProtDetails;
     stateSetters: StateSetters;
 }
 
@@ -50,7 +50,8 @@ export interface DB {
     img: string;
 }
 
-export interface Details {
+export interface ProtDetails {
+    gen?: string;
     synonyms?: string;
     domain?: string;
     description?: string;
@@ -63,6 +64,6 @@ export interface StateSetters {
     setSearch: (value: string) => void;
     setTitle: (value: string) => void;
     setProteomeSelected: (value: boolean) => void;
-    setDetails: (value: Details | undefined) => void;
+    setDetails: (value: ProtDetails | undefined) => void;
     toggleProteome: () => void;
 }

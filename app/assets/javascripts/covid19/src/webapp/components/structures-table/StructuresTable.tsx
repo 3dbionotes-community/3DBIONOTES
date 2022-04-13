@@ -214,6 +214,8 @@ const initialFilterState: Covid19Filter = {
     nanobodies: false,
     sybodies: false,
     pdbRedo: false,
+    isolde: false,
+    refmac: false,
 };
 
 function useRenderedRows() {

@@ -51,7 +51,7 @@ export interface Pdb extends DbItem {
     ligands: LigandId[];
     details: Details[];
     dbauthors?: string[];
-    refModels?: RefModel[];
+    refModels?: RefModels;
 }
 
 export interface Emdb extends DbItem {
@@ -72,8 +72,10 @@ export interface RefDB {
     deposited?: string;
     released?: string;
 }
+
 export interface RefEMDB extends RefDB {}
 export interface RefPDB {}
+
 export interface RefDoc {
     pmID: string;
     title: string;
@@ -84,6 +86,7 @@ export interface RefDoc {
     pmidLink?: Url;
     doi?: Url;
 }
+
 export interface Sample {
     name: string;
     exprSystem?: string;
@@ -96,14 +99,18 @@ export interface Sample {
     cellComponent?: string[];
     domains?: string[];
 }
+
 export interface Details {
     refEMDB?: RefEMDB;
     refPDB?: RefPDB;
     sample: Sample;
     refdoc: RefDoc[];
 }
-export interface RefModel {
-    method?: string;
-    externalLink: Url;
-    queryLink: Url;
+
+export interface PdbValidation {
+    method: "PDB-Redo" | "Isolde" | "Refmac";
+    externalLink?: Url;
+    queryLink?: Url;
 }
+
+export type RefModels = PdbValidation[];

@@ -2,10 +2,16 @@ import { Typography } from "@material-ui/core";
 import React from "react";
 import i18n from "../../../utils/i18n";
 import { Orf1a, Orf1b, Remaining, Nucleoprotein } from "./Proteins";
-import { ProteomePath, Details } from "./ProteomePath";
+import { ProteomePath, ProtDetails } from "./ProteomePath";
 import { Container, Layer, SVG } from "./styled";
 
 const viewerPath = "/?queryId=";
+
+export interface VisibleGen {
+    orf1a?: boolean;
+    orf1b?: boolean;
+    nucleoprotein?: boolean;
+}
 
 interface SVGProteomeProps {
     setSearch: (value: string) => void;
@@ -13,11 +19,16 @@ interface SVGProteomeProps {
     toggleProteome: () => void;
 }
 
+interface DetailsProps {
+    details: ProtDetails;
+    title: string;
+}
+
 export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
     const { setSearch, setProteomeSelected, toggleProteome } = props;
     const [title, setTitle] = React.useState("");
     const [visible, setVisible] = React.useState<VisibleGen>({});
-    const [details, setDetails] = React.useState<Details>();
+    const [details, setDetails] = React.useState<ProtDetails>();
     const [detailsVisible, setDetailsVisible] = React.useState(false);
 
     const stateSetters = React.useMemo(
@@ -109,7 +120,9 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                                     .replace(/\s/, "_") ?? ""
                                             }
                                             def={parentProts[s]?.def ?? ""}
-                                            details={{ childrenPDB: childrenPDB[s] }}
+                                            details={{
+                                                childrenPDB: childrenPDB[s],
+                                            }}
                                         />
                                     )}
                                     {visible[s] &&
@@ -117,12 +130,19 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                             <ProteomePath
                                                 key={idx}
                                                 stateSetters={stateSetters}
-                                                classStyle={prot.gen}
+                                                classStyle={
+                                                    prot.details.gen
+                                                        ?.toLowerCase()
+                                                        .replace(/\s/, "_") ?? ""
+                                                }
                                                 name={prot.name}
                                                 def={prot.def ?? ""}
                                                 details={
-                                                    prot.name === "NSP3"
-                                                        ? { childrenPDB: childrenPDB.nsp3 }
+                                                    prot.name === "NSP3" && !prot.details.domain
+                                                        ? {
+                                                              gen: "ORF1a",
+                                                              childrenPDB: childrenPDB.nsp3,
+                                                          }
                                                         : prot.details
                                                 }
                                             />
@@ -142,105 +162,124 @@ export const SVGProteome: React.FC<SVGProteomeProps> = React.memo(props => {
                                 />
                             ))}
                         </g>
-                        <text x="442" y="200">
+                        <text x="436" y="210">
                             5&rsquo;
                         </text>
-                        <text x="542" y="200">
+                        <text x="535" y="210">
                             3&rsquo;
                         </text>
                     </SVG>
                 </Layer>
-                {detailsVisible && details && (
-                    <>
-                        <Layer className="left">
-                            {details.pdb &&
-                                details.pdb.id &&
-                                details.pdb.id !== "N/A" &&
-                                details.pdb.img && (
-                                    <img
-                                        alt={details.pdb.id}
-                                        src={details.pdb.img}
-                                        loading="lazy"
-                                        style={!details.emdb ? styles.pdbOnly : styles.img}
-                                    />
-                                )}
-                            {details.emdb && details.emdb.img && (
-                                <img
-                                    alt={details.emdb.id}
-                                    src={details.emdb.img}
-                                    loading="lazy"
-                                    style={styles.img}
-                                />
-                            )}
-                        </Layer>
-                        <Layer className="right">
-                            <div>
-                                <Typography style={styles.title} variant="h6">
-                                    {details.domain ? (
-                                        <>
-                                            {details.domain}
-                                            <span style={styles.domain}> ({title})</span>
-                                        </>
-                                    ) : (
-                                        <>{title}</>
-                                    )}
-                                </Typography>
-                                <Typography style={styles.subtitle}>
-                                    {details.pdb && details.pdb.id && details.pdb.id !== "N/A" ? (
-                                        <>
-                                            PDB:&#160;
-                                            <a href={viewerPath + details.pdb.id.toLowerCase()}>
-                                                {details.pdb.id}
-                                            </a>
-                                        </>
-                                    ) : details.childrenPDB ? (
-                                        <>
-                                            Structures:&#160;
-                                            {details.childrenPDB.map((id, idx) => (
-                                                <React.Fragment key={idx}>
-                                                    <a href={viewerPath + id.toLowerCase()}>{id}</a>
-                                                    {details.childrenPDB &&
-                                                        idx <= details.childrenPDB.length - 2 &&
-                                                        ", "}
-                                                </React.Fragment>
-                                            ))}
-                                        </>
-                                    ) : (
-                                        <span>{i18n.t("No structures found.")}</span>
-                                    )}
-                                    {details.emdb && (
-                                        <>
-                                            , EMDB:&#160;
-                                            <a href={viewerPath + details.emdb.id.toLowerCase()}>
-                                                {details.emdb.id}
-                                            </a>
-                                        </>
-                                    )}
-                                </Typography>
-                                <Typography style={styles.description}>
-                                    {details.description &&
-                                        i18n.t(`Description: ${details.description}`)}
-                                </Typography>
-                            </div>
-                        </Layer>
-                    </>
-                )}
+                {detailsVisible && details && <Details details={details} title={title} />}
             </div>
         </Container>
     );
 });
 
-export interface VisibleGen {
-    orf1a?: boolean;
-    orf1b?: boolean;
-    nucleoprotein?: boolean;
-}
+const Details: React.FC<DetailsProps> = React.memo(props => {
+    const { details, title } = props;
+    return (
+        <>
+            {/*Images*/}
+            <Layer className="left">
+                {details.pdb && details.pdb.id && details.pdb.id !== "N/A" && details.pdb.img && (
+                    <img
+                        alt={details.pdb.id}
+                        src={details.pdb.img}
+                        loading="lazy"
+                        style={!details.emdb ? styles.pdbOnly : styles.img}
+                    />
+                )}
+                {details.emdb && details.emdb.img && (
+                    <img
+                        alt={details.emdb.id}
+                        src={details.emdb.img}
+                        loading="lazy"
+                        style={styles.img}
+                    />
+                )}
+            </Layer>
+            <Layer className="right">
+                <div>
+                    {/*Title and domain*/}
+                    <Typography style={styles.title} variant="h6">
+                        {details.domain ? (
+                            <>
+                                {title} ({details.domain})
+                            </>
+                        ) : details.gen && details.gen !== "Remaining" && details.gen !== title ? (
+                            <>
+                                {title} ({details.gen})
+                            </>
+                        ) : (
+                            <>{title}</>
+                        )}
+                    </Typography>
+                    {/*Synonyms*/}
+                    <Typography style={styles.synonyms}>{details.synonyms}</Typography>
+                    {/*Structures*/}
+                    <Typography style={styles.subtitle}>
+                        {details.pdb && details.pdb.id && details.pdb.id !== "N/A" ? (
+                            <>
+                                PDB:&#160;
+                                <a href={viewerPath + details.pdb.id.toLowerCase()}>
+                                    {details.pdb.id}
+                                </a>
+                            </>
+                        ) : details.childrenPDB ? (
+                            <>
+                                {i18n.t("Structures")}:&#160;
+                                {details.childrenPDB.map((id, idx) => (
+                                    <React.Fragment key={idx}>
+                                        <a href={viewerPath + id.toLowerCase()}>{id}</a>
+                                        {details.childrenPDB &&
+                                            idx <= details.childrenPDB.length - 2 &&
+                                            ", "}
+                                    </React.Fragment>
+                                ))}
+                            </>
+                        ) : (
+                            <span>{i18n.t("No models found yet.")}</span>
+                        )}
+                        {details.emdb && (
+                            <>
+                                , EMDB:&#160;
+                                <a href={viewerPath + details.emdb.id.toLowerCase()}>
+                                    {details.emdb.id}
+                                </a>
+                            </>
+                        )}
+                    </Typography>
+                    {/*Description*/}
+                    <Typography style={styles.description}>
+                        {details.description &&
+                            (details.description.length <= 1000
+                                ? details.description
+                                : `${details.description.slice(0, 1000)}...`)}
+                    </Typography>
+                </div>
+            </Layer>
+        </>
+    );
+});
 
 const styles = {
-    title: { marginBottom: "0.5em" },
-    subtitle: { marginBottom: "0.5em" },
-    domain: { color: "#6c757d" },
-    description: { fontSize: "0.875em" },
+    title: { marginBottom: "0.125em" },
+    subtitle: { fontSize: "0.875em", marginBottom: "1em" },
+    synonyms: {
+        color: "#6c757d",
+        fontSize: "0.875em",
+        marginTop: "0em",
+        marginBottom: "1em",
+        fontStyle: "italic",
+    },
+    description: {
+        fontSize: "0.875em",
+        marginTop: "1em",
+        marginBottom: "1em",
+        maxHeight: 380,
+        overflow: "hidden" as const,
+    },
     img: { height: 200, width: 200 },
     pdbOnly: { height: 250, width: 250 },
 };
