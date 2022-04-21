@@ -20,7 +20,7 @@ export const searchExamples = [
     "glycoprotein",
     "Remdesivir",
     "3CL-Pro",
-    "mouse",
+    "Llama",
     "PanDDA Helicase",
     "Martinez",
 ];
