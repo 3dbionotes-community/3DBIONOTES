@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
-import { DataGrid, DataGridProps } from "@material-ui/data-grid";
+import { DataGrid, DataGridProps, GridSortDirection, GridSortModel } from "@material-ui/data-grid";
 import { Structure, updateStructures } from "../../../domain/entities/Covid19Info";
 import { Field, getColumns } from "./Columns";
 import { Covid19Filter, Id } from "../../../domain/entities/Covid19Info";
@@ -31,6 +31,12 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
     const [isDialogOpen, { enable: openDialog, disable: closeDialog }] = useBooleanState(false);
     const [detailsOptions, setDetailsOptions] = React.useState<FieldStructure>();
+    const [sortModel, setSortModel] = React.useState<GridSortModel>([
+        {
+            field: "emdb",
+            sort: "desc" as GridSortDirection,
+        },
+    ]);
 
     const [filterState, setFilterState0] = React.useState(initialFilterState);
     const setFilterState = React.useCallback((value: Covid19Filter) => {
@@ -144,7 +150,10 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         setPageSize,
     ]);
 
-    const setFirstPage = React.useCallback<GridProp<"onSortModelChange">>(() => setPage(0), []);
+    const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(modelParams => {
+        setPage(0);
+        setSortModel(modelParams.sortModel);
+    }, []);
 
     const setPageFromParams = React.useCallback<GridProp<"onPageChange">>(params => {
         return setPage(params.page);
@@ -159,7 +168,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
             <DataGrid
                 page={page}
                 onStateChange={onStateChange}
-                onSortModelChange={setFirstPage}
+                sortModel={sortModel}
+                onSortModelChange={resetPageAndSorting}
                 className={classes.root}
                 rowHeight={rowHeight}
                 sortingOrder={sortingOrder}
