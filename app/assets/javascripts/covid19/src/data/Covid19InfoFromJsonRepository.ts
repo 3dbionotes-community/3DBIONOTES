@@ -284,11 +284,9 @@ function extractField(structure: Structure, field: Field): string {
             return getFields(structure.ligands, ["id", "name", "details"]);
         case "details": {
             if (!structure.details) return "";
-            const { refEMDB, refPDB, sample, refdoc } = structure.details;
+            const { sample, refdoc } = structure.details;
 
             const valuesList = [
-                getValuesFromObject(refEMDB),
-                getValuesFromObject(refPDB),
                 _.flatMap(refdoc, getValuesFromObject),
                 getValuesFromObject(sample),
             ];

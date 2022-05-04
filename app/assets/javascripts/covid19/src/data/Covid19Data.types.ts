@@ -101,8 +101,6 @@ export interface Sample {
 }
 
 export interface Details {
-    refEMDB?: RefEMDB;
-    refPDB?: RefPDB;
     sample: Sample;
     refdoc: RefDoc[];
 }
