@@ -2,18 +2,20 @@ import React from "react";
 import _ from "lodash";
 import styled from "styled-components";
 import { ClickAwayListener, Grid } from "@material-ui/core";
-import { HtmlTooltip } from "../HtmlTooltip";
-import { CellProps } from "../Columns";
-import { Thumbnail } from "../Thumbnail";
-import { BadgeLink } from "../badge/BadgeLink";
 import {
     getTranslations,
     Pdb,
     PdbValidation,
     Structure,
 } from "../../../../domain/entities/Covid19Info";
+import { useAppContext } from "../../../contexts/app-context";
+import { HtmlTooltip } from "../HtmlTooltip";
+import { CellProps } from "../Columns";
+import { Thumbnail } from "../Thumbnail";
+import { BadgeLink } from "../badge/BadgeLink";
 import { Badge } from "../badge/Badge";
 import i18n from "../../../../utils/i18n";
+import { Link } from "../Link";
 
 export const PdbCell: React.FC<CellProps> = React.memo(props => {
     const { pdb } = props.row;
@@ -47,14 +49,6 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
         </React.Fragment>
     );
 
-    const validationsTooltip = (
-        <React.Fragment>
-            {pdbValidations.map(pdbValidation => (
-                <Validation key={pdbValidation.type} pdbValidation={pdbValidation} />
-            ))}
-        </React.Fragment>
-    );
-
     const handleTooltipClose = React.useCallback(() => {
         setOpen(false);
     }, []);
@@ -78,7 +72,7 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
                                 open={open}
                                 disableFocusListener
                                 disableHoverListener
-                                title={validationsTooltip}
+                                title={<ValidationTooltip pdbValidations={pdbValidations} />}
                                 placement="bottom"
                                 arrow
                             >
@@ -94,59 +88,120 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
     );
 });
 
+const ValidationTooltip: React.FC<ValidationTooltipProps> = React.memo(({ pdbValidations }) => (
+    <React.Fragment>
+        {pdbValidations.map((pdbValidation, idx) => (
+            <Validation key={idx} pdbValidation={pdbValidation} />
+        ))}
+    </React.Fragment>
+));
+
 const Validation: React.FC<ValidationProps> = React.memo(props => {
     const { pdbValidation } = props;
+    const { compositionRoot } = useAppContext();
+
     const translations = React.useMemo(getTranslations, []);
-    switch (pdbValidation?.type) {
-        case "pdbRedo":
-            return (
-                <GroupBadges key="pdb-redo">
+
+    const text = React.useMemo(() => {
+        switch (pdbValidation?.source) {
+            case "PDB-REDO":
+                return translations.filterKeys.pdbRedo;
+            case "CSTF":
+                return translations.filterKeys.cstf;
+            case "Phenix":
+                return translations.filterKeys.phenix;
+        }
+    }, [
+        pdbValidation,
+        translations.filterKeys.cstf,
+        translations.filterKeys.pdbRedo,
+        translations.filterKeys.phenix,
+    ]);
+
+    const source = React.useMemo(
+        () => compositionRoot.getValidationSource.execute(pdbValidation.source),
+        [compositionRoot.getValidationSource, pdbValidation.source]
+    );
+
+    const method = React.useMemo(() => source?.methods.find(m => m.name === pdbValidation.method), [
+        pdbValidation.method,
+        source?.methods,
+    ]);
+
+    console.log(source, method);
+
+    return (
+        <HtmlTooltip
+            title={
+                <div>
+                    {method && (
+                        <>
+                            <strong>{i18n.t("Method: ")}</strong>
+                            <span>{method.description}</span>
+                        </>
+                    )}
+                    <br />
+                    <br />
+                    {source && (
+                        <>
+                            <strong>{i18n.t("Source: ")}</strong>
+                            <span>{source.description}</span>
+                        </>
+                    )}
+                    <br />
+                    <br />
+                    {source && (
+                        <>
+                            <strong>{i18n.t("Ref: ")}</strong>
+                            <Link url={source.externalLink}>{source.name}</Link>
+                        </>
+                    )}
+                </div>
+            }
+        >
+            <GroupBadges key={pdbValidation.method}>
+                {pdbValidation.externalLink && pdbValidation.queryLink ? (
+                    <>
+                        <BadgeLink
+                            style={styles.grow}
+                            key={pdbValidation.method + "-external"}
+                            url={pdbValidation.externalLink}
+                            text={text}
+                            icon="external"
+                            backgroundColor={pdbValidation.badgeColor}
+                        />
+                        <BadgeLink
+                            key={pdbValidation.method + "-viewer"}
+                            url={pdbValidation.queryLink}
+                            icon="viewer"
+                            backgroundColor={pdbValidation.badgeColor}
+                        />
+                    </>
+                ) : (
                     <BadgeLink
-                        key="pdb-redo-external"
-                        url={pdbValidation.externalLink}
-                        text={translations.filterKeys.pdbRedo}
-                        icon="external"
-                        backgroundColor={pdbValidation.badgeColor}
-                    />
-                    <BadgeLink
-                        key="pdb-redo-viewer"
-                        url={pdbValidation.queryLink}
-                        icon="viewer"
-                        backgroundColor={pdbValidation.badgeColor}
-                    />
-                </GroupBadges>
-            );
-        case "isolde":
-            return (
-                <GroupBadges key="isolde">
-                    <BadgeLink
-                        key="isolde-viewer"
-                        url={pdbValidation.queryLink}
-                        text={translations.filterKeys.isolde}
-                        icon="viewer"
-                        backgroundColor={pdbValidation.badgeColor}
                         style={styles.grow}
-                    />
-                </GroupBadges>
-            );
-        case "refmac":
-            return (
-                <GroupBadges key="refmac">
-                    <BadgeLink
-                        key="refmac-viewer"
-                        url={pdbValidation.queryLink}
-                        text={translations.filterKeys.refmac}
-                        icon="viewer"
+                        key={pdbValidation.method + "-external"}
+                        url={
+                            pdbValidation.queryLink
+                                ? pdbValidation.queryLink
+                                : pdbValidation.externalLink
+                        }
+                        text={text}
+                        icon={pdbValidation.queryLink ? "viewer" : "external"}
                         backgroundColor={pdbValidation.badgeColor}
-                        style={styles.grow}
                     />
-                </GroupBadges>
-            );
-    }
+                )}
+            </GroupBadges>
+        </HtmlTooltip>
+    );
 });
 
 interface ValidationProps {
     pdbValidation: PdbValidation;
+}
+
+interface ValidationTooltipProps {
+    pdbValidations: PdbValidation[];
 }
 
 const styles = {

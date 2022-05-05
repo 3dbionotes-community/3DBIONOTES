@@ -14,6 +14,9 @@ import {
     Structure,
     PdbValidation,
     filterPdbValidations,
+    ValidationSource,
+    ValidationMethod,
+    SourceName,
 } from "../domain/entities/Covid19Info";
 import { Covid19InfoRepository, SearchOptions } from "../domain/repositories/Covid19InfoRepository";
 import { SearchOptions as MiniSearchSearchOptions } from "minisearch";
@@ -26,11 +29,18 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     searchOptions: MiniSearchSearchOptions = { combineWith: "AND" };
 
     constructor() {
-        this.info = { structures: getStructures() };
+        this.info = {
+            structures: getStructures(),
+            validationSources: getValidationSources(),
+        };
     }
 
     get(): Covid19Info {
         return this.info;
+    }
+
+    getValidationSource(source: SourceName): Maybe<ValidationSource> {
+        return this.info.validationSources.find(s => s.name === source);
     }
 
     search(options: SearchOptions): Covid19Info {
@@ -45,7 +55,7 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         const structuresFilteredByTextAndBody = filterState
             ? this.filter(structuresFilteredByText, filterState)
             : structuresFilteredByText;
-        return { structures: structuresFilteredByTextAndBody };
+        return { ...data, structures: structuresFilteredByTextAndBody };
     }
 
     autoSuggestions(search: string): string[] {
@@ -60,7 +70,7 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         const isFilterStateEnabled =
             filterState.antibodies || filterState.nanobodies || filterState.sybodies;
         const isPdbValidationsFilterEnabled =
-            filterState.pdbRedo || filterState.isolde || filterState.refmac;
+            filterState.pdbRedo || filterState.cstf || filterState.phenix;
 
         if (!isFilterStateEnabled && !isPdbValidationsFilterEnabled) return structures;
         const structuresToFilter = isPdbValidationsFilterEnabled
@@ -120,6 +130,17 @@ function getStructures(): Structure[] {
     }
 
     return _.uniqBy(structures, getId);
+}
+
+function getValidationSources(): ValidationSource[] {
+    return data.RefModelSources.map(
+        (source): ValidationSource => ({
+            ...source,
+            methods: data.RefModelMethods.filter(method => method.source === source.name).map(
+                (method): ValidationMethod => _.omit(method, ["source"])
+            ),
+        })
+    );
 }
 
 function getStructureId(structure: Data.Structure): string {
@@ -218,29 +239,25 @@ function getDetails(pdb: Data.Pdb): Maybe<Details> {
 function getPdbValidations(pdb: Data.Pdb): PdbValidation[] {
     return pdb.refModels
         ? _.compact(
-              pdb.refModels?.map((refModel): PdbValidation | undefined => {
-                  switch (refModel.method) {
-                      case "PDB-Redo":
+              pdb.refModels?.map((validation): PdbValidation | undefined => {
+                  switch (validation.source) {
+                      case "PDB-REDO":
                           return {
-                              type: "pdbRedo",
+                              ...validation,
                               badgeColor: "w3-orange",
-                              externalLink: refModel.externalLink,
-                              queryLink: refModel.queryLink,
                           };
-                      case "Isolde":
+                      case "CSTF":
                           return {
-                              type: "isolde",
+                              ...validation,
                               badgeColor: "w3-cyan",
-                              queryLink: refModel.queryLink,
                           };
-                      case "Refmac":
+                      case "Phenix":
                           return {
-                              type: "refmac",
+                              ...validation,
                               badgeColor: "w3-blue",
-                              queryLink: refModel.queryLink,
                           };
                       default:
-                          console.error(`Validation not supported: "${refModel.method}"`);
+                          console.error(`Validation not supported: "${validation.source}"`);
                           return undefined;
                   }
               })

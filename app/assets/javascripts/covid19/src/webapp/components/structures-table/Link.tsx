@@ -22,7 +22,7 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
                     rel="noreferrer"
                     style={{ ...styles.link, ...style }}
                 >
-                    <NoWrapTypography>{text}</NoWrapTypography>
+                    {text && <NoWrapTypography>{text}</NoWrapTypography>}
                     {children}
                 </a>
             );
