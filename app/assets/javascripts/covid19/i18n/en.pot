@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-05-05T17:07:23.801Z\n"
-"PO-Revision-Date: 2022-05-05T17:07:23.801Z\n"
+"POT-Creation-Date: 2022-05-05T17:26:30.530Z\n"
+"PO-Revision-Date: 2022-05-05T17:26:30.530Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -244,6 +244,15 @@ msgid "Keywords"
 msgstr ""
 
 msgid "Show validations"
+msgstr ""
+
+msgid "Method: "
+msgstr ""
+
+msgid "Source: "
+msgstr ""
+
+msgid "Ref: "
 msgstr ""
 
 msgid " and {{overflow}} more..."

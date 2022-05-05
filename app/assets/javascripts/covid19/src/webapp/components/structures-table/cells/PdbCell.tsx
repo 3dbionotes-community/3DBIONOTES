@@ -136,7 +136,7 @@ const Validation: React.FC<ValidationProps> = React.memo(props => {
                 <div>
                     {method && (
                         <>
-                            <strong>{i18n.t("Method: ")}</strong>
+                            <strong>{i18n.t("Method: ", { nsSeparator: false })}</strong>
                             <span>{method.description}</span>
                         </>
                     )}
@@ -144,7 +144,7 @@ const Validation: React.FC<ValidationProps> = React.memo(props => {
                     <br />
                     {source && (
                         <>
-                            <strong>{i18n.t("Source: ")}</strong>
+                            <strong>{i18n.t("Source: ", { nsSeparator: false })}</strong>
                             <span>{source.description}</span>
                         </>
                     )}
@@ -152,7 +152,7 @@ const Validation: React.FC<ValidationProps> = React.memo(props => {
                     <br />
                     {source && (
                         <>
-                            <strong>{i18n.t("Ref: ")}</strong>
+                            <strong>{i18n.t("Ref: ", { nsSeparator: false })}</strong>
                             <Link url={source.externalLink}>{source.name}</Link>
                         </>
                     )}
