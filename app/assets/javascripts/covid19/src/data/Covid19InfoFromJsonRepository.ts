@@ -1,5 +1,5 @@
 import _ from "lodash";
-import MiniSearch, { Options } from "minisearch";
+import MiniSearch, { Options, SearchResult } from "minisearch";
 import {
     Covid19Info,
     Details,
@@ -48,8 +48,10 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         const { structures } = data;
         const isTextFilterEnabled = Boolean(search.trim());
 
+        const exactMatch = extractExactMatches(search);
+
         const structuresFilteredByText = isTextFilterEnabled
-            ? this.searchByText(structures, search)
+            ? this.searchByText(structures, exactMatch.search, exactMatch.matches)
             : structures;
 
         const structuresFilteredByTextAndBody = filterState
@@ -87,9 +89,26 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
             : structuresToFilter;
     }
 
-    private searchByText(structures: Structure[], search: string): Structure[] {
+    private searchByText(
+        structures: Structure[],
+        search: string,
+        matches: string[] = []
+    ): Structure[] {
         const miniSearch = this.getMiniSearch();
-        const matchingIds = miniSearch.search(search, this.searchOptions).map(getId);
+        const searchOptions =
+            matches.length > 0
+                ? {
+                      ...this.searchOptions,
+                      filter: (result: SearchResult) =>
+                          _.isEmpty(
+                              _.difference(
+                                  matches.map(m => m.toLowerCase()),
+                                  result.terms.map(m => m.toLowerCase())
+                              )
+                          ),
+                  }
+                : this.searchOptions;
+        const matchingIds = miniSearch.search(search, searchOptions).map(getId);
         return _(structures).keyBy(getId).at(matchingIds).compact().value();
     }
 
@@ -130,6 +149,14 @@ function getStructures(): Structure[] {
     }
 
     return _.uniqBy(structures, getId);
+}
+
+function extractExactMatches(search: string) {
+    const matches = search.match(/"[^"]+"/g)?.map(match => match.slice(1, -1)) ?? [];
+    return {
+        search: search.replace('"', ""),
+        matches,
+    };
 }
 
 function getValidationSources(): ValidationSource[] {

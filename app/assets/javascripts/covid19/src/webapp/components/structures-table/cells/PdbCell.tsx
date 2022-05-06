@@ -128,8 +128,6 @@ const Validation: React.FC<ValidationProps> = React.memo(props => {
         source?.methods,
     ]);
 
-    console.log(source, method);
-
     return (
         <HtmlTooltip
             title={
