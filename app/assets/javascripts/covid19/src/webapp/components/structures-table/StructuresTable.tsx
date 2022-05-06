@@ -22,6 +22,13 @@ export interface StructuresTableProps {
 
 export const rowHeight = 220;
 
+const defaultSortModel = [
+    {
+        field: "emdb",
+        sort: "desc" as GridSortDirection,
+    },
+];
+
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
     const { search, setSearch: setSearch0, highlighted, setHighlight } = props;
     const { compositionRoot } = useAppContext();
@@ -31,12 +38,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
     const [isDialogOpen, { enable: openDialog, disable: closeDialog }] = useBooleanState(false);
     const [detailsOptions, setDetailsOptions] = React.useState<FieldStructure>();
-    const [sortModel, setSortModel] = React.useState<GridSortModel>([
-        {
-            field: "emdb",
-            sort: "desc" as GridSortDirection,
-        },
-    ]);
+    const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSortModel);
 
     const [filterState, setFilterState0] = React.useState(initialFilterState);
     const setFilterState = React.useCallback((value: Covid19Filter) => {
@@ -86,6 +88,10 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const filteredData = React.useMemo(() => {
         return compositionRoot.searchCovid19Info.execute({ data, search, filter: filterState });
     }, [compositionRoot, data, search, filterState]);
+
+    React.useEffect(() => {
+        setSortModel(search ? [] : defaultSortModel);
+    }, [search]);
 
     const { structures } = filteredData;
 
@@ -150,9 +156,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         setPageSize,
     ]);
 
-    const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(modelParams => {
+    const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(_modelParams => {
         setPage(0);
-        setSortModel(modelParams.sortModel);
     }, []);
 
     const setPageFromParams = React.useCallback<GridProp<"onPageChange">>(params => {

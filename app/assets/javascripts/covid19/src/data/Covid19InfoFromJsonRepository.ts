@@ -103,7 +103,8 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
                           ),
                   }
                 : this.searchOptions;
-        const matchingIds = miniSearch.search(search, searchOptions).map(getId);
+        const results = miniSearch.search(search, searchOptions);
+        const matchingIds = results.map(getId);
         return _(structures).keyBy(getId).at(matchingIds).compact().value();
     }
 
@@ -304,7 +305,13 @@ function getMiniSearch(structures: Structure[]): MiniSearch {
     const miniSearch = new MiniSearch<Structure>({
         fields: Array.from(fields),
         storeFields: [],
-        searchOptions: { prefix: true, fuzzy: 0 },
+        searchOptions: {
+            prefix: true,
+            fuzzy: 0,
+            boost: {
+                title: 2,
+            },
+        },
         extractField: extractField as Options["extractField"],
     });
     miniSearch.addAll(structures);
