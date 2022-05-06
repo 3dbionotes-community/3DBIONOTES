@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
-import { DataGrid, DataGridProps, GridSortDirection, GridSortModel } from "@material-ui/data-grid";
+import { DataGrid, DataGridProps, GridSortModel } from "@material-ui/data-grid";
 import { Structure, updateStructures } from "../../../domain/entities/Covid19Info";
 import { Field, getColumns } from "./Columns";
 import { Covid19Filter, Id } from "../../../domain/entities/Covid19Info";
@@ -22,12 +22,9 @@ export interface StructuresTableProps {
 
 export const rowHeight = 220;
 
-const defaultSortModel = [
-    {
-        field: "emdb",
-        sort: "desc" as GridSortDirection,
-    },
-];
+const noSort: GridSortModel = [];
+
+const defaultSort: GridSortModel = [{ field: "emdb", sort: "desc" }];
 
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
     const { search, setSearch: setSearch0, highlighted, setHighlight } = props;
@@ -38,7 +35,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
     const [isDialogOpen, { enable: openDialog, disable: closeDialog }] = useBooleanState(false);
     const [detailsOptions, setDetailsOptions] = React.useState<FieldStructure>();
-    const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSortModel);
+    const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
 
     const [filterState, setFilterState0] = React.useState(initialFilterState);
     const setFilterState = React.useCallback((value: Covid19Filter) => {
@@ -56,6 +53,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 label: value,
             });
             setSearch0(value);
+            setSortModel(value ? noSort : defaultSort);
         },
         [setSearch0]
     );
@@ -88,10 +86,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const filteredData = React.useMemo(() => {
         return compositionRoot.searchCovid19Info.execute({ data, search, filter: filterState });
     }, [compositionRoot, data, search, filterState]);
-
-    React.useEffect(() => {
-        setSortModel(search ? [] : defaultSortModel);
-    }, [search]);
 
     const { structures } = filteredData;
 
