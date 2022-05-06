@@ -16,7 +16,6 @@ import { Thumbnail } from "../Thumbnail";
 import { BadgeLink } from "../badge/BadgeLink";
 import { Badge } from "../badge/Badge";
 import i18n from "../../../../utils/i18n";
-import { Link } from "../Link";
 
 export const PdbCell: React.FC<CellProps> = React.memo(props => {
     const { pdb } = props.row;
