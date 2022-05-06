@@ -144,7 +144,7 @@ const Validation: React.FC<ValidationProps> = React.memo(props => {
 
     const source = React.useMemo(
         () => getValidationSource(validationSources, pdbValidation.source),
-        [getValidationSource, pdbValidation.source]
+        [pdbValidation.source, validationSources]
     );
 
     const method = React.useMemo(() => source?.methods.find(m => m.name === pdbValidation.method), [
