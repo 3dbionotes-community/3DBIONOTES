@@ -44,7 +44,7 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
             <DialogContent>
                 <Container>
                     <ImgContainer>
-                        <PdbCell data={data} row={row} />
+                        <PdbCell data={data} row={row} validationSources={data.validationSources} />
                         <EmdbCell data={data} row={row} />
                     </ImgContainer>
 

@@ -170,14 +170,6 @@ const Validation: React.FC<ValidationProps> = React.memo(props => {
                             <span>{source.description}</span>
                         </>
                     )}
-                    <br />
-                    <br />
-                    {source && (
-                        <>
-                            <strong>{i18n.t("Ref: ", { nsSeparator: false })}</strong>
-                            <Link url={source.externalLink}>{source.name}</Link>
-                        </>
-                    )}
                 </div>
             }
         >
