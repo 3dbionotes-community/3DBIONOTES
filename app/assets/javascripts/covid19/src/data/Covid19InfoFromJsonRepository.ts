@@ -16,7 +16,6 @@ import {
     filterPdbValidations,
     ValidationSource,
     ValidationMethod,
-    SourceName,
 } from "../domain/entities/Covid19Info";
 import { Covid19InfoRepository, SearchOptions } from "../domain/repositories/Covid19InfoRepository";
 import { SearchOptions as MiniSearchSearchOptions } from "minisearch";
@@ -37,10 +36,6 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
 
     get(): Covid19Info {
         return this.info;
-    }
-
-    getValidationSource(source: SourceName): Maybe<ValidationSource> {
-        return this.info.validationSources.find(s => s.name === source);
     }
 
     search(options: SearchOptions): Covid19Info {

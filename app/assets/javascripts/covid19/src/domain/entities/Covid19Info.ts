@@ -256,3 +256,10 @@ export function getTranslations() {
         } as Record<FilterKey, string>,
     };
 }
+
+export function getValidationSource(
+    validationSources: ValidationSource[],
+    source: SourceName
+): Maybe<ValidationSource> {
+    return validationSources.find(s => s.name === source);
+}

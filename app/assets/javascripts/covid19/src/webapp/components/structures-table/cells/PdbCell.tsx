@@ -4,11 +4,12 @@ import styled from "styled-components";
 import { ClickAwayListener, Grid } from "@material-ui/core";
 import {
     getTranslations,
+    getValidationSource,
     Pdb,
     PdbValidation,
     Structure,
+    ValidationSource,
 } from "../../../../domain/entities/Covid19Info";
-import { useAppContext } from "../../../contexts/app-context";
 import { HtmlTooltip } from "../HtmlTooltip";
 import { CellProps } from "../Columns";
 import { Thumbnail } from "../Thumbnail";
@@ -19,11 +20,21 @@ import { Link } from "../Link";
 
 export const PdbCell: React.FC<CellProps> = React.memo(props => {
     const { pdb } = props.row;
-    return pdb ? <PdbCell2 structure={props.row} pdb={pdb} /> : null;
+    return pdb ? (
+        <PdbCell2
+            structure={props.row}
+            pdb={pdb}
+            validationSources={props.validationSources ?? []}
+        />
+    ) : null;
 });
 
-const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props => {
-    const { pdb, structure } = props;
+const PdbCell2: React.FC<{
+    structure: Structure;
+    pdb: Pdb;
+    validationSources: ValidationSource[];
+}> = React.memo(props => {
+    const { pdb, structure, validationSources } = props;
     const [open, setOpen] = React.useState(false);
     const pdbValidations = structure.validations.pdb;
 
@@ -63,7 +74,10 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
 
             {!_.isEmpty(pdbValidations) ? (
                 pdbValidations.length === 1 && pdbValidations[0] ? (
-                    <Validation pdbValidation={pdbValidations[0]} />
+                    <Validation
+                        pdbValidation={pdbValidations[0]}
+                        validationSources={validationSources}
+                    />
                 ) : (
                     <Grid container justify="center">
                         <ClickAwayListener onClickAway={handleTooltipClose}>
@@ -72,7 +86,12 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
                                 open={open}
                                 disableFocusListener
                                 disableHoverListener
-                                title={<ValidationTooltip pdbValidations={pdbValidations} />}
+                                title={
+                                    <ValidationTooltip
+                                        pdbValidations={pdbValidations}
+                                        validationSources={validationSources}
+                                    />
+                                }
                                 placement="bottom"
                                 arrow
                             >
@@ -88,17 +107,22 @@ const PdbCell2: React.FC<{ structure: Structure; pdb: Pdb }> = React.memo(props 
     );
 });
 
-const ValidationTooltip: React.FC<ValidationTooltipProps> = React.memo(({ pdbValidations }) => (
-    <React.Fragment>
-        {pdbValidations.map((pdbValidation, idx) => (
-            <Validation key={idx} pdbValidation={pdbValidation} />
-        ))}
-    </React.Fragment>
-));
+const ValidationTooltip: React.FC<ValidationTooltipProps> = React.memo(
+    ({ pdbValidations, validationSources }) => (
+        <React.Fragment>
+            {pdbValidations.map((pdbValidation, idx) => (
+                <Validation
+                    key={idx}
+                    pdbValidation={pdbValidation}
+                    validationSources={validationSources}
+                />
+            ))}
+        </React.Fragment>
+    )
+);
 
 const Validation: React.FC<ValidationProps> = React.memo(props => {
-    const { pdbValidation } = props;
-    const { compositionRoot } = useAppContext();
+    const { pdbValidation, validationSources } = props;
 
     const translations = React.useMemo(getTranslations, []);
 
@@ -119,8 +143,8 @@ const Validation: React.FC<ValidationProps> = React.memo(props => {
     ]);
 
     const source = React.useMemo(
-        () => compositionRoot.getValidationSource.execute(pdbValidation.source),
-        [compositionRoot.getValidationSource, pdbValidation.source]
+        () => getValidationSource(validationSources, pdbValidation.source),
+        [getValidationSource, pdbValidation.source]
     );
 
     const method = React.useMemo(() => source?.methods.find(m => m.name === pdbValidation.method), [
@@ -196,10 +220,12 @@ const Validation: React.FC<ValidationProps> = React.memo(props => {
 
 interface ValidationProps {
     pdbValidation: PdbValidation;
+    validationSources: ValidationSource[];
 }
 
 interface ValidationTooltipProps {
     pdbValidations: PdbValidation[];
+    validationSources: ValidationSource[];
 }
 
 const styles = {
