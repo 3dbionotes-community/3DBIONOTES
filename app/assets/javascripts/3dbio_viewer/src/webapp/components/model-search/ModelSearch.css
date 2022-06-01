@@ -1,0 +1,127 @@
+.results {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 22px;
+    min-height: 30px;
+}
+
+.results img {
+    width: 10vw;
+    height: 10vw;
+}
+
+.results .item,
+.results .image {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.results .item .name {
+    text-align: center;
+}
+
+.item .actions {
+    position: relative;
+    bottom: 0%;
+    text-align: center;
+    margin-top: 8px;
+    height: 40px;
+}
+
+.item .actions button {
+    padding: 8px 16px;
+}
+
+.model-search .params,
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.MuiDialogTitle-root {
+    background: #607d8b;
+    color: #fff;
+    padding: 8px 24px;
+    font-weight: 700;
+}
+
+.MuiDialogTitle-root .MuiIconButton-root {
+    color: #fff;
+}
+
+.MuiDialogTitle-root button {
+    float: right;
+}
+
+.MuiTypography-h6 {
+    line-height: 2.3 !important;
+}
+
+.MuiDialogContent-root {
+    padding: 24px 24px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.params {
+    justify-content: center;
+}
+
+.search input,
+.search input:focus {
+    outline: none;
+    border: solid 3px #607d8b;
+    border-radius: 10px;
+    padding: 12px 34px 12px 12px;
+    font-size: 1.2rem;
+}
+
+.search .MuiSvgIcon-root {
+    font-size: 1.8rem;
+    color: #575757;
+    margin-left: -38px;
+    margin-right: 18px;
+}
+
+.item .id {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item .id .tooltip {
+    margin-left: 6px;
+    color: #818181;
+}
+
+.MuiTooltip-tooltip {
+    border: none !important;
+    padding: 14px !important;
+    -webkit-box-shadow: 0px 0px 23px -1px rgba(0, 0, 0, 0.45);
+    -moz-box-shadow: 0px 0px 23px -1px rgba(0, 0, 0, 0.45);
+    box-shadow: 0px 0px 23px -1px rgba(0, 0, 0, 0.45);
+}
+
+.MuiTooltip-tooltip .external-link a {
+    color: #133546;
+}
+
+.close,
+.open {
+    height: fit-content;
+    display: inline-flex;
+    align-items: center;
+}
+
+.upload-model {
+    padding: 10px 12px;
+}
+
+.MuiCircularProgress-colorPrimary {
+    color: #4aa3df !important;
+}
+
+.spinner {
+    margin-left: 12px;
+}

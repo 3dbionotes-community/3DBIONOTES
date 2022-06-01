@@ -4,137 +4,14 @@
   var proteinsData = #{@proteins_data.to_json.html_safe};
   $(function() { initLiveSearch(proteinsData, {maxItems: #{max_items}}) });
 
-= render partial: "shared/wip"
+.d-flex.mt-2.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
+  .container.mb-5.pt-5
+    #root
+      This component requires Javascript
 
-.d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
-  .container
-    .searchBox
-      = form_tag({controller: "main", action: "home"}, :method => :post) do
-        = hidden_field_tag(:viewer_type, @viewerType)
-        %label.d-block.text-center Search by Entry ID
-        #mainSearch.input-group.form-control-lg.md-form.form-sm.form-2.pl-0.justify-content-center
-          %input.form-control.form-control-lg.my-0.py-1.amber-border{"aria-label" => "Search", :placeholder => "Uniprot accession, PDB ID, EMDB code", :name => "queryId"}/
-          %i.fa.fa-search.text-grey.searchIconMain{"aria-hidden" => "true"}
-    .contentBox
-      .contentTitle
-        %h4
-          %strong Selected entries
-          %br/
-      .contentData
-        .container-fluid.carouselContainer
-          #myCarousel.carousel.slide{"data-ride" => "carousel"}
-            .carousel-inner.row.w-100.mx-auto
-              - @selected_entries.each_with_index do |entry, idx|
-                %div{:class => ["carousel-item", "col-md-4", idx == 0 ? "active" : nil].compact}
-                  .card
-                    %a{:href => entry[:query_url]}
-                      %img.card-img-top.img-fluid{:alt => entry[:name], :src => entry[:image_url]}/
-                      .card-body
-                        %h4.card-title
-                          = entry[:name]
-                        %p.card-text
-                          = entry[:description]
-            %a.carousel-control-prev{"data-slide" => "prev", :href => "#myCarousel", :role => "button"}
-              %span.carousel-control-prev-icon{"aria-hidden" => "true"}
-              %span.sr-only Previous
-            %a.carousel-control-next{"data-slide" => "next", :href => "#myCarousel", :role => "button"}
-              %span.carousel-control-next-icon{"aria-hidden" => "true"}
-              %span.sr-only Next
-    .contentBox
-      .contentTitle
-        %h4
-          %strong SARS-CoV-2 virus proteome
-          %br/
-      .contentData
-        .alert.alert-warning{:role => "alert"}
-          %span
-            %em
-              Please note this is an on-going effort to collect all possible relevant information from many diverse sources in a semi-automatic way, sometimes manually. If you spot something missing, misplaced, incorrect or misbehaving, please feel free to contact us (3dbionotes@cnb.csic.es).
-            %br/
-        = render partial: "proteome_table"
-        %p
-          %span.badge.badge-primary.proteomeBadge.w3-gradient Non-structural protein (NSXx)
-          %span.badge.badge-primary.proteomeBadge.w3-cyan
-            %strong Spike (S)
-            %br/
-          %span.badge.badge-primary.proteomeBadge.w3-lime
-            %strong Membrane protein (M)
-            %br/
-          %span.badge.badge-primary.proteomeBadge.w3-green
-            %strong Nucleo protein (N)
-            %br/
-          %span.badge.badge-primary.proteomeBadge.w3-purple
-            %strong Envelope protein (E)
-            %br/
-          %span.badge.badge-primary.text-truncate.proteomeBadge.w3-red
-            %strong
-              Hypothetical protein - Open Reading
-              Frame (NS10): It is not clear yet if it is a protein
-            %br/
-        %h5{:style => "margin-top: 20px;margin-bottom: 9px;font-weight: bold;"}
-          About the SARS-CoV-2 virus proteome
-          %br/
-        %p
-          %em
-            CoVid-19 is causing the biggest pandemic in recent times, hitting the whole world. Currently, there are many scientists groups actively working to understand the biology of the virus responsible for this disease, SARS-CoV-2. So far, what we know about how the genome / proteome of the virus is organised can be summarised in this schema. Two major proteins are transcribed into two poly-proteins: R1a and R1ab that later self-precess to render a set of different non-structural proteins (NSP1 to NSP16). The S Glycoprotein forms the typical spikes in coronaviruses and is also responsible for recognition and attachment to the host cell surface. A set of auxiliary proteins are still under study and some (ORF10) have not even been characterised and remain as hypothetical.
-          %br/
-    .proteinsHeader
-      .contentTitle
-        %h4.d-inline-flex
-          %strong Known Proteins
-          %br/
-        %form#proteinSearch.float-right.d-inline-flex
-          %input#search-protein.form-control{"aria-label" => "Search", :placeholder => "Live Search", :type => "text"}/
-          %i.fa.fa-search.text-grey.searchIcon{"aria-hidden" => "true"}
-    .contentBox.proteinBox
+= javascript_include_tag('covid19/build/app/2.chunk.js')
+= javascript_include_tag('covid19/build/app/main.chunk.js')
+= javascript_include_tag('covid19/build/app/runtime-main.js')
 
-    .matches.h.badge.badge-primary.proteinBadge.w3-w3-green
-      %span.matches-length N
-      %span protein(s) matched text '
-      %span.matches-text TEXT
-      %span '
-    .no-matches.badge.badge-primary.proteinBadge.h.w3-gray
-      %span No matches for text '
-      %span.matches-text TEXT
-      %span '
-
-    - @proteins_data[:proteins].each do |protein|
-      %div{class: ["proteinBox", "protein", "protein-" + protein[:name]]}
-        %div.contentData{id: protein[:name]}
-          %span{:class => "badge badge-primary protein-name proteinBadge b-#{protein[:name]} #{protein_css_class(protein)}"}
-            %strong #{protein[:name]}
-            %br/
-          - protein[:polyproteins].each do |polyprotein|
-            %span{:class => "badge badge-primary proteinBadge b-#{polyprotein} w3-blue-gray"}
-              %strong #{polyprotein}
-              %br/
-          %h5
-            %strong
-              = protein[:names].join(" | ")
-            %br/
-          - if protein[:description]
-            %p
-              %em #{protein[:description]}
-              %br/
-          - protein[:sections].each do |section|
-            = render partial: "section", locals: {protein: protein, section: section, is_main: true, max_items: max_items}
-    .contentBox
-      .contentTitle
-        %h4
-          %strong External data sources and collaborations
-          %br/
-      .contentData
-        = reference({"UniProt" => "https://covid-19.uniprot.org/uniprotkb?query=*"})
-        = reference({"Protein Data Bank (PDB) - EBI" => "https://www.ebi.ac.uk/pdbe/", "Protein Data Bank (PDB) - RCSB" => "https://www.rcsb.org/", "Protein Data Bank (PDB)- PDBJ " => "https://pdbj.org/featured/covid-19"})
-        = reference({"PDBe-KB COVID-19 Data Portal" => "https://www.ebi.ac.uk/pdbe/covid-19"})
-        = reference({"The Electron Microscopy Data Bank (EMDB) - EBI" => "https://www.ebi.ac.uk/pdbe/emdb/", "The Electron Microscopy Data Bank (EMDB) - RCSB" => "http://www.rcsb.org/", "EMDataResource" => "http://www.emdataresource.org/"})
-        = reference({"ELIXIR support to COVID-19 research" => "https://elixir-europe.org/services/covid-19"})
-        = reference({"CORONAVIRUS STRUCTURAL TASKFORCE. Dr. Andrea Thorn Lab" => "https://elixir-europe.org/services/covid-19"})
-        = reference({"EMBL-EBI COVID-19 Data Portal - EBI" => "https://www.ebi.ac.uk/covid-19", "EMBL-EBI COVID-19 Data Portal - EBI-ENA" => "https://www.ebi.ac.uk/ena/pathogens/covid-19"})
-        = reference({"European COVID-19 Data Portal" => "https://www.covid19dataportal.org/"})
-        = reference({"China National Center for Bioinformation. 2019 Novel Coronavirus Resource. (2019nCoVR)" => "https://bigd.big.ac.cn/ncov/variation/annotation?lang=en"})
-        = reference({"Structural genomics and interactomics of SARS-CoV-2 novel coronavirus" => "http://draco.cs.wpi.edu/wuhan/"})
-        = reference({"SWISS-MODEL" => "https://swissmodel.expasy.org/repository/species/2697049"})
-        = reference({"Diamond: Main protease structure and XChem fragment screen" => "https://www.diamond.ac.uk/covid-19/for-scientists/Main-protease-structure-and-XChem"})
-        = reference({"John Jumper, Kathryn Tunyasuvunakool, Pushmeet Kohli, Demis Hassabis, and the AlphaFold Team, “Computational predictions of protein structures associated with COVID-19”, Version 2, DeepMind website, 8 April 2020" => "https://deepmind.com/research/open-source/computational-predictions-of-protein-structures-associated-with-COVID-19"})
-        = reference({"Knowledge‐based structural models of SARS‐CoV‐2 proteins and their complexes with potential drugs. Atsushi Hijikata, Clara Shionyu-Mitsuyama, Setsu Nakae, Masafumi Shionyu, Motonori Ota, Shigehiko Kanaya, Tsuyoshi Shirai" => "https://doi.org/https://doi.org/10.1002/1873-3468.13806"})
+:javascript
+  #{@log}

@@ -1,7 +1,7 @@
 -if @error
   :javascript
     #{@error.sub! "'" , "\'"}
-    console.log({title:'ERROR> BioPython parser',text:'#{@error}',type:'error'});
+    console.log({title:'ERROR> Isolde model',text:'#{@error}',type:'error'});
 -else
   .first_step_form
     = form_tag({controller: "main", action: "chain_mapping"}, :multipart => true, :method => :post,id: "query_form",:style=>"margin-top:20px;") do 

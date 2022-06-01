@@ -26,7 +26,7 @@ module AnnotationManager
           end
         end
         if out.nil? and pdbId =~ /^(\d\w{3})$/ and not pdbData.nil? then
-          url = PDB_REDO_URL+"/"+pdbId.downcase+"/"+pdbId.downcase+"_final.py"
+          url = PDB_REDO_URL+pdbId.downcase+"/"+pdbId.downcase+"_final.py"
           data = getUrl(url)
           data = data.chop.chop.chop.chop.chop.split("\n")
           data.shift(3)

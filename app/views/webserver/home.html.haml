@@ -1,17 +1,83 @@
-#welcome.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.align-items-md-center.align-items-lg-center.align-items-xl-center
-  .container
-    .jumbotron
-      %p
-        %strong> 3DBIONOTES-WS
-        = " "
-        is a web application designed to automatically annotate biochemical and biomedical information onto structural models. Current sources of information include post-translational modifications, genomic variations associated to diseases, short linear motifs, immune epitopes sites, disordered regions and domain families.
-        %br/
-      .alert.alert-warning{:role => "alert"}
-        %span
-          %em #{wip_texts[:title]}.
+#welcome.d-flex.align-items-xl-center
+  .container.d-flex.align-items-center.justify-content-between
+    %div
+      .jumbotron
+        %p
+          %strong 3DBIONOTES-WS
+          &nbsp;is a web application designed to automatically annotate biochemical and biomedical information onto structural models. Current sources of information include post-translational modifications, genomic
+          variations associated to diseases, short linear motifs, immune epitopes sites, disordered regions and domain families.
           %br/
-          %span #{wip_texts[:subtitle]}.
-      %p
-        %a.btn.btn-primary.btn-lg{:href => ws_covid19_path, :role => "button"} CoVid-19 Edition
-        %a.btn.btn-secondary.btn-lg{:href => "/?queryId=EMD-21375&viewer_type=ngl&button=#query", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
-        %a.btn.btn-secondary.btn-lg{:href => "/?queryId=6lzg&viewer_type=ngl&button=#query", :role => "button", :style => "margin-left: 10px;"} Example (6lzg)
+        .citation.rounded.bg-white.border.py-3.px-4
+          %strong Please cite us if you find this useful:
+          .authors.mt-1.text-muted
+            %span
+              Jose Ramon Macias, Ruben Sanchez-Garcia, Pablo Conesa, Erney Ramirez-Aportela, Marta Martinez Gonzalez, Carlos Wert-Carvajal, Alberto M Parra-Perez, Joan Segura Mora, Sam Horrell, Andrea Thorn, Carlos O S Sorzano, Jose Maria Carazo,
+            %strong 3DBionotes COVID-19 edition
+            %span>, Bioinformatics, Volume 37, Issue 22, 15 November 2021, Pages 4258–4260.
+          %a.mt-2.d-block{"target" => "_blank", "href" => "https://doi.org/10.1093/bioinformatics/btab397"} https://doi.org/10.1093/bioinformatics/btab397 
+        %p.mt-4
+          %a.cta-covid.btn.btn-primary.btn-lg{:href => ws_covid19_path, :role => "button"} CoVid-19 Edition
+          %a.cta-example.btn.btn-secondary.btn-lg{"data-id" => "EMD-21375", :href => "/?queryId=EMD-21375", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
+    %div
+      #videoWrapper
+        %video#welcomeVideo{:autoplay => "", :height => "auto", :loop => "", :muted => "", :width => "540"}
+          %source{:src => "https://www.oyasin.es/Window-mockup-web.mp4", :type => "video/mp4"}
+.d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
+  .container
+    .searchBox
+      = form_tag({controller: "main", action: "home"}, {:method => :post, :class => "search_form"}) do
+        = hidden_field_tag(:viewer_type, @viewerType)
+        #mainSearch.input-group.form-control-lg.md-form.form-sm.form-2.pl-0.justify-content-center
+          %div.d-flex.justify-content-center.align-items-center.input-group-text
+            %input#input-search.form-control.form-control-lg.my-0.amber-border{"aria-label" => "Search", :placeholder => "Uniprot accession, PDB ID, EMDB code", :name => "queryId"}/
+            %button.btn.mt-0.py-2{:type => "submit", :title => "Search"}
+              %i.fa.fa-search.text-grey.searchIconMain{"aria-hidden" => "true"}
+    .contentBox
+      .contentTitle
+        %h4
+          %strong Selected entries
+          %br/
+      .contentData
+        .container-fluid.carouselContainer
+          #myCarousel.carousel.slide{"data-ride" => "carousel"}
+            .carousel-inner.row.w-100.mx-auto
+              - @selected_entries.each_with_index do |entry, idx|
+                %div{:class => ["carousel-item", "col-md-4", idx == 0 ? "active" : nil].compact}
+                  .card
+                    %a{:href => entry[:query_url]}
+                      %img.card-img-top.img-fluid{:alt => entry[:name], :src => entry[:image_url]}/
+                      .card-body
+                        %h4.card-title
+                          = entry[:name]
+                        %p.card-text{:title => entry[:description]}
+                          = entry[:description]
+            %a.carousel-control-prev{"data-slide" => "prev", :href => "#myCarousel", :role => "button"}
+              %span.carousel-control-prev-icon{"aria-hidden" => "true"}
+              %span.sr-only Previous
+            %a.carousel-control-next{"data-slide" => "next", :href => "#myCarousel", :role => "button"}
+              %span.carousel-control-next-icon{"aria-hidden" => "true"}
+              %span.sr-only Next
+    .contentBox.Card2
+      .d-flex.align-items-xl-center.contentData
+        #CardImage.text-center{:style => "width: 50%;"}
+          %img{:src => "assets/icon_molecule.svg"}/
+        #CardText{:style => "width: 50%;"}
+          %p
+            %em The web platform 3DBionotes-WS integrates multiple web services including many biological and biomedical annotations that can be analyzed in their structural context. Periodically updated with new annotations, this platform allows the study of macromolecular structures from public databases and those generated by users as well.
+            %br/
+    .contentBox.Card2.Alternate
+      .d-flex.flex-row-reverse.align-items-xl-center.contentData.Card2
+        #CardImage-1.text-center{:style => "width: 50%;"}
+          %img{:src => "assets/icon_tablet.svg"}/
+        #CardText-1{:style => "width: 50%;"}
+          %p
+            %em The interactive web viewer of 3DBionotes shows simultaneously atomic structure, map, sequence and feature annotations for the macromolecule of interest. This unified environment  allows direct mapping of relevant biological annotations in the macromolecule conformational landscape.
+            %br/
+    .contentBox.Card2
+      .d-flex.align-items-xl-center.contentData.Card2
+        #CardImage-2.text-center{:style => "width: 50%;"}
+          %img{:src => "assets/icon_share.svg"}/
+        #CardText-2{:style => "width: 50%;"}
+          %p
+            %em For interoperability purposes, 3DBionotes-WS counts with a limited, but expanding, Application Programming Interface (API). Its purpose is to provide a convenient way to access the information we produce and collect to be processed by other third-party tools. In this regard, we are guided by FAIR principles (Findability, Accessibility, Interoperability, and Reuse).
+            %br/

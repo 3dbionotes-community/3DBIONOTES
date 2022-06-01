@@ -19,7 +19,7 @@ class FramesSequenceController < ApplicationController
             pdb = @alignment["path"].split(//).last(4).join
             json = fetchPDBalignment(pdb)
             @alignmentData = json[@alignment["chain"]][@alignment["uniprot"]]
-          elsif @alignment["path"].include? "refmac"
+          elsif @alignment["path"].include? "REFMAC"
               pdb = @alignment["path"].split(//).last(4).join
               json = fetchPDBalignment(pdb)
               @alignmentData = json[@alignment["chain"]][@alignment["uniprot"]]
