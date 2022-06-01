@@ -3,10 +3,23 @@ import i18n from "../../utils/i18n";
 
 export interface Covid19Info {
     structures: Structure[];
+    validationSources: ValidationSource[];
+}
+
+export interface Structure {
+    id: Id;
+    title: string;
+    entities: Entity[];
+    pdb: Maybe<Pdb>;
+    emdb: Maybe<Emdb>;
+    organisms: Organism[];
+    ligands: Ligand[];
+    details: Maybe<Details>;
+    validations: Validations;
 }
 
 export interface Organism {
-    id: string;
+    id: Id;
     name: string;
     commonName?: string;
     externalLink: Url;
@@ -24,7 +37,7 @@ export interface Entity {
 }
 
 export interface Ligand {
-    id: string;
+    id: Id;
     name: string;
     details: string;
     imageLink: Url;
@@ -34,21 +47,6 @@ export interface Ligand {
 export interface LigandInstance {
     info: Ligand;
     instances: number;
-}
-
-export interface Structure {
-    id: Id;
-    title: string;
-    entities: Entity[];
-    pdb: Maybe<Pdb>;
-    emdb: Maybe<Emdb>;
-    organisms: Organism[];
-    ligands: Ligand[];
-    details: Maybe<Details>;
-    validations: {
-        pdb: PdbValidation[];
-        emdb: EmdbValidation[];
-    };
 }
 
 export interface DbItem {
@@ -101,14 +99,51 @@ export type W3Color =
     | "w3-pale-yellow"
     | "w3-pale-blue";
 
-export interface PdbValidation {
-    type: "pdbRedo" | "isolde" | "refmac";
+export interface ValidationSource {
+    name: SourceName;
+    description: string;
+    externalLink: string;
+    methods: ValidationMethod[];
+}
+
+export interface ValidationMethod {
+    name: MethodName;
+    description: string;
+    externalLink: string;
+}
+
+export interface Validation {
     externalLink?: Url;
     queryLink?: Url;
     badgeColor: W3Color;
 }
 
-export type EmdbValidation = "DeepRes" | "MonoRes" | "BlocRes" | "Map-Q" | "FSC-Q";
+export interface PdbValidation extends Validation {
+    source: PdbSourceName;
+    method: PdbMethodName;
+}
+
+export interface EmdbValidation extends Validation {
+    source: EmdbSourceName;
+    method: EmdbMethodName;
+}
+
+export interface Validations {
+    pdb: PdbValidation[];
+    emdb: EmdbValidation[];
+}
+
+export type SourceName = PdbSourceName | EmdbSourceName;
+
+export type MethodName = PdbMethodName | EmdbMethodName;
+
+export type PdbSourceName = "PDB-REDO" | "CSTF" | "Phenix";
+
+export type PdbMethodName = "PDB-Redo" | "Isolde" | "Refmac" | "CERES";
+
+export type EmdbSourceName = "";
+
+export type EmdbMethodName = "DeepRes" | "MonoRes" | "BlocRes" | "Map-Q" | "FSC-Q";
 
 export interface Pdb extends DbItem {
     keywords: string;
@@ -137,12 +172,8 @@ export interface RefDB {
     released?: string;
 }
 
-export interface RefEMDB extends RefDB {}
-
-export interface RefPDB {}
-
 export interface RefDoc {
-    id: string;
+    id: Id;
     title: string;
     authors: string[];
     abstract?: string;
@@ -166,8 +197,6 @@ export interface Sample {
 }
 
 export interface Details {
-    refEMDB?: RefEMDB;
-    refPDB?: RefPDB;
     sample?: Sample;
     refdoc?: RefDoc[];
 }
@@ -177,8 +206,8 @@ export const filterKeys = [
     "nanobodies",
     "sybodies",
     "pdbRedo",
-    "isolde",
-    "refmac",
+    "cstf",
+    "phenix",
 ] as const;
 
 export type FilterKey = typeof filterKeys[number];
@@ -195,13 +224,13 @@ export function filterEntities(entities: Entity[], filterState: Covid19Filter): 
 }
 
 export function filterPdbValidations(
-    pdbValidations: PdbValidation[],
+    PdbValidations: PdbValidation[],
     filterState: Covid19Filter
 ): boolean {
     return (
-        (!filterState.pdbRedo || _.some(pdbValidations, v => v?.type === "pdbRedo")) &&
-        (!filterState.isolde || _.some(pdbValidations, v => v?.type === "isolde")) &&
-        (!filterState.refmac || _.some(pdbValidations, v => v?.type === "refmac"))
+        (!filterState.pdbRedo || _.some(PdbValidations, v => v?.source === "PDB-REDO")) &&
+        (!filterState.cstf || _.some(PdbValidations, v => v?.source === "CSTF")) &&
+        (!filterState.phenix || _.some(PdbValidations, v => v?.source === "Phenix"))
     );
 }
 
@@ -212,7 +241,7 @@ export function updateStructures(data: Covid19Info, structures: Structure[]): Co
     const hasChanges = _(data.structures)
         .zip(structures2)
         .some(([s1, s2]) => s1 !== s2);
-    return hasChanges ? { structures: structures2 } : data;
+    return hasChanges ? { ...data, structures: structures2 } : data;
 }
 
 export function getTranslations() {
@@ -221,9 +250,16 @@ export function getTranslations() {
             antibodies: i18n.t("Antibodies"),
             nanobodies: i18n.t("Nanobodies"),
             sybodies: i18n.t("Sybodies"),
-            pdbRedo: i18n.t("PDB-Redo"),
-            isolde: i18n.t("Isolde"),
-            refmac: i18n.t("Refmac"),
+            pdbRedo: i18n.t("PDB-REDO"),
+            cstf: i18n.t("CSTF"),
+            phenix: i18n.t("Phenix"),
         } as Record<FilterKey, string>,
     };
+}
+
+export function getValidationSource(
+    validationSources: ValidationSource[],
+    source: SourceName
+): Maybe<ValidationSource> {
+    return validationSources.find(s => s.name === source);
 }

@@ -7,7 +7,7 @@ import {
 } from "@material-ui/data-grid";
 import _ from "lodash";
 import i18n from "../../../utils/i18n";
-import { Covid19Info, Structure } from "../../../domain/entities/Covid19Info";
+import { Covid19Info, Structure, ValidationSource } from "../../../domain/entities/Covid19Info";
 import { TitleCell } from "./cells/TitleCell";
 import { DetailsCell } from "./cells/DetailsCell";
 import { PdbCell } from "./cells/PdbCell";
@@ -24,6 +24,7 @@ export interface CellProps {
     row: Row;
     moreDetails?: boolean;
     onClickDetails?: (options: { row: Structure; field: Field }) => void;
+    validationSources?: ValidationSource[];
 }
 
 export interface ColumnAttrs<F extends Field>
@@ -149,6 +150,7 @@ export function getColumns(
                                 row={params.row as Row}
                                 data={data}
                                 onClickDetails={options.onClickDetails}
+                                validationSources={data.validationSources}
                             />
                         </div>
                     );

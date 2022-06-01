@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
-import { DataGrid, DataGridProps } from "@material-ui/data-grid";
+import { DataGrid, DataGridProps, GridSortModel } from "@material-ui/data-grid";
 import { Structure, updateStructures } from "../../../domain/entities/Covid19Info";
 import { Field, getColumns } from "./Columns";
 import { Covid19Filter, Id } from "../../../domain/entities/Covid19Info";
@@ -22,6 +22,10 @@ export interface StructuresTableProps {
 
 export const rowHeight = 220;
 
+const noSort: GridSortModel = [];
+
+const defaultSort: GridSortModel = [{ field: "emdb", sort: "desc" }];
+
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
     const { search, setSearch: setSearch0, highlighted, setHighlight } = props;
     const { compositionRoot } = useAppContext();
@@ -31,6 +35,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
     const [isDialogOpen, { enable: openDialog, disable: closeDialog }] = useBooleanState(false);
     const [detailsOptions, setDetailsOptions] = React.useState<FieldStructure>();
+    const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
 
     const [filterState, setFilterState0] = React.useState(initialFilterState);
     const setFilterState = React.useCallback((value: Covid19Filter) => {
@@ -48,6 +53,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 label: value,
             });
             setSearch0(value);
+            setSortModel(value ? noSort : defaultSort);
         },
         [setSearch0]
     );
@@ -144,7 +150,9 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         setPageSize,
     ]);
 
-    const setFirstPage = React.useCallback<GridProp<"onSortModelChange">>(() => setPage(0), []);
+    const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(_modelParams => {
+        setPage(0);
+    }, []);
 
     const setPageFromParams = React.useCallback<GridProp<"onPageChange">>(params => {
         return setPage(params.page);
@@ -159,7 +167,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
             <DataGrid
                 page={page}
                 onStateChange={onStateChange}
-                onSortModelChange={setFirstPage}
+                sortModel={sortModel}
+                onSortModelChange={resetPageAndSorting}
                 className={classes.root}
                 rowHeight={rowHeight}
                 sortingOrder={sortingOrder}
@@ -214,8 +223,8 @@ const initialFilterState: Covid19Filter = {
     nanobodies: false,
     sybodies: false,
     pdbRedo: false,
-    isolde: false,
-    refmac: false,
+    cstf: false,
+    phenix: false,
 };
 
 function useRenderedRows() {
