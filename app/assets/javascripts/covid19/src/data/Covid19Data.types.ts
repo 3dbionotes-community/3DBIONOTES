@@ -2,6 +2,8 @@ export interface Covid19Data {
     Organisms: Organism[];
     Ligands: Ligand[];
     Structures: Array<Structure[]>;
+    RefModelSources: RefModelSource[];
+    RefModelMethods: RefModelMethod[];
 }
 
 export interface Organism {
@@ -36,6 +38,19 @@ export interface Structure {
     emdb: Maybe<Emdb>;
 }
 
+export interface RefModelSource {
+    name: SourceName;
+    description: string;
+    externalLink: string;
+}
+
+export interface RefModelMethod {
+    source: SourceName;
+    name: MethodName;
+    description: string;
+    externalLink: string;
+}
+
 export interface DbItem {
     dbId: string;
     method?: string;
@@ -51,12 +66,16 @@ export interface Pdb extends DbItem {
     ligands: LigandId[];
     details: Details[];
     dbauthors?: string[];
-    refModels?: RefModels;
+    refModels?: RefModel[];
 }
 
 export interface Emdb extends DbItem {
     emMethod: string;
 }
+
+export type SourceName = "PDB-REDO" | "CSTF" | "Phenix";
+
+export type MethodName = "PDB-Redo" | "Isolde" | "Refmac" | "CERES";
 
 type Maybe<T> = T | null;
 
@@ -72,9 +91,6 @@ export interface RefDB {
     deposited?: string;
     released?: string;
 }
-
-export interface RefEMDB extends RefDB {}
-export interface RefPDB {}
 
 export interface RefDoc {
     pmID: string;
@@ -101,16 +117,15 @@ export interface Sample {
 }
 
 export interface Details {
-    refEMDB?: RefEMDB;
-    refPDB?: RefPDB;
     sample: Sample;
     refdoc: RefDoc[];
 }
 
-export interface PdbValidation {
-    method: "PDB-Redo" | "Isolde" | "Refmac";
+export interface RefModel {
+    source: SourceName;
+    method: MethodName;
+    filename: string;
     externalLink?: Url;
     queryLink?: Url;
+    details: string;
 }
-
-export type RefModels = PdbValidation[];

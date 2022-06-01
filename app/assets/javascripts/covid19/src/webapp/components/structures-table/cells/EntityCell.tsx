@@ -19,13 +19,13 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
                             </div>
                         )}
 
-                        {entity.altNames.length !== 0 && (
+                        {entity.altNames && (
                             <div>
                                 {i18n.t("Alt Names")}: {entity.altNames}
                             </div>
                         )}
 
-                        {entity.organism.length !== 0 && (
+                        {entity.organism && (
                             <div>
                                 {i18n.t("Organism")}: {entity.organism}
                             </div>

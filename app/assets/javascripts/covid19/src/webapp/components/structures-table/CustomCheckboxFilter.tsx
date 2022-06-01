@@ -68,12 +68,12 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                         setFilterState={setFilterState}
                     />
                     <FilterItem
-                        filterKey="isolde"
+                        filterKey="cstf"
                         filterState={filterState}
                         setFilterState={setFilterState}
                     />
                     <FilterItem
-                        filterKey="refmac"
+                        filterKey="phenix"
                         filterState={filterState}
                         setFilterState={setFilterState}
                     />

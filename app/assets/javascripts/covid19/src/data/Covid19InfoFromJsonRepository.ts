@@ -1,5 +1,5 @@
 import _ from "lodash";
-import MiniSearch, { Options } from "minisearch";
+import MiniSearch, { Options, SearchResult } from "minisearch";
 import {
     Covid19Info,
     Details,
@@ -14,6 +14,8 @@ import {
     Structure,
     PdbValidation,
     filterPdbValidations,
+    ValidationSource,
+    ValidationMethod,
 } from "../domain/entities/Covid19Info";
 import { Covid19InfoRepository, SearchOptions } from "../domain/repositories/Covid19InfoRepository";
 import { SearchOptions as MiniSearchSearchOptions } from "minisearch";
@@ -26,7 +28,10 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     searchOptions: MiniSearchSearchOptions = { combineWith: "AND" };
 
     constructor() {
-        this.info = { structures: getStructures() };
+        this.info = {
+            structures: getStructures(),
+            validationSources: getValidationSources(),
+        };
     }
 
     get(): Covid19Info {
@@ -38,14 +43,16 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         const { structures } = data;
         const isTextFilterEnabled = Boolean(search.trim());
 
+        const exactMatch = extractExactMatches(search);
+
         const structuresFilteredByText = isTextFilterEnabled
-            ? this.searchByText(structures, search)
+            ? this.searchByText(structures, exactMatch.search, exactMatch.matches)
             : structures;
 
         const structuresFilteredByTextAndBody = filterState
             ? this.filter(structuresFilteredByText, filterState)
             : structuresFilteredByText;
-        return { structures: structuresFilteredByTextAndBody };
+        return { ...data, structures: structuresFilteredByTextAndBody };
     }
 
     autoSuggestions(search: string): string[] {
@@ -60,7 +67,7 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         const isFilterStateEnabled =
             filterState.antibodies || filterState.nanobodies || filterState.sybodies;
         const isPdbValidationsFilterEnabled =
-            filterState.pdbRedo || filterState.isolde || filterState.refmac;
+            filterState.pdbRedo || filterState.cstf || filterState.phenix;
 
         if (!isFilterStateEnabled && !isPdbValidationsFilterEnabled) return structures;
         const structuresToFilter = isPdbValidationsFilterEnabled
@@ -77,9 +84,27 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
             : structuresToFilter;
     }
 
-    private searchByText(structures: Structure[], search: string): Structure[] {
+    private searchByText(
+        structures: Structure[],
+        search: string,
+        matches: string[] = []
+    ): Structure[] {
         const miniSearch = this.getMiniSearch();
-        const matchingIds = miniSearch.search(search, this.searchOptions).map(getId);
+        const searchOptions =
+            matches.length > 0
+                ? {
+                      ...this.searchOptions,
+                      filter: (result: SearchResult) =>
+                          _.isEmpty(
+                              _.difference(
+                                  matches.map(m => m.toLowerCase()),
+                                  result.terms.map(m => m.toLowerCase())
+                              )
+                          ),
+                  }
+                : this.searchOptions;
+        const results = miniSearch.search(search, searchOptions);
+        const matchingIds = results.map(getId);
         return _(structures).keyBy(getId).at(matchingIds).compact().value();
     }
 
@@ -120,6 +145,25 @@ function getStructures(): Structure[] {
     }
 
     return _.uniqBy(structures, getId);
+}
+
+function extractExactMatches(search: string) {
+    const matches = search.match(/"[^"]+"/g)?.map(match => match.slice(1, -1)) ?? [];
+    return {
+        search: search.replace('"', ""),
+        matches,
+    };
+}
+
+function getValidationSources(): ValidationSource[] {
+    return data.RefModelSources.map(
+        (source): ValidationSource => ({
+            ...source,
+            methods: data.RefModelMethods.filter(method => method.source === source.name).map(
+                (method): ValidationMethod => _.omit(method, ["source"])
+            ),
+        })
+    );
 }
 
 function getStructureId(structure: Data.Structure): string {
@@ -218,29 +262,25 @@ function getDetails(pdb: Data.Pdb): Maybe<Details> {
 function getPdbValidations(pdb: Data.Pdb): PdbValidation[] {
     return pdb.refModels
         ? _.compact(
-              pdb.refModels?.map((refModel): PdbValidation | undefined => {
-                  switch (refModel.method) {
-                      case "PDB-Redo":
+              pdb.refModels?.map((validation): PdbValidation | undefined => {
+                  switch (validation.source) {
+                      case "PDB-REDO":
                           return {
-                              type: "pdbRedo",
+                              ...validation,
                               badgeColor: "w3-orange",
-                              externalLink: refModel.externalLink,
-                              queryLink: refModel.queryLink,
                           };
-                      case "Isolde":
+                      case "CSTF":
                           return {
-                              type: "isolde",
+                              ...validation,
                               badgeColor: "w3-cyan",
-                              queryLink: refModel.queryLink,
                           };
-                      case "Refmac":
+                      case "Phenix":
                           return {
-                              type: "refmac",
+                              ...validation,
                               badgeColor: "w3-blue",
-                              queryLink: refModel.queryLink,
                           };
                       default:
-                          console.error(`Validation not supported: "${refModel.method}"`);
+                          console.error(`Validation not supported: "${validation.source}"`);
                           return undefined;
                   }
               })
@@ -265,7 +305,13 @@ function getMiniSearch(structures: Structure[]): MiniSearch {
     const miniSearch = new MiniSearch<Structure>({
         fields: Array.from(fields),
         storeFields: [],
-        searchOptions: { prefix: true, fuzzy: 0 },
+        searchOptions: {
+            prefix: true,
+            fuzzy: 0,
+            boost: {
+                title: 2,
+            },
+        },
         extractField: extractField as Options["extractField"],
     });
     miniSearch.addAll(structures);
@@ -284,11 +330,9 @@ function extractField(structure: Structure, field: Field): string {
             return getFields(structure.ligands, ["id", "name", "details"]);
         case "details": {
             if (!structure.details) return "";
-            const { refEMDB, refPDB, sample, refdoc } = structure.details;
+            const { sample, refdoc } = structure.details;
 
             const valuesList = [
-                getValuesFromObject(refEMDB),
-                getValuesFromObject(refPDB),
                 _.flatMap(refdoc, getValuesFromObject),
                 getValuesFromObject(sample),
             ];

@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-04-12T11:17:59.885Z\n"
-"PO-Revision-Date: 2022-04-12T11:17:59.885Z\n"
+"POT-Creation-Date: 2022-05-06T12:44:58.118Z\n"
+"PO-Revision-Date: 2022-05-06T12:44:58.118Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -17,13 +17,13 @@ msgstr ""
 msgid "Sybodies"
 msgstr ""
 
-msgid "PDB-Redo"
+msgid "PDB-REDO"
 msgstr ""
 
-msgid "Isolde"
+msgid "CSTF"
 msgstr ""
 
-msgid "Refmac"
+msgid "Phenix"
 msgstr ""
 
 msgid "SARS-CoV-2 in structure databases"
@@ -244,6 +244,12 @@ msgid "Keywords"
 msgstr ""
 
 msgid "Show validations"
+msgstr ""
+
+msgid "Method: "
+msgstr ""
+
+msgid "Source: "
 msgstr ""
 
 msgid " and {{overflow}} more..."

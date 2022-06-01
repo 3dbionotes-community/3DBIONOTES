@@ -104,7 +104,7 @@ class Covid19
         query_url: "/?queryId=emd-21375"
       },
       {
-        name: "6XCD + EMD-22136",
+        name: "6XDC + EMD-22136",
         description: "ORF3: As a viroporin, ORF3 forms cellular dimeric nonselective Ca2+ permeable cation channels that become active by oligomerizing into tetramers or higher-order oligomers. This channel activity in cells could be relevant to promote viral maturation through inhibition of autophagy and disruption of lysosomes.",
         image_url: "images/entries/6xcd.png",
         query_url: "/?queryId=emd-22136"

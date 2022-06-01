@@ -20,7 +20,7 @@ export const searchExamples = [
     "glycoprotein",
     "Remdesivir",
     "3CL-Pro",
-    "mouse",
+    "Llama",
     "PanDDA Helicase",
     "Martinez",
 ];
@@ -274,7 +274,7 @@ const OrderedList = styled.ol`
     }
 `;
 
-const StyledTypography = styled(Typography)`
+export const StyledTypography = styled(Typography)`
     &.MuiTypography-body2 {
         font-size: 0.75rem;
         color: rgba(0, 0, 0, 0.87);
