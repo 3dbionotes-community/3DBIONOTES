@@ -66,7 +66,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         ),
     },
 
-    // Celullar Regions
+    // Cellular Regions
     cytolosic: {
         id: "cytolosic" as const,
         name: i18n.t("Cytolosic/Extracellular region"),
@@ -368,7 +368,17 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         shape: shapes.rama,
     },
 
-    // em validation
+    // Uploaded data
+
+    uploadData: {
+        id: "uploadData" as const,
+        name: i18n.t("Upload data"),
+        description: i18n.t("Data from uploaded annotations"),
+        color: colors.region,
+        shape: shapes.region,
+    },
+
+    // Cryo-EM Map Validation
     deepRes: {
         id: "deep-res" as const,
         name: i18n.t("DeepRes"),

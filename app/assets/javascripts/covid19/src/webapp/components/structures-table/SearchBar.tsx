@@ -5,7 +5,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
 import styled from "styled-components";
-import SearchIcon from "@material-ui/icons/Search";
+import { Close as CloseIcon, Search as SearchIcon } from "@material-ui/icons";
 import i18n from "../../../utils/i18n";
 import { useDebouncedSetter } from "../../hooks/useDebounce";
 import {
@@ -15,33 +15,30 @@ import {
     getTranslations,
 } from "../../../domain/entities/Covid19Info";
 import { useAppContext } from "../../contexts/app-context";
+import { searchExamples } from "./Toolbar";
 
 export interface SearchBarProps {
     value: string;
     setValue(search: string): void;
+    highlighted: boolean;
+    setHighlight: (value: boolean) => void;
     filterState: Covid19Filter;
     setFilterState(filter: Covid19Filter): void;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const { compositionRoot } = useAppContext();
-    const { value, setValue, filterState, setFilterState } = props;
+    const { value, setValue, highlighted, setHighlight, filterState, setFilterState } = props;
     const [open, setOpen] = React.useState(false);
     const [stateValue, setValueDebounced] = useDebouncedSetter(value, setValue, { delay: 500 });
-    const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState<Array<string>>([
-        "6YOR",
-        "Homo sapiens",
-        "SARS-CoV-2",
-    ]);
+    const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState(searchExamples);
     const [loading, setLoading] = React.useState(false);
     const selectedFilterNames = filterKeys.filter(key => filterState[key]);
 
     React.useEffect(() => {
         setLoading(true);
         const autoSuggestions = compositionRoot.getAutoSuggestions.execute(stateValue);
-        setAutoSuggestionOptions(
-            stateValue === "" ? ["6YOR", "Homo sapiens", "SARS-CoV-2"] : autoSuggestions
-        );
+        setAutoSuggestionOptions(stateValue === "" ? searchExamples : autoSuggestions);
         setLoading(false);
     }, [stateValue, compositionRoot.getAutoSuggestions]);
 
@@ -54,18 +51,27 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
 
     const t = React.useMemo(getTranslations, []);
 
+    const searchBarStyles = React.useMemo(
+        () => ({
+            ...styles.searchBar,
+            ...{ background: highlighted ? "#ffffdd" : undefined },
+        }),
+        [highlighted]
+    );
+
+    const removeHighlight = React.useCallback(() => setHighlight(false), [setHighlight]);
+
     return (
         <React.Fragment>
-            <div style={styles.searchBar}>
+            <div style={searchBarStyles}>
                 <div style={styles.chips}>
                     {selectedFilterNames.map(filterKey => (
-                        <li key={filterKey}>
-                            <Chip
-                                label={t.filterKeys[filterKey]}
-                                onDelete={() => removeChip(filterKey)}
-                                style={styles.chip}
-                            />
-                        </li>
+                        <StyledChip
+                            key={filterKey}
+                            deleteIcon={<CloseIcon />}
+                            label={t.filterKeys[filterKey]}
+                            onDelete={() => removeChip(filterKey)}
+                        />
                     ))}
                 </div>
                 <StyledAutocomplete<string>
@@ -103,6 +109,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                             {...params}
                             variant="outlined"
                             value={stateValue}
+                            onFocus={removeHighlight}
                             onChange={ev => setValueDebounced(ev.target.value)}
                             placeholder={i18n.t(
                                 "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
@@ -144,18 +151,33 @@ const StyledTextField = styled(TextField)`
     }
 `;
 
+const StyledChip = styled(Chip)`
+    &.MuiChip-root {
+        height: 1.5rem !important;
+        background-color: #575757 !important;
+        color: #fff;
+        margin-left: 6px;
+        border-radius: 8px;
+    }
+    .MuiChip-deleteIcon {
+        width: 1rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    .MuiChip-deleteIcon:hover {
+        color: rgba(255, 255, 255, 1);
+    }
+`;
+
 const styles = {
     searchBar: {
         display: "flex" as const,
         border: "4px solid #607d8b",
-        borderRadius: 12,
+        borderRadius: "0.75rem",
         width: 500,
     },
-    chip: { margin: 2 },
     chips: {
         display: "flex" as const,
-        justifyContent: "center",
-        flexWrap: "wrap" as const,
+        alignItems: "center",
         listStyle: "none",
         margin: 0,
     },

@@ -31,6 +31,7 @@ export function useCallbackEffect<Args extends any[]>(
         if (args) {
             const cancelFn = callback(...args.value);
             cancelRef.current = cancelFn || noCancel;
+            if (!cancelFn) setArgs(undefined);
             return cancelFn;
         }
     }, [callback, args]);

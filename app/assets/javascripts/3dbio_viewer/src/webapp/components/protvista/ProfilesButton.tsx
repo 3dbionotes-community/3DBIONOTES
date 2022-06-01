@@ -3,6 +3,7 @@ import _ from "lodash";
 import i18n from "../../utils/i18n";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import { Profile, ProfileId, profiles } from "../../../domain/entities/Profile";
+import { sendAnalytics } from "../../utils/analytics";
 
 export interface ProfilesButtonProps {
     profile: Profile;
@@ -20,6 +21,12 @@ export const ProfilesButton: React.FC<ProfilesButtonProps> = React.memo(props =>
 
     const setProfile = React.useCallback(
         (profileId: ProfileId) => {
+            sendAnalytics({
+                type: "event",
+                action: "set_profile",
+                category: "viewer",
+                label: profileId,
+            });
             onChange(profiles[profileId]);
         },
         [onChange]

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Field } from "../Columns";
 import { rowHeight } from "../StructuresTable";
-import { BadgeDetails } from "../BadgeDetails";
+import { BadgeDetails } from "../badge/BadgeDetails";
 import { useHeightFromElement } from "../../../hooks/useHeightFromElement";
 import { Structure } from "../../../../domain/entities/Covid19Info";
 
@@ -32,7 +32,7 @@ const Container = styled.div<{ moreDetails: boolean }>`
     flex-direction: column;
     line-height: 1.5;
     ul {
-        ${props => (props.moreDetails ? "margin: 10px 0;" : "margin:0;")}
+        ${props => (props.moreDetails ? "margin: 7px 0 2px;" : "margin:0;")}
         ${props =>
             props.moreDetails &&
             "max-height: " +
@@ -48,4 +48,4 @@ const Container = styled.div<{ moreDetails: boolean }>`
     ${props => props.moreDetails && "strong {font-weight: inherit;}"}
 `;
 
-const badgeHeight = 62;
+const badgeHeight = 50;

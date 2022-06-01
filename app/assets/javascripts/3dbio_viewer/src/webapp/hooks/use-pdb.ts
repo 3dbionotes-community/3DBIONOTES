@@ -1,19 +1,17 @@
 import React from "react";
 import _ from "lodash";
-import { Pdb } from "../../domain/entities/Pdb";
+import { Pdb, PdbId } from "../../domain/entities/Pdb";
 import { PdbInfo } from "../../domain/entities/PdbInfo";
 import { PdbOptions } from "../../domain/repositories/PdbRepository";
-import { debugVariable } from "../../utils/debug";
 import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
 import { LoaderState, useLoader } from "../components/Loader";
-import { getChainId, getMainPdbId, getPdbOptions, Selection } from "../view-models/Selection";
-import i18n from "../utils/i18n";
+import { getChainId, getMainPdbId, Selection } from "../view-models/Selection";
 
 export function usePdbLoader(
     selection: Selection,
     pdbInfo: Maybe<PdbInfo>
-): LoaderState<Pdb> | undefined {
+): [LoaderState<Pdb>, React.Dispatch<React.SetStateAction<LoaderState<Pdb>>>] {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
 
@@ -25,13 +23,7 @@ export function usePdbLoader(
     }, [pdbId, chainId, chains]);
 
     React.useEffect(() => {
-        if (!pdbOptions) {
-            setLoader({
-                type: "error",
-                message: i18n.t("PDB has no protein"),
-            });
-            return;
-        }
+        if (!pdbOptions) return;
         setLoader({ type: "loading" });
 
         return compositionRoot.getPdb.execute(pdbOptions).run(
@@ -40,9 +32,22 @@ export function usePdbLoader(
         );
     }, [compositionRoot, setLoader, pdbOptions]);
 
-    React.useEffect(() => {
-        if (loader.type === "loaded") debugVariable({ pdbData: loader.data });
-    }, [loader]);
+    return [loader, setLoader];
+}
 
-    return loader;
+export function getPdbOptions(
+    pdbId: Maybe<PdbId>,
+    chainId: Maybe<string>,
+    chains: Maybe<PdbInfo["chains"]>
+): Maybe<PdbOptions> {
+    if (!chains) return;
+
+    const defaultChain = chains[0];
+    const chain = chainId
+        ? _(chains)
+              .keyBy(chain => chain.chainId)
+              .get(chainId, defaultChain)
+        : defaultChain;
+
+    return chain ? { pdbId, proteinId: chain.protein.id, chainId: chain.chainId } : undefined;
 }
