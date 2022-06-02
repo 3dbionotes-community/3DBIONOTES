@@ -18,7 +18,7 @@
     "https://www.google-analytics.com/analytics.js",
     "ga"
 );
-ga("create", "UA-93698320-4", "auto");
+ga("create", "UA-93698320-4", "auto"); //UA-93698320-4 for development UA-93698320-1 for production
 ga("send", "pageview");
 
 var $j = jQuery.noConflict();

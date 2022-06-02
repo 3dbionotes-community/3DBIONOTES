@@ -21,7 +21,12 @@ export const Thumbnail: React.FC<ThumbnailProps> = React.memo(props => {
         <div style={styles.thumbnailWrapper}>
             <HtmlTooltip title={tooltip}>
                 <a href={href} target="_blank" rel="noreferrer">
-                    <img alt={name} src={imageSrc} loading="lazy" style={styles.image} />
+                    <img
+                        alt={name}
+                        src={imageSrc}
+                        loading="lazy"
+                        style={{ ...styles.image, ...thumnailStyles }}
+                    />
                 </a>
             </HtmlTooltip>
 
@@ -42,3 +47,7 @@ export const Thumbnail: React.FC<ThumbnailProps> = React.memo(props => {
         </div>
     );
 });
+
+const thumnailStyles = {
+    marginBottom: "1em",
+};
