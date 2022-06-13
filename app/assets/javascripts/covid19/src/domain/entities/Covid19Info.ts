@@ -137,9 +137,9 @@ export type SourceName = PdbSourceName | EmdbSourceName;
 
 export type MethodName = PdbMethodName | EmdbMethodName;
 
-export type PdbSourceName = "PDB-REDO" | "CSTF" | "Phenix";
+export type PdbSourceName = "PDB-REDO" | "CSTF" | "CERES";
 
-export type PdbMethodName = "PDB-Redo" | "Isolde" | "Refmac" | "CERES";
+export type PdbMethodName = "PDB-Redo" | "Isolde" | "Refmac" | "PHENIX";
 
 export type EmdbSourceName = "";
 
@@ -207,7 +207,7 @@ export const filterKeys = [
     "sybodies",
     "pdbRedo",
     "cstf",
-    "phenix",
+    "ceres",
 ] as const;
 
 export type FilterKey = typeof filterKeys[number];
@@ -230,7 +230,7 @@ export function filterPdbValidations(
     return (
         (!filterState.pdbRedo || _.some(PdbValidations, v => v?.source === "PDB-REDO")) &&
         (!filterState.cstf || _.some(PdbValidations, v => v?.source === "CSTF")) &&
-        (!filterState.phenix || _.some(PdbValidations, v => v?.source === "Phenix"))
+        (!filterState.ceres || _.some(PdbValidations, v => v?.source === "CERES"))
     );
 }
 
@@ -252,7 +252,7 @@ export function getTranslations() {
             sybodies: i18n.t("Sybodies"),
             pdbRedo: i18n.t("PDB-REDO"),
             cstf: i18n.t("CSTF"),
-            phenix: i18n.t("Phenix"),
+            ceres: i18n.t("CERES"),
         } as Record<FilterKey, string>,
     };
 }

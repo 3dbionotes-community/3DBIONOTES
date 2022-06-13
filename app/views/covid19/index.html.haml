@@ -7,8 +7,11 @@
 .d-flex.mt-2.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
   .container.mb-5.pt-5
     #root
-      This component requires Javascript
-
+      .d-flex.flex-column.justify-content-center.align-items-center
+        %p.text-center
+          Loading SARS-CoV-2 in structure databases...
+        .spinner-border{"role"=>"status"}
+      
 = javascript_include_tag('covid19/build/app/2.chunk.js')
 = javascript_include_tag('covid19/build/app/main.chunk.js')
 = javascript_include_tag('covid19/build/app/runtime-main.js')
