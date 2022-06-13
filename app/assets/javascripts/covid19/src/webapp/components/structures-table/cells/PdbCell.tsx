@@ -131,14 +131,14 @@ const Validation: React.FC<ValidationProps> = React.memo(props => {
                 return translations.filterKeys.pdbRedo;
             case "CSTF":
                 return translations.filterKeys.cstf;
-            case "Phenix":
-                return translations.filterKeys.phenix;
+            case "CERES":
+                return translations.filterKeys.ceres;
         }
     }, [
         pdbValidation,
         translations.filterKeys.cstf,
         translations.filterKeys.pdbRedo,
-        translations.filterKeys.phenix,
+        translations.filterKeys.ceres,
     ]);
 
     const source = React.useMemo(
