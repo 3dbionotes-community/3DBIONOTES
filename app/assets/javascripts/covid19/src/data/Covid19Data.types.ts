@@ -73,9 +73,9 @@ export interface Emdb extends DbItem {
     emMethod: string;
 }
 
-export type SourceName = "PDB-REDO" | "CSTF" | "Phenix";
+export type SourceName = "PDB-REDO" | "CSTF" | "CERES";
 
-export type MethodName = "PDB-Redo" | "Isolde" | "Refmac" | "CERES";
+export type MethodName = "PDB-Redo" | "Isolde" | "Refmac" | "PHENIX";
 
 type Maybe<T> = T | null;
 
