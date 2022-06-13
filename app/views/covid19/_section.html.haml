@@ -3,7 +3,6 @@
 - items = section[:items] || []
 - experiments = section[:experiments] || []
 - pockets = section[:pockets] || []
-- max_items = 12
 
 %div{:class => ["card", is_main ? "proteinSub" : "proteinNest"]}
   %div{id: "#pSub-#{id}", class: "card-header"}
@@ -38,10 +37,10 @@
           View All
         = render partial: "section_popup", locals: {items: items, id: id, title: section_popup_title(protein, section)}
       %a.collapseToggle{"aria-controls" => "pSubBod-#{id}", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#pSubBod-#{id}"}
-        %i.fa.fa-chevron-down
+        %i.fa.fa-chevron-down.margin
 
   %div{:id => "pSubBod-#{id}", :class => "card-body collapsable-body collapse show"}
     = render partial: "items", locals: {items: items, max_items: max_items, max_images: max_items}
     - (section[:subsections] || []).each do |section|
       -if section[:items].present?
-        = render partial: "section", locals: {protein: protein, section: section, is_main: false}
+        = render partial: "section", locals: {protein: protein, section: section, is_main: false, max_items: max_items}

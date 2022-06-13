@@ -1,11 +1,20 @@
-%p.footer
-  %a{:href => "http://biocomputingunit.es"}
-    Biocomputing Unit
-  \-
-  %a{:href => "http://www.cnb.csic.es/index.php/en/"}
-    CNB
-  \-
-  %a{:href => "http://www.csic.es/web/guest/home"}
-    CSIC
-%p.footer
-  Please, submit suggestions, comments and bug reports to...
+#mainFooter.bg-primary.footer-dark
+  %footer
+    .container.text-center
+      .row
+        .col
+          %h4
+            %strong
+              3DBIONOTES-<em>WS</em>
+            %br/
+          %p
+            %strong An ELIXIR Recommended Interoperability Resource
+            %br/
+            %a{:href => "https://drive.google.com/file/d/1mpHVIoblHdUw4zyu7jxdi-PDCQzB6C9Y/view?usp=sharing", :target => "_blank"} Terms of Use
+          .footerLinks
+            %p
+              %a{:href => "http://biocomputingunit.es"}> Biocomputing Unit
+              &nbsp;@
+              %a{:href => "http://www.cnb.csic.es/index.php/en"} CNB
+              %span -
+              %a{:href => "http://www.csic.es/en"} CSIC

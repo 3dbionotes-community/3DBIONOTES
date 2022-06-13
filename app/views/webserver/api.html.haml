@@ -1,5 +1,3 @@
-= render partial: "shared/wip"
-
 .d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
   .container
     .contentBox
@@ -99,6 +97,15 @@
           %br/
           %a{:href => "https://3dbionotes.cnb.csic.es/api/info/PDB/title/101m"} https://3dbionotes.cnb.csic.es/api/info/PDB/title/:pdb_id
           %br/
+        
+        %h4{:style => "margin-top: 20px;margin-bottom: 9px;"} PDB mappings
+        %p
+          %strong> related EMDB
+           - Get related EMDB where a PDB entry was used as fitting model
+          %br/
+          %a{:href => "https://3dbionotes.cnb.csic.es/api/mappings/PDB/EMDB/4d5n"} https://3dbionotes.cnb.csic.es/api/mappings/PDB/EMDB/:emdb_id
+          %br/
+        
         %h4{:style => "margin-top: 20px;margin-bottom: 9px;"} EMDB mappings
         %p
           %strong> Source
@@ -111,6 +118,7 @@
           %br/
           %a{:href => "https://3dbionotes.cnb.csic.es/api/mappings/EMDB/PDB/EMD-2810"} https://3dbionotes.cnb.csic.es/api/mappings/EMDB/PDB/:emdb_id
           %br/
+        
         %h4{:style => "margin-top: 20px;margin-bottom: 9px;"} UniProt mappings
         %p
           %strong> Source

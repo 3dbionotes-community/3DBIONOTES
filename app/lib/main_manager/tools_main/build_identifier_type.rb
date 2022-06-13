@@ -16,6 +16,9 @@ module MainManager
           elsif identifierName.upcase =~ /^ISOLDE-\d{1}\w{3}$/
             identifierName.upcase!
             identifierType = "ISOLDE"
+          elsif identifierName.upcase =~ /^REFMAC-\d{1}\w{3}$/
+            identifierName.upcase!
+            identifierType = "REFMAC"
           elsif identifierName.upcase =~ /^PDB-REDO-\d{1}\w{3}$/
             identifierName.upcase!
             identifierType = "PDB-REDO"

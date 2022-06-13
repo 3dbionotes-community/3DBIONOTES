@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post '/' => 'main#home'
   get '/pdb_redo/:pdbId' => 'main#pdb_redo'
   get '/isolde/:pdbId/:filename' => 'main#isolde'
+  get '/refmac/:pdbId/:filename' => 'main#refmac'
   get '/models/:protein/:source/:model' => 'main#models'
   post '/upload' => 'main#upload'
   get '/network' => 'main#network'
@@ -17,8 +18,9 @@ Rails.application.routes.draw do
   get '/programmatic/get/:id' => 'post_request#browse'
   get '/chain_mapping' => 'main#chain_mapping'
   get '/devel' => 'devel#home'
-  get '/ws' => 'webserver#home'
   get '/webserver' => 'webserver#home'
+  get '/ws' => 'webserver#home'
+  get '/ws/viewer' => 'webserver#viewer'
   get '/ws/submit' => 'webserver#submit'
   get '/ws/database' => 'webserver#query'
   get '/ws/covid19' => 'covid19#index'
@@ -136,6 +138,13 @@ Rails.application.routes.draw do
         scope '/PDB' do
           scope '/:name' do
             get '/' => 'mappings#getPDBsFromEMDB'
+          end
+        end
+      end
+      scope '/PDB' do
+        scope '/EMDB' do
+          scope '/:name' do
+            get '/' => 'mappings#getEMDBFromPDBs'
           end
         end
       end

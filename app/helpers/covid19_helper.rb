@@ -1,6 +1,9 @@
 module Covid19Helper
   PROTEIN_COLORS = {
     "S" => "w3-cyan",
+    "E" => "w3-purple",
+    "M" => "w3-lime",
+    "N" => "w3-green",
   }
 
   def protein_css_class(protein)
@@ -22,7 +25,7 @@ module Covid19Helper
   end
 
   def link_icon
-    content_tag(:i, "", class: "fa fa-external-link-square")
+    content_tag(:i, "", class: "fa fa-external-link-square margin")
   end
 
   def description_text(item)
@@ -40,10 +43,12 @@ module Covid19Helper
 
         item[:links].map do |link|
           content_tag(:p) do
-            safe_join([
-              content_tag(:span, link[:title] + ": ") + link_to(link[:name], link[:query_url]),
-              link[:external_url] ? link_to(content_tag(:span, "External ") + link_icon, link[:external_url], target: "_blank") : nil,
-            ].compact, " | ")
+            content_tag(:span, link[:title] + ": ") + link_to(link[:name], link[:query_url]) +
+
+            (content_tag(:span, class: "h", "data-check": link[:external_url]) do
+              content_tag(:span, " | ") +
+              (link[:external_url] ? link_to(content_tag(:span, "External ") + link_icon, link[:external_url], target: "_blank") : "")
+            end)
           end
         end.join,
 
@@ -51,7 +56,7 @@ module Covid19Helper
           content_tag(:p, "Related: #{item[:related].join(', ')}") : "",
         (item[:external] ?
           link_to(content_tag(:span, item[:external][:text]) + " " + link_icon, item[:external][:url], target: "_blank")
-          : "")
+          : ""),
       ])
     end
   end
