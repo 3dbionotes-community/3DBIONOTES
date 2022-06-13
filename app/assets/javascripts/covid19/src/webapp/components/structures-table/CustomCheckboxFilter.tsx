@@ -73,7 +73,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                         setFilterState={setFilterState}
                     />
                     <FilterItem
-                        filterKey="phenix"
+                        filterKey="ceres"
                         filterState={filterState}
                         setFilterState={setFilterState}
                     />
