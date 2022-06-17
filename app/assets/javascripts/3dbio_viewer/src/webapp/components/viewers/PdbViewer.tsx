@@ -21,7 +21,9 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
     const { selection, profile, setProfile } = viewerState;
 
     const blocks = React.useMemo(() => {
-        return getVisibleBlocks(blockDefs, { pdb, profile });
+        return getVisibleBlocks(blockDefs, { pdb, profile }).filter(
+            block => block.id === "mapValidation"
+        );
     }, [pdb, profile]);
 
     return (

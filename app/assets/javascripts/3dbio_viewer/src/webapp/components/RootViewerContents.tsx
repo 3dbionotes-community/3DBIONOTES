@@ -19,7 +19,7 @@ type ExternalData =
     | { type: "uploadData"; data: UploadData }
     | { type: "network"; data: ProteinNetwork };
 
-const showMolecularStructure = true;
+const showMolecularStructure = false;
 
 export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(props => {
     const { viewerState } = props;
