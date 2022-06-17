@@ -17,6 +17,7 @@ export interface ProtvistaTrackElement extends HTMLDivElement {
 export interface BlockComponentProps {
     pdb: Pdb;
     selection: Selection;
+    block: BlockDef;
 }
 
 export type TrackDef = TrackDefinition;

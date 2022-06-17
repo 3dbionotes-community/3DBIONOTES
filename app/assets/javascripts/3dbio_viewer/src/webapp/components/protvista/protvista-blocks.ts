@@ -4,6 +4,7 @@ import { BasicInfoViewer } from "../BasicInfoViewer";
 import { trackDefinitions as tracks } from "../../../domain/definitions/tracks";
 import { BlockDef } from "./Protvista.types";
 import { profiles } from "../../../domain/entities/Profile";
+import { ProtvistaPdbValidation } from "./ProtvistaPdbValidation";
 
 export const blockDefs: BlockDef[] = [
     {
@@ -104,6 +105,7 @@ export const blockDefs: BlockDef[] = [
             tracks.molprobity,
             tracks.emValidation,
         ],
+        component: ProtvistaPdbValidation,
         profiles: [profiles.structural, profiles.validation, profiles.drugDesign],
     },
     {
