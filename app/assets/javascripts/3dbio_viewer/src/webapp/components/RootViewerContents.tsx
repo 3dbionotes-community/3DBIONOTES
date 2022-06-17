@@ -19,6 +19,8 @@ type ExternalData =
     | { type: "uploadData"; data: UploadData }
     | { type: "network"; data: ProteinNetwork };
 
+const showMolecularStructure = true;
+
 export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(props => {
     const { viewerState } = props;
     const { compositionRoot } = useAppContext();
@@ -53,22 +55,26 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
         <div id="viewer">
             {error && <div style={{ color: "red" }}></div>}
 
-            <ViewerSelector
-                pdbInfo={pdbInfo}
-                selection={selection}
-                onSelectionChange={setSelection}
-                uploadData={uploadData}
-            />
+            {showMolecularStructure && (
+                <>
+                    <ViewerSelector
+                        pdbInfo={pdbInfo}
+                        selection={selection}
+                        onSelectionChange={setSelection}
+                        uploadData={uploadData}
+                    />
 
-            <div id="left">
-                <MolecularStructure
-                    pdbInfo={pdbInfo}
-                    selection={selection}
-                    onSelectionChange={setSelection}
-                    onLigandsLoaded={setLigands}
-                    proteinNetwork={proteinNetwork}
-                />
-            </div>
+                    <div id="left">
+                        <MolecularStructure
+                            pdbInfo={pdbInfo}
+                            selection={selection}
+                            onSelectionChange={setSelection}
+                            onLigandsLoaded={setLigands}
+                            proteinNetwork={proteinNetwork}
+                        />
+                    </div>
+                </>
+            )}
 
             <div id="right">
                 {
