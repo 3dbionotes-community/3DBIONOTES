@@ -1,0 +1,196 @@
+{
+    "emv_entry": {
+        "resource": "EMV-statitics",
+        "method_type": "ModelQuality",
+        "date": "2021-10-26",
+        "volume_map": "emd-31319",
+        "atomic_model": "7ey8"
+    },
+    "graph": {
+        "axis_x": {
+            "axis_name": "FSC-Q",
+            "categories": [
+                {
+                    "cat_id": 1,
+                    "cat_name": "Overfitting",
+                    "value_range": {
+                        "maximum": -1.0
+                    }
+                },
+                {
+                    "cat_id": 2,
+                    "cat_name": "Right",
+                    "value_range": {
+                        "minimum": -1.0,
+                        "maximum": 1.5
+                    }
+                },
+                {
+                    "cat_id": 3,
+                    "cat_name": "Wrong",
+                    "value_range": {
+                        "minimum": 1.5
+                    }
+                }
+            ]
+        },
+        "axis_y": {
+            "axis_name": "mapQ",
+            "categories": [
+                {
+                    "cat_id": 1,
+                    "cat_name": "Overfitting",
+                    "value_range": {
+                        "maximum": 0.0
+                    }
+                },
+                {
+                    "cat_id": 2,
+                    "cat_name": "Wrong",
+                    "value_range": {
+                        "minimum": 0.0,
+                        "maximum": 0.25
+                    }
+                },
+                {
+                    "cat_id": 3,
+                    "cat_name": "",
+                    "value_range": {
+                        "minimum": 0.25,
+                        "maximum": 0.45
+                    }
+                },
+                {
+                    "cat_id": 4,
+                    "cat_name": "Right",
+                    "value_range": {
+                        "minimum": 0.45
+                    }
+                }
+            ]
+        }
+    },
+    "data": {
+        "categories": [
+            {
+                "cat_id": "1,1",
+                "count": 0,
+                "residues": []
+            },
+            {
+                "cat_id": "2,1",
+                "count": 0,
+                "residues": []
+            },
+            {
+                "cat_id": "3,1",
+                "count": 0,
+                "residues": []
+            },
+            {
+                "cat_id": "1,2",
+                "count": 3,
+                "residues": [
+                    {
+                        "atomic_model": "7ey8",
+                        "chain": "A",
+                        "res_id": 27
+                    },
+                    {
+                        "atomic_model": "7ey8",
+                        "chain": "A",
+                        "res_id": 30
+                    },
+                    {
+                        "atomic_model": "7ey8",
+                        "chain": "A",
+                        "res_id": 50
+                    }
+                ]
+            },
+            {
+                "cat_id": "2,2",
+                "count": 53,
+                "residues": []
+            },
+            {
+                "cat_id": "3,2",
+                "count": 39,
+                "residues": []
+            },
+            {
+                "cat_id": "1,3",
+                "count": 3,
+                "residues": [
+                    {
+                        "atomic_model": "7ey8",
+                        "chain": "A",
+                        "res_id": 28
+                    },
+                    {
+                        "atomic_model": "7ey8",
+                        "chain": "A",
+                        "res_id": 29
+                    },
+                    {
+                        "atomic_model": "7ey8",
+                        "chain": "A",
+                        "res_id": 35
+                    }
+                ]
+            },
+            {
+                "cat_id": "2,3",
+                "count": 614,
+                "Residues": []
+            },
+            {
+                "cat_id": "3,3",
+                "count": 92,
+                "residues": []
+            },
+            {
+                "cat_id": "1,4",
+                "count": 4,
+                "residues": [
+                    {
+                        "atomic_model": "7ey8",
+                        "chain": "A",
+                        "res_id": 925
+                    },
+                    {
+                        "atomic_model": "7ey8",
+                        "chain": "A",
+                        "res_id": 929
+                    },
+                    {
+                        "atomic_model": "7ey8",
+                        "chain": "A",
+                        "res_id": 930
+                    },
+                    {
+                        "atomic_model": "7ey8",
+                        "chain": "A",
+                        "res_id": 931
+                    }
+                ]
+            },
+            {
+                "cat_id": "2,4",
+                "count": 3220,
+                "Residues": []
+            },
+            {
+                "cat_id": "3,4",
+                "count": 21,
+                "residues": []
+            }
+        ]
+    },
+    "warnings": {
+        "mapping": "This volume map has more than one model fitted. Results shown are just for one of them."
+    },
+    "errors": {
+        "processing": "No erros found."
+    }
+}
