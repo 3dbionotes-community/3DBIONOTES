@@ -1,0 +1,30 @@
+{
+    "emv_entry": {
+        "resource": "EMV-statitics",
+        "method_type": "LocalResolution",
+        "date": "2021-10-26",
+        "volume_map": "emd-31319",
+        "atomic_model": "7ey8"
+    },
+    "data": {
+        "unit": "Angstrom",
+        "sampling": 0.4,
+        "metrics": [
+            {
+                "resolution Median": 4.411
+            },
+            {
+                "quartile 25": 3.29
+            },
+            {
+                "quartile 75": 6.771
+            }
+        ]
+    },
+    "warnings": {
+        "mapping": "This volume map has more than one model fitted. Results shown are just for one of them."
+    },
+    "errors": {
+        "processing": "No values found for method BlocRes."
+    }
+}

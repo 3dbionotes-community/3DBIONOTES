@@ -2,6 +2,7 @@ import React from "react";
 import * as d3Module from "d3";
 import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
 import modelQualityStats from "../../../data/repositories/emv_modelquality_stats.json";
+import localResolutionStats from "../../../data/repositories/emv_localresolution_stats.json";
 
 declare global {
     const d3: typeof d3Module;
@@ -15,17 +16,18 @@ const margin = {
 };
 
 const dimensions = {
-    width: 200 - margin.left - margin.right,
-    height: 200 - margin.top - margin.bottom,
+    width: 200,
+    height: 200,
 };
 
 export const ProtvistaPdbValidation: React.FC<ProtvistaPdbProps> = React.memo(props => {
     const ref = useGrid();
+    const svgRef = useBar();
 
     return (
         <>
-            <h2>This is the custom ProtvistaPdbValidation component</h2>
             <svg ref={ref} />
+            <svg ref={svgRef} />
             <ProtvistaPdb {...props} />
         </>
     );
@@ -52,25 +54,13 @@ function useGrid() {
             for (let row = 0; row < numRows; row++) {
                 data.push([]);
                 for (let column = 0; column < numCols; column++) {
-                    const cellXValue = modelQualityStats.data.categories[i]?.cat_id.split(",")[0];
-                    const cellYValue = modelQualityStats.data.categories[i]?.cat_id.split(",")[1];
                     data[row].push({
                         x: xPos,
                         y: yPos,
                         width: width,
                         height: height,
                         value: modelQualityStats.data.categories[i]?.count,
-                        color:
-                            (cellXValue === "1" || cellXValue === "3") &&
-                            (cellYValue === "1" || cellYValue === "2")
-                                ? "red"
-                                : (cellXValue === "1" || cellXValue === "3") && cellYValue === "3"
-                                ? "orange"
-                                : cellXValue === "2" && cellYValue === "4"
-                                ? "lime"
-                                : cellXValue === "2" && cellYValue === "3"
-                                ? "greenyellow"
-                                : "yellow",
+                        color: modelQualityStats.data.categories[i]?.color,
                     });
                     xPos += width;
                     i++;
@@ -139,32 +129,32 @@ function useGrid() {
             .text("right");
 
         grid.append("g")
-            .attr("transform", "translate(30, " + dimensions.width + ")")
+            .attr("transform", "translate(30, 170)")
             .call(xAxis);
 
         grid.append("text")
             .attr(
                 "transform",
-                "translate(" + dimensions.width + " ," + (dimensions.height + margin.top) + ")"
+                "translate(" + (dimensions.width - margin.left - margin.right) + " ," + (dimensions.height - margin.top) + ")"
             )
             .style("text-anchor", "middle")
             .attr("font-size", "0.75em")
             .text(axisX);
 
         grid.append("text")
-            .attr("transform", "translate(50, " + dimensions.height + ")")
+            .attr("transform", "translate(50, 180)")
             .style("text-anchor", "middle")
             .attr("font-size", "0.35em")
             .text("overfitting");
 
         grid.append("text")
-            .attr("transform", "translate(90, " + dimensions.height + ")")
+            .attr("transform", "translate(90, 180)")
             .style("text-anchor", "middle")
             .attr("font-size", "0.35em")
             .text("right");
 
         grid.append("text")
-            .attr("transform", "translate(135, " + dimensions.height + ")")
+            .attr("transform", "translate(135, 180)")
             .style("text-anchor", "middle")
             .attr("font-size", "0.35em")
             .text("wrong");
@@ -198,6 +188,112 @@ function useGrid() {
             .attr("y", (d: any) => d.y + 10)
             .attr("font-size", "0.65em")
             .text((d: any) => d.value);
+    }, []);
+
+    return svgRef;
+}
+
+function useBar() {
+    const svgRef = React.useRef<SVGSVGElement>(null);
+
+    React.useEffect(() => {
+        if (!svgRef.current) return;
+
+        const svg = d3
+            .select(svgRef.current)
+            .attr("width", dimensions.width * 2)
+            .attr("height", dimensions.height);
+
+        const bar = svg
+            .append("rect")
+            .attr("width", dimensions.width)
+            .attr("height", dimensions.height / 6)
+            .attr("x", "30")
+            .attr("y", "50");
+
+        const svgDefs = svg.append("defs");
+
+        const mainGradient = svgDefs.append("linearGradient").attr("id", "mainGradient");
+
+        mainGradient.append("stop").attr("stop-color", "red").attr("offset", "0");
+
+        mainGradient.append("stop").attr("stop-color", "white").attr("offset", "0.5");
+
+        mainGradient.append("stop").attr("stop-color", "blue").attr("offset", "1");
+
+        bar.attr("fill", "url(#mainGradient)");
+
+        svg.append("text")
+            .attr("transform", "translate(20, 45)")
+            .style("text-anchor", "middle")
+            .text("Per 0");
+
+        svg.append("text")
+            .attr("transform", "translate(" + dimensions.width * 0.4 + ", 45)")
+            .style("text-anchor", "middle")
+            .text("Per 35");
+
+        svg.append("text")
+            .attr("transform", "translate(" + (dimensions.width + margin.left + margin.right) + ", 45)")
+            .style("text-anchor", "middle")
+            .text("Per 100");
+
+        svg.append("line")
+            .attr("x1", 98)
+            .attr("y1", 84)
+            .attr("x2", 98)
+            .attr("y2", 49)
+            .attr("stroke", "black")
+            .attr("stroke-width", "5px");
+
+        svg.append("line")
+            .attr("x1", 122)
+            .attr("y1", 84)
+            .attr("x2", 122)
+            .attr("y2", 49)
+            .attr("stroke", "black")
+            .attr("stroke-width", "5px");
+
+        svg.append("line")
+            .attr("x1", 60)
+            .attr("y1", 120)
+            .attr("x2", 100)
+            .attr("y2", 80)
+            .attr("stroke", "black");
+
+        svg.append("line")
+            .attr("x1", 160)
+            .attr("y1", 120)
+            .attr("x2", 120)
+            .attr("y2", 80)
+            .attr("stroke", "black");
+
+        const info = svg.append("g");
+
+        info.append("rect")
+            .attr("width", 120)
+            .attr("height", 50)
+            .attr("fill", "lightGrey")
+            .attr("x", "50")
+            .attr("y", "120");
+
+        info.append("text")
+            .attr("transform", "translate(92, 138)")
+            .style("text-anchor", "middle")
+            .attr("font-size", "0.5em")
+            .text("Median: " + localResolutionStats.data.metrics[0]?.["resolution Median"] + " Å");
+
+        info.append("text")
+            .attr("transform", "translate(100, 149)")
+            .style("text-anchor", "middle")
+            .attr("font-size", "0.5em")
+            .text("Quartile-25: " + localResolutionStats.data.metrics[1]?.["quartile 25"] + " Å");
+
+        info.append("text")
+            .attr("transform", "translate(100, 160)")
+            .style("text-anchor", "middle")
+            .attr("font-size", "0.5em")
+            .text("Quartile-75: " + localResolutionStats.data.metrics[2]?.["quartile 75"] + " Å");
     }, []);
 
     return svgRef;

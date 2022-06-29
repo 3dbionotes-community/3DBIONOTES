@@ -75,17 +75,20 @@
             {
                 "cat_id": "1,1",
                 "count": 0,
-                "residues": []
+                "residues": [],
+                "color": "#ff4500"
             },
             {
                 "cat_id": "2,1",
                 "count": 0,
-                "residues": []
+                "residues": [],
+                "color": "#ffff00"
             },
             {
                 "cat_id": "3,1",
                 "count": 0,
-                "residues": []
+                "residues": [],
+                "color": "#ff4500"
             },
             {
                 "cat_id": "1,2",
@@ -106,17 +109,20 @@
                         "chain": "A",
                         "res_id": 50
                     }
-                ]
+                ],
+                "color": "#ff4500"
             },
             {
                 "cat_id": "2,2",
                 "count": 53,
-                "residues": []
+                "residues": [],
+                "color": "#ffff00"
             },
             {
                 "cat_id": "3,2",
                 "count": 39,
-                "residues": []
+                "residues": [],
+                "color": "#ff4500"
             },
             {
                 "cat_id": "1,3",
@@ -137,17 +143,20 @@
                         "chain": "A",
                         "res_id": 35
                     }
-                ]
+                ],
+                "color": "#ffa500"
             },
             {
                 "cat_id": "2,3",
                 "count": 614,
-                "Residues": []
+                "Residues": [],
+                "color": "#98fb98"
             },
             {
                 "cat_id": "3,3",
                 "count": 92,
-                "residues": []
+                "residues": [],
+                "color": "#ffa500"
             },
             {
                 "cat_id": "1,4",
@@ -173,17 +182,20 @@
                         "chain": "A",
                         "res_id": 931
                     }
-                ]
+                ],
+                "color": "#ffff00"
             },
             {
                 "cat_id": "2,4",
                 "count": 3220,
-                "Residues": []
+                "Residues": [],
+                "color": "#00ff00"
             },
             {
                 "cat_id": "3,4",
                 "count": 21,
-                "residues": []
+                "residues": [],
+                "color": "#ffff00"
             }
         ]
     },
