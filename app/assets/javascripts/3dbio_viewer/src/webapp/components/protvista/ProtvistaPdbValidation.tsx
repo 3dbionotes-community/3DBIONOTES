@@ -9,14 +9,14 @@ declare global {
 }
 
 const margin = {
-    top: 10,
-    right: 10,
-    bottom: 10,
+    top: 20,
+    right: 20,
+    bottom: 20,
     left: 20,
 };
 
 const dimensions = {
-    width: 200,
+    width: 400,
     height: 200,
 };
 
@@ -47,8 +47,8 @@ function useGrid() {
 
         const gridData = () => {
             const data: any[] = [];
-            const width = 40;
-            let height = 40;
+            const width = 60;
+            const height = 50;
             let xPos = 1;
             let yPos = height * numRows;
             for (let row = 0; row < numRows; row++) {
@@ -65,11 +65,6 @@ function useGrid() {
                     xPos += width;
                     i++;
                 }
-                if (row === 1) {
-                    height = 20;
-                } else {
-                    height = 40;
-                }
                 xPos = 1;
                 yPos -= height;
             }
@@ -78,21 +73,21 @@ function useGrid() {
 
         const xScale = d3
             .scaleLinear()
-            .domain([-3.5, 3.5])
-            .range([0, numCols * 40]);
+            .domain([-3.5, 4])
+            .range([0, numCols * 50 + 50]);
         const xAxis = d3.axisBottom(xScale).tickValues([-1, 1.5]);
 
         const yScale = d3
             .scaleLinear()
             .domain([-0.65, 1.1])
-            .range([numRows * 40, 0]);
-        const yAxis = d3.axisLeft(yScale).tickValues([0.25, 0.45]);
+            .range([numRows * 50 + 10, 0]);
+        const yAxis = d3.axisLeft(yScale).tickValues([0, 0.25, 0.45]);
 
         const grid = d3
             .select(svgRef.current)
-            .attr("width", dimensions.width + margin.left + margin.right)
-            .attr("height", dimensions.height + margin.top + margin.bottom)
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            .attr("width", dimensions.width)
+            .attr("height", dimensions.height * 1.25)
+            .attr("transform", "translate(" + margin.left * 3 + "," + margin.top + ")");
 
         grid.append("g").attr("transform", "translate(30, 10)").call(yAxis);
 
@@ -107,17 +102,17 @@ function useGrid() {
         grid.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 25)
-            .attr("x", -150)
+            .attr("x", -195)
             .style("text-anchor", "middle")
-            .attr("font-size", "0.35em")
+            .attr("font-size", "0.5em")
             .text("overfitting");
 
         grid.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 25)
-            .attr("x", -110)
+            .attr("x", -145)
             .style("text-anchor", "middle")
-            .attr("font-size", "0.35em")
+            .attr("font-size", "0.5em")
             .text("wrong");
 
         grid.append("text")
@@ -125,43 +120,43 @@ function useGrid() {
             .attr("y", 25)
             .attr("x", -45)
             .style("text-anchor", "middle")
-            .attr("font-size", "0.35em")
+            .attr("font-size", "0.5em")
             .text("right");
 
         grid.append("g")
-            .attr("transform", "translate(30, 170)")
+            .attr("transform", "translate(30, 220)")
             .call(xAxis);
 
         grid.append("text")
             .attr(
                 "transform",
-                "translate(" + (dimensions.width - margin.left - margin.right) + " ," + (dimensions.height - margin.top) + ")"
+                "translate(" + (dimensions.width/2 + margin.right + margin.left) + " ," + (dimensions.height + margin.top + margin.bottom) + ")"
             )
             .style("text-anchor", "middle")
             .attr("font-size", "0.75em")
             .text(axisX);
 
         grid.append("text")
-            .attr("transform", "translate(50, 180)")
+            .attr("transform", "translate(60, 235)")
             .style("text-anchor", "middle")
-            .attr("font-size", "0.35em")
+            .attr("font-size", "0.7em")
             .text("overfitting");
 
         grid.append("text")
-            .attr("transform", "translate(90, 180)")
+            .attr("transform", "translate(120, 235)")
             .style("text-anchor", "middle")
-            .attr("font-size", "0.35em")
+            .attr("font-size", "0.7em")
             .text("right");
 
         grid.append("text")
-            .attr("transform", "translate(135, 180)")
+            .attr("transform", "translate(180, 235)")
             .style("text-anchor", "middle")
-            .attr("font-size", "0.35em")
+            .attr("font-size", "0.7em")
             .text("wrong");
 
         const row = grid
             .append("g")
-            .attr("transform", "translate(30, -" + margin.bottom * 3 + ")")
+            .attr("transform", "translate(30, -30)")
             .selectAll(".row")
             .data(gridData)
             .enter()
@@ -176,6 +171,7 @@ function useGrid() {
             .attr("class", ".cell");
 
         cell.append("rect")
+            .attr("onclick", (d: any) => "alert(" + d.value + ")")
             .attr("x", (d: any) => d.x)
             .attr("y", (d: any) => d.y)
             .attr("width", (d: any) => d.width)
@@ -201,12 +197,12 @@ function useBar() {
 
         const svg = d3
             .select(svgRef.current)
-            .attr("width", dimensions.width * 2)
+            .attr("width", dimensions.width)
             .attr("height", dimensions.height);
 
         const bar = svg
             .append("rect")
-            .attr("width", dimensions.width)
+            .attr("width", dimensions.width / 2)
             .attr("height", dimensions.height / 6)
             .attr("x", "30")
             .attr("y", "50");
@@ -234,7 +230,7 @@ function useBar() {
             .text("Per 35");
 
         svg.append("text")
-            .attr("transform", "translate(" + (dimensions.width + margin.left + margin.right) + ", 45)")
+            .attr("transform", "translate(" + (dimensions.width / 2 + margin.right + margin.left) + ", 45)")
             .style("text-anchor", "middle")
             .text("Per 100");
 
