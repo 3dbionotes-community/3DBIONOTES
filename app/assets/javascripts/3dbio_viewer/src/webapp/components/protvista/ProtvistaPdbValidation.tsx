@@ -24,7 +24,6 @@ export const ProtvistaPdbValidation: React.FC<ProtvistaPdbProps> = React.memo(pr
 
     return (
         <>
-            <h2>This is the custom ProtvistaPdbValidation component</h2>
             <svg ref={ref} />
             <ProtvistaPdb {...props} />
         </>

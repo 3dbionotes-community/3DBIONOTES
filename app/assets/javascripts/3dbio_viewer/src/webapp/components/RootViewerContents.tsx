@@ -9,6 +9,7 @@ import { useAppContext } from "./AppContext";
 import { UploadData } from "../../domain/entities/UploadData";
 import { setFromError } from "../utils/error";
 import { ProteinNetwork } from "../../domain/entities/ProteinNetwork";
+import { debugFlags } from "../pages/app/debugFlags";
 
 export interface RootViewerContentsProps {
     viewerState: ViewerState;
@@ -18,8 +19,6 @@ type ExternalData =
     | { type: "none" }
     | { type: "uploadData"; data: UploadData }
     | { type: "network"; data: ProteinNetwork };
-
-const showMolecularStructure = false;
 
 export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(props => {
     const { viewerState } = props;
@@ -55,7 +54,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
         <div id="viewer">
             {error && <div style={{ color: "red" }}></div>}
 
-            {showMolecularStructure && (
+            {!debugFlags.showOnlyValidations && (
                 <>
                     <ViewerSelector
                         pdbInfo={pdbInfo}
