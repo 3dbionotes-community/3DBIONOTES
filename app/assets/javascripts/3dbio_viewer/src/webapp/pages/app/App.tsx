@@ -9,8 +9,7 @@ import { RootViewer } from "../../components/RootViewer";
 import { sendAnalytics } from "../../utils/analytics";
 
 import "./App.css";
-
-const showTraining = true;
+import { debugFlags } from "./debugFlags";
 
 function App() {
     return (
@@ -38,7 +37,7 @@ function App() {
                 </Switch>
             </HashRouter>
 
-            {showTraining && <TrainingApp locale="en" modules={modules} />}
+            {!debugFlags.hideTraining && <TrainingApp locale="en" modules={modules} />}
         </AppContext>
     );
 }
