@@ -39,14 +39,13 @@ function useGrid() {
     React.useEffect(() => {
         if (!svgRef.current) return;
 
-        let i = 0;
         const numRows = modelQualityStats.graph.axis_y.categories.length;
         const numCols = modelQualityStats.graph.axis_x.categories.length;
-        const axisX = modelQualityStats.graph.axis_x.axis_name;
-        const axisY = modelQualityStats.graph.axis_y.axis_name;
+        const { axis_x, axis_y } = modelQualityStats.graph;
 
         const gridData = () => {
-            const data: any[] = [];
+            let i = 0;
+            const data: gridData[][] = [];
             const width = 60;
             const height = 50;
             let xPos = 1;
@@ -54,12 +53,12 @@ function useGrid() {
             for (let row = 0; row < numRows; row++) {
                 data.push([]);
                 for (let column = 0; column < numCols; column++) {
-                    data[row].push({
+                    data[row]?.push({
                         x: xPos,
                         y: yPos,
                         width: width,
                         height: height,
-                        value: modelQualityStats.data.categories[i]?.count,
+                        value: Number(modelQualityStats.data.categories[i]?.count),
                         color: modelQualityStats.data.categories[i]?.color,
                     });
                     xPos += width;
@@ -97,7 +96,7 @@ function useGrid() {
             .attr("x", -20)
             .style("text-anchor", "middle")
             .attr("font-size", "0.75em")
-            .text(axisY);
+            .text(axis_x.axis_name);
 
         grid.append("text")
             .attr("transform", "rotate(-90)")
@@ -134,7 +133,7 @@ function useGrid() {
             )
             .style("text-anchor", "middle")
             .attr("font-size", "0.75em")
-            .text(axisX);
+            .text(axis_y.axis_name);
 
         grid.append("text")
             .attr("transform", "translate(60, 235)")
@@ -171,19 +170,19 @@ function useGrid() {
             .attr("class", ".cell");
 
         cell.append("rect")
-            .attr("onclick", (d: any) => "alert(" + d.value + ")")
-            .attr("x", (d: any) => d.x)
-            .attr("y", (d: any) => d.y)
-            .attr("width", (d: any) => d.width)
-            .attr("height", (d: any) => d.height)
-            .attr("fill", (d: any) => d.color)
+            .attr("onclick", d => "alert(" + d.value + ")")
+            .attr("x", d => d.x)
+            .attr("y", d => d.y)
+            .attr("width", d => d.width)
+            .attr("height", d => d.height)
+            .attr("fill", d => d.color)
             .style("stroke", "#222");
 
         cell.append("text")
-            .attr("x", (d: any) => d.x + 8)
-            .attr("y", (d: any) => d.y + 10)
+            .attr("x", d => d.x + 8)
+            .attr("y", d => d.y + 10)
             .attr("font-size", "0.65em")
-            .text((d: any) => d.value);
+            .text(d => d.value);
     }, []);
 
     return svgRef;
@@ -293,4 +292,13 @@ function useBar() {
     }, []);
 
     return svgRef;
+}
+
+interface gridData {
+    color: string
+    height: number
+    width: number
+    value: number
+    x: number
+    y: number
 }
