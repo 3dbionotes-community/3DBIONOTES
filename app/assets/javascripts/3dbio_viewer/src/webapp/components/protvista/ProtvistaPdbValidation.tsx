@@ -59,7 +59,7 @@ function useGrid() {
                         width: width,
                         height: height,
                         value: Number(modelQualityStats.data.categories[i]?.count),
-                        color: modelQualityStats.data.categories[i]?.color,
+                        color: String(modelQualityStats.data.categories[i]?.color),
                     });
                     xPos += width;
                     i++;
@@ -122,14 +122,16 @@ function useGrid() {
             .attr("font-size", "0.5em")
             .text("right");
 
-        grid.append("g")
-            .attr("transform", "translate(30, 220)")
-            .call(xAxis);
+        grid.append("g").attr("transform", "translate(30, 220)").call(xAxis);
 
         grid.append("text")
             .attr(
                 "transform",
-                "translate(" + (dimensions.width/2 + margin.right + margin.left) + " ," + (dimensions.height + margin.top + margin.bottom) + ")"
+                "translate(" +
+                    (dimensions.width / 2 + margin.right + margin.left) +
+                    " ," +
+                    (dimensions.height + margin.top + margin.bottom) +
+                    ")"
             )
             .style("text-anchor", "middle")
             .attr("font-size", "0.75em")
@@ -196,26 +198,21 @@ function useBar() {
 
         const svg = d3
             .select(svgRef.current)
-            .attr("width", dimensions.width)
+            .attr("width", dimensions.width + margin.left + margin.right)
             .attr("height", dimensions.height);
 
         const bar = svg
             .append("rect")
-            .attr("width", dimensions.width / 2)
+            .attr("width", dimensions.width)
             .attr("height", dimensions.height / 6)
-            .attr("x", "30")
+            .attr("x", "20")
             .attr("y", "50");
 
         const svgDefs = svg.append("defs");
-
         const mainGradient = svgDefs.append("linearGradient").attr("id", "mainGradient");
-
         mainGradient.append("stop").attr("stop-color", "red").attr("offset", "0");
-
         mainGradient.append("stop").attr("stop-color", "white").attr("offset", "0.5");
-
         mainGradient.append("stop").attr("stop-color", "blue").attr("offset", "1");
-
         bar.attr("fill", "url(#mainGradient)");
 
         svg.append("text")
@@ -224,81 +221,113 @@ function useBar() {
             .text("Per 0");
 
         svg.append("text")
-            .attr("transform", "translate(" + dimensions.width * 0.4 + ", 45)")
+            .attr("transform", "translate(" + dimensions.width * 0.25 + ", 45)")
             .style("text-anchor", "middle")
-            .text("Per 35");
+            .text("Per 25");
 
         svg.append("text")
-            .attr("transform", "translate(" + (dimensions.width / 2 + margin.right + margin.left) + ", 45)")
+            .attr("transform", "translate(" + dimensions.width * 0.75 + ", 45)")
+            .style("text-anchor", "middle")
+            .text("Per 75");
+
+        svg.append("text")
+            .attr("transform", "translate(" + dimensions.width + ", 45)")
             .style("text-anchor", "middle")
             .text("Per 100");
 
-        svg.append("line")
-            .attr("x1", 98)
-            .attr("y1", 84)
-            .attr("x2", 98)
-            .attr("y2", 49)
+        const percentile25 = svg
+            .append("rect")
+            .attr("width", 5)
+            .attr("height", dimensions.height / 6)
+            .attr("x", 0.25 * dimensions.width)
+            .attr("y", 50);
+
+        const percentile75 = svg
+            .append("rect")
+            .attr("width", 5)
+            .attr("height", dimensions.height / 6)
+            .attr("x", 0.75 * dimensions.width)
+            .attr("y", 50);
+
+        const tooltip25 = svg.append("g").attr("class", "tooltip25").style("display", "none");
+
+        tooltip25
+            .append("rect")
+            .attr("width", 170)
+            .attr("height", 30)
+            .attr("x", 30)
+            .attr("y", 120)
+            .attr("fill", "lightGray");
+
+        tooltip25
+            .append("line")
             .attr("stroke", "black")
-            .attr("stroke-width", "5px");
+            .attr("x1", 100)
+            .attr("x2", 40)
+            .attr("y1", 80)
+            .attr("y2", 120);
 
-        svg.append("line")
-            .attr("x1", 122)
-            .attr("y1", 84)
-            .attr("x2", 122)
-            .attr("y2", 49)
+        tooltip25
+            .append("line")
             .attr("stroke", "black")
-            .attr("stroke-width", "5px");
+            .attr("x1", 105)
+            .attr("x2", 180)
+            .attr("y1", 80)
+            .attr("y2", 120);
 
-        svg.append("line")
-            .attr("x1", 60)
-            .attr("y1", 120)
-            .attr("x2", 100)
-            .attr("y2", 80)
-            .attr("stroke", "black");
+        tooltip25
+            .append("text")
+            .text("Quartile-25: " + localResolutionStats.data.metrics[1]?.["quartile 25"] + " Å")
+            .attr("x", "40")
+            .attr("y", "140");
 
-        svg.append("line")
-            .attr("x1", 160)
-            .attr("y1", 120)
-            .attr("x2", 120)
-            .attr("y2", 80)
-            .attr("stroke", "black");
+        percentile25.on("mouseover", () => tooltip25.style("display", "block"));
+        percentile25.on("mouseout", () => tooltip25.style("display", "none"));
 
-        const info = svg.append("g");
+        const tooltip75 = svg.append("g").attr("class", "tooltip75").style("display", "none");
 
-        info.append("rect")
-            .attr("width", 120)
-            .attr("height", 50)
-            .attr("fill", "lightGrey")
-            .attr("x", "50")
-            .attr("y", "120");
+        tooltip75
+            .append("rect")
+            .attr("width", 170)
+            .attr("height", 30)
+            .attr("x", 210)
+            .attr("y", 120)
+            .attr("fill", "lightGray");
 
-        info.append("text")
-            .attr("transform", "translate(92, 138)")
-            .style("text-anchor", "middle")
-            .attr("font-size", "0.5em")
-            .text("Median: " + localResolutionStats.data.metrics[0]?.["resolution Median"] + " Å");
+        tooltip75
+            .append("line")
+            .attr("stroke", "black")
+            .attr("x1", 300)
+            .attr("x2", 240)
+            .attr("y1", 80)
+            .attr("y2", 120);
 
-        info.append("text")
-            .attr("transform", "translate(100, 149)")
-            .style("text-anchor", "middle")
-            .attr("font-size", "0.5em")
-            .text("Quartile-25: " + localResolutionStats.data.metrics[1]?.["quartile 25"] + " Å");
+        tooltip75
+            .append("line")
+            .attr("stroke", "black")
+            .attr("x1", 305)
+            .attr("x2", 360)
+            .attr("y1", 80)
+            .attr("y2", 120);
 
-        info.append("text")
-            .attr("transform", "translate(100, 160)")
-            .style("text-anchor", "middle")
-            .attr("font-size", "0.5em")
-            .text("Quartile-75: " + localResolutionStats.data.metrics[2]?.["quartile 75"] + " Å");
+        tooltip75
+            .append("text")
+            .text("Quartile-25: " + localResolutionStats.data.metrics[2]?.["quartile 75"] + " Å")
+            .attr("x", "220")
+            .attr("y", "140");
+
+        percentile75.on("mouseover", () => tooltip75.style("display", "block"));
+        percentile75.on("mouseout", () => tooltip75.style("display", "none"));
     }, []);
 
     return svgRef;
 }
 
 interface gridData {
-    color: string
-    height: number
-    width: number
-    value: number
-    x: number
-    y: number
+    color: string;
+    height: number;
+    width: number;
+    value: number;
+    x: number;
+    y: number;
 }
