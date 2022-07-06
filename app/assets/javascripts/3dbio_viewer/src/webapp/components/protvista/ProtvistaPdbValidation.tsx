@@ -249,6 +249,9 @@ function useBar() {
             .attr("width", 5)
             .attr("height", dimensions.height / 6)
             .attr("x", 0.75 * dimensions.width)
+            .attr("stroke", "black")
+            .attr("stroke-width", 2)
+            .attr("fill", "none")
             .attr("y", 50);
 
         const tooltip25 = svgBar.append("g").attr("class", "tooltip25").style("display", "none");
