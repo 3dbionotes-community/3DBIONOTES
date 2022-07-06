@@ -46,8 +46,8 @@ function useGrid() {
         const gridData = () => {
             let i = 0;
             const data: gridData[][] = [];
-            const width = 60;
-            const height = 50;
+            const width = 80;
+            const height = 60;
             let xPos = 1;
             let yPos = height * numRows;
             for (let row = 0; row < numRows; row++) {
@@ -69,26 +69,64 @@ function useGrid() {
             }
             return data;
         };
-
-        const xScale = d3
-            .scaleLinear()
-            .domain([-3.5, 4])
-            .range([0, numCols * 50 + 50]);
-        const xAxis = d3.axisBottom(xScale).tickValues([-1, 1.5]);
-
-        const yScale = d3
-            .scaleLinear()
-            .domain([-0.65, 1.1])
-            .range([numRows * 50 + 10, 0]);
-        const yAxis = d3.axisLeft(yScale).tickValues([0, 0.25, 0.45]);
-
+    
         const grid = d3
             .select(svgRef.current)
-            .attr("width", dimensions.width)
-            .attr("height", dimensions.height * 1.25)
+            .attr("width", dimensions.width * 1.5)
+            .attr("height", dimensions.height * 1.5)
             .attr("transform", "translate(" + margin.left * 3 + "," + margin.top + ")");
 
-        grid.append("g").attr("transform", "translate(30, 10)").call(yAxis);
+        const x_axis = grid.append("g")
+        const y_axis = grid.append("g")
+
+        x_axis.append("line")
+            .attr("x1", "20")
+            .attr("y1", "270")
+            .attr("x2", "290")
+            .attr("y2", "270")
+            .attr("stroke", "black")
+
+        x_axis.append("text")
+            .attr("x", "110")
+            .attr("y", "290")
+            .attr("font-size", "0.75em")
+            .style("text-anchor", "middle")
+            .text("-1")
+
+        x_axis.append("text")
+            .attr("x", "190")
+            .attr("y", "290")
+            .attr("font-size", "0.75em")
+            .style("text-anchor", "middle")
+            .text("1.5")
+
+        y_axis.append("line")
+            .attr("x1", "30")
+            .attr("y1", "10")
+            .attr("x2", "30")
+            .attr("y2", "280")
+            .attr("stroke", "black")
+
+        y_axis.append("text")
+            .attr("x", "20")
+            .attr("y", "212")
+            .attr("font-size", "0.75em")
+            .style("text-anchor", "middle")
+            .text("0")
+
+        y_axis.append("text")
+            .attr("x", "15")
+            .attr("y", "155")
+            .attr("font-size", "0.75em")
+            .style("text-anchor", "middle")
+            .text("0.25")
+
+        y_axis.append("text")
+            .attr("x", "15")
+            .attr("y", "95")
+            .attr("font-size", "0.75em")
+            .style("text-anchor", "middle")
+            .text("0.45")
 
         grid.append("text")
             .attr("transform", "rotate(-90)")
@@ -96,61 +134,52 @@ function useGrid() {
             .attr("x", -20)
             .style("text-anchor", "middle")
             .attr("font-size", "0.75em")
-            .text(axis_x.axis_name);
+            .text(axis_y.axis_name);
 
         grid.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 25)
-            .attr("x", -195)
+            .attr("x", -240)
             .style("text-anchor", "middle")
-            .attr("font-size", "0.5em")
+            .attr("font-size", "0.65em")
             .text("overfitting");
 
         grid.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 25)
-            .attr("x", -145)
+            .attr("x", -180)
             .style("text-anchor", "middle")
-            .attr("font-size", "0.5em")
+            .attr("font-size", "0.7em")
             .text("wrong");
 
         grid.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 25)
-            .attr("x", -45)
+            .attr("x", -60)
             .style("text-anchor", "middle")
-            .attr("font-size", "0.5em")
+            .attr("font-size", "0.7em")
             .text("right");
 
-        grid.append("g").attr("transform", "translate(30, 220)").call(xAxis);
-
         grid.append("text")
-            .attr(
-                "transform",
-                "translate(" +
-                    (dimensions.width / 2 + margin.right + margin.left) +
-                    " ," +
-                    (dimensions.height + margin.top + margin.bottom) +
-                    ")"
-            )
+            .attr("transform", "translate(290, 290)")
             .style("text-anchor", "middle")
             .attr("font-size", "0.75em")
-            .text(axis_y.axis_name);
+            .text(axis_x.axis_name);
 
         grid.append("text")
-            .attr("transform", "translate(60, 235)")
+            .attr("transform", "translate(70, 290)")
             .style("text-anchor", "middle")
             .attr("font-size", "0.7em")
             .text("overfitting");
 
         grid.append("text")
-            .attr("transform", "translate(120, 235)")
+            .attr("transform", "translate(150, 290)")
             .style("text-anchor", "middle")
             .attr("font-size", "0.7em")
             .text("right");
 
         grid.append("text")
-            .attr("transform", "translate(180, 235)")
+            .attr("transform", "translate(230, 290  )")
             .style("text-anchor", "middle")
             .attr("font-size", "0.7em")
             .text("wrong");
