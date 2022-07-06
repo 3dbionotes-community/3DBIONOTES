@@ -198,6 +198,8 @@ function useGrid() {
             .data(d => d)
             .enter()
             .append("g")
+            .attr("width", d => d.width)
+            .attr("height", d => d.height)
             .attr("class", ".cell");
 
         cell.append("rect")
@@ -210,9 +212,11 @@ function useGrid() {
             .style("stroke", "#222");
 
         cell.append("text")
-            .attr("x", d => d.x + 8)
-            .attr("y", d => d.y + 10)
+            .attr("x", d => d.x - 1 + 40)
+            .attr("y", d => d.y + 30)
             .attr("font-size", "0.65em")
+            .attr("text-anchor", "middle")
+            .attr("alignment-baseline", "central")
             .text(d => d.value);
     }, []);
 
