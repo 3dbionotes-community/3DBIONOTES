@@ -198,58 +198,60 @@ function useBar() {
 
         const svg = d3
             .select(svgRef.current)
-            .attr("width", dimensions.width + margin.left + margin.right)
-            .attr("height", dimensions.height);
+            .attr("width", dimensions.width * 2)
+            .attr("height", dimensions.height * 2);
 
-        const bar = svg
+        const svgBar = svg.append("g")
+
+        const bar = svgBar
             .append("rect")
             .attr("width", dimensions.width)
             .attr("height", dimensions.height / 6)
             .attr("x", "20")
             .attr("y", "50");
 
-        const svgDefs = svg.append("defs");
+        const svgDefs = svgBar.append("defs");
         const mainGradient = svgDefs.append("linearGradient").attr("id", "mainGradient");
         mainGradient.append("stop").attr("stop-color", "red").attr("offset", "0");
         mainGradient.append("stop").attr("stop-color", "white").attr("offset", "0.5");
         mainGradient.append("stop").attr("stop-color", "blue").attr("offset", "1");
         bar.attr("fill", "url(#mainGradient)");
 
-        svg.append("text")
+        svgBar.append("text")
             .attr("transform", "translate(20, 45)")
             .style("text-anchor", "middle")
             .text("Per 0");
 
-        svg.append("text")
+        svgBar.append("text")
             .attr("transform", "translate(" + dimensions.width * 0.25 + ", 45)")
             .style("text-anchor", "middle")
             .text("Per 25");
 
-        svg.append("text")
+        svgBar.append("text")
             .attr("transform", "translate(" + dimensions.width * 0.75 + ", 45)")
             .style("text-anchor", "middle")
             .text("Per 75");
 
-        svg.append("text")
+        svgBar.append("text")
             .attr("transform", "translate(" + dimensions.width + ", 45)")
             .style("text-anchor", "middle")
             .text("Per 100");
 
-        const percentile25 = svg
+        const percentile25 = svgBar
             .append("rect")
             .attr("width", 5)
             .attr("height", dimensions.height / 6)
             .attr("x", 0.25 * dimensions.width)
             .attr("y", 50);
 
-        const percentile75 = svg
+        const percentile75 = svgBar
             .append("rect")
             .attr("width", 5)
             .attr("height", dimensions.height / 6)
             .attr("x", 0.75 * dimensions.width)
             .attr("y", 50);
 
-        const tooltip25 = svg.append("g").attr("class", "tooltip25").style("display", "none");
+        const tooltip25 = svgBar.append("g").attr("class", "tooltip25").style("display", "none");
 
         tooltip25
             .append("rect")
@@ -284,7 +286,7 @@ function useBar() {
         percentile25.on("mouseover", () => tooltip25.style("display", "block"));
         percentile25.on("mouseout", () => tooltip25.style("display", "none"));
 
-        const tooltip75 = svg.append("g").attr("class", "tooltip75").style("display", "none");
+        const tooltip75 = svgBar.append("g").attr("class", "tooltip75").style("display", "none");
 
         tooltip75
             .append("rect")
@@ -312,12 +314,28 @@ function useBar() {
 
         tooltip75
             .append("text")
-            .text("Quartile-25: " + localResolutionStats.data.metrics[2]?.["quartile 75"] + " Å")
+            .text("Quartile-75: " + localResolutionStats.data.metrics[2]?.["quartile 75"] + " Å")
             .attr("x", "220")
             .attr("y", "140");
 
         percentile75.on("mouseover", () => tooltip75.style("display", "block"));
         percentile75.on("mouseout", () => tooltip75.style("display", "none"));
+
+        const svgText = svg.append("g")
+            .attr("transform", "translate(450, 30)")
+            .attr("width", 350)
+            .attr("height", dimensions.height * 2)
+
+        svgText.append("foreignObject")
+            .attr("width", 300)
+            .attr("height", dimensions.height * 2)
+            .append("xhtml:div")
+            .style("font", "14px 'Helvetica Neue'")
+            .html(`
+                <p>Alias irure aliquam, facilisi taciti tenetur rutrum consequat impedit! Nisl tortor voluptates! Felis scelerisque, anim sollicitudin nostra sem, aliquet doloremque diamlorem magnam provident elit? Nulla lobortis varius omnis tempus asperiores? Ratione omnis, nibh repellat? Netus minima, doloremque veniam dolorem accusamus, porttitor lacus taciti modi senectus? Fugit ut voluptates. Natoque cupidatat.
+                <p style="color: orange; border: 3px solid orange; border-radius: 6px; padding: 4px 16px; font-style: italic">${localResolutionStats.warnings.mapping}<p>
+                <p style="color: orangered; border: 3px solid orangered; border-radius: 6px; padding: 4px 16px; font-style: italic">${localResolutionStats.errors.processing}<p>
+            `)
     }, []);
 
     return svgRef;
