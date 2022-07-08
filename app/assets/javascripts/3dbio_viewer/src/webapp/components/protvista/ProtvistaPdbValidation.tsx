@@ -39,13 +39,14 @@ function useGrid() {
     React.useEffect(() => {
         if (!svgRef.current) return;
 
-        const numRows = modelQualityStats.graph.axis_y.categories.length;
-        const numCols = modelQualityStats.graph.axis_x.categories.length;
         const { axis_x, axis_y } = modelQualityStats.graph;
-
+        const emvStatsCategories = modelQualityStats.data.categories;
+        const numRows = axis_y.categories.length;
+        const numCols = axis_x.categories.length;
+        
         const gridData = () => {
             let i = 0;
-            const data: gridData[][] = [];
+            const data: GridData[][] = [];
             const width = 80;
             const height = 60;
             let xPos = 1;
@@ -58,8 +59,8 @@ function useGrid() {
                         y: yPos,
                         width: width,
                         height: height,
-                        value: Number(modelQualityStats.data.categories[i]?.count),
-                        color: String(modelQualityStats.data.categories[i]?.color),
+                        value: Number(emvStatsCategories[i]?.count),
+                        color: String(emvStatsCategories[i]?.color),
                     });
                     xPos += width;
                     i++;
@@ -69,71 +70,81 @@ function useGrid() {
             }
             return data;
         };
-    
+
         const grid = d3
             .select(svgRef.current)
             .attr("width", dimensions.width * 1.5)
             .attr("height", dimensions.height * 1.5)
-            .attr("transform", "translate(" + margin.left * 3 + "," + margin.top + ")");
+            .attr("transform", "translate(" + margin.left * 3 + "," + margin.top + ")")
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        const x_axis = grid.append("g")
-        const y_axis = grid.append("g")
+        const x_axis = grid.append("g");
+        const y_axis = grid.append("g");
 
-        x_axis.append("line")
+        x_axis
+            .append("line")
             .attr("x1", "20")
             .attr("y1", "270")
             .attr("x2", "290")
             .attr("y2", "270")
-            .attr("stroke", "black")
+            .attr("stroke", "black");
 
-        x_axis.append("text")
+        x_axis
+            .append("text")
             .attr("x", "110")
             .attr("y", "290")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
-            .text("-1")
+            .text("-1");
 
-        x_axis.append("text")
+        x_axis
+            .append("text")
             .attr("x", "190")
             .attr("y", "290")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
-            .text("1.5")
+            .text("1.5");
 
-        y_axis.append("line")
+        y_axis
+            .append("line")
             .attr("x1", "30")
             .attr("y1", "10")
             .attr("x2", "30")
             .attr("y2", "280")
-            .attr("stroke", "black")
+            .attr("stroke", "black");
 
-        y_axis.append("text")
+        y_axis
+            .append("text")
             .attr("x", "20")
             .attr("y", "212")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
-            .text("0")
+            .text("0");
 
-        y_axis.append("text")
+        y_axis
+            .append("text")
             .attr("x", "15")
             .attr("y", "155")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
-            .text("0.25")
+            .text("0.25");
 
-        y_axis.append("text")
+        y_axis
+            .append("text")
             .attr("x", "15")
             .attr("y", "95")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
-            .text("0.45")
+            .text("0.45");
 
         grid.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 20)
-            .attr("x", -20)
+            .attr("y", 5)
+            .attr("x", 20)
             .style("text-anchor", "middle")
             .attr("font-size", "0.75em")
+            .attr("transform", "rotate(90deg)")
             .text(axis_y.axis_name);
 
         grid.append("text")
@@ -229,12 +240,14 @@ function useBar() {
     React.useEffect(() => {
         if (!svgRef.current) return;
 
+        const [_resolutionMedian, quartile25, quartile75] = localResolutionStats.data.metrics
+
         const svg = d3
             .select(svgRef.current)
             .attr("width", dimensions.width * 2)
             .attr("height", dimensions.height * 2);
 
-        const svgBar = svg.append("g")
+        const svgBar = svg.append("g");
 
         const bar = svgBar
             .append("rect")
@@ -250,22 +263,26 @@ function useBar() {
         mainGradient.append("stop").attr("stop-color", "blue").attr("offset", "1");
         bar.attr("fill", "url(#mainGradient)");
 
-        svgBar.append("text")
+        svgBar
+            .append("text")
             .attr("transform", "translate(20, 45)")
             .style("text-anchor", "middle")
             .text("Per 0");
 
-        svgBar.append("text")
+        svgBar
+            .append("text")
             .attr("transform", "translate(" + dimensions.width * 0.25 + ", 45)")
             .style("text-anchor", "middle")
             .text("Per 25");
 
-        svgBar.append("text")
+        svgBar
+            .append("text")
             .attr("transform", "translate(" + dimensions.width * 0.75 + ", 45)")
             .style("text-anchor", "middle")
             .text("Per 75");
 
-        svgBar.append("text")
+        svgBar
+            .append("text")
             .attr("transform", "translate(" + dimensions.width + ", 45)")
             .style("text-anchor", "middle")
             .text("Per 100");
@@ -315,7 +332,7 @@ function useBar() {
 
         tooltip25
             .append("text")
-            .text("Quartile-25: " + localResolutionStats.data.metrics[1]?.["quartile 25"] + " Å")
+            .text("Quartile-25: " + quartile25 + " Å")
             .attr("x", "40")
             .attr("y", "140");
 
@@ -350,34 +367,35 @@ function useBar() {
 
         tooltip75
             .append("text")
-            .text("Quartile-75: " + localResolutionStats.data.metrics[2]?.["quartile 75"] + " Å")
+            .text("Quartile-75: " + quartile75 + " Å")
             .attr("x", "220")
             .attr("y", "140");
 
         percentile75.on("mouseover", () => tooltip75.style("display", "block"));
         percentile75.on("mouseout", () => tooltip75.style("display", "none"));
 
-        const svgText = svg.append("g")
+        const svgText = svg
+            .append("g")
             .attr("transform", "translate(450, 30)")
             .attr("width", 350)
-            .attr("height", dimensions.height * 2)
+            .attr("height", dimensions.height * 2);
 
-        svgText.append("foreignObject")
+        svgText
+            .append("foreignObject")
             .attr("width", 300)
             .attr("height", dimensions.height * 2)
             .append("xhtml:div")
-            .style("font", "14px 'Helvetica Neue'")
-            .html(`
+            .style("font", "14px 'Helvetica Neue'").html(`
                 <p>Alias irure aliquam, facilisi taciti tenetur rutrum consequat impedit! Nisl tortor voluptates! Felis scelerisque, anim sollicitudin nostra sem, aliquet doloremque diamlorem magnam provident elit? Nulla lobortis varius omnis tempus asperiores? Ratione omnis, nibh repellat? Netus minima, doloremque veniam dolorem accusamus, porttitor lacus taciti modi senectus? Fugit ut voluptates. Natoque cupidatat.
                 <p style="color: orange; border: 3px solid orange; border-radius: 6px; padding: 4px 16px; font-style: italic">${localResolutionStats.warnings.mapping}<p>
                 <p style="color: orangered; border: 3px solid orangered; border-radius: 6px; padding: 4px 16px; font-style: italic">${localResolutionStats.errors.processing}<p>
-            `)
+            `);
     }, []);
 
     return svgRef;
 }
 
-interface gridData {
+interface GridData {
     color: string;
     height: number;
     width: number;
