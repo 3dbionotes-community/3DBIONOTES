@@ -43,7 +43,7 @@ function useGrid() {
         const emvStatsCategories = modelQualityStats.data.categories;
         const numRows = axis_y.categories.length;
         const numCols = axis_x.categories.length;
-        
+
         const gridData = () => {
             let i = 0;
             const data: GridData[][] = [];
@@ -74,7 +74,7 @@ function useGrid() {
         const grid = d3
             .select(svgRef.current)
             .attr("width", dimensions.width * 1.5)
-            .attr("height", dimensions.height * 1.5)
+            .attr("height", dimensions.height * 1.5 + 50)
             .attr("transform", "translate(" + margin.left * 3 + "," + margin.top + ")")
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -240,7 +240,7 @@ function useBar() {
     React.useEffect(() => {
         if (!svgRef.current) return;
 
-        const [_resolutionMedian, quartile25, quartile75] = localResolutionStats.data.metrics
+        const [_resolutionMedian, quartile25, quartile75] = localResolutionStats.data.metrics;
 
         const svg = d3
             .select(svgRef.current)
