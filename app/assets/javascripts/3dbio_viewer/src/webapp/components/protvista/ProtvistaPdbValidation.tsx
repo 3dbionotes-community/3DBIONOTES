@@ -359,7 +359,7 @@ function useBar() {
 
         tooltip25
             .append("text")
-            .text(`Quartile-25: ${Number(metrics["quartile 25"])}  Å`)
+            .text(`Quartile-25: ${metrics["quartile 25"] ? Number(metrics["quartile 25"]) : ''}  Å`)
             .attr("x", "40")
             .attr("y", "140");
 
@@ -394,7 +394,7 @@ function useBar() {
 
         tooltipMedian
             .append("text")
-            .text(`Resolution Median: ${Number(metrics["resolution Median"])}  Å`)
+            .text(`Resolution Median: ${metrics["resolution Median"] ? Number(metrics["resolution Median"]) : ''}  Å`)
             .attr("x", "105")
             .attr("y", "140");
 
@@ -429,7 +429,7 @@ function useBar() {
 
         tooltip75
             .append("text")
-            .text(`Quartile-75: ${Number(metrics["quartile 75"])}  Å`)
+            .text(`Quartile-75: ${metrics["quartile 75"] ? Number(metrics["quartile 75"]) : ''}  Å`)
             .attr("x", "220")
             .attr("y", "140");
 
