@@ -3,6 +3,7 @@ import * as d3Module from "d3";
 import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
 import modelQualityStats from "../../../data/repositories/emv_modelquality_stats.json";
 import localResolutionStats from "../../../data/repositories/emv_localresolution_stats.json";
+import _ from "lodash";
 
 declare global {
     const d3: typeof d3Module;
@@ -43,6 +44,13 @@ function useGrid() {
         const emvStatsCategories = modelQualityStats.data.categories;
         const numRows = axis_y.categories.length;
         const numCols = axis_x.categories.length;
+
+        const tickValue = (
+            axis: typeof modelQualityStats.graph.axis_x | typeof modelQualityStats.graph.axis_y,
+            i: number
+        ) => {
+            return String(axis.categories[i]?.value_range.maximum);
+        };
 
         const gridData = () => {
             let i = 0;
@@ -96,7 +104,7 @@ function useGrid() {
             .attr("y", "290")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
-            .text("-1");
+            .text(tickValue(axis_x, 0));
 
         x_axis
             .append("text")
@@ -104,7 +112,7 @@ function useGrid() {
             .attr("y", "290")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
-            .text("1.5");
+            .text(tickValue(axis_x, 1));
 
         y_axis
             .append("line")
@@ -120,7 +128,7 @@ function useGrid() {
             .attr("y", "212")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
-            .text("0");
+            .text(tickValue(axis_y, 0));
 
         y_axis
             .append("text")
@@ -128,7 +136,7 @@ function useGrid() {
             .attr("y", "155")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
-            .text("0.25");
+            .text(tickValue(axis_y, 1));
 
         y_axis
             .append("text")
@@ -136,7 +144,7 @@ function useGrid() {
             .attr("y", "95")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
-            .text("0.45");
+            .text(tickValue(axis_y, 2));
 
         grid.append("text")
             .attr("transform", "rotate(-90)")
@@ -240,7 +248,13 @@ function useBar() {
     React.useEffect(() => {
         if (!svgRef.current) return;
 
-        const [_resolutionMedian, quartile25, quartile75] = localResolutionStats.data.metrics;
+        type Metrics = Partial<Record<"resolution Median" | "quartile 25" | "quartile 75", number>>;
+
+        const metrics = _.reduce(
+            localResolutionStats.data.metrics,
+            (acc, metric) => _.merge(acc, metric),
+            {} as Metrics
+        );
 
         const svg = d3
             .select(svgRef.current)
@@ -332,7 +346,7 @@ function useBar() {
 
         tooltip25
             .append("text")
-            .text("Quartile-25: " + quartile25 + " Å")
+            .text(`Quartile-25: ${Number(metrics["quartile 25"])}  Å`)
             .attr("x", "40")
             .attr("y", "140");
 
@@ -367,7 +381,7 @@ function useBar() {
 
         tooltip75
             .append("text")
-            .text("Quartile-75: " + quartile75 + " Å")
+            .text(`Quartile-75: ${Number(metrics["quartile 75"])}  Å`)
             .attr("x", "220")
             .attr("y", "140");
 
