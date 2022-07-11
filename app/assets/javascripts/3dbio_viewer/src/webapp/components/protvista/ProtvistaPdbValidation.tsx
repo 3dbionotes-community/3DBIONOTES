@@ -289,6 +289,12 @@ function useBar() {
             .style("text-anchor", "middle")
             .text("Per 25");
 
+         svgBar
+            .append("text")
+            .attr("transform", "translate(" + dimensions.width * 0.5 + ", 45)")
+            .style("text-anchor", "middle")
+            .text("Per 50");
+
         svgBar
             .append("text")
             .attr("transform", "translate(" + dimensions.width * 0.75 + ", 45)")
@@ -306,6 +312,13 @@ function useBar() {
             .attr("width", 5)
             .attr("height", dimensions.height / 6)
             .attr("x", 0.25 * dimensions.width)
+            .attr("y", 50);
+
+        const median = svgBar
+            .append("rect")
+            .attr("width", 5)
+            .attr("height", dimensions.height / 6)
+            .attr("x", 0.5 * dimensions.width)
             .attr("y", 50);
 
         const percentile75 = svgBar
@@ -352,6 +365,41 @@ function useBar() {
 
         percentile25.on("mouseover", () => tooltip25.style("display", "block"));
         percentile25.on("mouseout", () => tooltip25.style("display", "none"));
+
+        const tooltipMedian = svgBar.append("g").attr("class", "median").style("display", "none");
+
+        tooltipMedian
+            .append("rect")
+            .attr("width", 210)
+            .attr("height", 30)
+            .attr("x", 100)
+            .attr("y", 120)
+            .attr("fill", "lightGray");
+
+        tooltipMedian
+            .append("line")
+            .attr("stroke", "black")
+            .attr("x1", 200)
+            .attr("x2", 150)
+            .attr("y1", 80)
+            .attr("y2", 120);
+
+        tooltipMedian
+            .append("line")
+            .attr("stroke", "black")
+            .attr("x1", 205)
+            .attr("x2", 250)
+            .attr("y1", 80)
+            .attr("y2", 120);
+
+        tooltipMedian
+            .append("text")
+            .text(`Resolution Median: ${Number(metrics["resolution Median"])}  Å`)
+            .attr("x", "105")
+            .attr("y", "140");
+
+        median.on("mouseover", () => tooltipMedian.style("display", "block"));
+        median.on("mouseout", () => tooltipMedian.style("display", "none"));
 
         const tooltip75 = svgBar.append("g").attr("class", "tooltip75").style("display", "none");
 
