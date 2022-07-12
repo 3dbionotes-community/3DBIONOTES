@@ -289,7 +289,7 @@ function useBar() {
             .style("text-anchor", "middle")
             .text("Per 25");
 
-         svgBar
+        svgBar
             .append("text")
             .attr("transform", "translate(" + dimensions.width * 0.5 + ", 45)")
             .style("text-anchor", "middle")
@@ -394,7 +394,7 @@ function useBar() {
 
         tooltipMedian
             .append("text")
-            .text(`Resolution Median: ${metrics["resolution Median"] ?? '-'}  Å`)
+            .text(`Resolution Median: ${metrics["resolution Median"] ?? "-"}  Å`)
             .attr("x", "105")
             .attr("y", "140");
 
@@ -429,7 +429,7 @@ function useBar() {
 
         tooltip75
             .append("text")
-            .text(`Quartile-75: ${metrics["quartile 75"] ?? '-'}  Å`)
+            .text(`Quartile-75: ${metrics["quartile 75"] ?? "-"}  Å`)
             .attr("x", "220")
             .attr("y", "140");
 
