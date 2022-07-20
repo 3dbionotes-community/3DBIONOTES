@@ -9,15 +9,8 @@ declare global {
     const d3: typeof d3Module;
 }
 
-const margin = {
-    top: 20,
-    right: 20,
-    bottom: 20,
-    left: 20,
-};
-
 const dimensions = {
-    width: 400,
+    width: 350,
     height: 200,
 };
 
@@ -57,7 +50,7 @@ function useGrid() {
             const data: GridData[][] = [];
             const width = 80;
             const height = 60;
-            let xPos = 1;
+            let xPos = 0;
             let yPos = height * numRows;
             for (let row = 0; row < numRows; row++) {
                 data.push([]);
@@ -73,7 +66,7 @@ function useGrid() {
                     xPos += width;
                     i++;
                 }
-                xPos = 1;
+                xPos = 0;
                 yPos -= height;
             }
             return data;
@@ -81,11 +74,10 @@ function useGrid() {
 
         const grid = d3
             .select(svgRef.current)
-            .attr("width", dimensions.width * 1.5)
-            .attr("height", dimensions.height * 1.5 + 50)
-            .attr("transform", "translate(" + margin.left * 3 + "," + margin.top + ")")
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            .attr("width", dimensions.width)
+            .attr("height", dimensions.height * 2)
+            .attr("transform", "translate(0, -80)")
+            .append("g");
 
         const x_axis = grid.append("g");
         const y_axis = grid.append("g");
@@ -93,15 +85,15 @@ function useGrid() {
         x_axis
             .append("line")
             .attr("x1", "20")
-            .attr("y1", "270")
+            .attr("y1", "300")
             .attr("x2", "290")
-            .attr("y2", "270")
+            .attr("y2", "300")
             .attr("stroke", "black");
 
         x_axis
             .append("text")
             .attr("x", "110")
-            .attr("y", "290")
+            .attr("y", "320")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
             .text(tickValue(axis_x, 0));
@@ -109,7 +101,7 @@ function useGrid() {
         x_axis
             .append("text")
             .attr("x", "190")
-            .attr("y", "290")
+            .attr("y", "320")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
             .text(tickValue(axis_x, 1));
@@ -117,15 +109,15 @@ function useGrid() {
         y_axis
             .append("line")
             .attr("x1", "30")
-            .attr("y1", "10")
+            .attr("y1", "40")
             .attr("x2", "30")
-            .attr("y2", "280")
+            .attr("y2", "310")
             .attr("stroke", "black");
 
         y_axis
             .append("text")
             .attr("x", "20")
-            .attr("y", "212")
+            .attr("y", "242")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
             .text(tickValue(axis_y, 0));
@@ -133,7 +125,7 @@ function useGrid() {
         y_axis
             .append("text")
             .attr("x", "15")
-            .attr("y", "155")
+            .attr("y", "185")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
             .text(tickValue(axis_y, 1));
@@ -141,24 +133,25 @@ function useGrid() {
         y_axis
             .append("text")
             .attr("x", "15")
-            .attr("y", "95")
+            .attr("y", "125")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
             .text(tickValue(axis_y, 2));
 
         grid.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 5)
-            .attr("x", 20)
+            .attr("y", 35)
+            .attr("x", 25)
             .style("text-anchor", "middle")
-            .attr("font-size", "0.75em")
+            .style("font-weight", "700")
+            .attr("font-size", "1em")
             .attr("transform", "rotate(90deg)")
             .text(axis_y.axis_name);
 
         grid.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 25)
-            .attr("x", -240)
+            .attr("x", -270)
             .style("text-anchor", "middle")
             .attr("font-size", "0.65em")
             .text("overfitting");
@@ -166,7 +159,7 @@ function useGrid() {
         grid.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 25)
-            .attr("x", -180)
+            .attr("x", -210)
             .style("text-anchor", "middle")
             .attr("font-size", "0.7em")
             .text("wrong");
@@ -174,38 +167,39 @@ function useGrid() {
         grid.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 25)
-            .attr("x", -60)
+            .attr("x", -90)
             .style("text-anchor", "middle")
             .attr("font-size", "0.7em")
             .text("right");
 
         grid.append("text")
-            .attr("transform", "translate(290, 290)")
+            .attr("transform", "translate(290, 320)")
             .style("text-anchor", "middle")
-            .attr("font-size", "0.75em")
+            .style("font-weight", "700")
+            .attr("font-size", "1em")
             .text(axis_x.axis_name);
 
         grid.append("text")
-            .attr("transform", "translate(70, 290)")
+            .attr("transform", "translate(70, 320)")
             .style("text-anchor", "middle")
             .attr("font-size", "0.7em")
             .text("overfitting");
 
         grid.append("text")
-            .attr("transform", "translate(150, 290)")
+            .attr("transform", "translate(150, 320)")
             .style("text-anchor", "middle")
             .attr("font-size", "0.7em")
             .text("right");
 
         grid.append("text")
-            .attr("transform", "translate(230, 290  )")
+            .attr("transform", "translate(230, 320)")
             .style("text-anchor", "middle")
             .attr("font-size", "0.7em")
             .text("wrong");
 
         const row = grid
             .append("g")
-            .attr("transform", "translate(30, -30)")
+            .attr("transform", "translate(30, 0)")
             .selectAll(".row")
             .data(gridData)
             .enter()
@@ -219,10 +213,11 @@ function useGrid() {
             .append("g")
             .attr("width", d => d.width)
             .attr("height", d => d.height)
+            .attr("onclick", d => "alert(" + d.value + ")")
+            .style("cursor", "pointer")
             .attr("class", ".cell");
 
         cell.append("rect")
-            .attr("onclick", d => "alert(" + d.value + ")")
             .attr("x", d => d.x)
             .attr("y", d => d.y)
             .attr("width", d => d.width)
@@ -231,7 +226,7 @@ function useGrid() {
             .style("stroke", "#222");
 
         cell.append("text")
-            .attr("x", d => d.x - 1 + 40)
+            .attr("x", d => d.x + 40)
             .attr("y", d => d.y + 30)
             .attr("font-size", "0.65em")
             .attr("text-anchor", "middle")
@@ -258,14 +253,14 @@ function useBar() {
 
         const svg = d3
             .select(svgRef.current)
-            .attr("width", dimensions.width * 2)
-            .attr("height", dimensions.height * 2);
+            .attr("width", dimensions.width)
+            .attr("height", dimensions.height * 2.5);
 
         const svgBar = svg.append("g");
 
         const bar = svgBar
             .append("rect")
-            .attr("width", dimensions.width)
+            .attr("width", 300)
             .attr("height", dimensions.height / 6)
             .attr("x", "20")
             .attr("y", "50");
@@ -285,25 +280,19 @@ function useBar() {
 
         svgBar
             .append("text")
-            .attr("transform", "translate(" + dimensions.width * 0.25 + ", 45)")
+            .attr("transform", "translate(" + 300 * 0.25 + ", 45)")
             .style("text-anchor", "middle")
             .text("Per 25");
 
         svgBar
             .append("text")
-            .attr("transform", "translate(" + dimensions.width * 0.5 + ", 45)")
-            .style("text-anchor", "middle")
-            .text("Per 50");
-
-        svgBar
-            .append("text")
-            .attr("transform", "translate(" + dimensions.width * 0.75 + ", 45)")
+            .attr("transform", "translate(" + 300 * 0.75 + ", 45)")
             .style("text-anchor", "middle")
             .text("Per 75");
 
         svgBar
             .append("text")
-            .attr("transform", "translate(" + dimensions.width + ", 45)")
+            .attr("transform", "translate(" + 300 + ", 45)")
             .style("text-anchor", "middle")
             .text("Per 100");
 
@@ -311,134 +300,86 @@ function useBar() {
             .append("rect")
             .attr("width", 5)
             .attr("height", dimensions.height / 6)
-            .attr("x", 0.25 * dimensions.width)
-            .attr("y", 50);
-
-        const median = svgBar
-            .append("rect")
-            .attr("width", 5)
-            .attr("height", dimensions.height / 6)
-            .attr("x", 0.5 * dimensions.width)
-            .attr("y", 50);
+            .attr("x", 0.25 * 300)
+            .attr("y", 50)
+            .style("cursor", "pointer");
 
         const percentile75 = svgBar
             .append("rect")
             .attr("width", 5)
             .attr("height", dimensions.height / 6)
-            .attr("x", 0.75 * dimensions.width)
+            .attr("x", 0.75 * 300)
             .attr("stroke", "black")
             .attr("stroke-width", 2)
             .attr("fill", "none")
-            .attr("y", 50);
+            .attr("y", 50)
+            .style("cursor", "pointer");
 
         const tooltip25 = svgBar.append("g").attr("class", "tooltip25").style("display", "none");
 
         tooltip25
             .append("rect")
             .attr("width", 170)
-            .attr("height", 30)
-            .attr("x", 30)
-            .attr("y", 120)
+            .attr("height", 70)
+            .attr("x", 10)
+            .attr("y", 100)
             .attr("fill", "lightGray");
-
-        tooltip25
-            .append("line")
-            .attr("stroke", "black")
-            .attr("x1", 100)
-            .attr("x2", 40)
-            .attr("y1", 80)
-            .attr("y2", 120);
-
-        tooltip25
-            .append("line")
-            .attr("stroke", "black")
-            .attr("x1", 105)
-            .attr("x2", 180)
-            .attr("y1", 80)
-            .attr("y2", 120);
 
         tooltip25
             .append("text")
             .text(`Quartile-25: ${metrics["quartile 25"] ?? "-"}  Å`)
-            .attr("x", "40")
+            .attr("x", "20")
+            .attr("y", "120");
+
+        tooltip25
+            .append("text")
+            .text(`Median: ${metrics["resolution Median"] ?? "-"}  Å`)
+            .attr("x", "20")
             .attr("y", "140");
+
+        tooltip25
+            .append("text")
+            .text(`Quartile-75: ${metrics["quartile 75"] ?? "-"}  Å`)
+            .attr("x", "20")
+            .attr("y", "160");
 
         percentile25.on("mouseover", () => tooltip25.style("display", "block"));
         percentile25.on("mouseout", () => tooltip25.style("display", "none"));
-
-        const tooltipMedian = svgBar.append("g").attr("class", "median").style("display", "none");
-
-        tooltipMedian
-            .append("rect")
-            .attr("width", 210)
-            .attr("height", 30)
-            .attr("x", 100)
-            .attr("y", 120)
-            .attr("fill", "lightGray");
-
-        tooltipMedian
-            .append("line")
-            .attr("stroke", "black")
-            .attr("x1", 200)
-            .attr("x2", 150)
-            .attr("y1", 80)
-            .attr("y2", 120);
-
-        tooltipMedian
-            .append("line")
-            .attr("stroke", "black")
-            .attr("x1", 205)
-            .attr("x2", 250)
-            .attr("y1", 80)
-            .attr("y2", 120);
-
-        tooltipMedian
-            .append("text")
-            .text(`Resolution Median: ${metrics["resolution Median"] ?? "-"}  Å`)
-            .attr("x", "105")
-            .attr("y", "140");
-
-        median.on("mouseover", () => tooltipMedian.style("display", "block"));
-        median.on("mouseout", () => tooltipMedian.style("display", "none"));
 
         const tooltip75 = svgBar.append("g").attr("class", "tooltip75").style("display", "none");
 
         tooltip75
             .append("rect")
             .attr("width", 170)
-            .attr("height", 30)
-            .attr("x", 210)
-            .attr("y", 120)
+            .attr("height", 70)
+            .attr("x", 160)
+            .attr("y", 100)
             .attr("fill", "lightGray");
 
         tooltip75
-            .append("line")
-            .attr("stroke", "black")
-            .attr("x1", 300)
-            .attr("x2", 240)
-            .attr("y1", 80)
-            .attr("y2", 120);
+            .append("text")
+            .text(`Quartile-25: ${metrics["quartile 25"] ?? "-"}  Å`)
+            .attr("x", "170")
+            .attr("y", "120");
 
         tooltip75
-            .append("line")
-            .attr("stroke", "black")
-            .attr("x1", 305)
-            .attr("x2", 360)
-            .attr("y1", 80)
-            .attr("y2", 120);
+            .append("text")
+            .text(`Median: ${metrics["resolution Median"] ?? "-"}  Å`)
+            .attr("x", "170")
+            .attr("y", "140");
 
         tooltip75
             .append("text")
             .text(`Quartile-75: ${metrics["quartile 75"] ?? "-"}  Å`)
-            .attr("x", "220")
-            .attr("y", "140");
+            .attr("x", "170")
+            .attr("y", "160");
 
         percentile75.on("mouseover", () => tooltip75.style("display", "block"));
         percentile75.on("mouseout", () => tooltip75.style("display", "none"));
 
         const svgText = svg
             .append("g")
-            .attr("transform", "translate(450, 30)")
+            .attr("transform", "translate(10, 170)")
             .attr("width", 350)
             .attr("height", dimensions.height * 2);
 
@@ -447,7 +388,7 @@ function useBar() {
             .attr("width", 300)
             .attr("height", dimensions.height * 2)
             .append("xhtml:div")
-            .style("font", "14px 'Helvetica Neue'").html(`
+            .style("font-size", "14px").html(`
                 <p>Alias irure aliquam, facilisi taciti tenetur rutrum consequat impedit! Nisl tortor voluptates! Felis scelerisque, anim sollicitudin nostra sem, aliquet doloremque diamlorem magnam provident elit? Nulla lobortis varius omnis tempus asperiores? Ratione omnis, nibh repellat? Netus minima, doloremque veniam dolorem accusamus, porttitor lacus taciti modi senectus? Fugit ut voluptates. Natoque cupidatat.
                 <p style="color: orange; border: 3px solid orange; border-radius: 6px; padding: 4px 16px; font-style: italic">${localResolutionStats.warnings.mapping}<p>
                 <p style="color: orangered; border: 3px solid orangered; border-radius: 6px; padding: 4px 16px; font-style: italic">${localResolutionStats.errors.processing}<p>
