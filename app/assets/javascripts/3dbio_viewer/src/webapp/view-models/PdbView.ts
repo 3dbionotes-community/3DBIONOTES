@@ -1,7 +1,6 @@
 import _ from "lodash";
 import React from "react";
 import { renderToString } from "react-dom/server";
-
 import { Color } from "../../domain/entities/Color";
 import { getCustomTracksFromPdb, Pdb } from "../../domain/entities/Pdb";
 import { Shape } from "../../domain/entities/Shape";
@@ -10,6 +9,7 @@ import { Variant, Variants } from "../../domain/entities/Variant";
 import { GenericTooltip } from "../components/protvista/GenericTooltip";
 import { BlockDef } from "../components/protvista/Protvista.types";
 import { Tooltip } from "../components/protvista/Tooltip";
+import { trackDefinitions } from "../../domain/definitions/tracks";
 
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
 
@@ -95,7 +95,9 @@ export function getPdbView(
         .compact()
         .value();
 
-    const variants = getVariants(pdb);
+    const variants = _(block.tracks).some(track => track === trackDefinitions.variants)
+        ? getVariants(pdb)
+        : undefined;
 
     return {
         ...pdb,
