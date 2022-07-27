@@ -243,13 +243,12 @@ function useBar() {
     React.useEffect(() => {
         if (!svgRef.current) return;
 
-        type Metrics = Partial<Record<"resolution Median" | "quartile 25" | "quartile 75", number>>;
-
-        const metrics = _.reduce(
-            localResolutionStats.data.metrics,
-            (acc, metric) => _.merge(acc, metric),
-            {} as Metrics
-        );
+        const {
+            rank,
+            resolutionMedian,
+            quartile25,
+            quartile75,
+        } = localResolutionStats.data.metrics;
 
         const svg = d3
             .select(svgRef.current)
@@ -280,15 +279,9 @@ function useBar() {
 
         svgBar
             .append("text")
-            .attr("transform", "translate(" + 300 * 0.25 + ", 45)")
+            .attr("transform", "translate(" + (300 * rank) / 100 + ", 45)")
             .style("text-anchor", "middle")
-            .text("Per 25");
-
-        svgBar
-            .append("text")
-            .attr("transform", "translate(" + 300 * 0.75 + ", 45)")
-            .style("text-anchor", "middle")
-            .text("Per 75");
+            .text("Rank: " + rank);
 
         svgBar
             .append("text")
@@ -296,86 +289,47 @@ function useBar() {
             .style("text-anchor", "middle")
             .text("Per 100");
 
-        const percentile25 = svgBar
+        const percentileRank = svgBar
             .append("rect")
             .attr("width", 5)
             .attr("height", dimensions.height / 6)
-            .attr("x", 0.25 * 300)
+            .attr("x", (rank / 100) * 300)
             .attr("y", 50)
             .style("cursor", "pointer");
 
-        const percentile75 = svgBar
-            .append("rect")
-            .attr("width", 5)
-            .attr("height", dimensions.height / 6)
-            .attr("x", 0.75 * 300)
-            .attr("stroke", "black")
-            .attr("stroke-width", 2)
-            .attr("fill", "none")
-            .attr("y", 50)
-            .style("cursor", "pointer");
+        const rankTooltip = svgBar
+            .append("g")
+            .attr("class", "rankTooltip")
+            .style("display", "none");
 
-        const tooltip25 = svgBar.append("g").attr("class", "tooltip25").style("display", "none");
-
-        tooltip25
+        rankTooltip
             .append("rect")
             .attr("width", 170)
             .attr("height", 70)
-            .attr("x", 10)
+            .attr("x", rank - 20)
             .attr("y", 100)
             .attr("fill", "lightGray");
 
-        tooltip25
+        rankTooltip
             .append("text")
-            .text(`Quartile-25: ${metrics["quartile 25"] ?? "-"}  Å`)
-            .attr("x", "20")
+            .text("Quartile-25: " + quartile25 + "Å")
+            .attr("x", rank - 10)
             .attr("y", "120");
 
-        tooltip25
+        rankTooltip
             .append("text")
-            .text(`Median: ${metrics["resolution Median"] ?? "-"}  Å`)
-            .attr("x", "20")
+            .text("Median: " + resolutionMedian + "Å")
+            .attr("x", rank - 10)
             .attr("y", "140");
 
-        tooltip25
+        rankTooltip
             .append("text")
-            .text(`Quartile-75: ${metrics["quartile 75"] ?? "-"}  Å`)
-            .attr("x", "20")
+            .text("Quartile-75: " + quartile75 + "Å")
+            .attr("x", rank - 10)
             .attr("y", "160");
 
-        percentile25.on("mouseover", () => tooltip25.style("display", "block"));
-        percentile25.on("mouseout", () => tooltip25.style("display", "none"));
-
-        const tooltip75 = svgBar.append("g").attr("class", "tooltip75").style("display", "none");
-
-        tooltip75
-            .append("rect")
-            .attr("width", 170)
-            .attr("height", 70)
-            .attr("x", 160)
-            .attr("y", 100)
-            .attr("fill", "lightGray");
-
-        tooltip75
-            .append("text")
-            .text(`Quartile-25: ${metrics["quartile 25"] ?? "-"}  Å`)
-            .attr("x", "170")
-            .attr("y", "120");
-
-        tooltip75
-            .append("text")
-            .text(`Median: ${metrics["resolution Median"] ?? "-"}  Å`)
-            .attr("x", "170")
-            .attr("y", "140");
-
-        tooltip75
-            .append("text")
-            .text(`Quartile-75: ${metrics["quartile 75"] ?? "-"}  Å`)
-            .attr("x", "170")
-            .attr("y", "160");
-
-        percentile75.on("mouseover", () => tooltip75.style("display", "block"));
-        percentile75.on("mouseout", () => tooltip75.style("display", "none"));
+        percentileRank.on("mouseover", () => rankTooltip.style("display", "block"));
+        percentileRank.on("mouseout", () => rankTooltip.style("display", "none"));
 
         const svgText = svg
             .append("g")
