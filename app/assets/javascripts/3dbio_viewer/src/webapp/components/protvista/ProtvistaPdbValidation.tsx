@@ -45,36 +45,37 @@ function useGrid() {
             return String(axis.categories[i]?.value_range.maximum);
         };
 
+        const cellWidth = 95;
+        const cellHeight = 75;
+
         const gridData = () => {
             let i = 0;
             const data: GridData[][] = [];
-            const width = 80;
-            const height = 60;
             let xPos = 0;
-            let yPos = height * numRows;
+            let yPos = cellHeight * numRows;
             for (let row = 0; row < numRows; row++) {
                 data.push([]);
                 for (let column = 0; column < numCols; column++) {
                     data[row]?.push({
                         x: xPos,
                         y: yPos,
-                        width: width,
-                        height: height,
+                        width: cellWidth,
+                        height: cellHeight,
                         value: Number(emvStatsCategories[i]?.count),
                         color: String(emvStatsCategories[i]?.color),
                     });
-                    xPos += width;
+                    xPos += cellWidth;
                     i++;
                 }
                 xPos = 0;
-                yPos -= height;
+                yPos -= cellHeight;
             }
             return data;
         };
 
         const grid = d3
             .select(svgRef.current)
-            .attr("width", dimensions.width)
+            .attr("width", dimensions.width + 10)
             .attr("height", dimensions.height * 2)
             .attr("transform", "translate(0, -80)")
             .append("g");
@@ -85,23 +86,23 @@ function useGrid() {
         x_axis
             .append("line")
             .attr("x1", "20")
-            .attr("y1", "300")
-            .attr("x2", "290")
-            .attr("y2", "300")
+            .attr("y1", "375")
+            .attr("x2", cellWidth * 3 + 50)
+            .attr("y2", "375")
             .attr("stroke", "black");
 
         x_axis
             .append("text")
-            .attr("x", "110")
-            .attr("y", "320")
+            .attr("x", cellWidth + 30)
+            .attr("y", "395")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
             .text(tickValue(axis_x, 0));
 
         x_axis
             .append("text")
-            .attr("x", "190")
-            .attr("y", "320")
+            .attr("x", cellWidth * 2 + 30)
+            .attr("y", "395")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
             .text(tickValue(axis_x, 1));
@@ -111,13 +112,13 @@ function useGrid() {
             .attr("x1", "30")
             .attr("y1", "40")
             .attr("x2", "30")
-            .attr("y2", "310")
+            .attr("y2", cellHeight * 5 + 10)
             .attr("stroke", "black");
 
         y_axis
             .append("text")
             .attr("x", "20")
-            .attr("y", "242")
+            .attr("y", "304")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
             .text(tickValue(axis_y, 0));
@@ -125,7 +126,7 @@ function useGrid() {
         y_axis
             .append("text")
             .attr("x", "15")
-            .attr("y", "185")
+            .attr("y", "230")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
             .text(tickValue(axis_y, 1));
@@ -133,7 +134,7 @@ function useGrid() {
         y_axis
             .append("text")
             .attr("x", "15")
-            .attr("y", "125")
+            .attr("y", "155")
             .attr("font-size", "0.75em")
             .style("text-anchor", "middle")
             .text(tickValue(axis_y, 2));
@@ -151,50 +152,50 @@ function useGrid() {
         grid.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 25)
-            .attr("x", -270)
+            .attr("x", -340)
             .style("text-anchor", "middle")
-            .attr("font-size", "0.65em")
+            .attr("font-size", "0.8em")
             .text("overfitting");
 
         grid.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 25)
-            .attr("x", -210)
+            .attr("x", -265)
             .style("text-anchor", "middle")
-            .attr("font-size", "0.7em")
+            .attr("font-size", "0.9em")
             .text("wrong");
 
         grid.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 25)
-            .attr("x", -90)
+            .attr("x", -110)
             .style("text-anchor", "middle")
-            .attr("font-size", "0.7em")
+            .attr("font-size", "0.9em")
             .text("right");
 
         grid.append("text")
-            .attr("transform", "translate(290, 320)")
+            .attr("transform", "translate(330, 395)")
             .style("text-anchor", "middle")
             .style("font-weight", "700")
             .attr("font-size", "1em")
             .text(axis_x.axis_name);
 
         grid.append("text")
-            .attr("transform", "translate(70, 320)")
+            .attr("transform", "translate(80, 395)")
             .style("text-anchor", "middle")
-            .attr("font-size", "0.7em")
+            .attr("font-size", "0.9em")
             .text("overfitting");
 
         grid.append("text")
-            .attr("transform", "translate(150, 320)")
+            .attr("transform", "translate(175, 395)")
             .style("text-anchor", "middle")
-            .attr("font-size", "0.7em")
+            .attr("font-size", "0.9em")
             .text("right");
 
         grid.append("text")
-            .attr("transform", "translate(230, 320)")
+            .attr("transform", "translate(270, 395)")
             .style("text-anchor", "middle")
-            .attr("font-size", "0.7em")
+            .attr("font-size", "0.9em")
             .text("wrong");
 
         const row = grid
@@ -226,9 +227,9 @@ function useGrid() {
             .style("stroke", "#222");
 
         cell.append("text")
-            .attr("x", d => d.x + 40)
-            .attr("y", d => d.y + 30)
-            .attr("font-size", "0.65em")
+            .attr("x", d => d.x + cellWidth / 2)
+            .attr("y", d => d.y + cellHeight / 2)
+            .attr("font-size", "1.25em")
             .attr("text-anchor", "middle")
             .attr("alignment-baseline", "central")
             .text(d => d.value);
@@ -262,7 +263,7 @@ function useBar() {
             .attr("width", 300)
             .attr("height", dimensions.height / 6)
             .attr("x", "20")
-            .attr("y", "50");
+            .attr("y", "90");
 
         const svgDefs = svgBar.append("defs");
         const mainGradient = svgDefs.append("linearGradient").attr("id", "mainGradient");
@@ -273,19 +274,19 @@ function useBar() {
 
         svgBar
             .append("text")
-            .attr("transform", "translate(20, 45)")
+            .attr("transform", "translate(20, 85)")
             .style("text-anchor", "middle")
             .text("Per 0");
 
         svgBar
             .append("text")
-            .attr("transform", "translate(" + (300 * rank) / 100 + ", 45)")
+            .attr("transform", "translate(" + (300 * rank) / 100 + ", 85)")
             .style("text-anchor", "middle")
             .text("Rank: " + rank);
 
         svgBar
             .append("text")
-            .attr("transform", "translate(" + 300 + ", 45)")
+            .attr("transform", "translate(" + 300 + ", 85)")
             .style("text-anchor", "middle")
             .text("Per 100");
 
@@ -294,7 +295,7 @@ function useBar() {
             .attr("width", 5)
             .attr("height", dimensions.height / 6)
             .attr("x", (rank / 100) * 300)
-            .attr("y", 50)
+            .attr("y", 90)
             .style("cursor", "pointer");
 
         const rankTooltip = svgBar
@@ -306,34 +307,39 @@ function useBar() {
             .append("rect")
             .attr("width", 170)
             .attr("height", 70)
-            .attr("x", rank - 20)
-            .attr("y", 100)
-            .attr("fill", "lightGray");
+            .attr("rx", 10)
+            .attr("fill-opacity", "0.5")
+            .attr("fill", "#000")
+            .attr("x", rank + 20)
+            .attr("y", 0);
 
         rankTooltip
             .append("text")
             .text("Quartile-25: " + quartile25 + "Å")
-            .attr("x", rank - 10)
-            .attr("y", "120");
+            .attr("x", rank + 30)
+            .attr("y", "20")
+            .attr("fill", "white");
 
         rankTooltip
             .append("text")
             .text("Median: " + resolutionMedian + "Å")
-            .attr("x", rank - 10)
-            .attr("y", "140");
+            .attr("x", rank + 30)
+            .attr("y", "40")
+            .attr("fill", "white");
 
         rankTooltip
             .append("text")
             .text("Quartile-75: " + quartile75 + "Å")
-            .attr("x", rank - 10)
-            .attr("y", "160");
+            .attr("x", rank + 30)
+            .attr("y", "60")
+            .attr("fill", "white");
 
         percentileRank.on("mouseover", () => rankTooltip.style("display", "block"));
         percentileRank.on("mouseout", () => rankTooltip.style("display", "none"));
 
         const svgText = svg
             .append("g")
-            .attr("transform", "translate(10, 170)")
+            .attr("transform", "translate(10, 140)")
             .attr("width", 350)
             .attr("height", dimensions.height * 2);
 
