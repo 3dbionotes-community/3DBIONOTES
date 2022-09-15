@@ -12,6 +12,7 @@ import { useAppContext } from "../../contexts/app-context";
 import { ViewMoreDialog } from "./ViewMoreDialog";
 import { useBooleanState } from "../../hooks/useBoolean";
 import { sendAnalytics } from "../../../utils/analytics";
+import { Dialog } from "./Dialog";
 
 export interface StructuresTableProps {
     search: string;
@@ -184,14 +185,16 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 components={components}
                 componentsProps={componentsProps}
             />
-            {isDialogOpen && detailsOptions && (
+            {detailsOptions && (
                 <ViewMoreDialog
+                    open={isDialogOpen}
                     onClose={closeDialog}
                     expandedAccordion={detailsOptions.field}
                     row={detailsOptions.structure}
                     data={data}
                 />
             )}
+            <Dialog open={false} onClose={closeDialog} title={"Ligand IDR"} />
         </div>
     );
 });
