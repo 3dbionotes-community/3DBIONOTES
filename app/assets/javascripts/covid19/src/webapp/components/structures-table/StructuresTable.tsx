@@ -120,7 +120,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
             openIDR();
             setIDROptions(options);
         },
-        [openViewMore]
+        [openIDR]
     );
 
     const columns = React.useMemo(() => {

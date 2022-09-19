@@ -45,9 +45,8 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
             field="ligands"
         >
             {ligands.map(ligand => (
-                <div>
+                <div key={ligand.id}>
                     <Link
-                        key={ligand.id}
                         tooltip={ligand.tooltip}
                         url={ligand.url}
                         text={`${ligand.name} (${ligand.id})`}
