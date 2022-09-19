@@ -21,7 +21,9 @@ export const Wrapper: React.FC<WrapperProps> = React.memo(props => {
         <Container moreDetails={moreDetails}>
             <ul ref={ref}>{props.children}</ul>
             {height >= rowHeight - badgeHeight && moreDetails && (
-                <BadgeDetails onClick={onClickDetails} row={row} field={field} />
+                <div style={{ marginLeft: "40px" }}>
+                    <BadgeDetails onClick={onClickDetails} row={row} field={field} />
+                </div>
             )}
         </Container>
     );
