@@ -149,7 +149,7 @@ const RefDocLi: React.FC<RefDocLiProps> = React.memo(props => {
     );
 });
 
-interface ListItemProps {
+export interface ListItemProps {
     name: string;
     value?: string;
 }

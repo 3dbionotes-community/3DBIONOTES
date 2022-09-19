@@ -1,18 +1,18 @@
 import React from "react";
 import i18n from "../../../../utils/i18n";
+import { BadgeLigands } from "../badge/BadgeLigands";
 import { CellProps, styles } from "../Columns";
 import { Link } from "../Link";
 import { Wrapper } from "./Wrapper";
 
 export const LigandsCell: React.FC<CellProps> = React.memo(props => {
-    const { row, onClickDetails, moreDetails } = props;
+    const { row, onClickDetails, onClickLigands, moreDetails } = props;
 
     const ligands = React.useMemo(() => {
         return row.ligands.map(ligand => {
             return {
-                id: ligand.id,
+                ...ligand,
                 url: ligand.externalLink,
-                name: ligand.name,
                 tooltip: (
                     <React.Fragment>
                         <div>
@@ -45,12 +45,17 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
             field="ligands"
         >
             {ligands.map(ligand => (
-                <Link
-                    key={ligand.id}
-                    tooltip={ligand.tooltip}
-                    url={ligand.url}
-                    text={`${ligand.name} (${ligand.id})`}
-                />
+                <div>
+                    <Link
+                        key={ligand.id}
+                        tooltip={ligand.tooltip}
+                        url={ligand.url}
+                        text={`${ligand.name} (${ligand.id})`}
+                    />
+                    <div>
+                        <BadgeLigands ligand={ligand} onClick={onClickLigands} />
+                    </div>
+                </div>
             ))}
         </Wrapper>
     );

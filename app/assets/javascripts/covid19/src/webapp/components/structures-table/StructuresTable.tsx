@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps, GridSortModel } from "@material-ui/data-grid";
-import { Structure, updateStructures } from "../../../domain/entities/Covid19Info";
+import { Ligand, Structure, updateStructures } from "../../../domain/entities/Covid19Info";
 import { Field, getColumns } from "./Columns";
 import { Covid19Filter, Id } from "../../../domain/entities/Covid19Info";
 import { Toolbar, ToolbarProps } from "./Toolbar";
@@ -12,7 +12,7 @@ import { useAppContext } from "../../contexts/app-context";
 import { ViewMoreDialog } from "./ViewMoreDialog";
 import { useBooleanState } from "../../hooks/useBoolean";
 import { sendAnalytics } from "../../../utils/analytics";
-import { Dialog } from "./Dialog";
+import { IDRDialog } from "./IDRDialog";
 
 export interface StructuresTableProps {
     search: string;
@@ -34,11 +34,16 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const [pageSize, setPageSize] = React.useState(pageSizes[0]);
     const classes = useStyles();
 
-    const [isDialogOpen, { enable: openDialog, disable: closeDialog }] = useBooleanState(false);
+    const [isViewMoreOpen, { enable: openViewMore, disable: closeViewMore }] = useBooleanState(
+        false
+    );
     const [detailsOptions, setDetailsOptions] = React.useState<FieldStructure>();
+    const [idrOptions, setIDROptions] = React.useState<{ ligand: Ligand }>();
+    const [isIDROpen, { enable: openIDR, disable: closeIDR }] = useBooleanState(false);
     const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
 
     const [filterState, setFilterState0] = React.useState(initialFilterState);
+
     const setFilterState = React.useCallback((value: Covid19Filter) => {
         setPage(0);
         setFilterState0(value);
@@ -98,15 +103,32 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 category: "dialog",
                 label: `Details. Field: ${options.field}, PDB: ${options.row.pdb?.id}`,
             });
-            openDialog();
+            openViewMore();
             setDetailsOptions({ field: options.field, structure: options.row });
         },
-        [openDialog]
+        [openViewMore]
+    );
+
+    const showIDRDialog = React.useCallback(
+        (options: { ligand: Ligand }) => {
+            sendAnalytics({
+                type: "event",
+                action: "open",
+                category: "dialog",
+                label: `Ligand IDR. Ligand: {}`,
+            });
+            openIDR();
+            setIDROptions(options);
+        },
+        [openViewMore]
     );
 
     const columns = React.useMemo(() => {
-        return getColumns(data, { onClickDetails: showDetailsDialog });
-    }, [data, showDetailsDialog]);
+        return getColumns(data, {
+            onClickDetails: showDetailsDialog,
+            onClickLigands: showIDRDialog,
+        });
+    }, [data, showDetailsDialog, showIDRDialog]);
 
     const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
 
@@ -187,14 +209,14 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
             />
             {detailsOptions && (
                 <ViewMoreDialog
-                    open={isDialogOpen}
-                    onClose={closeDialog}
+                    open={isViewMoreOpen}
+                    onClose={closeViewMore}
                     expandedAccordion={detailsOptions.field}
                     row={detailsOptions.structure}
                     data={data}
                 />
             )}
-            <Dialog open={false} onClose={closeDialog} title={"Ligand IDR"} />
+            <IDRDialog open={isIDROpen} onClose={closeIDR} idrOptions={idrOptions} />
         </div>
     );
 });

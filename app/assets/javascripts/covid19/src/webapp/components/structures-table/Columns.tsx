@@ -7,7 +7,12 @@ import {
 } from "@material-ui/data-grid";
 import _ from "lodash";
 import i18n from "../../../utils/i18n";
-import { Covid19Info, Structure, ValidationSource } from "../../../domain/entities/Covid19Info";
+import {
+    Covid19Info,
+    Ligand,
+    Structure,
+    ValidationSource,
+} from "../../../domain/entities/Covid19Info";
 import { TitleCell } from "./cells/TitleCell";
 import { DetailsCell } from "./cells/DetailsCell";
 import { PdbCell } from "./cells/PdbCell";
@@ -23,8 +28,9 @@ export interface CellProps {
     data: Covid19Info;
     row: Row;
     moreDetails?: boolean;
-    onClickDetails?: (options: { row: Structure; field: Field }) => void;
     validationSources?: ValidationSource[];
+    onClickDetails?: (options: { row: Structure; field: Field }) => void;
+    onClickLigands?: (options: { ligand: Ligand }) => void;
 }
 
 export interface ColumnAttrs<F extends Field>
@@ -134,7 +140,10 @@ export const columnsBase: Columns = [
 
 export function getColumns(
     data: Covid19Info,
-    options: { onClickDetails: (options: { row: Structure; field: Field }) => void }
+    options: {
+        onClickDetails: (options: { row: Structure; field: Field }) => void;
+        onClickLigands: (options: { ligand: Ligand }) => void;
+    }
 ): { definition: GridColDef[]; base: Columns } {
     const definition = columnsBase.map(
         (column): GridColDef => {
@@ -150,6 +159,7 @@ export function getColumns(
                                 row={params.row as Row}
                                 data={data}
                                 onClickDetails={options.onClickDetails}
+                                onClickLigands={options.onClickLigands}
                                 validationSources={data.validationSources}
                             />
                         </div>

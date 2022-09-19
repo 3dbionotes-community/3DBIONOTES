@@ -13,7 +13,9 @@ export const NoWrapTypography = styled(Typography)`
 export const Link: React.FC<LinkProps> = React.memo(props => {
     const { text, url, tooltip, children, style } = props;
     if (props.url) {
+        //BADGE LINK
         if (tooltip === undefined || typeof tooltip === "string") {
+            // DETAILS
             return (
                 <a
                     title={tooltip}
@@ -27,6 +29,7 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
                 </a>
             );
         } else {
+            //ORGANISMS AND LIGANDS
             return (
                 <HtmlTooltip title={tooltip}>
                     <li>
@@ -54,6 +57,7 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
             );
         } else {
             return (
+                //WITH NOTHING AND ENTITY
                 <HtmlTooltip title={tooltip}>
                     <li>
                         <NoWrapTypography>{text}</NoWrapTypography>
