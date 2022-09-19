@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-13T08:01:25.803Z\n"
-"PO-Revision-Date: 2022-06-13T08:01:25.803Z\n"
+"POT-Creation-Date: 2022-09-19T07:51:45.984Z\n"
+"PO-Revision-Date: 2022-09-19T07:51:45.984Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -78,6 +78,18 @@ msgid "Save as CSV"
 msgstr ""
 
 msgid "Save as JSON"
+msgstr ""
+
+msgid "Ligand IDR"
+msgstr ""
+
+msgid "Assay"
+msgstr ""
+
+msgid "Screens"
+msgstr ""
+
+msgid "Compound"
 msgstr ""
 
 msgid "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
@@ -232,6 +244,9 @@ msgid "Entity is sybody"
 msgstr ""
 
 msgid "Name"
+msgstr ""
+
+msgid "IDR"
 msgstr ""
 
 msgid "Scientific name"

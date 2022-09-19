@@ -1,28 +1,37 @@
 import React from "react";
+import styled from "styled-components";
 import { Dialog as MuiDialog, DialogContent, DialogTitle, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
-import styled from "styled-components";
 
 export interface DialogProps {
+    className?: string;
     title: string;
     open: boolean;
+    maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
     onClose(): void;
 }
 
-export const Dialog: React.FC<DialogProps> = React.memo(({ onClose, title, open, children }) => {
-    return (
-        <StyledDialog open={open} onClose={onClose} maxWidth="md">
-            <DialogTitle>
-                <Title title={title}>{title}</Title>
-                <IconButton onClick={onClose}>
-                    <Close />
-                </IconButton>
-            </DialogTitle>
+export const Dialog: React.FC<DialogProps> = React.memo(
+    ({ onClose, className, title, open, children, maxWidth }) => {
+        return (
+            <StyledDialog
+                className={className}
+                open={open}
+                onClose={onClose}
+                maxWidth={maxWidth ?? "md"}
+            >
+                <DialogTitle>
+                    <Title title={title}>{title}</Title>
+                    <IconButton onClick={onClose}>
+                        <Close />
+                    </IconButton>
+                </DialogTitle>
 
-            <DialogContent>{children}</DialogContent>
-        </StyledDialog>
-    );
-});
+                <DialogContent>{children}</DialogContent>
+            </StyledDialog>
+        );
+    }
+);
 
 const StyledDialog = styled(MuiDialog)`
     .MuiDialogTitle-root {
@@ -42,7 +51,7 @@ const StyledDialog = styled(MuiDialog)`
     }
 
     .MuiDialogContent-root {
-        padding: 24px 24px !important;
+        padding: 24px;
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch;
     }
