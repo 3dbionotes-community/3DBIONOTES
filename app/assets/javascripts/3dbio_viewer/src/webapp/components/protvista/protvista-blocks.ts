@@ -4,6 +4,7 @@ import { BasicInfoViewer } from "../BasicInfoViewer";
 import { trackDefinitions as tracks } from "../../../domain/definitions/tracks";
 import { BlockDef } from "./Protvista.types";
 import { profiles } from "../../../domain/entities/Profile";
+import { ProtvistaPdbValidation } from "./ProtvistaPdbValidation";
 
 export const blockDefs: BlockDef[] = [
     {
@@ -87,15 +88,13 @@ export const blockDefs: BlockDef[] = [
         id: "mapValidation",
         title: "Validation",
         description: i18n.t(`
-            This section offers a complete validation of the atomic models obtained by different methods. Also, where possible, a validation of the Cryo-EM maps and the map-model fit will be carried out. For this, methods based on biophysical characteristics of structure (molprobity), refinement methods, showing the residues affected by said processes, and methods, when it is a structure obtained by cryo-EM, of validation of maps and models will be used.
+            This section offers a complete validation of the atomic models obtained by different methods. Also, where possible, a validation of the Cryo-EM maps and the map-model fit will be carried out.
 
-            In summary, the mean resolution of the protein is \${resolution} Å.
+            The mean resolution of the protein is \${resolution} Å.
 
             There are regions that have a poorer quality, with values between \${poorQualityRegionMin} and \${poorQualityRegionMax}. These regions can be visualized in red in the structure (why is it worse? Is there any possibility of refinement by the user (guide)?)
 
-            Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have been modified or are capable of refinement.
-
-            Pearson correlation, 2-2 scatter, ranking of models according to whether they measure the same, local accuracy graph, comparison with pdb - percentile in similar resolutions and more globally, combination of measurements`),
+            Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have been modified or are capable of refinement.`),
         help: "",
         tracks: [
             tracks.structureCoverage,
@@ -104,6 +103,7 @@ export const blockDefs: BlockDef[] = [
             tracks.molprobity,
             tracks.emValidation,
         ],
+        component: ProtvistaPdbValidation,
         profiles: [profiles.structural, profiles.validation, profiles.drugDesign],
     },
     {

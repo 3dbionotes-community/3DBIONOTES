@@ -9,6 +9,7 @@ import { useAppContext } from "./AppContext";
 import { UploadData } from "../../domain/entities/UploadData";
 import { setFromError } from "../utils/error";
 import { ProteinNetwork } from "../../domain/entities/ProteinNetwork";
+import { debugFlags } from "../pages/app/debugFlags";
 
 export interface RootViewerContentsProps {
     viewerState: ViewerState;
@@ -53,22 +54,26 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
         <div id="viewer">
             {error && <div style={{ color: "red" }}></div>}
 
-            <ViewerSelector
-                pdbInfo={pdbInfo}
-                selection={selection}
-                onSelectionChange={setSelection}
-                uploadData={uploadData}
-            />
+            {!debugFlags.showOnlyValidations && (
+                <>
+                    <ViewerSelector
+                        pdbInfo={pdbInfo}
+                        selection={selection}
+                        onSelectionChange={setSelection}
+                        uploadData={uploadData}
+                    />
 
-            <div id="left">
-                <MolecularStructure
-                    pdbInfo={pdbInfo}
-                    selection={selection}
-                    onSelectionChange={setSelection}
-                    onLigandsLoaded={setLigands}
-                    proteinNetwork={proteinNetwork}
-                />
-            </div>
+                    <div id="left">
+                        <MolecularStructure
+                            pdbInfo={pdbInfo}
+                            selection={selection}
+                            onSelectionChange={setSelection}
+                            onLigandsLoaded={setLigands}
+                            proteinNetwork={proteinNetwork}
+                        />
+                    </div>
+                </>
+            )}
 
             <div id="right">
                 {

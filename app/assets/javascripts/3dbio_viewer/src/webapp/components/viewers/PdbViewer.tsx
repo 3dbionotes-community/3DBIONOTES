@@ -9,6 +9,7 @@ import { Pdb } from "../../../domain/entities/Pdb";
 import { ViewerState } from "../../view-models/ViewerState";
 import { Annotations } from "../../../domain/entities/Annotation";
 import { getVisibleBlocks } from "../protvista/Protvista.helpers";
+import { debugFlags } from "../../pages/app/debugFlags";
 
 export interface PdbViewerProps {
     pdb: Pdb;
@@ -21,7 +22,9 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
     const { selection, profile, setProfile } = viewerState;
 
     const blocks = React.useMemo(() => {
-        return getVisibleBlocks(blockDefs, { pdb, profile });
+        return getVisibleBlocks(blockDefs, { pdb, profile }).filter(
+            block => !debugFlags.showOnlyValidations || block.id === "mapValidation"
+        );
     }, [pdb, profile]);
 
     return (

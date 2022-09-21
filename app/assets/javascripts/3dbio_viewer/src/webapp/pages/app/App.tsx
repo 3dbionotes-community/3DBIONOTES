@@ -9,8 +9,7 @@ import { RootViewer } from "../../components/RootViewer";
 import { sendAnalytics } from "../../utils/analytics";
 
 import "./App.css";
-
-const showTraining = true;
+import { debugFlags } from "./debugFlags";
 
 function App() {
     return (
@@ -31,7 +30,6 @@ function App() {
                             render={() => <RootViewer from="network" />}
                         />
                         <Route path="/:selection" render={() => <RootViewer from="selector" />} />
-                        <Route path="/:selection" render={() => <RootViewer from="selector" />} />
                         <Route path="/">
                             <Redirect to="/6zow+EMD-11328" />
                         </Route>
@@ -39,7 +37,7 @@ function App() {
                 </Switch>
             </HashRouter>
 
-            {showTraining && <TrainingApp locale="en" modules={modules} />}
+            {!debugFlags.hideTraining && <TrainingApp locale="en" modules={modules} />}
         </AppContext>
     );
 }
