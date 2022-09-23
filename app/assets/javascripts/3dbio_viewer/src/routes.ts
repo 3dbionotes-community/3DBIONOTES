@@ -7,5 +7,5 @@ export const routes = {
     bionotes: isDev ? "/3dbionotes" : "",
     bionotesDev: isDev ? "/rinchen-dos" : "",
     ebi: isDev ? "/ebi" : "https://www.ebi.ac.uk",
-    uniprot: isDev ? "/uniprot" : "https://www.uniprot.org",
+    uniprot: isDev ? "/uniprot" : "https://rest.uniprot.org",
 };
