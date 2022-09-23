@@ -6,7 +6,7 @@ import { PluginContext } from "molstar/lib/mol-plugin/context";
 import { getMainPdbId, Selection } from "../../view-models/Selection";
 import { Maybe } from "../../../utils/ts-utils";
 import { buildLigand, Ligand } from "../../../domain/entities/Ligand";
-import { StateObjectCell } from "@3dbionotes/pdbe-molstar/node_modules/molstar/lib/mol-state/object";
+import { StateObjectCell } from "molstar/lib/mol-state/object";
 
 function getCellsWithPath(molstarPlugin: PluginContext) {
     const cells = Array.from(molstarPlugin.state.data.cells.values());
