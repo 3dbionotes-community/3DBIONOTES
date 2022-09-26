@@ -7,6 +7,7 @@ import { ListItemProps } from "./cells/DetailsCell";
 import { Pagination } from "@material-ui/lab";
 import { Ligand } from "../../../domain/entities/Covid19Info";
 import i18n from "../../../utils/i18n";
+import { colors } from "./badge/Badge";
 
 export interface IDRDialogProps {
     onClose(): void;
@@ -91,7 +92,7 @@ export const IDRDialog: React.FC<IDRDialogProps> = React.memo(props => {
                     </Section>
                 </Container>
                 <div>
-                    <Pagination count={3} shape="rounded" />
+                    <StyledPagination count={3} shape="rounded" color="primary" />
                 </div>
             </Wrapper>
         </StyledDialog>
@@ -178,5 +179,15 @@ const Li = styled.li`
     letter-spacing: 0.00938em;
     span {
         color: ;
+    }
+`;
+
+const StyledPagination = styled(Pagination)`
+    .MuiPaginationItem-textPrimary.Mui-selected {
+        background-color: ${colors["w3-blue-grey"]};
+    }
+    .MuiPaginationItem-textPrimary.Mui-selected:hover,
+    .MuiPaginationItem-textPrimary.Mui-selected.Mui-focusVisible {
+        background-color: #82a4b5;
     }
 `;
