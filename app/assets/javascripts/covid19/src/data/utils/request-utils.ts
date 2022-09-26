@@ -1,10 +1,8 @@
 import { AxiosRequestConfig } from "axios";
 import { Codec } from "purify-ts/Codec";
-import xml2js from "xml2js";
-import { FutureData } from "../domain/entities/FutureData";
-import { parseFromCodec } from "../utils/codec";
-import { Future } from "../utils/future";
+import { parseFromCodec } from "./codec";
 import { axiosRequest, defaultBuilder, RequestResult } from "../utils/future-axios";
+import { Future, FutureData } from "../utils/future";
 import { Maybe } from "../utils/ts-utils";
 
 export type RequestError = { message: string };
@@ -52,29 +50,6 @@ export function getValidatedJSON<Data>(
         .flatMap(s => {
             return s ? parseFromCodec(codec, s) : Future.success(undefined);
         });
-}
-
-export function getXML<Data>(url: string): Future<RequestError, Data | undefined> {
-    const data$ = getJSON<string>(url);
-
-    return data$.flatMap(xml => {
-        return xml ? xmlToJs<Data>(xml) : Future.success(undefined);
-    });
-}
-
-function xmlToJs<Data>(xml: string): Future<RequestError, Data> {
-    const parser = new xml2js.Parser();
-
-    return Future.fromComputation((resolve, reject) => {
-        parser.parseString(xml, (err: any, result: Data) => {
-            if (err) {
-                reject({ message: err ? err.toString() : "Unknown error" });
-            } else {
-                resolve(result);
-            }
-        });
-        return () => {};
-    });
 }
 
 export function request<Data>(
