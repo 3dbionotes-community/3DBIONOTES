@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import i18n from "../../../../utils/i18n";
 import { BadgeLigands } from "../badge/BadgeLigands";
 import { CellProps, styles } from "../Columns";
@@ -45,7 +46,7 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
             field="ligands"
         >
             {ligands.map(ligand => (
-                <div key={ligand.id}>
+                <LigandItem key={ligand.id}>
                     <Link
                         tooltip={ligand.tooltip}
                         url={ligand.url}
@@ -54,8 +55,14 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
                     <div>
                         <BadgeLigands ligand={ligand} onClick={onClickLigands} />
                     </div>
-                </div>
+                </LigandItem>
             ))}
         </Wrapper>
     );
 });
+
+const LigandItem = styled.div`
+    p {
+        text-align: left;
+    }
+`;
