@@ -39,7 +39,7 @@ export const CustomGridTopPagination: React.FC<CustomGridTopPaginationProps> = R
                 onPageChange={handleChangePage}
                 rowsPerPageOptions={pageSizes}
                 rowsPerPage={pageSize || 10}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
             />
         </React.Fragment>
     );
