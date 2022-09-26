@@ -63,6 +63,7 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
 
 const LigandItem = styled.div`
     p {
+        margin-top: 0;
         text-align: left;
     }
 `;
