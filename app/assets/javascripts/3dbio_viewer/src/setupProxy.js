@@ -4,13 +4,13 @@ const _ = require("lodash");
 
 const routes = {
     pro: "https://3dbionotes.cnb.csic.es",
-    dev: "http://rinchen-dos.cnb.csic.es:8882",
+    dev: "http://rinchen-dos.cnb.csic.es",
 };
 
 module.exports = function (app) {
     proxyRoutes(app, {
         routes: ["/3dbionotes"],
-        target: routes.dev,
+        target: routes.pro,
         rewritePath: true,
     });
 
@@ -55,7 +55,14 @@ function proxyRoutes(app, options) {
         ? _.fromPairs(routes.map(route => [`^${route}/`, "/"]))
         : undefined;
 
-    const proxyOptions = { target, changeOrigin: true, pathRewrite, logLevel: "debug" };
+    const proxyOptions = {
+        target,
+        changeOrigin: true,
+        pathRewrite,
+        logLevel: "debug",
+        secure: false,
+    };
+
     const apiProxy = proxy.createProxyMiddleware(proxyOptions);
 
     if (cache) {

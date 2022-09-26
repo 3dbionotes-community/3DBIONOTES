@@ -50,7 +50,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                 return (
                     <ViewerBlock key={block.id} block={block} namespace={namespace}>
                         {CustomComponent ? (
-                            <CustomComponent pdb={pdb} selection={selection} />
+                            <CustomComponent pdb={pdb} selection={selection} block={block} />
                         ) : (
                             <ProtvistaPdb pdb={pdb} block={block} />
                         )}
@@ -60,6 +60,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                             return (
                                 CustomTrackComponent && (
                                     <CustomTrackComponent
+                                        block={block}
                                         key={idx}
                                         trackDef={trackDef}
                                         pdb={pdb}
