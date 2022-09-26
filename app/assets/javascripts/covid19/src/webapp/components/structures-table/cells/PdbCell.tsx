@@ -192,7 +192,6 @@ const Validation: React.FC<ValidationProps> = React.memo(props => {
                     </>
                 ) : (
                     <BadgeLink
-                        style={styles.grow}
                         key={pdbValidation.method + "-external"}
                         url={
                             pdbValidation.queryLink

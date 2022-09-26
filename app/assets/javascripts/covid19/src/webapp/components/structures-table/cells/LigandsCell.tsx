@@ -46,24 +46,32 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
             field="ligands"
         >
             {ligands.map(ligand => (
-                <LigandItem key={ligand.id}>
+                <LigandItem key={ligand.id} moreDetails={moreDetails}>
                     <Link
                         tooltip={ligand.tooltip}
                         url={ligand.url}
                         text={`${ligand.name} (${ligand.id})`}
-                    />
-                    <div>
-                        <BadgeLigands ligand={ligand} onClick={onClickLigands} />
-                    </div>
+                    >
+                        <BadgeLigands
+                            ligand={ligand}
+                            onClick={onClickLigands}
+                            moreDetails={moreDetails}
+                        />
+                    </Link>
                 </LigandItem>
             ))}
         </Wrapper>
     );
 });
 
-const LigandItem = styled.div`
+const LigandItem = styled.div<{ moreDetails?: boolean }>`
+    li {
+        text-align: left;
+    }
     p {
         margin-top: 0;
         text-align: left;
+        display: ${props => (props.moreDetails ? "inherit" : "inline-flex")};
+        margin-right: ${props => (props.moreDetails ? "0" : "0.5em")};
     }
 `;

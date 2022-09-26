@@ -7,11 +7,12 @@ import i18n from "../../../../utils/i18n";
 export interface BadgeLigandsProps {
     onClick?: (options: { ligand: Ligand }) => void;
     ligand: Ligand;
+    moreDetails?: boolean;
 }
 
 export const BadgeLigands: React.FC<BadgeLigandsProps> = React.memo(props => {
-    const { ligand, onClick } = props;
-
+    const { ligand, onClick, moreDetails = true } = props;
+    console.log(moreDetails);
     const notifyClick = React.useCallback(
         e => {
             e.preventDefault();
@@ -22,7 +23,7 @@ export const BadgeLigands: React.FC<BadgeLigandsProps> = React.memo(props => {
 
     const openExternal = React.useCallback(() => {}, []);
 
-    return (
+    return moreDetails ? (
         <BadgeGroup>
             <Badge onClick={notifyClick} backgroundColor={"w3-cyan"}>
                 {i18n.t("IDR")} <i className="fa fa-info-circle icon-right"></i>
@@ -31,10 +32,24 @@ export const BadgeLigands: React.FC<BadgeLigandsProps> = React.memo(props => {
                 <i className="fa fa-external-link-square"></i>
             </Badge>
         </BadgeGroup>
+    ) : (
+        <BadgeInlineGroup>
+            <Badge onClick={notifyClick} backgroundColor={"w3-cyan"}>
+                {i18n.t("IDR")} <i className="fa fa-info-circle icon-right"></i>
+            </Badge>
+            <Badge onClick={openExternal} backgroundColor={"w3-cyan"}>
+                <i className="fa fa-external-link-square"></i>
+            </Badge>
+        </BadgeInlineGroup>
     );
 });
 
 const BadgeGroup = styled.div`
     display: flex;
+    justify-content: center;
+`;
+
+const BadgeInlineGroup = styled.div`
+    display: inline-flex;
     justify-content: center;
 `;
