@@ -6,8 +6,8 @@ import { Dialog } from "./Dialog";
 import { ListItemProps } from "./cells/DetailsCell";
 import { Pagination } from "@material-ui/lab";
 import { Ligand } from "../../../domain/entities/Covid19Info";
-import i18n from "../../../utils/i18n";
 import { colors } from "./badge/Badge";
+import i18n from "../../../utils/i18n";
 
 export interface IDRDialogProps {
     onClose(): void;
@@ -17,9 +17,15 @@ export interface IDRDialogProps {
 
 export const IDRDialog: React.FC<IDRDialogProps> = React.memo(props => {
     const { onClose, open } = props;
+    const { ligand } = props.idrOptions ?? { ligand: undefined };
 
     return (
-        <StyledDialog open={open} onClose={onClose} title={i18n.t("Ligand IDR")} maxWidth={"sm"}>
+        <StyledDialog
+            open={open}
+            onClose={onClose}
+            title={ligand?.name ? `${ligand.name} (${ligand.id})` : i18n.t("Ligand IDR")}
+            maxWidth={"sm"}
+        >
             <Wrapper>
                 <Container>
                     <Section title={i18n.t("Assay")}>
