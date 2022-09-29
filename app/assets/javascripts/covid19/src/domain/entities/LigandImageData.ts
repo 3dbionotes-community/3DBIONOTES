@@ -32,10 +32,10 @@ export interface Screen {
 }
 
 export interface Compound {
-    percentageInhibition: string; //percentage
-    cytotoxicity: string;
-    doseResponse: string;
-    cytotoxicIndex: string;
+    percentageInhibition?: string; //percentage
+    cytotoxicity?: string;
+    doseResponse?: string;
+    cytotoxicIndex?: string;
 }
 
 type Url = string;
