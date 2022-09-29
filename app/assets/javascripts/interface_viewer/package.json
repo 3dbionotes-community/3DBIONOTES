@@ -22,7 +22,7 @@
     "dependencies": {},
     "devDependencies": {
         "browserify": "16.2.2",
-        "d3": "^5.4.0"
+        "d3": "^7.6.1"
     },
     "keywords": [
         "feature viewer",
