@@ -2,8 +2,8 @@ import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps, GridSortModel } from "@material-ui/data-grid";
-import { Ligand, Structure, updateStructures } from "../../../domain/entities/Covid19Info";
-import { Field, getColumns } from "./Columns";
+import { Structure, updateStructures } from "../../../domain/entities/Covid19Info";
+import { Field, getColumns, IDROptions, ViewMoreOptions } from "./Columns";
 import { Covid19Filter, Id } from "../../../domain/entities/Covid19Info";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
@@ -38,7 +38,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         false
     );
     const [detailsOptions, setDetailsOptions] = React.useState<FieldStructure>();
-    const [idrOptions, setIDROptions] = React.useState<{ ligand: Ligand }>();
+    const [idrOptions, setIDROptions] = React.useState<IDROptions>();
     const [isIDROpen, { enable: openIDR, disable: closeIDR }] = useBooleanState(false);
     const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
 
@@ -96,7 +96,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const { structures } = filteredData;
 
     const showDetailsDialog = React.useCallback(
-        (options: { row: Structure; field: Field }) => {
+        (options: ViewMoreOptions) => {
             sendAnalytics({
                 type: "event",
                 action: "open",
@@ -110,7 +110,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     );
 
     const showIDRDialog = React.useCallback(
-        (options: { ligand: Ligand }) => {
+        (options: IDROptions) => {
             sendAnalytics({
                 type: "event",
                 action: "open",
@@ -126,7 +126,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const columns = React.useMemo(() => {
         return getColumns(data, {
             onClickDetails: showDetailsDialog,
-            onClickLigands: showIDRDialog,
+            onClickIDR: showIDRDialog,
         });
     }, [data, showDetailsDialog, showIDRDialog]);
 

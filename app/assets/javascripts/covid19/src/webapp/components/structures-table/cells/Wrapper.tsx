@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Field } from "../Columns";
+import { Field, ViewMoreOptions } from "../Columns";
 import { rowHeight } from "../StructuresTable";
 import { BadgeDetails } from "../badge/BadgeDetails";
 import { useHeightFromElement } from "../../../hooks/useHeightFromElement";
@@ -9,7 +9,7 @@ import { Structure } from "../../../../domain/entities/Covid19Info";
 interface WrapperProps {
     moreDetails?: boolean;
     row: Structure;
-    onClickDetails?: (options: { row: Structure; field: Field }) => void;
+    onClickDetails?: (options: ViewMoreOptions) => void;
     field: Field;
 }
 

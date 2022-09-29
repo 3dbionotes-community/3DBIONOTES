@@ -1,11 +1,11 @@
 import React from "react";
 import { Badge } from "./Badge";
-import { Field } from "../Columns";
-import i18n from "../../../../utils/i18n";
+import { Field, ViewMoreOptions } from "../Columns";
 import { Structure } from "../../../../domain/entities/Covid19Info";
+import i18n from "../../../../utils/i18n";
 
 export interface BadgeDetailsProps {
-    onClick?: (options: { row: Structure; field: Field }) => void;
+    onClick?: (options: ViewMoreOptions) => void;
     row: Structure;
     field: Field;
 }

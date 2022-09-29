@@ -20,17 +20,28 @@ import { EmdbCell } from "./cells/EmdbCell";
 import { EntityCell } from "./cells/EntityCell";
 import { LigandsCell } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
+import { LigandImageData } from "../../../domain/entities/LigandImageData";
 
 type Row = Structure;
 export type Field = keyof Row;
+
+export interface IDROptions {
+    ligand: Ligand;
+    idr: LigandImageData;
+}
+
+export interface ViewMoreOptions {
+    row: Structure;
+    field: Field;
+}
 
 export interface CellProps {
     data: Covid19Info;
     row: Row;
     moreDetails?: boolean;
     validationSources?: ValidationSource[];
-    onClickDetails?: (options: { row: Structure; field: Field }) => void;
-    onClickLigands?: (options: { ligand: Ligand }) => void;
+    onClickDetails?: (options: ViewMoreOptions) => void;
+    onClickIDR?: (options: IDROptions) => void;
 }
 
 export interface ColumnAttrs<F extends Field>
@@ -141,8 +152,8 @@ export const columnsBase: Columns = [
 export function getColumns(
     data: Covid19Info,
     options: {
-        onClickDetails: (options: { row: Structure; field: Field }) => void;
-        onClickLigands: (options: { ligand: Ligand }) => void;
+        onClickDetails: (options: ViewMoreOptions) => void;
+        onClickIDR: (options: IDROptions) => void;
     }
 ): { definition: GridColDef[]; base: Columns } {
     const definition = columnsBase.map(
@@ -159,7 +170,7 @@ export function getColumns(
                                 row={params.row as Row}
                                 data={data}
                                 onClickDetails={options.onClickDetails}
-                                onClickLigands={options.onClickLigands}
+                                onClickIDR={options.onClickIDR}
                                 validationSources={data.validationSources}
                             />
                         </div>
