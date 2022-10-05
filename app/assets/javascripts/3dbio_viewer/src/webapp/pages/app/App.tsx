@@ -1,16 +1,13 @@
 import React from "react";
 import { HashRouter, Redirect, Route, Switch, useLocation } from "react-router-dom";
-
 import { AppContext } from "../../../webapp/components/AppContext";
 import { TrainingApp } from "../../../webapp/training-app";
 import { modules } from "../../../webapp/training-app/training-modules";
 import { ProtvistaGrouped } from "../../components/protvista/ProvistaGrouped";
 import { RootViewer } from "../../components/RootViewer";
 import { sendAnalytics } from "../../utils/analytics";
-
+import { debugFlags } from "./debugFlags";
 import "./App.css";
-
-const showTraining = true;
 
 function App() {
     return (
@@ -31,7 +28,6 @@ function App() {
                             render={() => <RootViewer from="network" />}
                         />
                         <Route path="/:selection" render={() => <RootViewer from="selector" />} />
-                        <Route path="/:selection" render={() => <RootViewer from="selector" />} />
                         <Route path="/">
                             <Redirect to="/6zow+EMD-11328" />
                         </Route>
@@ -39,7 +35,7 @@ function App() {
                 </Switch>
             </HashRouter>
 
-            {showTraining && <TrainingApp locale="en" modules={modules} />}
+            {!debugFlags.hideTraining && <TrainingApp locale="en" modules={modules} />}
         </AppContext>
     );
 }

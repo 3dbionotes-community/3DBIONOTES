@@ -1,4 +1,3 @@
-//import _ from "lodash";
 import React from "react";
 import ReactGA from "react-ga";
 import ReactDOM from "react-dom";
