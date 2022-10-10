@@ -89,7 +89,7 @@ The network sections run a set of jobs in the background on the server.
 To work properly, a delayed job daemon needs to be running on the server:
 
 ```
-$ RAILS_ENV=production bin/delayed_job -n 6 restart
+RAILS_ENV=production bin/delayed_job -n 6 restart
 ```
 
 ## Sub-modules
@@ -103,8 +103,8 @@ The application contains two git sub-modules:
   - How to install:
 
      ```
-     $ npm install
-     $ npm run build
+     npm install
+     npm run build
      ```
 
 - extendProtVista
@@ -114,8 +114,8 @@ The application contains two git sub-modules:
   - How to install:
 
      ```
-     $ npm install
-     $ npm run build
+     npm install
+     npm run build
      ```
 
 Some extra modules are also part of the application:
@@ -126,8 +126,8 @@ Some extra modules are also part of the application:
   - How to install:
 
      ```
-     $ npm install
-     $ npm run build
+     npm install
+     npm run build
      ```
 
 - structure_viewer
@@ -136,8 +136,8 @@ Some extra modules are also part of the application:
   - How to install:
 
      ```
-     $ npm install
-     $ npm run build
+     npm install
+     npm run build
      ```
 
 - interface_viewer
@@ -146,8 +146,8 @@ Some extra modules are also part of the application:
   - How to install:
 
      ```
-     $ npm install
-     $ npm run build
+     npm install
+     npm run build
      ```
 
 ## Other dependencies
