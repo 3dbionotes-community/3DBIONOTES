@@ -109,6 +109,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
                     console.debug("molstar.events.loadComplete", loaded);
                     hideLoading();
                     if (loaded) setPluginLoad(new Date());
+                    // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
+                    window.dispatchEvent(new Event("resize"));
                 });
 
                 plugin.render(element, initParams);
