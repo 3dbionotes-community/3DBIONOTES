@@ -194,7 +194,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
 
     // Move URLS to each track module?
     const data$: DataRequests = {
-        uniprot: getXML(`${routes.uniprot}/uniprot/${proteinId}.xml`),
+        uniprot: getXML(`${routes.uniprot}/uniprotkb/${proteinId}.xml`),
         pdbEmdbMapping: onF(pdbId, pdbId => getJSON(`${emdbsFromPdbUrl}/${pdbId}`)),
         features: getJSON(`${ebiProteinsApiUrl}/features/${proteinId}`),
         cv19Tracks: getJSON(`${bioUrl}/cv19_annotations/${proteinId}_annotations.json`),
