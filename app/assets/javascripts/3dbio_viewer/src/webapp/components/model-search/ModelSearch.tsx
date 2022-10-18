@@ -9,7 +9,7 @@ import {
     IconButton,
 } from "@material-ui/core";
 import { Close, Search } from "@material-ui/icons";
-import { DbModel } from "../../../domain/entities/DbModel";
+import { DbModel, DbModelType } from "../../../domain/entities/DbModel";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { ActionType, DbItem } from "../../view-models/Selection";
@@ -22,6 +22,7 @@ import { sendAnalytics } from "../../utils/analytics";
 import { useGoto } from "../../hooks/use-goto";
 import i18n from "../../utils/i18n";
 import "./ModelSearch.css";
+import { Maybe } from "../../../utils/ts-utils";
 
 /* Search PDB/EMDB models from text and model type. As the search items to show are limited,
    we get all the matching models and use an infinite scroll just to render more items. Only a
@@ -240,17 +241,25 @@ function useSearch(
                 label: query,
             });
 
-            return compositionRoot.searchDbModels.execute({ query, limit: maxRenderedItems }).run(
-                results => {
-                    updateState({ type: "results", data: results.items, totals: results.totals });
-                },
-                err => {
-                    console.error(err);
-                    updateState({ type: "results" });
-                }
-            );
+            const type = getDbModelType(formState.models);
+
+            return compositionRoot.searchDbModels
+                .execute({ query, limit: maxRenderedItems, type })
+                .run(
+                    results => {
+                        updateState({
+                            type: "results",
+                            data: results.items,
+                            totals: results.totals,
+                        });
+                    },
+                    err => {
+                        console.error(err);
+                        updateState({ type: "results" });
+                    }
+                );
         },
-        [compositionRoot, updateState]
+        [compositionRoot, updateState, formState.models]
     );
 
     const runSearch = useCallbackEffect(search);
@@ -270,4 +279,16 @@ function useSearch(
     }, [runSearch, formState.query]);
 
     return setSearchFromEvent;
+}
+
+function getDbModelType(models: FormState["models"]): Maybe<DbModelType> {
+    if (models.pdb && models.emdb) {
+        return undefined;
+    } else if (models.pdb) {
+        return "pdb";
+    } else if (models.emdb) {
+        return "emdb";
+    } else {
+        return undefined;
+    }
 }
