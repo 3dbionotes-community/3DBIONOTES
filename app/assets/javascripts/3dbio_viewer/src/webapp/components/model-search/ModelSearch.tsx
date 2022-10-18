@@ -1,4 +1,6 @@
+import _ from "lodash";
 import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import {
     CircularProgress,
     Dialog,
@@ -7,21 +9,24 @@ import {
     IconButton,
 } from "@material-ui/core";
 import { Close, Search } from "@material-ui/icons";
-import _ from "lodash";
-import { DbModel, DbModelCollection } from "../../../domain/entities/DbModel";
+import { DbModel } from "../../../domain/entities/DbModel";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
-import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value";
-import { useDebounce } from "../../hooks/use-debounce";
 import { useBooleanState } from "../../hooks/use-boolean";
-import i18n from "../../utils/i18n";
 import { ActionType, DbItem } from "../../view-models/Selection";
 import { useAppContext } from "../AppContext";
-import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
-import "./ModelSearch.css";
 import { ModelSearchItem } from "./ModelSearchItem";
 import { ModelUpload } from "../model-upload/ModelUpload";
+import { ModelSearchFilterMenu, ModelTypeFilter, modelTypeKeys } from "./ModelSearchFilterMenu";
+import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value";
 import { sendAnalytics } from "../../utils/analytics";
 import { useGoto } from "../../hooks/use-goto";
+import i18n from "../../utils/i18n";
+import "./ModelSearch.css";
+
+/* Search PDB/EMDB models from text and model type. As the search items to show are limited,
+   we get all the matching models and use an infinite scroll just to render more items. Only a
+   query text change issues a query to the API.
+*/
 
 export interface ModelSearchProps {
     title: string;
@@ -29,32 +34,53 @@ export interface ModelSearchProps {
     onSelect(actionType: ActionType, selected: DbItem): void;
 }
 
-type ModelSearchType = DbModel["type"] | "all";
-
 export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const { title, onClose, onSelect } = props;
 
-    const modelTypes = React.useMemo<DropdownProps<ModelSearchType>["items"]>(() => {
-        return [
-            { id: "all", text: i18n.t("EMDB/PDB") },
-            { id: "emdb", text: i18n.t("EMDB") },
-            { id: "pdb", text: i18n.t("PDB") },
-        ];
-    }, []);
+    const [isUploadOpen, { open: openUpload, close: closeUpload }] = useBooleanState(false);
+    const [formState, setFormState] = React.useState<FormState>(initialFormState);
+    const [inputValue, setInputValue] = React.useState<string>("");
 
-    const placeholders = React.useMemo<Record<ModelSearchType, string>>(() => {
+    const { models, data, startIndex, totals } = formState;
+
+    const goTo = useGoto();
+    const setSearchFromEvent = useSearch(formState, setFormState, inputValue, setInputValue);
+    const filterTranslations = React.useMemo<Record<ModelSearchType, string>>(() => {
         return {
-            all: i18n.t("Search EMDB or PDB"),
             pdb: i18n.t("Search PDB"),
             emdb: i18n.t("Search EMDB "),
+            all: i18n.t("Search EMDB or PDB"),
         };
     }, []);
 
-    const [modelType, setModelType] = React.useState<ModelSearchType>("all");
-    const [isUploadOpen, { open: openUpload, close: closeUpload }] = useBooleanState(false);
-    const [searchState, startSearch] = useDbModelSearch(modelType);
-    const goTo = useGoto();
+    const placeholder = React.useMemo(() => {
+        const index = modelTypeKeys.find(key => formState.models[key]) || "all";
+        return filterTranslations[index];
+    }, [formState, filterTranslations]);
 
+    const allItems = React.useMemo(() => {
+        const showAll = models.pdb === models.emdb;
+        return data.filter(item => showAll || models[item.type]);
+    }, [data, models]);
+
+    const visibleItems = React.useMemo(() => {
+        return _.take(allItems, startIndex + pageSize);
+    }, [allItems, startIndex]);
+
+    const totalMatches = React.useMemo(() => {
+        return (models.pdb ? totals.pdb : 0) + (models.emdb ? totals.emdb : 0);
+    }, [totals, models]);
+
+    const hasMore = visibleItems.length < allItems.length;
+
+    const setModels = React.useCallback(
+        (models: ModelTypeFilter) => setFormState(prev => ({ ...prev, models, startIndex: 0 })),
+        [setFormState]
+    );
+
+    const fetchMoreData = React.useCallback(() => {
+        setFormState(prevForm => ({ ...prevForm, startIndex: prevForm.startIndex + pageSize }));
+    }, []);
     const goToLoaded = React.useCallback(
         (options: { token: string }) => {
             goTo(`/uploaded/${options.token}`);
@@ -82,27 +108,22 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                 </IconButton>
             </DialogTitle>
 
-            <DialogContent>
+            <DialogContent id="scrollableDiv">
                 <div className="params">
                     <div className="search">
                         <input
                             aria-label={i18n.t("Search")}
                             className="form-control"
-                            placeholder={placeholders[modelType]}
+                            placeholder={placeholder}
                             type="text"
-                            onChange={startSearch}
+                            value={inputValue}
+                            onChange={setSearchFromEvent}
                         />
                         <Search />
                     </div>
 
-                    <Dropdown<ModelSearchType>
-                        text={i18n.t("Model type")}
-                        selected={modelType}
-                        items={modelTypes}
-                        onClick={setModelType}
-                        showExpandIcon
-                    />
-                    <button className="upload-model" onClick={openUploadWithAnalytics}>
+                    <ModelSearchFilterMenu modelTypeState={models} setModelTypeState={setModels} />
+                    <button className="model-search" onClick={openUploadWithAnalytics}>
                         {i18n.t("Upload model")}
                     </button>
                     {isUploadOpen && (
@@ -113,24 +134,41 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         />
                     )}
 
-                    {searchState.type === "searching" && (
+                    {formState.type === "searching" && (
                         <div className="spinner">
                             <CircularProgress />
+                        </div>
+                    )}
+                    {formState.type === "results" && (
+                        <div>
+                            {i18n.t("{{total}} matches (showing {{visible}})", {
+                                total: totalMatches,
+                                visible: allItems.length,
+                            })}
                         </div>
                     )}
                 </div>
 
                 <div className="results">
-                    {searchState.type === "results" && (
-                        <React.Fragment>
-                            {_.isEmpty(searchState.data) ? (
-                                <div className="feedback">{i18n.t("No results")}</div>
-                            ) : (
-                                searchState.data.map((item, idx) => (
-                                    <ModelSearchItem key={idx} item={item} onSelect={onSelect} />
-                                ))
-                            )}
-                        </React.Fragment>
+                    {visibleItems.length > 0 && inputValue && (
+                        <InfiniteScroll
+                            style={styles.infiniteScroll}
+                            dataLength={visibleItems.length}
+                            next={fetchMoreData}
+                            hasMore={hasMore}
+                            scrollableTarget="scrollableDiv"
+                            loader={<p>{i18n.t("Loading")}....</p>}
+                            endMessage={
+                                <p style={{ textAlign: "center" }}>
+                                    <b>{i18n.t("End of EMDBs/PDBs")}</b>
+                                </p>
+                            }
+                        >
+                            {visibleItems.map((item, idx) => (
+                                <ModelSearchItem key={idx} item={item} onSelect={onSelect} />
+                            ))}{" "}
+                            {/* working on calling the search api when the user gets to the end */}
+                        </InfiniteScroll>
                     )}
                 </div>
             </DialogContent>
@@ -138,20 +176,63 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     );
 });
 
-type SearchDataState<Data> =
-    | { type: "empty" }
-    | { type: "searching" }
-    | { type: "results"; data: Data };
+type ModelSearchType = DbModel["type"] | "all";
 
-type SearchState = SearchDataState<DbModelCollection>;
+interface FormState {
+    type: "empty" | "searching" | "results";
+    query: string;
+    startIndex: number;
+    data: DbModel[];
+    totals: Record<DbModel["type"], number>;
+    models: ModelTypeFilter;
+}
 
-function useDbModelSearch(modelType: ModelSearchType) {
+const initialFormState: FormState = {
+    type: "empty",
+    query: "",
+    data: [],
+    startIndex: 0,
+    totals: { pdb: 0, emdb: 0 },
+    models: { pdb: true, emdb: true },
+};
+
+const pageSize = 30;
+const maxRenderedItems = 300;
+
+const styles = {
+    infiniteScroll: {
+        display: "flex" as const,
+        flexDirection: "row" as const,
+        flexWrap: "wrap" as const,
+    },
+};
+
+function useUpdater<T>(dispatchFn: React.Dispatch<React.SetStateAction<T>>) {
+    return React.useCallback(
+        (partialValue: Partial<T>) => {
+            dispatchFn(prev => ({ ...prev, ...partialValue }));
+        },
+        [dispatchFn]
+    );
+}
+
+function useSearch(
+    formState: FormState,
+    setFormState: React.Dispatch<React.SetStateAction<FormState>>,
+    inputValue: string,
+    setInputValue: React.Dispatch<React.SetStateAction<string>>
+) {
     const { compositionRoot } = useAppContext();
-    const [searchState, setSearchState] = React.useState<SearchState>({ type: "empty" });
+    const updateState = useUpdater(setFormState);
 
     const search = React.useCallback(
         (query: string) => {
-            setSearchState({ type: "searching" });
+            if (!query) {
+                updateState({ type: "empty", data: [] });
+                return;
+            }
+
+            updateState({ type: "searching" });
             sendAnalytics({
                 type: "event",
                 category: "viewer_search_menu",
@@ -159,23 +240,34 @@ function useDbModelSearch(modelType: ModelSearchType) {
                 label: query,
             });
 
-            const searchType = modelType === "all" ? undefined : modelType;
-            return compositionRoot.searchDbModels
-                .execute({ query, type: searchType })
-                .run(dbModelCollection => {
-                    const newState: SearchState =
-                        _.isEmpty(dbModelCollection) && !query
-                            ? { type: "empty" }
-                            : { type: "results", data: dbModelCollection };
-                    setSearchState(newState);
-                }, console.error);
+            return compositionRoot.searchDbModels.execute({ query, limit: maxRenderedItems }).run(
+                results => {
+                    updateState({ type: "results", data: results.items, totals: results.totals });
+                },
+                err => {
+                    console.error(err);
+                    updateState({ type: "results" });
+                }
+            );
         },
-        [compositionRoot, modelType]
+        [compositionRoot, updateState]
     );
 
-    const searchFromString = useCallbackEffect(search);
-    const searchFromEv = useCallbackFromEventValue(searchFromString);
-    const startSearch = useDebounce(searchFromEv, 200);
+    const runSearch = useCallbackEffect(search);
 
-    return [searchState, startSearch] as const;
+    React.useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            updateState({ query: inputValue, startIndex: 0 });
+        }, 1000);
+
+        return () => clearTimeout(timeoutId);
+    }, [inputValue, updateState]);
+
+    const setSearchFromEvent = useCallbackFromEventValue(setInputValue);
+
+    React.useEffect(() => {
+        return runSearch(formState.query);
+    }, [runSearch, formState.query]);
+
+    return setSearchFromEvent;
 }
