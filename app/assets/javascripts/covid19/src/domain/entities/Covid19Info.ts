@@ -42,6 +42,7 @@ export interface Ligand {
     details: string;
     imageLink: Url;
     externalLink: Url;
+    inChI: string; //IUPACInChIkey
 }
 
 export interface LigandInstance {

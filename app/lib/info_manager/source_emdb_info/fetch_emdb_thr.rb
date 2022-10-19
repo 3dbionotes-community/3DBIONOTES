@@ -23,16 +23,14 @@ module InfoManager
         end
         emdbInfo = {}
         json.each do |k,v|
-          if !v[0].empty?
-            if !v[0]["map"].nil?
-              if !v[0]["map"]["contour_level"].nil?
-                emdbInfo["contour"]=v[0]["map"]["contour_level"]["value"]
-              end
-              if !v[0]["map"]["statistics"].nil?
-                emdbInfo["limits"] = {}
-                emdbInfo["limits"]["start"] = v[0]["map"]["statistics"]["minimum"]
-                emdbInfo["limits"]["end"] = v[0]["map"]["statistics"]["maximum"]
-              end
+          if !json["map"].nil?
+            if !json["map"]["contour_level"].nil?
+              emdbInfo["contour"]=json["map"]["contour_level"]["value"]
+            end
+            if !json["map"]["statistics"].nil?
+              emdbInfo["limits"] = {}
+              emdbInfo["limits"]["start"] = json["map"]["statistics"]["minimum"]
+              emdbInfo["limits"]["end"] = json["map"]["statistics"]["maximum"]
             end
           end
         end

@@ -194,13 +194,13 @@ function getLigands(
     dataLigands: Data.Covid19Data["Ligands"],
     ligandRefs: Data.Pdb["ligands"]
 ): Ligand[] {
-    const ligandsById = _(dataLigands)
-        .map((ligand): Ligand => ({ id: ligand.dbId, ...ligand }))
-        .keyBy(getId)
+    const ligandsByInChI = _(dataLigands)
+        .map((ligand): Ligand => ({ id: ligand.dbId, inChI: ligand.IUPACInChIkey, ...ligand }))
+        .keyBy(ligand => ligand.inChI)
         .value();
 
     return _(ligandRefs)
-        .map(ligandId => ligandsById[ligandId])
+        .map(ligandInChI => ligandsByInChI[ligandInChI])
         .compact()
         .value();
 }

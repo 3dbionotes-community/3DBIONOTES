@@ -25,6 +25,8 @@ export interface Entity {
 }
 
 export interface Ligand {
+    IUPACInChIkey: IUPACInChIkey;
+    pubChemCompoundId: string;
     dbId: LigandId;
     name: string;
     details: string;
@@ -63,7 +65,7 @@ export interface DbItem {
 export interface Pdb extends DbItem {
     keywords: string;
     entities: Entity[];
-    ligands: LigandId[];
+    ligands: IUPACInChIkey[];
     details: Details[];
     dbauthors?: string[];
     refModels?: RefModel[];
@@ -80,6 +82,7 @@ export type MethodName = "PDB-Redo" | "Isolde" | "Refmac" | "PHENIX";
 type Maybe<T> = T | null;
 
 type LigandId = string;
+type IUPACInChIkey = string;
 
 export type EntityRef = { organism?: string; uniprotAcc?: string };
 
