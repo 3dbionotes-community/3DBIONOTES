@@ -26,7 +26,7 @@ msgstr ""
 msgid "CERES"
 msgstr ""
 
-msgid "SARS-CoV-2 in structure databases"
+msgid "COVID-19 Structural Hub"
 msgstr ""
 
 msgid "Hide proteome"
