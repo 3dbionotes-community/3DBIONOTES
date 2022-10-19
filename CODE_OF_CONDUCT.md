@@ -58,9 +58,9 @@ decisions when appropriate.
 
 ## Scope
 
-This Code of Conduct applies to all content on 3dbionotes.cnb.csic.es, 
-3DBIONOTES-WS GitHub organization, or any other official 3DBIONOTES-WS web 
-presence allowing for community interactions.
+This Code of Conduct applies to all content on 
+[3dbionotes.cnb.csic.es][3dbionotes webpage], 3DBIONOTES-WS' GitHub organization, 
+or any other official 3DBIONOTES-WS web presence allowing for community interactions.
 
 This Code of Conduct also applies within all community spaces and also applies 
 when an individual is officially representing the community in public spaces.
@@ -142,4 +142,4 @@ For answers to common questions about this code of conduct, see the FAQ at
 [Mozilla CoC]: https://github.com/mozilla/diversity
 [FAQ]: https://www.contributor-covenant.org/faq
 [translations]: https://www.contributor-covenant.org/translations
-
+[3dbionotes webpage]: https://3dbionotes.cnb.csic.es/ws
