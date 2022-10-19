@@ -1,6 +1,6 @@
+import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
-import { Maybe } from "../../../../data/utils/ts-utils";
 import { LigandImageData } from "../../../../domain/entities/LigandImageData";
 import i18n from "../../../../utils/i18n";
 import { useAppContext } from "../../../contexts/app-context";
@@ -12,7 +12,9 @@ import { Wrapper } from "./Wrapper";
 export const LigandsCell: React.FC<CellProps> = React.memo(props => {
     const { row, onClickDetails, onClickIDR, moreDetails } = props;
     const { compositionRoot } = useAppContext();
-    const [ligandsIDR, setLigandsIDR] = React.useState<Record<string, Maybe<LigandImageData>>>({});
+    const [ligandsIDR, setLigandsIDR] = React.useState<{ inChI: string; idr: LigandImageData }[]>(
+        []
+    );
 
     const ligands = React.useMemo(() => {
         return row.ligands.map(ligand => {
@@ -44,17 +46,17 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
     }, [row.ligands]);
 
     React.useEffect(() => {
-        row.ligands.forEach(ligand =>
-            compositionRoot.ligands.getIDR.execute(ligand.id).run(
-                imageDataResource => {
-                    if (imageDataResource)
-                        setLigandsIDR(ligandsIDR => ({
-                            ...ligandsIDR,
-                            [ligand.id]: imageDataResource,
-                        }));
-                },
-                err => console.error(err.message)
-            )
+        compositionRoot.ligands.getIDR.execute(row.ligands.map(({ inChI }) => inChI)).run(
+            arr => {
+                const idrs = arr.filter(inChIAndIDR => inChIAndIDR.idr) as {
+                    inChI: string;
+                    idr: LigandImageData;
+                }[];
+                if (!_.isEmpty(idrs)) setLigandsIDR(idrs);
+            },
+            err => {
+                throw new Error(err.message);
+            }
         );
     }, [row.ligands, compositionRoot]);
 
@@ -65,27 +67,33 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
             row={row}
             field="ligands"
         >
-            {ligands.map(ligand => {
-                const idr = ligandsIDR[ligand.id];
-                return (
-                    <LigandItem key={ligand.id} moreDetails={moreDetails}>
-                        <Link
-                            tooltip={ligand.tooltip}
-                            url={ligand.url}
-                            text={`${ligand.name} (${ligand.id})`}
-                        >
-                            {idr && (
-                                <BadgeLigands
-                                    ligand={ligand}
-                                    onClick={onClickIDR}
-                                    moreDetails={moreDetails}
-                                    imageDataResource={idr}
-                                />
-                            )}
-                        </Link>
-                    </LigandItem>
-                );
-            })}
+            {ligands
+                .sort((a, b) => {
+                    if (!a.inChI && b.inChI) return 1;
+                    if (a.inChI && !b.inChI) return -1;
+                    return 0;
+                })
+                .map(ligand => {
+                    const idr = ligandsIDR.find(({ inChI }) => inChI === ligand.inChI)?.idr;
+                    return (
+                        <LigandItem key={ligand.id} moreDetails={moreDetails}>
+                            <Link
+                                tooltip={ligand.tooltip}
+                                url={ligand.url}
+                                text={`${ligand.name} (${ligand.id})`}
+                            >
+                                {idr && (
+                                    <BadgeLigands
+                                        ligand={ligand}
+                                        onClick={onClickIDR}
+                                        moreDetails={moreDetails}
+                                        imageDataResource={idr}
+                                    />
+                                )}
+                            </Link>
+                        </LigandItem>
+                    );
+                })}
         </Wrapper>
     );
 });

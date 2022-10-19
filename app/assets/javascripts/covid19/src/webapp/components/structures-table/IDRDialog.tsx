@@ -12,17 +12,20 @@ import i18n from "../../../utils/i18n";
 
 export interface IDRDialogProps {
     onClose(): void;
-    idrOptions?: IDROptions;
+    idrOptions: IDROptions;
     open: boolean;
 }
 
 export const IDRDialog: React.FC<IDRDialogProps> = React.memo(props => {
     const { onClose, open } = props;
-    const { ligand, idr } = props.idrOptions ?? { ligand: undefined, idr: undefined };
+    const { ligand, idr } = props.idrOptions;
     const [page, setPage] = React.useState(1);
-    const handleChange = React.useCallback((_event: React.ChangeEvent<unknown>, value: number) => {
-        setPage(value);
-    }, []);
+    const setPageFromEvent = React.useCallback(
+        (_event: React.ChangeEvent<unknown>, page: number) => {
+            setPage(page);
+        },
+        []
+    );
 
     return (
         <StyledDialog
@@ -33,7 +36,7 @@ export const IDRDialog: React.FC<IDRDialogProps> = React.memo(props => {
         >
             <Wrapper>
                 <Container>
-                    {idr?.assays.map((assay, idx) => {
+                    {idr.assays.map((assay, idx) => {
                         return (
                             <>
                                 <Section title={i18n.t("Assay")}>
@@ -52,14 +55,14 @@ export const IDRDialog: React.FC<IDRDialogProps> = React.memo(props => {
                     })}
                 </Container>
                 <div>
-                    {/*Need this div for CSS layout*/}
-                    {idr && idr?.assays.length > 1 && (
+                    {/*Need this div always for CSS layout*/}
+                    {idr.assays.length > 1 && (
                         <StyledPagination
                             count={idr.assays.length}
                             page={page}
                             shape="rounded"
                             color="primary"
-                            onChange={handleChange}
+                            onChange={setPageFromEvent}
                         />
                     )}
                 </div>
@@ -128,10 +131,6 @@ const CompoundFC: React.FC<CompoundFCProps> = React.memo(({ compound }) => (
     </>
 ));
 
-interface SectionProps {
-    title: string;
-}
-
 const Section: React.FC<SectionProps> = React.memo(({ children, title }) => (
     <div>
         <Typography variant="h6" gutterBottom>
@@ -141,9 +140,22 @@ const Section: React.FC<SectionProps> = React.memo(({ children, title }) => (
     </div>
 ));
 
-type AssayFCProps = { assay: Assay; dataSource: string };
-type ScreenFCProps = { screen: Screen };
-type CompoundFCProps = { compound: Compound };
+interface SectionProps {
+    title: string;
+}
+
+interface AssayFCProps {
+    assay: Assay;
+    dataSource: string;
+}
+
+interface ScreenFCProps {
+    screen: Screen;
+}
+
+interface CompoundFCProps {
+    compound: Compound;
+}
 
 const StyledDialog = styled(Dialog)`
     .MuiDialogContent-root {

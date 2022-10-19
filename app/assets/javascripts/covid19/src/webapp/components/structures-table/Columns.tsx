@@ -21,6 +21,8 @@ import { EntityCell } from "./cells/EntityCell";
 import { LigandsCell } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
 import { LigandImageData } from "../../../domain/entities/LigandImageData";
+import { OnClickDetails } from "./badge/BadgeDetails";
+import { OnClickIDR } from "./badge/BadgeLigands";
 
 type Row = Structure;
 export type Field = keyof Row;
@@ -30,7 +32,7 @@ export interface IDROptions {
     idr: LigandImageData;
 }
 
-export interface ViewMoreOptions {
+export interface DetailsDialogOptions {
     row: Structure;
     field: Field;
 }
@@ -40,8 +42,8 @@ export interface CellProps {
     row: Row;
     moreDetails?: boolean;
     validationSources?: ValidationSource[];
-    onClickDetails?: (options: ViewMoreOptions) => void;
-    onClickIDR?: (options: IDROptions) => void;
+    onClickDetails?: OnClickDetails;
+    onClickIDR?: OnClickIDR;
 }
 
 export interface ColumnAttrs<F extends Field>
@@ -152,8 +154,8 @@ export const columnsBase: Columns = [
 export function getColumns(
     data: Covid19Info,
     options: {
-        onClickDetails: (options: ViewMoreOptions) => void;
-        onClickIDR: (options: IDROptions) => void;
+        onClickDetails: OnClickDetails;
+        onClickIDR: OnClickIDR;
     }
 ): { definition: GridColDef[]; base: Columns } {
     const definition = columnsBase.map(

@@ -7,8 +7,10 @@ import { BadgeLink } from "./BadgeLink";
 import { IDROptions } from "../Columns";
 import { Badge } from "./Badge";
 
+export type OnClickIDR = (options: IDROptions, gaLabel: string) => void;
+
 export interface BadgeLigandsProps {
-    onClick?: (options: IDROptions) => void;
+    onClick?: OnClickIDR;
     ligand: Ligand;
     moreDetails?: boolean;
     imageDataResource: LigandImageData;
@@ -20,7 +22,7 @@ export const BadgeLigands: React.FC<BadgeLigandsProps> = React.memo(props => {
     const notifyClick = React.useCallback(
         e => {
             e.preventDefault();
-            onClick?.({ ligand, idr });
+            onClick?.({ ligand, idr }, `IDR Ligand. ID: ${ligand.id}. Name: ${ligand.name}`);
         },
         [onClick, ligand, idr]
     );

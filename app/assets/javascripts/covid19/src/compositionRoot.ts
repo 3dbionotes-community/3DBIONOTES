@@ -7,7 +7,7 @@ import { SearchCovid19InfoUseCase } from "./domain/usecases/SearchCovid19InfoUse
 import { AddDynamicInfoToCovid19InfoUseCase } from "./domain/usecases/AddDynamicInfoToCovid19InfoUseCase";
 import { LocalStorageCacheRepository } from "./data/LocalStorageCacheRepository";
 import { LigandsApiRepository } from "./data/LigandsApiRepository";
-import { GetLigandImageDataResourceUseCase } from "./domain/usecases/GetLigandImageDataResourceUseCase";
+import { GetLigandImageDataResourcesUseCase } from "./domain/usecases/GetLigandImageDataResourcesUseCase";
 
 export function getCompositionRoot() {
     const covid19InfoRepository = new Covid19InfoFromJsonRepository();
@@ -25,7 +25,7 @@ export function getCompositionRoot() {
             cacheRepository
         ),
         ligands: {
-            getIDR: new GetLigandImageDataResourceUseCase(ligandsRepository),
+            getIDR: new GetLigandImageDataResourcesUseCase(ligandsRepository),
         },
     };
 }

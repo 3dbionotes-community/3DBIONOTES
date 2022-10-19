@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { Field, ViewMoreOptions } from "../Columns";
+import { Field } from "../Columns";
 import { rowHeight } from "../StructuresTable";
-import { BadgeDetails } from "../badge/BadgeDetails";
+import { BadgeDetails, OnClickDetails } from "../badge/BadgeDetails";
 import { useHeightFromElement } from "../../../hooks/useHeightFromElement";
 import { Structure } from "../../../../domain/entities/Covid19Info";
 
 interface WrapperProps {
     moreDetails?: boolean;
     row: Structure;
-    onClickDetails?: (options: ViewMoreOptions) => void;
+    onClickDetails?: OnClickDetails;
     field: Field;
 }
 

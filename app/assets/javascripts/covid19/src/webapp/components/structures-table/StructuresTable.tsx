@@ -2,17 +2,17 @@ import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps, GridSortModel } from "@material-ui/data-grid";
-import { Structure, updateStructures } from "../../../domain/entities/Covid19Info";
-import { Field, getColumns, IDROptions, ViewMoreOptions } from "./Columns";
+import { updateStructures } from "../../../domain/entities/Covid19Info";
+import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
 import { Covid19Filter, Id } from "../../../domain/entities/Covid19Info";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
 import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
 import { useAppContext } from "../../contexts/app-context";
-import { ViewMoreDialog } from "./ViewMoreDialog";
-import { useBooleanState } from "../../hooks/useBoolean";
+import { DetailsDialog } from "./DetailsDialog";
 import { sendAnalytics } from "../../../utils/analytics";
 import { IDRDialog } from "./IDRDialog";
+import { useInfoDialog } from "../../hooks/useInfoDialog";
 
 export interface StructuresTableProps {
     search: string;
@@ -34,14 +34,15 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const [pageSize, setPageSize] = React.useState(pageSizes[0]);
     const classes = useStyles();
 
-    const [isViewMoreOpen, { enable: openViewMore, disable: closeViewMore }] = useBooleanState(
-        false
-    );
-    const [detailsOptions, setDetailsOptions] = React.useState<FieldStructure>();
-    const [idrOptions, setIDROptions] = React.useState<IDROptions>();
-    const [isIDROpen, { enable: openIDR, disable: closeIDR }] = useBooleanState(false);
-    const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
+    const [
+        isDetailsOpen,
+        closeDetails,
+        detailsInfo,
+        showDetailsDialog,
+    ] = useInfoDialog<DetailsDialogOptions>();
+    const [isIDROpen, closeIDR, idrOptions, showIDRDialog] = useInfoDialog<IDROptions>();
 
+    const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
     const [filterState, setFilterState0] = React.useState(initialFilterState);
 
     const setFilterState = React.useCallback((value: Covid19Filter) => {
@@ -94,34 +95,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     }, [compositionRoot, data, search, filterState]);
 
     const { structures } = filteredData;
-
-    const showDetailsDialog = React.useCallback(
-        (options: ViewMoreOptions) => {
-            sendAnalytics({
-                type: "event",
-                action: "open",
-                category: "dialog",
-                label: `Details. Field: ${options.field}, PDB: ${options.row.pdb?.id}`,
-            });
-            openViewMore();
-            setDetailsOptions({ field: options.field, structure: options.row });
-        },
-        [openViewMore]
-    );
-
-    const showIDRDialog = React.useCallback(
-        (options: IDROptions) => {
-            sendAnalytics({
-                type: "event",
-                action: "open",
-                category: "dialog",
-                label: `Ligand IDR. Ligand: {}`,
-            });
-            openIDR();
-            setIDROptions(options);
-        },
-        [openIDR]
-    );
 
     const columns = React.useMemo(() => {
         return getColumns(data, {
@@ -207,26 +180,23 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 components={components}
                 componentsProps={componentsProps}
             />
-            {detailsOptions && (
-                <ViewMoreDialog
-                    open={isViewMoreOpen}
-                    onClose={closeViewMore}
-                    expandedAccordion={detailsOptions.field}
-                    row={detailsOptions.structure}
+            {detailsInfo && (
+                <DetailsDialog
+                    open={isDetailsOpen}
+                    onClose={closeDetails}
+                    expandedAccordion={detailsInfo.field}
+                    row={detailsInfo.row}
                     data={data}
                 />
             )}
-            <IDRDialog open={isIDROpen} onClose={closeIDR} idrOptions={idrOptions} />
+            {idrOptions && (
+                <IDRDialog open={isIDROpen} onClose={closeIDR} idrOptions={idrOptions} />
+            )}
         </div>
     );
 });
 
 type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
-
-interface FieldStructure {
-    field: Field;
-    structure: Structure;
-}
 
 const useStyles = makeStyles({
     root: {

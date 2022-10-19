@@ -14,7 +14,7 @@ import { DetailsCell } from "./cells/DetailsCell";
 import { Dialog } from "./Dialog";
 import i18n from "../../../utils/i18n";
 
-export interface ViewMoreDialogProps {
+export interface DetailsDialogProps {
     onClose(): void;
     open: boolean;
     expandedAccordion: Field | undefined;
@@ -22,7 +22,7 @@ export interface ViewMoreDialogProps {
     data: Covid19Info;
 }
 
-export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props => {
+export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
     const { onClose, expandedAccordion, row, data, open } = props;
 
     return (
@@ -38,9 +38,7 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                         {row.entities.length > 0 ? (
                             <EntityCell data={data} row={row} moreDetails={false}></EntityCell>
                         ) : (
-                            <Typography variant="caption">
-                                {i18n.t("No {{name}} found", { name: "entities" })}
-                            </Typography>
+                            <NoCellsFound name="entities" />
                         )}
                     </ModifiedAccordion>
 
@@ -48,9 +46,7 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                         {row.ligands.length > 0 ? (
                             <LigandsCell data={data} row={row} moreDetails={false}></LigandsCell>
                         ) : (
-                            <Typography variant="caption">
-                                {i18n.t("No {{name}} found", { name: "ligands" })}
-                            </Typography>
+                            <NoCellsFound name="ligands" />
                         )}
                     </ModifiedAccordion>
 
@@ -58,9 +54,7 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                         {row.organisms.length > 0 ? (
                             <OrganismCell row={row} data={data} moreDetails={false}></OrganismCell>
                         ) : (
-                            <Typography variant="caption">
-                                {i18n.t("No {{name}} found", { name: "organisms" })}
-                            </Typography>
+                            <NoCellsFound name="organisms" />
                         )}
                     </ModifiedAccordion>
 
@@ -68,9 +62,7 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
                         {row.details ? (
                             <DetailsCell row={row} data={data} moreDetails={false}></DetailsCell>
                         ) : (
-                            <Typography variant="caption">
-                                {i18n.t("No {{name}} found", { name: "details" })}
-                            </Typography>
+                            <NoCellsFound name="details" />
                         )}
                     </ModifiedAccordion>
                 </div>
@@ -78,26 +70,6 @@ export const ViewMoreDialog: React.FC<ViewMoreDialogProps> = React.memo(props =>
         </Dialog>
     );
 });
-
-const Container = styled.div`
-    display: flex;
-    & > div: {
-        flex-grow: 1;
-    }
-`;
-
-const ImgContainer = styled.div`
-    margin-right: 20px;
-    img {
-        max-height: 200px !important;
-        max-width: 200px !important;
-    }
-`;
-
-interface ModifiedAccordionProps {
-    field: Field;
-    expandedAccordion: Field | undefined;
-}
 
 const ModifiedAccordion: React.FC<ModifiedAccordionProps> = React.memo(props => {
     const { field, expandedAccordion } = props;
@@ -115,3 +87,31 @@ const ModifiedAccordion: React.FC<ModifiedAccordionProps> = React.memo(props => 
         </Accordion>
     );
 });
+
+const NoCellsFound: React.FC<NoCellsFoundProps> = React.memo(({ name }) => (
+    <Typography variant="caption">{i18n.t("No {{name}} found", { name })}</Typography>
+));
+
+interface ModifiedAccordionProps {
+    field: Field;
+    expandedAccordion: Field | undefined;
+}
+
+interface NoCellsFoundProps {
+    name: string;
+}
+
+const Container = styled.div`
+    display: flex;
+    & > div: {
+        flex-grow: 1;
+    }
+`;
+
+const ImgContainer = styled.div`
+    margin-right: 20px;
+    img {
+        max-height: 200px !important;
+        max-width: 200px !important;
+    }
+`;
