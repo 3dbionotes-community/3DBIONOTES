@@ -18,10 +18,17 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
 
     const ligands = React.useMemo(() => {
         return row.ligands.map(ligand => {
+            console.log(
+                !_.isEmpty(
+                    _.compact(_.values(_.pick(ligand, ["id", "name", "details", "imageLink"])))
+                )
+            );
             return {
                 ...ligand,
                 url: ligand.externalLink,
-                tooltip: (
+                tooltip: !_.isEmpty(
+                    _.compact(_.values(_.pick(ligand, ["id", "name", "details", "imageLink"])))
+                ) && (
                     <React.Fragment>
                         <div>
                             {i18n.t("ID")}: {ligand.id}

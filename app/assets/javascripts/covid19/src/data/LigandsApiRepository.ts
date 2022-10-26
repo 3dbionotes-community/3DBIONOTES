@@ -9,6 +9,7 @@ import { Maybe } from "./utils/ts-utils";
 export class LigandsApiRepository implements LigandsRepository {
     getImageDataResource(inChI: string): FutureData<Maybe<LigandImageData>> {
         return getJSON(`${routes.bionotesApi}/ligandToImageData/${inChI}`).map((data: any) => {
+            if (!data) return undefined;
             const { imageData } = data;
             if (!imageData) return undefined;
             if (imageData.length > 1) {
@@ -30,7 +31,7 @@ export class LigandsApiRepository implements LigandsRepository {
                             )
                         )
                         .join(", ");
-                    console.log(allPercentageInhibition);
+                    // console.log(allPercentageInhibition);
 
                     const cytotoxicity = assay.additionalAnalyses.find(
                         (analytic: any) => analytic.name === "CC50"

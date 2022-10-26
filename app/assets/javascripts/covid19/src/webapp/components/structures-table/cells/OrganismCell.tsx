@@ -13,7 +13,9 @@ export const OrganismCell: React.FC<CellProps> = React.memo(props => {
             .map(organism => ({
                 id: organism.id,
                 url: organism.externalLink,
-                tooltip: (
+                tooltip: !_.isEmpty(
+                    _.compact(_.values(_.pick(organism, ["id", "name", "commonName"])))
+                ) && (
                     <React.Fragment>
                         <div>
                             {i18n.t("ID")}: {organism.id}

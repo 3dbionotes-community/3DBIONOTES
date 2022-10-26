@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-09-26T10:53:31.741Z\n"
-"PO-Revision-Date: 2022-09-26T10:53:31.741Z\n"
+"POT-Creation-Date: 2022-10-26T15:27:31.554Z\n"
+"PO-Revision-Date: 2022-10-26T15:27:31.554Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -78,6 +78,9 @@ msgid "Save as CSV"
 msgstr ""
 
 msgid "Save as JSON"
+msgstr ""
+
+msgid "No {{name}} found"
 msgstr ""
 
 msgid "Ligand IDR"
@@ -166,9 +169,6 @@ msgid ""
 msgstr ""
 
 msgid "Examples"
-msgstr ""
-
-msgid "No {{name}} found"
 msgstr ""
 
 msgid "View more"

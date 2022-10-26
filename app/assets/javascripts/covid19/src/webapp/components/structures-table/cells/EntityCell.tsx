@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 import i18n from "../../../../utils/i18n";
 import { CellProps } from "../Columns";
@@ -11,7 +12,21 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
         return row.entities.map(entity => {
             return {
                 name: entity.name,
-                tooltip: (
+                tooltip: !_.isEmpty(
+                    _.compact(
+                        _.values(
+                            _.pick(entity, [
+                                "uniprotAcc",
+                                "altNames",
+                                "organism",
+                                "details",
+                                "isAntibody",
+                                "isNanobody",
+                                "isSybody",
+                            ])
+                        )
+                    )
+                ) && (
                     <React.Fragment>
                         {entity.uniprotAcc && (
                             <div>

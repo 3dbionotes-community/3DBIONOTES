@@ -29,17 +29,28 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
                 </a>
             );
         } else {
-            //ORGANISMS AND LIGANDS
-            return (
-                <HtmlTooltip title={tooltip}>
+            if (tooltip === false) {
+                return (
                     <li>
                         <a href={url} target="_blank" rel="noreferrer" style={styles.link}>
                             <NoWrapTypography>{text}</NoWrapTypography>
                             {children}
                         </a>
                     </li>
-                </HtmlTooltip>
-            );
+                );
+            } else {
+                //ORGANISMS AND LIGANDS
+                return (
+                    <HtmlTooltip title={tooltip}>
+                        <li>
+                            <a href={url} target="_blank" rel="noreferrer" style={styles.link}>
+                                <NoWrapTypography>{text}</NoWrapTypography>
+                                {children}
+                            </a>
+                        </li>
+                    </HtmlTooltip>
+                );
+            }
         }
     } else {
         if (tooltip === undefined || typeof tooltip === "string") {
@@ -56,15 +67,24 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
                 </HtmlTooltip>
             );
         } else {
-            return (
-                //WITH NOTHING AND ENTITY
-                <HtmlTooltip title={tooltip}>
+            if (tooltip === false) {
+                return (
                     <li>
                         <NoWrapTypography>{text}</NoWrapTypography>
                         {children}
                     </li>
-                </HtmlTooltip>
-            );
+                );
+            } else {
+                return (
+                    //WITH NOTHING AND ENTITY
+                    <HtmlTooltip title={tooltip}>
+                        <li>
+                            <NoWrapTypography>{text}</NoWrapTypography>
+                            {children}
+                        </li>
+                    </HtmlTooltip>
+                );
+            }
         }
     }
 });

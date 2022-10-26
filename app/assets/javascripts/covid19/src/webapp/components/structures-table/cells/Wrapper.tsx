@@ -33,6 +33,7 @@ const Container = styled.div<{ moreDetails: boolean }>`
     display: flex;
     flex-direction: column;
     line-height: 1.5;
+    overflow-wrap: anywhere;
     ul {
         ${props => (props.moreDetails ? "margin: 7px 0 2px;" : "margin:0;")}
         ${props =>
