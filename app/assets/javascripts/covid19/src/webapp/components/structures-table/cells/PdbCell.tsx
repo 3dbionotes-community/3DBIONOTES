@@ -68,7 +68,7 @@ const PdbCell2: React.FC<{
     }, []);
 
     return (
-        <React.Fragment>
+        <div>
             {pdb ? <Thumbnail type="pdb" value={pdb} tooltip={propertiesTooltip} /> : null}
 
             {!_.isEmpty(pdbValidations) ? (
@@ -102,7 +102,7 @@ const PdbCell2: React.FC<{
                     </Grid>
                 )
             ) : null}
-        </React.Fragment>
+        </div>
     );
 });
 

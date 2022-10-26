@@ -109,6 +109,9 @@ const Container = styled.div`
 `;
 
 const ImgContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
     margin-right: 20px;
     img {
         max-height: 200px !important;
