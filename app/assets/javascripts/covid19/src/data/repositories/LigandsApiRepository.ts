@@ -19,34 +19,21 @@ export class LigandsApiRepository implements LigandsRepository {
             ligandToImageDataResponseC
         )
             .flatMapError<Error>(() =>
-                Future.error({
-                    message: i18n.t("Error: the api response type was not the expected."),
-                })
+                Future.error(err("Error: the api response type was not the expected."))
             )
             .flatMap(
                 (ligandToImageData): FutureData<LigandImageData> => {
                     if (!ligandToImageData)
-                        return Future.error({
-                            message: i18n.t("Error: the api response is undefined."),
-                        });
+                        return Future.error(err("Error: the api response is undefined."));
                     if (_.has(ligandToImageData, "detail"))
-                        return Future.error({
-                            message: i18n.t('Error: "detail": Not found.'),
-                        });
+                        return Future.error(err('Error: "detail": Not found.'));
                     const data = ligandToImageData as LigandToImageData;
                     const { imageData } = data;
-                    if (!imageData)
-                        return Future.error({
-                            message: i18n.t("Error: imageData is undefined."),
-                        });
+                    if (!imageData) return Future.error(err("Error: imageData is undefined."));
                     if (imageData.length > 1)
-                        return Future.error({
-                            message: i18n.t("Error: there is more than one IDR."),
-                        }); //it shouldn't be an array...
+                        return Future.error(err("Error: there is more than one IDR.")); //it shouldn't be an array...
                     if (_.isEmpty(imageData))
-                        return Future.error({
-                            message: i18n.t("Error: imageData is empty."),
-                        });
+                        return Future.error(err("Error: imageData is empty."));
                     const idr = _.first(imageData) as ImageDataResource;
                     return Future.success<LigandImageData, Error>({
                         ...idr,
@@ -111,4 +98,8 @@ export class LigandsApiRepository implements LigandsRepository {
             );
         return ligandToImageData$;
     }
+}
+
+function err(message: string) {
+    return { message: i18n.t(message, { nsSeparator: false }) };
 }
