@@ -8,8 +8,21 @@ import {
     oneOf,
     optional,
     string,
-    unknown,
 } from "purify-ts";
+
+function maybeNull<Data>(type: Codec<Data>) {
+    return oneOf([type, nullType]);
+}
+
+const additionalAnalysisC = Codec.interface({
+    name: string,
+    value: number,
+    description: string,
+    units: maybeNull(string),
+    unitsTermAccession: maybeNull(string),
+    pvalue: maybeNull(number),
+    dataComment: maybeNull(string),
+});
 
 const wellC = Codec.interface({
     dbId: string,
@@ -21,7 +34,7 @@ const wellC = Codec.interface({
     cellLineTermAccession: string,
     controlType: string,
     qualityControl: string,
-    micromolarConcentration: oneOf([number, nullType]),
+    micromolarConcentration: maybeNull(number),
     percentageInhibition: number,
     hitOver75Activity: string,
     numberCells: number,
@@ -96,7 +109,7 @@ const assayC = Codec.interface({
     BIAId: string,
     screenCount: number,
     screens: array(screenC),
-    additionalAnalyses: array(unknown), //...
+    additionalAnalyses: array(additionalAnalysisC), //...
 });
 
 const imageDataC = Codec.interface({
@@ -107,8 +120,11 @@ const imageDataC = Codec.interface({
     assays: array(assayC),
 });
 
+const notFoundC = Codec.interface({
+    detail: exactly("Not found."),
+});
+
 export const ligandToImageDataC = Codec.interface({
-    detail: optional(exactly("Not found.")),
     IUPACInChIkey: string,
     name: string,
     formula: string,
@@ -117,7 +133,11 @@ export const ligandToImageDataC = Codec.interface({
     pubChemCompoundId: string,
     imageLink: string,
     externalLink: string,
-    imageData: array(imageDataC), //it shouldn't be an array...
+    imageData: optional(array(imageDataC)), //it shouldn't be an array...
 });
 
+export const ligandToImageDataResponseC = oneOf([notFoundC, ligandToImageDataC]);
+
+export type ImageDataResource = GetType<typeof imageDataC>;
 export type LigandToImageData = GetType<typeof ligandToImageDataC>;
+export type LigandToImageDataResponse = GetType<typeof ligandToImageDataResponseC>;

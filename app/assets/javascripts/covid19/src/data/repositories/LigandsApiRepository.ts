@@ -1,78 +1,114 @@
 import _ from "lodash";
+import {
+    ImageDataResource,
+    LigandToImageData,
+    LigandToImageDataResponse,
+    ligandToImageDataResponseC,
+} from "../LigandToImageData";
 import { LigandImageData } from "../../domain/entities/LigandImageData";
 import { LigandsRepository } from "../../domain/repositories/LigandsRepository";
 import { routes } from "../../routes";
-import { LigandToImageData, ligandToImageDataC } from "../LigandToImageData";
-import { FutureData } from "../utils/future";
+import { Error, Future, FutureData } from "../utils/future";
 import { getValidatedJSON } from "../utils/request-utils";
-import { Maybe } from "../utils/ts-utils";
+import i18n from "../../utils/i18n";
 
 export class LigandsApiRepository implements LigandsRepository {
-    getImageDataResource(inChI: string): FutureData<Maybe<LigandImageData>> {
-        const ligandToImageData$ = getValidatedJSON<LigandToImageData>(
+    getImageDataResource(inChI: string): FutureData<LigandImageData> {
+        const ligandToImageData$ = getValidatedJSON<LigandToImageDataResponse>(
             `${routes.bionotesApi}/ligandToImageData/${inChI}`,
-            ligandToImageDataC
-        ).map(ligandToImageData => {
-            if (!ligandToImageData || ligandToImageData.detail) return undefined;
-            const { imageData } = ligandToImageData;
-            if (!imageData) return undefined;
-            if (imageData.length > 1) {
-                console.log("There is more than one IDR");
-                return undefined;
-            }
-            const idr: any = _.first(imageData);
-            return {
-                ...idr,
-                assays: idr.assays.map((assay: any) => {
-                    const wellsOnPlates: any[][] = assay.screens
-                        .find((screen: any) => screen.dbId === "2602")
-                        ?.plates.map((plate: any) => plate.wells);
-                    // console.log(wellsOnPlates);
-                    const allPercentageInhibition = wellsOnPlates
-                        ?.map((plate: any) =>
-                            plate.flatMap((well: any) =>
-                                well.percentageInhibition ? [`${well.percentageInhibition}%`] : []
-                            )
-                        )
-                        .join(", ");
-                    // console.log(allPercentageInhibition);
+            ligandToImageDataResponseC
+        )
+            .flatMapError<Error>(() =>
+                Future.error({
+                    message: i18n.t("Error: the api response type was not the expected."),
+                })
+            )
+            .flatMap(
+                (ligandToImageData): FutureData<LigandImageData> => {
+                    if (!ligandToImageData)
+                        return Future.error({
+                            message: i18n.t("Error: the api response is undefined."),
+                        });
+                    if (_.has(ligandToImageData, "detail"))
+                        return Future.error({
+                            message: i18n.t('Error: "detail": Not found.'),
+                        });
+                    const data = ligandToImageData as LigandToImageData;
+                    const { imageData } = data;
+                    if (!imageData)
+                        return Future.error({
+                            message: i18n.t("Error: imageData is undefined."),
+                        });
+                    if (imageData.length > 1)
+                        return Future.error({
+                            message: i18n.t("Error: there is more than one IDR."),
+                        }); //it shouldn't be an array...
+                    if (_.isEmpty(imageData))
+                        return Future.error({
+                            message: i18n.t("Error: imageData is empty."),
+                        });
+                    const idr = _.first(imageData) as ImageDataResource;
+                    return Future.success<LigandImageData, Error>({
+                        ...idr,
+                        assays: idr.assays.map(assay => {
+                            const {
+                                screens,
+                                additionalAnalyses,
+                                dbId,
+                                assayType,
+                                assayTypeTermAccession,
+                            } = assay;
 
-                    const cytotoxicity = assay.additionalAnalyses.find(
-                        (analytic: any) => analytic.name === "CC50"
-                    );
-                    const doseResponse = assay.additionalAnalyses.find(
-                        (analytic: any) => analytic.name === "IC50"
-                    );
-                    const cytotoxicIndex = assay.additionalAnalyses.find(
-                        (analytic: any) => analytic.name === "Selectivity index"
-                    );
+                            //Compound: inhibition cytopathicity
+                            const wellsFromPlates = screens
+                                .find(({ dbId }) => dbId === "2602")
+                                ?.plates.map(({ wells }) => wells);
+                            const allPercentageInhibition = wellsFromPlates
+                                ?.map(plate =>
+                                    plate.flatMap(({ percentageInhibition }) =>
+                                        percentageInhibition ? [`${percentageInhibition}%`] : []
+                                    )
+                                )
+                                .join(", "); //it should be only one...¿?, but just in case...
 
-                    return {
-                        ...assay,
-                        id: assay.dbId,
-                        type: assay.assayType,
-                        typeTermAccession: assay.assayTypeTermAccession,
-                        screens: assay.screens.map((screen: any) => ({
-                            ...screen,
-                            id: screen.dbId,
-                            doi: screen.dataDoi,
-                        })),
-                        compound: {
-                            percentageInhibition: allPercentageInhibition,
-                            cytotoxicity: cytotoxicity
-                                ? `${cytotoxicity.value} ${cytotoxicity.units ?? ""}`
-                                : undefined,
-                            cytotoxicityIndex: cytotoxicIndex
-                                ? `${cytotoxicIndex.value} ${cytotoxicIndex.units ?? ""}`
-                                : undefined,
-                            doseResponse: doseResponse
-                                ? `${doseResponse.value} ${doseResponse.units ?? ""}`
-                                : undefined,
-                        },
-                    };
-                }),
-            } as LigandImageData;
-        });
+                            //Compounds: cytotoxicity, dose response, cytotoxic index
+                            const cytotoxicity = additionalAnalyses.find(
+                                ({ name }) => name === "CC50"
+                            );
+                            const doseResponse = additionalAnalyses.find(
+                                ({ name }) => name === "IC50"
+                            );
+                            const cytotoxicIndex = additionalAnalyses.find(
+                                ({ name }) => name === "Selectivity index"
+                            );
+
+                            return {
+                                ...assay,
+                                id: dbId,
+                                type: assayType,
+                                typeTermAccession: assayTypeTermAccession,
+                                screens: screens.map(screen => ({
+                                    ...screen,
+                                    id: screen.dbId,
+                                    doi: screen.dataDoi,
+                                })),
+                                compound: {
+                                    percentageInhibition: allPercentageInhibition,
+                                    cytotoxicity: cytotoxicity
+                                        ? `${cytotoxicity.value} ${cytotoxicity.units ?? ""}`
+                                        : undefined,
+                                    cytotoxicityIndex: cytotoxicIndex
+                                        ? `${cytotoxicIndex.value} ${cytotoxicIndex.units ?? ""}`
+                                        : undefined,
+                                    doseResponse: doseResponse
+                                        ? `${doseResponse.value} ${doseResponse.units ?? ""}`
+                                        : undefined,
+                                },
+                            };
+                        }),
+                    });
+                }
+            );
         return ligandToImageData$;
     }
 }

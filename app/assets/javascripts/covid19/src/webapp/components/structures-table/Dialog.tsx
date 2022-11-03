@@ -21,13 +21,13 @@ export const Dialog: React.FC<DialogProps> = React.memo(
                 onClose={onClose}
                 maxWidth={maxWidth ?? "md"}
             >
-                <DialogTitle>
+                <StyledDialogTitle>
                     <Title title={title}>{title}</Title>
                     {headerChildren}
-                    <IconButton onClick={onClose}>
+                    <StyledIconButton onClick={onClose}>
                         <Close />
-                    </IconButton>
-                </DialogTitle>
+                    </StyledIconButton>
+                </StyledDialogTitle>
 
                 <DialogContent>{children}</DialogContent>
             </StyledDialog>
@@ -59,10 +59,22 @@ const StyledDialog = styled(MuiDialog)`
     }
 `;
 
+const StyledDialogTitle = styled(DialogTitle)`
+    & .MuiTypography-h6 {
+        align-items: center;
+    }
+`;
+
+const StyledIconButton = styled(IconButton)`
+    &.MuiIconButton-root {
+        margin-left: auto;
+    }
+`;
+
 const Title = styled.span`
     display: inline-block;
-    flex-grow: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1;
 `;
