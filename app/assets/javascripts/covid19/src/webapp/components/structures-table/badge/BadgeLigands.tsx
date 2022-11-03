@@ -2,10 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import i18n from "../../../../utils/i18n";
 import { Ligand } from "../../../../domain/entities/Covid19Info";
-import { LigandImageData } from "../../../../domain/entities/LigandImageData";
-import { BadgeLink } from "./BadgeLink";
 import { IDROptions } from "../Columns";
 import { Badge } from "./Badge";
+import { useAppContext } from "../../../contexts/app-context";
 
 export type OnClickIDR = (options: IDROptions, gaLabel: string) => void;
 
@@ -13,18 +12,30 @@ export interface BadgeLigandsProps {
     onClick?: OnClickIDR;
     ligand: Ligand;
     moreDetails?: boolean;
-    imageDataResource: LigandImageData;
 }
 
 export const BadgeLigands: React.FC<BadgeLigandsProps> = React.memo(props => {
-    const { ligand, onClick, moreDetails = true, imageDataResource: idr } = props;
+    const { ligand, onClick, moreDetails = true } = props;
+    const { compositionRoot } = useAppContext();
 
     const notifyClick = React.useCallback(
         e => {
             e.preventDefault();
-            onClick?.({ ligand, idr }, `IDR Ligand. ID: ${ligand.id}. Name: ${ligand.name}`);
+            compositionRoot.ligands.getIDR.execute(ligand.inChI).run(
+                idr => {
+                    if (idr)
+                        onClick?.(
+                            { ligand, idr },
+                            `IDR Ligand. ID: ${ligand.id}. Name: ${ligand.name}`
+                        );
+                },
+                err => {
+                    console.error(err.message);
+                    throw new Error(err.message);
+                }
+            );
         },
-        [onClick, ligand, idr]
+        [onClick, ligand, compositionRoot]
     );
 
     return moreDetails ? (
@@ -32,14 +43,12 @@ export const BadgeLigands: React.FC<BadgeLigandsProps> = React.memo(props => {
             <Badge onClick={notifyClick} backgroundColor={"w3-cyan"}>
                 {i18n.t("IDR")} <i className="fa fa-info-circle icon-right"></i>
             </Badge>
-            <BadgeLink url={idr.externalLink} backgroundColor={"w3-cyan"} icon="external" />
         </BadgeGroup>
     ) : (
         <BadgeInlineGroup>
             <Badge onClick={notifyClick} backgroundColor={"w3-cyan"}>
                 {i18n.t("IDR")} <i className="fa fa-info-circle icon-right"></i>
             </Badge>
-            <BadgeLink url={idr.externalLink} backgroundColor={"w3-cyan"} icon="external" />
         </BadgeInlineGroup>
     );
 });
