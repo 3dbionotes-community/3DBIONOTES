@@ -32,6 +32,7 @@ export interface Ligand {
     details: string;
     imageLink: Url;
     externalLink: Url;
+    xRef?: XRef;
 }
 
 export interface Structure {
@@ -78,6 +79,8 @@ export interface Emdb extends DbItem {
 export type SourceName = "PDB-REDO" | "CSTF" | "CERES";
 
 export type MethodName = "PDB-Redo" | "Isolde" | "Refmac" | "PHENIX";
+
+type XRef = ["IDR"];
 
 type Maybe<T> = T | null;
 

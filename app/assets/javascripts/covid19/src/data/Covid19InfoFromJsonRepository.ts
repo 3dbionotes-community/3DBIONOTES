@@ -195,7 +195,14 @@ function getLigands(
     ligandRefs: Data.Pdb["ligands"]
 ): Ligand[] {
     const ligandsByInChI = _(dataLigands)
-        .map((ligand): Ligand => ({ id: ligand.dbId, inChI: ligand.IUPACInChIkey, ...ligand }))
+        .map(
+            (ligand): Ligand => ({
+                id: ligand.dbId,
+                inChI: ligand.IUPACInChIkey,
+                hasIDR: !!ligand.xRef,
+                ...ligand,
+            })
+        )
         .keyBy(ligand => ligand.inChI)
         .value();
 

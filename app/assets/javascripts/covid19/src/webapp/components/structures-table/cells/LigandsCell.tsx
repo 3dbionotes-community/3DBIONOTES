@@ -18,11 +18,6 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
 
     const ligands = React.useMemo(() => {
         return row.ligands.map(ligand => {
-            console.log(
-                !_.isEmpty(
-                    _.compact(_.values(_.pick(ligand, ["id", "name", "details", "imageLink"])))
-                )
-            );
             return {
                 ...ligand,
                 url: ligand.externalLink,
@@ -53,18 +48,20 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
     }, [row.ligands]);
 
     React.useEffect(() => {
-        compositionRoot.ligands.getIDR.execute(row.ligands.map(({ inChI }) => inChI)).run(
-            arr => {
-                const idrs = arr.filter(inChIAndIDR => inChIAndIDR.idr) as {
-                    inChI: string;
-                    idr: LigandImageData;
-                }[];
-                if (!_.isEmpty(idrs)) setLigandsIDR(idrs);
-            },
-            err => {
-                throw new Error(err.message);
-            }
-        );
+        compositionRoot.ligands.getIDR
+            .execute(row.ligands.flatMap(({ inChI, hasIDR }) => (hasIDR ? [inChI] : [])))
+            .run(
+                arr => {
+                    const idrs = arr.filter(inChIAndIDR => inChIAndIDR.idr) as {
+                        inChI: string;
+                        idr: LigandImageData;
+                    }[];
+                    if (!_.isEmpty(idrs)) setLigandsIDR(idrs);
+                },
+                err => {
+                    throw new Error(err.message);
+                }
+            );
     }, [row.ligands, compositionRoot]);
 
     return (
@@ -75,11 +72,7 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
             field="ligands"
         >
             {ligands
-                .sort((a, b) => {
-                    if (!a.inChI && b.inChI) return 1;
-                    if (a.inChI && !b.inChI) return -1;
-                    return 0;
-                })
+                .sort((a, b) => (b.hasIDR ? (a.hasIDR ? 0 : 1) : -1))
                 .map(ligand => {
                     const idr = ligandsIDR.find(({ inChI }) => inChI === ligand.inChI)?.idr;
                     return (
@@ -89,7 +82,7 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
                                 url={ligand.url}
                                 text={`${ligand.name} (${ligand.id})`}
                             >
-                                {idr && (
+                                {ligand.hasIDR && idr && (
                                     <BadgeLigands
                                         ligand={ligand}
                                         onClick={onClickIDR}
