@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-10-26T15:27:31.554Z\n"
-"PO-Revision-Date: 2022-10-26T15:27:31.554Z\n"
+"POT-Creation-Date: 2022-11-03T07:47:19.044Z\n"
+"PO-Revision-Date: 2022-11-03T07:47:19.044Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -24,6 +24,9 @@ msgid "CSTF"
 msgstr ""
 
 msgid "CERES"
+msgstr ""
+
+msgid "IDR"
 msgstr ""
 
 msgid "COVID-19 Structural Hub"
@@ -172,9 +175,6 @@ msgid "Examples"
 msgstr ""
 
 msgid "View more"
-msgstr ""
-
-msgid "IDR"
 msgstr ""
 
 msgid "Sample"
