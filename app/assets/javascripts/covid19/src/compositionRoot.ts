@@ -1,12 +1,12 @@
-import { Covid19InfoFromJsonRepository } from "./data/Covid19InfoFromJsonRepository";
-import { BrowserDataGridRepository } from "./data/BrowserDataGridRepository";
+import { Covid19InfoFromJsonRepository } from "./data/repositories/Covid19InfoFromJsonRepository";
+import { BrowserDataGridRepository } from "./data/repositories/BrowserDataGridRepository";
 import { ExportStructuresUseCase } from "./domain/usecases/ExportStructuresUseCase";
 import { GetCovid19InfoUseCase } from "./domain/usecases/GetCovid19InfoUseCase";
 import { GetAutoSuggestionsUseCase } from "./domain/usecases/GetAutoSuggestionsUseCase";
 import { SearchCovid19InfoUseCase } from "./domain/usecases/SearchCovid19InfoUseCase";
 import { AddDynamicInfoToCovid19InfoUseCase } from "./domain/usecases/AddDynamicInfoToCovid19InfoUseCase";
-import { LocalStorageCacheRepository } from "./data/LocalStorageCacheRepository";
-import { LigandsApiRepository } from "./data/LigandsApiRepository";
+import { LocalStorageCacheRepository } from "./data/repositories/LocalStorageCacheRepository";
+import { LigandsApiRepository } from "./data/repositories/LigandsApiRepository";
 import { GetLigandImageDataResourcesUseCase } from "./domain/usecases/GetLigandImageDataResourcesUseCase";
 
 export function getCompositionRoot() {

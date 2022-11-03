@@ -16,12 +16,16 @@ import {
     filterPdbValidations,
     ValidationSource,
     ValidationMethod,
-} from "../domain/entities/Covid19Info";
-import { Covid19InfoRepository, SearchOptions } from "../domain/repositories/Covid19InfoRepository";
+    filterLigands,
+} from "../../domain/entities/Covid19Info";
+import {
+    Covid19InfoRepository,
+    SearchOptions,
+} from "../../domain/repositories/Covid19InfoRepository";
 import { SearchOptions as MiniSearchSearchOptions } from "minisearch";
-import { cache } from "../utils/cache";
-import { data } from "./covid19-data";
-import * as Data from "./Covid19Data.types";
+import { cache } from "../../utils/cache";
+import { data } from "../covid19-data";
+import * as Data from "../Covid19Data.types";
 
 export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     info: Covid19Info;
@@ -64,24 +68,32 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     }
 
     private filter(structures: Structure[], filterState: Covid19Filter): Structure[] {
-        const isFilterStateEnabled =
+        const isEntitiesStateEnabled =
             filterState.antibodies || filterState.nanobodies || filterState.sybodies;
         const isPdbValidationsFilterEnabled =
             filterState.pdbRedo || filterState.cstf || filterState.ceres;
+        const isIDREnabled = filterState.idr;
 
-        if (!isFilterStateEnabled && !isPdbValidationsFilterEnabled) return structures;
-        const structuresToFilter = isPdbValidationsFilterEnabled
+        if (!isEntitiesStateEnabled && !isPdbValidationsFilterEnabled && !isIDREnabled)
+            return structures;
+        const structuresWithValidations = isPdbValidationsFilterEnabled
             ? structures.filter(structure =>
                   structure.validations.pdb.length > 0
                       ? filterPdbValidations(structure.validations.pdb, filterState)
                       : false
               )
             : structures;
-        return isFilterStateEnabled
-            ? structuresToFilter.filter(
+        const structuresWithEntities = isEntitiesStateEnabled
+            ? structuresWithValidations.filter(
                   structure => filterEntities(structure.entities, filterState).length > 0
               )
-            : structuresToFilter;
+            : structuresWithValidations;
+        const structuresWithIDR = isIDREnabled
+            ? structuresWithEntities.filter(
+                  structure => filterLigands(structure.ligands).length > 0
+              )
+            : structures;
+        return structuresWithIDR;
     }
 
     private searchByText(

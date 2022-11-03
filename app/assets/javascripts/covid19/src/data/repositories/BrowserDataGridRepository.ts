@@ -1,9 +1,9 @@
-import FileSaver from "file-saver";
 import _ from "lodash";
-import { lookup } from "mime-types";
+import FileSaver from "file-saver";
 import Papa from "papaparse";
-import { DataGrid } from "../domain/entities/DataGrid";
-import { DataGridRepository } from "../domain/repositories/DataGridRepository";
+import { lookup } from "mime-types";
+import { DataGrid } from "../../domain/entities/DataGrid";
+import { DataGridRepository } from "../../domain/repositories/DataGridRepository";
 
 export class BrowserDataGridRepository implements DataGridRepository {
     saveAsCsv(options: { dataGrid: DataGrid; name: string }) {
