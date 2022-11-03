@@ -1,13 +1,14 @@
 import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
-import { Typography } from "@material-ui/core";
+import { IconButton, Typography } from "@material-ui/core";
+import { OpenInNew } from "@material-ui/icons";
 import { Pagination } from "@material-ui/lab";
+import { Assay, Compound, Screen } from "../../../domain/entities/LigandImageData";
 import { ListItemProps } from "./cells/DetailsCell";
 import { colors } from "./badge/Badge";
 import { Dialog } from "./Dialog";
 import { IDROptions } from "./Columns";
-import { Assay, Compound, Screen } from "../../../domain/entities/LigandImageData";
 import i18n from "../../../utils/i18n";
 
 export interface IDRDialogProps {
@@ -26,12 +27,14 @@ export const IDRDialog: React.FC<IDRDialogProps> = React.memo(props => {
         },
         []
     );
+    const externalLink = React.useMemo(() => <ExternalLink href={idr.externalLink} />, [idr]);
 
     return (
         <StyledDialog
             open={open}
             onClose={onClose}
             title={ligand?.name ? `${ligand.name} (${ligand.id})` : i18n.t("Ligand IDR")}
+            headerChildren={externalLink}
             maxWidth={"sm"}
         >
             <Wrapper>
@@ -68,6 +71,16 @@ export const IDRDialog: React.FC<IDRDialogProps> = React.memo(props => {
                 </div>
             </Wrapper>
         </StyledDialog>
+    );
+});
+
+const ExternalLink: React.FC<ExternalLinkProps> = React.memo(({ href }) => {
+    return (
+        <a href={href} target="_blank" rel="noreferrer noopener">
+            <IconButton>
+                <OpenInNew />
+            </IconButton>
+        </a>
     );
 });
 
@@ -142,6 +155,10 @@ const Section: React.FC<SectionProps> = React.memo(({ children, title }) => (
 
 interface SectionProps {
     title: string;
+}
+
+interface ExternalLinkProps {
+    href: string;
 }
 
 interface AssayFCProps {

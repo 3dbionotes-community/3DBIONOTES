@@ -7,12 +7,13 @@ export interface DialogProps {
     className?: string;
     title: string;
     open: boolean;
+    headerChildren?: React.ReactNode;
     maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
     onClose(): void;
 }
 
 export const Dialog: React.FC<DialogProps> = React.memo(
-    ({ onClose, className, title, open, children, maxWidth }) => {
+    ({ onClose, className, title, open, children, maxWidth, headerChildren }) => {
         return (
             <StyledDialog
                 className={className}
@@ -22,6 +23,7 @@ export const Dialog: React.FC<DialogProps> = React.memo(
             >
                 <DialogTitle>
                     <Title title={title}>{title}</Title>
+                    {headerChildren}
                     <IconButton onClick={onClose}>
                         <Close />
                     </IconButton>
