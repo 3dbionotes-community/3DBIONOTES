@@ -210,6 +210,7 @@ export const filterKeys = [
     "pdbRedo",
     "cstf",
     "ceres",
+    "idr",
 ] as const;
 
 export type FilterKey = typeof filterKeys[number];
@@ -223,6 +224,10 @@ export function filterEntities(entities: Entity[], filterState: Covid19Filter): 
             entity.isNanobody === filterState.nanobodies &&
             entity.isSybody === filterState.sybodies
     );
+}
+
+export function filterLigands(ligands: Ligand[]): Ligand[] {
+    return ligands.filter(ligand => ligand.hasIDR);
 }
 
 export function filterPdbValidations(
@@ -255,6 +260,7 @@ export function getTranslations() {
             pdbRedo: i18n.t("PDB-REDO"),
             cstf: i18n.t("CSTF"),
             ceres: i18n.t("CERES"),
+            idr: i18n.t("IDR"),
         } as Record<FilterKey, string>,
     };
 }
