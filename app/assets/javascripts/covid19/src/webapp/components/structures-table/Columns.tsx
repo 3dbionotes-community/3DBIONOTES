@@ -18,7 +18,7 @@ import { DetailsCell } from "./cells/DetailsCell";
 import { PdbCell } from "./cells/PdbCell";
 import { EmdbCell } from "./cells/EmdbCell";
 import { EntityCell } from "./cells/EntityCell";
-import { LigandsCell } from "./cells/LigandsCell";
+import { LigandsCell, LigandsCellProps } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
 import { LigandImageData } from "../../../domain/entities/LigandImageData";
 import { OnClickDetails } from "./badge/BadgeDetails";
@@ -29,7 +29,8 @@ export type Field = keyof Row;
 
 export interface IDROptions {
     ligand: Ligand;
-    idr: LigandImageData;
+    idr?: LigandImageData;
+    error?: string;
 }
 
 export interface DetailsDialogOptions {
@@ -43,14 +44,13 @@ export interface CellProps {
     moreDetails?: boolean;
     validationSources?: ValidationSource[];
     onClickDetails?: OnClickDetails;
-    onClickIDR?: OnClickIDR;
 }
 
 export interface ColumnAttrs<F extends Field>
     extends Omit<GridColDef, "headerName" | "field" | "renderCell"> {
     headerName: string;
     field: F;
-    renderCell: React.FC<CellProps>;
+    renderCell: React.FC<CellProps> | React.FC<LigandsCellProps>;
     renderString(row: Row): string | undefined;
 }
 

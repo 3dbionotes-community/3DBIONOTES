@@ -20,20 +20,21 @@ export const BadgeLigands: React.FC<BadgeLigandsProps> = React.memo(props => {
 
     const notifyClick = React.useCallback(
         e => {
-            e.preventDefault();
-            compositionRoot.ligands.getIDR.execute(ligand.inChI).run(
-                idr => {
-                    if (idr)
-                        onClick?.(
+            if (onClick) {
+                e.preventDefault();
+                compositionRoot.ligands.getIDR.execute(ligand.inChI).run(
+                    idr =>
+                        onClick(
                             { ligand, idr },
                             `IDR Ligand. ID: ${ligand.id}. Name: ${ligand.name}`
-                        );
-                },
-                err => {
-                    console.error(err.message);
-                    throw new Error(err.message);
-                }
-            );
+                        ),
+                    err =>
+                        onClick(
+                            { ligand, error: err.message },
+                            `ERROR IDR Ligand. ID: ${ligand.id}`
+                        )
+                );
+            }
         },
         [onClick, ligand, compositionRoot]
     );

@@ -36,6 +36,10 @@ export const Dialog: React.FC<DialogProps> = React.memo(
 );
 
 const StyledDialog = styled(MuiDialog)`
+    .MuiDialog-paper {
+        min-width: 480px;
+    }
+
     .MuiDialogTitle-root {
         background: #607d8b;
         color: #fff;

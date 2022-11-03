@@ -19,7 +19,7 @@ export interface IDRDialogProps {
 
 export const IDRDialog: React.FC<IDRDialogProps> = React.memo(props => {
     const { onClose, open } = props;
-    const { ligand, idr } = props.idrOptions;
+    const { ligand, idr, error } = props.idrOptions;
     const [page, setPage] = React.useState(1);
     const setPageFromEvent = React.useCallback(
         (_event: React.ChangeEvent<unknown>, page: number) => {
@@ -27,7 +27,9 @@ export const IDRDialog: React.FC<IDRDialogProps> = React.memo(props => {
         },
         []
     );
-    const externalLink = React.useMemo(() => <ExternalLink href={idr.externalLink} />, [idr]);
+    const externalLink = React.useMemo(() => idr && <ExternalLink href={idr.externalLink} />, [
+        idr,
+    ]);
 
     return (
         <StyledDialog
@@ -38,37 +40,46 @@ export const IDRDialog: React.FC<IDRDialogProps> = React.memo(props => {
             maxWidth={"sm"}
         >
             <Wrapper>
-                <Container>
-                    {idr.assays.map((assay, idx) => {
-                        return (
-                            <>
-                                <Section title={i18n.t("Assay")}>
-                                    <AssayFC key={idx} assay={assay} dataSource={idr.dataSource} />
-                                </Section>
-                                <Section title={i18n.t("Screens")}>
-                                    {assay.screens.map((screen, idx) => (
-                                        <ScreenFC key={idx} screen={screen} />
-                                    ))}
-                                </Section>
-                                <Section title={i18n.t("Compound")}>
-                                    <CompoundFC compound={assay.compound} />
-                                </Section>
-                            </>
-                        );
-                    })}
-                </Container>
-                <div>
-                    {/*Need this div always for CSS layout*/}
-                    {idr.assays.length > 1 && (
-                        <StyledPagination
-                            count={idr.assays.length}
-                            page={page}
-                            shape="rounded"
-                            color="primary"
-                            onChange={setPageFromEvent}
-                        />
-                    )}
-                </div>
+                {error && <Typography>{error}</Typography>}
+                {idr && (
+                    <>
+                        <Container>
+                            {idr.assays.map((assay, idx) => {
+                                return (
+                                    <>
+                                        <Section title={i18n.t("Assay")}>
+                                            <AssayFC
+                                                key={idx}
+                                                assay={assay}
+                                                dataSource={idr.dataSource}
+                                            />
+                                        </Section>
+                                        <Section title={i18n.t("Screens")}>
+                                            {assay.screens.map((screen, idx) => (
+                                                <ScreenFC key={idx} screen={screen} />
+                                            ))}
+                                        </Section>
+                                        <Section title={i18n.t("Compound")}>
+                                            <CompoundFC compound={assay.compound} />
+                                        </Section>
+                                    </>
+                                );
+                            })}
+                        </Container>
+                        <div>
+                            {/*Need this div always for CSS layout*/}
+                            {idr.assays.length > 1 && (
+                                <StyledPagination
+                                    count={idr.assays.length}
+                                    page={page}
+                                    shape="rounded"
+                                    color="primary"
+                                    onChange={setPageFromEvent}
+                                />
+                            )}
+                        </div>
+                    </>
+                )}
             </Wrapper>
         </StyledDialog>
     );

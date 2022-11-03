@@ -1,13 +1,17 @@
 import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
-import { BadgeLigands } from "../badge/BadgeLigands";
+import { BadgeLigands, OnClickIDR } from "../badge/BadgeLigands";
 import { CellProps, styles } from "../Columns";
 import { Link } from "../Link";
 import { Wrapper } from "./Wrapper";
 import i18n from "../../../../utils/i18n";
 
-export const LigandsCell: React.FC<CellProps> = React.memo(props => {
+export interface LigandsCellProps extends CellProps {
+    onClickIDR?: OnClickIDR;
+}
+
+export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
     const { row, onClickDetails, onClickIDR, moreDetails } = props;
 
     const ligands = React.useMemo(() => {
