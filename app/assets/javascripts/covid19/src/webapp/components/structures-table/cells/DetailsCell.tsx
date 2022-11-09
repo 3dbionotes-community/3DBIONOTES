@@ -1,12 +1,13 @@
+import _ from "lodash";
 import React from "react";
-import { CellProps } from "../Columns";
-import i18n from "../../../../utils/i18n";
 import styled from "styled-components";
+import { CellProps } from "../Columns";
 import { ellipsizedList } from "../../../utils/ellipsizedList";
 import { HtmlTooltip } from "../HtmlTooltip";
 import { Wrapper } from "./Wrapper";
 import { RefDoc } from "../../../../domain/entities/Covid19Info";
 import { Link } from "../Link";
+import i18n from "../../../../utils/i18n";
 
 export const DetailsCell: React.FC<CellProps> = React.memo(props => {
     const { row, moreDetails, onClickDetails } = props;
@@ -107,7 +108,7 @@ const RefDocLi: React.FC<RefDocLiProps> = React.memo(props => {
         <Li>
             <strong>{i18n.t("Publication")}:</strong>
             <ul>
-                {!moreDetails && refDoc.id.trim().length > 0 && (
+                {!moreDetails && !_.isEmpty(refDoc.id.trim()) && (
                     <ListItem name={i18n.t("ID")}>
                         <Link url={refDoc.idLink} text={refDoc.id}></Link>
                     </ListItem>

@@ -78,19 +78,19 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
             return structures;
         const structuresWithValidations = isPdbValidationsFilterEnabled
             ? structures.filter(structure =>
-                  structure.validations.pdb.length > 0
+                  !_.isEmpty(structure.validations.pdb)
                       ? filterPdbValidations(structure.validations.pdb, filterState)
                       : false
               )
             : structures;
         const structuresWithEntities = isEntitiesStateEnabled
             ? structuresWithValidations.filter(
-                  structure => filterEntities(structure.entities, filterState).length > 0
+                  structure => !_.isEmpty(filterEntities(structure.entities, filterState))
               )
             : structuresWithValidations;
         const structuresWithIDR = isIDREnabled
             ? structuresWithEntities.filter(
-                  structure => filterLigands(structure.ligands).length > 0
+                  structure => !_.isEmpty(filterLigands(structure.ligands))
               )
             : structuresWithEntities;
         return structuresWithIDR;
@@ -102,19 +102,18 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         matches: string[] = []
     ): Structure[] {
         const miniSearch = this.getMiniSearch();
-        const searchOptions =
-            matches.length > 0
-                ? {
-                      ...this.searchOptions,
-                      filter: (result: SearchResult) =>
-                          _.isEmpty(
-                              _.difference(
-                                  matches.map(m => m.toLowerCase()),
-                                  result.terms.map(m => m.toLowerCase())
-                              )
-                          ),
-                  }
-                : this.searchOptions;
+        const searchOptions = !_.isEmpty(matches.length)
+            ? {
+                  ...this.searchOptions,
+                  filter: (result: SearchResult) =>
+                      _.isEmpty(
+                          _.difference(
+                              matches.map(m => m.toLowerCase()),
+                              result.terms.map(m => m.toLowerCase())
+                          )
+                      ),
+              }
+            : this.searchOptions;
         const results = miniSearch.search(search, searchOptions);
         const matchingIds = results.map(getId);
         return _(structures).keyBy(getId).at(matchingIds).compact().value();
@@ -152,7 +151,7 @@ function getStructures(): Structure[] {
         .compact()
         .value();
 
-    if (repeatedIds.length > 0) {
+    if (!_.isEmpty(repeatedIds.length)) {
         console.error(`Repeated structure IDs: ${repeatedIds.join(", ")}`);
     }
 
