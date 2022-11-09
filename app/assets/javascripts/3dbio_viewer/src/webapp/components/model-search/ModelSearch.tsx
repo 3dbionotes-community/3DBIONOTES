@@ -1,4 +1,6 @@
+import _ from "lodash";
 import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import {
     CircularProgress,
     Dialog,
@@ -7,21 +9,20 @@ import {
     IconButton,
 } from "@material-ui/core";
 import { Close, Search } from "@material-ui/icons";
-import _ from "lodash";
-import { DbModel } from "../../../domain/entities/DbModel";
+import { DbModel, DbModelType } from "../../../domain/entities/DbModel";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { useBooleanState } from "../../hooks/use-boolean";
-import i18n from "../../utils/i18n";
 import { ActionType, DbItem } from "../../view-models/Selection";
 import { useAppContext } from "../AppContext";
-import "./ModelSearch.css";
 import { ModelSearchItem } from "./ModelSearchItem";
 import { ModelUpload } from "../model-upload/ModelUpload";
 import { ModelSearchFilterMenu, ModelTypeFilter, modelTypeKeys } from "./ModelSearchFilterMenu";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value";
 import { sendAnalytics } from "../../utils/analytics";
 import { useGoto } from "../../hooks/use-goto";
+import i18n from "../../utils/i18n";
+import "./ModelSearch.css";
+import { Maybe } from "../../../utils/ts-utils";
 
 /* Search PDB/EMDB models from text and model type. As the search items to show are limited,
    we get all the matching models and use an infinite scroll just to render more items. Only a
@@ -34,33 +35,17 @@ export interface ModelSearchProps {
     onSelect(actionType: ActionType, selected: DbItem): void;
 }
 
-type ModelSearchType = DbModel["type"] | "all";
-
-interface FormState {
-    type: "empty" | "searching" | "results";
-    query: string;
-    startIndex: number;
-    data: DbModel[];
-    totals: Record<DbModel["type"], number>;
-    models: ModelTypeFilter;
-}
-
-const pageSize = 30;
-
-const maxRenderedItems = 300;
-
-const initialFormState: FormState = {
-    type: "empty",
-    query: "",
-    data: [],
-    startIndex: 0,
-    totals: { pdb: 0, emdb: 0 },
-    models: { pdb: true, emdb: true },
-};
-
 export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     const { title, onClose, onSelect } = props;
 
+    const [isUploadOpen, { open: openUpload, close: closeUpload }] = useBooleanState(false);
+    const [formState, setFormState] = React.useState<FormState>(initialFormState);
+    const [inputValue, setInputValue] = React.useState<string>("");
+
+    const { models, data, startIndex, totals } = formState;
+
+    const goTo = useGoto();
+    const setSearchFromEvent = useSearch(formState, setFormState, inputValue, setInputValue);
     const filterTranslations = React.useMemo<Record<ModelSearchType, string>>(() => {
         return {
             pdb: i18n.t("Search PDB"),
@@ -69,24 +54,10 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
         };
     }, []);
 
-    const [isUploadOpen, { enable: openUpload, disable: closeUpload }] = useBooleanState(false);
-    const [formState, setFormState] = React.useState<FormState>(initialFormState);
-
-    const setModels = React.useCallback(
-        (models: ModelTypeFilter) => setFormState(prev => ({ ...prev, models, startIndex: 0 })),
-        [setFormState]
-    );
-
-    const [inputValue, setInputValue] = React.useState<string>("");
-
-    const setSearchFromEvent = useSearch(formState, setFormState, inputValue, setInputValue);
-
-    const fetchMoreData = React.useCallback(() => {
-        setFormState(prevForm => ({ ...prevForm, startIndex: prevForm.startIndex + pageSize }));
-    }, []);
-
-    const placeholder = modelTypeKeys.find(key => formState.models[key]) || "all";
-    const { models, data, startIndex, totals } = formState;
+    const placeholder = React.useMemo(() => {
+        const index = modelTypeKeys.find(key => formState.models[key]) || "all";
+        return filterTranslations[index];
+    }, [formState, filterTranslations]);
 
     const allItems = React.useMemo(() => {
         const showAll = models.pdb === models.emdb;
@@ -103,8 +74,14 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 
     const hasMore = visibleItems.length < allItems.length;
 
-    const goTo = useGoto();
+    const setModels = React.useCallback(
+        (models: ModelTypeFilter) => setFormState(prev => ({ ...prev, models, startIndex: 0 })),
+        [setFormState]
+    );
 
+    const fetchMoreData = React.useCallback(() => {
+        setFormState(prevForm => ({ ...prevForm, startIndex: prevForm.startIndex + pageSize }));
+    }, []);
     const goToLoaded = React.useCallback(
         (options: { token: string }) => {
             goTo(`/uploaded/${options.token}`);
@@ -138,7 +115,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         <input
                             aria-label={i18n.t("Search")}
                             className="form-control"
-                            placeholder={filterTranslations[placeholder]}
+                            placeholder={placeholder}
                             type="text"
                             value={inputValue}
                             onChange={setSearchFromEvent}
@@ -190,7 +167,8 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         >
                             {visibleItems.map((item, idx) => (
                                 <ModelSearchItem key={idx} item={item} onSelect={onSelect} />
-                            ))}
+                            ))}{" "}
+                            {/* working on calling the search api when the user gets to the end */}
                         </InfiniteScroll>
                     )}
                 </div>
@@ -198,6 +176,29 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
         </Dialog>
     );
 });
+
+type ModelSearchType = DbModel["type"] | "all";
+
+interface FormState {
+    type: "empty" | "searching" | "results";
+    query: string;
+    startIndex: number;
+    data: DbModel[];
+    totals: Record<DbModel["type"], number>;
+    models: ModelTypeFilter;
+}
+
+const initialFormState: FormState = {
+    type: "empty",
+    query: "",
+    data: [],
+    startIndex: 0,
+    totals: { pdb: 0, emdb: 0 },
+    models: { pdb: true, emdb: true },
+};
+
+const pageSize = 30;
+const maxRenderedItems = 300;
 
 const styles = {
     infiniteScroll: {
@@ -240,17 +241,25 @@ function useSearch(
                 label: query,
             });
 
-            return compositionRoot.searchDbModels.execute({ query, limit: maxRenderedItems }).run(
-                results => {
-                    updateState({ type: "results", data: results.items, totals: results.totals });
-                },
-                err => {
-                    console.error(err);
-                    updateState({ type: "results" });
-                }
-            );
+            const type = getDbModelType(formState.models);
+
+            return compositionRoot.searchDbModels
+                .execute({ query, limit: maxRenderedItems, type })
+                .run(
+                    results => {
+                        updateState({
+                            type: "results",
+                            data: results.items,
+                            totals: results.totals,
+                        });
+                    },
+                    err => {
+                        console.error(err);
+                        updateState({ type: "results" });
+                    }
+                );
         },
-        [compositionRoot, updateState]
+        [compositionRoot, updateState, formState.models]
     );
 
     const runSearch = useCallbackEffect(search);
@@ -270,4 +279,16 @@ function useSearch(
     }, [runSearch, formState.query]);
 
     return setSearchFromEvent;
+}
+
+function getDbModelType(models: FormState["models"]): Maybe<DbModelType> {
+    if (models.pdb && models.emdb) {
+        return undefined;
+    } else if (models.pdb) {
+        return "pdb";
+    } else if (models.emdb) {
+        return "emdb";
+    } else {
+        return undefined;
+    }
 }

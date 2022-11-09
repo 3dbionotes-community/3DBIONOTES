@@ -18,10 +18,4 @@ module ApplicationHelper
     end
   end
 
-  def wip_texts
-    {
-      title: "Please, note this web site is a work in progress",
-      subtitle: "Feel free to report any missing or inconsistent data or behaviour",
-    }
-  end
 end

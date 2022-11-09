@@ -15,9 +15,21 @@ import { HtmlTooltip } from "./HtmlTooltip";
 import i18n from "../../../utils/i18n";
 import "./Toolbar.css";
 
+export const searchExamples = [
+    "EMD-21375",
+    "glycoprotein",
+    "Remdesivir",
+    "3CL-Pro",
+    "Llama",
+    "PanDDA Helicase",
+    "Martinez",
+];
+
 export interface ToolbarProps {
     search: string;
     setSearch(search: string): void;
+    highlighted: boolean;
+    setHighlight: (value: boolean) => void;
     filterState: Covid19Filter;
     setFilterState(filter: Covid19Filter): void;
     gridApi: GridApi;
@@ -116,6 +128,8 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
     const {
         search,
         setSearch,
+        highlighted,
+        setHighlight,
         filterState,
         setFilterState,
         gridApi,
@@ -136,6 +150,8 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                         <SearchBar
                             value={search}
                             setValue={setSearch}
+                            highlighted={highlighted}
+                            setHighlight={setHighlight}
                             filterState={filterState}
                             setFilterState={setFilterState}
                         />
@@ -174,9 +190,13 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                 <div style={styles.toolbarRow}>
                     <div style={styles.exampleRow}>
                         <p style={styles.examplesText}>{i18n.t("Examples")}:</p>
-                        <SearchExampleButton setValue={setSearch} exampleValue="6YOR" />
-                        <SearchExampleButton setValue={setSearch} exampleValue="Homo sapiens" />
-                        <SearchExampleButton setValue={setSearch} exampleValue="SARS-CoV-2" />
+                        {searchExamples.map((example, idx) => (
+                            <SearchExampleButton
+                                key={idx}
+                                setValue={setSearch}
+                                exampleValue={example}
+                            />
+                        ))}
                     </div>
                     <CustomGridTopPagination
                         dataGrid={dataGrid}
@@ -254,7 +274,7 @@ const OrderedList = styled.ol`
     }
 `;
 
-const StyledTypography = styled(Typography)`
+export const StyledTypography = styled(Typography)`
     &.MuiTypography-body2 {
         font-size: 0.75rem;
         color: rgba(0, 0, 0, 0.87);

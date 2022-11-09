@@ -107,7 +107,7 @@ const RefDocLi: React.FC<RefDocLiProps> = React.memo(props => {
         <Li>
             <strong>{i18n.t("Publication")}:</strong>
             <ul>
-                {!moreDetails && (
+                {!moreDetails && refDoc.id.trim().length > 0 && (
                     <ListItem name={i18n.t("ID")}>
                         <Link url={refDoc.idLink} text={refDoc.id}></Link>
                     </ListItem>

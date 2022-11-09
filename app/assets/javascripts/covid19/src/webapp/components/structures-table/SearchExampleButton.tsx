@@ -26,6 +26,7 @@ export const StyledSearchExampleButton = styled(Button)`
         margin: 12px 6px;
         color: #fff;
         font-weight: 500;
+        text-transform: unset;
         text-align: center;
         border-radius: 0.75rem;
         background-color: #607d8b;

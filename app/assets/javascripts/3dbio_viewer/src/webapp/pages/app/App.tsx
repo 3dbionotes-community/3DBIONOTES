@@ -1,15 +1,13 @@
 import React from "react";
 import { HashRouter, Redirect, Route, Switch, useLocation } from "react-router-dom";
-
 import { AppContext } from "../../../webapp/components/AppContext";
 import { TrainingApp } from "../../../webapp/training-app";
 import { modules } from "../../../webapp/training-app/training-modules";
 import { ProtvistaGrouped } from "../../components/protvista/ProvistaGrouped";
 import { RootViewer } from "../../components/RootViewer";
 import { sendAnalytics } from "../../utils/analytics";
-
-import "./App.css";
 import { debugFlags } from "./debugFlags";
+import "./App.css";
 
 function App() {
     return (

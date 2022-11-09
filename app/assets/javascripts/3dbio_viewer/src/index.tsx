@@ -5,7 +5,7 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import App from "./webapp/pages/app/App";
 
-const gaAppId = "UA-93698320-4";
+const gaAppId = "UA-93698320-4"; //UA-93698320-4 for development UA-93698320-1 for production
 ReactGA.initialize(gaAppId, {
     debug: true,
     titleCase: false,
