@@ -19,9 +19,7 @@ export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
             return {
                 ...ligand,
                 url: ligand.externalLink,
-                tooltip: !_.isEmpty(
-                    _.compact(_.values(_.pick(ligand, ["id", "name", "details", "imageLink"])))
-                ) && (
+                tooltip: (
                     <React.Fragment>
                         <div>
                             {i18n.t("ID")}: {ligand.id}
@@ -52,8 +50,8 @@ export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
             row={row}
             field="ligands"
         >
-            {ligands
-                .sort((a, b) => (b.hasIDR ? (a.hasIDR ? 0 : 1) : -1))
+            {_(ligands)
+                .sortBy(ligand => (ligand.hasIDR ? 0 : 1))
                 .map(ligand => {
                     return (
                         <LigandItem key={ligand.id} moreDetails={moreDetails}>
@@ -72,7 +70,8 @@ export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
                             </Link>
                         </LigandItem>
                     );
-                })}
+                })
+                .value()}
         </Wrapper>
     );
 });

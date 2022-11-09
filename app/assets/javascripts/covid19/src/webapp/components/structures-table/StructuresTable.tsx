@@ -34,13 +34,13 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const [pageSize, setPageSize] = React.useState(pageSizes[0]);
     const classes = useStyles();
 
-    const [
-        isDetailsOpen,
-        closeDetails,
-        detailsInfo,
-        showDetailsDialog,
-    ] = useInfoDialog<DetailsDialogOptions>();
-    const [isIDROpen, closeIDR, idrOptions, showIDRDialog] = useInfoDialog<IDROptions>();
+    const {
+        info: detailsInfo,
+        useDialogState: detailsDialogState,
+    } = useInfoDialog<DetailsDialogOptions>();
+    const [isDetailsOpen, closeDetails, showDetailsDialog] = detailsDialogState;
+    const { info: idrOptions, useDialogState: idrDialogState } = useInfoDialog<IDROptions>();
+    const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
 
     const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
     const [filterState, setFilterState0] = React.useState(initialFilterState);

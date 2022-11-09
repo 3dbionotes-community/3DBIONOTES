@@ -25,16 +25,21 @@ export class LigandsApiRepository implements LigandsRepository {
                 (ligandToImageData): FutureData<LigandImageData> => {
                     if (!ligandToImageData)
                         return Future.error(err("Error: the api response is undefined."));
-                    if (_.has(ligandToImageData, "detail"))
+                    else if (_.has(ligandToImageData, "detail"))
                         return Future.error(err('Error: "detail": Not found.'));
+
                     const data = ligandToImageData as LigandToImageData;
                     const { imageData } = data;
+
                     if (!imageData) return Future.error(err("Error: imageData is undefined."));
-                    if (imageData.length > 1)
-                        return Future.error(err("Error: there is more than one IDR.")); //it shouldn't be an array...
-                    if (_.isEmpty(imageData))
+                    else if (imageData.length > 1)
+                        return Future.error(err("Error: there is more than one IDR."));
+                    //it shouldn't be an array...
+                    else if (_.isEmpty(imageData))
                         return Future.error(err("Error: imageData is empty."));
+
                     const idr = _.first(imageData) as ImageDataResource;
+
                     return Future.success<LigandImageData, Error>({
                         ...idr,
                         assays: idr.assays.map(assay => {
