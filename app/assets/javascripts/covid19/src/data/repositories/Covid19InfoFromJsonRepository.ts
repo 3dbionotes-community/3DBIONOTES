@@ -92,7 +92,7 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
             ? structuresWithEntities.filter(
                   structure => filterLigands(structure.ligands).length > 0
               )
-            : structures;
+            : structuresWithEntities;
         return structuresWithIDR;
     }
 
