@@ -8,7 +8,7 @@ import { DataGrid } from "../../../domain/entities/DataGrid";
 import { Covid19Filter, ValidationSource } from "../../../domain/entities/Covid19Info";
 import { VirtualScroll, VirtualScrollbarProps } from "../VirtualScrollbar";
 import { CustomGridToolbarExport } from "./CustomGridToolbarExport";
-import { CustomGridTopPagination } from "./CustomGridTopPagination";
+import { CustomGridPagination } from "./CustomGridPagination";
 import { SearchBar } from "./SearchBar";
 import { CustomCheckboxFilter } from "./CustomCheckboxFilter";
 import { SearchExampleButton } from "./SearchExampleButton";
@@ -201,7 +201,7 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                             />
                         ))}
                     </div>
-                    <CustomGridTopPagination
+                    <CustomGridPagination
                         dataGrid={dataGrid}
                         page={page}
                         pageSize={pageSize}

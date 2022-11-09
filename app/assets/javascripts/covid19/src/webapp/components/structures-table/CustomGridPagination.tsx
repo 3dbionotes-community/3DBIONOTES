@@ -2,7 +2,7 @@ import React from "react";
 import TablePagination from "@material-ui/core/TablePagination";
 import { DataGrid } from "../../../domain/entities/DataGrid";
 
-export interface CustomGridTopPaginationProps {
+export interface CustomGridPaginationProps {
     dataGrid: DataGrid;
     page: number;
     pageSize: number | undefined;
@@ -11,7 +11,7 @@ export interface CustomGridTopPaginationProps {
     setPageSize: (param: number) => void;
 }
 
-export const CustomGridTopPagination: React.FC<CustomGridTopPaginationProps> = React.memo(props => {
+export const CustomGridPagination: React.FC<CustomGridPaginationProps> = React.memo(props => {
     const { dataGrid, page, pageSize, pageSizes, setPage, setPageSize } = props;
 
     const handleChangePage = React.useCallback(

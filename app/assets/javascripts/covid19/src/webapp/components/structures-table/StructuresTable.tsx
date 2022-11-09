@@ -13,6 +13,7 @@ import { DetailsDialog } from "./DetailsDialog";
 import { sendAnalytics } from "../../../utils/analytics";
 import { IDRDialog } from "./IDRDialog";
 import { useInfoDialog } from "../../hooks/useInfoDialog";
+import { CustomGridPagination, CustomGridPaginationProps } from "./CustomGridPagination";
 
 export interface StructuresTableProps {
     search: string;
@@ -103,13 +104,18 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         });
     }, [data, showDetailsDialog, showIDRDialog]);
 
-    const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
+    const components = React.useMemo(
+        () => ({ Toolbar: Toolbar, Pagination: CustomGridPagination }),
+        []
+    );
 
     const dataGrid = React.useMemo<DataGridE>(() => {
         return { columns: columns.base, structures };
     }, [columns, structures]);
 
-    const componentsProps = React.useMemo<{ toolbar: ToolbarProps } | undefined>(() => {
+    const componentsProps = React.useMemo<
+        { toolbar: ToolbarProps; pagination: CustomGridPaginationProps } | undefined
+    >(() => {
         return gridApi
             ? {
                   toolbar: {
@@ -128,6 +134,14 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                       setPage,
                       setPageSize,
                       validationSources: data.validationSources,
+                  },
+                  pagination: {
+                      dataGrid,
+                      page,
+                      pageSize,
+                      pageSizes,
+                      setPage,
+                      setPageSize,
                   },
               }
             : undefined;
