@@ -247,7 +247,7 @@ export const styles = {
     searchBar: { display: "flex", flexGrow: 1 },
 };
 
-function isNonEmptyObject<T>(obj: T | {}): obj is T {
+function isNonEmptyObject<T extends object>(obj: T | {}): obj is T {
     return !_.isEmpty(Object.keys(obj));
 }
 
