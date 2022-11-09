@@ -77,6 +77,12 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                         filterState={filterState}
                         setFilterState={setFilterState}
                     />
+                    <Divider />
+                    <FilterItem
+                        filterKey="idr"
+                        filterState={filterState}
+                        setFilterState={setFilterState}
+                    />
                 </MenuList>
             </GridMenu>
         </React.Fragment>

@@ -7,31 +7,50 @@ import {
 } from "@material-ui/data-grid";
 import _ from "lodash";
 import i18n from "../../../utils/i18n";
-import { Covid19Info, Structure, ValidationSource } from "../../../domain/entities/Covid19Info";
+import {
+    Covid19Info,
+    Ligand,
+    Structure,
+    ValidationSource,
+} from "../../../domain/entities/Covid19Info";
 import { TitleCell } from "./cells/TitleCell";
 import { DetailsCell } from "./cells/DetailsCell";
 import { PdbCell } from "./cells/PdbCell";
 import { EmdbCell } from "./cells/EmdbCell";
 import { EntityCell } from "./cells/EntityCell";
-import { LigandsCell } from "./cells/LigandsCell";
+import { LigandsCell, LigandsCellProps } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
+import { LigandImageData } from "../../../domain/entities/LigandImageData";
+import { OnClickDetails } from "./badge/BadgeDetails";
+import { OnClickIDR } from "./badge/BadgeLigands";
 
 type Row = Structure;
 export type Field = keyof Row;
+
+export interface IDROptions {
+    ligand: Ligand;
+    idr?: LigandImageData;
+    error?: string;
+}
+
+export interface DetailsDialogOptions {
+    row: Structure;
+    field: Field;
+}
 
 export interface CellProps {
     data: Covid19Info;
     row: Row;
     moreDetails?: boolean;
-    onClickDetails?: (options: { row: Structure; field: Field }) => void;
     validationSources?: ValidationSource[];
+    onClickDetails?: OnClickDetails;
 }
 
 export interface ColumnAttrs<F extends Field>
     extends Omit<GridColDef, "headerName" | "field" | "renderCell"> {
     headerName: string;
     field: F;
-    renderCell: React.FC<CellProps>;
+    renderCell: React.FC<CellProps> | React.FC<LigandsCellProps>;
     renderString(row: Row): string | undefined;
 }
 
@@ -51,7 +70,7 @@ export const columnsBase: Columns = [
     }),
     column("pdb", {
         headerName: i18n.t("PDB"),
-        width: 140,
+        width: 150,
         renderCell: PdbCell,
         sortComparator: compareIds,
         renderString: row => row.pdb?.id,
@@ -134,7 +153,10 @@ export const columnsBase: Columns = [
 
 export function getColumns(
     data: Covid19Info,
-    options: { onClickDetails: (options: { row: Structure; field: Field }) => void }
+    options: {
+        onClickDetails: OnClickDetails;
+        onClickIDR: OnClickIDR;
+    }
 ): { definition: GridColDef[]; base: Columns } {
     const definition = columnsBase.map(
         (column): GridColDef => {
@@ -150,6 +172,7 @@ export function getColumns(
                                 row={params.row as Row}
                                 data={data}
                                 onClickDetails={options.onClickDetails}
+                                onClickIDR={options.onClickIDR}
                                 validationSources={data.validationSources}
                             />
                         </div>

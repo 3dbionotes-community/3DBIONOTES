@@ -22,23 +22,21 @@ module InfoManager
         end
         tmp = {}
         json.each do |k,v|
-          if !v[0].empty?
-            if !v[0]["map"].nil?
-              if !v[0]["map"]["dimensions"].nil?
-                tmp["dimensions"] = v[0]["map"]["dimensions"]
-              end
-              if !v[0]["map"]["pixel_spacing"].nil?
-                tmp["spacing"] = v[0]["map"]["pixel_spacing"]
-              end
+          if !json["map"].nil?
+            if !json["map"]["dimensions"].nil?
+              tmp["dimensions"] = json["map"]["dimensions"]
+            end
+            if !json["map"]["pixel_spacing"].nil?
+              tmp["spacing"] = json["map"]["pixel_spacing"]
             end
           end
         end
         maxSize = ""
         myStatus = :not_found
         if !tmp["dimensions"].nil? and !tmp["spacing"].nil?
-          col = tmp["dimensions"]["column"].to_f * tmp["spacing"]["y"]["value"].to_f
-          sect = tmp["dimensions"]["section"].to_f * tmp["spacing"]["x"]["value"].to_f
-          row = tmp["dimensions"]["row"].to_f * tmp["spacing"]["z"]["value"].to_f
+          col = tmp["dimensions"]["col"].to_f * tmp["spacing"]["y"]["valueOf_"].to_f
+          sect = tmp["dimensions"]["sec"].to_f * tmp["spacing"]["x"]["valueOf_"].to_f
+          row = tmp["dimensions"]["row"].to_f * tmp["spacing"]["z"]["valueOf_"].to_f
           arr = [col,sect,row]
         end
         return arr.max.to_s

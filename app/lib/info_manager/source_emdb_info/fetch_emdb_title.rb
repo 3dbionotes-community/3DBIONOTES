@@ -20,14 +20,7 @@ module InfoManager
         rescue
           raise EmdbSummaryUrl+"/"+emdbId+" DID NOT RETURN A JSON OBJECT"
         end
-        title = "Compound title not found"
-        json.each do |k,v|
-          if !v[0].empty?
-            if !v[0]["deposition"].nil?
-              title = v[0]["deposition"]["title"].upcase
-            end
-          end
-        end
+        title = json["admin"]["title"].upcase
         return {"title"=>title}
       end
 

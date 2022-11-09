@@ -36,10 +36,10 @@ export const CustomGridTopPagination: React.FC<CustomGridTopPaginationProps> = R
                 style={styles.table}
                 count={dataGrid?.structures?.length}
                 page={page}
-                onChangePage={handleChangePage}
+                onPageChange={handleChangePage}
                 rowsPerPageOptions={pageSizes}
                 rowsPerPage={pageSize || 10}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
             />
         </React.Fragment>
     );

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import styled from "styled-components";
@@ -246,8 +247,8 @@ export const styles = {
     searchBar: { display: "flex", flexGrow: 1 },
 };
 
-function isNonEmptyObject<T>(obj: T | {}): obj is T {
-    return Object.keys(obj).length > 0;
+function isNonEmptyObject<T extends object>(obj: T | {}): obj is T {
+    return !_.isEmpty(Object.keys(obj));
 }
 
 const GridToolbarActions = styled.div`
