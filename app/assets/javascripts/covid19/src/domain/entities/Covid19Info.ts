@@ -28,7 +28,7 @@ export interface Organism {
 export interface Entity {
     uniprotAcc: string | null;
     name: string;
-    organism: string;
+    organism: string | null;
     details?: string;
     altNames: string;
     isAntibody: boolean;

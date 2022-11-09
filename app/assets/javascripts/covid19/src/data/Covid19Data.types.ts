@@ -16,7 +16,7 @@ export interface Organism {
 export interface Entity {
     uniprotAcc: Maybe<string>;
     name: string;
-    organism: string;
+    organism: Maybe<string>;
     details?: string;
     altNames: string;
     isAntibody: boolean;
