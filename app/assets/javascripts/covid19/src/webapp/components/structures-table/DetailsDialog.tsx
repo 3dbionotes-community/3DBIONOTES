@@ -34,32 +34,16 @@ export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
                 </ImgContainer>
 
                 <div>
-                    <ModifiedAccordion
-                        expanded={expandedAccordion}
-                        field="entities"
-                        isEmpty={_.isEmpty(row.entities)}
-                    >
+                    <ModifiedAccordion expanded={expandedAccordion} field="entities" row={row}>
                         <EntityCell data={data} row={row} moreDetails={false}></EntityCell>
                     </ModifiedAccordion>
-                    <ModifiedAccordion
-                        expanded={expandedAccordion}
-                        field="ligands"
-                        isEmpty={_.isEmpty(row.ligands)}
-                    >
+                    <ModifiedAccordion expanded={expandedAccordion} field="ligands" row={row}>
                         <LigandsCell data={data} row={row} moreDetails={false}></LigandsCell>
                     </ModifiedAccordion>
-                    <ModifiedAccordion
-                        expanded={expandedAccordion}
-                        field="organisms"
-                        isEmpty={_.isEmpty(row.organisms)}
-                    >
+                    <ModifiedAccordion expanded={expandedAccordion} field="organisms" row={row}>
                         <OrganismCell row={row} data={data} moreDetails={false}></OrganismCell>
                     </ModifiedAccordion>
-                    <ModifiedAccordion
-                        expanded={expandedAccordion}
-                        field="details"
-                        isEmpty={!row.details}
-                    >
+                    <ModifiedAccordion expanded={expandedAccordion} field="details" row={row}>
                         <DetailsCell row={row} data={data} moreDetails={false}></DetailsCell>
                     </ModifiedAccordion>
                 </div>
@@ -69,7 +53,8 @@ export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
 });
 
 const ModifiedAccordion: React.FC<ModifiedAccordionProps> = React.memo(props => {
-    const { field, expanded, isEmpty } = props;
+    const { field, expanded, row } = props;
+    const content = _(row).at(field).value();
 
     return (
         <Accordion defaultExpanded={expanded === field}>
@@ -81,7 +66,12 @@ const ModifiedAccordion: React.FC<ModifiedAccordionProps> = React.memo(props => 
                 <Typography>{i18n.t(field.charAt(0).toUpperCase() + field.slice(1))}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                {!isEmpty ? props.children : <NoCellsFound name={field} />}
+                {(field === "details" && content) ||
+                (field !== "details" && !_.isEmpty(content)) ? (
+                    props.children
+                ) : (
+                    <NoCellsFound name={field} />
+                )}
             </AccordionDetails>
         </Accordion>
     );
@@ -93,7 +83,7 @@ const NoCellsFound: React.FC<NoCellsFoundProps> = React.memo(({ name }) => (
 
 interface ModifiedAccordionProps {
     field: Field;
-    isEmpty: boolean;
+    row: Structure;
     expanded: Field | undefined;
 }
 
