@@ -1,7 +1,6 @@
 import _ from "lodash";
 import {
     ImageDataResource,
-    LigandToImageData,
     LigandToImageDataResponse,
     ligandToImageDataResponseC,
 } from "../LigandToImageData";
@@ -25,10 +24,10 @@ export class LigandsApiRepository implements LigandsRepository {
                 (ligandToImageData): FutureData<LigandImageData> => {
                     if (!ligandToImageData)
                         return Future.error(err("Error: the api response is undefined."));
-                    else if (_.has(ligandToImageData, "detail"))
+                    else if ("detail" in ligandToImageData)
                         return Future.error(err('Error: "detail": Not found.'));
 
-                    const data = ligandToImageData as LigandToImageData;
+                    const data = ligandToImageData;
                     const { imageData } = data;
 
                     if (!imageData) return Future.error(err("Error: imageData is undefined."));

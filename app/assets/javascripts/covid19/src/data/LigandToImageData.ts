@@ -109,7 +109,7 @@ const assayC = Codec.interface({
     BIAId: string,
     screenCount: number,
     screens: array(screenC),
-    additionalAnalyses: array(additionalAnalysisC), //...
+    additionalAnalyses: array(additionalAnalysisC), //review if api changes the sctructure (codec was extracted from old json)
 });
 
 const imageDataC = Codec.interface({

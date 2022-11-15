@@ -102,7 +102,7 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         matches: string[] = []
     ): Structure[] {
         const miniSearch = this.getMiniSearch();
-        const searchOptions = !_.isEmpty(matches.length)
+        const searchOptions = !_.isEmpty(matches)
             ? {
                   ...this.searchOptions,
                   filter: (result: SearchResult) =>
@@ -151,7 +151,7 @@ function getStructures(): Structure[] {
         .compact()
         .value();
 
-    if (!_.isEmpty(repeatedIds.length)) {
+    if (!_.isEmpty(repeatedIds)) {
         console.error(`Repeated structure IDs: ${repeatedIds.join(", ")}`);
     }
 
