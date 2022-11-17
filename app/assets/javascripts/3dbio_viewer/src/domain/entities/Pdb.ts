@@ -4,6 +4,7 @@ import { BlockDef } from "../../webapp/components/protvista/Protvista.types";
 import { Annotations, getTracksFromAnnotations } from "./Annotation";
 import { Color } from "./Color";
 import { Experiment } from "./Experiment";
+import { LigandImageData } from "./LigandImageData";
 import { Link } from "./Link";
 import { Protein } from "./Protein";
 import { ProteinNetwork } from "./ProteinNetwork";
@@ -30,6 +31,17 @@ export interface Pdb {
     file: Maybe<string>;
     path: Maybe<string>;
     customAnnotations: Maybe<Annotations>;
+    ligands: PdbLigand;
+}
+
+export interface PdbLigand {
+    id: string;
+    name: string;
+    details: string;
+    imageLink: string;
+    externalLink: string;
+    inChI: string; //IUPACInChIkey
+    imageDataResource?: LigandImageData;
 }
 
 export type PdbId = string;

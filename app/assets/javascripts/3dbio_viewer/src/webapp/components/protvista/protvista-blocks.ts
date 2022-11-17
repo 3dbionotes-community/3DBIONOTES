@@ -5,6 +5,7 @@ import { trackDefinitions as tracks } from "../../../domain/definitions/tracks";
 import { BlockDef } from "./Protvista.types";
 import { profiles } from "../../../domain/entities/Profile";
 import { ProtvistaPdbValidation } from "./ProtvistaPdbValidation";
+import { IDRViewerBlock } from "../idr/IDRViewerBlock";
 
 export const blockDefs: BlockDef[] = [
     {
@@ -23,6 +24,15 @@ export const blockDefs: BlockDef[] = [
             profiles.biomedicine,
             profiles.omics,
         ],
+    },
+    {
+        id: "bioimageDataStudies",
+        title: i18n.t("Bioimage Data Studies"),
+        description: i18n.t("Text to be determined."),
+        help: i18n.t("Help description to be determined."),
+        tracks: [],
+        component: IDRViewerBlock,
+        profiles: [profiles.general],
     },
     {
         id: "uploadData",
