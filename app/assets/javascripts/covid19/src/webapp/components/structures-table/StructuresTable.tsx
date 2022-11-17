@@ -109,6 +109,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         return { columns: columns.base, structures };
     }, [columns, structures]);
 
+    const validationSources = React.useMemo(() => data.validationSources, [data]);
+
     const componentsProps = React.useMemo<{ toolbar: ToolbarProps } | undefined>(() => {
         return gridApi
             ? {
@@ -127,6 +129,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                       pageSizes,
                       setPage,
                       setPageSize,
+                      validationSources,
                   },
               }
             : undefined;
@@ -144,6 +147,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         pageSize,
         setPage,
         setPageSize,
+        validationSources,
     ]);
 
     const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(_modelParams => {

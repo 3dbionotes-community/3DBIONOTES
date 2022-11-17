@@ -41,6 +41,7 @@ export class LigandsApiRepository implements LigandsRepository {
 
                     return Future.success<LigandImageData, Error>({
                         ...idr,
+                        externalLink: data.externalLink,
                         assays: idr.assays.map(assay => {
                             const {
                                 screens,
@@ -82,6 +83,7 @@ export class LigandsApiRepository implements LigandsRepository {
                                     ...screen,
                                     id: screen.dbId,
                                     doi: screen.dataDoi,
+                                    well: _.first(_.first(screen.plates)?.wells)?.externalLink,
                                 })),
                                 compound: {
                                     percentageInhibition: allPercentageInhibition,
