@@ -63,15 +63,15 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
 
     const pdbTooltip = React.useMemo(
         () => getTooltip(getValidationSource(validationSources, "PDB-REDO")),
-        [validationSources]
+        [validationSources, getTooltip]
     );
     const cstfTooltip = React.useMemo(
         () => getTooltip(getValidationSource(validationSources, "CSTF")),
-        [validationSources]
+        [validationSources, getTooltip]
     );
     const ceresTooltip = React.useMemo(
         () => getTooltip(getValidationSource(validationSources, "CERES")),
-        [validationSources]
+        [validationSources, getTooltip]
     );
 
     return (
@@ -142,41 +142,44 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
 
 const FilterItem: React.FC<FilterItemProps> = React.memo(props => {
     const { filterKey, filterState, setFilterState, tooltip } = props;
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFilterState({
-            ...filterState,
-            [event.target.name]: event.target.checked,
-        });
-    };
-
-    const handleClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-        const filter = event.currentTarget.dataset.filter;
-        if (filter === undefined) return;
-
-        setFilterState({
-            ...filterState,
-            [filter]: !filterState[filter as FilterKey],
-        });
-    };
-
-    const t = React.useMemo(getTranslations, []);
-
     const [open, setOpen] = React.useState(false);
 
-    const handleTooltipClose = () => {
+    const handleChange = React.useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setFilterState({
+                ...filterState,
+                [event.target.name]: event.target.checked,
+            });
+        },
+        [filterState, setFilterState]
+    );
+
+    const handleClick = React.useCallback(
+        (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+            const filter = event.currentTarget.dataset.filter;
+            if (filter === undefined) return;
+            setFilterState({
+                ...filterState,
+                [filter]: !filterState[filter as FilterKey],
+            });
+        },
+        [filterState, setFilterState]
+    );
+
+    const closeTooltip = React.useCallback(() => {
         setOpen(false);
-    };
+    }, []);
 
-    const handleTooltipOpen = () => {
+    const openTooltip = React.useCallback(() => {
         setOpen(true);
-    };
+    }, []);
 
+    const t = React.useMemo(getTranslations, []);
     const component = React.useMemo(
         () => (
             <MenuItem
-                onMouseEnter={handleTooltipOpen}
-                onMouseLeave={handleTooltipClose}
+                onMouseEnter={openTooltip}
+                onMouseLeave={closeTooltip}
                 onClick={handleClick}
                 data-filter={filterKey}
             >
@@ -188,7 +191,7 @@ const FilterItem: React.FC<FilterItemProps> = React.memo(props => {
                 {t.filterKeys[filterKey]}
             </MenuItem>
         ),
-        []
+        [filterKey, filterState, handleChange, handleClick, t, closeTooltip, openTooltip]
     );
 
     return tooltip ? (
