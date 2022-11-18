@@ -1,9 +1,9 @@
 import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
+import FilterListIcon from "@material-ui/icons/FilterList";
 import { MenuItem, MenuList, Divider, Checkbox, Button } from "@material-ui/core";
 import { GridMenu } from "@material-ui/data-grid";
-import FilterListIcon from "@material-ui/icons/FilterList";
 import {
     Covid19Filter,
     FilterKey,
@@ -12,17 +12,16 @@ import {
     Maybe,
     ValidationSource,
 } from "../../../domain/entities/Covid19Info";
-import i18n from "../../../utils/i18n";
 import { HtmlTooltip } from "./HtmlTooltip";
+import i18n from "../../../utils/i18n";
 
 export interface CustomCheckboxFilterProps {
-    filterState: Covid19Filter;
-    setFilterState(filter: Covid19Filter): void;
+    setFilterState: (value: React.SetStateAction<Covid19Filter>) => void;
     validationSources: ValidationSource[];
 }
 
 export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.memo(props => {
-    const { filterState, setFilterState, validationSources } = props;
+    const { setFilterState, validationSources } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const isOpen = Boolean(anchorEl);
     const openMenu = React.useCallback(event => setAnchorEl(event.currentTarget), []);
@@ -94,46 +93,27 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                 position="bottom-start"
             >
                 <MenuList className="MuiDataGrid-gridMenuList" autoFocusItem={isOpen}>
-                    <FilterItem
-                        filterKey="antibodies"
-                        filterState={filterState}
-                        setFilterState={setFilterState}
-                    />
-                    <FilterItem
-                        filterKey="nanobodies"
-                        filterState={filterState}
-                        setFilterState={setFilterState}
-                    />
-                    <FilterItem
-                        filterKey="sybodies"
-                        filterState={filterState}
-                        setFilterState={setFilterState}
-                    />
+                    <FilterItem filterKey="antibodies" setFilterState={setFilterState} />
+                    <FilterItem filterKey="nanobodies" setFilterState={setFilterState} />
+                    <FilterItem filterKey="sybodies" setFilterState={setFilterState} />
                     <Divider />
                     <FilterItem
                         filterKey="pdbRedo"
-                        filterState={filterState}
                         setFilterState={setFilterState}
                         tooltip={pdbTooltip}
                     />
                     <FilterItem
                         filterKey="cstf"
-                        filterState={filterState}
                         setFilterState={setFilterState}
                         tooltip={cstfTooltip}
                     />
                     <FilterItem
                         filterKey="ceres"
-                        filterState={filterState}
                         setFilterState={setFilterState}
                         tooltip={ceresTooltip}
                     />
                     <Divider />
-                    <FilterItem
-                        filterKey="idr"
-                        filterState={filterState}
-                        setFilterState={setFilterState}
-                    />
+                    <FilterItem filterKey="idr" setFilterState={setFilterState} />
                 </MenuList>
             </GridMenu>
         </React.Fragment>
@@ -141,30 +121,17 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
 });
 
 const FilterItem: React.FC<FilterItemProps> = React.memo(props => {
-    const { filterKey, filterState, setFilterState, tooltip } = props;
+    const { filterKey, setFilterState, tooltip } = props;
     const [open, setOpen] = React.useState(false);
+    const [checked, setChecked] = React.useState(false);
 
-    const handleChange = React.useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
-            setFilterState({
-                ...filterState,
-                [event.target.name]: event.target.checked,
-            });
-        },
-        [filterState, setFilterState]
-    );
-
-    const handleClick = React.useCallback(
-        (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-            const filter = event.currentTarget.dataset.filter;
-            if (filter === undefined) return;
-            setFilterState({
-                ...filterState,
-                [filter]: !filterState[filter as FilterKey],
-            });
-        },
-        [filterState, setFilterState]
-    );
+    const handleClick = React.useCallback(() => {
+        setFilterState(filterState => ({
+            ...filterState,
+            [filterKey]: !checked,
+        }));
+        setChecked(!checked);
+    }, [setFilterState, filterKey, checked, setChecked]);
 
     const closeTooltip = React.useCallback(() => {
         setOpen(false);
@@ -177,21 +144,12 @@ const FilterItem: React.FC<FilterItemProps> = React.memo(props => {
     const t = React.useMemo(getTranslations, []);
     const component = React.useMemo(
         () => (
-            <MenuItem
-                onMouseEnter={openTooltip}
-                onMouseLeave={closeTooltip}
-                onClick={handleClick}
-                data-filter={filterKey}
-            >
-                <StyledCheckbox
-                    checked={filterState[filterKey]}
-                    onChange={handleChange}
-                    name={filterKey}
-                />
+            <MenuItem onMouseEnter={openTooltip} onMouseLeave={closeTooltip} onClick={handleClick}>
+                <StyledCheckbox checked={checked} onClick={handleClick} name={filterKey} />
                 {t.filterKeys[filterKey]}
             </MenuItem>
         ),
-        [filterKey, filterState, handleChange, handleClick, t, closeTooltip, openTooltip]
+        [filterKey, handleClick, t, closeTooltip, openTooltip, checked]
     );
 
     return tooltip ? (
@@ -205,9 +163,8 @@ const FilterItem: React.FC<FilterItemProps> = React.memo(props => {
 
 interface FilterItemProps {
     filterKey: FilterKey;
-    filterState: Covid19Filter;
-    setFilterState(filter: Covid19Filter): void;
-    tooltip?: NonNullable<React.ReactNode>;
+    setFilterState: (value: React.SetStateAction<Covid19Filter>) => void;
+    tooltip?: React.ReactNode;
 }
 
 const StyledCheckbox = styled(Checkbox)`

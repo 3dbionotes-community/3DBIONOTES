@@ -32,7 +32,7 @@ export interface ToolbarProps {
     highlighted: boolean;
     setHighlight: (value: boolean) => void;
     filterState: Covid19Filter;
-    setFilterState(filter: Covid19Filter): void;
+    setFilterState: (value: React.SetStateAction<Covid19Filter>) => void;
     gridApi: GridApi;
     dataGrid: DataGrid;
     virtualScrollbarProps: VirtualScrollbarProps;
@@ -159,7 +159,6 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                             setFilterState={setFilterState}
                         />
                         <CustomCheckboxFilter
-                            filterState={filterState}
                             setFilterState={setFilterState}
                             validationSources={validationSources}
                         />

@@ -45,7 +45,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
     const [filterState, setFilterState0] = React.useState(initialFilterState);
 
-    const setFilterState = React.useCallback((value: Covid19Filter) => {
+    const setFilterState = React.useCallback((value: React.SetStateAction<Covid19Filter>) => {
         setPage(0);
         setFilterState0(value);
     }, []);
@@ -109,8 +109,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         return { columns: columns.base, structures };
     }, [columns, structures]);
 
-    const validationSources = React.useMemo(() => data.validationSources, [data]);
-
     const componentsProps = React.useMemo<{ toolbar: ToolbarProps } | undefined>(() => {
         return gridApi
             ? {
@@ -129,7 +127,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                       pageSizes,
                       setPage,
                       setPageSize,
-                      validationSources,
+                      validationSources: data.validationSources,
                   },
               }
             : undefined;
@@ -147,7 +145,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         pageSize,
         setPage,
         setPageSize,
-        validationSources,
+        data.validationSources,
     ]);
 
     const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(_modelParams => {
