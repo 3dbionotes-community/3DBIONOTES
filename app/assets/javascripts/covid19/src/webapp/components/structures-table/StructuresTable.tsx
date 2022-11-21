@@ -13,6 +13,7 @@ import { DetailsDialog } from "./DetailsDialog";
 import { sendAnalytics } from "../../../utils/analytics";
 import { IDRDialog } from "./IDRDialog";
 import { useInfoDialog } from "../../hooks/useInfoDialog";
+import { CustomGridPagination, CustomGridPaginationProps } from "./CustomGridPagination";
 
 export interface StructuresTableProps {
     search: string;
@@ -45,7 +46,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
     const [filterState, setFilterState0] = React.useState(initialFilterState);
 
-    const setFilterState = React.useCallback((value: Covid19Filter) => {
+    const setFilterState = React.useCallback((value: React.SetStateAction<Covid19Filter>) => {
         setPage(0);
         setFilterState0(value);
     }, []);
@@ -103,13 +104,18 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         });
     }, [data, showDetailsDialog, showIDRDialog]);
 
-    const components = React.useMemo(() => ({ Toolbar: Toolbar }), []);
+    const components = React.useMemo(
+        () => ({ Toolbar: Toolbar, Pagination: CustomGridPagination }),
+        []
+    );
 
     const dataGrid = React.useMemo<DataGridE>(() => {
         return { columns: columns.base, structures };
     }, [columns, structures]);
 
-    const componentsProps = React.useMemo<{ toolbar: ToolbarProps } | undefined>(() => {
+    const componentsProps = React.useMemo<
+        { toolbar: ToolbarProps; pagination: CustomGridPaginationProps } | undefined
+    >(() => {
         return gridApi
             ? {
                   toolbar: {
@@ -122,6 +128,15 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                       gridApi,
                       dataGrid,
                       virtualScrollbarProps,
+                      page,
+                      pageSize,
+                      pageSizes,
+                      setPage,
+                      setPageSize,
+                      validationSources: data.validationSources,
+                  },
+                  pagination: {
+                      dataGrid,
                       page,
                       pageSize,
                       pageSizes,
@@ -144,6 +159,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         pageSize,
         setPage,
         setPageSize,
+        data.validationSources,
     ]);
 
     const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(_modelParams => {

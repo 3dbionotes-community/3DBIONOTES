@@ -137,9 +137,20 @@ const ScreenFC: React.FC<ScreenFCProps> = React.memo(({ screen }) => (
         />
         <ListItem name={"Data DOI"}>
             <span>
-                <a href={screen.doi}>{screen.doi}</a>
+                <a href={screen.doi} target="_blank" rel="noreferrer noopener">
+                    {screen.doi}
+                </a>
             </span>
         </ListItem>
+        {screen.well && (
+            <ListItem name={"Well"}>
+                <span>
+                    <a href={screen.well} target="_blank" rel="noreferrer noopener">
+                        {screen.well}
+                    </a>
+                </span>
+            </ListItem>
+        )}
     </div>
 ));
 

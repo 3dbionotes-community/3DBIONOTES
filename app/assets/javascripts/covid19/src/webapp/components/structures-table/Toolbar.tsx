@@ -5,10 +5,10 @@ import styled from "styled-components";
 import { GridApi, GridToolbarColumnsButton, GridToolbarContainer } from "@material-ui/data-grid";
 import { Typography } from "@material-ui/core";
 import { DataGrid } from "../../../domain/entities/DataGrid";
-import { Covid19Filter } from "../../../domain/entities/Covid19Info";
+import { Covid19Filter, ValidationSource } from "../../../domain/entities/Covid19Info";
 import { VirtualScroll, VirtualScrollbarProps } from "../VirtualScrollbar";
 import { CustomGridToolbarExport } from "./CustomGridToolbarExport";
-import { CustomGridTopPagination } from "./CustomGridTopPagination";
+import { CustomGridPagination } from "./CustomGridPagination";
 import { SearchBar } from "./SearchBar";
 import { CustomCheckboxFilter } from "./CustomCheckboxFilter";
 import { SearchExampleButton } from "./SearchExampleButton";
@@ -32,7 +32,7 @@ export interface ToolbarProps {
     highlighted: boolean;
     setHighlight: (value: boolean) => void;
     filterState: Covid19Filter;
-    setFilterState(filter: Covid19Filter): void;
+    setFilterState: (value: React.SetStateAction<Covid19Filter>) => void;
     gridApi: GridApi;
     dataGrid: DataGrid;
     virtualScrollbarProps: VirtualScrollbarProps;
@@ -41,6 +41,7 @@ export interface ToolbarProps {
     pageSizes: number[];
     setPage: (param: number) => void;
     setPageSize: (param: number) => void;
+    validationSources: ValidationSource[];
 }
 
 // Toolbar is called with empty object on initialization
@@ -141,6 +142,7 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
         pageSizes,
         setPage,
         setPageSize,
+        validationSources,
     } = props;
 
     return (
@@ -157,8 +159,8 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                             setFilterState={setFilterState}
                         />
                         <CustomCheckboxFilter
-                            filterState={filterState}
                             setFilterState={setFilterState}
+                            validationSources={validationSources}
                         />
                         <HtmlTooltip
                             title={
@@ -199,7 +201,7 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                             />
                         ))}
                     </div>
-                    <CustomGridTopPagination
+                    <CustomGridPagination
                         dataGrid={dataGrid}
                         page={page}
                         pageSize={pageSize}
