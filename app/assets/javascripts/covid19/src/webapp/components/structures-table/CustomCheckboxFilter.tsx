@@ -72,28 +72,9 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
         () => getTooltip(getValidationSource(validationSources, "CERES")),
         [validationSources, getTooltip]
     );
-
     const idrTooltip = React.useMemo(
-        () => (
-            <div>
-                <strong>{i18n.t("Method: ", { nsSeparator: false })}</strong>
-                <span>
-                    {i18n.t(
-                        "High throughput sample analysis of collections of compounds that provide a variety of chemically diverse structures that can be used to identify structure types that have affinity with pharmacological targets. (Source Accession: EFO_0007553)",
-                        { nsSeparator: false }
-                    )}
-                </span>
-                <br />
-                <br />
-                <strong>{i18n.t("Source: ", { nsSeparator: false })}</strong>
-                <span>
-                    {i18n.t(
-                        "The Image Data Resource (IDR) is a public repository of image datasets from published scientific studies, where the community can submit, search and access high-quality bio-image data."
-                    )}
-                </span>
-            </div>
-        ),
-        []
+        () => getTooltip(getValidationSource(validationSources, "IDR")),
+        [validationSources, getTooltip]
     );
 
     return (

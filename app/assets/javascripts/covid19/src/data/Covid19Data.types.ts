@@ -76,9 +76,13 @@ export interface Emdb extends DbItem {
     emMethod: string;
 }
 
-export type SourceName = "PDB-REDO" | "CSTF" | "CERES";
+export type SourceName = PdbSourceName | "IDR";
 
-export type MethodName = "PDB-Redo" | "Isolde" | "Refmac" | "PHENIX";
+export type PdbSourceName = "PDB-REDO" | "CSTF" | "CERES";
+
+export type MethodName = PdbMethodName | "IDR";
+
+export type PdbMethodName = "PDB-Redo" | "Isolde" | "Refmac" | "PHENIX";
 
 type XRef = ["IDR"];
 
@@ -128,8 +132,8 @@ export interface Details {
 }
 
 export interface RefModel {
-    source: SourceName;
-    method: MethodName;
+    source: PdbSourceName;
+    method: PdbMethodName;
     filename: string;
     externalLink?: Url;
     queryLink?: Url;

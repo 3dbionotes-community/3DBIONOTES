@@ -135,9 +135,9 @@ export interface Validations {
     emdb: EmdbValidation[];
 }
 
-export type SourceName = PdbSourceName | EmdbSourceName;
+export type SourceName = PdbSourceName | EmdbSourceName | "IDR";
 
-export type MethodName = PdbMethodName | EmdbMethodName;
+export type MethodName = PdbMethodName | EmdbMethodName | "IDR";
 
 export type PdbSourceName = "PDB-REDO" | "CSTF" | "CERES";
 
