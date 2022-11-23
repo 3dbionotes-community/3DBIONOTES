@@ -40,10 +40,18 @@ export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(props => {
                     {idr.assays.map((assay, idx) => {
                         return (
                             <>
-                                <Section title={i18n.t("Assay")}>
+                                <Section
+                                    title={i18n.t("Assay")}
+                                    subtitle={assay.name}
+                                    help={assay.description}
+                                >
                                     <AssayFC key={idx} assay={assay} dataSource={idr.dataSource} />
                                 </Section>
-                                <Section title={i18n.t("Screens")}>
+                                <Section
+                                    title={i18n.t("Screens")}
+                                    subtitle={screen.name}
+                                    help={screen.description}
+                                >
                                     {assay.screens.map((screen, idx) => (
                                         <ScreenFC key={idx} screen={screen} />
                                     ))}
@@ -155,17 +163,36 @@ const CompoundFC: React.FC<CompoundFCProps> = React.memo(({ compound }) => (
     </>
 ));
 
-const Section: React.FC<SectionProps> = React.memo(({ children, title }) => (
-    <div>
-        <Typography variant="h6" gutterBottom>
-            {title}
-        </Typography>
-        <List>{children}</List>
-    </div>
-));
+const Section: React.FC<SectionProps> = React.memo(({ children, title, subtitle, help }) => {
+    const [showTooltip, setShowTooltip] = React.useState(false);
+
+    return (
+        <div>
+            <SectionHeader>
+                <Typography variant="h6">
+                    {title}
+                    {subtitle && ":"}
+                </Typography>
+                {subtitle && <p>{subtitle}</p>}
+                {help && (
+                    <ViewerTooltip
+                        title={help}
+                        showTooltip={showTooltip}
+                        setShowTooltip={setShowTooltip}
+                    >
+                        <button onClick={() => setShowTooltip(!showTooltip)}>?</button>
+                    </ViewerTooltip>
+                )}
+            </SectionHeader>
+            <List>{children}</List>
+        </div>
+    );
+});
 
 interface SectionProps {
     title: string;
+    subtitle?: string;
+    help?: string;
 }
 
 interface ExternalLinkProps {
@@ -192,7 +219,6 @@ export interface ListItemProps {
 
 const Container = styled.div`
     margin-top: 2rem;
-    margin-bottom: 2rem;
 
     & div {
         margin-bottom: 1em;
@@ -201,6 +227,7 @@ const Container = styled.div`
     & .MuiTypography-h6 {
         color: rgb(0, 188, 212);
         line-height: 1 !important;
+        margin-right: 0.5rem;
     }
 `;
 
@@ -212,11 +239,18 @@ const List = styled.ul`
 
 const Li = styled.li`
     font-size: 0.875rem;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-weight: 400;
     line-height: 1.5;
     letter-spacing: 0.00938em;
     span {
         color: ;
+    }
+`;
+
+const SectionHeader = styled.div`
+    display: flex;
+    align-items: center;
+    p {
+        margin: 0;
     }
 `;
