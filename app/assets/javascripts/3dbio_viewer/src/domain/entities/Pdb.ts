@@ -31,15 +31,12 @@ export interface Pdb {
     file: Maybe<string>;
     path: Maybe<string>;
     customAnnotations: Maybe<Annotations>;
-    ligands: PdbLigand;
+    ligands: Maybe<PdbLigand[]>;
 }
 
 export interface PdbLigand {
     id: string;
     name: string;
-    details: string;
-    imageLink: string;
-    externalLink: string;
     inChI: string; //IUPACInChIkey
     imageDataResource?: LigandImageData;
 }

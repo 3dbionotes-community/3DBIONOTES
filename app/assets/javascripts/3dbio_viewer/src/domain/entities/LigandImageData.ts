@@ -29,6 +29,7 @@ export interface Screen {
     imagingMethod: string;
     imagingMethodTermAccession: string;
     doi: Url;
+    well?: Url;
 }
 
 export interface Compound {
