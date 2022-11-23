@@ -18,10 +18,11 @@ import i18n from "../../../utils/i18n";
 export interface CustomCheckboxFilterProps {
     setFilterState: (value: React.SetStateAction<Covid19Filter>) => void;
     validationSources: ValidationSource[];
+    filterState: Covid19Filter;
 }
 
 export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.memo(props => {
-    const { setFilterState, validationSources } = props;
+    const { filterState, setFilterState, validationSources } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const isOpen = Boolean(anchorEl);
     const openMenu = React.useCallback(event => setAnchorEl(event.currentTarget), []);
@@ -60,20 +61,13 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
         []
     );
 
-    const pdbTooltip = React.useMemo(
-        () => getTooltip(getValidationSource(validationSources, "PDB-REDO")),
-        [validationSources, getTooltip]
-    );
-    const cstfTooltip = React.useMemo(
-        () => getTooltip(getValidationSource(validationSources, "CSTF")),
-        [validationSources, getTooltip]
-    );
-    const ceresTooltip = React.useMemo(
-        () => getTooltip(getValidationSource(validationSources, "CERES")),
-        [validationSources, getTooltip]
-    );
-    const idrTooltip = React.useMemo(
-        () => getTooltip(getValidationSource(validationSources, "IDR")),
+    const filterTooltips: FilterTooltips = React.useMemo(
+        () => ({
+            pdbRedo: getTooltip(getValidationSource(validationSources, "PDB-REDO")),
+            cstf: getTooltip(getValidationSource(validationSources, "CSTF")),
+            ceres: getTooltip(getValidationSource(validationSources, "CERES")),
+            idr: getTooltip(getValidationSource(validationSources, "IDR")),
+        }),
         [validationSources, getTooltip]
     );
 
@@ -97,30 +91,46 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                 position="bottom-start"
             >
                 <MenuList className="MuiDataGrid-gridMenuList" autoFocusItem={isOpen}>
-                    <FilterItem filterKey="antibodies" setFilterState={setFilterState} />
-                    <FilterItem filterKey="nanobodies" setFilterState={setFilterState} />
-                    <FilterItem filterKey="sybodies" setFilterState={setFilterState} />
+                    <FilterItem
+                        filterKey="antibodies"
+                        checked={filterState.antibodies}
+                        setFilterState={setFilterState}
+                    />
+                    <FilterItem
+                        filterKey="nanobodies"
+                        checked={filterState.nanobodies}
+                        setFilterState={setFilterState}
+                    />
+                    <FilterItem
+                        filterKey="sybodies"
+                        checked={filterState.sybodies}
+                        setFilterState={setFilterState}
+                    />
                     <Divider />
                     <FilterItem
                         filterKey="pdbRedo"
+                        checked={filterState.pdbRedo}
                         setFilterState={setFilterState}
-                        tooltip={pdbTooltip}
+                        tooltip={filterTooltips.pdbRedo}
                     />
                     <FilterItem
                         filterKey="cstf"
+                        checked={filterState.cstf}
                         setFilterState={setFilterState}
-                        tooltip={cstfTooltip}
+                        tooltip={filterTooltips.cstf}
                     />
                     <FilterItem
                         filterKey="ceres"
+                        checked={filterState.ceres}
                         setFilterState={setFilterState}
-                        tooltip={ceresTooltip}
+                        tooltip={filterTooltips.ceres}
                     />
                     <Divider />
                     <FilterItem
                         filterKey="idr"
+                        checked={filterState.idr}
                         setFilterState={setFilterState}
-                        tooltip={idrTooltip}
+                        tooltip={filterTooltips.idr}
                     />
                 </MenuList>
             </GridMenu>
@@ -128,18 +138,23 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
     );
 });
 
+interface FilterItemProps {
+    filterKey: FilterKey;
+    checked?: boolean;
+    setFilterState: (value: React.SetStateAction<Covid19Filter>) => void;
+    tooltip?: React.ReactNode;
+}
+
 const FilterItem: React.FC<FilterItemProps> = React.memo(props => {
-    const { filterKey, setFilterState, tooltip } = props;
+    const { filterKey, setFilterState, tooltip, checked } = props;
     const [open, setOpen] = React.useState(false);
-    const [checked, setChecked] = React.useState(false);
 
     const handleClick = React.useCallback(() => {
         setFilterState(filterState => ({
             ...filterState,
             [filterKey]: !checked,
         }));
-        setChecked(!checked);
-    }, [setFilterState, filterKey, checked, setChecked]);
+    }, [setFilterState, filterKey, checked]);
 
     const closeTooltip = React.useCallback(() => {
         setOpen(false);
@@ -169,11 +184,7 @@ const FilterItem: React.FC<FilterItemProps> = React.memo(props => {
     );
 });
 
-interface FilterItemProps {
-    filterKey: FilterKey;
-    setFilterState: (value: React.SetStateAction<Covid19Filter>) => void;
-    tooltip?: React.ReactNode;
-}
+type FilterTooltips = Partial<Record<keyof Covid19Filter, Maybe<JSX.Element>>>;
 
 const StyledCheckbox = styled(Checkbox)`
     &.MuiCheckbox-colorSecondary.Mui-checked {
