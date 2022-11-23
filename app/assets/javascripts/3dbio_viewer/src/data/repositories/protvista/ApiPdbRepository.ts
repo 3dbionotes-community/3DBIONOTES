@@ -39,10 +39,9 @@ import {
     ligandToImageDataResponseC,
     PdbEntryResponse,
     pdbEntryResponseC,
-    pdbLigandsC,
     PdbLigandsResponse,
 } from "../../PdbLigands";
-import { LigandImageData } from "../../../domain/entities/LigandImageData";
+import { LigandImageData, Organism, Screen } from "../../../domain/entities/LigandImageData";
 import i18n from "../../../webapp/utils/i18n";
 
 interface Data {
@@ -270,12 +269,23 @@ export class ApiPdbRepository implements PdbRepository {
                                 id: dbId,
                                 type: assayType,
                                 typeTermAccession: assayTypeTermAccession,
-                                screens: screens.map(screen => ({
-                                    ...screen,
-                                    id: screen.dbId,
-                                    doi: screen.dataDoi,
-                                    well: _.first(_.first(screen.plates)?.wells)?.externalLink,
-                                })),
+                                bioStudiesAccessionId: assay.BIAId,
+                                organisms: assay.organisms.map(
+                                    (organism): Organism => ({
+                                        id: organism.ncbi_taxonomy_id,
+                                        name: organism.scientific_name,
+                                        commonName: organism.common_name,
+                                        externalLink: organism.externalLink,
+                                    })
+                                ),
+                                screens: screens.map(
+                                    (screen): Screen => ({
+                                        ...screen,
+                                        id: screen.dbId,
+                                        doi: screen.dataDoi,
+                                        well: _.first(_.first(screen.plates)?.wells)?.externalLink,
+                                    })
+                                ),
                                 compound: {
                                     percentageInhibition: allPercentageInhibition,
                                     cytotoxicity: cytotoxicity

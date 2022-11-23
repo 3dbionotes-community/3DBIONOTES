@@ -6,16 +6,15 @@ import { recordOfStyles } from "../../../utils/ts-utils";
 import { Assay, Compound, Screen } from "../../../domain/entities/LigandImageData";
 import { Typography } from "@material-ui/core";
 import { ViewerTooltip } from "../viewer-tooltip/ViewerTooltip";
+import { useBooleanState } from "../../hooks/use-boolean";
 import i18n from "../../utils/i18n";
 
 interface BasicInfoProps {
     pdb: Pdb;
 }
 
-export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(props => {
-    const { pdb } = props;
-    const [showTooltip, setShowTooltip] = React.useState(false);
-
+export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => {
+    const [showTooltip, { set: setShowTooltip, toggle: toggleTooltip }] = useBooleanState(false);
     const idrs = _.compact(pdb.ligands?.map(ligand => ligand.imageDataResource));
 
     return (
@@ -27,7 +26,7 @@ export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(props => {
                     showTooltip={showTooltip}
                     setShowTooltip={setShowTooltip}
                 >
-                    <button onClick={() => setShowTooltip(!showTooltip)}>?</button>
+                    <button onClick={toggleTooltip}>?</button>
                 </ViewerTooltip>
             </div>
             <p className="contents">{i18n.t("Text to be determined.")}</p>
@@ -43,6 +42,7 @@ export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(props => {
                                 >
                                     <AssayFC key={idx} assay={assay} dataSource={idr.dataSource} />
                                 </Section>
+
                                 {assay.screens.map((screen, idx) => (
                                     <Section
                                         key={idx}
@@ -76,7 +76,7 @@ const styles = recordOfStyles({
         color: "#123546",
     },
     section: {
-        padding: 20,
+        padding: "20px 20px 0 20px",
     },
 });
 
@@ -110,12 +110,14 @@ const AssayFC: React.FC<AssayFCProps> = React.memo(({ assay, dataSource }) => (
         <ListItem name={"ID"} value={assay.id} />
         <ListItem name={"Type"} value={assay.type} />
         <ListItem name={"Type Term Accession"} value={assay.typeTermAccession} />
-        <ListItem name={"Source"} value={dataSource} />
+        <ListItem name={"Organisms"} value={assay.organisms.map(({ name }) => name).join(", ")} />
         <ListItem
             name={"Publication Title"}
             value={assay.publications.map(({ title }) => title).join(", ")}
         />
         <ListItem name={"Data DOI"} value={assay.dataDoi} />
+        <ListItem name={"BioStudies Accession ID"} value={assay.bioStudiesAccessionId} />
+        <ListItem name={"Source"} value={dataSource} />
     </>
 ));
 
@@ -128,6 +130,8 @@ const ScreenFC: React.FC<ScreenFCProps> = React.memo(({ screen }) => (
         <ListItem name={"ID"} value={screen.id} />
         <ListItem name={"Type"} value={screen.type} />
         <ListItem name={"Type Term Accession"} value={screen.typeTermAccession} />
+        <ListItem name={"Technology Type"} value={screen.type} />
+        <ListItem name={"Technology Type Term Accession"} value={screen.typeTermAccession} />
         <ListItem name={"Imaging Method"} value={screen.imagingMethod} />
         <ListItem
             name={"Imaging Method Term Accession"}
@@ -140,15 +144,6 @@ const ScreenFC: React.FC<ScreenFCProps> = React.memo(({ screen }) => (
                 </a>
             </span>
         </ListItem>
-        {screen.well && (
-            <ListItem name={"Well"}>
-                <span>
-                    <a href={screen.well} target="_blank" rel="noreferrer noopener">
-                        {screen.well}
-                    </a>
-                </span>
-            </ListItem>
-        )}
     </div>
 ));
 
@@ -175,7 +170,7 @@ interface SectionProps {
 }
 
 const Section: React.FC<SectionProps> = React.memo(({ children, title, subtitle, help }) => {
-    const [showTooltip, setShowTooltip] = React.useState(false);
+    const [showTooltip, { set: setShowTooltip, toggle: toggleTooltip }] = useBooleanState(false);
 
     return (
         <div>
@@ -191,7 +186,7 @@ const Section: React.FC<SectionProps> = React.memo(({ children, title, subtitle,
                         showTooltip={showTooltip}
                         setShowTooltip={setShowTooltip}
                     >
-                        <button onClick={() => setShowTooltip(!showTooltip)}>?</button>
+                        <button onClick={toggleTooltip}>?</button>
                     </ViewerTooltip>
                 )}
             </SectionHeader>

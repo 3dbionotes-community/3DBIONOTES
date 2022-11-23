@@ -14,8 +14,10 @@ export interface Assay {
     typeTermAccession: string;
     dataDoi: DataDoi;
     publications: Publication[];
+    organisms: Organism[];
     screens: Screen[];
     compound: Compound;
+    bioStudiesAccessionId: string;
 }
 
 export interface Publication {
@@ -28,6 +30,8 @@ export interface Screen {
     description?: string;
     type: string;
     typeTermAccession: string;
+    technologyType: string;
+    technologyTypeTermAccession: string;
     imagingMethod: string;
     imagingMethodTermAccession: string;
     doi: Url;
@@ -39,6 +43,13 @@ export interface Compound {
     cytotoxicity?: string;
     doseResponse?: string;
     cytotoxicIndex?: string;
+}
+
+export interface Organism {
+    id: string;
+    name: string;
+    commonName: string;
+    externalLink: Url;
 }
 
 type Url = string;

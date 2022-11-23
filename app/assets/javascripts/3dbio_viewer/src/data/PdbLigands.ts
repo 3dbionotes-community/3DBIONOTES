@@ -9,9 +9,7 @@ import {
     optional,
     string,
 } from "purify-ts";
-import { FutureData } from "../domain/entities/FutureData";
 import { PdbLigand } from "../domain/entities/Pdb";
-import { parseFromCodec } from "../utils/codec";
 
 function maybeNull<Data>(type: Codec<Data>) {
     return oneOf([type, nullType]);
