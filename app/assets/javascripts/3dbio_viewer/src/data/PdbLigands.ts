@@ -55,6 +55,7 @@ const plateC = Codec.interface({
 const screenC = Codec.interface({
     dbId: string,
     name: string,
+    description: optional(string),
     type: string,
     typeTermAccession: string,
     technologyType: string,

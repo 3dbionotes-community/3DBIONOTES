@@ -24,6 +24,8 @@ export interface Publication {
 
 export interface Screen {
     id: string;
+    name: string;
+    description?: string;
     type: string;
     typeTermAccession: string;
     imagingMethod: string;

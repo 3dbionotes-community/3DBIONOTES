@@ -1,16 +1,12 @@
+import _ from "lodash";
 import React from "react";
+import styled from "styled-components";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { recordOfStyles } from "../../../utils/ts-utils";
-import { Selection } from "../../view-models/Selection";
-import { BlockDef } from "../protvista/Protvista.types";
-import i18n from "../../utils/i18n";
-import { ImageDataResource } from "../../../data/PdbLigands";
-import _ from "lodash";
-import styled from "styled-components";
 import { Assay, Compound, Screen } from "../../../domain/entities/LigandImageData";
-import { IconButton, Typography } from "@material-ui/core";
-import { OpenInNew } from "@material-ui/icons";
+import { Typography } from "@material-ui/core";
 import { ViewerTooltip } from "../viewer-tooltip/ViewerTooltip";
+import i18n from "../../utils/i18n";
 
 interface BasicInfoProps {
     pdb: Pdb;
@@ -47,15 +43,17 @@ export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(props => {
                                 >
                                     <AssayFC key={idx} assay={assay} dataSource={idr.dataSource} />
                                 </Section>
-                                <Section
-                                    title={i18n.t("Screens")}
-                                    subtitle={screen.name}
-                                    help={screen.description}
-                                >
-                                    {assay.screens.map((screen, idx) => (
-                                        <ScreenFC key={idx} screen={screen} />
-                                    ))}
-                                </Section>
+                                {assay.screens.map((screen, idx) => (
+                                    <Section
+                                        key={idx}
+                                        title={i18n.t("Screen")}
+                                        subtitle={screen.name}
+                                        help={screen.description}
+                                    >
+                                        <ScreenFC screen={screen} />
+                                    </Section>
+                                ))}
+
                                 <Section title={i18n.t("Compound")}>
                                     <CompoundFC compound={assay.compound} />
                                 </Section>
@@ -82,17 +80,11 @@ const styles = recordOfStyles({
     },
 });
 
-const ExternalLink: React.FC<ExternalLinkProps> = React.memo(({ href }) => {
-    return (
-        <a href={href} target="_blank" rel="noreferrer noopener">
-            <IconButton>
-                <OpenInNew />
-            </IconButton>
-        </a>
-    );
-});
+export interface ListItemProps {
+    name: string;
+    value?: string;
+}
 
-//different <Li/> from "DetailsCell.tsx"
 const ListItem: React.FC<ListItemProps> = React.memo(props => {
     const { name, value, children } = props;
     return (
@@ -108,6 +100,11 @@ const ListItem: React.FC<ListItemProps> = React.memo(props => {
     );
 });
 
+interface AssayFCProps {
+    assay: Assay;
+    dataSource: string;
+}
+
 const AssayFC: React.FC<AssayFCProps> = React.memo(({ assay, dataSource }) => (
     <>
         <ListItem name={"ID"} value={assay.id} />
@@ -121,6 +118,10 @@ const AssayFC: React.FC<AssayFCProps> = React.memo(({ assay, dataSource }) => (
         <ListItem name={"Data DOI"} value={assay.dataDoi} />
     </>
 ));
+
+interface ScreenFCProps {
+    screen: Screen;
+}
 
 const ScreenFC: React.FC<ScreenFCProps> = React.memo(({ screen }) => (
     <div>
@@ -151,6 +152,10 @@ const ScreenFC: React.FC<ScreenFCProps> = React.memo(({ screen }) => (
     </div>
 ));
 
+interface CompoundFCProps {
+    compound: Compound;
+}
+
 const CompoundFC: React.FC<CompoundFCProps> = React.memo(({ compound }) => (
     <>
         <ListItem name={"Inhibition of cytopathicity"} value={compound.percentageInhibition} />
@@ -163,6 +168,12 @@ const CompoundFC: React.FC<CompoundFCProps> = React.memo(({ compound }) => (
     </>
 ));
 
+interface SectionProps {
+    title: string;
+    subtitle?: string;
+    help?: string;
+}
+
 const Section: React.FC<SectionProps> = React.memo(({ children, title, subtitle, help }) => {
     const [showTooltip, setShowTooltip] = React.useState(false);
 
@@ -173,7 +184,7 @@ const Section: React.FC<SectionProps> = React.memo(({ children, title, subtitle,
                     {title}
                     {subtitle && ":"}
                 </Typography>
-                {subtitle && <p>{subtitle}</p>}
+                {subtitle && <p>{subtitle.charAt(0).toUpperCase() + subtitle.slice(1)}</p>}
                 {help && (
                     <ViewerTooltip
                         title={help}
@@ -188,34 +199,6 @@ const Section: React.FC<SectionProps> = React.memo(({ children, title, subtitle,
         </div>
     );
 });
-
-interface SectionProps {
-    title: string;
-    subtitle?: string;
-    help?: string;
-}
-
-interface ExternalLinkProps {
-    href: string;
-}
-
-interface AssayFCProps {
-    assay: Assay;
-    dataSource: string;
-}
-
-interface ScreenFCProps {
-    screen: Screen;
-}
-
-interface CompoundFCProps {
-    compound: Compound;
-}
-
-export interface ListItemProps {
-    name: string;
-    value?: string;
-}
 
 const Container = styled.div`
     margin-top: 2rem;
