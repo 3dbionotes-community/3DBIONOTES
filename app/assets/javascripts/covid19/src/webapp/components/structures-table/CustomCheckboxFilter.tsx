@@ -79,7 +79,8 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                 <strong>{i18n.t("Method: ", { nsSeparator: false })}</strong>
                 <span>
                     {i18n.t(
-                        "High throughput sample analysis of collections of compounds that provide a variety of chemically diverse structures that can be used to identify structure types that have affinity with pharmacological targets. (Source Accession: EFO_0007553)"
+                        "High throughput sample analysis of collections of compounds that provide a variety of chemically diverse structures that can be used to identify structure types that have affinity with pharmacological targets. (Source Accession: EFO_0007553)",
+                        { nsSeparator: false }
                     )}
                 </span>
                 <br />
