@@ -32,7 +32,7 @@ export const blockDefs: BlockDef[] = [
         help: i18n.t("Help description to be determined."),
         tracks: [],
         component: IDRViewerBlock,
-        profiles: [profiles.general],
+        profiles: [profiles.drugDesign],
     },
     {
         id: "uploadData",
