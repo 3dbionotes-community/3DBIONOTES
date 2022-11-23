@@ -130,8 +130,11 @@ const ScreenFC: React.FC<ScreenFCProps> = React.memo(({ screen }) => (
         <ListItem name={"ID"} value={screen.id} />
         <ListItem name={"Type"} value={screen.type} />
         <ListItem name={"Type Term Accession"} value={screen.typeTermAccession} />
-        <ListItem name={"Technology Type"} value={screen.type} />
-        <ListItem name={"Technology Type Term Accession"} value={screen.typeTermAccession} />
+        <ListItem name={"Technology Type"} value={screen.technologyType} />
+        <ListItem
+            name={"Technology Type Term Accession"}
+            value={screen.technologyTypeTermAccession}
+        />
         <ListItem name={"Imaging Method"} value={screen.imagingMethod} />
         <ListItem
             name={"Imaging Method Term Accession"}
