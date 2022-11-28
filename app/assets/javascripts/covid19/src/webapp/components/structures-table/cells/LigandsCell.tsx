@@ -1,18 +1,24 @@
+import _ from "lodash";
 import React from "react";
-import i18n from "../../../../utils/i18n";
+import styled from "styled-components";
+import { BadgeLigands, OnClickIDR } from "../badge/BadgeLigands";
 import { CellProps, styles } from "../Columns";
 import { Link } from "../Link";
 import { Wrapper } from "./Wrapper";
+import i18n from "../../../../utils/i18n";
 
-export const LigandsCell: React.FC<CellProps> = React.memo(props => {
-    const { row, onClickDetails, moreDetails } = props;
+export interface LigandsCellProps extends CellProps {
+    onClickIDR?: OnClickIDR;
+}
+
+export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
+    const { row, onClickDetails, onClickIDR, moreDetails } = props;
 
     const ligands = React.useMemo(() => {
         return row.ligands.map(ligand => {
             return {
-                id: ligand.id,
+                ...ligand,
                 url: ligand.externalLink,
-                name: ligand.name,
                 tooltip: (
                     <React.Fragment>
                         <div>
@@ -44,14 +50,40 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
             row={row}
             field="ligands"
         >
-            {ligands.map(ligand => (
-                <Link
-                    key={ligand.id}
-                    tooltip={ligand.tooltip}
-                    url={ligand.url}
-                    text={`${ligand.name} (${ligand.id})`}
-                />
-            ))}
+            {_(ligands)
+                .sortBy(ligand => (ligand.hasIDR ? 0 : 1))
+                .map(ligand => {
+                    return (
+                        <LigandItem key={ligand.id} moreDetails={moreDetails}>
+                            <Link
+                                tooltip={ligand.tooltip}
+                                url={ligand.url}
+                                text={`${ligand.name} (${ligand.id})`}
+                            >
+                                {ligand.hasIDR && (
+                                    <BadgeLigands
+                                        ligand={ligand}
+                                        onClick={onClickIDR}
+                                        moreDetails={moreDetails}
+                                    />
+                                )}
+                            </Link>
+                        </LigandItem>
+                    );
+                })
+                .value()}
         </Wrapper>
     );
 });
+
+const LigandItem = styled.div<{ moreDetails?: boolean }>`
+    li {
+        text-align: left;
+    }
+    p {
+        margin-top: 0;
+        text-align: left;
+        display: ${props => (props.moreDetails ? "inherit" : "inline-flex")};
+        margin-right: ${props => (props.moreDetails ? "0" : "0.5em")};
+    }
+`;

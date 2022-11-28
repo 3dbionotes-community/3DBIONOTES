@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { Field } from "../Columns";
 import { rowHeight } from "../StructuresTable";
-import { BadgeDetails } from "../badge/BadgeDetails";
+import { BadgeDetails, OnClickDetails } from "../badge/BadgeDetails";
 import { useHeightFromElement } from "../../../hooks/useHeightFromElement";
 import { Structure } from "../../../../domain/entities/Covid19Info";
 
 interface WrapperProps {
     moreDetails?: boolean;
     row: Structure;
-    onClickDetails?: (options: { row: Structure; field: Field }) => void;
+    onClickDetails?: OnClickDetails;
     field: Field;
 }
 
@@ -21,7 +21,9 @@ export const Wrapper: React.FC<WrapperProps> = React.memo(props => {
         <Container moreDetails={moreDetails}>
             <ul ref={ref}>{props.children}</ul>
             {height >= rowHeight - badgeHeight && moreDetails && (
-                <BadgeDetails onClick={onClickDetails} row={row} field={field} />
+                <div style={{ marginLeft: "40px" }}>
+                    <BadgeDetails onClick={onClickDetails} row={row} field={field} />
+                </div>
             )}
         </Container>
     );
@@ -31,6 +33,7 @@ const Container = styled.div<{ moreDetails: boolean }>`
     display: flex;
     flex-direction: column;
     line-height: 1.5;
+    overflow-wrap: anywhere;
     ul {
         ${props => (props.moreDetails ? "margin: 7px 0 2px;" : "margin:0;")}
         ${props =>

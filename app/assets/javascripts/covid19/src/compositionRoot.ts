@@ -1,16 +1,19 @@
-import { Covid19InfoFromJsonRepository } from "./data/Covid19InfoFromJsonRepository";
-import { BrowserDataGridRepository } from "./data/BrowserDataGridRepository";
+import { Covid19InfoFromJsonRepository } from "./data/repositories/Covid19InfoFromJsonRepository";
+import { BrowserDataGridRepository } from "./data/repositories/BrowserDataGridRepository";
 import { ExportStructuresUseCase } from "./domain/usecases/ExportStructuresUseCase";
 import { GetCovid19InfoUseCase } from "./domain/usecases/GetCovid19InfoUseCase";
 import { GetAutoSuggestionsUseCase } from "./domain/usecases/GetAutoSuggestionsUseCase";
 import { SearchCovid19InfoUseCase } from "./domain/usecases/SearchCovid19InfoUseCase";
 import { AddDynamicInfoToCovid19InfoUseCase } from "./domain/usecases/AddDynamicInfoToCovid19InfoUseCase";
-import { LocalStorageCacheRepository } from "./data/LocalStorageCacheRepository";
+import { LocalStorageCacheRepository } from "./data/repositories/LocalStorageCacheRepository";
+import { LigandsApiRepository } from "./data/repositories/LigandsApiRepository";
+import { GetLigandImageDataResourcesUseCase } from "./domain/usecases/GetLigandImageDataResourcesUseCase";
 
 export function getCompositionRoot() {
     const covid19InfoRepository = new Covid19InfoFromJsonRepository();
     const dataGridRepository = new BrowserDataGridRepository();
     const cacheRepository = new LocalStorageCacheRepository();
+    const ligandsRepository = new LigandsApiRepository();
 
     return {
         getCovid19Info: new GetCovid19InfoUseCase(covid19InfoRepository),
@@ -21,6 +24,9 @@ export function getCompositionRoot() {
             covid19InfoRepository,
             cacheRepository
         ),
+        ligands: {
+            getIDR: new GetLigandImageDataResourcesUseCase(ligandsRepository),
+        },
     };
 }
 
