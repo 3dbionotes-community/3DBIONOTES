@@ -36,6 +36,7 @@ export interface Screen {
     imagingMethodTermAccession: string;
     doi: Url;
     well?: Url;
+    plates: Plate[];
 }
 
 export interface Compound {
@@ -50,6 +51,19 @@ export interface Organism {
     name: string;
     commonName: string;
     externalLink: Url;
+}
+
+export interface Plate {
+    id: string;
+    name: string;
+    wells: Well[];
+    controlWells: Well[];
+}
+
+export interface Well {
+    id: string;
+    position: { x: number; y: number };
+    image: string;
 }
 
 type Url = string;

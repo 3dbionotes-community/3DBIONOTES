@@ -7,6 +7,7 @@ import { Assay, Compound, Screen } from "../../../domain/entities/LigandImageDat
 import { Typography } from "@material-ui/core";
 import { ViewerTooltip } from "../viewer-tooltip/ViewerTooltip";
 import { useBooleanState } from "../../hooks/use-boolean";
+import { SVGPlate } from "./SVGPlate";
 import i18n from "../../utils/i18n";
 
 interface BasicInfoProps {
@@ -15,7 +16,16 @@ interface BasicInfoProps {
 
 export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => {
     const [showTooltip, { set: setShowTooltip, toggle: toggleTooltip }] = useBooleanState(false);
-    const idrs = _.compact(pdb.ligands?.map(ligand => ligand.imageDataResource));
+    const idrs = React.useMemo(
+        () =>
+            _.compact(
+                pdb.ligands?.map(ligand => {
+                    console.log(ligand.imageDataResource);
+                    return ligand.imageDataResource;
+                })
+            ),
+        [pdb]
+    );
 
     return (
         <div style={styles.section}>
@@ -34,13 +44,13 @@ export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => 
                 <Container key={i}>
                     {idr.assays.map((assay, idx) => {
                         return (
-                            <>
+                            <React.Fragment key={idx}>
                                 <Section
                                     title={i18n.t("Assay")}
                                     subtitle={assay.name}
                                     help={assay.description}
                                 >
-                                    <AssayFC key={idx} assay={assay} dataSource={idr.dataSource} />
+                                    <AssayFC assay={assay} dataSource={idr.dataSource} />
                                 </Section>
 
                                 {assay.screens.map((screen, idx) => (
@@ -51,13 +61,16 @@ export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => 
                                         help={screen.description}
                                     >
                                         <ScreenFC screen={screen} />
+                                        {screen.plates.map((plate, idx) => (
+                                            <SVGPlate plate={plate} key={idx} />
+                                        ))}
                                     </Section>
                                 ))}
 
                                 <Section title={i18n.t("Compound")}>
                                     <CompoundFC compound={assay.compound} />
                                 </Section>
-                            </>
+                            </React.Fragment>
                         );
                     })}
                 </Container>

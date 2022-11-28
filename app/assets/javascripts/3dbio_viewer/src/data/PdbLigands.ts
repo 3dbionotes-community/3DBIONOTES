@@ -168,6 +168,7 @@ export type LigandToImageData = GetType<typeof ligandToImageDataC>;
 export type LigandToImageDataResponse = GetType<typeof ligandToImageDataResponseC>;
 export type PdbLigandsResponse = GetType<typeof pdbLigandsC>;
 export type PdbEntryResponse = GetType<typeof pdbEntryResponseC>;
+export type IDRWell = GetType<typeof wellC>;
 
 type PdbLigandResponse = GetType<typeof pdbLigandC>;
 

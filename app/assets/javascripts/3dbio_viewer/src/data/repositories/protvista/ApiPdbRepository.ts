@@ -34,6 +34,7 @@ import { MutagenesisResponse } from "./tracks/mutagenesis";
 import { Maybe } from "../../../utils/ts-utils";
 import {
     getPdbLigand,
+    IDRWell,
     ImageDataResource,
     LigandToImageDataResponse,
     ligandToImageDataResponseC,
@@ -41,7 +42,13 @@ import {
     pdbEntryResponseC,
     PdbLigandsResponse,
 } from "../../PdbLigands";
-import { LigandImageData, Organism, Screen } from "../../../domain/entities/LigandImageData";
+import {
+    LigandImageData,
+    Organism,
+    Plate,
+    Screen,
+    Well,
+} from "../../../domain/entities/LigandImageData";
 import i18n from "../../../webapp/utils/i18n";
 
 interface Data {
@@ -284,6 +291,14 @@ export class ApiPdbRepository implements PdbRepository {
                                         id: screen.dbId,
                                         doi: screen.dataDoi,
                                         well: _.first(_.first(screen.plates)?.wells)?.externalLink,
+                                        plates: screen.plates.map(
+                                            (plate): Plate => ({
+                                                id: plate.dbId,
+                                                name: plate.name,
+                                                wells: plate.wells.flatMap(flatMapWell),
+                                                controlWells: plate.wells.flatMap(flatMapWell),
+                                            })
+                                        ),
                                     })
                                 ),
                                 compound: {
@@ -354,6 +369,22 @@ function getData(options: Options): FutureData<Partial<Data>> {
     };
 
     return Future.joinObj(data$);
+}
+
+function flatMapWell(well: IDRWell): Well[] {
+    const [_void, a, b] = well.name.toLowerCase().split(/^(.)/, 1);
+    const codePoint = a && a.codePointAt(0);
+    const x = codePoint ? _.clamp(codePoint - 97, 0, 7) : undefined;
+    const y = b ? _.toNumber(b) : undefined;
+    if (x && y)
+        return [
+            {
+                id: well.dbId,
+                position: { x, y },
+                image: well.imageThumbailLink,
+            },
+        ];
+    else return [];
 }
 
 function err(message: string) {
