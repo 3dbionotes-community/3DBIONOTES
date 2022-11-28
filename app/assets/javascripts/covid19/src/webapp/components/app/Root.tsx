@@ -19,7 +19,7 @@ export const Root: React.FC = React.memo(() => {
         <Body>
             <HeaderBanner>
                 <Wrapper>
-                    <h1>{i18n.t("SARS-CoV-2 in structure databases")}</h1>
+                    <h1>{i18n.t("COVID-19 Structural Hub")}</h1>
                     <Button
                         variant="outlined"
                         color="inherit"

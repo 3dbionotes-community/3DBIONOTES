@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-13T08:01:25.803Z\n"
-"PO-Revision-Date: 2022-06-13T08:01:25.803Z\n"
+"POT-Creation-Date: 2022-11-23T13:00:39.368Z\n"
+"PO-Revision-Date: 2022-11-23T13:00:39.368Z\n"
 
 msgid "Antibodies"
 msgstr ""
@@ -26,7 +26,10 @@ msgstr ""
 msgid "CERES"
 msgstr ""
 
-msgid "SARS-CoV-2 in structure databases"
+msgid "IDR"
+msgstr ""
+
+msgid "COVID-19 Structural Hub"
 msgstr ""
 
 msgid "Hide proteome"
@@ -68,6 +71,15 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
+msgid "{{methodName}} Method: "
+msgstr ""
+
+msgid "Method: "
+msgstr ""
+
+msgid "Source: "
+msgstr ""
+
 msgid "Filter"
 msgstr ""
 
@@ -78,6 +90,21 @@ msgid "Save as CSV"
 msgstr ""
 
 msgid "Save as JSON"
+msgstr ""
+
+msgid "No {{name}} found"
+msgstr ""
+
+msgid "Ligand IDR"
+msgstr ""
+
+msgid "Assay"
+msgstr ""
+
+msgid "Screens"
+msgstr ""
+
+msgid "Compound"
 msgstr ""
 
 msgid "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
@@ -154,9 +181,6 @@ msgid ""
 msgstr ""
 
 msgid "Examples"
-msgstr ""
-
-msgid "No {{name}} found"
 msgstr ""
 
 msgid "View more"
@@ -244,12 +268,6 @@ msgid "Keywords"
 msgstr ""
 
 msgid "Show validations"
-msgstr ""
-
-msgid "Method: "
-msgstr ""
-
-msgid "Source: "
 msgstr ""
 
 msgid " and {{overflow}} more..."
