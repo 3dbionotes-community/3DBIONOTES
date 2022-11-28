@@ -46,6 +46,22 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
     const [filterState, setFilterState0] = React.useState(initialFilterState);
 
+    const openDetailsDialog = React.useCallback(
+        (options: DetailsDialogOptions, gaLabel: string) => {
+            closeIDR();
+            showDetailsDialog(options, gaLabel);
+        },
+        [closeIDR, showDetailsDialog]
+    );
+
+    const openIDRDialog = React.useCallback(
+        (options: IDROptions, gaLabel: string) => {
+            closeDetails();
+            showIDRDialog(options, gaLabel);
+        },
+        [closeDetails, showIDRDialog]
+    );
+
     const setFilterState = React.useCallback((value: React.SetStateAction<Covid19Filter>) => {
         setPage(0);
         setFilterState0(value);
@@ -99,10 +115,10 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
     const columns = React.useMemo(() => {
         return getColumns(data, {
-            onClickDetails: showDetailsDialog,
-            onClickIDR: showIDRDialog,
+            onClickDetails: openDetailsDialog,
+            onClickIDR: openIDRDialog,
         });
-    }, [data, showDetailsDialog, showIDRDialog]);
+    }, [data, openDetailsDialog, openIDRDialog]);
 
     const components = React.useMemo(
         () => ({ Toolbar: Toolbar, Pagination: CustomGridPagination }),
@@ -203,6 +219,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                     expandedAccordion={detailsInfo.field}
                     row={detailsInfo.row}
                     data={data}
+                    onClickIDR={openIDRDialog}
                 />
             )}
             {idrOptions && (

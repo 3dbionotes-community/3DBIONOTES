@@ -1,10 +1,10 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import styled from "styled-components";
-import i18n from "../../../../utils/i18n";
 import { Ligand } from "../../../../domain/entities/Covid19Info";
 import { IDROptions } from "../Columns";
 import { Badge } from "./Badge";
 import { useAppContext } from "../../../contexts/app-context";
+import i18n from "../../../../utils/i18n";
 
 export type OnClickIDR = (options: IDROptions, gaLabel: string) => void;
 
@@ -19,9 +19,9 @@ export const BadgeLigands: React.FC<BadgeLigandsProps> = React.memo(props => {
     const { compositionRoot } = useAppContext();
 
     const notifyClick = React.useCallback(
-        e => {
+        (e: MouseEvent) => {
+            e.preventDefault();
             if (onClick) {
-                e.preventDefault();
                 compositionRoot.ligands.getIDR.execute(ligand.inChI).run(
                     idr =>
                         onClick(

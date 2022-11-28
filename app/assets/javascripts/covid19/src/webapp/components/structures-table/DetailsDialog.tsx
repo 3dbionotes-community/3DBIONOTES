@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Accordion, AccordionSummary, AccordionDetails, Typography } from "@material-ui/core";
 import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 import { Covid19Info, Structure } from "../../../domain/entities/Covid19Info";
+import { OnClickIDR } from "./badge/BadgeLigands";
 import { Field } from "./Columns";
 import { PdbCell } from "./cells/PdbCell";
 import { EmdbCell } from "./cells/EmdbCell";
@@ -20,10 +21,11 @@ export interface DetailsDialogProps {
     expandedAccordion: Field | undefined;
     row: Structure;
     data: Covid19Info;
+    onClickIDR: OnClickIDR;
 }
 
 export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
-    const { onClose, expandedAccordion, row, data, open } = props;
+    const { onClose, expandedAccordion, row, data, open, onClickIDR } = props;
 
     return (
         <Dialog open={open} onClose={onClose} title={row.title}>
@@ -35,16 +37,21 @@ export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
 
                 <div>
                     <ModifiedAccordion expanded={expandedAccordion} field="entities" row={row}>
-                        <EntityCell data={data} row={row} moreDetails={false}></EntityCell>
+                        <EntityCell data={data} row={row} moreDetails={false} />
                     </ModifiedAccordion>
                     <ModifiedAccordion expanded={expandedAccordion} field="ligands" row={row}>
-                        <LigandsCell data={data} row={row} moreDetails={false}></LigandsCell>
+                        <LigandsCell
+                            data={data}
+                            row={row}
+                            moreDetails={false}
+                            onClickIDR={onClickIDR}
+                        />
                     </ModifiedAccordion>
                     <ModifiedAccordion expanded={expandedAccordion} field="organisms" row={row}>
-                        <OrganismCell row={row} data={data} moreDetails={false}></OrganismCell>
+                        <OrganismCell row={row} data={data} moreDetails={false} />
                     </ModifiedAccordion>
                     <ModifiedAccordion expanded={expandedAccordion} field="details" row={row}>
-                        <DetailsCell row={row} data={data} moreDetails={false}></DetailsCell>
+                        <DetailsCell row={row} data={data} moreDetails={false} />
                     </ModifiedAccordion>
                 </div>
             </Container>

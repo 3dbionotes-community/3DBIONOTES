@@ -159,6 +159,7 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                             setFilterState={setFilterState}
                         />
                         <CustomCheckboxFilter
+                            filterState={filterState}
                             setFilterState={setFilterState}
                             validationSources={validationSources}
                         />
