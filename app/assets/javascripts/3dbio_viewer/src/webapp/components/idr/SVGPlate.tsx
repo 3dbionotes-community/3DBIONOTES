@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 import { Plate } from "../../../domain/entities/LigandImageData";
@@ -12,7 +13,11 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate }) => {
         <StyledSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 509.28 362.16">
             <defs>
                 <clipPath xmlns="http://www.w3.org/2000/svg" id="clippath">
-                    <circle className="fill-b9b9b9" cx="80.82" cy="70.6" r="15" />
+                    {_.range(70.6, 342.6, 34).map((y, i) =>
+                        _.range(80.82, 488.82, 34).map((x, j) => (
+                            <circle key={`${i}${j}`} cx={x} cy={y} r="15" />
+                        ))
+                    )}
                 </clipPath>
             </defs>
             <PlateBackground />
@@ -22,18 +27,23 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate }) => {
                 <path className="grid" d={wellsD} />
             </g>
             <g id="images" className="clip-path">
-                <image
-                    width="96"
-                    height="96"
-                    transform="translate(65.82 55.6) scale(.3125)"
-                    xlinkHref={"https://idr.openmicroscopy.org/webclient/render_thumbnail/10533536"}
-                />
+                {plate.wells.map(well => (
+                    <Well
+                        key={well.id}
+                        x={well.position.x}
+                        y={well.position.y}
+                        image={well.image}
+                    />
+                ))}
+                {plate.controlWells.map(well => (
+                    <Well
+                        key={well.id}
+                        x={well.position.x}
+                        y={well.position.y}
+                        image={well.image}
+                    />
+                ))}
             </g>
-            <circle cx="80.82" cy="55.6" r="2" fill="#ff0000" />
-            <path
-                stroke="#ff0000"
-                d="M80.82,55.6c8.27,0,15,6.73,15,15s-6.73,15-15,15-15-6.73-15-15,6.73-15,15-15"
-            />
         </StyledSVG>
     );
 });
@@ -117,6 +127,19 @@ const TopRow: React.FC = React.memo(() => (
     </text>
 ));
 
+interface WellProps {
+    x: number;
+    y: number;
+    image: string;
+}
+
+const Well: React.FC<WellProps> = React.memo(props => {
+    const x = React.useMemo(() => 65.82 + 34 * props.x, [props.x]);
+    const y = React.useMemo(() => 55.6 + 34 * props.y, [props.y]);
+
+    return <image x={x} y={y} width="30" height="30" xlinkHref={props.image} />;
+});
+
 //viewBox const for readability = 0 0 509.28 362.16
 
 const backgroundPlateD =
@@ -128,31 +151,17 @@ const innerLineD =
 
 const circ = "c8.27,0,15,6.73,15,15s-6.73,15-15,15-15-6.73-15-15,6.73-15,15-15";
 const innerCirc = "m0-1c-8.84,0-16,7.16-16,16s7.16,16,16,16,16-7.16,16-16-7.16-16-16-16h0Z";
-const m34_1 = "m34,1";
 const cell = `${circ}${innerCirc}`;
-const row = `
-    ${cell}${m34_1}
-    ${cell}${m34_1}
-    ${cell}${m34_1}
-    ${cell}${m34_1}
-    ${cell}${m34_1}
-    ${cell}${m34_1}
-    ${cell}${m34_1}
-    ${cell}${m34_1}
-    ${cell}${m34_1}
-    ${cell}${m34_1}
-    ${cell}${m34_1}
-    ${cell}`;
 
-const wellsD = `
-    M80.82,55.6${row}
-    m-374,35${row}
-    m-374,35${row}
-    m-374,35${row}
-    m-374,35${row}
-    m-374,35${row}
-    m-374,35${row}
-    m-374,35${row}`;
+const row = _.range(12)
+    .map(() => cell)
+    .join("m34,1");
+
+const wellsD =
+    "M80.82,55.6" +
+    _.range(8)
+        .map(() => row)
+        .join("m-374,35");
 
 const StyledSVG = styled.svg`
     .plate-background {

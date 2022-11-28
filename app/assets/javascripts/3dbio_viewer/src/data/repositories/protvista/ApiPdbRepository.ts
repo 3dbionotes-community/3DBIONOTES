@@ -296,7 +296,9 @@ export class ApiPdbRepository implements PdbRepository {
                                                 id: plate.dbId,
                                                 name: plate.name,
                                                 wells: plate.wells.flatMap(flatMapWell),
-                                                controlWells: plate.wells.flatMap(flatMapWell),
+                                                controlWells: plate.controlWells.flatMap(
+                                                    flatMapWell
+                                                ),
                                             })
                                         ),
                                     })
@@ -372,11 +374,11 @@ function getData(options: Options): FutureData<Partial<Data>> {
 }
 
 function flatMapWell(well: IDRWell): Well[] {
-    const [_void, a, b] = well.name.toLowerCase().split(/^(.)/, 1);
+    const [_void, a, b] = well.name.toLowerCase().split(/^(.)/);
+    const x = b ? _.toNumber(b) - 1 : undefined;
     const codePoint = a && a.codePointAt(0);
-    const x = codePoint ? _.clamp(codePoint - 97, 0, 7) : undefined;
-    const y = b ? _.toNumber(b) : undefined;
-    if (x && y)
+    const y = codePoint ? _.clamp(codePoint - 97, 0, 7) : undefined;
+    if ((x === 0 || x) && (y || y === 0))
         return [
             {
                 id: well.dbId,

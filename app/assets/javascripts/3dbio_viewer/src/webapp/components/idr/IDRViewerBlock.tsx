@@ -17,13 +17,7 @@ interface BasicInfoProps {
 export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => {
     const [showTooltip, { set: setShowTooltip, toggle: toggleTooltip }] = useBooleanState(false);
     const idrs = React.useMemo(
-        () =>
-            _.compact(
-                pdb.ligands?.map(ligand => {
-                    console.log(ligand.imageDataResource);
-                    return ligand.imageDataResource;
-                })
-            ),
+        () => _.compact(pdb.ligands?.map(ligand => ligand.imageDataResource)),
         [pdb]
     );
 
