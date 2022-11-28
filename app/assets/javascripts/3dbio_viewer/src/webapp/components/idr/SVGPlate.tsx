@@ -5,14 +5,15 @@ import { Plate } from "../../../domain/entities/LigandImageData";
 import { plateShadowImage } from "./plate-shadow-image";
 
 interface SVGPlateProps {
+    idx: number;
     plate: Plate;
 }
 
-export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate }) => {
+export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => {
     return (
-        <StyledSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 509.28 362.16">
+        <StyledSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 509.28 362.16" idx={idx}>
             <defs>
-                <clipPath xmlns="http://www.w3.org/2000/svg" id="clippath">
+                <clipPath xmlns="http://www.w3.org/2000/svg" id={`${idx}-clip-path`}>
                     {_.range(70.6, 342.6, 34).map((y, i) =>
                         _.range(80.82, 488.82, 34).map((x, j) => (
                             <circle key={`${i}${j}`} cx={x} cy={y} r="15" />
@@ -23,10 +24,8 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate }) => {
             <PlateBackground />
             <LeftColumn />
             <TopRow />
-            <g id="Wells">
-                <path className="grid" d={wellsD} />
-            </g>
-            <g id="images" className="clip-path">
+            <path className="grid" d={wellsD} />
+            <g className="images">
                 {plate.wells.map(well => (
                     <Well
                         key={well.id}
@@ -163,7 +162,11 @@ const wellsD =
         .map(() => row)
         .join("m-374,35");
 
-const StyledSVG = styled.svg`
+interface StyledSVGProps {
+    idx: number;
+}
+
+const StyledSVG = styled.svg<StyledSVGProps>`
     .plate-background {
         fill: #fff;
     }
@@ -183,8 +186,8 @@ const StyledSVG = styled.svg`
     .fill-b9b9b9 {
         fill: #b9b9b9;
     }
-    .clip-path {
-        clip-path: url(#clippath);
+    .images {
+        clip-path: url(#${props => props.idx}-clip-path);
     }
     .grid {
         fill: #929292;

@@ -56,7 +56,7 @@ export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => 
                                     >
                                         <ScreenFC screen={screen} />
                                         {screen.plates.map((plate, idx) => (
-                                            <SVGPlate plate={plate} key={idx} />
+                                            <SVGPlate plate={plate} key={idx} idx={idx} />
                                         ))}
                                     </Section>
                                 ))}
