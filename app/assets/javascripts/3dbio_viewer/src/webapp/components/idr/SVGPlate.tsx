@@ -1,7 +1,9 @@
+import { Tooltip } from "@material-ui/core";
 import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 import { Plate } from "../../../domain/entities/LigandImageData";
+import { HtmlTooltip } from "../HtmlTooltip";
 import { plateShadowImage } from "./plate-shadow-image";
 
 interface SVGPlateProps {
@@ -27,15 +29,12 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
             <path className="grid" d={wellsD} />
             <g className="images">
                 {plate.wells.map(well => (
-                    <Well
-                        key={well.id}
-                        x={well.position.x}
-                        y={well.position.y}
-                        image={well.image}
-                    />
+                    <Tooltip key={well.id} title="hola">
+                        <RefWell x={well.position.x} y={well.position.y} image={well.image} />
+                    </Tooltip>
                 ))}
                 {plate.controlWells.map(well => (
-                    <Well
+                    <RefWell
                         key={well.id}
                         x={well.position.x}
                         y={well.position.y}
@@ -48,12 +47,12 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
 });
 
 const PlateBackground: React.FC = React.memo(() => (
-    <>
+    <g>
         <image width="2122" height="1509" transform="scale(.24)" xlinkHref={plateShadowImage} />
         <path className="plate-background" d={backgroundPlateD} />
         <path className="fill-b9b9b9" d={outerLineD} />
         <path className="fill-cdcdcd" d={innerLineD} />
-    </>
+    </g>
 ));
 
 const LeftColumn: React.FC = React.memo(() => (
@@ -130,6 +129,7 @@ interface WellProps {
     x: number;
     y: number;
     image: string;
+    ref: React.ForwardedRef<SVGImageElement | null>;
 }
 
 const Well: React.FC<WellProps> = React.memo(props => {
@@ -137,6 +137,10 @@ const Well: React.FC<WellProps> = React.memo(props => {
     const y = React.useMemo(() => 55.6 + 34 * props.y, [props.y]);
 
     return <image x={x} y={y} width="30" height="30" xlinkHref={props.image} />;
+});
+
+const RefWell = React.forwardRef<SVGImageElement | null, WellProps>((props, ref) => {
+    return <Well {...props} ref={ref} />;
 });
 
 //viewBox const for readability = 0 0 509.28 362.16
