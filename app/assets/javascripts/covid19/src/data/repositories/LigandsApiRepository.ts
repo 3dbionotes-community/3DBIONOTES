@@ -14,7 +14,7 @@ import i18n from "../../utils/i18n";
 export class LigandsApiRepository implements LigandsRepository {
     getImageDataResource(inChI: string): FutureData<LigandImageData> {
         const ligandToImageData$ = getValidatedJSON<LigandToImageDataResponse>(
-            `${routes.bionotesApi}/ligandToImageData/${inChI}`,
+            `${routes.bionotesApi}/ligandToImageData/${inChI}/`,
             ligandToImageDataResponseC
         )
             .flatMapError<Error>(() =>
