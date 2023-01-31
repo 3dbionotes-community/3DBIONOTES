@@ -71,11 +71,10 @@ export const blockDefs: BlockDef[] = [
         tracks: [
             tracks.structureCoverage,
             tracks.domains,
-            tracks.cellularRegions,
+            tracks.cellTopology,
             tracks.secondaryStructure,
             tracks.disorderedRegions /* prediction (old: inferred) */,
             tracks.motifs /* Now it's a subtrack in Domains&Sites */,
-            tracks.regions /* The one in Domains&Sites? */,
             tracks.otherRegions /* Coiled coil (D&S), LIPS (D&S), Repeats (D&S), Zinc finger (D&S) */,
         ],
         profiles: [profiles.structural, profiles.drugDesign],
@@ -118,12 +117,6 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
 Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have been modified or are capable of refinement.`),
         help: i18n.t(`This section offers a local resolution analysis and a map-model validation of the reconstructed maps. Different algorithms are used to carriy out this analysis. Also, where possible, a validation of the Cryo-EM maps and the map-model fit will be carried out. For this, methods based on biophysical characteristics of structure (molprobity), refinement methods, showing the residues affected by said processes, and methods, when it is a structure obtained by cryo-EM, of validation of maps and models will be used.
 
-
-
-
-
-
-
         The resolution bar summarises the local resolution information. The bar represents the rank of the map in the data base. The mouse on the bar shows the consensus local resolution information of the map estimated with blocres, MonoRes and DeepRes. Each local resolution estimation has a median resolution and a interquartile (25-75) range. As loca resolution consensus, we provide the local median resolution of the median value of each estimation, and as dispersion measure, the maximum interquartile range of all of posible combination of the estimated quantiles 25 and quantiles 75.`),
         tracks: [
             tracks.structureCoverage,
@@ -142,7 +135,7 @@ Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have 
             `Percentage of the surface of a specific residue exposed to the solvent according to the spatial arrangement and packaging of the residue in the 3D structure.`
         ),
         help: "",
-        tracks: [tracks.structureCoverage, tracks.pockets, tracks.residueAccessibility],
+        tracks: [tracks.structureCoverage, tracks.residueAccessibility],
         profiles: [profiles.drugDesign],
     },
     {
@@ -163,11 +156,7 @@ Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have 
 
         For this protein, we found \${ligandsAndSmallMoleculesCount} different ligands or small molecules.`),
         help: "",
-        tracks: [
-            tracks.structureCoverage,
-            tracks.ligands,
-            tracks.functionalMappingLigands /* + Pandda, how to show, prefix?*/,
-        ],
+        tracks: [tracks.structureCoverage, tracks.ligands],
         profiles: [profiles.drugDesign, profiles.biomedicine],
     },
     {
@@ -208,7 +197,7 @@ export const testblock: BlockDef = {
         tracks.structureCoverage,
         /*
         tracks.domains,
-        tracks.cellularRegions,
+        tracks.cellTopology,
         tracks.secondaryStructure,
         tracks.disorderedRegions,
         tracks.motifs,
