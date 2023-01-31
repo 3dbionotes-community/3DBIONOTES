@@ -22,7 +22,7 @@ export const blockDefs: BlockDef[] = [
         title: i18n.t("Basic information of the molecule assembly"),
         description: "",
         help: i18n.t(
-            "This section contains the basic information about the protein structure model that is being visualized, such as the name of the protein, the name of the gene, the organism in which it is expressed, its biological function, the experimental (or computational) method that has allowed knowing the structure and its resolution. Also, if there is a cryo-EM map associated with the model, it will be shown. The IDs of PDB, EMDB (in case of cryo-EM map availability) and Uniprot will be displayed"
+            "This section contains the basic information about the molecular complex that you can visualize on the left viewer. This molecule may be constituted by one or several protein chains, as well as nucleic acids and ligands. By selecting one of the protein chains, you can check their associated feature annotations on the right side screen. Feature annotations associated to the first chain (A) are shown by default."
         ),
         tracks: [],
         component: BasicInfoViewer,
@@ -35,12 +35,15 @@ export const blockDefs: BlockDef[] = [
         ],
     },
     {
-        id: "uploadData",
-        title: i18n.t("Uploaded data"),
-        description: "",
-        help: i18n.t("This section contains the annotations in the uploaded data"),
+        id: "featureAnnotation",
+        title: i18n.t("Feature annotation"),
+        description: i18n.t(
+            `The chain \${chain} of the molecular complex is the protein \${protein_name} (Uniprot ID \${uniprotid}) encoded by the gene \${gene_name} (GeneBank \${genebank_entry}). In the following, the numbered residues of the protein are displayed horizontally. Below the sequence, you can see the tracks showing the most relevant feature annotations of the protein.`
+        ),
+        help: i18n.t(
+            "These features, shown as small boxes correlative to the numbering of the protein residues, have been retrieved from several external databases characterizing proteins functionally or/and structurally.  Please be aware that in some cases the atomic structure may not be completely traced. The actual coverage is reported in the structure coverage track."
+        ),
         tracks: [],
-        hasUploadedTracks: true,
         profiles: [
             profiles.structural,
             profiles.validation,
@@ -49,17 +52,27 @@ export const blockDefs: BlockDef[] = [
             profiles.omics,
         ],
     },
+    // {
+    //     id: "uploadData",
+    //     title: i18n.t("Uploaded data"),
+    //     description: "",
+    //     help: i18n.t("This section contains the annotations in the uploaded data"),
+    //     tracks: [],
+    //     hasUploadedTracks: true,
+    //     profiles: [
+    //         profiles.structural,
+    //         profiles.validation,
+    //         profiles.drugDesign,
+    //         profiles.biomedicine,
+    //         profiles.omics,
+    //     ],
+    // },
     {
         id: "structuralInfo",
         title: "Structural and functional *segments* in this protein",
-        description: i18n.t(`The protein \${proteinName} has a secondary structure consisting of \${alphaHelices} alpha helices, \${betaSheets} beta sheets and \${turns} turns.
-
-        It contains \${domains} domains known and annotated by the different databases used (PFAM, SMART, Interpro, CATH and Prosite). The consensus domains are:
-
-        Furthermore, this protein contains a transmembrane region, formed by \${transmembraneAlphaHelices} alpha helices, and \${transmembraneExternalRegions} external regions, a larger cytosolic and a smaller external one (\${transmembraneResidues} residues).
-
-        It contains a disordered region \${disorderedRegionRange} and various motifs and regions that are relevant to its function.
-        `),
+        description: i18n.t(
+            "Structural or functional *blocks* of the protein sequence of variable length, long as domains or short as motifs, identified both experimentally and by similarity, retrieved from several databases."
+        ),
         help: "",
         tracks: [
             tracks.structureCoverage,
@@ -76,9 +89,9 @@ export const blockDefs: BlockDef[] = [
     {
         id: "relevantSites",
         title: "Relevant sites in the protein",
-        description: i18n.t(`
-            This section shows the amino acids that are relevant to the function of the protein or in its processing.
-        `),
+        description: i18n.t(
+            "Key specific residues of the protein since the map of contacts of these residues make it them essential to preserve the structure and/or the functionality of the protein."
+        ),
         help: "",
         tracks: [
             tracks.structureCoverage,
@@ -89,9 +102,9 @@ export const blockDefs: BlockDef[] = [
     {
         id: "processing",
         title: "Post-translational modifications in the mature protein",
-        description: i18n.t(`
-            This section shows the post-translational modifications of the protein in terms of the processing of immature proteins after translation, through the elimination of the signal peptide and the cutting of the different chains that make up the protein.
-        `),
+        description: i18n.t(
+            "Post-translational modifications driving to the mature isoform of the protein: Proteolytic processing of signal peptide and polyproteins, as well as chemical modifications of specific residues."
+        ),
         help: "",
         tracks: [
             tracks.structureCoverage,
@@ -104,14 +117,14 @@ export const blockDefs: BlockDef[] = [
         id: "mapValidation",
         title: "Validation and quality",
         description: i18n.t(`
-            This section offers a complete validation of the atomic models obtained by different methods. Also, where possible, a validation of the Cryo-EM maps and the map-model fit will be carried out.
+        The median local resolution of the protein is \${resolution} Å.
 
-            The mean resolution of the protein is \${resolution} Å.
+The local resolution values are between \${poorQualityRegionMin} (percentile 25) and \${poorQualityRegionMax} (percentile 75). These regions can be visualized in red in the structure.
 
-            There are regions that have a poorer quality, with values between \${poorQualityRegionMin} and \${poorQualityRegionMax}. These regions can be visualized in red in the structure (why is it worse? Is there any possibility of refinement by the user (guide)?)
+Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have been modified or are capable of refinement.`),
+        help: i18n.t(`This section offers a local resolution analysis and a map-model validation of the reconstructed maps. Different algorithms are used to carriy out this analysis. Also, where possible, a validation of the Cryo-EM maps and the map-model fit will be carried out. For this, methods based on biophysical characteristics of structure (molprobity), refinement methods, showing the residues affected by said processes, and methods, when it is a structure obtained by cryo-EM, of validation of maps and models will be used.
 
-            Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have been modified or are capable of refinement.`),
-        help: "",
+        The resolution bar summarises the local resolution information. The bar represents the rank of the map in the data base. The mouse on the bar shows the consensus local resolution information of the map estimated with blocres, MonoRes and DeepRes. Each local resolution estimation has a median resolution and a interquartile (25-75) range. As loca resolution consensus, we provide the local median resolution of the median value of each estimation, and as dispersion measure, the maximum interquartile range of all of posible combination of the estimated quantiles 25 and quantiles 75.`),
         tracks: [
             tracks.structureCoverage,
             tracks.sequenceInformation,
@@ -125,7 +138,9 @@ export const blockDefs: BlockDef[] = [
     {
         id: "residueAccessibility",
         title: "Residue accessibility to the solvent",
-        description: i18n.t(`Number of pockets`),
+        description: i18n.t(
+            `Percentage of the surface of a specific residue exposed to the solvent according to the spatial arrangement and packaging of the residue in the 3D structure.`
+        ),
         help: "",
         tracks: [tracks.structureCoverage, tracks.pockets, tracks.residueAccessibility],
         profiles: [profiles.drugDesign],
@@ -133,9 +148,9 @@ export const blockDefs: BlockDef[] = [
     {
         id: "proteinInteraction",
         title: "Protein interactions for this protein",
-        description: i18n.t(
-            "This section shows other proteins observed together with the protein of interest in PDB entries as a interaction network and as a list. In addittion, we show the protein residues that are interacting with the other proteins.\n\nFor this protein, we found ${proteinPartners} different partners."
-        ),
+        description: i18n.t(`This section shows other proteins observed together with the protein of interest in PDB entries as a interaction network and as a list. In addittion, we show the protein residues that are interacting with the other proteins. 
+
+        For this protein, we found \${proteinPartners} different partners.`),
         help: "",
         tracks: [tracks.structureCoverage, tracks.ppiViewer, tracks.functionalMappingPpi],
         profiles: [profiles.drugDesign, profiles.biomedicine],
@@ -144,7 +159,9 @@ export const blockDefs: BlockDef[] = [
         id: "ligandInteraction",
         title: "Ligand interaction",
         description: i18n.t(`
-            This protein interacts with \${proteinInteractsWith} and it could be interact with \${proteinInteractsMoreCount} protein more.`),
+        This section shows ligands observed directly bound to the protein of interest in different experiments and PDB entries. In addittion, we show the ligand binding residues.
+
+        For this protein, we found \${ligandsAndSmallMoleculesCount} different ligands or small molecules.`),
         help: "",
         tracks: [
             tracks.structureCoverage,
@@ -157,7 +174,9 @@ export const blockDefs: BlockDef[] = [
         id: "variants",
         title: "Mutagenesis experiments and Variants",
         description: "",
-        help: "",
+        help: i18n.t(
+            "This section contains information related to [mutagenesis experiments performed on the protein and] mutations found by large-scale sequencing studies and those reviewed by uniprot."
+        ),
         tracks: [tracks.structureCoverage, tracks.geneViewer, tracks.mutagenesis, tracks.variants],
         profiles: [profiles.omics, profiles.biomedicine],
     },
