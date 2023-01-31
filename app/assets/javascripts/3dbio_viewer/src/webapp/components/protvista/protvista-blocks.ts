@@ -10,16 +10,16 @@ import { IDRViewerBlock } from "../idr/IDRViewerBlock";
 export const blockDefs: BlockDef[] = [
     {
         id: "bioimageDataStudies",
-        title: i18n.t("Bioimage Data Studies"),
-        description: i18n.t("Text to be determined."),
-        help: i18n.t("Help description to be determined."),
+        title: i18n.t("BioImage"),
+        description: "",
+        help: "",
         tracks: [],
         component: IDRViewerBlock,
         profiles: [profiles.drugDesign],
     },
     {
         id: "basicInfo",
-        title: i18n.t("Basic information"),
+        title: i18n.t("Basic information of the molecule assembly"),
         description: "",
         help: i18n.t(
             "This section contains the basic information about the protein structure model that is being visualized, such as the name of the protein, the name of the gene, the organism in which it is expressed, its biological function, the experimental (or computational) method that has allowed knowing the structure and its resolution. Also, if there is a cryo-EM map associated with the model, it will be shown. The IDs of PDB, EMDB (in case of cryo-EM map availability) and Uniprot will be displayed"
@@ -45,7 +45,7 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "structuralInfo",
-        title: "Structural information",
+        title: "Structural and functional *segments* in this protein",
         description: i18n.t(`The protein \${proteinName} has a secondary structure consisting of \${alphaHelices} alpha helices, \${betaSheets} beta sheets and \${turns} turns.
 
         It contains \${domains} domains known and annotated by the different databases used (PFAM, SMART, Interpro, CATH and Prosite). The consensus domains are:
@@ -69,7 +69,7 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "relevantSites",
-        title: "Relevant sites",
+        title: "Relevant sites in the protein",
         description: i18n.t(`
             This section shows the amino acids that are relevant to the function of the protein or in its processing.
         `),
@@ -82,7 +82,7 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "processing",
-        title: "Processing and post-translational modifications",
+        title: "Post-translational modifications in the mature protein",
         description: i18n.t(`
             This section shows the post-translational modifications of the protein in terms of the processing of immature proteins after translation, through the elimination of the signal peptide and the cutting of the different chains that make up the protein.
         `),
@@ -96,7 +96,7 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "mapValidation",
-        title: "Validation",
+        title: "Validation and quality",
         description: i18n.t(`
             This section offers a complete validation of the atomic models obtained by different methods. Also, where possible, a validation of the Cryo-EM maps and the map-model fit will be carried out.
 
@@ -118,7 +118,7 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "residueAccessibility",
-        title: "Residue Accessibility",
+        title: "Residue accessibility to the solvent",
         description: i18n.t(`Number of pockets`),
         help: "",
         tracks: [tracks.structureCoverage, tracks.pockets, tracks.residueAccessibility],
@@ -126,7 +126,7 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "proteinInteraction",
-        title: "Protein Interaction",
+        title: "Protein interactions for this protein",
         description: i18n.t(
             "This section shows other proteins observed together with the protein of interest in PDB entries as a interaction network and as a list. In addittion, we show the protein residues that are interacting with the other proteins.\n\nFor this protein, we found ${proteinPartners} different partners."
         ),
@@ -147,15 +147,15 @@ export const blockDefs: BlockDef[] = [
         ],
         profiles: [profiles.drugDesign, profiles.biomedicine],
     },
-    // <- Diseases and his relation with the variants
     {
         id: "variants",
-        title: "Variants and mutagenesis experiments",
+        title: "Mutagenesis experiments and Variants",
         description: "",
         help: "",
         tracks: [tracks.structureCoverage, tracks.geneViewer, tracks.mutagenesis, tracks.variants],
         profiles: [profiles.omics, profiles.biomedicine],
     },
+    // <- Diseases and his relation with the variants
     {
         id: "proteomics",
         title: "Proteomics",
@@ -166,7 +166,7 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "inmunology",
-        title: "Inmunology information",
+        title: "Immunology information",
         description: "",
         help: "",
         tracks: [tracks.structureCoverage, tracks.epitomes, tracks.antigenicSequence],
