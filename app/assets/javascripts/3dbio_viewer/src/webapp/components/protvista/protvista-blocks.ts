@@ -52,21 +52,15 @@ export const blockDefs: BlockDef[] = [
             profiles.omics,
         ],
     },
-    // {
-    //     id: "uploadData",
-    //     title: i18n.t("Uploaded data"),
-    //     description: "",
-    //     help: i18n.t("This section contains the annotations in the uploaded data"),
-    //     tracks: [],
-    //     hasUploadedTracks: true,
-    //     profiles: [
-    //         profiles.structural,
-    //         profiles.validation,
-    //         profiles.drugDesign,
-    //         profiles.biomedicine,
-    //         profiles.omics,
-    //     ],
-    // },
+    {
+        id: "uploadData",
+        title: i18n.t("Uploaded data"),
+        description: "",
+        help: i18n.t("This section contains the annotations in the uploaded data"),
+        tracks: [],
+        hasUploadedTracks: true,
+        profiles: [profiles.general],
+    },
     {
         id: "structuralInfo",
         title: "Structural and functional *segments* in this protein",
@@ -123,6 +117,12 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
 
 Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have been modified or are capable of refinement.`),
         help: i18n.t(`This section offers a local resolution analysis and a map-model validation of the reconstructed maps. Different algorithms are used to carriy out this analysis. Also, where possible, a validation of the Cryo-EM maps and the map-model fit will be carried out. For this, methods based on biophysical characteristics of structure (molprobity), refinement methods, showing the residues affected by said processes, and methods, when it is a structure obtained by cryo-EM, of validation of maps and models will be used.
+
+
+
+
+
+
 
         The resolution bar summarises the local resolution information. The bar represents the rank of the map in the data base. The mouse on the bar shows the consensus local resolution information of the map estimated with blocres, MonoRes and DeepRes. Each local resolution estimation has a median resolution and a interquartile (25-75) range. As loca resolution consensus, we provide the local median resolution of the median value of each estimation, and as dispersion measure, the maximum interquartile range of all of posible combination of the estimated quantiles 25 and quantiles 75.`),
         tracks: [
