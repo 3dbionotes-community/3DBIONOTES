@@ -41,7 +41,13 @@ export const blockDefs: BlockDef[] = [
         help: i18n.t("This section contains the annotations in the uploaded data"),
         tracks: [],
         hasUploadedTracks: true,
-        profiles: [profiles.general],
+        profiles: [
+            profiles.structural,
+            profiles.validation,
+            profiles.drugDesign,
+            profiles.biomedicine,
+            profiles.omics,
+        ],
     },
     {
         id: "structuralInfo",
