@@ -9,6 +9,15 @@ import { IDRViewerBlock } from "../idr/IDRViewerBlock";
 
 export const blockDefs: BlockDef[] = [
     {
+        id: "bioimageDataStudies",
+        title: i18n.t("Bioimage Data Studies"),
+        description: i18n.t("Text to be determined."),
+        help: i18n.t("Help description to be determined."),
+        tracks: [],
+        component: IDRViewerBlock,
+        profiles: [profiles.drugDesign],
+    },
+    {
         id: "basicInfo",
         title: i18n.t("Basic information"),
         description: "",
@@ -24,15 +33,6 @@ export const blockDefs: BlockDef[] = [
             profiles.biomedicine,
             profiles.omics,
         ],
-    },
-    {
-        id: "bioimageDataStudies",
-        title: i18n.t("Bioimage Data Studies"),
-        description: i18n.t("Text to be determined."),
-        help: i18n.t("Help description to be determined."),
-        tracks: [],
-        component: IDRViewerBlock,
-        profiles: [profiles.drugDesign],
     },
     {
         id: "uploadData",
