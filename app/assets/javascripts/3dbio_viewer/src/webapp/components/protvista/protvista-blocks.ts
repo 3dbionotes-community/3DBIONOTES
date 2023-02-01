@@ -101,8 +101,8 @@ export const blockDefs: BlockDef[] = [
         help: "",
         tracks: [
             tracks.structureCoverage,
-            tracks.molecularProcessing /* signal peptide, chain */,
-            tracks.ptm /* All from Phosphite/uniprot PTM */,
+            tracks.proteolyticProcessing /* signal peptide, polyprotein chain	 */,
+            tracks.modifiedResidue /* All from Phosphite/uniprot PTM */,
         ],
         profiles: [profiles.structural, profiles.biomedicine],
     },
@@ -145,7 +145,7 @@ Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have 
 
         For this protein, we found \${proteinPartners} different partners.`),
         help: "",
-        tracks: [tracks.structureCoverage, tracks.ppiViewer, tracks.functionalMappingPpi],
+        tracks: [tracks.structureCoverage, tracks.ppiViewer],
         profiles: [profiles.drugDesign, profiles.biomedicine],
     },
     {

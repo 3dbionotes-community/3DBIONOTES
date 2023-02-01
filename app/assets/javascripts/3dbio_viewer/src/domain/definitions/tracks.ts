@@ -7,14 +7,14 @@ export const trackDefinitions = {
     structureCoverage: definition({
         id: "structure-coverage",
         name: i18n.t("Structure Coverage"),
-        description: i18n.t("Coverage of the sequence shown with the primary protein sequence"),
+        description: i18n.t("Segments of the protein sequence traced in the atomic model."),
         subtracks: [subtracks.structureCoverage],
     }),
     domains: definition({
         id: "domains" as const,
         name: i18n.t("Domains"),
         description: i18n.t(
-            "Specific combination of secondary structures origanized intro a characteristic 3D structure"
+            "Domain composition retrieved from databases Prosite, Pfam, Smart, InterPro, and CATH."
         ),
         subtracks: [
             subtracks.prositeDomain,
@@ -26,31 +26,29 @@ export const trackDefinitions = {
     }),
     cellTopology: definition({
         id: "topology" as const,
-        name: i18n.t("Cellular regions"),
-        description: i18n.t("Cell space in which the protein is located"),
+        name: i18n.t("Cell topology"),
+        description: i18n.t(
+            "Segments of the protein that are soluble (located in the cytosol or in the extracellular environment) or insoluble (embeded in the cell plasma membrane)."
+        ),
         subtracks: [subtracks.cytolosic, subtracks.transmembraneRegion],
     }),
     secondaryStructure: definition({
         id: "secondary-structure" as const,
         name: i18n.t("Secondary Structure"),
-        description: i18n.t(
-            "The secondary structure of proteins is the local regular folding between nearby amino acid residues of the polypeptide chain. The most common structures are alpha helix, beta sheet and turns connecting them"
-        ),
+        description: i18n.t("Segments of the protein folded as alpha-helix, beta strand or turn."),
         subtracks: [subtracks.helix, subtracks.betaStrand, subtracks.turn],
     }),
     disorderedRegions: definition({
         id: "disordered-regions" as const,
         name: i18n.t("Disordered regions"),
-        description: i18n.t(
-            "Intrinsically disordered regions are region that do not have a fixed or ordered three-dimensional structure. They can possess many functions. They can, e.g., bind other proteins, interact with nucleic acids, or serve as scaffold proteins. Commonly, they are also involved in signaling pathways and have important roles in protein regulation"
-        ),
+        description: i18n.t("Intrinsically disordered regions (IDPRs)."),
         subtracks: [subtracks.prediction],
     }),
     motifs: definition({
         id: "motifs" as const,
         name: i18n.t("Motifs"),
         description: i18n.t(
-            "Short (usually not more than 20 amino acids) conserved sequence motif of biological significance"
+            "Short (usually not more than 20 amino acids) conserved sequence of potential biological significance"
         ),
         subtracks: [subtracks.motifs],
     }),
@@ -64,7 +62,7 @@ export const trackDefinitions = {
         id: "other-structural-regions" as const,
         name: i18n.t("Other structural regions"),
         description: i18n.t(
-            "This are regions that interactiing with other peptides. Protein-protein interactions are often mediated by short linear motifs (SLiMs) that are  normall+P38:AA39y located in intrinsically disordered regions (IDRs) of proteins"
+            "Coiled coils, small linear interacting peptides (SLiM), sequence block repeats, and zinc fingers."
         ),
         subtracks: [
             subtracks.coiledCoils,
@@ -77,7 +75,7 @@ export const trackDefinitions = {
         id: "sites" as const,
         name: i18n.t("Sites"),
         description: i18n.t(
-            "Amino acids that have a relevant biological function, such as the union of different chemical groups or being part of the active center of an enzyme"
+            "Catalytic residues in the active site, as well as residues that interact with other proteins, nucleic acids, ligands, metals or other chemical groups"
         ),
         subtracks: [
             subtracks.activeSite,
@@ -87,17 +85,17 @@ export const trackDefinitions = {
             subtracks.otherStructuralRelevantSites,
         ],
     }),
-    molecularProcessing: definition({
-        id: "molecular-processing" as const,
-        name: i18n.t("Molecular processing"),
+    proteolyticProcessing: definition({
+        id: "proteolytic-processing" as const,
+        name: i18n.t("Proteolytic processing"),
         description: i18n.t(
-            "Molecular protein processing involves processing the protein to its active form, such as signal peptide removal, residue modification (glycosylation, phosphorylation, etc.), and cleavage of the original chain into several smaller chains"
+            "Proteolytic processing to remove the signal peptide or to release each protein chain from a polyprotein (that includes several proteins generated in a single step of transcription and translation)."
         ),
         subtracks: [subtracks.signalPeptide, subtracks.chain],
     }),
-    ptm: definition({
-        id: "ptm" as const,
-        name: i18n.t("PTM"),
+    modifiedResidue: definition({
+        id: "modified-residue" as const,
+        name: i18n.t("Modified residue"),
         description: i18n.t("Post-translational modifications of protein residues"),
         subtracks: [
             subtracks.acetylation,
@@ -190,7 +188,7 @@ export const trackDefinitions = {
     }),
     geneViewer: definition({
         id: "gene-viewer" as const,
-        name: i18n.t("Gene viewer"),
+        name: i18n.t("Gene view"),
         description: i18n.t("ENSEMBL database viewer"),
         subtracks: [subtracks.geneViewer],
     }),
