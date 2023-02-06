@@ -96,7 +96,9 @@ export const trackDefinitions = {
     ptm: definition({
         id: "ptm" as const,
         name: i18n.t("Modified residue"),
-        description: i18n.t("Post-translational modifications of protein residues"),
+        description: i18n.t(
+            "Chemical modifications of specific protein residues such as acetylation, glycosilation, phosphorilation or methylation."
+        ),
         subtracks: [
             subtracks.acetylation,
             subtracks.disulfideBond,
@@ -111,7 +113,7 @@ export const trackDefinitions = {
         id: "sequence-information" as const,
         name: i18n.t("Sequence information"),
         description: i18n.t(
-            "Information regarding the protein sequence and the possible mutations that may be included in the structure compared to the reference sequence"
+            "Information regarding the protein sequence and the possible mutations that may be included in the structure compared to the reference sequence."
         ),
         subtracks: [subtracks.compositionalBias, subtracks.sequenceConflict],
     }),
@@ -119,7 +121,8 @@ export const trackDefinitions = {
         id: "pdb-redo" as const,
         name: i18n.t("PDB-REDO"),
         description: i18n.t(
-            "DB-REDO is a procedure to optimise crystallographic structure models, providing algorithms that make a fully automated decision making system for refinement, rebuilding and validation. It combines popular crystallographic software from CCP4, e.g. REFMAC and COOT, with  specially developed rebuilding tools Centrifuge, Pepflip & SideAide and structure analysis tools like WHAT IF and PDB-care. PDB-REDO optimises refinement settings (e.g. geometric and B-factor restraint weights, B-factor model, TLS groups, NCS and homology restraints), refines with REFMAC, partially rebuilds the structure (rejects waters, refines side chains, checks peptide planes), refines some more, and then validates the results.\nWe show the modified and refined residues by PDB-REDO"
+            `PDB-REDO is a procedure to optimise crystallographic structure models, providing algorithms that make a fully automated decision making system for refinement, rebuilding and validation. It combines popular crystallographic software from CCP4, e.g. REFMAC and COOT, with  specially developed rebuilding tools Centrifuge, Pepflip & SideAide and structure analysis tools like WHAT IF and PDB-care. PDB-REDO optimises refinement settings (e.g. geometric and B-factor restraint weights, B-factor model, TLS groups, NCS and homology restraints), refines with REFMAC, partially rebuilds the structure (rejects waters, refines side chains, checks peptide planes), refines some more, and then validates the results.
+            We show the modified and refined residues by PDB-REDO`
         ),
         subtracks: [subtracks.changedRotamers, subtracks.hBondFlip, subtracks.completedResidues],
     }),
@@ -135,7 +138,7 @@ export const trackDefinitions = {
         id: "em-validation" as const,
         name: i18n.t("EM - Validation"),
         description: i18n.t(
-            "Different validation methods and local quality of models and maps in cryo-EM"
+            "Different validation methods and local quality of the map-to-models fit in cryo-EM"
         ),
         subtracks: [
             subtracks.deepRes,
@@ -156,15 +159,12 @@ export const trackDefinitions = {
     residueAccessibility: definition({
         id: "residue-accessibility" as const,
         name: i18n.t("Residue accesibility"),
-        description: i18n.t(
-            "The accessibility of residues in a protein is defined as the extent of the solvent-accessible surface of a given residue and is related to the spatial arrangement and packaging of the residue. It reveals the folding state of proteins and has been considered a significant quantitative measure for the three-dimensional structures of proteins. It  is closely involved in structural domains identification, fold recognition, binding region identification, protein-protein  and protein-ligand interactions"
-        ),
+        description: i18n.t("Solvent-accessible surface per residue."),
         subtracks: [subtracks.residueAccessibility],
     }),
     ppiViewer: definition({
         id: "ppi-viewer" as const,
         name: i18n.t("PPI Viewer"),
-        description: i18n.t("Protein-protein interaction networks graph"),
         subtracks: [subtracks.proteinNetwork, subtracks.pdbList],
     }),
     functionalMappingPpi: definition({
@@ -175,7 +175,6 @@ export const trackDefinitions = {
     ligands: definition({
         id: "ligands" as const,
         name: i18n.t("Ligands"),
-        description: i18n.t(""),
         subtracks: [subtracks.ligands],
     }),
     functionalMappingLigands: definition({
@@ -212,7 +211,7 @@ export const trackDefinitions = {
         id: "peptides" as const,
         name: i18n.t("Peptides"),
         description: i18n.t(
-            "Peptides generated in silico by Uniprot using rules based on mass spectrometry experiments and comparing with peptides already identified in proteomics repositories. Only those that have already been identified are shown on the track"
+            "Peptides generated in silico by Uniprot using rules based on mass spectrometry experiments and comparing with peptides already identified in proteomics repositories. Only those that have already been identified are shown on the track."
         ),
         subtracks: [subtracks.uniquePeptide, subtracks.nonUniquePeptide],
     }),
@@ -220,7 +219,7 @@ export const trackDefinitions = {
         id: "epitomes" as const,
         name: i18n.t("Epitomes"),
         description: i18n.t(
-            "An epitope is the portion of a macromolecule that is recognized by the immune system, specifically the sequence to which antibodies or B-cell and T-cell receptors bind"
+            "An epitope is the portion of a macromolecule that is recognized by the immune system, specifically the sequence to which antibodies or B-cell and T-cell receptors bind."
         ),
         subtracks: [subtracks.linearEpitomesN, subtracks.linearEpitomes],
     }),
@@ -228,7 +227,7 @@ export const trackDefinitions = {
         id: "antigenic-sequence" as const,
         name: i18n.t("Antigenic sequence"),
         description: i18n.t(
-            "An antigenic sequence is a region of the protein that triggers the formation of antibodies and can cause an immune response"
+            "An antigenic sequence is a region of the protein that triggers the formation of antibodies and can cause an immune response."
         ),
         subtracks: [subtracks.abBindingSequence],
     }),
