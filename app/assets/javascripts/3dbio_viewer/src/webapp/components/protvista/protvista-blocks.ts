@@ -6,6 +6,7 @@ import { BlockDef } from "./Protvista.types";
 import { profiles } from "../../../domain/entities/Profile";
 import { ProtvistaPdbValidation } from "./ProtvistaPdbValidation";
 import { IDRViewerBlock } from "../idr/IDRViewerBlock";
+import { FeatureAnnotationBlock } from "./FeatureAnnotationBlock";
 
 export const blockDefs: BlockDef[] = [
     {
@@ -38,11 +39,12 @@ export const blockDefs: BlockDef[] = [
         id: "featureAnnotation",
         title: i18n.t("Feature annotation"),
         description: i18n.t(
-            `The chain \${chain} of the molecular complex is the protein \${protein_name} (Uniprot ID \${uniprotid}) encoded by the gene \${gene_name} (GeneBank \${genebank_entry}). In the following, the numbered residues of the protein are displayed horizontally. Below the sequence, you can see the tracks showing the most relevant feature annotations of the protein.`
+            `The chain \${chain} of the molecular complex is the protein \${proteinName} (Uniprot ID \${uniprotId}) encoded by the gene \${geneName} (GeneBank \${geneBankEntry}). In the following, the numbered residues of the protein are displayed horizontally. Below the sequence, you can see the tracks showing the most relevant feature annotations of the protein.`
         ),
         help: i18n.t(
             "These features, shown as small boxes correlative to the numbering of the protein residues, have been retrieved from several external databases characterizing proteins functionally or/and structurally.  Please be aware that in some cases the atomic structure may not be completely traced. The actual coverage is reported in the structure coverage track."
         ),
+        component: FeatureAnnotationBlock,
         tracks: [],
         profiles: [
             profiles.structural,
@@ -63,7 +65,7 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "structuralInfo",
-        title: "Structural and functional *segments* in this protein",
+        title: i18n.t("Structural and functional *segments* in this protein"),
         description: i18n.t(
             "Structural or functional *blocks* of the protein sequence of variable length, long as domains or short as motifs, identified both experimentally and by similarity, retrieved from several databases."
         ),

@@ -41,6 +41,10 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         transmembraneExternalRegions: "TODO",
         transmembraneResidues: "TODO",
         turns: "TODO",
+        chain: "TODO",
+        uniprotId: "TODO",
+        geneName: "TODO",
+        geneBankEntry: "TODO",
     };
 
     return (
