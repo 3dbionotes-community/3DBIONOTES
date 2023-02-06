@@ -93,8 +93,8 @@ export const trackDefinitions = {
         ),
         subtracks: [subtracks.signalPeptide, subtracks.chain],
     }),
-    modifiedResidue: definition({
-        id: "modified-residue" as const,
+    ptm: definition({
+        id: "ptm" as const,
         name: i18n.t("Modified residue"),
         description: i18n.t("Post-translational modifications of protein residues"),
         subtracks: [
@@ -188,7 +188,7 @@ export const trackDefinitions = {
     }),
     geneViewer: definition({
         id: "gene-viewer" as const,
-        name: i18n.t("Gene view"),
+        name: i18n.t("Gene viewer"),
         description: i18n.t("ENSEMBL database viewer"),
         subtracks: [subtracks.geneViewer],
     }),

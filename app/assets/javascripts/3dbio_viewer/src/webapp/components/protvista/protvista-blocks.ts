@@ -102,7 +102,7 @@ export const blockDefs: BlockDef[] = [
         tracks: [
             tracks.structureCoverage,
             tracks.proteolyticProcessing /* signal peptide, polyprotein chain	 */,
-            tracks.modifiedResidue /* All from Phosphite/uniprot PTM */,
+            tracks.ptm /* All from Phosphite/uniprot PTM */ /* Renamed to Modified residue */,
         ],
         profiles: [profiles.structural, profiles.biomedicine],
     },
