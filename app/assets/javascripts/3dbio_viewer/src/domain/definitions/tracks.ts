@@ -141,11 +141,12 @@ export const trackDefinitions = {
             "Different validation methods and local quality of the map-to-models fit in cryo-EM"
         ),
         subtracks: [
+            subtracks.fscQ,
+            subtracks.mapQ,
+            // TODO: Add DAQ
             subtracks.deepRes,
             subtracks.monoRes,
             subtracks.blocRes,
-            subtracks.mapQ,
-            subtracks.fscQ,
         ],
     }),
     pockets: definition({
