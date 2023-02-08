@@ -29,6 +29,7 @@ export type Field = keyof Row;
 
 export interface IDROptions {
     ligand: Ligand;
+    pdbId: string;
     idr?: LigandImageData;
     error?: string;
 }

@@ -1,9 +1,5 @@
 import _ from "lodash";
-import {
-    ImageDataResource,
-    LigandToImageDataResponse,
-    ligandToImageDataResponseC,
-} from "../LigandToImageData";
+import { ImageDataResource, pdbEntryLigandsC, PdbEntryLigandsResponse } from "../LigandToImageData";
 import { LigandImageData } from "../../domain/entities/LigandImageData";
 import { LigandsRepository } from "../../domain/repositories/LigandsRepository";
 import { routes } from "../../routes";
@@ -12,11 +8,14 @@ import { getValidatedJSON } from "../utils/request-utils";
 import i18n from "../../utils/i18n";
 
 export class LigandsApiRepository implements LigandsRepository {
-    getImageDataResource(inChI: string): FutureData<LigandImageData> {
-        const ligandToImageData$ = getValidatedJSON<LigandToImageDataResponse>(
-            `${routes.bionotesApi}/ligandToImageData/${inChI}`,
-            ligandToImageDataResponseC
+    getImageDataResource(inChI: string, pdbId: string): FutureData<LigandImageData> {
+        const pdbEntryLigands$ = getValidatedJSON<PdbEntryLigandsResponse>(
+            `${routes.bionotesApi}/pdbentry/${pdbId}/ligands/`,
+            pdbEntryLigandsC
         )
+            .map(pdbEntryRes => {
+                return pdbEntryRes?.results.find(r => r.IUPACInChIkey === inChI);
+            })
             .flatMapError<Error>(() =>
                 Future.error(err("Error: the api response type was not the expected."))
             )
@@ -24,8 +23,6 @@ export class LigandsApiRepository implements LigandsRepository {
                 (ligandToImageData): FutureData<LigandImageData> => {
                     if (!ligandToImageData)
                         return Future.error(err("Error: the api response is undefined."));
-                    else if ("detail" in ligandToImageData)
-                        return Future.error(err('Error: "detail": Not found.'));
 
                     const data = ligandToImageData;
                     const { imageData } = data;
@@ -102,7 +99,7 @@ export class LigandsApiRepository implements LigandsRepository {
                     });
                 }
             );
-        return ligandToImageData$;
+        return pdbEntryLigands$;
     }
 }
 
