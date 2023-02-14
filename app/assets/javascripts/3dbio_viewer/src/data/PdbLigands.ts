@@ -1,14 +1,6 @@
-import {
-    array,
-    Codec,
-    exactly,
-    GetType,
-    nullType,
-    number,
-    oneOf,
-    optional,
-    string,
-} from "purify-ts";
+import _ from "lodash";
+import { array, Codec, GetType, nullType, number, oneOf, optional, string } from "purify-ts";
+import { Organism, Plate, Screen, Well } from "../domain/entities/LigandImageData";
 import { PdbLigand } from "../domain/entities/Pdb";
 
 function maybeNull<Data>(type: Codec<Data>) {
@@ -122,24 +114,6 @@ const imageDataC = Codec.interface({
     assays: array(assayC),
 });
 
-const notFoundC = Codec.interface({
-    detail: exactly("Not found."),
-});
-
-export const ligandToImageDataC = Codec.interface({
-    IUPACInChIkey: string,
-    name: string,
-    formula: string,
-    formula_weight: number,
-    dbId: string,
-    pubChemCompoundId: string,
-    imageLink: string,
-    externalLink: string,
-    imageData: optional(array(imageDataC)), //it shouldn't be an array...
-});
-
-export const ligandToImageDataResponseC = oneOf([notFoundC, ligandToImageDataC]);
-
 export const pdbLigandC = Codec.interface({
     IUPACInChIkey: string,
     dbId: string,
@@ -152,6 +126,7 @@ export const pdbLigandC = Codec.interface({
     IUPACInChI: string,
     isomericSMILES: string,
     canonicalSMILES: string,
+    imageData: optional(array(imageDataC)), //it shouldn't be an array...
 });
 
 export const pdbLigandsC = array(pdbLigandC);
@@ -164,14 +139,114 @@ export const pdbEntryResponseC = Codec.interface({
 });
 
 export type ImageDataResource = GetType<typeof imageDataC>;
-export type LigandToImageData = GetType<typeof ligandToImageDataC>;
-export type LigandToImageDataResponse = GetType<typeof ligandToImageDataResponseC>;
 export type PdbLigandsResponse = GetType<typeof pdbLigandsC>;
 export type PdbEntryResponse = GetType<typeof pdbEntryResponseC>;
-export type IDRWell = GetType<typeof wellC>;
 
+type IDRWell = GetType<typeof wellC>;
 type PdbLigandResponse = GetType<typeof pdbLigandC>;
 
 export function getPdbLigand(ligand: PdbLigandResponse): PdbLigand {
-    return { id: ligand.dbId, name: ligand.name, inChI: ligand.IUPACInChIkey };
+    if (ligand.imageData && ligand.imageData.length > 1)
+        throw new Error("Error: there is more than one IDR.");
+    const idr = _.first(
+        ligand.imageData?.map(idr => ({
+            ...idr,
+            externalLink: ligand.externalLink,
+            assays: idr.assays.map(assay => {
+                const {
+                    screens,
+                    additionalAnalyses,
+                    dbId,
+                    assayType,
+                    assayTypeTermAccession,
+                } = assay;
+
+                //Compound: inhibition cytopathicity
+                const wellsFromPlates = screens
+                    .find(({ dbId }) => dbId === "2602")
+                    ?.plates.map(({ wells }) => wells);
+                const allPercentageInhibition = wellsFromPlates
+                    ?.map(plate =>
+                        plate.flatMap(({ percentageInhibition }) =>
+                            percentageInhibition ? [`${percentageInhibition}%`] : []
+                        )
+                    )
+                    .join(", "); //it should be only one...¿?, but just in case...
+
+                //Compounds: cytotoxicity, dose response, cytotoxic index
+                const cytotoxicity = additionalAnalyses.find(({ name }) => name === "CC50");
+                const doseResponse = additionalAnalyses.find(({ name }) => name === "IC50");
+                const cytotoxicIndex = additionalAnalyses.find(
+                    ({ name }) => name === "Selectivity index"
+                );
+
+                return {
+                    ...assay,
+                    id: dbId,
+                    type: assayType,
+                    typeTermAccession: assayTypeTermAccession,
+                    bioStudiesAccessionId: assay.BIAId,
+                    organisms: assay.organisms.map(
+                        (organism): Organism => ({
+                            id: organism.ncbi_taxonomy_id,
+                            name: organism.scientific_name,
+                            commonName: organism.common_name,
+                            externalLink: organism.externalLink,
+                        })
+                    ),
+                    screens: screens.map(
+                        (screen): Screen => ({
+                            ...screen,
+                            id: screen.dbId,
+                            doi: screen.dataDoi,
+                            well: _.first(_.first(screen.plates)?.wells)?.externalLink,
+                            plates: screen.plates.map(
+                                (plate): Plate => ({
+                                    id: plate.dbId,
+                                    name: plate.name,
+                                    wells: plate.wells.flatMap(flatMapWell),
+                                    controlWells: plate.controlWells.flatMap(flatMapWell),
+                                })
+                            ),
+                        })
+                    ),
+                    compound: {
+                        percentageInhibition: allPercentageInhibition,
+                        cytotoxicity: cytotoxicity
+                            ? `${cytotoxicity.value} ${cytotoxicity.units ?? ""}`
+                            : undefined,
+                        cytotoxicityIndex: cytotoxicIndex
+                            ? `${cytotoxicIndex.value} ${cytotoxicIndex.units ?? ""}`
+                            : undefined,
+                        doseResponse: doseResponse
+                            ? `${doseResponse.value} ${doseResponse.units ?? ""}`
+                            : undefined,
+                    },
+                };
+            }),
+        }))
+    );
+
+    return {
+        id: ligand.dbId,
+        name: ligand.name,
+        inChI: ligand.IUPACInChIkey,
+        imageDataResource: idr,
+    };
+}
+
+function flatMapWell(well: IDRWell): Well[] {
+    const [_void, a, b] = well.name.toLowerCase().split(/^(.)/);
+    const x = b ? _.toNumber(b) - 1 : undefined;
+    const codePoint = a && a.codePointAt(0);
+    const y = codePoint ? _.clamp(codePoint - 97, 0, 7) : undefined;
+    if ((x === 0 || x) && (y || y === 0))
+        return [
+            {
+                id: well.dbId,
+                position: { x, y },
+                image: well.imageThumbailLink,
+            },
+        ];
+    return [];
 }

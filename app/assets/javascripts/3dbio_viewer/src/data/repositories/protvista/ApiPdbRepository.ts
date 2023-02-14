@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Error, FutureData } from "../../../domain/entities/FutureData";
+import { FutureData } from "../../../domain/entities/FutureData";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { PdbRepository } from "../../../domain/repositories/PdbRepository";
 import { Future } from "../../../utils/future";
@@ -34,22 +34,10 @@ import { MutagenesisResponse } from "./tracks/mutagenesis";
 import { Maybe } from "../../../utils/ts-utils";
 import {
     getPdbLigand,
-    IDRWell,
-    ImageDataResource,
-    LigandToImageDataResponse,
-    ligandToImageDataResponseC,
     PdbEntryResponse,
     pdbEntryResponseC,
     PdbLigandsResponse,
 } from "../../PdbLigands";
-import {
-    LigandImageData,
-    Organism,
-    Plate,
-    Screen,
-    Well,
-} from "../../../domain/entities/LigandImageData";
-import i18n from "../../../webapp/utils/i18n";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -203,124 +191,8 @@ export class ApiPdbRepository implements PdbRepository {
             file: undefined,
             path: undefined,
             customAnnotations: undefined,
-            ligands: ligands,
+            ligands,
         };
-    }
-
-    getIDR(inChIKey: string): FutureData<Maybe<LigandImageData>> {
-        const { publicBionotesDev: bws } = routes;
-        const ligandToImageData$ = getValidatedJSON<LigandToImageDataResponse>(
-            `${bws}/api/ligandToImageData/${inChIKey}`,
-            ligandToImageDataResponseC
-        )
-            .flatMapError<Error>(() =>
-                Future.error(err("Error: the api response type was not the expected."))
-            )
-            .flatMap(
-                (ligandToImageData): FutureData<Maybe<LigandImageData>> => {
-                    if (!ligandToImageData) return Future.success(undefined);
-                    // return Future.error(err("Error: the api response is undefined."));
-                    else if ("detail" in ligandToImageData) return Future.success(undefined);
-                    // return Future.error(err('Error: "detail": Not found.'));
-
-                    const data = ligandToImageData;
-                    const { imageData } = data;
-
-                    if (!imageData) return Future.success(undefined);
-                    // return Future.error(err("Error: imageData is undefined."));
-                    else if (imageData.length > 1)
-                        return Future.error(err("Error: there is more than one IDR."));
-                    //it shouldn't be an array...
-                    else if (_.isEmpty(imageData))
-                        return Future.error(err("Error: imageData is empty."));
-
-                    const idr = _.first(imageData) as ImageDataResource;
-
-                    return Future.success<LigandImageData, Error>({
-                        ...idr,
-                        externalLink: data.externalLink,
-                        assays: idr.assays.map(assay => {
-                            const {
-                                screens,
-                                additionalAnalyses,
-                                dbId,
-                                assayType,
-                                assayTypeTermAccession,
-                            } = assay;
-
-                            //Compound: inhibition cytopathicity
-                            const wellsFromPlates = screens
-                                .find(({ dbId }) => dbId === "2602")
-                                ?.plates.map(({ wells }) => wells);
-                            const allPercentageInhibition = wellsFromPlates
-                                ?.map(plate =>
-                                    plate.flatMap(({ percentageInhibition }) =>
-                                        percentageInhibition ? [`${percentageInhibition}%`] : []
-                                    )
-                                )
-                                .join(", "); //it should be only one...¿?, but just in case...
-
-                            //Compounds: cytotoxicity, dose response, cytotoxic index
-                            const cytotoxicity = additionalAnalyses.find(
-                                ({ name }) => name === "CC50"
-                            );
-                            const doseResponse = additionalAnalyses.find(
-                                ({ name }) => name === "IC50"
-                            );
-                            const cytotoxicIndex = additionalAnalyses.find(
-                                ({ name }) => name === "Selectivity index"
-                            );
-
-                            return {
-                                ...assay,
-                                id: dbId,
-                                type: assayType,
-                                typeTermAccession: assayTypeTermAccession,
-                                bioStudiesAccessionId: assay.BIAId,
-                                organisms: assay.organisms.map(
-                                    (organism): Organism => ({
-                                        id: organism.ncbi_taxonomy_id,
-                                        name: organism.scientific_name,
-                                        commonName: organism.common_name,
-                                        externalLink: organism.externalLink,
-                                    })
-                                ),
-                                screens: screens.map(
-                                    (screen): Screen => ({
-                                        ...screen,
-                                        id: screen.dbId,
-                                        doi: screen.dataDoi,
-                                        well: _.first(_.first(screen.plates)?.wells)?.externalLink,
-                                        plates: screen.plates.map(
-                                            (plate): Plate => ({
-                                                id: plate.dbId,
-                                                name: plate.name,
-                                                wells: plate.wells.flatMap(flatMapWell),
-                                                controlWells: plate.controlWells.flatMap(
-                                                    flatMapWell
-                                                ),
-                                            })
-                                        ),
-                                    })
-                                ),
-                                compound: {
-                                    percentageInhibition: allPercentageInhibition,
-                                    cytotoxicity: cytotoxicity
-                                        ? `${cytotoxicity.value} ${cytotoxicity.units ?? ""}`
-                                        : undefined,
-                                    cytotoxicityIndex: cytotoxicIndex
-                                        ? `${cytotoxicIndex.value} ${cytotoxicIndex.units ?? ""}`
-                                        : undefined,
-                                    doseResponse: doseResponse
-                                        ? `${doseResponse.value} ${doseResponse.units ?? ""}`
-                                        : undefined,
-                                },
-                            };
-                        }),
-                    });
-                }
-            );
-        return ligandToImageData$;
     }
 }
 
@@ -371,24 +243,4 @@ function getData(options: Options): FutureData<Partial<Data>> {
     };
 
     return Future.joinObj(data$);
-}
-
-function flatMapWell(well: IDRWell): Well[] {
-    const [_void, a, b] = well.name.toLowerCase().split(/^(.)/);
-    const x = b ? _.toNumber(b) - 1 : undefined;
-    const codePoint = a && a.codePointAt(0);
-    const y = codePoint ? _.clamp(codePoint - 97, 0, 7) : undefined;
-    if ((x === 0 || x) && (y || y === 0))
-        return [
-            {
-                id: well.dbId,
-                position: { x, y },
-                image: well.imageThumbailLink,
-            },
-        ];
-    else return [];
-}
-
-function err(message: string) {
-    return { message: i18n.t(message, { nsSeparator: false }) };
 }
