@@ -10,15 +10,6 @@ import { FeatureAnnotationBlock } from "./FeatureAnnotationBlock";
 
 export const blockDefs: BlockDef[] = [
     {
-        id: "bioimageDataStudies",
-        title: i18n.t("BioImage"),
-        description: "",
-        help: "",
-        tracks: [],
-        component: IDRViewerBlock,
-        profiles: [profiles.drugDesign],
-    },
-    {
         id: "basicInfo",
         title: i18n.t("Basic information of the molecule assembly"),
         description: "",
@@ -160,6 +151,15 @@ Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have 
         help: "",
         tracks: [tracks.structureCoverage, tracks.ligands],
         profiles: [profiles.drugDesign, profiles.biomedicine],
+    },
+    {
+        id: "bioimageDataStudies",
+        title: i18n.t("BioImage"),
+        description: "",
+        help: "",
+        tracks: [],
+        component: IDRViewerBlock,
+        profiles: [profiles.drugDesign],
     },
     {
         id: "variants",
