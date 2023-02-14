@@ -6,6 +6,6 @@ interface BasicInfoProps {
     pdb: Pdb;
 }
 
-export const FeatureAnnotationBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => {
+export const FeatureAnnotationBlock: React.FC<BasicInfoProps> = React.memo(({ pdb: _pdb }) => {
     return <div></div>;
 });
