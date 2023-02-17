@@ -1,4 +1,3 @@
-import { Tooltip } from "@material-ui/core";
 import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
@@ -12,37 +11,76 @@ interface SVGPlateProps {
 }
 
 export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => {
+    const [open, setOpen] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState<SVGImageElement | null>();
+
+    const wellRefs = React.useRef([]);
+
+    const wellsWithRef = React.useMemo(
+        () =>
+            [...plate.wells, ...plate.controlWells].map(well => ({
+                well,
+                ref: React.createRef<SVGImageElement>(),
+            })),
+        [plate.controlWells, plate.wells]
+    );
+
+    const handleTooltipClose = React.useCallback(() => {
+        setOpen(false);
+    }, []);
+
     return (
-        <StyledSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 509.28 362.16" idx={idx}>
-            <defs>
-                <clipPath xmlns="http://www.w3.org/2000/svg" id={`${idx}-clip-path`}>
-                    {_.range(70.6, 342.6, 34).map((y, i) =>
-                        _.range(80.82, 488.82, 34).map((x, j) => (
-                            <circle key={`${i}${j}`} cx={x} cy={y} r="15" />
-                        ))
-                    )}
-                </clipPath>
-            </defs>
-            <PlateBackground />
-            <LeftColumn />
-            <TopRow />
-            <path className="grid" d={wellsD} />
-            <g className="images">
-                {plate.wells.map(well => (
-                    <Tooltip key={well.id} title="hola">
-                        <RefWell x={well.position.x} y={well.position.y} image={well.image} />
-                    </Tooltip>
-                ))}
-                {plate.controlWells.map(well => (
-                    <RefWell
-                        key={well.id}
-                        x={well.position.x}
-                        y={well.position.y}
-                        image={well.image}
-                    />
-                ))}
-            </g>
-        </StyledSVG>
+        <div onMouseLeave={handleTooltipClose}>
+            <StyledSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 509.28 362.16" idx={idx}>
+                <defs>
+                    <clipPath xmlns="http://www.w3.org/2000/svg" id={`${idx}-clip-path`}>
+                        {_.range(70.6, 342.6, 34).map((y, i) =>
+                            _.range(80.82, 488.82, 34).map((x, j) => (
+                                <circle key={`${i}${j}`} cx={x} cy={y} r="15" />
+                            ))
+                        )}
+                    </clipPath>
+                </defs>
+                <PlateBackground />
+                <LeftColumn />
+                <TopRow />
+                <path className="grid" d={wellsD} />
+                <g className="idr-images">
+                    {wellsWithRef.map(({ well, ref }, idx) => (
+                        <WellWithRef
+                            key={well.id}
+                            x={well.position.x}
+                            y={well.position.y}
+                            image={well.image}
+                            ref={ref}
+                            onMouseEnter={() => {
+                                setOpen(true);
+                                console.log(ref);
+                                setAnchorEl(ref.current);
+                            }}
+                        />
+                    ))}
+                </g>
+            </StyledSVG>
+            <div>
+                <HtmlTooltip
+                    PopperProps={{
+                        disablePortal: true,
+                        anchorEl: anchorEl,
+                    }}
+                    onClose={handleTooltipClose}
+                    open={open}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    title="custom tooltip"
+                    placement="bottom"
+                    arrow
+                >
+                    <span></span>
+                </HtmlTooltip>
+            </div>
+        </div>
     );
 });
 
@@ -84,64 +122,81 @@ const LeftColumn: React.FC = React.memo(() => (
     </text>
 ));
 
-const TopRow: React.FC = React.memo(() => (
-    <text className="top-row">
-        <tspan x="75.98" y="42.3">
-            1
-        </tspan>
-        <tspan x="109.48" y="42.3">
-            2
-        </tspan>
-        <tspan x="143.48" y="42.3">
-            3
-        </tspan>
-        <tspan x="176.98" y="42.3">
-            4
-        </tspan>
-        <tspan x="211.48" y="42.3">
-            5
-        </tspan>
-        <tspan x="244.98" y="42.3">
-            6
-        </tspan>
-        <tspan x="278.98" y="42.3">
-            7
-        </tspan>
-        <tspan x="312.98" y="42.3">
-            8
-        </tspan>
-        <tspan x="346.48" y="42.3">
-            9
-        </tspan>
-        <tspan x="376.65" y="42.3">
-            10
-        </tspan>
-        <tspan x="412.09" y="42.3">
-            11
-        </tspan>
-        <tspan x="444.15" y="42.3">
-            12
-        </tspan>
-    </text>
-));
+const TopRow: React.FC = React.memo(() => {
+    const y = 42.3;
+    return (
+        <text className="top-row">
+            <tspan x="75.98" y={y}>
+                1
+            </tspan>
+            <tspan x="109.48" y={y}>
+                2
+            </tspan>
+            <tspan x="143.48" y={y}>
+                3
+            </tspan>
+            <tspan x="176.98" y={y}>
+                4
+            </tspan>
+            <tspan x="211.48" y={y}>
+                5
+            </tspan>
+            <tspan x="244.98" y={y}>
+                6
+            </tspan>
+            <tspan x="278.98" y={y}>
+                7
+            </tspan>
+            <tspan x="312.98" y={y}>
+                8
+            </tspan>
+            <tspan x="346.48" y={y}>
+                9
+            </tspan>
+            <tspan x="376.65" y={y}>
+                10
+            </tspan>
+            <tspan x="412.09" y={y}>
+                11
+            </tspan>
+            <tspan x="444.15" y={y}>
+                12
+            </tspan>
+        </text>
+    );
+});
 
 interface WellProps {
     x: number;
     y: number;
     image: string;
     ref: React.ForwardedRef<SVGImageElement | null>;
+    onMouseEnter: () => void;
 }
 
 const Well: React.FC<WellProps> = React.memo(props => {
     const x = React.useMemo(() => 65.82 + 34 * props.x, [props.x]);
     const y = React.useMemo(() => 55.6 + 34 * props.y, [props.y]);
 
-    return <image x={x} y={y} width="30" height="30" xlinkHref={props.image} />;
+    return (
+        <image
+            x={x}
+            y={y}
+            width="30"
+            height="30"
+            xlinkHref={props.image}
+            ref={props.ref}
+            onMouseEnter={() => {
+                console.log(props.ref);
+                props.onMouseEnter();
+            }}
+        />
+    );
 });
 
-const RefWell = React.forwardRef<SVGImageElement | null, WellProps>((props, ref) => {
-    return <Well {...props} ref={ref} />;
-});
+const WellWithRef = React.forwardRef<SVGImageElement | null, WellProps>((props, ref) => (
+    <Well {...props} ref={ref} />
+));
 
 //viewBox const for readability = 0 0 509.28 362.16
 
@@ -190,7 +245,7 @@ const StyledSVG = styled.svg<StyledSVGProps>`
     .fill-b9b9b9 {
         fill: #b9b9b9;
     }
-    .images {
+    .idr-images {
         clip-path: url(#${props => props.idx}-clip-path);
     }
     .grid {
