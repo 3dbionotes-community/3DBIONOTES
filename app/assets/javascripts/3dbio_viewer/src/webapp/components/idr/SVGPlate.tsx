@@ -1,9 +1,11 @@
 import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
+import { TooltipProps, Typography } from "@material-ui/core";
 import { Plate } from "../../../domain/entities/LigandImageData";
 import { HtmlTooltip } from "../HtmlTooltip";
 import { plateShadowImage } from "./plate-shadow-image";
+import { IDRSectionHeader } from "./IDRViewerBlock";
 
 interface SVGPlateProps {
     idx: number;
@@ -12,25 +14,45 @@ interface SVGPlateProps {
 
 export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => {
     const [open, setOpen] = React.useState(false);
-    const [anchorEl, setAnchorEl] = React.useState<SVGImageElement | null>();
+    const [anchorEl, setAnchorEl] = React.useState<RefType>();
+    const [tooltipContentProps, setTooltipContentProps] = React.useState<TooltipContentProps>();
+    const [tooltipPlacement, setTooltipPlacement] = React.useState<TooltipProps["placement"]>();
 
-    const wellRefs = React.useRef([]);
+    const plateRef = React.useRef<SVGGElement>(null);
+    const wellRefs = React.useRef<SVGImageElement[]>([]);
 
-    const wellsWithRef = React.useMemo(
-        () =>
-            [...plate.wells, ...plate.controlWells].map(well => ({
-                well,
-                ref: React.createRef<SVGImageElement>(),
-            })),
+    const wells = React.useMemo(
+        () => [
+            ...plate.wells.map(well => ({ well, type: "well" as const })),
+            ...plate.controlWells.map(well => ({ well, type: "control-well" as const })),
+        ],
         [plate.controlWells, plate.wells]
     );
 
-    const handleTooltipClose = React.useCallback(() => {
+    const hideTooltip = React.useCallback(() => {
         setOpen(false);
     }, []);
 
+    const showTooltip = React.useCallback(
+        (
+            ref?: RefType,
+            tooltipContentProps?: TooltipContentProps,
+            placement?: TooltipProps["placement"]
+        ) => {
+            setOpen(true);
+            setAnchorEl(ref);
+            setTooltipContentProps(tooltipContentProps);
+            if (placement) setTooltipPlacement(placement);
+        },
+        []
+    );
+
+    const tooltipContent = React.useMemo(() => <TooltipContent {...tooltipContentProps} />, [
+        tooltipContentProps,
+    ]);
+
     return (
-        <div onMouseLeave={handleTooltipClose}>
+        <div onMouseLeave={hideTooltip}>
             <StyledSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 509.28 362.16" idx={idx}>
                 <defs>
                     <clipPath xmlns="http://www.w3.org/2000/svg" id={`${idx}-clip-path`}>
@@ -41,23 +63,42 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
                         )}
                     </clipPath>
                 </defs>
-                <PlateBackground />
+                <PlateBackground
+                    ref={plateRef}
+                    onMouseEnter={() =>
+                        showTooltip(
+                            plateRef.current,
+                            { type: "plate", subtitle: plate.name },
+                            "top"
+                        )
+                    }
+                    onMouseLeave={() => {
+                        console.log("x");
+                    }}
+                />
                 <LeftColumn />
                 <TopRow />
                 <path className="grid" d={wellsD} />
                 <g className="idr-images">
-                    {wellsWithRef.map(({ well, ref }, idx) => (
+                    {wells.map(({ well, type }, idx) => (
                         <WellWithRef
                             key={well.id}
-                            x={well.position.x}
-                            y={well.position.y}
+                            column={well.position.x}
+                            row={well.position.y}
                             image={well.image}
-                            ref={ref}
-                            onMouseEnter={() => {
-                                setOpen(true);
-                                console.log(ref);
-                                setAnchorEl(ref.current);
+                            ref={el => {
+                                if (el) wellRefs.current[idx] = el;
                             }}
+                            onMouseEnter={() =>
+                                showTooltip(wellRefs.current[idx], {
+                                    type,
+                                    subtitle:
+                                        ("ABCDEFGH".charAt(well.position.y) ?? "") +
+                                        (well.position.x + 1),
+                                    image: well.image,
+                                })
+                            }
+                            setTooltipPlacement={setTooltipPlacement}
                         />
                     ))}
                 </g>
@@ -67,15 +108,15 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
                     PopperProps={{
                         disablePortal: true,
                         anchorEl: anchorEl,
+                        keepMounted: true,
                     }}
-                    onClose={handleTooltipClose}
+                    onClose={hideTooltip}
                     open={open}
                     disableFocusListener
                     disableHoverListener
                     disableTouchListener
-                    title="custom tooltip"
-                    placement="bottom"
-                    arrow
+                    title={tooltipContent}
+                    placement={tooltipPlacement}
                 >
                     <span></span>
                 </HtmlTooltip>
@@ -84,14 +125,22 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
     );
 });
 
-const PlateBackground: React.FC = React.memo(() => (
-    <g>
-        <image width="2122" height="1509" transform="scale(.24)" xlinkHref={plateShadowImage} />
-        <path className="plate-background" d={backgroundPlateD} />
-        <path className="fill-b9b9b9" d={outerLineD} />
-        <path className="fill-cdcdcd" d={innerLineD} />
-    </g>
-));
+interface PlateBackgroundProps {
+    tooltipPlacement?: TooltipProps["placement"];
+    onMouseEnter: () => void;
+    onMouseLeave: () => void;
+}
+
+const PlateBackground = React.forwardRef<SVGGElement | null, PlateBackgroundProps>((props, ref) => {
+    return (
+        <g ref={ref} onMouseOverCapture={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>
+            <image width="2122" height="1509" transform="scale(.24)" xlinkHref={plateShadowImage} />
+            <path className="plate-background" d={backgroundPlateD} />
+            <path className="fill-b9b9b9" d={outerLineD} />
+            <path className="fill-cdcdcd" d={innerLineD} />
+        </g>
+    );
+});
 
 const LeftColumn: React.FC = React.memo(() => (
     <text className="left-column">
@@ -167,16 +216,22 @@ const TopRow: React.FC = React.memo(() => {
 });
 
 interface WellProps {
-    x: number;
-    y: number;
+    column: number;
+    row: number;
     image: string;
-    ref: React.ForwardedRef<SVGImageElement | null>;
+    setTooltipPlacement: React.Dispatch<React.SetStateAction<TooltipProps["placement"]>>;
     onMouseEnter: () => void;
 }
 
-const Well: React.FC<WellProps> = React.memo(props => {
-    const x = React.useMemo(() => 65.82 + 34 * props.x, [props.x]);
-    const y = React.useMemo(() => 55.6 + 34 * props.y, [props.y]);
+const WellWithRef = React.forwardRef<SVGImageElement | null, WellProps>((props, ref) => {
+    const { column, row, setTooltipPlacement, image, onMouseEnter } = props;
+    const x = React.useMemo(() => 65.82 + 34 * column, [column]);
+    const y = React.useMemo(() => 55.6 + 34 * row, [row]);
+
+    React.useEffect(() => {
+        if (column > 11) setTooltipPlacement("left");
+        else setTooltipPlacement("right");
+    }, [column, setTooltipPlacement]);
 
     return (
         <image
@@ -184,29 +239,53 @@ const Well: React.FC<WellProps> = React.memo(props => {
             y={y}
             width="30"
             height="30"
-            xlinkHref={props.image}
-            ref={props.ref}
-            onMouseEnter={() => {
-                console.log(props.ref);
-                props.onMouseEnter();
-            }}
+            xlinkHref={image}
+            ref={ref}
+            onMouseEnter={onMouseEnter}
         />
     );
 });
 
-const WellWithRef = React.forwardRef<SVGImageElement | null, WellProps>((props, ref) => (
-    <Well {...props} ref={ref} />
-));
+const titles = {
+    "control-well": "Control Well",
+    well: "Well",
+    plate: "Plate",
+};
+
+interface TooltipContentProps {
+    type?: "control-well" | "well" | "plate";
+    subtitle?: string;
+    image?: string;
+}
+
+const TooltipContent: React.FC<TooltipContentProps> = React.memo(props => {
+    const { type, subtitle, image } = props;
+
+    const title = React.useMemo(() => {
+        return type ? titles[type] : "";
+    }, [type]);
+
+    return (
+        <TooltipContainer>
+            <IDRSectionHeader>
+                <Typography variant="h6">
+                    {title}
+                    {subtitle && ":"}
+                </Typography>
+                {subtitle && <p>{subtitle.charAt(0).toUpperCase() + subtitle.slice(1)}</p>}
+            </IDRSectionHeader>
+            <div>{image && <img width="100px" height="100px" src={image} />}</div>
+        </TooltipContainer>
+    );
+});
 
 //viewBox const for readability = 0 0 509.28 362.16
-
 const backgroundPlateD =
     "M33.36,351.19l-.18-.1c-1.31-.71-2.51-1.61-3.56-2.66l-13.49-13.49c-.62-.62-1.18-1.28-1.68-1.99l-2.48-3.48c-1.88-2.65-2.89-5.81-2.89-9.06V40.78c0-2.61,.65-5.18,1.9-7.47h0c.72-1.32,1.62-2.52,2.68-3.58l13.46-13.46c.63-.63,1.3-1.2,2.03-1.71l3.67-2.59c2.64-1.87,5.79-2.87,9.02-2.87H483.07s17,.5,17,15V338.1s-.25,15-17,15H40.85c-2.62,0-5.19-.66-7.49-1.91Z";
 const outerLineD =
     "M480.32,24.6h0c.41,0,4,.15,4,4V333.6c0,.41-.15,4-4,4H43.73l-18.41-18.41V43.01l18.41-18.41H480.32m0-1H43.32l-19,19V319.6l19,19H480.32c5,0,5-5,5-5V28.6c0-5-5-5-5-5h0Z";
 const innerLineD =
     "M469.32,52.1c4.82,0,5,4.49,5,5V322.1c0,.51-.18,5-5,5H66.32c-4.82,0-5-4.49-5-5V57.1c0-.51,.18-5,5-5H469.32m0-1H66.32c-6,0-6,6-6,6V322.1s0,6,6,6H469.32c6,0,6-6,6-6V57.1s0-6-6-6h0Z";
-
 const circ = "c8.27,0,15,6.73,15,15s-6.73,15-15,15-15-6.73-15-15,6.73-15,15-15";
 const innerCirc = "m0-1c-8.84,0-16,7.16-16,16s7.16,16,16,16,16-7.16,16-16-7.16-16-16-16h0Z";
 const cell = `${circ}${innerCirc}`;
@@ -221,11 +300,14 @@ const wellsD =
         .map(() => row)
         .join("m-374,35");
 
+type RefType = SVGImageElement | SVGGElement | null;
+
 interface StyledSVGProps {
     idx: number;
 }
 
 const StyledSVG = styled.svg<StyledSVGProps>`
+    margin-top: 1em;
     .plate-background {
         fill: #fff;
     }
@@ -250,5 +332,13 @@ const StyledSVG = styled.svg<StyledSVGProps>`
     }
     .grid {
         fill: #929292;
+    }
+`;
+
+const TooltipContainer = styled.div`
+    padding: 0.5em;
+    font-size: 1.25em;
+    & .MuiTypography-h6 {
+        font-size: 1em;
     }
 `;

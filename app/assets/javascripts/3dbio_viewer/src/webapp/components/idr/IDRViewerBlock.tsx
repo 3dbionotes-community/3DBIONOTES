@@ -184,7 +184,7 @@ const Section: React.FC<SectionProps> = React.memo(({ children, title, subtitle,
 
     return (
         <div>
-            <SectionHeader>
+            <IDRSectionHeader>
                 <Typography variant="h6">
                     {title}
                     {subtitle && ":"}
@@ -199,7 +199,7 @@ const Section: React.FC<SectionProps> = React.memo(({ children, title, subtitle,
                         <button onClick={toggleTooltip}>?</button>
                     </ViewerTooltip>
                 )}
-            </SectionHeader>
+            </IDRSectionHeader>
             <List>{children}</List>
         </div>
     );
@@ -208,7 +208,7 @@ const Section: React.FC<SectionProps> = React.memo(({ children, title, subtitle,
 const Container = styled.div`
     margin-top: 2rem;
 
-    & div {
+    & > div {
         margin-bottom: 1em;
     }
 
@@ -235,10 +235,11 @@ const Li = styled.li`
     }
 `;
 
-const SectionHeader = styled.div`
+export const IDRSectionHeader = styled.div`
     display: flex;
     align-items: center;
     p {
         margin: 0;
     }
+    margin-bottom: 1em;
 `;
