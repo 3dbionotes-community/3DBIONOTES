@@ -9,34 +9,35 @@ import i18n from "../../../../utils/i18n";
 export type OnClickIDR = (options: IDROptions, gaLabel: string) => void;
 
 export interface BadgeLigandsProps {
+    pdbId: string;
     onClick?: OnClickIDR;
     ligand: Ligand;
     moreDetails?: boolean;
 }
 
 export const BadgeLigands: React.FC<BadgeLigandsProps> = React.memo(props => {
-    const { ligand, onClick, moreDetails = true } = props;
+    const { ligand, pdbId, onClick, moreDetails = true } = props;
     const { compositionRoot } = useAppContext();
 
     const notifyClick = React.useCallback(
         (e: MouseEvent) => {
             e.preventDefault();
             if (onClick) {
-                compositionRoot.ligands.getIDR.execute(ligand.inChI).run(
+                compositionRoot.ligands.getIDR.execute(ligand.inChI, pdbId).run(
                     idr =>
                         onClick(
-                            { ligand, idr },
-                            `IDR Ligand. ID: ${ligand.id}. Name: ${ligand.name}`
+                            { ligand, pdbId, idr },
+                            `IDR Ligand. PDB: ${pdbId}. Ligand: ${ligand.id}. Ligand name: ${ligand.name}`
                         ),
                     err =>
                         onClick(
-                            { ligand, error: err.message },
+                            { ligand, pdbId, error: err.message },
                             `ERROR IDR Ligand. ID: ${ligand.id}`
                         )
                 );
             }
         },
-        [onClick, ligand, compositionRoot]
+        [onClick, ligand, compositionRoot, pdbId]
     );
 
     return moreDetails ? (

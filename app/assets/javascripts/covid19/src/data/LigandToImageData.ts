@@ -136,8 +136,17 @@ export const ligandToImageDataC = Codec.interface({
     imageData: optional(array(imageDataC)), //it shouldn't be an array...
 });
 
+export const pdbEntryLigandsC = Codec.interface({
+    count: number,
+    next: maybeNull(string),
+    previous: maybeNull(string),
+    results: array(ligandToImageDataC),
+});
+
 export const ligandToImageDataResponseC = oneOf([notFoundC, ligandToImageDataC]);
 
 export type ImageDataResource = GetType<typeof imageDataC>;
 export type LigandToImageData = GetType<typeof ligandToImageDataC>;
 export type LigandToImageDataResponse = GetType<typeof ligandToImageDataResponseC>;
+
+export type PdbEntryLigandsResponse = GetType<typeof pdbEntryLigandsC>;

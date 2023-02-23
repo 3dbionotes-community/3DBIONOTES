@@ -22,6 +22,7 @@
     = javascript_include_tag('main_frame/main_inter')
     = javascript_include_tag('main_frame/main_init')
   %body.parentBody{:id => "body"}
+    = render partial: "layouts/send_feedback"
     %div.filter_screen
     %div.jsonp_info
       %div
