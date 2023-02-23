@@ -60,8 +60,9 @@ export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
                                 url={ligand.url}
                                 text={`${ligand.name} (${ligand.id})`}
                             >
-                                {ligand.hasIDR && (
+                                {ligand.hasIDR && row.pdb?.id && (
                                     <BadgeLigands
+                                        pdbId={row.pdb.id}
                                         ligand={ligand}
                                         onClick={onClickIDR}
                                         moreDetails={moreDetails}
