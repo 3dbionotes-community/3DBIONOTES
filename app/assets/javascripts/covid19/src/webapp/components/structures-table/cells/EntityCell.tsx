@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 import i18n from "../../../../utils/i18n";
 import { CellProps } from "../Columns";
@@ -9,32 +10,39 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
 
     const entities = React.useMemo(() => {
         return row.entities.map(entity => {
+            const uniprot = entity.uniprotAcc && (
+                <div>
+                    {i18n.t("UniProt")}: {entity.uniprotAcc}
+                </div>
+            );
+            const altNames = entity.altNames && (
+                <div>
+                    {i18n.t("Alt Names")}: {entity.altNames}
+                </div>
+            );
+            const organism = entity.organism && (
+                <div>
+                    {i18n.t("Organism")}: {entity.organism}
+                </div>
+            );
+            const details = entity.details && <div>{entity.details}</div>;
+            const antibody = entity.isAntibody && <div>{i18n.t("Entity is antibody")}</div>;
+            const nanobody = entity.isNanobody && <div>{i18n.t("Entity is nanobody")}</div>;
+            const sybody = entity.isSybody && <div>{i18n.t("Entity is sybody")}</div>;
+
             return {
                 name: entity.name,
-                tooltip: (
+                tooltip: !_.isEmpty(
+                    _.compact([uniprot, altNames, organism, details, antibody, nanobody, sybody])
+                ) && (
                     <React.Fragment>
-                        {entity.uniprotAcc && (
-                            <div>
-                                {i18n.t("UniProt")}: {entity.uniprotAcc}
-                            </div>
-                        )}
-
-                        {entity.altNames && (
-                            <div>
-                                {i18n.t("Alt Names")}: {entity.altNames}
-                            </div>
-                        )}
-
-                        {entity.organism && (
-                            <div>
-                                {i18n.t("Organism")}: {entity.organism}
-                            </div>
-                        )}
-
-                        {entity.details && <div>{entity.details}</div>}
-                        {entity.isAntibody && <div>{i18n.t("Entity is antibody")}</div>}
-                        {entity.isNanobody && <div>{i18n.t("Entity is nanobody")}</div>}
-                        {entity.isSybody && <div>{i18n.t("Entity is sybody")}</div>}
+                        {uniprot}
+                        {altNames}
+                        {organism}
+                        {details}
+                        {antibody}
+                        {nanobody}
+                        {sybody}
                     </React.Fragment>
                 ),
             };

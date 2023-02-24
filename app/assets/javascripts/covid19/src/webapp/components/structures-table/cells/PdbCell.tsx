@@ -68,7 +68,7 @@ const PdbCell2: React.FC<{
     }, []);
 
     return (
-        <React.Fragment>
+        <div>
             {pdb ? <Thumbnail type="pdb" value={pdb} tooltip={propertiesTooltip} /> : null}
 
             {!_.isEmpty(pdbValidations) ? (
@@ -102,7 +102,7 @@ const PdbCell2: React.FC<{
                     </Grid>
                 )
             ) : null}
-        </React.Fragment>
+        </div>
     );
 });
 
@@ -192,7 +192,6 @@ const Validation: React.FC<ValidationProps> = React.memo(props => {
                     </>
                 ) : (
                     <BadgeLink
-                        style={styles.grow}
                         key={pdbValidation.method + "-external"}
                         url={
                             pdbValidation.queryLink

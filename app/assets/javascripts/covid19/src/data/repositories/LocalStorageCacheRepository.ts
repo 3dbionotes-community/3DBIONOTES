@@ -1,4 +1,4 @@
-import { CacheRepository } from "../domain/repositories/CacheRepository";
+import { CacheRepository } from "../../domain/repositories/CacheRepository";
 
 export class LocalStorageCacheRepository implements CacheRepository {
     get<T>(key: string): T | undefined {
