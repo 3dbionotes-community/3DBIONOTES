@@ -2,10 +2,10 @@ import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 import { TooltipProps, Typography } from "@material-ui/core";
-import { Plate } from "../../../domain/entities/LigandImageData";
+import { Plate, Well } from "../../../domain/entities/LigandImageData";
 import { HtmlTooltip } from "../HtmlTooltip";
 import { plateShadowImage } from "./plate-shadow-image";
-import { IDRSectionHeader } from "./IDRViewerBlock";
+import i18n from "../../utils/i18n";
 
 interface SVGPlateProps {
     idx: number;
@@ -14,6 +14,7 @@ interface SVGPlateProps {
 
 export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => {
     const [open, setOpen] = React.useState(false);
+    const [transitioning, setTransitioning] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState<RefType>();
     const [tooltipContentProps, setTooltipContentProps] = React.useState<TooltipContentProps>();
     const [tooltipPlacement, setTooltipPlacement] = React.useState<TooltipProps["placement"]>();
@@ -66,15 +67,13 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
                 <PlateBackground
                     ref={plateRef}
                     onMouseEnter={() =>
+                        !transitioning &&
                         showTooltip(
                             plateRef.current,
-                            { type: "plate", subtitle: plate.name },
+                            { type: "plate", subtitle: plate.name, plate },
                             "top"
                         )
                     }
-                    onMouseLeave={() => {
-                        console.log("x");
-                    }}
                 />
                 <LeftColumn />
                 <TopRow />
@@ -95,9 +94,13 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
                                     subtitle:
                                         ("ABCDEFGH".charAt(well.position.y) ?? "") +
                                         (well.position.x + 1),
-                                    image: well.image,
+                                    well,
                                 })
                             }
+                            onMouseLeave={() => {
+                                setTransitioning(true);
+                                setTimeout(() => setTransitioning(false), 500);
+                            }}
                             setTooltipPlacement={setTooltipPlacement}
                         />
                     ))}
@@ -117,6 +120,7 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
                     disableTouchListener
                     title={tooltipContent}
                     placement={tooltipPlacement}
+                    interactive
                 >
                     <span></span>
                 </HtmlTooltip>
@@ -128,12 +132,11 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
 interface PlateBackgroundProps {
     tooltipPlacement?: TooltipProps["placement"];
     onMouseEnter: () => void;
-    onMouseLeave: () => void;
 }
 
 const PlateBackground = React.forwardRef<SVGGElement | null, PlateBackgroundProps>((props, ref) => {
     return (
-        <g ref={ref} onMouseOverCapture={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>
+        <g ref={ref} onMouseOverCapture={props.onMouseEnter}>
             <image width="2122" height="1509" transform="scale(.24)" xlinkHref={plateShadowImage} />
             <path className="plate-background" d={backgroundPlateD} />
             <path className="fill-b9b9b9" d={outerLineD} />
@@ -221,10 +224,11 @@ interface WellProps {
     image: string;
     setTooltipPlacement: React.Dispatch<React.SetStateAction<TooltipProps["placement"]>>;
     onMouseEnter: () => void;
+    onMouseLeave: () => void;
 }
 
 const WellWithRef = React.forwardRef<SVGImageElement | null, WellProps>((props, ref) => {
-    const { column, row, setTooltipPlacement, image, onMouseEnter } = props;
+    const { column, row, setTooltipPlacement, image, onMouseEnter, onMouseLeave } = props;
     const x = React.useMemo(() => 65.82 + 34 * column, [column]);
     const y = React.useMemo(() => 55.6 + 34 * row, [row]);
 
@@ -242,6 +246,7 @@ const WellWithRef = React.forwardRef<SVGImageElement | null, WellProps>((props, 
             xlinkHref={image}
             ref={ref}
             onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
         />
     );
 });
@@ -255,11 +260,12 @@ const titles = {
 interface TooltipContentProps {
     type?: "control-well" | "well" | "plate";
     subtitle?: string;
-    image?: string;
+    well?: Well;
+    plate?: Plate;
 }
 
 const TooltipContent: React.FC<TooltipContentProps> = React.memo(props => {
-    const { type, subtitle, image } = props;
+    const { type, subtitle, well, plate } = props;
 
     const title = React.useMemo(() => {
         return type ? titles[type] : "";
@@ -267,14 +273,83 @@ const TooltipContent: React.FC<TooltipContentProps> = React.memo(props => {
 
     return (
         <TooltipContainer>
-            <IDRSectionHeader>
+            <Title>
                 <Typography variant="h6">
                     {title}
                     {subtitle && ":"}
                 </Typography>
-                {subtitle && <p>{subtitle.charAt(0).toUpperCase() + subtitle.slice(1)}</p>}
-            </IDRSectionHeader>
-            <div>{image && <img width="100px" height="100px" src={image} />}</div>
+                {subtitle && <span>{subtitle.charAt(0).toUpperCase() + subtitle.slice(1)}</span>}
+            </Title>
+            {plate && (
+                <div>
+                    <ul>
+                        <li>
+                            {i18n.t("ID")}: {plate.id}
+                        </li>
+                    </ul>
+                </div>
+            )}
+            {well && (
+                <>
+                    <CenterImage>
+                        <img width="100px" height="100px" src={well.image} />
+                    </CenterImage>
+                    <div>
+                        <ul>
+                            {well.controlType && (
+                                <li>
+                                    {i18n.t("Control type")}: <span>{well.controlType}</span>
+                                </li>
+                            )}
+                            <li>
+                                {i18n.t("ID")}: <span>{well.id}</span>
+                            </li>
+                            <li>
+                                {i18n.t("Cell line")}: <span>{well.cellLine}</span>
+                            </li>
+                            <li>
+                                {i18n.t("Cell Line Term Accession")}:{" "}
+                                <span>{well.cellLineTermAccession}</span>
+                            </li>
+                            <li>
+                                {i18n.t("Quality control")}: <span>{well.qualityControl}</span>
+                            </li>
+                            {well.micromolarConcentration && (
+                                <li>
+                                    {i18n.t("Concentration (microMolar)")}:{" "}
+                                    <span>{well.micromolarConcentration}</span>
+                                </li>
+                            )}
+                            <li>
+                                {i18n.t("Percentage Inhibition")}:{" "}
+                                <span>{well.percentageInhibition}</span>
+                            </li>
+                            <li>
+                                {i18n.t("Hit compound (over 75% activity)")}:{" "}
+                                <span>{well.hitCompound}</span>
+                            </li>
+                            <li>
+                                {i18n.t("Number of Cells (DPC)")}: <span>{well.numberOfCells}</span>
+                            </li>
+                            <li>
+                                {i18n.t("Phenotype Annotation Level")}:{" "}
+                                <span>{well.phenotypeAnnotation}</span>
+                            </li>
+                            <li>
+                                {i18n.t("Channels")}: <span>{well.channels}</span>
+                            </li>
+                            <li>
+                                {i18n.t("External link")}:{" "}
+                                <span>
+                                    <a href={well.externalLink} target="_blank" rel="noreferrer">
+                                        {well.externalLink}
+                                    </a>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </>
+            )}
         </TooltipContainer>
     );
 });
@@ -338,7 +413,36 @@ const StyledSVG = styled.svg<StyledSVGProps>`
 const TooltipContainer = styled.div`
     padding: 0.5em;
     font-size: 1.25em;
+    max-width: 300px;
     & .MuiTypography-h6 {
         font-size: 1em;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        li {
+            list-style: none;
+            font-weight: 500;
+            line-height: 1.25em;
+            span {
+                font-weight: 400;
+            }
+        }
+    }
+`;
+
+const CenterImage = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1em 0;
+`;
+
+export const Title = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.25em;
+    span {
+        line-height: 1em;
     }
 `;

@@ -64,6 +64,17 @@ export interface Well {
     id: string;
     position: { x: number; y: number };
     image: string;
+    cellLine: string;
+    cellLineTermAccession: string;
+    controlType?: string;
+    qualityControl: string;
+    micromolarConcentration: number | null;
+    percentageInhibition: number;
+    hitCompound: string;
+    numberOfCells: number;
+    phenotypeAnnotation: string;
+    channels: string;
+    externalLink: string;
 }
 
 type Url = string;

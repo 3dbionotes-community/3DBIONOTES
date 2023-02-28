@@ -235,7 +235,7 @@ const Li = styled.li`
     }
 `;
 
-export const IDRSectionHeader = styled.div`
+const IDRSectionHeader = styled.div`
     display: flex;
     align-items: center;
     p {
