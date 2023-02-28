@@ -14,8 +14,9 @@ interface SVGPlateProps {
 
 export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => {
     const [open, setOpen] = React.useState(false);
-    const [transitioning, setTransitioning] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState<RefType>();
+
+    const [tooltipTransitioning, setTooltipTransitioning] = React.useState(false);
     const [tooltipContentProps, setTooltipContentProps] = React.useState<TooltipContentProps>();
     const [tooltipPlacement, setTooltipPlacement] = React.useState<TooltipProps["placement"]>();
 
@@ -29,6 +30,10 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
         ],
         [plate.controlWells, plate.wells]
     );
+
+    const tooltipContent = React.useMemo(() => <TooltipContent {...tooltipContentProps} />, [
+        tooltipContentProps,
+    ]);
 
     const hideTooltip = React.useCallback(() => {
         setOpen(false);
@@ -48,33 +53,41 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
         []
     );
 
-    const tooltipContent = React.useMemo(() => <TooltipContent {...tooltipContentProps} />, [
-        tooltipContentProps,
-    ]);
+    const showPlateTooltip = React.useCallback(
+        () =>
+            !tooltipTransitioning &&
+            showTooltip(plateRef.current, { type: "plate", subtitle: plate.name, plate }, "top"),
+        [plate, showTooltip, tooltipTransitioning]
+    );
+
+    const showWellTooltip = React.useCallback(
+        (well: Well, type: "control-well" | "well", idx: number) => () =>
+            showTooltip(
+                wellRefs.current[idx],
+                {
+                    type,
+                    subtitle: ("ABCDEFGH".charAt(well.position.y) ?? "") + (well.position.x + 1),
+                    well,
+                },
+                "right" //if there is no space for tooltip it will be left as default being "right" set.
+            ),
+        [showTooltip]
+    );
+
+    const triggerTransitioning = React.useCallback(() => {
+        setTooltipTransitioning(true);
+        setTimeout(() => setTooltipTransitioning(false), 500);
+    }, []);
 
     return (
         <div onMouseLeave={hideTooltip}>
             <StyledSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 509.28 362.16" idx={idx}>
                 <defs>
                     <clipPath xmlns="http://www.w3.org/2000/svg" id={`${idx}-clip-path`}>
-                        {_.range(70.6, 342.6, 34).map((y, i) =>
-                            _.range(80.82, 488.82, 34).map((x, j) => (
-                                <circle key={`${i}${j}`} cx={x} cy={y} r="15" />
-                            ))
-                        )}
+                        <ClipPathCircles />
                     </clipPath>
                 </defs>
-                <PlateBackground
-                    ref={plateRef}
-                    onMouseEnter={() =>
-                        !transitioning &&
-                        showTooltip(
-                            plateRef.current,
-                            { type: "plate", subtitle: plate.name, plate },
-                            "top"
-                        )
-                    }
-                />
+                <PlateBackground ref={plateRef} onMouseEnter={showPlateTooltip} />
                 <LeftColumn />
                 <TopRow />
                 <path className="grid" d={wellsD} />
@@ -88,20 +101,8 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
                             ref={el => {
                                 if (el) wellRefs.current[idx] = el;
                             }}
-                            onMouseEnter={() =>
-                                showTooltip(wellRefs.current[idx], {
-                                    type,
-                                    subtitle:
-                                        ("ABCDEFGH".charAt(well.position.y) ?? "") +
-                                        (well.position.x + 1),
-                                    well,
-                                })
-                            }
-                            onMouseLeave={() => {
-                                setTransitioning(true);
-                                setTimeout(() => setTransitioning(false), 500);
-                            }}
-                            setTooltipPlacement={setTooltipPlacement}
+                            onMouseEnter={showWellTooltip(well, type, idx)}
+                            onMouseLeave={triggerTransitioning}
                         />
                     ))}
                 </g>
@@ -145,97 +146,18 @@ const PlateBackground = React.forwardRef<SVGGElement | null, PlateBackgroundProp
     );
 });
 
-const LeftColumn: React.FC = React.memo(() => (
-    <text className="left-column">
-        <tspan x="35.31" y="79.75">
-            A
-        </tspan>
-        <tspan x="35.08" y="113.75">
-            B
-        </tspan>
-        <tspan x="34.41" y="147.25">
-            C
-        </tspan>
-        <tspan x="34.41" y="181.25">
-            D
-        </tspan>
-        <tspan x="35.08" y="215.25">
-            E
-        </tspan>
-        <tspan x="34.75" y="248.75">
-            F
-        </tspan>
-        <tspan x="32.75" y="282.25">
-            G
-        </tspan>
-        <tspan x="34.41" y="316.25">
-            H
-        </tspan>
-    </text>
-));
-
-const TopRow: React.FC = React.memo(() => {
-    const y = 42.3;
-    return (
-        <text className="top-row">
-            <tspan x="75.98" y={y}>
-                1
-            </tspan>
-            <tspan x="109.48" y={y}>
-                2
-            </tspan>
-            <tspan x="143.48" y={y}>
-                3
-            </tspan>
-            <tspan x="176.98" y={y}>
-                4
-            </tspan>
-            <tspan x="211.48" y={y}>
-                5
-            </tspan>
-            <tspan x="244.98" y={y}>
-                6
-            </tspan>
-            <tspan x="278.98" y={y}>
-                7
-            </tspan>
-            <tspan x="312.98" y={y}>
-                8
-            </tspan>
-            <tspan x="346.48" y={y}>
-                9
-            </tspan>
-            <tspan x="376.65" y={y}>
-                10
-            </tspan>
-            <tspan x="412.09" y={y}>
-                11
-            </tspan>
-            <tspan x="444.15" y={y}>
-                12
-            </tspan>
-        </text>
-    );
-});
-
 interface WellProps {
     column: number;
     row: number;
     image: string;
-    setTooltipPlacement: React.Dispatch<React.SetStateAction<TooltipProps["placement"]>>;
     onMouseEnter: () => void;
     onMouseLeave: () => void;
 }
 
 const WellWithRef = React.forwardRef<SVGImageElement | null, WellProps>((props, ref) => {
-    const { column, row, setTooltipPlacement, image, onMouseEnter, onMouseLeave } = props;
+    const { column, row, image, onMouseEnter, onMouseLeave } = props;
     const x = React.useMemo(() => 65.82 + 34 * column, [column]);
     const y = React.useMemo(() => 55.6 + 34 * row, [row]);
-
-    React.useEffect(() => {
-        if (column > 11) setTooltipPlacement("left");
-        else setTooltipPlacement("right");
-    }, [column, setTooltipPlacement]);
 
     return (
         <image
@@ -251,7 +173,7 @@ const WellWithRef = React.forwardRef<SVGImageElement | null, WellProps>((props, 
     );
 });
 
-const titles = {
+const tooltipTitles = {
     "control-well": "Control Well",
     well: "Well",
     plate: "Plate",
@@ -265,11 +187,13 @@ interface TooltipContentProps {
 }
 
 const TooltipContent: React.FC<TooltipContentProps> = React.memo(props => {
-    const { type, subtitle, well, plate } = props;
+    const { type, subtitle: s, well, plate } = props;
 
     const title = React.useMemo(() => {
-        return type ? titles[type] : "";
+        return type ? tooltipTitles[type] : "";
     }, [type]);
+
+    const subtitle = React.useMemo(() => s && s.charAt(0).toUpperCase() + s.slice(1), [s]);
 
     return (
         <TooltipContainer>
@@ -278,68 +202,38 @@ const TooltipContent: React.FC<TooltipContentProps> = React.memo(props => {
                     {title}
                     {subtitle && ":"}
                 </Typography>
-                {subtitle && <span>{subtitle.charAt(0).toUpperCase() + subtitle.slice(1)}</span>}
+                {subtitle && <span>{subtitle}</span>}
             </Title>
             {plate && (
                 <div>
                     <ul>
                         <li>
-                            {i18n.t("ID")}: {plate.id}
+                            {i18n.t("ID")}: <span>{plate.id}</span>
                         </li>
                     </ul>
                 </div>
             )}
-            {well && (
+            {
+                // prettier-ignore
+                well && (
                 <>
                     <CenterImage>
                         <img width="100px" height="100px" src={well.image} />
                     </CenterImage>
                     <div>
                         <ul>
-                            {well.controlType && (
-                                <li>
-                                    {i18n.t("Control type")}: <span>{well.controlType}</span>
-                                </li>
-                            )}
-                            <li>
-                                {i18n.t("ID")}: <span>{well.id}</span>
-                            </li>
-                            <li>
-                                {i18n.t("Cell line")}: <span>{well.cellLine}</span>
-                            </li>
-                            <li>
-                                {i18n.t("Cell Line Term Accession")}:{" "}
-                                <span>{well.cellLineTermAccession}</span>
-                            </li>
-                            <li>
-                                {i18n.t("Quality control")}: <span>{well.qualityControl}</span>
-                            </li>
-                            {well.micromolarConcentration && (
-                                <li>
-                                    {i18n.t("Concentration (microMolar)")}:{" "}
-                                    <span>{well.micromolarConcentration}</span>
-                                </li>
-                            )}
-                            <li>
-                                {i18n.t("Percentage Inhibition")}:{" "}
-                                <span>{well.percentageInhibition}</span>
-                            </li>
-                            <li>
-                                {i18n.t("Hit compound (over 75% activity)")}:{" "}
-                                <span>{well.hitCompound}</span>
-                            </li>
-                            <li>
-                                {i18n.t("Number of Cells (DPC)")}: <span>{well.numberOfCells}</span>
-                            </li>
-                            <li>
-                                {i18n.t("Phenotype Annotation Level")}:{" "}
-                                <span>{well.phenotypeAnnotation}</span>
-                            </li>
-                            <li>
-                                {i18n.t("Channels")}: <span>{well.channels}</span>
-                            </li>
-                            <li>
-                                {i18n.t("External link")}:{" "}
+                            {well.controlType && (<li>{i18n.t("Control type")}: <span>{well.controlType}</span></li>)}
+                            <li>{i18n.t("ID")}: <span>{well.id}</span></li>
+                            <li>{i18n.t("Cell line")}: <span>{well.cellLine}</span></li>
+                            <li>{i18n.t("Cell Line Term Accession")}: <span>{well.cellLineTermAccession}</span></li>
+                            <li>{i18n.t("Quality control")}: <span>{well.qualityControl}</span></li>
+                            {well.micromolarConcentration && (<li>{i18n.t("Concentration (microMolar)")}: <span>{well.micromolarConcentration}</span></li>)}
+                            <li>{i18n.t("Percentage Inhibition")}: <span>{well.percentageInhibition}</span></li>
+                            <li>{i18n.t("Hit compound (over 75% activity)")}: <span>{well.hitCompound}</span></li>
+                            <li>{i18n.t("Number of Cells (DPC)")}: <span>{well.numberOfCells}</span></li>
+                            <li>{i18n.t("Phenotype Annotation Level")}: <span>{well.phenotypeAnnotation}</span></li>
+                            <li>{i18n.t("Channels")}: <span>{well.channels}</span></li>
+                            <li>{i18n.t("External link")}:{" "}
                                 <span>
                                     <a href={well.externalLink} target="_blank" rel="noreferrer">
                                         {well.externalLink}
@@ -349,8 +243,56 @@ const TooltipContent: React.FC<TooltipContentProps> = React.memo(props => {
                         </ul>
                     </div>
                 </>
-            )}
+            )
+            }
         </TooltipContainer>
+    );
+});
+
+const ClipPathCircles: React.FC = React.memo(() => (
+    <>
+        {_.range(70.6, 342.6, 34).map((y, i) =>
+            _.range(80.82, 488.82, 34).map((x, j) => (
+                <circle key={`${i}${j}`} cx={x} cy={y} r="15" />
+            ))
+        )}
+    </>
+));
+
+const LeftColumn: React.FC = React.memo(
+    // prettier-ignore
+    () => (
+    <text className="left-column">
+        <tspan x="35.31" y="79.75">A</tspan>
+        <tspan x="35.08" y="113.75">B</tspan>
+        <tspan x="34.41" y="147.25">C</tspan>
+        <tspan x="34.41" y="181.25">D</tspan>
+        <tspan x="35.08" y="215.25">E</tspan>
+        <tspan x="34.75" y="248.75">F</tspan>
+        <tspan x="32.75" y="282.25">G</tspan>
+        <tspan x="34.41" y="316.25">H</tspan>
+    </text>
+)
+);
+
+const TopRow: React.FC = React.memo(() => {
+    const y = 42.3;
+    // prettier-ignore
+    return (
+        <text className="top-row">
+            <tspan x="75.98" y={y}>1</tspan>
+            <tspan x="109.48" y={y}>2</tspan>
+            <tspan x="143.48" y={y}>3</tspan>
+            <tspan x="176.98" y={y}>4</tspan>
+            <tspan x="211.48" y={y}>5</tspan>
+            <tspan x="244.98" y={y}>6</tspan>
+            <tspan x="278.98" y={y}>7</tspan>
+            <tspan x="312.98" y={y}>8</tspan>
+            <tspan x="346.48" y={y}>9</tspan>
+            <tspan x="376.65" y={y}>10</tspan>
+            <tspan x="412.09" y={y}>11</tspan>
+            <tspan x="444.15" y={y}>12</tspan>
+        </text>
     );
 });
 
