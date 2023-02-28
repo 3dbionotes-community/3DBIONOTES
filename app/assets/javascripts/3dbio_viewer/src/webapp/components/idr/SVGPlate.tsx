@@ -69,7 +69,7 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
                     subtitle: ("ABCDEFGH".charAt(well.position.y) ?? "") + (well.position.x + 1),
                     well,
                 },
-                "right" //if there is no space for tooltip it will be left as default being "right" set.
+                undefined
             ),
         [showTooltip]
     );
