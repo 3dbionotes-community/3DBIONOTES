@@ -45,9 +45,28 @@ export type PdbId = string;
 
 export interface Emdb {
     id: EmdbId;
+    emv?: EMValidations;
 }
 
 export type EmdbId = string;
+
+export interface StatsValidation {
+    unit: "Angstrom";
+    rank: number;
+    resolutionMedian: number;
+    quartile25: number;
+    quartile75: number;
+}
+
+export interface EMValidations {
+    stats: Maybe<StatsValidation>;
+    // deepres: {};
+    // monores: {};
+    // blocres: {};
+    // mapq: {};
+    // fscq: {};
+    // daq: {};
+}
 
 type PdbEntity = "pdb" | "emdb" | "uniprot";
 

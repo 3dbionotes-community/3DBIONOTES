@@ -33,6 +33,12 @@ import { emdbsFromPdbUrl, getEmdbsFromMapping, PdbEmdbMapping } from "../mapping
 import { MutagenesisResponse } from "./tracks/mutagenesis";
 import { Maybe } from "../../../utils/ts-utils";
 import {
+    getEmValidations,
+    PdbEmdbEmValidations,
+    StatsResponse,
+    statsResponseC,
+} from "../../PdbEmdbEmValidations";
+import {
     getPdbLigand,
     PdbEntryResponse,
     pdbEntryResponseC,
@@ -41,7 +47,7 @@ import {
 
 interface Data {
     uniprot: UniprotResponse;
-    pdbEmdbMapping: PdbEmdbMapping;
+    pdbEmdbsEmValidations: PdbEmdbEmValidations[];
     features: Features;
     cv19Tracks: Cv19Tracks;
     pdbAnnotations: PdbAnnotations;
@@ -170,8 +176,8 @@ export class ApiPdbRepository implements PdbRepository {
             filters: variants?.filters || [],
         };
         const tracks = getTracksFromFragments(_(fragmentsList).compact().flatten().value());
-        const emdbs = on(data.pdbEmdbMapping, mapping =>
-            options.pdbId ? getEmdbsFromMapping(mapping, options.pdbId).map(id => ({ id })) : []
+        const emdbs = on(data.pdbEmdbsEmValidations, pdbEmdbsEmValidations =>
+            pdbEmdbsEmValidations.map(({ id, emv }) => ({ id, emv: getEmValidations(emv) }))
         );
         debugVariable({ tracks, variants });
 
@@ -205,7 +211,30 @@ function getData(options: Options): FutureData<Partial<Data>> {
     // Move URLS to each track module?
     const data$: DataRequests = {
         uniprot: getXML(`${routes.uniprot}/uniprot/${proteinId}.xml`),
-        pdbEmdbMapping: onF(pdbId, pdbId => getJSON(`${emdbsFromPdbUrl}/${pdbId}`)),
+        pdbEmdbsEmValidations: onF(pdbId, pdbId =>
+            getJSON<PdbEmdbMapping>(`${emdbsFromPdbUrl}/${pdbId}`).flatMap(pdbEmdbMapping => {
+                const emdbs = pdbEmdbMapping ? getEmdbsFromMapping(pdbEmdbMapping, pdbId) : [];
+
+                const pdbEmdbsEmValidations = emdbs?.map(id => ({
+                    id,
+                    emv:
+                        //prettier-ignore
+                        Future.joinObj({
+                        stats: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats/`, statsResponseC),
+                        // deepres: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
+                        // monores: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
+                        // blocres: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
+                        // mapq: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
+                        // fscq: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
+                        // daq: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
+                    }),
+                }));
+
+                return Future.parallel(
+                    pdbEmdbsEmValidations.map(emdb => emdb.emv.map(emv => ({ id: emdb.id, emv })))
+                );
+            })
+        ),
         features: getJSON(`${ebiProteinsApiUrl}/features/${proteinId}`),
         cv19Tracks: getJSON(`${bioUrl}/cv19_annotations/${proteinId}_annotations.json`),
         pdbAnnotations: onF(pdbId, pdbId =>

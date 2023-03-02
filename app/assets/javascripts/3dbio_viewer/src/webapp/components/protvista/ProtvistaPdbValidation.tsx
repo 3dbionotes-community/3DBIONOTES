@@ -1,9 +1,10 @@
+import _ from "lodash";
 import React from "react";
 import * as d3Module from "d3";
 import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
 import modelQualityStats from "../../../data/repositories/emv_modelquality_stats.json";
 import localResolutionStats from "../../../data/repositories/emv_localresolution_stats.json";
-import _ from "lodash";
+import { StatsValidation } from "../../../domain/entities/Pdb";
 
 declare global {
     const d3: typeof d3Module;
@@ -15,14 +16,19 @@ const dimensions = {
 };
 
 export const ProtvistaPdbValidation: React.FC<ProtvistaPdbProps> = React.memo(props => {
+    const emdb = _.first(props.pdb.emdbs);
     const ref = useGrid();
-    const svgRef = useBar();
+    const svgRef = useBar(emdb?.emv?.stats);
 
     return (
         <>
-            <svg ref={ref} />
-            <svg ref={svgRef} />
-            <ProtvistaPdb {...props} />
+            <div style={styles.svgContainers}>
+                <svg ref={ref} />
+                {svgRef && <svg ref={svgRef} />}
+            </div>
+            <div>
+                <ProtvistaPdb {...props} />
+            </div>
         </>
     );
 });
@@ -77,7 +83,6 @@ function useGrid() {
             .select(svgRef.current)
             .attr("width", dimensions.width + 10)
             .attr("height", dimensions.height * 2)
-            .attr("transform", "translate(0, -80)")
             .append("g");
 
         const x_axis = grid.append("g");
@@ -238,18 +243,13 @@ function useGrid() {
     return svgRef;
 }
 
-function useBar() {
+function useBar(stats?: StatsValidation) {
     const svgRef = React.useRef<SVGSVGElement>(null);
 
     React.useEffect(() => {
         if (!svgRef.current) return;
-
-        const {
-            rank,
-            resolutionMedian,
-            quartile25,
-            quartile75,
-        } = localResolutionStats.data.metrics;
+        if (!stats) return;
+        const { rank, unit, resolutionMedian, quartile25, quartile75 } = stats;
 
         const svg = d3
             .select(svgRef.current)
@@ -315,21 +315,21 @@ function useBar() {
 
         rankTooltip
             .append("text")
-            .text("Quartile-25: " + quartile25 + "Å")
+            .text(`Quartile-25: ${quartile25} ${unit}`)
             .attr("x", rank + 30)
             .attr("y", "20")
             .attr("fill", "white");
 
         rankTooltip
             .append("text")
-            .text("Median: " + resolutionMedian + "Å")
+            .text(`Median: ${resolutionMedian} ${unit}`)
             .attr("x", rank + 30)
             .attr("y", "40")
             .attr("fill", "white");
 
         rankTooltip
             .append("text")
-            .text("Quartile-75: " + quartile75 + "Å")
+            .text(`Quartile-75: ${quartile75} ${unit}`)
             .attr("x", rank + 30)
             .attr("y", "60")
             .attr("fill", "white");
@@ -353,10 +353,19 @@ function useBar() {
                 <p style="color: orange; border: 3px solid orange; border-radius: 6px; padding: 4px 16px; font-style: italic">${localResolutionStats.warnings.mapping}<p>
                 <p style="color: orangered; border: 3px solid orangered; border-radius: 6px; padding: 4px 16px; font-style: italic">${localResolutionStats.errors.processing}<p>
             `);
-    }, []);
+    }, [stats]);
 
     return svgRef;
 }
+
+const styles = {
+    svgContainers: {
+        display: "flex",
+        alignItems: "center",
+        columnGap: "1em",
+        marginBottom: "1em",
+    },
+};
 
 interface GridData {
     color: string;
