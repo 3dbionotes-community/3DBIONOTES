@@ -33,10 +33,12 @@ import { emdbsFromPdbUrl, getEmdbsFromMapping, PdbEmdbMapping } from "../mapping
 import { MutagenesisResponse } from "./tracks/mutagenesis";
 import { Maybe } from "../../../utils/ts-utils";
 import {
+    ConsensusResponse,
+    consensusResponseC,
     getEmValidations,
     PdbEmdbEmValidations,
-    StatsResponse,
-    statsResponseC,
+    RankResponse,
+    rankResponseC,
 } from "../../PdbEmdbEmValidations";
 import {
     getPdbLigand,
@@ -220,7 +222,8 @@ function getData(options: Options): FutureData<Partial<Data>> {
                     emv:
                         //prettier-ignore
                         Future.joinObj({
-                        stats: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats/`, statsResponseC),
+                        localResolution: getValidatedJSON<ConsensusResponse>(`${bws}/api/emv/${id}/localresolution/consensus/`, consensusResponseC).flatMap(
+                            consensus=>getValidatedJSON<RankResponse>(`${bws}/api/emv/${id}/localresolution/rank/`, rankResponseC).map(rank=>({consensus,rank}))),
                         // deepres: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
                         // monores: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
                         // blocres: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),

@@ -3,7 +3,6 @@ import React from "react";
 import * as d3Module from "d3";
 import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
 import modelQualityStats from "../../../data/repositories/emv_modelquality_stats.json";
-import localResolutionStats from "../../../data/repositories/emv_localresolution_stats.json";
 import { StatsValidation } from "../../../domain/entities/Pdb";
 
 declare global {
@@ -24,7 +23,32 @@ export const ProtvistaPdbValidation: React.FC<ProtvistaPdbProps> = React.memo(pr
         <>
             <div style={styles.svgContainers}>
                 <svg ref={ref} />
-                {svgRef && <svg ref={svgRef} />}
+                {svgRef && (
+                    <div>
+                        <svg ref={svgRef} />
+                        <div style={styles.info.container}>
+                            <p>
+                                Alias irure aliquam, facilisi taciti tenetur rutrum consequat
+                                impedit! Nisl tortor voluptates! Felis scelerisque, anim
+                                sollicitudin nostra sem, aliquet doloremque diamlorem magnam
+                                provident elit? Nulla lobortis varius omnis tempus asperiores?
+                                Ratione omnis, nibh repellat? Netus minima, doloremque veniam
+                                dolorem accusamus, porttitor lacus taciti modi senectus? Fugit ut
+                                voluptates. Natoque cupidatat.
+                            </p>
+                            {emdb?.emv?.stats?.warnings?.map((warning, idx) => (
+                                <p key={idx} style={styles.info.warnings}>
+                                    {warning}
+                                </p>
+                            ))}
+                            {emdb?.emv?.stats?.errors?.map((error, idx) => (
+                                <p key={idx} style={styles.info.errors}>
+                                    {error}
+                                </p>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
             <div>
                 <ProtvistaPdb {...props} />
@@ -251,10 +275,7 @@ function useBar(stats?: StatsValidation) {
         if (!stats) return;
         const { rank, unit, resolutionMedian, quartile25, quartile75 } = stats;
 
-        const svg = d3
-            .select(svgRef.current)
-            .attr("width", dimensions.width)
-            .attr("height", dimensions.height * 2.5);
+        const svg = d3.select(svgRef.current).attr("width", dimensions.width).attr("height", 150);
 
         const svgBar = svg.append("g");
 
@@ -280,7 +301,7 @@ function useBar(stats?: StatsValidation) {
 
         svgBar
             .append("text")
-            .attr("transform", "translate(" + (300 * rank) / 100 + ", 85)")
+            .attr("transform", "translate(" + (300 * rank) / 100 + ", 145)")
             .style("text-anchor", "middle")
             .text("Rank: " + rank);
 
@@ -336,23 +357,6 @@ function useBar(stats?: StatsValidation) {
 
         percentileRank.on("mouseover", () => rankTooltip.style("display", "block"));
         percentileRank.on("mouseout", () => rankTooltip.style("display", "none"));
-
-        const svgText = svg
-            .append("g")
-            .attr("transform", "translate(10, 140)")
-            .attr("width", 350)
-            .attr("height", dimensions.height * 2);
-
-        svgText
-            .append("foreignObject")
-            .attr("width", 300)
-            .attr("height", dimensions.height * 2)
-            .append("xhtml:div")
-            .style("font-size", "14px").html(`
-                <p>Alias irure aliquam, facilisi taciti tenetur rutrum consequat impedit! Nisl tortor voluptates! Felis scelerisque, anim sollicitudin nostra sem, aliquet doloremque diamlorem magnam provident elit? Nulla lobortis varius omnis tempus asperiores? Ratione omnis, nibh repellat? Netus minima, doloremque veniam dolorem accusamus, porttitor lacus taciti modi senectus? Fugit ut voluptates. Natoque cupidatat.
-                <p style="color: orange; border: 3px solid orange; border-radius: 6px; padding: 4px 16px; font-style: italic">${localResolutionStats.warnings.mapping}<p>
-                <p style="color: orangered; border: 3px solid orangered; border-radius: 6px; padding: 4px 16px; font-style: italic">${localResolutionStats.errors.processing}<p>
-            `);
     }, [stats]);
 
     return svgRef;
@@ -361,9 +365,29 @@ function useBar(stats?: StatsValidation) {
 const styles = {
     svgContainers: {
         display: "flex",
-        alignItems: "center",
+        alignItems: "flex-start",
         columnGap: "1em",
         marginBottom: "1em",
+    },
+    info: {
+        container: {
+            fontSize: "14px",
+            maxWidth: 350,
+        },
+        warnings: {
+            color: "orange",
+            border: "3px solid orange",
+            borderRadius: "6px",
+            padding: "4px 16px",
+            fontStyle: "italic",
+        },
+        errors: {
+            color: "orangered",
+            border: "3px solid orangered",
+            borderRadius: "6px",
+            padding: "4px 16px",
+            fontStyle: "italic",
+        },
     },
 };
 

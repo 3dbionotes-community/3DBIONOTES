@@ -56,6 +56,8 @@ export interface StatsValidation {
     resolutionMedian: number;
     quartile25: number;
     quartile75: number;
+    warnings?: string[];
+    errors?: string[];
 }
 
 export interface EMValidations {
