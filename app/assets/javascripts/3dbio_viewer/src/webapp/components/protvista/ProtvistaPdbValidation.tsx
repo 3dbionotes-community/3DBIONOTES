@@ -63,6 +63,8 @@ function useGrid() {
     React.useEffect(() => {
         if (!svgRef.current) return;
 
+        svgRef.current.innerHTML = ""; //remove all to prevent overlapping
+
         const { axis_x, axis_y } = modelQualityStats.graph;
         const emvStatsCategories = modelQualityStats.data.categories;
         const numRows = axis_y.categories.length;
@@ -274,6 +276,8 @@ function useBar(stats?: StatsValidation) {
         if (!svgRef.current) return;
         if (!stats) return;
         const { rank, unit, resolutionMedian, quartile25, quartile75 } = stats;
+
+        svgRef.current.innerHTML = ""; //remove all to prevent overlapping
 
         const svg = d3.select(svgRef.current).attr("width", dimensions.width).attr("height", 150);
 
