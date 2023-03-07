@@ -175,7 +175,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
         pdbePlugin.load(
             {
-                url: `${routes.bionotesDev}/upload/${uploadDataToken}/structure_file.cif`,
+                url: `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.cif`,
                 format: "mmcif",
                 isBinary: false,
                 assemblyId: "1",

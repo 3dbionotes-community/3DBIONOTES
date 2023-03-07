@@ -206,7 +206,7 @@ export class ApiPdbRepository implements PdbRepository {
 
 function getData(options: Options): FutureData<Partial<Data>> {
     const { proteinId, pdbId, chainId } = options;
-    const { bionotes: bioUrl, ebi: ebiBaseUrl, publicBionotesDev: bws } = routes;
+    const { bionotes: bioUrl, bionotesStaging: bioUrlDev, ebi: ebiBaseUrl } = routes;
     const ebiProteinsApiUrl = `${ebiBaseUrl}/proteins/api`;
     const pdbAnnotUrl = `${bioUrl}/ws/lrs/pdbAnnotFromMap`;
 
@@ -222,8 +222,8 @@ function getData(options: Options): FutureData<Partial<Data>> {
                     emv:
                         //prettier-ignore
                         Future.joinObj({
-                        localResolution: getValidatedJSON<ConsensusResponse>(`${bws}/api/emv/${id}/localresolution/consensus/`, consensusResponseC).flatMap(
-                            consensus=>getValidatedJSON<RankResponse>(`${bws}/api/emv/${id}/localresolution/rank/`, rankResponseC).map(rank=>({consensus,rank}))),
+                        localResolution: getValidatedJSON<ConsensusResponse>(`${bioUrlDev}/bws/api/emv/${id}/localresolution/consensus/`, consensusResponseC).flatMap(
+                            consensus=>getValidatedJSON<RankResponse>(`${bioUrlDev}/bws/api/emv/${id}/localresolution/rank/`, rankResponseC).map(rank=>({consensus,rank}))),
                         // deepres: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
                         // monores: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
                         // blocres: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
@@ -268,7 +268,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         ),
         ligands: onF(pdbId, pdbId =>
             getValidatedJSON<PdbEntryResponse>(
-                `${bws}/api/pdbentry/${pdbId}/ligands/`,
+                `${bioUrlDev}/bws/api/pdbentry/${pdbId}/ligands/`,
                 pdbEntryResponseC
             ).map(pdbEntryResponse => pdbEntryResponse?.results)
         ),

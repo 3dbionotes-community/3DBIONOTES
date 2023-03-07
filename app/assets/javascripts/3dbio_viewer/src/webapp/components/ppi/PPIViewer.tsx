@@ -50,7 +50,7 @@ const styles = recordOfStyles({
 */
 function useIframeDataPost(pdb: Pdb) {
     React.useEffect(() => {
-        const src = routes.bionotesDev + "/ppiIFrame";
+        const src = routes.bionotesStaging + "/ppiIFrame";
         const params = pdb.proteinNetwork
             ? { ppi_network: pdb.proteinNetwork.networkGraph }
             : pdb.id
