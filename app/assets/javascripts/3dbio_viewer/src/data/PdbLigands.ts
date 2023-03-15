@@ -151,7 +151,6 @@ export function getPdbLigand(ligand: PdbLigandResponse): PdbLigand {
     const idr = _.first(
         ligand.imageData?.map(idr => ({
             ...idr,
-            externalLink: ligand.externalLink,
             assays: idr.assays.map(assay => {
                 const {
                     screens,
@@ -211,6 +210,7 @@ export function getPdbLigand(ligand: PdbLigandResponse): PdbLigand {
                         })
                     ),
                     compound: {
+                        name: ligand.name,
                         percentageInhibition: allPercentageInhibition,
                         cytotoxicity: cytotoxicity
                             ? `${cytotoxicity.value} ${cytotoxicity.units ?? ""}`
