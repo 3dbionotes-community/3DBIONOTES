@@ -20,6 +20,8 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
     const [tooltipContentProps, setTooltipContentProps] = React.useState<TooltipContentProps>();
     const [tooltipPlacement, setTooltipPlacement] = React.useState<TooltipProps["placement"]>();
 
+    const displayTooltipStyle = React.useMemo(() => (open ? {} : { display: "none" }), [open]);
+
     const plateRef = React.useRef<SVGGElement>(null);
     const wellRefs = React.useRef<SVGImageElement[]>([]);
 
@@ -80,7 +82,7 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
     }, []);
 
     return (
-        <div onMouseLeave={hideTooltip}>
+        <Wrapper onMouseLeave={hideTooltip}>
             <StyledSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 509.28 362.16" idx={idx}>
                 <defs>
                     <clipPath xmlns="http://www.w3.org/2000/svg" id={`${idx}-clip-path`}>
@@ -91,6 +93,18 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
                 <LeftColumn />
                 <TopRow />
                 <path className="grid" d={wellsD} />
+                <g className="highlight-wells">
+                    {wells
+                        .filter(({ well: _well, type }) => type === "well")
+                        .map(({ well }, idx) => (
+                            <circle
+                                key={idx}
+                                cx={80.82 + 34 * well.position.x}
+                                cy={70.75 + 34 * well.position.y}
+                                r="18"
+                            />
+                        ))}
+                </g>
                 <g className="idr-images">
                     {wells.map(({ well, type }, idx) => (
                         <WellWithRef
@@ -107,7 +121,7 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
                     ))}
                 </g>
             </StyledSVG>
-            <div>
+            <div style={displayTooltipStyle}>
                 <HtmlTooltip
                     PopperProps={{
                         disablePortal: true,
@@ -126,7 +140,7 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
                     <span></span>
                 </HtmlTooltip>
             </div>
-        </div>
+        </Wrapper>
     );
 });
 
@@ -172,12 +186,6 @@ const WellWithRef = React.forwardRef<SVGImageElement | null, WellProps>((props, 
         />
     );
 });
-
-const tooltipTitles = {
-    "control-well": "Control Well",
-    well: "Well",
-    plate: "Plate",
-};
 
 interface TooltipContentProps {
     type?: "control-well" | "well" | "plate";
@@ -296,6 +304,18 @@ const TopRow: React.FC = React.memo(() => {
     );
 });
 
+type RefType = SVGImageElement | SVGGElement | null;
+
+interface StyledSVGProps {
+    idx: number;
+}
+
+const tooltipTitles = {
+    "control-well": "Control Well",
+    well: "Well",
+    plate: "Plate",
+};
+
 //viewBox const for readability = 0 0 509.28 362.16
 const backgroundPlateD =
     "M33.36,351.19l-.18-.1c-1.31-.71-2.51-1.61-3.56-2.66l-13.49-13.49c-.62-.62-1.18-1.28-1.68-1.99l-2.48-3.48c-1.88-2.65-2.89-5.81-2.89-9.06V40.78c0-2.61,.65-5.18,1.9-7.47h0c.72-1.32,1.62-2.52,2.68-3.58l13.46-13.46c.63-.63,1.3-1.2,2.03-1.71l3.67-2.59c2.64-1.87,5.79-2.87,9.02-2.87H483.07s17,.5,17,15V338.1s-.25,15-17,15H40.85c-2.62,0-5.19-.66-7.49-1.91Z";
@@ -316,12 +336,6 @@ const wellsD =
     _.range(8)
         .map(() => row)
         .join("m-374,35");
-
-type RefType = SVGImageElement | SVGGElement | null;
-
-interface StyledSVGProps {
-    idx: number;
-}
 
 const StyledSVG = styled.svg<StyledSVGProps>`
     margin-top: 1em;
@@ -349,6 +363,9 @@ const StyledSVG = styled.svg<StyledSVGProps>`
     }
     .grid {
         fill: #929292;
+    }
+    .highlight-wells {
+        fill: rgb(0, 188, 212);
     }
 `;
 
@@ -387,4 +404,9 @@ export const Title = styled.div`
     span {
         line-height: 1em;
     }
+`;
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
