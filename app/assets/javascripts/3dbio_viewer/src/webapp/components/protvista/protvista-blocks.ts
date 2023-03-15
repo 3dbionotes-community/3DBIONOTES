@@ -74,7 +74,7 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "relevantSites",
-        title: "Relevant sites in the protein",
+        title: i18n.t("Relevant sites in the protein"),
         description: i18n.t(
             "Key specific residues of the protein since the map of contacts of these residues make it them essential to preserve the structure and/or the functionality of the protein."
         ),
@@ -87,7 +87,7 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "processing",
-        title: "Post-translational modifications in the mature protein",
+        title: i18n.t("Post-translational modifications in the mature protein"),
         description: i18n.t(
             "Post-translational modifications driving to the mature isoform of the protein: Proteolytic processing of signal peptide and polyproteins, as well as chemical modifications of specific residues."
         ),
@@ -101,7 +101,7 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "mapValidation",
-        title: "Validation and quality",
+        title: i18n.t("Validation and quality"),
         description: i18n.t(`
         The median local resolution of the protein is \${resolution} Å.
 
@@ -123,7 +123,7 @@ Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have 
     },
     {
         id: "residueAccessibility",
-        title: "Residue accessibility to the solvent",
+        title: i18n.t("Residue accessibility to the solvent"),
         description: i18n.t(
             `Percentage of the surface of a specific residue exposed to the solvent according to the spatial arrangement and packaging of the residue in the 3D structure.`
         ),
@@ -133,7 +133,7 @@ Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have 
     },
     {
         id: "proteinInteraction",
-        title: "Protein interactions for this protein",
+        title: i18n.t("Protein interactions for this protein"),
         description: i18n.t(`This section shows other proteins observed together with the protein of interest in PDB entries as a interaction network and as a list. In addittion, we show the protein residues that are interacting with the other proteins. 
 
         For this protein, we found \${proteinPartners} different partners.`),
@@ -143,7 +143,7 @@ Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have 
     },
     {
         id: "ligandInteraction",
-        title: "Ligand interaction",
+        title: i18n.t("Ligand interaction"),
         description: i18n.t(`
         This section shows ligands observed directly bound to the protein of interest in different experiments and PDB entries. In addittion, we show the ligand binding residues.
 
@@ -154,16 +154,18 @@ Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have 
     },
     {
         id: "bioimageDataStudies",
-        title: i18n.t("BioImage"),
+        title: i18n.t("BioImage Studies"),
         description: "",
-        help: "",
+        help: i18n.t(
+            "This section contains image-based studies that show biological processes and functions related to the molecular complex displayed in the 3D viewer on the left. It includes imaging modalities and experimental approaches such as high-content screening, multi-dimensional microscopy and digital pathology, among others."
+        ),
         tracks: [],
         component: IDRViewerBlock,
-        profiles: [profiles.drugDesign],
+        profiles: [profiles.drugDesign, profiles.biomedicine],
     },
     {
         id: "variants",
-        title: "Mutagenesis experiments and Variants",
+        title: i18n.t("Mutagenesis experiments and Variants"),
         description: "",
         help: i18n.t(
             "This section contains information related to [mutagenesis experiments performed on the protein and] mutations found by large-scale sequencing studies and those reviewed by uniprot."
@@ -174,7 +176,7 @@ Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have 
     // <- Diseases and his relation with the variants
     {
         id: "proteomics",
-        title: "Proteomics",
+        title: i18n.t("Proteomics"),
         description: "",
         help: "",
         tracks: [tracks.structureCoverage, tracks.peptides],
@@ -182,7 +184,7 @@ Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have 
     },
     {
         id: "inmunology",
-        title: "Immunology information",
+        title: i18n.t("Immunology information"),
         description: "",
         help: "",
         tracks: [tracks.structureCoverage, tracks.epitomes, tracks.antigenicSequence],
