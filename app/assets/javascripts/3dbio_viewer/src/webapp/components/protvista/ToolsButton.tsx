@@ -30,10 +30,7 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
 
     const openNetworkWithAnalytics = React.useCallback(() => {
         openNetwork();
-        sendAnalytics({
-            type: "event",
-            category: "dialog",
-            action: "open",
+        sendAnalytics("open_dialog", {
             label: "Network",
         });
     }, [openNetwork]);
