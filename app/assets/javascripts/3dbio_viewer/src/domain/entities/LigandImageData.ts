@@ -40,6 +40,7 @@ export interface Screen {
 }
 
 export interface Compound {
+    name: string;
     percentageInhibition?: string;
     cytotoxicity?: string;
     doseResponse?: string;
