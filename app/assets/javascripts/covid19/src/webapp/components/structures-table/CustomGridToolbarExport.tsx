@@ -32,7 +32,7 @@ export const CustomGridToolbarExport: React.FC<CustomGridToolbarExportProps> = R
                 label: `Export ${format}: ${ellipsizedList(
                     dataGrid.structures.map(row => row.id)
                 )}`,
-                value: gridApi.getRowsCount(),
+                rowsCount: gridApi.getRowsCount(),
             });
             closeMenu();
         },
