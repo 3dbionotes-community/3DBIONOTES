@@ -18,7 +18,7 @@
     "https://www.googletagmanager.com/gtag/js?id=G-1WTRK5CB7C",
     "gtag"
 );
-gtag("config", "G-1WTRK5CB7C");
+gtag("config", "G-1WTRK5CB7C"); //change on prod
 
 var $j = jQuery.noConflict();
 
