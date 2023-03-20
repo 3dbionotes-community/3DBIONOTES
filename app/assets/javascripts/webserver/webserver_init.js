@@ -25,20 +25,26 @@ var $j = jQuery.noConflict();
 $j(document).ready(function () {
     $j(".btn-contact").bind("click", () => {
         gtag("event", "clicked_contact", {
-            location: window.location.hash,
+            location_hash: window.location.hash,
+            location_pathname: window.location.pathname,
+            location_href: window.location.href,
         });
     });
     $j(".cta-covid").bind("click", () => {
         gtag("event", "clicked_cta", {
             action: "go_to",
-            location: window.location.hash,
+            location_hash: window.location.hash,
+            location_pathname: window.location.pathname,
+            location_href: window.location.href,
             href: "/covid19",
         });
     });
     $j(".cta-example").bind("click", () => {
         gtag("event", "clicked_cta", {
             action: "view_example",
-            location: window.location.hash,
+            location_hash: window.location.hash,
+            location_pathname: window.location.pathname,
+            location_href: window.location.href,
             href: $j(".cta-example").data("id"),
         });
     });
