@@ -292,9 +292,9 @@ function useBar(stats?: StatsValidation) {
 
         const svgDefs = svgBar.append("defs");
         const mainGradient = svgDefs.append("linearGradient").attr("id", "mainGradient");
-        mainGradient.append("stop").attr("stop-color", "red").attr("offset", "0");
+        mainGradient.append("stop").attr("stop-color", "green").attr("offset", "0");
         mainGradient.append("stop").attr("stop-color", "white").attr("offset", "0.5");
-        mainGradient.append("stop").attr("stop-color", "blue").attr("offset", "1");
+        mainGradient.append("stop").attr("stop-color", "red").attr("offset", "1");
         bar.attr("fill", "url(#mainGradient)");
 
         svgBar
