@@ -1,6 +1,5 @@
 import React from "react";
 import { ProtvistaViewer } from "../protvista/ProtvistaViewer";
-import styles from "./Viewers.module.css";
 import { JumpToButton } from "../protvista/JumpToButton";
 import { ProfilesButton } from "../protvista/ProfilesButton";
 import { ToolsButton } from "../protvista/ToolsButton";
@@ -10,6 +9,9 @@ import { ViewerState } from "../../view-models/ViewerState";
 import { Annotations } from "../../../domain/entities/Annotation";
 import { getVisibleBlocks } from "../protvista/Protvista.helpers";
 import { debugFlags } from "../../pages/app/debugFlags";
+import { TrainingApp } from "../../training-app";
+import { modules } from "../../training-app/training-modules";
+import styles from "./Viewers.module.css";
 
 export interface PdbViewerProps {
     pdb: Pdb;
@@ -34,6 +36,7 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
                     <ToolsButton onAddAnnotations={onAddAnnotations} />
                     <ProfilesButton profile={profile} onChange={setProfile} />
                     <JumpToButton blocks={blocks} />
+                    {!debugFlags.hideTraining && <TrainingApp locale="en" modules={modules} />}
                 </div>
             </div>
 
