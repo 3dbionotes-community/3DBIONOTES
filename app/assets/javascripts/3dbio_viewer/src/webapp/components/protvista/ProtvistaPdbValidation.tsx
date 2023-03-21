@@ -275,7 +275,7 @@ function useBar(stats?: StatsValidation) {
     React.useEffect(() => {
         if (!svgRef.current) return;
         if (!stats) return;
-        const { rank, unit, resolutionMedian, quartile25, quartile75 } = stats;
+        const { rank, resolutionMedian, unit, quartile25, quartile75 } = stats;
 
         svgRef.current.innerHTML = ""; //remove all to prevent overlapping
 
@@ -340,7 +340,7 @@ function useBar(stats?: StatsValidation) {
 
         rankTooltip
             .append("text")
-            .text(`Quartile-25: ${quartile25} ${unit}`)
+            .text(`Quartile-25: ${quartile25}`)
             .attr("x", rank + 30)
             .attr("y", "20")
             .attr("fill", "white");
@@ -354,7 +354,7 @@ function useBar(stats?: StatsValidation) {
 
         rankTooltip
             .append("text")
-            .text(`Quartile-75: ${quartile75} ${unit}`)
+            .text(`Quartile-75: ${quartile75}`)
             .attr("x", rank + 30)
             .attr("y", "60")
             .attr("fill", "white");
