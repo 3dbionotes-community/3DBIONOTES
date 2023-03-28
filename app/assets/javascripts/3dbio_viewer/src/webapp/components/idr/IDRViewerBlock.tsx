@@ -3,13 +3,21 @@ import React from "react";
 import styled from "styled-components";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { recordOfStyles } from "../../../utils/ts-utils";
-import { Assay, Compound, Plate, Screen } from "../../../domain/entities/LigandImageData";
+import {
+    AdditionalAnalysisCompound,
+    Assay,
+    Compound,
+    OntologyTerm,
+    Plate,
+    Screen,
+} from "../../../domain/entities/LigandImageData";
 import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@material-ui/core";
 import { ViewerTooltip } from "../viewer-tooltip/ViewerTooltip";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { SVGPlate } from "./SVGPlate";
-import i18n from "../../utils/i18n";
 import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
+import { HtmlTooltip } from "../HtmlTooltip";
+import i18n from "../../utils/i18n";
 
 interface BasicInfoProps {
     pdb: Pdb;
@@ -17,78 +25,113 @@ interface BasicInfoProps {
 
 export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => {
     const [showTooltip, { set: setShowTooltip, toggle: toggleTooltip }] = useBooleanState(false);
+
     const idrs = React.useMemo(
         () => _.compact(pdb.ligands?.map(ligand => ligand.imageDataResource)),
         [pdb]
     );
 
+    const getAssayDescription = React.useCallback((assay: Assay) => {
+        const screen = assay.screens.find(screen => screen.id == "2602");
+        const namespace = {
+            ligandName: assay.compound.name,
+            percentageInhibition: assay.compound.percentageInhibition,
+            micromolarConcentration: _.first(_.first(screen?.plates)?.wells)
+                ?.micromolarConcentration,
+            hitOver75Activity:
+                _.first(_.first(screen?.plates)?.wells)?.hitCompound.toLowerCase() === "yes"
+                    ? "is"
+                    : "is not",
+            doseResponseValue: assay.compound.doseResponse?.value,
+            doseResponseUnit: assay.compound.doseResponse?.units?.name,
+            cytotoxicityValue: assay.compound.cytotoxicity?.value,
+            cytotoxicityUnits: assay.compound.cytotoxicity?.units?.name,
+            cytotoxicIndexValue: assay.compound.cytotoxicIndex?.value,
+            cytotoxicIndexUnits: assay.compound.cytotoxicIndex?.units?.name,
+        };
+
+        //prettier-ignore
+        return [
+            i18n.t("This is an assay based on high content screen of cells treated with a compound library and infection in which a well-defined collection of compounds is tested against SARS-CoV-2.", namespace),
+            i18n.t("The compound {{ligandName}} inhibited cytopathicity by {{percentageInhibition}} at {{micromolarConcentration}} µM, which {{hitOver75Activity}} considered as a hit (efficiency in blocking viral cytopathicity) in the context of this assay.", namespace),
+            screen?.type.some(term => term.name === "multiple concentration")
+                ? i18n.t("Concentration-response profiling of hit compound {{ligandName}} was performed in triplicate with eight concentrations ranging from 20 µM to 20 nM and on three different plates to minimise the influence of plate effects.", namespace)
+                : [],
+            assay.compound.doseResponse
+                ? i18n.t("The half maximal inhibitory concentration (IC50) for {{ligandName}} is {{doseResponseValue}} {{doseResponseUnit}}.", namespace)
+                : [],
+            assay.compound.cytotoxicity
+                ? i18n.t("The cytotoxic concentration (CC50) for {{ligandName}} is {{cytotoxicityValue}} {{cytotoxicityUnits}}.", namespace)
+                : [],
+            assay.compound.cytotoxicIndex
+                ? i18n.t("The the ratio between the cytopathic effect and cytotoxicity, also known as the selectivity index (IC50/CC50), for {{ligandName}} is {{cytotoxicIndexValue}} {{cytotoxicIndexUnits}}.", namespace)
+                : [],
+        ].flat();
+    }, []);
+
     return (
-        <div style={styles.section}>
-            <div style={styles.title}>
-                {i18n.t("High-Content Screening (HCS) Assays")}
-                <ViewerTooltip
-                    title={i18n.t(
-                        "This section contains key information about High-Content Screening assays in which some of the entities present in the atomic model have been tested, including information about assay, screens, plates, wells and compound effects. Note that for HCSs of cells treated with a compound library, due to the nature of the assay, there is no precise evidence that the compound-macromolecule binding in the atomic model is the direct cause of the final phenotype observed in the images."
-                    )}
-                    showTooltip={showTooltip}
-                    setShowTooltip={setShowTooltip}
-                >
-                    <button onClick={toggleTooltip}>?</button>
-                </ViewerTooltip>
-            </div>
-            <p className="contents">{i18n.t("Text to be determined.")}</p>
-            {
-                //                     This is an assay based on high content screen of cells treated with a compound library and infection in which a well-defined collection of compounds is tested against SARS-CoV-2.
-                //
-                // The compound <ligand[name]> inhibited cytopathicity by <ligand['imageData']['assays'][‘screens’][‘dbId’ == ‘2602’][‘plates’][‘wells’][‘percentageInhibition’]> % at <ligand['imageData']['assays']['screens'][‘dbId’ == ‘2602’]['plates']['wells']['micromolarConcentration']> µM, which <if ligand['imageData']['assays']['screens']['plates']['well']['hitOver75Activity'] == ‘yes': is>/<else: is not> considered as a hit (efficiency in blocking viral cytopathicity) in the context of this assay.
-                //
-                // <if ligand['imageData']['assays'][‘screens’][‘type’ == 'multiple concentration]’: Concentration-response profiling of hit compound <ligand[name]> was performed in triplicate with eight concentrations ranging from 20 µM to 20 nM and on three different plates to minimise the influence of plate effects.>
-                //
-                // <if ligand['imageData']['assays']['additionalAnalyses'][‘name’ == ‘ic50’]: The half maximal inhibitory concentration (IC50) for <ligand[name]> is <ligand['imageData']['assays']['additionalAnalyses'][‘name’ == ‘ic50’][value]> <ligand['imageData']['assays']['additionalAnalyses'][‘name’ == ‘ic50’][units]>. >.
-                //
-                // <if ligand['imageData']['assays']['additionalAnalyses'][‘name’ == ‘cc50’]: The cytotoxic concentration (CC50) for <ligand[name]> is <ligand['imageData']['assays']['additionalAnalyses'][‘name’ == ‘cc50’][value]> <ligand['imageData']['assays']['additionalAnalyses'][‘name’ == ‘cc50’][units]>. >
-                //
-                // <if ligand['imageData']['assays']['additionalAnalyses'][‘name’ == ‘selectivity index’]: The the ratio between the cytopathic effect and cytotoxicity, also known as the selectivity index (IC50/CC50), for <ligand[name]> is  <ligand['imageData']['assays']['additionalAnalyses'][‘name’ == ‘Selectivity index’][value]> <ligand['imageData']['assays']['additionalAnalyses'][‘name’ == ‘Selectivity index’][units]>. ></div>
-            }
-            {idrs?.map((idr, i) => (
-                <Container key={i}>
-                    {idr.assays.map((assay, idx) => {
-                        return (
-                            <React.Fragment key={idx}>
-                                <Section
-                                    title={i18n.t("Assay")}
-                                    subtitle={assay.name}
-                                    help={assay.description}
-                                >
-                                    <AssayFC
-                                        assay={assay}
-                                        dataSource={{
-                                            label: idr.dataSource,
-                                            href: idr.externalLink,
-                                        }}
-                                    />
-                                </Section>
-                                <Section title={i18n.t("Compound")}>
-                                    <CompoundFC compound={assay.compound} />
-                                </Section>
-                                {assay.screens.map((screen, idx) => (
-                                    <Section
-                                        key={idx}
-                                        title={i18n.t("Screen")}
-                                        subtitle={screen.name}
-                                        help={screen.description}
-                                    >
-                                        <ScreenFC screen={screen} />
-                                        <PlatesAccordion plates={screen.plates} />
-                                    </Section>
-                                ))}
-                            </React.Fragment>
-                        );
-                    })}
-                </Container>
-            ))}
-            {_.isEmpty(idrs) && <p>{i18n.t("No IDRs found.")}</p>}
-        </div>
+        <>
+            {!_.isEmpty(idrs) && (
+                <div style={styles.section}>
+                    <div style={styles.title}>
+                        {i18n.t("High-Content Screening (HCS) Assays")}
+                        <ViewerTooltip
+                            title={i18n.t(
+                                "This section contains key information about High-Content Screening assays in which some of the entities present in the atomic model have been tested, including information about assay, screens, plates, wells and compound effects. Note that for HCSs of cells treated with a compound library, due to the nature of the assay, there is no precise evidence that the compound-macromolecule binding in the atomic model is the direct cause of the final phenotype observed in the images."
+                            )}
+                            showTooltip={showTooltip}
+                            setShowTooltip={setShowTooltip}
+                        >
+                            <button onClick={toggleTooltip}>?</button>
+                        </ViewerTooltip>
+                    </div>
+
+                    {idrs?.map((idr, i) => (
+                        <Container key={i}>
+                            {idr.assays.map((assay, idx) => {
+                                return (
+                                    <React.Fragment key={idx}>
+                                        {getAssayDescription(assay).map((description, idx) => (
+                                            <p key={idx} style={styles.description}>
+                                                {description}
+                                            </p>
+                                        ))}
+                                        <Section
+                                            title={i18n.t("Assay")}
+                                            subtitle={assay.name}
+                                            help={assay.description}
+                                        >
+                                            <AssayFC
+                                                assay={assay}
+                                                dataSource={{
+                                                    label: idr.dataSource,
+                                                    href: idr.externalLink,
+                                                }}
+                                            />
+                                        </Section>
+                                        <Section title={i18n.t("Compound")}>
+                                            <CompoundFC compound={assay.compound} />
+                                        </Section>
+                                        {assay.screens.map((screen, idx) => (
+                                            <Section
+                                                key={idx}
+                                                title={i18n.t("Screen")}
+                                                subtitle={screen.name}
+                                                help={screen.description}
+                                            >
+                                                <ScreenFC screen={screen} />
+                                                <PlatesAccordion plates={screen.plates} />
+                                            </Section>
+                                        ))}
+                                    </React.Fragment>
+                                );
+                            })}
+                        </Container>
+                    ))}
+                </div>
+            )}
+            {_.isEmpty(idrs) && <p style={styles.notFound}>{i18n.t("No IDRs found.")}</p>}
+        </>
     );
 });
 
@@ -109,8 +152,8 @@ const PlatesAccordion: React.FC<PlatesAccordionProps> = React.memo(({ plates }) 
                     </AccordionSummary>
                     <AccordionDetails>
                         <div style={styles.platesAccordion}>
-                            {plates.map((plate, idx) => (
-                                <SVGPlate plate={plate} key={idx + 1} idx={idx + 1} />
+                            {plates.slice(1).map((plate, idx) => (
+                                <SVGPlate plate={plate} key={idx + 1} idx={idx + 1} /> // idx + 1 for the slice
                             ))}
                         </div>
                     </AccordionDetails>
@@ -148,14 +191,19 @@ interface AssayFCProps {
 const AssayFC: React.FC<AssayFCProps> = React.memo(({ assay, dataSource }) => (
     <>
         <ListItem name={"ID"} value={assay.id} />
-        <ListItem name={"Type"} value={assay.type} />
-        <ListItem name={"Type Term Accession"} value={assay.typeTermAccession} />
+        <ListItem name={"Type"}>{assay.type.reduce(reduceOntologyType, [])}</ListItem>
         <ListItem name={"Organisms"} value={assay.organisms.map(({ name }) => name).join(", ")} />
         <ListItem
             name={"Publication Title"}
             value={assay.publications.map(({ title }) => title).join(", ")}
         />
-        <ListItem name={"Data DOI"} value={assay.dataDoi} />
+        <ListItem name={"Data DOI"}>
+            <span>
+                <a href={assay.dataDoi} target="_blank" rel="noreferrer noopener">
+                    {assay.dataDoi}
+                </a>
+            </span>
+        </ListItem>
         <ListItem name={"BioStudies Accession ID"} value={assay.bioStudiesAccessionId} />
         <ListItem name={"Source"}>
             <span>
@@ -174,18 +222,13 @@ interface ScreenFCProps {
 const ScreenFC: React.FC<ScreenFCProps> = React.memo(({ screen }) => (
     <div>
         <ListItem name={"ID"} value={screen.id} />
-        <ListItem name={"Type"} value={screen.type} />
-        <ListItem name={"Type Term Accession"} value={screen.typeTermAccession} />
-        <ListItem name={"Technology Type"} value={screen.technologyType} />
-        <ListItem
-            name={"Technology Type Term Accession"}
-            value={screen.technologyTypeTermAccession}
-        />
-        <ListItem name={"Imaging Method"} value={screen.imagingMethod} />
-        <ListItem
-            name={"Imaging Method Term Accession"}
-            value={screen.imagingMethodTermAccession}
-        />
+        <ListItem name={"Type"}>{screen.type.reduce(reduceOntologyType, [])}</ListItem>
+        <ListItem name={"Technology Type"}>
+            {screen.technologyType.reduce(reduceOntologyType, [])}
+        </ListItem>
+        <ListItem name={"Imaging Method"}>
+            {screen.imagingMethod.reduce(reduceOntologyType, [])}
+        </ListItem>
         <ListItem name={"Data DOI"}>
             <span>
                 <a href={screen.doi} target="_blank" rel="noreferrer noopener">
@@ -200,18 +243,35 @@ interface CompoundFCProps {
     compound: Compound;
 }
 
-const CompoundFC: React.FC<CompoundFCProps> = React.memo(({ compound }) => (
-    <>
-        <ListItem name={"Name"} value={compound.name} />
-        <ListItem name={"Inhibition of cytopathicity"} value={compound.percentageInhibition} />
-        <ListItem name={"Cytotoxicity (CC50)"} value={compound.cytotoxicity} />
-        <ListItem name={"Dose-response (IC50)"} value={compound.doseResponse} />
-        <ListItem
-            name={"Cytotoxic Index (Selectivity Index, IC50/CC50)"}
-            value={compound.cytotoxicIndex}
-        />
-    </>
-));
+const CompoundFC: React.FC<CompoundFCProps> = React.memo(({ compound }) => {
+    const values = React.useMemo(
+        () => ({
+            cytotoxicity: aacToString(compound.cytotoxicity),
+            doseResponse: aacToString(compound.doseResponse),
+            cytotoxicIndex: aacToString(compound.cytotoxicIndex),
+        }),
+        [compound]
+    );
+
+    return (
+        <>
+            <ListItem name={"Name"} value={compound.name} />
+            <ListItem name={"Inhibition of cytopathicity"} value={compound.percentageInhibition} />
+            {compound.cytotoxicity && (
+                <ListItem name={"Cytotoxicity (CC50)"} value={values.cytotoxicity} />
+            )}
+            {compound.doseResponse && (
+                <ListItem name={"Dose-response (IC50)"} value={values.doseResponse} />
+            )}
+            {compound.cytotoxicIndex && (
+                <ListItem
+                    name={"Cytotoxic Index (Selectivity Index, IC50/CC50)"}
+                    value={values.cytotoxicIndex}
+                />
+            )}
+        </>
+    );
+});
 
 interface SectionProps {
     title: string;
@@ -245,9 +305,80 @@ const Section: React.FC<SectionProps> = React.memo(({ children, title, subtitle,
     );
 });
 
+interface OntologyTypeProps {
+    term: OntologyTerm;
+}
+
+export const OntologyType: React.FC<OntologyTypeProps> = React.memo(({ term: type }) => {
+    const tooltip = React.useMemo(
+        () => (
+            <div>
+                <div>
+                    <span style={styles.bold}>{i18n.t("ID") + ": "}</span>
+                    <span>{type.id}</span>
+                </div>
+                <div>
+                    <span style={styles.bold}>{i18n.t("Term") + ": "}</span>
+                    <span>{type.name}</span>
+                </div>
+                <div>
+                    <span style={styles.bold}>{i18n.t("Description") + ": "}</span>
+                    <span>{type.description}</span>
+                </div>
+                {type.source && (
+                    <div>
+                        <span style={styles.bold}>{i18n.t("Ontology") + ": "}</span>
+                        <span>
+                            {type.source.name} ({type.source.id})
+                        </span>
+                    </div>
+                )}
+            </div>
+        ),
+        [type]
+    );
+
+    return (
+        <span>
+            {type.name}
+            {" ("}
+            <HtmlTooltip title={tooltip}>
+                <a href={type.externalLink} target="_blank" rel="noreferrer noopener">
+                    {type.id}
+                </a>
+            </HtmlTooltip>
+            {")"}
+        </span>
+    );
+});
+
+function aacToString(aac?: AdditionalAnalysisCompound) {
+    if (!aac) return undefined;
+    const relation = aac.relation !== "=";
+    const units = aac.units?.name ?? undefined;
+
+    return `${relation ? aac.relation + " " : ""}${JSON.stringify(aac.value)}${
+        units ? " " + units : ""
+    }`;
+}
+
+export function reduceOntologyType(acc: JSX.Element[], type: OntologyTerm, idx: number) {
+    return [
+        ...acc,
+        acc.length != 0 ? [<span key={idx + "-span"}>, </span>] : [],
+        <OntologyType key={idx} term={type} />,
+    ].flat();
+}
+
 const styles = recordOfStyles({
     ul: { listStyleType: "none" },
     help: { marginLeft: 10 },
+    bold: { fontWeight: "bold" },
+    description: {
+        marginTop: 0,
+        marginBottom: "1em",
+    },
+    notFound: { margin: 0 },
     title: {
         fontWeight: "bold",
         marginBottom: 15,
@@ -260,7 +391,7 @@ const styles = recordOfStyles({
 });
 
 const Container = styled.div`
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 
     & > div {
         margin-bottom: 1em;
@@ -284,9 +415,6 @@ const Li = styled.li`
     font-weight: 400;
     line-height: 1.5;
     letter-spacing: 0.00938em;
-    span {
-        color: ;
-    }
 `;
 
 const IDRSectionHeader = styled.div`

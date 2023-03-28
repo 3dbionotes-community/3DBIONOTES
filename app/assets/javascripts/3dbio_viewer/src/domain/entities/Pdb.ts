@@ -35,7 +35,6 @@ export interface Pdb {
 }
 
 export interface PdbLigand {
-    id: string;
     name: string;
     inChI: string; //IUPACInChIkey
     imageDataResource?: LigandImageData;

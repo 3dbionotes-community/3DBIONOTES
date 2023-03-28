@@ -1,3 +1,5 @@
+import { Ontology, OntologyTerm as BioOntologyTerm } from "./Ontology";
+
 export interface LigandImageData {
     name: string;
     description: string;
@@ -10,8 +12,7 @@ export interface Assay {
     id: string;
     name: string;
     description: string;
-    type: string;
-    typeTermAccession: string;
+    type: OntologyTerm[];
     dataDoi: DataDoi;
     publications: Publication[];
     organisms: Organism[];
@@ -27,24 +28,20 @@ export interface Publication {
 export interface Screen {
     id: string;
     name: string;
-    description?: string;
-    type: string;
-    typeTermAccession: string;
-    technologyType: string;
-    technologyTypeTermAccession: string;
-    imagingMethod: string;
-    imagingMethodTermAccession: string;
+    description: string;
+    type: OntologyTerm[];
+    technologyType: OntologyTerm[];
+    imagingMethod: OntologyTerm[];
     doi: Url;
-    well?: Url;
     plates: Plate[];
 }
 
 export interface Compound {
     name: string;
     percentageInhibition?: string;
-    cytotoxicity?: string;
-    doseResponse?: string;
-    cytotoxicIndex?: string;
+    cytotoxicity?: AdditionalAnalysisCompound;
+    doseResponse?: AdditionalAnalysisCompound;
+    cytotoxicIndex?: AdditionalAnalysisCompound;
 }
 
 export interface Organism {
@@ -65,8 +62,7 @@ export interface Well {
     id: string;
     position: { x: number; y: number };
     image: string;
-    cellLine: string;
-    cellLineTermAccession: string;
+    cellLine?: OntologyTerm;
     controlType?: string;
     qualityControl: string;
     micromolarConcentration: number | null;
@@ -78,5 +74,15 @@ export interface Well {
     externalLink: string;
 }
 
+export interface AdditionalAnalysisCompound {
+    name: string;
+    relation: "<" | ">" | "=";
+    value: number;
+    description: string;
+    units?: OntologyTerm;
+    pvalue?: number;
+}
+
 type Url = string;
 type DataDoi = string;
+export type OntologyTerm = Omit<BioOntologyTerm, "source"> & { source?: Ontology };
