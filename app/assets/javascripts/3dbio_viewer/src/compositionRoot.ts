@@ -16,6 +16,8 @@ import { DownloadAnnotationsExampleUseCase } from "./domain/usecases/DownloadAnn
 import { BuildNetworkUseCase } from "./domain/usecases/BuildNetworkUseCase";
 import { BionotesNetworkRepository } from "./data/repositories/BionotesNetworkRepository";
 import { GetProteinNetworkUseCase as GetNetworkUseCase } from "./domain/usecases/GetNetworkUseCase";
+import { BionotesOntologyRepository } from "./data/repositories/BionotesOntologyRepository";
+import { BionotesOrganismRepository } from "./data/repositories/BionotesOrganismRepository";
 
 export function getCompositionRoot() {
     const pdbRepository = new ApiPdbRepository();
@@ -25,9 +27,11 @@ export function getCompositionRoot() {
     const pdbInfoRepository = new BionotesPdbInfoRepository();
     const uploadDataRepository = new UploadDataBionotesRepository();
     const networkRepository = new BionotesNetworkRepository();
+    const ontologyRepository = new BionotesOntologyRepository();
+    const organismRepository = new BionotesOrganismRepository();
 
     return {
-        getPdb: new GetPdbUseCase(pdbRepository),
+        getPdb: new GetPdbUseCase(pdbRepository, ontologyRepository, organismRepository),
         getPdbInfo: new GetPdbInfoUseCase(pdbInfoRepository),
         searchDbModels: new SearchDbModelsUseCase(dbModelRepository),
         uploadAtomicStructure: new UploadAtomicStructureUseCase(atomicStructureRepository),

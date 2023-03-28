@@ -5,6 +5,7 @@ import { TooltipProps, Typography } from "@material-ui/core";
 import { Plate, Well } from "../../../domain/entities/LigandImageData";
 import { HtmlTooltip } from "../HtmlTooltip";
 import { plateShadowImage } from "./plate-shadow-image";
+import { OntologyType } from "./IDRViewerBlock";
 import i18n from "../../utils/i18n";
 
 interface SVGPlateProps {
@@ -232,10 +233,9 @@ const TooltipContent: React.FC<TooltipContentProps> = React.memo(props => {
                         <ul>
                             {well.controlType && (<li>{i18n.t("Control type")}: <span>{well.controlType}</span></li>)}
                             <li>{i18n.t("ID")}: <span>{well.id}</span></li>
-                            <li>{i18n.t("Cell line")}: <span>{well.cellLine}</span></li>
-                            <li>{i18n.t("Cell Line Term Accession")}: <span>{well.cellLineTermAccession}</span></li>
+                            {well.cellLine && <li>{i18n.t("Cell line")}: <OntologyType term={well.cellLine}/></li>}
                             <li>{i18n.t("Quality control")}: <span>{well.qualityControl}</span></li>
-                            {well.micromolarConcentration && (<li>{i18n.t("Concentration (microMolar)")}: <span>{well.micromolarConcentration}</span></li>)}
+                            {well.micromolarConcentration && <li>{i18n.t("Concentration (microMolar)")}: <span>{well.micromolarConcentration}</span></li>}
                             <li>{i18n.t("Percentage Inhibition")}: <span>{well.percentageInhibition}</span></li>
                             <li>{i18n.t("Hit compound (over 75% activity)")}: <span>{well.hitCompound}</span></li>
                             <li>{i18n.t("Number of Cells (DPC)")}: <span>{well.numberOfCells}</span></li>
@@ -377,15 +377,13 @@ const TooltipContainer = styled.div`
         font-size: 1em;
     }
     ul {
+        font-family: inherit;
         margin: 0;
         padding: 0;
         li {
             list-style: none;
-            font-weight: 500;
-            line-height: 1.25em;
-            span {
-                font-weight: 400;
-            }
+            color: #000;
+            line-height: 1.5em;
         }
     }
 `;
