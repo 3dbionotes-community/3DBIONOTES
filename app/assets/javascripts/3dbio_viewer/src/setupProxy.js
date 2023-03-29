@@ -37,7 +37,7 @@ module.exports = function (app) {
 
     proxyRoutes(app, {
         routes: ["/uniprot"],
-        target: "https://www.uniprot.org",
+        target: "https://rest.uniprot.org",
         rewritePath: true,
     });
 

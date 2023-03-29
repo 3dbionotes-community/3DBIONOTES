@@ -64,9 +64,10 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const { selection: newSelection, onSelectionChange: setSelection, onLigandsLoaded } = options;
     const { proteinNetwork } = options;
     const { compositionRoot } = useAppContext();
-    const [pdbePlugin, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
+    const [pdbePlugin0, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
     const [pluginLoad, setPluginLoad] = React.useState<Date>();
     const [isLoading, { enable: showLoading, disable: hideLoading }] = useBooleanState(false);
+    const pdbePlugin = pdbePlugin0 && pluginLoad ? pdbePlugin0 : undefined;
 
     // Keep a reference containing the previous value of selection. We need this value to diff
     // the new state against the old state and perform imperative operations (add/remove/update)
@@ -108,6 +109,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
                     console.debug("molstar.events.loadComplete", loaded);
                     hideLoading();
                     if (loaded) setPluginLoad(new Date());
+                    // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
+                    window.dispatchEvent(new Event("resize"));
                 });
 
                 plugin.render(element, initParams);
