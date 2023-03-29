@@ -28,6 +28,15 @@ $ cp config/secrets.example.yml config/secrets.yml
 $ bundle exec rake db:migrate RAILS_ENV=development
 $ bundle exec rails server
 ```
+### Setup Viewer
+If you want to set up the React protein viewer as well, open up a separate terminal tab (while the Ruby app is running!) and run:
+
+```
+$ cd app/assets/javascripts/3dbio_viewer/
+$ yarn install
+$ yarn start
+```
+Then go to localhost:3001 and you'll see the viewer! 
 
 ### Setup Production
 

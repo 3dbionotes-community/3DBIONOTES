@@ -16,7 +16,7 @@ export interface Organism {
 export interface Entity {
     uniprotAcc: Maybe<string>;
     name: string;
-    organism: string;
+    organism: Maybe<string>;
     details?: string;
     altNames: string;
     isAntibody: boolean;
@@ -25,11 +25,14 @@ export interface Entity {
 }
 
 export interface Ligand {
+    IUPACInChIkey: IUPACInChIkey;
+    pubChemCompoundId: string;
     dbId: LigandId;
     name: string;
     details: string;
     imageLink: Url;
     externalLink: Url;
+    xRef?: XRef;
 }
 
 export interface Structure {
@@ -63,7 +66,7 @@ export interface DbItem {
 export interface Pdb extends DbItem {
     keywords: string;
     entities: Entity[];
-    ligands: LigandId[];
+    ligands: IUPACInChIkey[];
     details: Details[];
     dbauthors?: string[];
     refModels?: RefModel[];
@@ -73,13 +76,20 @@ export interface Emdb extends DbItem {
     emMethod: string;
 }
 
-export type SourceName = "PDB-REDO" | "CSTF" | "CERES";
+export type SourceName = PdbSourceName | "IDR";
 
-export type MethodName = "PDB-Redo" | "Isolde" | "Refmac" | "PHENIX";
+export type PdbSourceName = "PDB-REDO" | "CSTF" | "CERES";
+
+export type MethodName = PdbMethodName | "IDR";
+
+export type PdbMethodName = "PDB-Redo" | "Isolde" | "Refmac" | "PHENIX";
+
+type XRef = ["IDR"];
 
 type Maybe<T> = T | null;
 
 type LigandId = string;
+type IUPACInChIkey = string;
 
 export type EntityRef = { organism?: string; uniprotAcc?: string };
 
@@ -122,8 +132,8 @@ export interface Details {
 }
 
 export interface RefModel {
-    source: SourceName;
-    method: MethodName;
+    source: PdbSourceName;
+    method: PdbMethodName;
     filename: string;
     externalLink?: Url;
     queryLink?: Url;

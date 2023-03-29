@@ -28,7 +28,7 @@ export interface Organism {
 export interface Entity {
     uniprotAcc: string | null;
     name: string;
-    organism: string;
+    organism: string | null;
     details?: string;
     altNames: string;
     isAntibody: boolean;
@@ -42,6 +42,8 @@ export interface Ligand {
     details: string;
     imageLink: Url;
     externalLink: Url;
+    inChI: string; //IUPACInChIkey
+    hasIDR: boolean;
 }
 
 export interface LigandInstance {
@@ -133,9 +135,9 @@ export interface Validations {
     emdb: EmdbValidation[];
 }
 
-export type SourceName = PdbSourceName | EmdbSourceName;
+export type SourceName = PdbSourceName | EmdbSourceName | "IDR";
 
-export type MethodName = PdbMethodName | EmdbMethodName;
+export type MethodName = PdbMethodName | EmdbMethodName | "IDR";
 
 export type PdbSourceName = "PDB-REDO" | "CSTF" | "CERES";
 
@@ -208,6 +210,7 @@ export const filterKeys = [
     "pdbRedo",
     "cstf",
     "ceres",
+    "idr",
 ] as const;
 
 export type FilterKey = typeof filterKeys[number];
@@ -221,6 +224,10 @@ export function filterEntities(entities: Entity[], filterState: Covid19Filter): 
             entity.isNanobody === filterState.nanobodies &&
             entity.isSybody === filterState.sybodies
     );
+}
+
+export function filterLigands(ligands: Ligand[]): Ligand[] {
+    return ligands.filter(ligand => ligand.hasIDR);
 }
 
 export function filterPdbValidations(
@@ -253,6 +260,7 @@ export function getTranslations() {
             pdbRedo: i18n.t("PDB-REDO"),
             cstf: i18n.t("CSTF"),
             ceres: i18n.t("CERES"),
+            idr: i18n.t("IDR"),
         } as Record<FilterKey, string>,
     };
 }
