@@ -1,5 +1,6 @@
 import { Codec } from "purify-ts/Codec";
-import { Future, FutureData } from "./future";
+import { FutureData } from "../../domain/entities/FutureData";
+import { Future } from "./future";
 
 export function parseFromCodec<T>(codec: Codec<T>, contents: string): FutureData<T> {
     let json: unknown;

@@ -8,12 +8,16 @@ import { AddDynamicInfoToCovid19InfoUseCase } from "./domain/usecases/AddDynamic
 import { LocalStorageCacheRepository } from "./data/repositories/LocalStorageCacheRepository";
 import { LigandsApiRepository } from "./data/repositories/LigandsApiRepository";
 import { GetLigandImageDataResourcesUseCase } from "./domain/usecases/GetLigandImageDataResourcesUseCase";
+import { BionotesOntologyRepository } from "./data/repositories/BioOntologyRepository";
+import { BionotesOrganismRepository } from "./data/repositories/BionotesOrganismRepository";
 
 export function getCompositionRoot() {
     const covid19InfoRepository = new Covid19InfoFromJsonRepository();
     const dataGridRepository = new BrowserDataGridRepository();
     const cacheRepository = new LocalStorageCacheRepository();
     const ligandsRepository = new LigandsApiRepository();
+    const ontologyRepository = new BionotesOntologyRepository();
+    const organismRepository = new BionotesOrganismRepository();
 
     return {
         getCovid19Info: new GetCovid19InfoUseCase(covid19InfoRepository),
@@ -25,7 +29,11 @@ export function getCompositionRoot() {
             cacheRepository
         ),
         ligands: {
-            getIDR: new GetLigandImageDataResourcesUseCase(ligandsRepository),
+            getIDR: new GetLigandImageDataResourcesUseCase(
+                ligandsRepository,
+                ontologyRepository,
+                organismRepository
+            ),
         },
     };
 }

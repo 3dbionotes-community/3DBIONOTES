@@ -114,8 +114,6 @@ const ListItem: React.FC<ListItemProps> = React.memo(props => {
 const AssayFC: React.FC<AssayFCProps> = React.memo(({ assay, dataSource }) => (
     <>
         <ListItem name={"ID"} value={assay.id} />
-        <ListItem name={"Type"} value={assay.type} />
-        <ListItem name={"Type Term Accession"} value={assay.typeTermAccession} />
         <ListItem name={"Source"} value={dataSource} />
         <ListItem
             name={"Publication Title"}
@@ -128,13 +126,6 @@ const AssayFC: React.FC<AssayFCProps> = React.memo(({ assay, dataSource }) => (
 const ScreenFC: React.FC<ScreenFCProps> = React.memo(({ screen }) => (
     <div>
         <ListItem name={"ID"} value={screen.id} />
-        <ListItem name={"Type"} value={screen.type} />
-        <ListItem name={"Type Term Accession"} value={screen.typeTermAccession} />
-        <ListItem name={"Imaging Method"} value={screen.imagingMethod} />
-        <ListItem
-            name={"Imaging Method Term Accession"}
-            value={screen.imagingMethodTermAccession}
-        />
         <ListItem name={"Data DOI"}>
             <span>
                 <a href={screen.doi} target="_blank" rel="noreferrer noopener">
@@ -142,27 +133,12 @@ const ScreenFC: React.FC<ScreenFCProps> = React.memo(({ screen }) => (
                 </a>
             </span>
         </ListItem>
-        {screen.well && (
-            <ListItem name={"Well"}>
-                <span>
-                    <a href={screen.well} target="_blank" rel="noreferrer noopener">
-                        {screen.well}
-                    </a>
-                </span>
-            </ListItem>
-        )}
     </div>
 ));
 
 const CompoundFC: React.FC<CompoundFCProps> = React.memo(({ compound }) => (
     <>
         <ListItem name={"Inhibition of cytopathicity"} value={compound.percentageInhibition} />
-        <ListItem name={"Cytotoxicity (CC50)"} value={compound.cytotoxicity} />
-        <ListItem name={"Dose-response (IC50)"} value={compound.doseResponse} />
-        <ListItem
-            name={"Cytotoxic Index (Selectivity Index, IC50/CC50)"}
-            value={compound.cytotoxicIndex}
-        />
     </>
 ));
 

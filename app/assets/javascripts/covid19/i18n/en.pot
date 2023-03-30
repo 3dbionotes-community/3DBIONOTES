@@ -5,8 +5,17 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-11-23T13:00:39.368Z\n"
-"PO-Revision-Date: 2022-11-23T13:00:39.368Z\n"
+"POT-Creation-Date: 2023-03-30T07:19:12.780Z\n"
+"PO-Revision-Date: 2023-03-30T07:19:12.780Z\n"
+
+msgid "No ontologies found."
+msgstr ""
+
+msgid "No ontology terms found."
+msgstr ""
+
+msgid "No organisms found."
+msgstr ""
 
 msgid "Antibodies"
 msgstr ""
