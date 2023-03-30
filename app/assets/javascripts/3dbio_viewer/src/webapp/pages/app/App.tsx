@@ -25,7 +25,7 @@ function App() {
                             render={() => <RootViewer from="network" />}
                         />
                         <Route path="/:selection" render={() => <RootViewer from="selector" />} />
-                        <Route path="/">
+                        <Route exact path="/">
                             <Redirect to="/6zow+EMD-11328" />
                         </Route>
                     </RouterTracking>
