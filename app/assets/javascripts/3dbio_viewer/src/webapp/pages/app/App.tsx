@@ -45,10 +45,6 @@ function App() {
 }
 
 const RouterTracking: React.FC = props => {
-    const location = useLocation();
-    React.useEffect(() => {
-        sendAnalytics({ type: "pageView", path: `/viewer${location.pathname}` });
-    }, [location.pathname]);
     return <>{props.children}</>;
 };
 
