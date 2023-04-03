@@ -6,13 +6,16 @@ import { CellProps, styles } from "../Columns";
 import { Link } from "../Link";
 import { Wrapper } from "./Wrapper";
 import i18n from "../../../../utils/i18n";
+import { getValidationSource, ValidationSource } from "../../../../domain/entities/Covid19Info";
+import { Maybe } from "../../../../data/utils/ts-utils";
+import { HtmlTooltip } from "../HtmlTooltip";
 
 export interface LigandsCellProps extends CellProps {
     onClickIDR?: OnClickIDR;
 }
 
 export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
-    const { row, onClickDetails, onClickIDR, moreDetails } = props;
+    const { row, onClickDetails, onClickIDR, moreDetails, validationSources } = props;
 
     const ligands = React.useMemo(() => {
         return row.ligands.map(ligand => {
@@ -43,6 +46,43 @@ export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
         });
     }, [row.ligands]);
 
+    const idrValidationSource = React.useMemo(
+        () => getValidationSource(validationSources ?? [], "IDR"),
+        [validationSources]
+    );
+
+    const idrTooltip = React.useMemo(
+        () =>
+            idrValidationSource ? (
+                <div>
+                    {idrValidationSource.methods.map(method => (
+                        <>
+                            {idrValidationSource.methods.length > 1 ? (
+                                <strong>
+                                    {i18n.t(`{{methodName}} Method: `, {
+                                        nsSeparator: false,
+                                        methodName: method.name,
+                                    })}
+                                </strong>
+                            ) : (
+                                <strong>{i18n.t("Method: ", { nsSeparator: false })}</strong>
+                            )}
+                            <span>{method.description}</span>
+                            <br />
+                            <br />
+                        </>
+                    ))}
+                    {idrValidationSource.description && (
+                        <>
+                            <strong>{i18n.t("Source: ", { nsSeparator: false })}</strong>
+                            <span>{idrValidationSource.description}</span>
+                        </>
+                    )}
+                </div>
+            ) : undefined,
+        []
+    );
+
     return (
         <Wrapper
             onClickDetails={onClickDetails}
@@ -59,16 +99,19 @@ export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
                                 tooltip={ligand.tooltip}
                                 url={ligand.url}
                                 text={`${ligand.name} (${ligand.id})`}
-                            >
-                                {ligand.hasIDR && row.pdb?.id && (
-                                    <BadgeLigands
-                                        pdbId={row.pdb.id}
-                                        ligand={ligand}
-                                        onClick={onClickIDR}
-                                        moreDetails={moreDetails}
-                                    />
-                                )}
-                            </Link>
+                            />
+                            {ligand.hasIDR && row.pdb?.id && idrTooltip && (
+                                <HtmlTooltip title={idrTooltip}>
+                                    <span>
+                                        <BadgeLigands
+                                            pdbId={row.pdb.id}
+                                            ligand={ligand}
+                                            onClick={onClickIDR}
+                                            moreDetails={moreDetails}
+                                        />
+                                    </span>
+                                </HtmlTooltip>
+                            )}
                         </LigandItem>
                     );
                 })

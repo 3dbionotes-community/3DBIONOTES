@@ -4,11 +4,19 @@ import styled from "styled-components";
 import { IconButton, Typography } from "@material-ui/core";
 import { OpenInNew } from "@material-ui/icons";
 import { Pagination } from "@material-ui/lab";
-import { Assay, Compound, Screen } from "../../../domain/entities/LigandImageData";
+import {
+    AdditionalAnalysisCompound,
+    Assay,
+    Compound,
+    OntologyTerm,
+    Screen,
+} from "../../../domain/entities/LigandImageData";
 import { ListItemProps } from "./cells/DetailsCell";
 import { colors } from "./badge/Badge";
 import { Dialog } from "./Dialog";
 import { IDROptions } from "./Columns";
+import { recordOfStyles } from "../../../data/utils/ts-utils";
+import { HtmlTooltip } from "./HtmlTooltip";
 import i18n from "../../../utils/i18n";
 
 export interface IDRDialogProps {
@@ -51,7 +59,10 @@ export const IDRDialog: React.FC<IDRDialogProps> = React.memo(props => {
                                             <AssayFC
                                                 key={idx}
                                                 assay={assay}
-                                                dataSource={idr.dataSource}
+                                                dataSource={{
+                                                    label: idr.dataSource,
+                                                    href: idr.externalLink,
+                                                }}
                                             />
                                         </Section>
                                         <Section title={i18n.t("Screens")}>
@@ -114,18 +125,39 @@ const ListItem: React.FC<ListItemProps> = React.memo(props => {
 const AssayFC: React.FC<AssayFCProps> = React.memo(({ assay, dataSource }) => (
     <>
         <ListItem name={"ID"} value={assay.id} />
-        <ListItem name={"Source"} value={dataSource} />
+        <ListItem name={"Type"}>{assay.type.reduce(reduceOntologyType, [])}</ListItem>
         <ListItem
             name={"Publication Title"}
             value={assay.publications.map(({ title }) => title).join(", ")}
         />
-        <ListItem name={"Data DOI"} value={assay.dataDoi} />
+        <ListItem name={"Data DOI"}>
+            <span>
+                <a href={assay.dataDoi} target="_blank" rel="noreferrer noopener">
+                    {assay.dataDoi}
+                </a>
+            </span>
+        </ListItem>
+        <ListItem name={"BioStudies Accession ID"} value={assay.bioStudiesAccessionId} />
+        <ListItem name={"Source"}>
+            <span>
+                <a href={dataSource.href} target="_blank" rel="noreferrer noopener">
+                    {dataSource.label}
+                </a>
+            </span>
+        </ListItem>
     </>
 ));
 
 const ScreenFC: React.FC<ScreenFCProps> = React.memo(({ screen }) => (
     <div>
         <ListItem name={"ID"} value={screen.id} />
+        <ListItem name={"Type"}>{screen.type.reduce(reduceOntologyType, [])}</ListItem>
+        <ListItem name={"Technology Type"}>
+            {screen.technologyType.reduce(reduceOntologyType, [])}
+        </ListItem>
+        <ListItem name={"Imaging Method"}>
+            {screen.imagingMethod.reduce(reduceOntologyType, [])}
+        </ListItem>
         <ListItem name={"Data DOI"}>
             <span>
                 <a href={screen.doi} target="_blank" rel="noreferrer noopener">
@@ -136,11 +168,34 @@ const ScreenFC: React.FC<ScreenFCProps> = React.memo(({ screen }) => (
     </div>
 ));
 
-const CompoundFC: React.FC<CompoundFCProps> = React.memo(({ compound }) => (
-    <>
-        <ListItem name={"Inhibition of cytopathicity"} value={compound.percentageInhibition} />
-    </>
-));
+const CompoundFC: React.FC<CompoundFCProps> = React.memo(({ compound }) => {
+    const values = React.useMemo(
+        () => ({
+            cytotoxicity: aacToString(compound.cytotoxicity),
+            doseResponse: aacToString(compound.doseResponse),
+            cytotoxicIndex: aacToString(compound.cytotoxicIndex),
+        }),
+        [compound]
+    );
+
+    return (
+        <>
+            <ListItem name={"Inhibition of cytopathicity"} value={compound.percentageInhibition} />
+            {compound.cytotoxicity && (
+                <ListItem name={"Cytotoxicity (CC50)"} value={values.cytotoxicity} />
+            )}
+            {compound.doseResponse && (
+                <ListItem name={"Dose-response (IC50)"} value={values.doseResponse} />
+            )}
+            {compound.cytotoxicIndex && (
+                <ListItem
+                    name={"Cytotoxic Index (Selectivity Index, IC50/CC50)"}
+                    value={values.cytotoxicIndex}
+                />
+            )}
+        </>
+    );
+});
 
 const Section: React.FC<SectionProps> = React.memo(({ children, title }) => (
     <div>
@@ -150,6 +205,75 @@ const Section: React.FC<SectionProps> = React.memo(({ children, title }) => (
         <List>{children}</List>
     </div>
 ));
+
+interface OntologyTypeProps {
+    term: OntologyTerm;
+}
+
+export const OntologyType: React.FC<OntologyTypeProps> = React.memo(({ term: type }) => {
+    const tooltip = React.useMemo(
+        () => (
+            <div>
+                <div>
+                    <span style={styles.bold}>{i18n.t("ID") + ": "}</span>
+                    <span>{type.id}</span>
+                </div>
+                <div>
+                    <span style={styles.bold}>{i18n.t("Term") + ": "}</span>
+                    <span>{type.name}</span>
+                </div>
+                <div>
+                    <span style={styles.bold}>{i18n.t("Description") + ": "}</span>
+                    <span>{type.description}</span>
+                </div>
+                {type.source && (
+                    <div>
+                        <span style={styles.bold}>{i18n.t("Ontology") + ": "}</span>
+                        <span>
+                            {type.source.name} ({type.source.id})
+                        </span>
+                    </div>
+                )}
+            </div>
+        ),
+        [type]
+    );
+
+    return (
+        <span>
+            {type.name}
+            {" ("}
+            <HtmlTooltip title={tooltip}>
+                <a href={type.externalLink} target="_blank" rel="noreferrer noopener">
+                    {type.id}
+                </a>
+            </HtmlTooltip>
+            {")"}
+        </span>
+    );
+});
+
+function aacToString(aac?: AdditionalAnalysisCompound) {
+    if (!aac) return undefined;
+    const relation = aac.relation !== "=";
+    const units = aac.units?.name ?? undefined;
+
+    return `${relation ? aac.relation + " " : ""}${JSON.stringify(aac.value)}${
+        units ? " " + units : ""
+    }`;
+}
+
+export function reduceOntologyType(acc: JSX.Element[], type: OntologyTerm, idx: number) {
+    return [
+        ...acc,
+        acc.length != 0 ? [<span key={idx + "-span"}>, </span>] : [],
+        <OntologyType key={idx} term={type} />,
+    ].flat();
+}
+
+const styles = recordOfStyles({
+    bold: { fontWeight: "bold" },
+});
 
 interface SectionProps {
     title: string;
@@ -161,7 +285,7 @@ interface ExternalLinkProps {
 
 interface AssayFCProps {
     assay: Assay;
-    dataSource: string;
+    dataSource: { label: string; href: string };
 }
 
 interface ScreenFCProps {
