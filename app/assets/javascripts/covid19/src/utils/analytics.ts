@@ -1,14 +1,6 @@
-declare global {
-    interface Window {
-        gtag?: (...args: []) => void;
-    }
-}
-
-declare function gtag(type: "event", name: string, data?: object): void;
-
 export function sendAnalytics(name: string, data?: object) {
     if (window.gtag !== undefined)
-        gtag(
+        window.gtag(
             "event",
             name,
             data && {
@@ -18,4 +10,5 @@ export function sendAnalytics(name: string, data?: object) {
                 location_href: window.location.href,
             }
         );
+    else throw new Error("gtag() function has not been declared.");
 }
