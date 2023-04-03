@@ -14,7 +14,7 @@ export interface LigandsCellProps extends CellProps {
 }
 
 export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
-    const { row, onClickDetails, onClickIDR, moreDetails, validationSources } = props;
+    const { row, onClickDetails, onClickIDR, moreDetails = true, validationSources } = props;
 
     const ligands = React.useMemo(() => {
         return row.ligands.map(ligand => {
@@ -120,6 +120,7 @@ export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
 });
 
 const LigandItem = styled.div<{ moreDetails?: boolean }>`
+    ${props => (props.moreDetails ? "" : "display: flex; align-items: center;")}
     li {
         text-align: left;
     }
