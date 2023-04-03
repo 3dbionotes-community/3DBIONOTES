@@ -266,7 +266,7 @@ function aacToString(aac?: AdditionalAnalysisCompound) {
 export function reduceOntologyType(acc: JSX.Element[], type: OntologyTerm, idx: number) {
     return [
         ...acc,
-        acc.length != 0 ? [<span key={idx + "-span"}>, </span>] : [],
+        acc.length !== 0 ? [<span key={idx + "-span"}>, </span>] : [],
         <OntologyType key={idx} term={type} />,
     ].flat();
 }

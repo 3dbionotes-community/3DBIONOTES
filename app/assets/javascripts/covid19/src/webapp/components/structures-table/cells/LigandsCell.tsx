@@ -5,10 +5,9 @@ import { BadgeLigands, OnClickIDR } from "../badge/BadgeLigands";
 import { CellProps, styles } from "../Columns";
 import { Link } from "../Link";
 import { Wrapper } from "./Wrapper";
-import i18n from "../../../../utils/i18n";
-import { getValidationSource, ValidationSource } from "../../../../domain/entities/Covid19Info";
-import { Maybe } from "../../../../data/utils/ts-utils";
+import { getValidationSource } from "../../../../domain/entities/Covid19Info";
 import { HtmlTooltip } from "../HtmlTooltip";
+import i18n from "../../../../utils/i18n";
 
 export interface LigandsCellProps extends CellProps {
     onClickIDR?: OnClickIDR;
@@ -80,7 +79,7 @@ export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
                     )}
                 </div>
             ) : undefined,
-        []
+        [idrValidationSource]
     );
 
     return (
