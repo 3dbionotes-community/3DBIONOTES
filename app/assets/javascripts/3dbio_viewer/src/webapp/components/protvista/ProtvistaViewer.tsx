@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import { Pdb } from "../../../domain/entities/Pdb";
+import { Pdb, getEntityLinks } from "../../../domain/entities/Pdb";
 import { Selection } from "../../view-models/Selection";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
@@ -25,25 +25,27 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks } = props;
 
     const namespace = {
-        alphaHelices: "TODO",
-        betaSheets: "TODO",
-        disorderedRegionRange: "TODO",
-        domains: "TODO",
+        // alphaHelices: "TODO",
+        // betaSheets: "TODO",
+        // disorderedRegionRange: "TODO",
+        // domains: "TODO",
         modifiedOrRefinementAminoAcids: "TODO",
         poorQualityRegionMax: _.first(pdb.emdbs)?.emv?.stats?.quartile75,
         poorQualityRegionMin: _.first(pdb.emdbs)?.emv?.stats?.quartile25,
-        proteinInteractsMoreCount: "TODO",
-        proteinInteractsWith: "TODO",
+        // proteinInteractsMoreCount: "TODO",
+        // proteinInteractsWith: "TODO",
         proteinName: pdb.protein.name,
         proteinPartners: "TODO",
         resolution: _.first(pdb.emdbs)?.emv?.stats?.resolutionMedian,
-        transmembraneAlphaHelices: "TODO",
-        transmembraneExternalRegions: "TODO",
-        transmembraneResidues: "TODO",
-        turns: "TODO",
-        chain: "TODO",
-        uniprotId: "TODO",
-        geneName: "TODO",
+        // transmembraneAlphaHelices: "TODO",
+        // transmembraneExternalRegions: "TODO",
+        // transmembraneResidues: "TODO",
+        // turns: "TODO",
+        chain: pdb.chainId,
+        uniprotId: getEntityLinks(pdb, "uniprot")
+            .map(link => link.name)
+            .join(", "),
+        geneName: pdb.protein.gene,
         geneBankEntry: "TODO",
     };
 
