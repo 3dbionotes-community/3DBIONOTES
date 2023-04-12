@@ -50,7 +50,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     };
 
     return (
-        <div>
+        <div style={styles.container}>
             {blocks.map(block => {
                 const CustomComponent = block.component;
                 return (
@@ -80,4 +80,8 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
             })}
         </div>
     );
+};
+
+const styles = {
+    container: { padding: "1em 0 2em" },
 };

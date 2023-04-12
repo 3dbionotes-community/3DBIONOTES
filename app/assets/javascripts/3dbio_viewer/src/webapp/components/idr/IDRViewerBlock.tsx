@@ -385,13 +385,13 @@ const styles = recordOfStyles({
         color: "#123546",
     },
     section: {
-        padding: "20px 20px 0 20px",
+        padding: "0 1.5em",
     },
     platesAccordion: { width: "100%" },
 });
 
 const Container = styled.div`
-    margin-top: 1.5rem;
+    margin-top: 1rem;
 
     & > div {
         margin-bottom: 1em;

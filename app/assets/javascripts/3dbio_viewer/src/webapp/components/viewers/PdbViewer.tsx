@@ -31,15 +31,12 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
 
     return (
         <React.Fragment>
-            <div className={styles.section}>
-                <div className={styles.actions}>
-                    <ToolsButton onAddAnnotations={onAddAnnotations} />
-                    <ProfilesButton profile={profile} onChange={setProfile} />
-                    <JumpToButton blocks={blocks} />
-                    {!debugFlags.hideTraining && <TrainingApp locale="en" modules={modules} />}
-                </div>
+            <div className={styles["tools-section"]}>
+                <ToolsButton onAddAnnotations={onAddAnnotations} />
+                <ProfilesButton profile={profile} onChange={setProfile} />
+                <JumpToButton blocks={blocks} />
+                {!debugFlags.hideTraining && <TrainingApp locale="en" modules={modules} />}
             </div>
-
             <ProtvistaViewer blocks={blocks} pdb={pdb} selection={selection} />
         </React.Fragment>
     );
