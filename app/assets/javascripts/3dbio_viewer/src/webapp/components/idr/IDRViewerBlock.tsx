@@ -90,7 +90,9 @@ export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => 
                             showTooltip={showTooltip}
                             setShowTooltip={setShowTooltip}
                         >
-                            <button onClick={toggleTooltip}>?</button>
+                            <button style={styles.smallButton} onClick={toggleTooltip}>
+                                ?
+                            </button>
                         </ViewerTooltip>
                     </div>
 
@@ -304,7 +306,9 @@ const Section: React.FC<SectionProps> = React.memo(({ children, title, subtitle,
                         showTooltip={showTooltip}
                         setShowTooltip={setShowTooltip}
                     >
-                        <button onClick={toggleTooltip}>?</button>
+                        <button style={styles.smallButton} onClick={toggleTooltip}>
+                            ?
+                        </button>
                     </ViewerTooltip>
                 )}
             </IDRSectionHeader>
@@ -388,6 +392,8 @@ const styles = recordOfStyles({
     },
     notFound: { margin: 0 },
     title: {
+        display: "flex",
+        alignItems: "center",
         fontWeight: "bold",
         marginBottom: 15,
         color: "#123546",
@@ -396,6 +402,11 @@ const styles = recordOfStyles({
         padding: "0 1.5em",
     },
     platesAccordion: { width: "100%" },
+    smallButton: {
+        marginLeft: "0.75em",
+        padding: "0.3em 0.6em",
+        borderRadius: "0.5em",
+    },
 });
 
 const Container = styled.div`
