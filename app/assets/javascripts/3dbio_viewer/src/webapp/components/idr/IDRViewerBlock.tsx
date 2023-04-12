@@ -33,21 +33,29 @@ export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => 
 
     const getAssayDescription = React.useCallback((assay: Assay) => {
         const screen = assay.screens.find(screen => screen.id == "2602");
+        const {
+            name,
+            percentageInhibition,
+            doseResponse,
+            cytotoxicity,
+            cytotoxicIndex,
+        } = assay.compound;
+
         const namespace = {
-            ligandName: assay.compound.name,
-            percentageInhibition: assay.compound.percentageInhibition,
+            ligandName: name,
+            percentageInhibition: percentageInhibition,
             micromolarConcentration: _.first(_.first(screen?.plates)?.wells)
                 ?.micromolarConcentration,
             hitOver75Activity:
                 _.first(_.first(screen?.plates)?.wells)?.hitCompound.toLowerCase() === "yes"
                     ? "is"
                     : "is not",
-            doseResponseValue: assay.compound.doseResponse?.value,
-            doseResponseUnit: assay.compound.doseResponse?.units?.name,
-            cytotoxicityValue: assay.compound.cytotoxicity?.value,
-            cytotoxicityUnits: assay.compound.cytotoxicity?.units?.name,
-            cytotoxicIndexValue: assay.compound.cytotoxicIndex?.value,
-            cytotoxicIndexUnits: assay.compound.cytotoxicIndex?.units?.name,
+            doseResponseValue: doseResponse?.value,
+            doseResponseUnit: doseResponse?.units?.name,
+            cytotoxicityValue: cytotoxicity?.value,
+            cytotoxicityUnits: cytotoxicity?.units?.name,
+            cytotoxicIndexValue: cytotoxicIndex?.value,
+            cytotoxicIndexUnits: cytotoxicIndex?.units?.name,
         };
 
         //prettier-ignore
@@ -57,13 +65,13 @@ export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => 
             screen?.type.some(term => term.name === "multiple concentration")
                 ? i18n.t("Concentration-response profiling of hit compound {{ligandName}} was performed in triplicate with eight concentrations ranging from 20 µM to 20 nM and on three different plates to minimise the influence of plate effects.", namespace)
                 : [],
-            assay.compound.doseResponse
+            doseResponse
                 ? i18n.t("The half maximal inhibitory concentration (IC50) for {{ligandName}} is {{doseResponseValue}} {{doseResponseUnit}}.", namespace)
                 : [],
-            assay.compound.cytotoxicity
+            cytotoxicity
                 ? i18n.t("The cytotoxic concentration (CC50) for {{ligandName}} is {{cytotoxicityValue}} {{cytotoxicityUnits}}.", namespace)
                 : [],
-            assay.compound.cytotoxicIndex
+            cytotoxicIndex
                 ? i18n.t("The the ratio between the cytopathic effect and cytotoxicity, also known as the selectivity index (IC50/CC50), for {{ligandName}} is {{cytotoxicIndexValue}} {{cytotoxicIndexUnits}}.", namespace)
                 : [],
         ].flat();
