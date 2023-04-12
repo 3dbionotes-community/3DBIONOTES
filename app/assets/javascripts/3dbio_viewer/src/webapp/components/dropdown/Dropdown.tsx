@@ -1,11 +1,10 @@
-import React from "react";
 import _ from "lodash";
+import React from "react";
 import { MenuItem } from "@material-ui/core";
+import { ExpandMore, ExpandLess, Done } from "@material-ui/icons";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { PopperMenu } from "./PopperMenu";
-import Done from "@material-ui/icons/Done";
-import { ExpandMore } from "@material-ui/icons";
-import i18n from "d2-ui-components/locales";
+import i18n from "../../utils/i18n";
 
 export interface DropdownProps<Id extends string = string> {
     // Show text or, if empty, the selected item.
@@ -50,7 +49,7 @@ export function Dropdown<Id extends string = string>(
         <React.Fragment>
             <button ref={buttonRef} onClick={openMenu} className={isMenuOpen ? "open" : undefined}>
                 {buttonText}
-                {showExpandIcon && <ExpandMore />}
+                {showExpandIcon && (isMenuOpen ? <ExpandLess /> : <ExpandMore />)}
             </button>
 
             <PopperMenu isOpen={isMenuOpen} close={closeMenu} buttonRef={buttonRef}>

@@ -5,6 +5,8 @@
 .menu .MuiPaper-root {
     background-color: #e2e2e2 !important;
     margin-top: 10px;
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .menu .MuiListItem-button:hover {
