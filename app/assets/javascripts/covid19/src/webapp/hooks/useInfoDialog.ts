@@ -18,10 +18,7 @@ export function useInfoDialog<T>(): UseInfoDialogReturn<T> {
 
     const showDialog = React.useCallback(
         (options: T, gaLabel: string) => {
-            sendAnalytics({
-                type: "event",
-                action: "open",
-                category: "dialog",
+            sendAnalytics("open_dialog", {
                 label: gaLabel,
             });
             openDialog();

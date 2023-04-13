@@ -2,8 +2,9 @@ import { AxiosRequestConfig } from "axios";
 import { Codec } from "purify-ts/Codec";
 import { parseFromCodec } from "./codec";
 import { axiosRequest, defaultBuilder, RequestResult } from "../utils/future-axios";
-import { Future, FutureData } from "../utils/future";
+import { Future } from "../utils/future";
 import { Maybe } from "../utils/ts-utils";
+import { FutureData } from "../../domain/entities/FutureData";
 
 export type RequestError = { message: string };
 

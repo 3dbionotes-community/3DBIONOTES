@@ -21,10 +21,8 @@ export const ProfilesButton: React.FC<ProfilesButtonProps> = React.memo(props =>
 
     const setProfile = React.useCallback(
         (profileId: ProfileId) => {
-            sendAnalytics({
-                type: "event",
-                action: "set_profile",
-                category: "viewer",
+            sendAnalytics("set_profile", {
+                on: "viewer",
                 label: profileId,
             });
             onChange(profiles[profileId]);
