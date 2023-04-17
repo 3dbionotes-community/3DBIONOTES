@@ -301,7 +301,7 @@ function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selec
         encoding: "cif",
         loadMaps: false,
         validationAnnotation: true,
-        hideControls: false,
+        hideControls: true,
         superposition: false,
         domainAnnotation: true,
         expanded: false,
