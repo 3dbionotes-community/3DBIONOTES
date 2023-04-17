@@ -21,7 +21,7 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
     const { block, namespace, children } = props;
     const [showTooltip, setShowTooltip] = useState(false);
     const { title, description, help } = block;
-    const stringNamespace = _.mapValues(namespace, value => (value || "?").toString());
+    const stringNamespace = _.mapValues(namespace, value => (value ?? "?").toString());
     const interpolatedDescription = _.template(description)(stringNamespace);
 
     return (

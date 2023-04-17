@@ -9,6 +9,7 @@ import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
 import { PPIViewer } from "../ppi/PPIViewer";
 import { GeneViewer } from "../gene-viewer/GeneViewer";
+import i18n from "../../utils/i18n";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
@@ -24,29 +25,49 @@ const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks } = props;
 
-    const namespace = {
-        // alphaHelices: "TODO",
-        // betaSheets: "TODO",
-        // disorderedRegionRange: "TODO",
-        // domains: "TODO",
-        poorQualityRegionMax: _.first(pdb.emdbs)?.emv?.stats?.quartile75,
-        poorQualityRegionMin: _.first(pdb.emdbs)?.emv?.stats?.quartile25,
-        // proteinInteractsMoreCount: "TODO",
-        // proteinInteractsWith: "TODO",
-        proteinName: pdb.protein.name,
-        proteinPartners: "TODO",
-        resolution: _.first(pdb.emdbs)?.emv?.stats?.resolutionMedian,
-        // transmembraneAlphaHelices: "TODO",
-        // transmembraneExternalRegions: "TODO",
-        // transmembraneResidues: "TODO",
-        // turns: "TODO",
-        chain: pdb.chainId,
-        uniprotId: getEntityLinks(pdb, "uniprot")
-            .map(link => link.name)
-            .join(", "),
-        geneName: pdb.protein.gene,
-        geneBankEntry: pdb.protein.geneBank?.join(", "),
-    };
+    const geneName = React.useMemo(
+        () =>
+            pdb.protein.gene
+                ? i18n.t(" encoded by the gene {{geneName}}", { geneName: pdb.protein.gene })
+                : undefined,
+        [pdb.protein]
+    );
+
+    const geneBankEntry = React.useMemo(
+        () =>
+            !_.isEmpty(pdb.protein.geneBank)
+                ? i18n.t(" (GeneBank {{geneBankEntry}})", {
+                      geneBankEntry: pdb.protein.geneBank?.join(", "),
+                  })
+                : undefined,
+        [pdb.protein]
+    );
+
+    const namespace = React.useMemo(
+        () => ({
+            // alphaHelices: "TODO",
+            // betaSheets: "TODO",
+            // disorderedRegionRange: "TODO",
+            // domains: "TODO",
+            poorQualityRegionMax: _.first(pdb.emdbs)?.emv?.stats?.quartile75,
+            poorQualityRegionMin: _.first(pdb.emdbs)?.emv?.stats?.quartile25,
+            // proteinInteractsMoreCount: "TODO",
+            // proteinInteractsWith: "TODO",
+            proteinName: pdb.protein.name,
+            proteinPartners: "TODO",
+            resolution: _.first(pdb.emdbs)?.emv?.stats?.resolutionMedian,
+            // transmembraneAlphaHelices: "TODO",
+            // transmembraneExternalRegions: "TODO",
+            // transmembraneResidues: "TODO",
+            // turns: "TODO",
+            chain: pdb.chainId,
+            uniprotId: getEntityLinks(pdb, "uniprot")
+                .map(link => link.name)
+                .join(", "),
+            genePhrase: geneName ? geneName + (geneBankEntry ?? "") : "",
+        }),
+        [pdb, geneName, geneBankEntry]
+    );
 
     return (
         <div style={styles.container}>
