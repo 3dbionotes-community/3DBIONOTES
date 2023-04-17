@@ -93,18 +93,6 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                             )}
                         </>
                     )}
-
-                    <button onClick={openSearchWithAnalytics}>
-                        <Search />
-                    </button>
-
-                    {isSearchOpen && (
-                        <ModelSearch
-                            title={i18n.t("Select or append a new model")}
-                            onClose={closeSearch}
-                            onSelect={runModelSearchAction}
-                        />
-                    )}
                 </div>
 
                 <div className="selection">
@@ -122,9 +110,20 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
             </div>
 
             <div className="selectors">
+                <button onClick={openSearchWithAnalytics}>
+                    <Search />
+                </button>
                 <Dropdown {...chainDropdownProps} showExpandIcon />
                 <Dropdown {...ligandsDropdownProps} showExpandIcon />
             </div>
+
+            {isSearchOpen && (
+                <ModelSearch
+                    title={i18n.t("Select or append a new model")}
+                    onClose={closeSearch}
+                    onSelect={runModelSearchAction}
+                />
+            )}
         </div>
     );
 };
