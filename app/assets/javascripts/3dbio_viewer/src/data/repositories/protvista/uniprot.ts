@@ -10,7 +10,7 @@ export interface UniprotResponse {
             name: string[];
             protein?: Array<{
                 recommendedName?: Array<{
-                    fullName?: Array<{ _: string }>;
+                    fullName?: Array<{ _: string } | string>;
                 }>;
             }>;
             gene?: Array<{
@@ -19,6 +19,7 @@ export interface UniprotResponse {
             organism?: Array<{
                 name: Array<{ _: string }>;
             }>;
+            dbReference?: Array<{ $: { type: string; id: string } }>;
         }>;
     };
 }
@@ -27,10 +28,12 @@ export function getProtein(proteinId: string, res: UniprotResponse | undefined):
     const entry = res?.uniprot.entry[0];
     if (!entry) return { id: proteinId };
 
-    const name = entry.protein?.[0]?.recommendedName?.[0]?.fullName?.[0]?._;
+    const tempName = entry.protein?.[0]?.recommendedName?.[0]?.fullName?.[0];
+    const name = typeof tempName === "string" ? tempName : tempName?._;
     const geneEntries = entry.gene?.[0]?.name || [];
     const geneEntry = entry.gene?.[0]?.name.find(g => g.$.type === "primary") || geneEntries[0];
     const organismEntries = _.compact(entry.organism?.[0]?.name.map(x => x._));
+    const geneBank = entry.dbReference?.filter(({ $ }) => $.type === "GeneID").map(g => g.$.id);
 
     const organism = [
         ..._.take(organismEntries, 1),
@@ -39,5 +42,5 @@ export function getProtein(proteinId: string, res: UniprotResponse | undefined):
 
     const gene = geneEntry ? geneEntry._ : undefined;
 
-    return { id: proteinId, name, gene, organism };
+    return { id: proteinId, name, gene, organism, geneBank };
 }

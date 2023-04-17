@@ -29,7 +29,6 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         // betaSheets: "TODO",
         // disorderedRegionRange: "TODO",
         // domains: "TODO",
-        modifiedOrRefinementAminoAcids: "TODO",
         poorQualityRegionMax: _.first(pdb.emdbs)?.emv?.stats?.quartile75,
         poorQualityRegionMin: _.first(pdb.emdbs)?.emv?.stats?.quartile25,
         // proteinInteractsMoreCount: "TODO",
@@ -46,7 +45,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
             .map(link => link.name)
             .join(", "),
         geneName: pdb.protein.gene,
-        geneBankEntry: "TODO",
+        geneBankEntry: pdb.protein.geneBank?.join(", "),
     };
 
     return (

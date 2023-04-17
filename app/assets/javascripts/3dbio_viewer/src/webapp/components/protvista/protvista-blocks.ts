@@ -105,9 +105,7 @@ export const blockDefs: BlockDef[] = [
         description: i18n.t(`
         The median local resolution of the protein is \${resolution} Å.
 
-The local resolution values are between \${poorQualityRegionMin} (percentile 25) and \${poorQualityRegionMax} (percentile 75). These regions can be visualized in red in the structure.
-
-Furthermore, there are \${modifiedOrRefinementAminoAcids} amino acids that have been modified or are capable of refinement.`),
+The local resolution values are between \${poorQualityRegionMin} (percentile 25) and \${poorQualityRegionMax} (percentile 75). These regions can be visualized in red in the structure.`),
         help: i18n.t(`This section offers a local resolution analysis and a map-model validation of the reconstructed maps. Different algorithms are used to carriy out this analysis. Also, where possible, a validation of the Cryo-EM maps and the map-model fit will be carried out. For this, methods based on biophysical characteristics of structure (molprobity), refinement methods, showing the residues affected by said processes, and methods, when it is a structure obtained by cryo-EM, of validation of maps and models will be used.
 
         The resolution bar summarises the local resolution information. The bar represents the rank of the map in the data base. The mouse on the bar shows the consensus local resolution information of the map estimated with blocres, MonoRes and DeepRes. Each local resolution estimation has a median resolution and a interquartile (25-75) range. As loca resolution consensus, we provide the local median resolution of the median value of each estimation, and as dispersion measure, the maximum interquartile range of all of posible combination of the estimated quantiles 25 and quantiles 75.`),

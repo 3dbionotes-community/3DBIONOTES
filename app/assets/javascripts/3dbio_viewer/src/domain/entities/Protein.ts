@@ -3,6 +3,7 @@ export interface Protein {
     name?: string;
     gene?: string;
     organism?: string;
+    geneBank?: string[];
 }
 
 export type ProteinId = string;

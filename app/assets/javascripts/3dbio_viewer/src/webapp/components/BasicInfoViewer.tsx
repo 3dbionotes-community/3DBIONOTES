@@ -74,6 +74,10 @@ function getItems(pdb: Pdb) {
     const items: Item[] = [
         { name: i18n.t("Protein Name"), value: pdb.protein.name },
         { name: i18n.t("Gene Name"), value: pdb.protein.gene },
+        {
+            name: i18n.t("Gene Bank ID"),
+            value: pdb.protein.geneBank ? <Links links={getEntityLinks(pdb, "geneBank")} /> : "-",
+        },
         { name: i18n.t("Organism"), value: pdb.protein.organism },
         {
             name: i18n.t("Biological function"),
