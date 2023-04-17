@@ -56,9 +56,9 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "structuralInfo",
-        title: i18n.t("Structural and functional *segments* in this protein"),
+        title: i18n.t("Structural and functional segments in this protein"),
         description: i18n.t(
-            "Structural or functional *blocks* of the protein sequence of variable length, long as domains or short as motifs, identified both experimentally and by similarity, retrieved from several databases."
+            "Structural or functional blocks of the protein sequence of variable length, long as domains or short as motifs, identified both experimentally and by similarity, retrieved from several databases."
         ),
         help: "",
         tracks: [
