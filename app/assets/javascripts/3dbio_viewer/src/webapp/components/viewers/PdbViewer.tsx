@@ -12,15 +12,17 @@ import { debugFlags } from "../../pages/app/debugFlags";
 import { TrainingApp } from "../../training-app";
 import { modules } from "../../training-app/training-modules";
 import styles from "./Viewers.module.css";
+import { PdbInfo } from "../../../domain/entities/PdbInfo";
 
 export interface PdbViewerProps {
     pdb: Pdb;
+    pdbInfo: PdbInfo;
     viewerState: ViewerState;
     onAddAnnotations(annotations: Annotations): void;
 }
 
 export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
-    const { pdb, viewerState, onAddAnnotations } = props;
+    const { pdb, viewerState, onAddAnnotations, pdbInfo } = props;
     const { selection, profile, setProfile } = viewerState;
 
     const blocks = React.useMemo(() => {
@@ -37,7 +39,7 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
                 <JumpToButton blocks={blocks} />
                 {!debugFlags.hideTraining && <TrainingApp locale="en" modules={modules} />}
             </div>
-            <ProtvistaViewer blocks={blocks} pdb={pdb} selection={selection} />
+            <ProtvistaViewer pdbInfo={pdbInfo} blocks={blocks} pdb={pdb} selection={selection} />
         </React.Fragment>
     );
 });

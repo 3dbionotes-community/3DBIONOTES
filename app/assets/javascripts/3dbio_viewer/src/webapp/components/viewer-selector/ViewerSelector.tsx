@@ -163,7 +163,7 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
     return { text, items, onClick: setChain };
 }
 
-function getSelectedChain(pdbInfo: PdbInfo | undefined, selection: Selection) {
+export function getSelectedChain(pdbInfo: PdbInfo | undefined, selection: Selection) {
     const chains = pdbInfo?.chains || [];
     const selectedChain = chains.find(chain => chain.chainId === selection.chainId) || chains[0];
     return selectedChain;

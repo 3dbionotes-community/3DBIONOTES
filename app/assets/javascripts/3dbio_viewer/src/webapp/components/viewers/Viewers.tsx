@@ -71,8 +71,9 @@ export const Viewers: React.FC<ViewersProps> = React.memo(props => {
         <React.Fragment>
             <Loader state={pdbLoader} loadingMsg={i18n.t("Loading data...")} />
 
-            {pdbLoader.type === "loaded" && (
+            {pdbLoader.type === "loaded" && pdbInfo && (
                 <PdbViewer
+                    pdbInfo={pdbInfo}
                     pdb={pdbLoader.data}
                     viewerState={viewerState}
                     onAddAnnotations={onAddAnnotations}

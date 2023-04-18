@@ -10,9 +10,12 @@ import "./ProtvistaViewer.css";
 import { PPIViewer } from "../ppi/PPIViewer";
 import { GeneViewer } from "../gene-viewer/GeneViewer";
 import i18n from "../../utils/i18n";
+import { PdbInfo } from "../../../domain/entities/PdbInfo";
+import { getSelectedChain } from "../viewer-selector/ViewerSelector";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
+    pdbInfo: PdbInfo;
     selection: Selection;
     blocks: BlockDef[];
 }
@@ -23,7 +26,19 @@ const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps
 };
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
-    const { pdb, selection, blocks } = props;
+    const { pdb, selection, blocks, pdbInfo } = props;
+
+    const selectedChain = React.useMemo(() => getSelectedChain(pdbInfo, selection), [
+        pdbInfo,
+        selection,
+    ]);
+
+    const proteinPartners = React.useMemo(
+        () =>
+            pdbInfo?.ligands.filter(ligand => ligand.shortChainId === selectedChain?.chainId)
+                .length,
+        [selectedChain, pdbInfo]
+    );
 
     const geneName = React.useMemo(
         () =>
@@ -45,28 +60,18 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
 
     const namespace = React.useMemo(
         () => ({
-            // alphaHelices: "TODO",
-            // betaSheets: "TODO",
-            // disorderedRegionRange: "TODO",
-            // domains: "TODO",
             poorQualityRegionMax: _.first(pdb.emdbs)?.emv?.stats?.quartile75,
             poorQualityRegionMin: _.first(pdb.emdbs)?.emv?.stats?.quartile25,
-            // proteinInteractsMoreCount: "TODO",
-            // proteinInteractsWith: "TODO",
             proteinName: pdb.protein.name,
-            proteinPartners: "TODO",
+            proteinPartners,
             resolution: _.first(pdb.emdbs)?.emv?.stats?.resolutionMedian,
-            // transmembraneAlphaHelices: "TODO",
-            // transmembraneExternalRegions: "TODO",
-            // transmembraneResidues: "TODO",
-            // turns: "TODO",
             chain: pdb.chainId,
             uniprotId: getEntityLinks(pdb, "uniprot")
                 .map(link => link.name)
                 .join(", "),
             genePhrase: geneName ? geneName + (geneBankEntry ?? "") : "",
         }),
-        [pdb, geneName, geneBankEntry]
+        [pdb, geneName, geneBankEntry, proteinPartners]
     );
 
     return (
