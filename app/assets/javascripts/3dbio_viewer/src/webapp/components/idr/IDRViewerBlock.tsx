@@ -384,7 +384,7 @@ export function reduceOntologyType(acc: JSX.Element[], type: OntologyTerm, idx: 
 
 const styles = recordOfStyles({
     ul: { listStyleType: "none" },
-    help: { marginLeft: 10 },
+    help: { marginLeft: "0.75em" },
     bold: { fontWeight: "bold" },
     description: {
         marginTop: 0,
@@ -395,7 +395,7 @@ const styles = recordOfStyles({
         display: "flex",
         alignItems: "center",
         fontWeight: "bold",
-        marginBottom: 15,
+        marginBottom: "1em",
         color: "#123546",
     },
     section: {

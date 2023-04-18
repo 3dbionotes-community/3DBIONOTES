@@ -1,7 +1,7 @@
 import React from "react";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { routes } from "../../../routes";
-import { Maybe, recordOfStyles } from "../../../utils/ts-utils";
+import { Maybe } from "../../../utils/ts-utils";
 import { FrameViewer, postToIFrame } from "../frame-viewer/FrameViewer";
 import { TrackDef } from "../protvista/Protvista.types";
 import { FeaturesButton } from "./FeaturesButton";
@@ -29,18 +29,12 @@ export const PPIViewer: React.FC<PPiViewerProps> = props => {
 
     return (
         <FrameViewer name={iframeName} ref={iframeRef} title={title}>
-            <div style={styles.featuresButton}>
-                <FeaturesButton onClick={loadFeatures} />
-            </div>
+            <FeaturesButton onClick={loadFeatures} />
         </FrameViewer>
     );
 };
 
 const iframeName = "ppi";
-
-const styles = recordOfStyles({
-    featuresButton: { float: "right" },
-});
 
 /* Post data to PPI iframe to render contents.
 

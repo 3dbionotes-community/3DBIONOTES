@@ -1,5 +1,6 @@
 import React from "react";
 import _ from "lodash";
+import { recordOfStyles } from "../../../utils/ts-utils";
 import "./FrameViewer.css";
 
 interface FrameViewerProps {
@@ -15,12 +16,26 @@ export const FrameViewer = React.forwardRef<HTMLIFrameElement, FrameViewerProps>
 
     return (
         <div className="frame-viewer">
-            <div className="title">{"> " + title}</div>
-            {children}
-
+            <div style={styles.topBar}>
+                <div style={styles.title}>{title}</div>
+                {children}
+            </div>
             <iframe name={name} ref={ref} src={src} width="95%" height="600" />
         </div>
     );
+});
+
+const styles = recordOfStyles({
+    title: {
+        fontWeight: "bold",
+        color: "#123546",
+    },
+    topBar: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginTop: "1.5em",
+    },
 });
 
 export function postToIFrame(options: {
