@@ -19,7 +19,7 @@ export const PopperMenu: React.FC<PropperMenuProps> = props => {
             transition
             disablePortal
         >
-            {({ TransitionProps, placement }) => (
+            {({ TransitionProps }) => (
                 <Grow {...TransitionProps} style={growStyles.bottom}>
                     <Paper className="wrapper">
                         <ClickAwayListener onClickAway={close}>

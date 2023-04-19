@@ -1,8 +1,6 @@
 import _ from "lodash";
 import React, { useState } from "react";
 import { ViewerTooltip } from "./viewer-tooltip/ViewerTooltip";
-import { Help as HelpIcon } from "@material-ui/icons";
-import { recordOfStyles } from "../../utils/ts-utils";
 import css from "./viewers/Viewers.module.css";
 
 export interface BlockProps {
