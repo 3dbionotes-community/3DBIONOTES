@@ -42,17 +42,17 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
 
     const geneName = React.useMemo(
         () =>
-            pdb.protein.gene
-                ? i18n.t(" encoded by the gene {{geneName}}", { geneName: pdb.protein.gene })
+            pdb.protein.gen
+                ? i18n.t(" encoded by the gene {{geneName}}", { geneName: pdb.protein.gen })
                 : undefined,
         [pdb.protein]
     );
 
     const geneBankEntry = React.useMemo(
         () =>
-            !_.isEmpty(pdb.protein.geneBank)
+            !_.isEmpty(pdb.protein.genBank)
                 ? i18n.t(" (GeneBank {{geneBankEntry}})", {
-                      geneBankEntry: pdb.protein.geneBank?.join(", "),
+                      geneBankEntry: pdb.protein.genBank?.join(", "),
                   })
                 : undefined,
         [pdb.protein]
@@ -63,6 +63,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
             poorQualityRegionMax: _.first(pdb.emdbs)?.emv?.stats?.quartile75,
             poorQualityRegionMin: _.first(pdb.emdbs)?.emv?.stats?.quartile25,
             proteinName: pdb.protein.name,
+            ligandsAndSmallMoleculesCount: "X",
             proteinPartners,
             resolution: _.first(pdb.emdbs)?.emv?.stats?.resolutionMedian,
             chain: pdb.chainId,

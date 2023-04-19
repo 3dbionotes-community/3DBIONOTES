@@ -33,8 +33,8 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
                     .toPairs()
                     .map(
                         ([proteinId, proteinInfo]): Protein => {
-                            const [_length, name, gene, organism] = proteinInfo;
-                            return { id: proteinId, name, gene, organism };
+                            const [_length, name, gen, organism] = proteinInfo;
+                            return { id: proteinId, name, gen, organism };
                         }
                     )
                     .value();

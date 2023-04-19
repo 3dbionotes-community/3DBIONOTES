@@ -89,8 +89,8 @@ export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
             return [{ name: proteinId, url: `https://www.uniprot.org/uniprot/${proteinId}` }];
         }
         case "geneBank": {
-            return pdb.protein.geneBank
-                ? pdb.protein.geneBank?.map(id => ({
+            return pdb.protein.genBank
+                ? pdb.protein.genBank?.map(id => ({
                       name: id ?? "-",
                       url: `https://www.ncbi.nlm.nih.gov/gene/${id}`,
                   }))
