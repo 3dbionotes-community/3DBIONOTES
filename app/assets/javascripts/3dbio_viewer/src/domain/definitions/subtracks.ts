@@ -441,7 +441,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     proteinNetwork: {
         id: "protein-network" as const,
         name: i18n.t("Protein Network"),
-        source: "Interactome 3D, String",
+        source: "Interactome 3D",
         description: i18n.t(
             "Set of proteins that interact directly with the protein under study. It is shown as a network of interactions."
         ),
