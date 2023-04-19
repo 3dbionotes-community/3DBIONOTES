@@ -83,7 +83,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         onLigandsLoaded(ligands);
 
         setVisibilityForSelection(pdbePlugin, newSelection);
-        highlight(pdbePlugin, newSelection);
+        // highlight(pdbePlugin, newSelection);
     }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection]);
 
     const pluginRef = React.useCallback(
@@ -265,10 +265,10 @@ async function applySelectionChangesToPlugin(
 
 async function highlight(plugin: PDBeMolstarPlugin, selection: Selection): Promise<void> {
     plugin.visual.clearSelection().catch(_err => {});
-
+    // console.log("times");
     const ligandsView = getLigandView(selection);
     if (ligandsView) return;
-
+    // console.log(selection);
     return plugin.visual.select({
         data: [
             {
