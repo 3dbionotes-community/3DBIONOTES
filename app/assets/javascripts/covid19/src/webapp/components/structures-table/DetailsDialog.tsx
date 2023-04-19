@@ -45,6 +45,7 @@ export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
                             row={row}
                             moreDetails={false}
                             onClickIDR={onClickIDR}
+                            validationSources={data.validationSources}
                         />
                     </ModifiedAccordion>
                     <ModifiedAccordion expanded={expandedAccordion} field="organisms" row={row}>

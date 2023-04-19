@@ -92,10 +92,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 
     const openUploadWithAnalytics = React.useCallback(() => {
         openUpload();
-        sendAnalytics({
-            type: "event",
-            category: "dialog",
-            action: "open",
+        sendAnalytics("open_dialog", {
             label: "Upload Model",
         });
     }, [openUpload]);
@@ -234,11 +231,9 @@ function useSearch(
             }
 
             updateState({ type: "searching" });
-            sendAnalytics({
-                type: "event",
-                category: "viewer_search_menu",
-                action: "search",
-                label: query,
+            sendAnalytics("search", {
+                on: "viewer",
+                query: query,
             });
 
             const type = getDbModelType(formState.models);
