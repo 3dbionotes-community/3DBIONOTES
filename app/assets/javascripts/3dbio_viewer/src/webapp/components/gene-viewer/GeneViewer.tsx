@@ -16,5 +16,5 @@ export const GeneViewer: React.FC<GeneViewerProps> = props => {
     const src = routes.bionotes + `/genomicIFrame?uniprot_acc=${pdb.protein.id.toUpperCase()}`;
     const title = `${trackDef.name}: ${trackDef.description || "-"}`;
 
-    return <FrameViewer title={title} src={src} />;
+    return <FrameViewer title={title} src={src} height={450} />;
 };
