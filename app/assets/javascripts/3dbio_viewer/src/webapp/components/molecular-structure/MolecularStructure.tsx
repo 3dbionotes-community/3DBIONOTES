@@ -103,6 +103,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
             if (pluginAlreadyRendered) {
                 showLoading();
+                console.log(initParams);
                 await plugin.visual.update(initParams);
             } else {
                 plugin.events.loadComplete.subscribe(loaded => {
@@ -172,9 +173,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
     React.useEffect(() => {
         if (!pdbePlugin) return;
-
-        pdbePlugin.visual.remove({});
         if (!uploadDataToken) return;
+        pdbePlugin.visual.remove({});
 
         pdbePlugin.load(
             {
@@ -189,9 +189,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
     React.useEffect(() => {
         if (!pdbePlugin) return;
-
-        pdbePlugin.visual.remove({});
         if (!proteinNetwork) return;
+        pdbePlugin.visual.remove({});
 
         const chainInNetwork =
             proteinNetwork.uploadData.chains.find(chain => chain.chain === newSelection.chainId) ||
@@ -269,19 +268,18 @@ async function highlight(plugin: PDBeMolstarPlugin, selection: Selection): Promi
 
     const ligandsView = getLigandView(selection);
     if (ligandsView) return;
-
     /*
     return plugin.visual.select({
         data: [
             {
                 struct_asym_id: selection.chainId,
-                color: "#9B9BBE",
+                color: "#ff00ff",
                 focus: true,
+                // 9B9BBE
             },
         ],
         nonSelectedColor: { r: 255, g: 255, b: 255 },
-    });
-    */
+    });*/
 }
 
 const colors = {
