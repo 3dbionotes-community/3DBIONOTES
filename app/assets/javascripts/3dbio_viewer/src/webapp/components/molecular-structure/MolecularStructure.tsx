@@ -256,30 +256,30 @@ async function applySelectionChangesToPlugin(
         setVisibility(plugin, item);
     }
 
-    if (newSelection.chainId !== currentSelection.chainId) {
-        highlight(plugin, newSelection);
-    }
+    // if (newSelection.chainId !== currentSelection.chainId) {
+    //     highlight(plugin, newSelection);
+    // }
 
     plugin.visual.reset({ camera: true });
 }
 
 async function highlight(plugin: PDBeMolstarPlugin, selection: Selection): Promise<void> {
-    plugin.visual.clearSelection().catch(_err => {});
+    // plugin.visual.clearSelection().catch(_err => {});
     // console.log("times");
-    const ligandsView = getLigandView(selection);
-    if (ligandsView) return;
-    // console.log(selection);
-    return plugin.visual.select({
-        data: [
-            {
-                struct_asym_id: selection.chainId,
-                color: "#ff00ff",
-                focus: true,
-                // 9B9BBE
-            },
-        ],
-        nonSelectedColor: { r: 255, g: 255, b: 255 },
-    });
+    // const ligandsView = getLigandView(selection);
+    // if (ligandsView) return;
+    // // console.log(selection);
+    // return plugin.visual.select({
+    //     data: [
+    //         {
+    //             struct_asym_id: selection.chainId,
+    //             color: "#0000ff",
+    //             focus: true,
+    //             // 9B9BBE
+    //         },
+    //     ],
+    //     // nonSelectedColor: { r: 255, g: 255, b: 255 },
+    // });
 }
 
 const colors = {
