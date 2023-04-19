@@ -268,7 +268,7 @@ async function highlight(plugin: PDBeMolstarPlugin, selection: Selection): Promi
 
     const ligandsView = getLigandView(selection);
     if (ligandsView) return;
-    /*
+
     return plugin.visual.select({
         data: [
             {
@@ -279,7 +279,7 @@ async function highlight(plugin: PDBeMolstarPlugin, selection: Selection): Promi
             },
         ],
         nonSelectedColor: { r: 255, g: 255, b: 255 },
-    });*/
+    });
 }
 
 const colors = {
