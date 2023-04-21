@@ -21,10 +21,8 @@ export const JumpToButton: React.FC<JumpToButtonProps> = React.memo(props => {
 export function goToElement(DOMElementId: string) {
     // Use document.getElementById for simplicity. The orthodox approach would be to use refs,
     // but we'd need to pass them to all components that have an anchor.
-    sendAnalytics({
-        type: "event",
-        action: "jump_to",
-        category: "viewer",
+    sendAnalytics("jump_to", {
+        on: "viewer",
         label: DOMElementId,
     });
     const el = document.getElementById(DOMElementId);

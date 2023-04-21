@@ -5,6 +5,8 @@ import { BadgeLigands, OnClickIDR } from "../badge/BadgeLigands";
 import { CellProps, styles } from "../Columns";
 import { Link } from "../Link";
 import { Wrapper } from "./Wrapper";
+import { getValidationSource } from "../../../../domain/entities/Covid19Info";
+import { HtmlTooltip } from "../HtmlTooltip";
 import i18n from "../../../../utils/i18n";
 
 export interface LigandsCellProps extends CellProps {
@@ -12,7 +14,7 @@ export interface LigandsCellProps extends CellProps {
 }
 
 export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
-    const { row, onClickDetails, onClickIDR, moreDetails } = props;
+    const { row, onClickDetails, onClickIDR, moreDetails = true, validationSources } = props;
 
     const ligands = React.useMemo(() => {
         return row.ligands.map(ligand => {
@@ -43,6 +45,43 @@ export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
         });
     }, [row.ligands]);
 
+    const idrValidationSource = React.useMemo(
+        () => getValidationSource(validationSources ?? [], "IDR"),
+        [validationSources]
+    );
+
+    const idrTooltip = React.useMemo(
+        () =>
+            idrValidationSource ? (
+                <div>
+                    {idrValidationSource.methods.map(method => (
+                        <>
+                            {idrValidationSource.methods.length > 1 ? (
+                                <strong>
+                                    {i18n.t(`{{methodName}} Method: `, {
+                                        nsSeparator: false,
+                                        methodName: method.name,
+                                    })}
+                                </strong>
+                            ) : (
+                                <strong>{i18n.t("Method: ", { nsSeparator: false })}</strong>
+                            )}
+                            <span>{method.description}</span>
+                            <br />
+                            <br />
+                        </>
+                    ))}
+                    {idrValidationSource.description && (
+                        <>
+                            <strong>{i18n.t("Source: ", { nsSeparator: false })}</strong>
+                            <span>{idrValidationSource.description}</span>
+                        </>
+                    )}
+                </div>
+            ) : undefined,
+        [idrValidationSource]
+    );
+
     return (
         <Wrapper
             onClickDetails={onClickDetails}
@@ -59,16 +98,19 @@ export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
                                 tooltip={ligand.tooltip}
                                 url={ligand.url}
                                 text={`${ligand.name} (${ligand.id})`}
-                            >
-                                {ligand.hasIDR && row.pdb?.id && (
-                                    <BadgeLigands
-                                        pdbId={row.pdb.id}
-                                        ligand={ligand}
-                                        onClick={onClickIDR}
-                                        moreDetails={moreDetails}
-                                    />
-                                )}
-                            </Link>
+                            />
+                            {ligand.hasIDR && row.pdb?.id && idrTooltip && (
+                                <HtmlTooltip title={idrTooltip}>
+                                    <span>
+                                        <BadgeLigands
+                                            pdbId={row.pdb.id}
+                                            ligand={ligand}
+                                            onClick={onClickIDR}
+                                            moreDetails={moreDetails}
+                                        />
+                                    </span>
+                                </HtmlTooltip>
+                            )}
                         </LigandItem>
                     );
                 })
@@ -78,6 +120,7 @@ export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
 });
 
 const LigandItem = styled.div<{ moreDetails?: boolean }>`
+    ${props => (props.moreDetails ? "" : "display: flex; align-items: center;")}
     li {
         text-align: left;
     }

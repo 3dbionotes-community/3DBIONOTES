@@ -7,7 +7,7 @@ module MappingsManager
       def queryPDBfromEMDB(emdbId)
         emdbToPDB = Hash.new
         if emdbId =~ /^EMD-\d+$/
-          request = makeRequest(Server+EmdbFit,emdbId)
+          request = makeRequest("https://www.ebi.ac.uk/emdb/api/entry/fitted/",emdbId)
         else
           request = nil
         end
@@ -20,16 +20,7 @@ module MappingsManager
         rescue
           raise Server+EmdbFit+"/"+emdbId+" DID NOT RETURN A JSON OBJECT"
         end
-        #json = JSON.parse(request)
-        json.each do |k,v|
-          tmpArray = []
-          v.each do |fit|
-            if fit != {}
-              tmpArray+=fit["fitted_emdb_id_list"]["pdb_id"]
-            end
-          end
-          emdbToPDB[k]=tmpArray
-        end
+        emdbToPDB[json['emdb_id']]=[json['crossreferences']['pdb_list']['pdb_reference'][0]["pdb_id"]]
         myStatus = :ok
         if emdbToPDB == {}
           myStatus = :not_found
