@@ -24,11 +24,9 @@ export const ProteomePath: React.FC<ProteomePathProps> = React.memo(props => {
         );
         setProteomeSelected(true);
         toggleProteome();
-        sendAnalytics({
-            type: "event",
-            category: "proteome",
-            action: "select",
-            label: name,
+        sendAnalytics("select", {
+            type: "proteome",
+            item: name,
         });
     }, [name, details, setProteomeSelected, setSearch, toggleProteome]);
 

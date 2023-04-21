@@ -70,11 +70,9 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const setSearch = React.useCallback(
         (value: string) => {
             setPage(0);
-            sendAnalytics({
-                type: "event",
-                category: "covid_table",
-                action: "search",
-                label: value,
+            sendAnalytics("search", {
+                on: "covid_table",
+                query: value,
             });
             setSearch0(value);
             setSortModel(value ? noSort : defaultSort);
