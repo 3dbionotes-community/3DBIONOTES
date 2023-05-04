@@ -1,8 +1,10 @@
 import React from "react";
 import i18n from "../../utils/i18n";
+import { FilterList as FilterListIcon } from "@material-ui/icons";
 import { MenuItem, MenuList, Checkbox } from "@material-ui/core";
 import { GridMenu } from "@material-ui/data-grid";
 import styled from "styled-components";
+import { StyledButton } from "../../training-app/components/action-button/ActionButton";
 
 export const modelTypeKeys = ["emdb", "pdb"] as const;
 
@@ -36,9 +38,10 @@ export const ModelSearchFilterMenu: React.FC<{
 
     return (
         <React.Fragment>
-            <button className="model-search" onClick={openMenu}>
+            <StyledButton className="model-search" onClick={openMenu}>
                 {i18n.t("Filter")}
-            </button>
+                <FilterListIcon fontSize="small" />
+            </StyledButton>
             <GridMenu
                 open={isOpen}
                 target={anchorEl}

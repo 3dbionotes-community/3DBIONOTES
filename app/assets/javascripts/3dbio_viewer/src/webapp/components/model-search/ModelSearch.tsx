@@ -8,7 +8,7 @@ import {
     DialogTitle,
     IconButton,
 } from "@material-ui/core";
-import { Close, Search } from "@material-ui/icons";
+import { Close, CloudUpload as CloudUploadIcon, Search } from "@material-ui/icons";
 import { DbModel, DbModelType } from "../../../domain/entities/DbModel";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { useBooleanState } from "../../hooks/use-boolean";
@@ -20,9 +20,10 @@ import { ModelSearchFilterMenu, ModelTypeFilter, modelTypeKeys } from "./ModelSe
 import { useCallbackFromEventValue } from "../../hooks/use-callback-event-value";
 import { sendAnalytics } from "../../utils/analytics";
 import { useGoto } from "../../hooks/use-goto";
-import i18n from "../../utils/i18n";
-import "./ModelSearch.css";
 import { Maybe } from "../../../utils/ts-utils";
+import { StyledButton } from "../../training-app/components/action-button/ActionButton";
+import "./ModelSearch.css";
+import i18n from "../../utils/i18n";
 
 /* Search PDB/EMDB models from text and model type. As the search items to show are limited,
    we get all the matching models and use an infinite scroll just to render more items. Only a
@@ -55,7 +56,9 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     }, []);
 
     const placeholder = React.useMemo(() => {
-        const index = modelTypeKeys.find(key => formState.models[key]) || "all";
+        const index = modelTypeKeys.every(key => formState.models[key])
+            ? "all"
+            : modelTypeKeys.find(key => formState.models[key]) || "all";
         return filterTranslations[index];
     }, [formState, filterTranslations]);
 
@@ -111,7 +114,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                     <div className="search">
                         <input
                             aria-label={i18n.t("Search")}
-                            className="form-control"
+                            className=""
                             placeholder={placeholder}
                             type="text"
                             value={inputValue}
@@ -121,9 +124,10 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                     </div>
 
                     <ModelSearchFilterMenu modelTypeState={models} setModelTypeState={setModels} />
-                    <button className="model-search" onClick={openUploadWithAnalytics}>
+                    <StyledButton className="model-search" onClick={openUploadWithAnalytics}>
                         {i18n.t("Upload model")}
-                    </button>
+                        <CloudUploadIcon fontSize="small" />
+                    </StyledButton>
                     {isUploadOpen && (
                         <ModelUpload
                             title={i18n.t("Upload your atomic structure")}
@@ -138,7 +142,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         </div>
                     )}
                     {formState.type === "results" && (
-                        <div>
+                        <div style={styles.matching}>
                             {i18n.t("{{total}} matches (showing {{visible}})", {
                                 total: totalMatches,
                                 visible: allItems.length,
@@ -202,6 +206,9 @@ const styles = {
         display: "flex" as const,
         flexDirection: "row" as const,
         flexWrap: "wrap" as const,
+    },
+    matching: {
+        marginLeft: "0.5em",
     },
 };
 
