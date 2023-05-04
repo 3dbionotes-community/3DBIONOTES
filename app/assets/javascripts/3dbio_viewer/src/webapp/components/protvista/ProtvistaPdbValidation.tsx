@@ -27,15 +27,6 @@ export const ProtvistaPdbValidation: React.FC<ProtvistaPdbProps> = React.memo(pr
                     <div>
                         <svg ref={svgRef} />
                         <div style={styles.info.container}>
-                            <p>
-                                Alias irure aliquam, facilisi taciti tenetur rutrum consequat
-                                impedit! Nisl tortor voluptates! Felis scelerisque, anim
-                                sollicitudin nostra sem, aliquet doloremque diamlorem magnam
-                                provident elit? Nulla lobortis varius omnis tempus asperiores?
-                                Ratione omnis, nibh repellat? Netus minima, doloremque veniam
-                                dolorem accusamus, porttitor lacus taciti modi senectus? Fugit ut
-                                voluptates. Natoque cupidatat.
-                            </p>
                             {emdb?.emv?.stats?.warnings?.map((warning, idx) => (
                                 <p key={idx} style={styles.info.warnings}>
                                     {warning}
