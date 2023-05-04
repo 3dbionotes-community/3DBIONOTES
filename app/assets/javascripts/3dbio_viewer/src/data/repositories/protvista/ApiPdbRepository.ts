@@ -180,7 +180,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
     // Move URLS to each track module?
     //prettier-ignore
     const data$: DataRequests = {
-        uniprot: getXML(`${routes.uniprot}/uniprot/${proteinId}.xml`),
+        uniprot: getXML(`${routes.uniprot}/uniprotkb/${proteinId}.xml`),
         pdbEmdbsEmValidations: onF(pdbId, pdbId =>
             getJSON<PdbEmdbMapping>(`${emdbsFromPdbUrl}/${pdbId}`).flatMap(pdbEmdbMapping => {
                 const emdbs = pdbEmdbMapping ? getEmdbsFromMapping(pdbEmdbMapping, pdbId) : [];
