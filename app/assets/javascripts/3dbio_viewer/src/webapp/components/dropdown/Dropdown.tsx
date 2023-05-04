@@ -5,6 +5,7 @@ import { ExpandMore, ExpandLess, Done } from "@material-ui/icons";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { PopperMenu } from "./PopperMenu";
 import i18n from "../../utils/i18n";
+import { StyledButton } from "../../training-app/components/action-button/ActionButton";
 
 export interface DropdownProps<Id extends string = string> {
     // Show text or, if empty, the selected item.
@@ -14,6 +15,7 @@ export interface DropdownProps<Id extends string = string> {
     onClick(id: Id): void;
     showSelection?: boolean;
     showExpandIcon?: boolean;
+    rightIcon?: React.ReactNode;
 }
 
 export interface DropdownItemModel<Id extends string> {
@@ -24,7 +26,7 @@ export interface DropdownItemModel<Id extends string> {
 export function Dropdown<Id extends string = string>(
     props: DropdownProps<Id>
 ): React.ReactElement | null {
-    const { items, text, onClick, showExpandIcon = false, selected } = props;
+    const { items, text, onClick, showExpandIcon = false, selected, rightIcon } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
     const showSelection = Boolean(selected);
@@ -47,10 +49,15 @@ export function Dropdown<Id extends string = string>(
 
     return (
         <React.Fragment>
-            <button ref={buttonRef} onClick={openMenu} className={isMenuOpen ? "open" : undefined}>
+            <StyledButton
+                ref={buttonRef}
+                onClick={openMenu}
+                className={isMenuOpen ? "open" : undefined}
+            >
                 {buttonText}
+                {rightIcon}
                 {showExpandIcon && (isMenuOpen ? <ExpandLess /> : <ExpandMore />)}
-            </button>
+            </StyledButton>
 
             <PopperMenu isOpen={isMenuOpen} close={closeMenu} buttonRef={buttonRef}>
                 {items.map(item => (

@@ -15,7 +15,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({ onClick }) => {
     );
 };
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
     display: inline-flex;
     column-gap: 0.5em;
     align-items: center;

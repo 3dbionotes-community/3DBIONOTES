@@ -6,6 +6,7 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import { sendAnalytics } from "../../utils/analytics";
 import { AnnotationsTool } from "../annotations-tool/AnnotationsTool";
 import { Annotations } from "../../../domain/entities/Annotation";
+import { Build as BuildIcon } from "@material-ui/icons";
 
 export interface ToolsButtonProps {
     onAddAnnotations(annotations: Annotations): void;
@@ -49,7 +50,12 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
 
     return (
         <>
-            <Dropdown<ItemId> text={i18n.t("Tools")} items={items} onClick={openMenuItem} />
+            <Dropdown<ItemId>
+                text={i18n.t("Tools")}
+                items={items}
+                onClick={openMenuItem}
+                rightIcon={<BuildIcon fontSize="small" />}
+            />
 
             {isNetworkOpen && <Network onClose={closeNetwork} />}
 
