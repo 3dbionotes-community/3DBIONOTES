@@ -160,11 +160,6 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                             hasMore={hasMore}
                             scrollableTarget="scrollableDiv"
                             loader={<p>{i18n.t("Loading")}....</p>}
-                            endMessage={
-                                <p style={{ textAlign: "center" }}>
-                                    <b>{i18n.t("End of EMDBs/PDBs")}</b>
-                                </p>
-                            }
                         >
                             {visibleItems.map((item, idx) => (
                                 <ModelSearchItem key={idx} item={item} onSelect={onSelect} />
