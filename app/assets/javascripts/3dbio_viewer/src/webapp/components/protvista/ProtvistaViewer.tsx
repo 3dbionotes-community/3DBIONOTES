@@ -5,13 +5,13 @@ import { Selection } from "../../view-models/Selection";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
 import { BlockDef, TrackComponentProps } from "./Protvista.types";
-import "./protvista-pdb.css";
-import "./ProtvistaViewer.css";
 import { PPIViewer } from "../ppi/PPIViewer";
 import { GeneViewer } from "../gene-viewer/GeneViewer";
-import i18n from "../../utils/i18n";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { getSelectedChain } from "../viewer-selector/ViewerSelector";
+import i18n from "../../utils/i18n";
+import "./protvista-pdb.css";
+import "./ProtvistaViewer.css";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
@@ -27,6 +27,20 @@ const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks, pdbInfo } = props;
+
+    const [blocksVisibility, setBlocksVisibility] = React.useState(
+        blocks.map(block => ({ block, visible: true }))
+    );
+
+    const setBlockVisibility = React.useCallback(
+        (blockVisibility: { block: BlockDef; visible: boolean }) =>
+            setBlocksVisibility(
+                blocksVisibility.map(i =>
+                    i.block.id === blockVisibility.block.id ? blockVisibility : i
+                )
+            ),
+        [blocksVisibility]
+    );
 
     const selectedChain = React.useMemo(() => getSelectedChain(pdbInfo, selection), [
         pdbInfo,
@@ -64,13 +78,16 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         const ppiFrame = [...document.getElementsByTagName("iframe")].find(
             frame => frame.name === "ppi"
         );
-        if (ppiFrame && ppiFrame.contentWindow)
-            return (
-                (ppiFrame.contentWindow as PPIWindow).cytoscape_graph.elements.nodes.filter(
-                    (node: { data: { shape: string } }) => node.data.shape === "ellipse"
-                ).length - 1
-            );
-        else return 0;
+        if (ppiFrame && (ppiFrame.contentWindow as PPIWindow)) {
+            if ((ppiFrame.contentWindow as PPIWindow).cytoscape_graph)
+                /*sometimes prodcues error*/
+                return (
+                    (ppiFrame.contentWindow as PPIWindow).cytoscape_graph.elements.nodes.filter(
+                        (node: { data: { shape: string } }) => node.data.shape === "ellipse"
+                    ).length - 1
+                );
+            else return 0;
+        } else return 0;
     }, []);
 
     const namespace = React.useMemo(
@@ -90,37 +107,46 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         [pdb, geneName, geneBankEntry, ligandsAndSmallMoleculesCount, proteinPartners]
     );
 
-    return (
-        <div style={styles.container}>
-            {blocks.map(block => {
+    const renderBlocks = React.useMemo(
+        () =>
+            blocksVisibility.map(({ block, visible }) => {
                 const CustomComponent = block.component;
                 return (
-                    <ViewerBlock key={block.id} block={block} namespace={namespace}>
-                        {CustomComponent ? (
-                            <CustomComponent pdb={pdb} selection={selection} block={block} />
-                        ) : (
-                            <ProtvistaPdb pdb={pdb} block={block} />
-                        )}
+                    visible && (
+                        <ViewerBlock key={block.id} block={block} namespace={namespace}>
+                            {CustomComponent ? (
+                                <CustomComponent
+                                    pdb={pdb}
+                                    selection={selection}
+                                    block={block}
+                                    setBlockVisibility={setBlockVisibility}
+                                />
+                            ) : (
+                                <ProtvistaPdb pdb={pdb} block={block} />
+                            )}
 
-                        {block.tracks.map((trackDef, idx) => {
-                            const CustomTrackComponent = trackComponentMapping[trackDef.id];
-                            return (
-                                CustomTrackComponent && (
-                                    <CustomTrackComponent
-                                        block={block}
-                                        key={idx}
-                                        trackDef={trackDef}
-                                        pdb={pdb}
-                                        selection={selection}
-                                    />
-                                )
-                            );
-                        })}
-                    </ViewerBlock>
+                            {block.tracks.map((trackDef, idx) => {
+                                const CustomTrackComponent = trackComponentMapping[trackDef.id];
+                                return (
+                                    CustomTrackComponent && (
+                                        <CustomTrackComponent
+                                            block={block}
+                                            key={idx}
+                                            trackDef={trackDef}
+                                            pdb={pdb}
+                                            selection={selection}
+                                        />
+                                    )
+                                );
+                            })}
+                        </ViewerBlock>
+                    )
                 );
-            })}
-        </div>
+            }),
+        [blocksVisibility, namespace, pdb, selection, setBlockVisibility]
     );
+
+    return <div style={styles.container}>{renderBlocks}</div>;
 };
 
 const styles = {

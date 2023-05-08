@@ -1,9 +1,9 @@
+import * as d3Module from "d3";
 import _ from "lodash";
 import React from "react";
-import * as d3Module from "d3";
 import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
-import modelQualityStats from "../../../data/repositories/emv_modelquality_stats.json";
 import { StatsValidation } from "../../../domain/entities/Pdb";
+import modelQualityStats from "../../../data/repositories/emv_modelquality_stats.json";
 
 declare global {
     const d3: typeof d3Module;

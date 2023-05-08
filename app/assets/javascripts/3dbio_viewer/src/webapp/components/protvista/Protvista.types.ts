@@ -18,6 +18,7 @@ export interface BlockComponentProps {
     pdb: Pdb;
     selection: Selection;
     block: BlockDef;
+    setBlockVisibility?: (blockVisibility: { block: BlockDef; visible: boolean }) => void;
 }
 
 export type TrackDef = TrackDefinition;
