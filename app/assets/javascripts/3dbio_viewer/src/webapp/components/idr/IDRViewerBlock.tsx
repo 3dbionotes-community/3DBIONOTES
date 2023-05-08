@@ -1,7 +1,6 @@
 import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
-import { Pdb } from "../../../domain/entities/Pdb";
 import { recordOfStyles } from "../../../utils/ts-utils";
 import {
     AdditionalAnalysisCompound,
@@ -81,7 +80,7 @@ export const IDRViewerBlock: React.FC<BlockComponentProps> = React.memo(
             if (_.isEmpty(idrs) && setBlockVisibility) {
                 setBlockVisibility({ block, visible: false });
             }
-        }, [setBlockVisibility]);
+        }, [setBlockVisibility, block, idrs]);
 
         return (
             <>
