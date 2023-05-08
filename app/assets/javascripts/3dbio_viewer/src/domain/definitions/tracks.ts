@@ -166,8 +166,7 @@ export const trackDefinitions = {
     ppiViewer: definition({
         id: "ppi-viewer" as const,
         name: i18n.t("PPI Viewer"),
-        // description: i18n.t("Protein Network"),
-        subtracks: [subtracks.proteinNetwork, subtracks.pdbList],
+        subtracks: [subtracks.proteinNetwork],
     }),
     functionalMappingPpi: definition({
         id: "functional-mapping-ppi" as const,

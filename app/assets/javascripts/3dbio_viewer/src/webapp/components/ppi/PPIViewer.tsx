@@ -19,7 +19,7 @@ interface PPiViewerProps {
 
 export const PPIViewer: React.FC<PPiViewerProps> = props => {
     const { pdb, trackDef } = props;
-    const title = `${trackDef.name}: ${trackDef.description || "-"}`;
+    const title = `${trackDef.name}`;
     const iframeRef = React.useRef<HTMLIFrameElement>(null);
     const infoAlignment = useInfoAlignment(pdb);
     const loadFeatures = useLoadFeaturesAction(iframeRef);
@@ -28,7 +28,7 @@ export const PPIViewer: React.FC<PPiViewerProps> = props => {
     if (!infoAlignment) return null;
 
     return (
-        <FrameViewer name={iframeName} ref={iframeRef} title={title}>
+        <FrameViewer name={iframeName} ref={iframeRef} title={title} trackDef={trackDef}>
             <FeaturesButton onClick={loadFeatures} />
         </FrameViewer>
     );
