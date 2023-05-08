@@ -16,13 +16,13 @@ const dimensions = {
 
 export const ProtvistaPdbValidation: React.FC<ProtvistaPdbProps> = React.memo(props => {
     const emdb = _.first(props.pdb.emdbs);
-    const ref = useGrid();
+    const _ref = useGrid(); /*temporal hidden*/
     const svgRef = useBar(emdb?.emv?.stats);
 
     return (
         <>
             <div style={styles.svgContainers}>
-                <svg ref={ref} />
+                {/* <svg ref={ref} /> */}
                 {svgRef && (
                     <div>
                         <svg ref={svgRef} />
