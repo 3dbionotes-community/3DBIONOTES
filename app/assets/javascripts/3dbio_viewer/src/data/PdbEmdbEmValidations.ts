@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { array, Codec, exactly, GetType, number, oneOf, string } from "purify-ts";
+import { array, Codec, exactly, GetType, number, oneOf, optional, string } from "purify-ts";
 import { EMValidations as EmdbEmValidations } from "../domain/entities/Pdb";
 import { Maybe } from "../utils/ts-utils";
 
@@ -13,8 +13,8 @@ function getEmvResponse<T>(codec: Codec<T>) {
             volume_map: string,
         }),
         data: codec,
-        warnings: array(string),
-        errors: array(string),
+        warnings: optional(array(string)),
+        errors: optional(array(string)),
     });
 }
 
