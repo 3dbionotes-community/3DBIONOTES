@@ -17,49 +17,49 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import { SVGPlate } from "./SVGPlate";
 import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 import { HtmlTooltip } from "../HtmlTooltip";
+import { BlockComponentProps } from "../protvista/Protvista.types";
 import i18n from "../../utils/i18n";
 
-interface BasicInfoProps {
-    pdb: Pdb;
-}
+export const IDRViewerBlock: React.FC<BlockComponentProps> = React.memo(
+    ({ pdb, block, setBlockVisibility }) => {
+        const [showTooltip, { set: setShowTooltip, toggle: toggleTooltip }] = useBooleanState(
+            false
+        );
 
-export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => {
-    const [showTooltip, { set: setShowTooltip, toggle: toggleTooltip }] = useBooleanState(false);
+        const idrs = React.useMemo(
+            () => _.compact(pdb.ligands?.map(ligand => ligand.imageDataResource)),
+            [pdb]
+        );
 
-    const idrs = React.useMemo(
-        () => _.compact(pdb.ligands?.map(ligand => ligand.imageDataResource)),
-        [pdb]
-    );
+        const getAssayDescription = React.useCallback((assay: Assay) => {
+            const screen = assay.screens.find(screen => screen.id == "2602");
+            const {
+                name,
+                percentageInhibition,
+                doseResponse,
+                cytotoxicity,
+                cytotoxicIndex,
+            } = assay.compound;
 
-    const getAssayDescription = React.useCallback((assay: Assay) => {
-        const screen = assay.screens.find(screen => screen.id == "2602");
-        const {
-            name,
-            percentageInhibition,
-            doseResponse,
-            cytotoxicity,
-            cytotoxicIndex,
-        } = assay.compound;
+            const namespace = {
+                ligandName: name,
+                percentageInhibition: percentageInhibition,
+                micromolarConcentration: _.first(_.first(screen?.plates)?.wells)
+                    ?.micromolarConcentration,
+                hitOver75Activity:
+                    _.first(_.first(screen?.plates)?.wells)?.hitCompound.toLowerCase() === "yes"
+                        ? "is"
+                        : "is not",
+                doseResponseValue: doseResponse?.value,
+                doseResponseUnit: doseResponse?.units?.name,
+                cytotoxicityValue: cytotoxicity?.value,
+                cytotoxicityUnits: cytotoxicity?.units?.name,
+                cytotoxicIndexValue: cytotoxicIndex?.value,
+                cytotoxicIndexUnits: cytotoxicIndex?.units?.name,
+            };
 
-        const namespace = {
-            ligandName: name,
-            percentageInhibition: percentageInhibition,
-            micromolarConcentration: _.first(_.first(screen?.plates)?.wells)
-                ?.micromolarConcentration,
-            hitOver75Activity:
-                _.first(_.first(screen?.plates)?.wells)?.hitCompound.toLowerCase() === "yes"
-                    ? "is"
-                    : "is not",
-            doseResponseValue: doseResponse?.value,
-            doseResponseUnit: doseResponse?.units?.name,
-            cytotoxicityValue: cytotoxicity?.value,
-            cytotoxicityUnits: cytotoxicity?.units?.name,
-            cytotoxicIndexValue: cytotoxicIndex?.value,
-            cytotoxicIndexUnits: cytotoxicIndex?.units?.name,
-        };
-
-        //prettier-ignore
-        return [
+            //prettier-ignore
+            return [
             i18n.t("This is an assay based on high content screen of cells treated with a compound library and infection in which a well-defined collection of compounds is tested against SARS-CoV-2.", namespace),
             i18n.t("The compound {{ligandName}} inhibited cytopathicity by {{percentageInhibition}} at {{micromolarConcentration}} µM, which {{hitOver75Activity}} considered as a hit (efficiency in blocking viral cytopathicity) in the context of this assay.", namespace),
             screen?.type.some(term => term.name === "multiple concentration")
@@ -75,75 +75,82 @@ export const IDRViewerBlock: React.FC<BasicInfoProps> = React.memo(({ pdb }) => 
                 ? i18n.t("The the ratio between the cytopathic effect and cytotoxicity, also known as the selectivity index (IC50/CC50), for {{ligandName}} is {{cytotoxicIndexValue}} {{cytotoxicIndexUnits}}.", namespace)
                 : [],
         ].flat();
-    }, []);
+        }, []);
 
-    return (
-        <>
-            {!_.isEmpty(idrs) && (
-                <div style={styles.section}>
-                    <div style={styles.title}>
-                        {i18n.t("High-Content Screening (HCS) Assays")}
-                        <ViewerTooltip
-                            title={i18n.t(
-                                "This section contains key information about High-Content Screening assays in which some of the entities present in the atomic model have been tested, including information about assay, screens, plates, wells and compound effects. Note that for HCSs of cells treated with a compound library, due to the nature of the assay, there is no precise evidence that the compound-macromolecule binding in the atomic model is the direct cause of the final phenotype observed in the images."
-                            )}
-                            showTooltip={showTooltip}
-                            setShowTooltip={setShowTooltip}
-                        >
-                            <button style={styles.smallButton} onClick={toggleTooltip}>
-                                ?
-                            </button>
-                        </ViewerTooltip>
-                    </div>
+        React.useEffect(() => {
+            if (_.isEmpty(idrs) && setBlockVisibility) {
+                setBlockVisibility({ block, visible: false });
+            }
+        }, [setBlockVisibility]);
 
-                    {idrs?.map((idr, i) => (
-                        <Container key={i}>
-                            {idr.assays.map((assay, idx) => {
-                                return (
-                                    <React.Fragment key={idx}>
-                                        {getAssayDescription(assay).map((description, idx) => (
-                                            <p key={idx} style={styles.description}>
-                                                {description}
-                                            </p>
-                                        ))}
-                                        <Section
-                                            title={i18n.t("Assay")}
-                                            subtitle={assay.name}
-                                            help={assay.description}
-                                        >
-                                            <AssayFC
-                                                assay={assay}
-                                                dataSource={{
-                                                    label: idr.dataSource,
-                                                    href: idr.externalLink,
-                                                }}
-                                            />
-                                        </Section>
-                                        <Section title={i18n.t("Compound")}>
-                                            <CompoundFC compound={assay.compound} />
-                                        </Section>
-                                        {assay.screens.map((screen, idx) => (
+        return (
+            <>
+                {!_.isEmpty(idrs) && (
+                    <div style={styles.section}>
+                        <div style={styles.title}>
+                            {i18n.t("High-Content Screening (HCS) Assays")}
+                            <ViewerTooltip
+                                title={i18n.t(
+                                    "This section contains key information about High-Content Screening assays in which some of the entities present in the atomic model have been tested, including information about assay, screens, plates, wells and compound effects. Note that for HCSs of cells treated with a compound library, due to the nature of the assay, there is no precise evidence that the compound-macromolecule binding in the atomic model is the direct cause of the final phenotype observed in the images."
+                                )}
+                                showTooltip={showTooltip}
+                                setShowTooltip={setShowTooltip}
+                            >
+                                <button style={styles.smallButton} onClick={toggleTooltip}>
+                                    ?
+                                </button>
+                            </ViewerTooltip>
+                        </div>
+
+                        {idrs?.map((idr, i) => (
+                            <Container key={i}>
+                                {idr.assays.map((assay, idx) => {
+                                    return (
+                                        <React.Fragment key={idx}>
+                                            {getAssayDescription(assay).map((description, idx) => (
+                                                <p key={idx} style={styles.description}>
+                                                    {description}
+                                                </p>
+                                            ))}
                                             <Section
-                                                key={idx}
-                                                title={i18n.t("Screen")}
-                                                subtitle={screen.name}
-                                                help={screen.description}
+                                                title={i18n.t("Assay")}
+                                                subtitle={assay.name}
+                                                help={assay.description}
                                             >
-                                                <ScreenFC screen={screen} />
-                                                <PlatesAccordion plates={screen.plates} />
+                                                <AssayFC
+                                                    assay={assay}
+                                                    dataSource={{
+                                                        label: idr.dataSource,
+                                                        href: idr.externalLink,
+                                                    }}
+                                                />
                                             </Section>
-                                        ))}
-                                    </React.Fragment>
-                                );
-                            })}
-                        </Container>
-                    ))}
-                </div>
-            )}
-            {_.isEmpty(idrs) && <p style={styles.notFound}>{i18n.t("No IDRs found.")}</p>}
-        </>
-    );
-});
+                                            <Section title={i18n.t("Compound")}>
+                                                <CompoundFC compound={assay.compound} />
+                                            </Section>
+                                            {assay.screens.map((screen, idx) => (
+                                                <Section
+                                                    key={idx}
+                                                    title={i18n.t("Screen")}
+                                                    subtitle={screen.name}
+                                                    help={screen.description}
+                                                >
+                                                    <ScreenFC screen={screen} />
+                                                    <PlatesAccordion plates={screen.plates} />
+                                                </Section>
+                                            ))}
+                                        </React.Fragment>
+                                    );
+                                })}
+                            </Container>
+                        ))}
+                    </div>
+                )}
+                {_.isEmpty(idrs) && <p style={styles.notFound}>{i18n.t("No IDRs found.")}</p>}
+            </>
+        );
+    }
+);
 
 interface PlatesAccordionProps {
     plates: Plate[];

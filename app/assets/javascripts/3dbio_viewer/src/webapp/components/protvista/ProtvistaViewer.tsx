@@ -4,7 +4,7 @@ import { Pdb, getEntityLinks } from "../../../domain/entities/Pdb";
 import { Selection } from "../../view-models/Selection";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
-import { BlockDef, TrackComponentProps } from "./Protvista.types";
+import { BlockDef, BlockVisibility, TrackComponentProps } from "./Protvista.types";
 import { PPIViewer } from "../ppi/PPIViewer";
 import { GeneViewer } from "../gene-viewer/GeneViewer";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
@@ -33,7 +33,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     );
 
     const setBlockVisibility = React.useCallback(
-        (blockVisibility: { block: BlockDef; visible: boolean }) =>
+        (blockVisibility: BlockVisibility) =>
             setBlocksVisibility(
                 blocksVisibility.map(i =>
                     i.block.id === blockVisibility.block.id ? blockVisibility : i

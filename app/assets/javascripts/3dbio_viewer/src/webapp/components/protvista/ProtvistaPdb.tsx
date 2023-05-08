@@ -2,14 +2,14 @@ import React from "react";
 import _ from "lodash";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { loadPdbView, ProtvistaAction } from "./Protvista.helpers";
-import { BlockDef, ProtvistaTrackElement } from "./Protvista.types";
+import { BlockDef, BlockVisibility, ProtvistaTrackElement } from "./Protvista.types";
 import { getPdbView } from "../../view-models/PdbView";
 
 export interface ProtvistaPdbProps {
     pdb: Pdb;
     block: BlockDef;
     showAllTracks?: boolean;
-    setBlockVisibility?: (blockVisibility: { block: BlockDef; visible: boolean }) => void;
+    setBlockVisibility?: (blockVisibility: BlockVisibility) => void;
     onAction?(action: ProtvistaAction): void;
 }
 
