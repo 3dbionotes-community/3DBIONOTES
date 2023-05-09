@@ -370,7 +370,6 @@ const styles = {
         display: "flex",
         alignItems: "flex-start",
         columnGap: "1em",
-        marginBottom: "1em",
     },
     info: {
         container: {
