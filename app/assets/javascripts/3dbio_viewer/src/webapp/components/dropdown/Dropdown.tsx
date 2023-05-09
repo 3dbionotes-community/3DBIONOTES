@@ -15,6 +15,7 @@ export interface DropdownProps<Id extends string = string> {
     onClick(id: Id): void;
     showSelection?: boolean;
     showExpandIcon?: boolean;
+    leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
 }
 
@@ -26,7 +27,7 @@ export interface DropdownItemModel<Id extends string> {
 export function Dropdown<Id extends string = string>(
     props: DropdownProps<Id>
 ): React.ReactElement | null {
-    const { items, text, onClick, showExpandIcon = false, selected, rightIcon } = props;
+    const { items, text, onClick, showExpandIcon = false, selected, rightIcon, leftIcon } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
     const showSelection = Boolean(selected);
@@ -54,6 +55,7 @@ export function Dropdown<Id extends string = string>(
                 onClick={openMenu}
                 className={isMenuOpen ? "open" : undefined}
             >
+                {leftIcon}
                 {buttonText}
                 {rightIcon}
                 {showExpandIcon && (isMenuOpen ? <ExpandLess /> : <ExpandMore />)}

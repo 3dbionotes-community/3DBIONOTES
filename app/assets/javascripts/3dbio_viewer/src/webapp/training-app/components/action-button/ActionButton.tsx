@@ -9,15 +9,17 @@ export interface ActionButtonProps {
 export const ActionButton: React.FC<ActionButtonProps> = ({ onClick }) => {
     return (
         <StyledButton onClick={onClick}>
-            Tutorial
             <EmojiObjectsIcon fontSize="small" />
+            Tutorial
         </StyledButton>
     );
 };
 
 export const StyledButton = styled.button`
     display: inline-flex;
-    column-gap: 0.5em;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    column-gap: 4px; /*not em intentionally*/
     align-items: center;
 
     .MuiSvgIcon-fontSizeSmall {

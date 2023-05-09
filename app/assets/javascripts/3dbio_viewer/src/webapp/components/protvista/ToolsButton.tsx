@@ -54,7 +54,7 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
                 text={i18n.t("Tools")}
                 items={items}
                 onClick={openMenuItem}
-                rightIcon={<BuildIcon fontSize="small" />}
+                leftIcon={<BuildIcon fontSize="small" />}
             />
 
             {isNetworkOpen && <Network onClose={closeNetwork} />}
