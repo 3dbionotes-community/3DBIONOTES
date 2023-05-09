@@ -3,7 +3,9 @@ import _ from "lodash";
 import React from "react";
 import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
 import { StatsValidation } from "../../../domain/entities/Pdb";
+import { HtmlTooltip } from "../HtmlTooltip";
 import modelQualityStats from "../../../data/repositories/emv_modelquality_stats.json";
+import i18n from "../../utils/i18n";
 
 declare global {
     const d3: typeof d3Module;
@@ -17,15 +19,100 @@ const dimensions = {
 export const ProtvistaPdbValidation: React.FC<ProtvistaPdbProps> = React.memo(props => {
     const emdb = _.first(props.pdb.emdbs);
     const _ref = useGrid(); /*temporal hidden*/
-    const svgRef = useBar(emdb?.emv?.stats);
+    const stats = emdb?.emv?.stats;
+
+    const [open, setOpen] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState<SVGRectElement | null>(null);
+    const containerRef = React.useRef<HTMLDivElement | null>(null);
+
+    const svgWidth = React.useMemo(() => containerRef.current?.getBoundingClientRect().width ?? 0, [
+        containerRef.current,
+    ]);
+
+    const displayTooltipStyle = React.useMemo(() => (open ? {} : { display: "none" }), [open]);
+    const tooltipContent = React.useMemo(
+        () =>
+            (stats && (
+                <p>
+                    {`${i18n.t("Quartile-25")}: ${stats.quartile25}`}
+                    {`${i18n.t("Median")}: ${stats.resolutionMedian} ${stats.unit}`}
+                    {`${i18n.t("Quartile-75")}: ${stats.quartile75}`}
+                </p>
+            )) ||
+            "",
+        []
+    );
+
+    const hideTooltip = React.useCallback(() => {
+        setOpen(false);
+    }, []);
+
+    const showTooltip = React.useCallback(() => {
+        setOpen(true);
+        setAnchorEl(anchorEl);
+    }, [anchorEl]);
+
+    const svgRef = useBar(showTooltip, hideTooltip, emdb?.emv?.stats);
 
     return (
         <>
+            <div style={displayTooltipStyle}>
+                <HtmlTooltip
+                    PopperProps={{
+                        disablePortal: true,
+                        anchorEl: anchorEl,
+                        keepMounted: true,
+                    }}
+                    onClose={hideTooltip}
+                    open={open}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    title={tooltipContent}
+                    placement={"top"}
+                >
+                    <span></span>
+                </HtmlTooltip>
+            </div>
             <div style={styles.svgContainers}>
                 {/* <svg ref={ref} /> */}
                 {svgRef && (
-                    <div>
+                    <div ref={containerRef} style={{ width: "100%" }}>
                         <svg ref={svgRef} />
+                        <div>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox={`0 0 ${svgWidth} 83`}
+                                style={styles.svgBar}
+                            >
+                                <defs>
+                                    <linearGradient id="barGradient">
+                                        <stop stopColor="green" offset={0} />
+                                        <stop stopColor="white" offset={0.5} />
+                                        <stop stopColor="red" offset={1} />
+                                    </linearGradient>
+                                </defs>
+                                <g>
+                                    <rect
+                                        width={svgWidth}
+                                        height="35"
+                                        x="0"
+                                        y="24"
+                                        fill="url(#barGradient)"
+                                    ></rect>
+                                    <text x="0" y="79">
+                                        {i18n.t("Per 0")}
+                                    </text>
+                                    {/*x=52 from 1char is 8px and space is 4px*/}
+                                    <text x={svgWidth - 52} y="79">
+                                        {i18n.t("Per 100")}
+                                    </text>
+                                    <text x="0" y="16">
+                                        {i18n.t("Rank") + ": " + stats?.rank}
+                                    </text>
+                                </g>
+                            </svg>
+                        </div>
                         <div style={styles.info.container}>
                             {emdb?.emv?.stats?.warnings?.map((warning, idx) => (
                                 <p key={idx} style={styles.info.warnings}>
@@ -260,7 +347,7 @@ function useGrid() {
     return svgRef;
 }
 
-function useBar(stats?: StatsValidation) {
+function useBar(showTooltip: () => void, hideTooltip: () => void, stats?: StatsValidation) {
     const svgRef = React.useRef<SVGSVGElement>(null);
 
     React.useEffect(() => {
@@ -314,44 +401,8 @@ function useBar(stats?: StatsValidation) {
             .attr("y", 90)
             .style("cursor", "pointer");
 
-        const rankTooltip = svgBar
-            .append("g")
-            .attr("class", "rankTooltip")
-            .style("display", "none");
-
-        rankTooltip
-            .append("rect")
-            .attr("width", 170)
-            .attr("height", 70)
-            .attr("rx", 10)
-            .attr("fill-opacity", "0.5")
-            .attr("fill", "#000")
-            .attr("x", rank + 20)
-            .attr("y", 0);
-
-        rankTooltip
-            .append("text")
-            .text(`Quartile-25: ${quartile25}`)
-            .attr("x", rank + 30)
-            .attr("y", "20")
-            .attr("fill", "white");
-
-        rankTooltip
-            .append("text")
-            .text(`Median: ${resolutionMedian} ${unit}`)
-            .attr("x", rank + 30)
-            .attr("y", "40")
-            .attr("fill", "white");
-
-        rankTooltip
-            .append("text")
-            .text(`Quartile-75: ${quartile75}`)
-            .attr("x", rank + 30)
-            .attr("y", "60")
-            .attr("fill", "white");
-
-        percentileRank.on("mouseover", () => rankTooltip.style("display", "block"));
-        percentileRank.on("mouseout", () => rankTooltip.style("display", "none"));
+        percentileRank.on("mouseover", () => showTooltip());
+        percentileRank.on("mouseout", () => hideTooltip());
     }, [stats]);
 
     return svgRef;
@@ -383,6 +434,10 @@ const styles = {
             padding: "4px 16px",
             fontStyle: "italic",
         },
+    },
+    svgBar: {
+        width: "100%",
+        height: "100px",
     },
 };
 
