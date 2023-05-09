@@ -97,7 +97,7 @@ function DropdownItem<Id extends string>(
                 <React.Fragment>
                     {isSelected && <Done />}
 
-                    <span style={isSelected ? undefined : styles.menuItemSelected}>
+                    <span style={isSelected ? styles.selected : styles.menuItemSelected}>
                         {item.text}
                     </span>
                 </React.Fragment>
@@ -109,7 +109,10 @@ function DropdownItem<Id extends string>(
 }
 
 const styles = {
+    selected: {
+        marginLeft: 8,
+    },
     menuItemSelected: {
-        marginLeft: 24,
+        marginLeft: 32,
     },
 };
