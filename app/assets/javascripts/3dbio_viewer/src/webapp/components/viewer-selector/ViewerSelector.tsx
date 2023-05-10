@@ -157,7 +157,7 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
         ? `${i18n.t("Chain")}: ${selectedChain.shortName}`
         : i18n.t("Chains");
 
-    return { text, items, onClick: setChain };
+    return { text, items, selected: selectedChain?.chainId, onClick: setChain };
 }
 
 export function getSelectedChain(pdbInfo: PdbInfo | undefined, selection: Selection) {
@@ -170,9 +170,9 @@ function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
     const { pdbInfo, selection, onSelectionChange } = options;
 
     const setLigand = React.useCallback(
-        (ligandId: string) => {
+        (ligandId: Maybe<string>) => {
             const selectedLigand = getSelectedLigand({ ...selection, ligandId }, pdbInfo);
-            if (selectedLigand) onSelectionChange(setSelectionLigand(selection, selectedLigand));
+            onSelectionChange(setSelectionLigand(selection, selectedLigand));
         },
         [selection, onSelectionChange, pdbInfo]
     );
@@ -191,5 +191,11 @@ function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
         ? `${i18n.t("Ligand")}: ${selectedLigand.shortId}`
         : i18n.t("Ligands");
 
-    return { text, items, onClick: setLigand };
+    return {
+        text,
+        items,
+        onClick: setLigand,
+        selected: selectedLigand?.shortId,
+        deselectable: true,
+    };
 }

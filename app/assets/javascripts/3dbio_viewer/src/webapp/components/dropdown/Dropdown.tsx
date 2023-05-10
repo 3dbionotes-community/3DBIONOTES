@@ -6,17 +6,20 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import { PopperMenu } from "./PopperMenu";
 import i18n from "../../utils/i18n";
 import { StyledButton } from "../../training-app/components/action-button/ActionButton";
+import styled from "styled-components";
+import { Maybe } from "../../../utils/ts-utils";
 
 export interface DropdownProps<Id extends string = string> {
     // Show text or, if empty, the selected item.
     items: DropdownItemModel<Id>[] | undefined;
     text?: string;
     selected?: Id | undefined;
-    onClick(id: Id): void;
+    onClick(id: Maybe<Id>): void;
     showSelection?: boolean;
     showExpandIcon?: boolean;
     leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
+    deselectable?: boolean;
 }
 
 export interface DropdownItemModel<Id extends string> {
@@ -28,6 +31,7 @@ export function Dropdown<Id extends string = string>(
     props: DropdownProps<Id>
 ): React.ReactElement | null {
     const { items, text, onClick, showExpandIcon = false, selected, rightIcon, leftIcon } = props;
+    const { deselectable } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
     const showSelection = Boolean(selected);
@@ -38,6 +42,14 @@ export function Dropdown<Id extends string = string>(
             closeMenu();
         },
         [onClick, closeMenu]
+    );
+
+    const deselect = React.useCallback<React.MouseEventHandler>(
+        ev => {
+            ev.stopPropagation();
+            onClick(undefined);
+        },
+        [onClick]
     );
 
     if (!items || _.isEmpty(items)) return null;
@@ -57,6 +69,7 @@ export function Dropdown<Id extends string = string>(
             >
                 {leftIcon}
                 {buttonText}
+                {selected && deselectable && <InnerButton onClick={deselect}>✕</InnerButton>}
                 {rightIcon}
                 {showExpandIcon && (isMenuOpen ? <ExpandLess /> : <ExpandMore />)}
             </StyledButton>
@@ -77,6 +90,14 @@ export function Dropdown<Id extends string = string>(
         </React.Fragment>
     );
 }
+
+const InnerButton = styled.button`
+    margin: 0;
+    padding: 0;
+    &:hover {
+        background-color: #aae;
+    }
+`;
 
 interface MenuItemProps<Id extends string> {
     isSelected: boolean;
