@@ -64,7 +64,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
         } else {
             hideLoading();
         }
-    }, [pdbLoader.type]);
+    }, [pdbLoader.type, showLoading, hideLoading]);
 
     return (
         <div id="viewer">

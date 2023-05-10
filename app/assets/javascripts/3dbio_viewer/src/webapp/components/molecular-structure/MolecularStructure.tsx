@@ -126,7 +126,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             setPdbePlugin(plugin);
         },
-        [pdbePlugin, newSelection, prevSelectionRef, showLoading, hideLoading]
+        [pdbePlugin, newSelection, prevSelectionRef, showLoading, setTitle]
     );
 
     const updatePluginOnNewSelection = React.useCallback(() => {
@@ -178,6 +178,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
         setPrevSelection,
         setSelection,
         showLoading,
+        hideLoading,
+        setTitle,
     ]);
 
     const updatePluginOnNewSelectionEffect = useCallbackEffect(updatePluginOnNewSelection);
@@ -293,7 +295,7 @@ async function applySelectionChangesToPlugin(
     plugin.visual.reset({ camera: true });
 }
 
-async function highlight(plugin: PDBeMolstarPlugin, selection: Selection): Promise<void> {
+async function _highlight(_plugin: PDBeMolstarPlugin, _selection: Selection): Promise<void> {
     // plugin.visual.clearSelection().catch(_err => {});
     // console.log("times");
     // const ligandsView = getLigandView(selection);

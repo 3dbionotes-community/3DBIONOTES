@@ -1,7 +1,5 @@
 import React from "react";
-import i18n from "../../utils/i18n";
 import { Loader, LoaderState } from "../Loader";
-import { usePdbLoader } from "../../hooks/use-pdb";
 import {
     Pdb,
     addCustomAnnotationsToPdb,
