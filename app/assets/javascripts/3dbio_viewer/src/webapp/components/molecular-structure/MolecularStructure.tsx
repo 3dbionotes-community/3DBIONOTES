@@ -71,8 +71,10 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
     // Keep a reference containing the previous value of selection. We need this value to diff
     // the new state against the old state and perform imperative operations (add/remove/update)
-    // on the plugin.
-    const [prevSelectionRef, setPrevSelection] = useReference<Selection>();
+    // on the plugin. The value starts only with the PDB being rendered (initParams).
+    const [prevSelectionRef, setPrevSelection] = useReference<Selection>(
+        setMainPdb(emptySelection, getMainPdbId(newSelection))
+    );
 
     debugVariable({ pdbePlugin });
 
@@ -103,11 +105,9 @@ function usePdbePlugin(options: MolecularStructureProps) {
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
             if (pluginAlreadyRendered) {
                 showLoading();
-                console.log(initParams);
                 await plugin.visual.update(initParams);
             } else {
                 plugin.events.loadComplete.subscribe(loaded => {
-                    console.debug("molstar.events.loadComplete", loaded);
                     hideLoading();
                     if (loaded) setPluginLoad(new Date());
                     // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
@@ -256,30 +256,29 @@ async function applySelectionChangesToPlugin(
         setVisibility(plugin, item);
     }
 
-    // if (newSelection.chainId !== currentSelection.chainId) {
-    //     highlight(plugin, newSelection);
-    // }
+    if (newSelection.chainId !== currentSelection.chainId) {
+        highlight(plugin, newSelection);
+    }
 
     plugin.visual.reset({ camera: true });
 }
 
 async function highlight(plugin: PDBeMolstarPlugin, selection: Selection): Promise<void> {
-    // plugin.visual.clearSelection().catch(_err => {});
-    // console.log("times");
-    // const ligandsView = getLigandView(selection);
-    // if (ligandsView) return;
-    // // console.log(selection);
-    // return plugin.visual.select({
-    //     data: [
-    //         {
-    //             struct_asym_id: selection.chainId,
-    //             color: "#0000ff",
-    //             focus: true,
-    //             // 9B9BBE
-    //         },
-    //     ],
-    //     // nonSelectedColor: { r: 255, g: 255, b: 255 },
-    // });
+    plugin.visual.clearSelection().catch(_err => {});
+    const ligandsView = getLigandView(selection);
+
+    if (ligandsView) return;
+
+    return plugin.visual.select({
+        data: [
+            {
+                struct_asym_id: selection.chainId,
+                color: "#0000ff",
+                focus: true,
+            },
+        ],
+        nonSelectedColor: { r: 255, g: 255, b: 255 },
+    });
 }
 
 const colors = {
