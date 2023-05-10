@@ -12,19 +12,14 @@ export function useLoader<Data>() {
 
 export interface LoaderProps<Data> {
     state: LoaderState<Data>;
-    loadingMsg?: string;
 }
 
 export function Loader<Data>(props: LoaderProps<Data>) {
-    const { state, loadingMsg } = props;
+    const { state } = props;
 
     return (
         <div>
-            {state.type === "loading" ? (
-                <div style={styles.section}>{loadingMsg || i18n.t("Loading...")}</div>
-            ) : state.type === "error" ? (
-                <div style={styles.section}>{state.message}</div>
-            ) : null}
+            {state.type === "error" ? <div style={styles.section}>{state.message}</div> : null}
         </div>
     );
 }
