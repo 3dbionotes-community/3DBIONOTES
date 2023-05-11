@@ -68,8 +68,8 @@ export function Dropdown<Id extends string = string>(
                 className={isMenuOpen ? "open" : undefined}
             >
                 {leftIcon}
-                {buttonText}
                 {selected && deselectable && <InnerButton onClick={deselect}>✕</InnerButton>}
+                {buttonText}
                 {rightIcon}
                 {showExpandIcon && (isMenuOpen ? <ExpandLess /> : <ExpandMore />)}
             </StyledButton>

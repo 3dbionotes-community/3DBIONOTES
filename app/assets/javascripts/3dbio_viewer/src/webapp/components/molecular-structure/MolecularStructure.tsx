@@ -12,6 +12,7 @@ import {
     getItems,
     getItemSelector,
     getMainChanges,
+    getMainEmdbId,
     getMainPdbId,
     Selection,
     setMainEmdb,
@@ -81,7 +82,6 @@ function usePdbePlugin(options: MolecularStructureProps) {
     React.useEffect(() => {
         if (!pluginLoad || !pdbePlugin) return;
         const ligands = getLigands(pdbePlugin, newSelection) || [];
-        debugVariable({ ligands: ligands.length });
         onLigandsLoaded(ligands);
 
         setVisibilityForSelection(pdbePlugin, newSelection);
@@ -101,11 +101,20 @@ function usePdbePlugin(options: MolecularStructureProps) {
             const plugin = pdbePlugin || new window.PDBeMolstarPlugin();
             const initParams = getPdbePluginInitParams(plugin, newSelection);
             debugVariable({ pdbeMolstarPlugin: plugin });
+            const mainPdb = getMainPdbId(newSelection);
+            const emdbId = getMainEmdbId(newSelection);
 
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
             if (pluginAlreadyRendered) {
                 showLoading();
+                console.log({ initParams });
                 await plugin.visual.update(initParams);
+                const selectionWithMainPdb = setMainPdb(emptySelection, mainPdb);
+                if (initParams.ligandView) setPrevSelection(selectionWithMainPdb);
+            } else if (!mainPdb && emdbId) {
+                compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
+                    setSelection(setMainPdb(newSelection, pdbId));
+                }, console.error);
             } else {
                 plugin.events.loadComplete.subscribe(loaded => {
                     hideLoading();
@@ -119,7 +128,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             setPdbePlugin(plugin);
         },
-        [pdbePlugin, newSelection, prevSelectionRef, showLoading, hideLoading]
+        [pdbePlugin, newSelection, prevSelectionRef, showLoading, hideLoading, setPrevSelection]
     );
 
     const updatePluginOnNewSelection = React.useCallback(() => {
@@ -146,11 +155,13 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
         if (pdbId) {
             return compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(emdbId => {
-                updateSelection(currentSelection, setMainEmdb(newSelection, emdbId));
+                if (newSelection.main.emdb?.id !== emdbId)
+                    updateSelection(currentSelection, setMainEmdb(newSelection, emdbId));
             }, console.error);
         } else if (emdbId) {
             return compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
-                updateSelection(currentSelection, setMainPdb(newSelection, pdbId));
+                if (newSelection.main.pdb?.id !== pdbId)
+                    updateSelection(currentSelection, setMainPdb(newSelection, pdbId));
             }, console.error);
         } else {
             updateSelection(currentSelection, newSelection);
@@ -232,6 +243,7 @@ async function applySelectionChangesToPlugin(
     const newItems = getItems(newSelection);
 
     const { added, removed, updated } = diffDbItems(newItems, oldItems);
+    console.log({ added, removed, updated });
 
     for (const item of removed) {
         plugin.visual.remove(getItemSelector(item));
@@ -298,7 +310,7 @@ function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selec
         encoding: "cif",
         loadMaps: false,
         validationAnnotation: true,
-        hideControls: true,
+        hideControls: false,
         superposition: false,
         domainAnnotation: true,
         expanded: false,

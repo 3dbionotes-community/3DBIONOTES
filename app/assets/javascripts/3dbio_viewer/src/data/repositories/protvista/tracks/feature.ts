@@ -148,7 +148,7 @@ const uniprotLink: Record<FeatureType, string> = {
 
 function getDefaultEvidence(protein: string, feature: Feature): ApiEvidence {
     const type = uniprotLink[feature.type];
-    const url = `http://www.uniprot.org/uniprot/${protein}#${type || ""}`;
+    const url = `https://www.uniprot.org/uniprotkb/${protein}/entry#${type || ""}`;
 
     return {
         code: "Imported information",
