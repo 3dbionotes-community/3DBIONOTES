@@ -317,5 +317,9 @@ export function getMainChanges(
 }
 
 export function getSelectedLigand(selection: Selection, pdbInfo: Maybe<PdbInfo>) {
-    return pdbInfo?.ligands.find(ligand => ligand.shortId === selection.ligandId);
+    const chainId = selection.chainId || pdbInfo?.chains[0]?.chainId;
+
+    return pdbInfo?.ligands.find(ligand => {
+        return ligand.shortChainId === chainId && ligand.shortId == selection.ligandId;
+    });
 }

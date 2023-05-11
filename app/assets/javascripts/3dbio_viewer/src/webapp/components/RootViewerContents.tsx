@@ -10,6 +10,7 @@ import { UploadData } from "../../domain/entities/UploadData";
 import { setFromError } from "../utils/error";
 import { ProteinNetwork } from "../../domain/entities/ProteinNetwork";
 import { debugFlags } from "../pages/app/debugFlags";
+import { setSelectionChain } from "../view-models/Selection";
 
 export interface RootViewerContentsProps {
     viewerState: ViewerState;
@@ -23,7 +24,9 @@ type ExternalData =
 export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(props => {
     const { viewerState } = props;
     const { compositionRoot } = useAppContext();
+
     const { selection, setSelection } = viewerState;
+
     const [error, setError] = React.useState<string>();
 
     const [externalData, setExternalData] = React.useState<ExternalData>({ type: "none" });

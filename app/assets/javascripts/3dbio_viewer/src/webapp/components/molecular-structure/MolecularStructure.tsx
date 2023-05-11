@@ -17,6 +17,7 @@ import {
     Selection,
     setMainEmdb,
     setMainPdb,
+    setSelectionChain,
 } from "../../view-models/Selection";
 
 import "./molstar.css";
@@ -32,6 +33,7 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import { LoaderMask } from "../loader-mask/LoaderMask";
 import { routes } from "../../../routes";
 import { ProteinNetwork } from "../../../domain/entities/ProteinNetwork";
+import { MolstarState, MolstarStateActions } from "./MolstarState";
 
 declare global {
     interface Window {
@@ -61,6 +63,8 @@ export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
     );
 };
 
+type MolstarStateRef = React.MutableRefObject<MolstarState>;
+
 function usePdbePlugin(options: MolecularStructureProps) {
     const { selection: newSelection, onSelectionChange: setSelection, onLigandsLoaded } = options;
     const { proteinNetwork } = options;
@@ -69,6 +73,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const [pluginLoad, setPluginLoad] = React.useState<Date>();
     const [isLoading, { enable: showLoading, disable: hideLoading }] = useBooleanState(false);
     const pdbePlugin = pdbePlugin0 && pluginLoad ? pdbePlugin0 : undefined;
+    const molstarState = React.useRef<MolstarState>({ type: "pdb", items: [], chainId: undefined });
 
     // Keep a reference containing the previous value of selection. We need this value to diff
     // the new state against the old state and perform imperative operations (add/remove/update)
@@ -81,12 +86,59 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
     React.useEffect(() => {
         if (!pluginLoad || !pdbePlugin) return;
-        const ligands = getLigands(pdbePlugin, newSelection) || [];
-        onLigandsLoaded(ligands);
+        if (!newSelection.ligandId) {
+            // Set ligands only in PDB view (when all the nodes can be parsed)
+            const ligands = getLigands(pdbePlugin, newSelection) || [];
+            onLigandsLoaded(ligands);
+        }
 
         setVisibilityForSelection(pdbePlugin, newSelection);
-        // highlight(pdbePlugin, newSelection);
+        highlight(pdbePlugin, newSelection);
     }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection]);
+
+    const updatePluginOnNewSelection = React.useCallback(() => {
+        if (!pdbePlugin) return _.noop;
+
+        function updateSelection(newSelection: Selection): void {
+            if (!pdbePlugin) return;
+
+            applySelectionChangesToPlugin(pdbePlugin, molstarState, newSelection, showLoading);
+            setSelection(newSelection);
+        }
+
+        const currentSelection = prevSelectionRef.current || emptySelection;
+        setPrevSelection(newSelection);
+
+        const uploadDataRemoved =
+            currentSelection.type === "uploadData" && newSelection.type !== "uploadData";
+
+        if (uploadDataRemoved) pdbePlugin.visual.remove({});
+
+        if (newSelection.type !== "free") return _.noop;
+
+        const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
+
+        if (pdbId) {
+            return compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(emdbId => {
+                updateSelection(setMainEmdb(newSelection, emdbId));
+            }, console.error);
+        } else if (emdbId) {
+            return compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
+                updateSelection(setMainPdb(newSelection, pdbId));
+            }, console.error);
+        } else {
+            updateSelection(newSelection);
+            return _.noop;
+        }
+    }, [
+        compositionRoot,
+        pdbePlugin,
+        newSelection,
+        prevSelectionRef,
+        setPrevSelection,
+        setSelection,
+        showLoading,
+    ]);
 
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
@@ -107,10 +159,9 @@ function usePdbePlugin(options: MolecularStructureProps) {
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
             if (pluginAlreadyRendered) {
                 showLoading();
-                console.log({ initParams });
                 await plugin.visual.update(initParams);
-                const selectionWithMainPdb = setMainPdb(emptySelection, mainPdb);
-                if (initParams.ligandView) setPrevSelection(selectionWithMainPdb);
+                molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
+                updatePluginOnNewSelection();
             } else if (!mainPdb && emdbId) {
                 compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
                     setSelection(setMainPdb(newSelection, pdbId));
@@ -124,58 +175,22 @@ function usePdbePlugin(options: MolecularStructureProps) {
                 });
 
                 plugin.render(element, initParams);
+                molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
             }
 
             setPdbePlugin(plugin);
         },
-        [pdbePlugin, newSelection, prevSelectionRef, showLoading, hideLoading, setPrevSelection]
+        [
+            pdbePlugin,
+            newSelection,
+            prevSelectionRef,
+            showLoading,
+            hideLoading,
+            compositionRoot,
+            setSelection,
+            updatePluginOnNewSelection,
+        ]
     );
-
-    const updatePluginOnNewSelection = React.useCallback(() => {
-        if (!pdbePlugin) return _.noop;
-
-        function updateSelection(currentSelection: Selection, newSelection: Selection): void {
-            if (!pdbePlugin) return;
-
-            applySelectionChangesToPlugin(pdbePlugin, currentSelection, newSelection, showLoading);
-            setSelection(newSelection);
-        }
-
-        const currentSelection = prevSelectionRef.current || emptySelection;
-        setPrevSelection(newSelection);
-
-        const uploadDataRemoved =
-            currentSelection.type === "uploadData" && newSelection.type !== "uploadData";
-
-        if (uploadDataRemoved) pdbePlugin.visual.remove({});
-
-        if (newSelection.type !== "free") return _.noop;
-
-        const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
-
-        if (pdbId) {
-            return compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(emdbId => {
-                if (newSelection.main.emdb?.id !== emdbId)
-                    updateSelection(currentSelection, setMainEmdb(newSelection, emdbId));
-            }, console.error);
-        } else if (emdbId) {
-            return compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
-                if (newSelection.main.pdb?.id !== pdbId)
-                    updateSelection(currentSelection, setMainPdb(newSelection, pdbId));
-            }, console.error);
-        } else {
-            updateSelection(currentSelection, newSelection);
-            return _.noop;
-        }
-    }, [
-        compositionRoot,
-        pdbePlugin,
-        newSelection,
-        prevSelectionRef,
-        setPrevSelection,
-        setSelection,
-        showLoading,
-    ]);
 
     const updatePluginOnNewSelectionEffect = useCallbackEffect(updatePluginOnNewSelection);
     React.useEffect(updatePluginOnNewSelectionEffect, [updatePluginOnNewSelectionEffect]);
@@ -235,22 +250,32 @@ function setVisibility(plugin: PDBeMolstarPlugin, item: DbItem) {
 
 async function applySelectionChangesToPlugin(
     plugin: PDBeMolstarPlugin,
-    currentSelection: Selection,
+    molstarState: MolstarStateRef,
     newSelection: Selection,
     showLoading: () => void
 ): Promise<void> {
-    const oldItems = getItems(currentSelection);
+    const state = molstarState.current;
+    if (state.type !== "pdb") return;
+
+    const oldItems = state.items;
     const newItems = getItems(newSelection);
 
     const { added, removed, updated } = diffDbItems(newItems, oldItems);
-    console.log({ added, removed, updated });
 
     for (const item of removed) {
         plugin.visual.remove(getItemSelector(item));
+        molstarState.current = MolstarStateActions.updateItems(
+            state,
+            _.differenceBy(oldItems, [item], getId)
+        );
     }
 
     for (const item of updated) {
         setVisibility(plugin, item);
+        molstarState.current = MolstarStateActions.updateItems(
+            state,
+            oldItems.map(item_ => (item_.id === item.id ? item : item_))
+        );
     }
 
     for (const item of added) {
@@ -266,9 +291,13 @@ async function applySelectionChangesToPlugin(
             await plugin.load(loadParams, false);
         }
         setVisibility(plugin, item);
+        molstarState.current = MolstarStateActions.updateItems(
+            state,
+            _.unionBy(oldItems, [item], getId)
+        );
     }
 
-    if (newSelection.chainId !== currentSelection.chainId) {
+    if (newSelection.chainId !== state.chainId) {
         highlight(plugin, newSelection);
     }
 
@@ -333,4 +362,8 @@ function getLigandView(selection: Selection): LigandView | undefined {
         auth_seq_id: parseInt(position),
         label_comp_id: component,
     };
+}
+
+function getId<T extends { id: string }>(obj: T): string {
+    return obj.id;
 }
