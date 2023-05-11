@@ -162,7 +162,7 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
 
 export function getSelectedChain(pdbInfo: PdbInfo | undefined, selection: Selection) {
     const chains = pdbInfo?.chains || [];
-    const selectedChain = chains.find(chain => chain.chainId === selection.chainId) || chains[0];
+    const selectedChain = chains.find(chain => chain.chainId === selection.chainId); // || chains[0];
     return selectedChain;
 }
 

@@ -93,7 +93,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         }
 
         setVisibilityForSelection(pdbePlugin, newSelection);
-        highlight(pdbePlugin, newSelection);
+        highlight(pdbePlugin, newSelection, molstarState);
     }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection]);
 
     const updatePluginOnNewSelection = React.useCallback(() => {
@@ -254,27 +254,26 @@ async function applySelectionChangesToPlugin(
     newSelection: Selection,
     showLoading: () => void
 ): Promise<void> {
-    const state = molstarState.current;
-    if (state.type !== "pdb") return;
+    if (molstarState.current.type !== "pdb") return;
 
-    const oldItems = state.items;
+    const oldItems = () => (molstarState.current.type === "pdb" ? molstarState.current.items : []);
     const newItems = getItems(newSelection);
 
-    const { added, removed, updated } = diffDbItems(newItems, oldItems);
+    const { added, removed, updated } = diffDbItems(newItems, oldItems());
 
     for (const item of removed) {
         plugin.visual.remove(getItemSelector(item));
         molstarState.current = MolstarStateActions.updateItems(
-            state,
-            _.differenceBy(oldItems, [item], getId)
+            molstarState.current,
+            _.differenceBy(oldItems(), [item], getId)
         );
     }
 
     for (const item of updated) {
         setVisibility(plugin, item);
         molstarState.current = MolstarStateActions.updateItems(
-            state,
-            oldItems.map(item_ => (item_.id === item.id ? item : item_))
+            molstarState.current,
+            oldItems().map(item_ => (item_.id === item.id ? item : item_))
         );
     }
 
@@ -292,28 +291,38 @@ async function applySelectionChangesToPlugin(
         }
         setVisibility(plugin, item);
         molstarState.current = MolstarStateActions.updateItems(
-            state,
-            _.unionBy(oldItems, [item], getId)
+            molstarState.current,
+            _.unionBy(oldItems(), [item], getId)
         );
     }
 
-    if (newSelection.chainId !== state.chainId) {
-        highlight(plugin, newSelection);
+    if (
+        molstarState.current.type === "pdb" &&
+        newSelection.chainId !== molstarState.current.chainId
+    ) {
+        highlight(plugin, newSelection, molstarState);
     }
 
     plugin.visual.reset({ camera: true });
 }
 
-async function highlight(plugin: PDBeMolstarPlugin, selection: Selection): Promise<void> {
+async function highlight(
+    plugin: PDBeMolstarPlugin,
+    selection: Selection,
+    molstarState: MolstarStateRef
+): Promise<void> {
     plugin.visual.clearSelection().catch(_err => {});
     const ligandsView = getLigandView(selection);
+    const chainId = selection.chainId;
 
     if (ligandsView) return;
+
+    molstarState.current = MolstarStateActions.setChain(molstarState.current, chainId);
 
     return plugin.visual.select({
         data: [
             {
-                struct_asym_id: selection.chainId,
+                struct_asym_id: chainId,
                 color: "#0000ff",
                 focus: true,
             },

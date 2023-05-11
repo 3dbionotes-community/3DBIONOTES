@@ -31,4 +31,8 @@ export class MolstarStateActions {
     static updateItems(state: MolstarState, items: DbItem[]): MolstarState {
         return state.type === "pdb" ? { ...state, items: items } : state;
     }
+
+    static setChain(state: MolstarState, chainId: Maybe<string>): MolstarState {
+        return state.type === "pdb" ? { ...state, chainId } : state;
+    }
 }
