@@ -2,9 +2,6 @@ import React from "react";
 import _ from "lodash";
 import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
-
-import { debugVariable } from "../../../utils/debug";
-import i18n from "../../utils/i18n";
 import {
     DbItem,
     diffDbItems,
@@ -17,9 +14,7 @@ import {
     setMainEmdb,
     setMainPdb,
 } from "../../view-models/Selection";
-
-import "./molstar.css";
-import "./molstar-light.css";
+import { debugVariable } from "../../../utils/debug";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
@@ -27,10 +22,12 @@ import { getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
 import { Ligand } from "../../../domain/entities/Ligand";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
-import { useBooleanState } from "../../hooks/use-boolean";
 import { LoaderMask } from "../loader-mask/LoaderMask";
 import { routes } from "../../../routes";
 import { ProteinNetwork } from "../../../domain/entities/ProteinNetwork";
+import i18n from "../../utils/i18n";
+import "./molstar.css";
+import "./molstar-light.css";
 
 declare global {
     interface Window {
@@ -44,14 +41,19 @@ interface MolecularStructureProps {
     onSelectionChange(newSelection: Selection): void;
     onLigandsLoaded(ligands: Ligand[]): void;
     proteinNetwork: Maybe<ProteinNetwork>;
+    title: string;
+    setTitle: (title: string) => void;
+    isLoading: boolean;
+    showLoading: () => void;
+    hideLoading: () => void;
 }
 
 export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
-    const { pluginRef, isLoading } = usePdbePlugin(props);
+    const { pluginRef } = usePdbePlugin(props);
 
     return (
         <React.Fragment>
-            <LoaderMask open={isLoading} />
+            <LoaderMask open={props.isLoading} title={props.title} />
 
             <div ref={pluginRef} className="molecular-structure">
                 {i18n.t("Loading...")}
@@ -61,12 +63,19 @@ export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
 };
 
 function usePdbePlugin(options: MolecularStructureProps) {
-    const { selection: newSelection, onSelectionChange: setSelection, onLigandsLoaded } = options;
+    const {
+        selection: newSelection,
+        onSelectionChange: setSelection,
+        onLigandsLoaded,
+        setTitle,
+        showLoading,
+        hideLoading,
+    } = options;
     const { proteinNetwork } = options;
     const { compositionRoot } = useAppContext();
-    const [pdbePlugin, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
+    const [pdbePlugin0, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
     const [pluginLoad, setPluginLoad] = React.useState<Date>();
-    const [isLoading, { enable: showLoading, disable: hideLoading }] = useBooleanState(false);
+    const pdbePlugin = pdbePlugin0 && pluginLoad ? pdbePlugin0 : undefined;
 
     // Keep a reference containing the previous value of selection. We need this value to diff
     // the new state against the old state and perform imperative operations (add/remove/update)
@@ -82,7 +91,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         onLigandsLoaded(ligands);
 
         setVisibilityForSelection(pdbePlugin, newSelection);
-        highlight(pdbePlugin, newSelection);
+        // highlight(pdbePlugin, newSelection);
     }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection]);
 
     const pluginRef = React.useCallback(
@@ -101,13 +110,15 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
             if (pluginAlreadyRendered) {
+                setTitle(i18n.t("Loading..."));
                 showLoading();
                 await plugin.visual.update(initParams);
             } else {
                 plugin.events.loadComplete.subscribe(loaded => {
                     console.debug("molstar.events.loadComplete", loaded);
-                    hideLoading();
                     if (loaded) setPluginLoad(new Date());
+                    // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
+                    window.dispatchEvent(new Event("resize"));
                 });
 
                 plugin.render(element, initParams);
@@ -115,7 +126,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             setPdbePlugin(plugin);
         },
-        [pdbePlugin, newSelection, prevSelectionRef, showLoading, hideLoading]
+        [pdbePlugin, newSelection, prevSelectionRef, showLoading, setTitle]
     );
 
     const updatePluginOnNewSelection = React.useCallback(() => {
@@ -124,7 +135,14 @@ function usePdbePlugin(options: MolecularStructureProps) {
         function updateSelection(currentSelection: Selection, newSelection: Selection): void {
             if (!pdbePlugin) return;
 
-            applySelectionChangesToPlugin(pdbePlugin, currentSelection, newSelection, showLoading);
+            applySelectionChangesToPlugin(
+                pdbePlugin,
+                currentSelection,
+                newSelection,
+                showLoading,
+                setTitle,
+                hideLoading
+            );
             setSelection(newSelection);
         }
 
@@ -160,6 +178,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
         setPrevSelection,
         setSelection,
         showLoading,
+        hideLoading,
+        setTitle,
     ]);
 
     const updatePluginOnNewSelectionEffect = useCallbackEffect(updatePluginOnNewSelection);
@@ -169,13 +189,12 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
     React.useEffect(() => {
         if (!pdbePlugin) return;
-
-        pdbePlugin.visual.remove({});
         if (!uploadDataToken) return;
+        pdbePlugin.visual.remove({});
 
         pdbePlugin.load(
             {
-                url: `${routes.bionotesDev}/upload/${uploadDataToken}/structure_file.cif`,
+                url: `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.cif`,
                 format: "mmcif",
                 isBinary: false,
                 assemblyId: "1",
@@ -186,9 +205,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
     React.useEffect(() => {
         if (!pdbePlugin) return;
-
-        pdbePlugin.visual.remove({});
         if (!proteinNetwork) return;
+        pdbePlugin.visual.remove({});
 
         const chainInNetwork =
             proteinNetwork.uploadData.chains.find(chain => chain.chain === newSelection.chainId) ||
@@ -208,7 +226,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         );
     }, [pdbePlugin, newSelection.chainId, proteinNetwork, compositionRoot]);
 
-    return { pluginRef, pdbePlugin, isLoading };
+    return { pluginRef, pdbePlugin };
 }
 
 function setVisibilityForSelection(plugin: PDBeMolstarPlugin, selection: Selection) {
@@ -224,12 +242,16 @@ async function applySelectionChangesToPlugin(
     plugin: PDBeMolstarPlugin,
     currentSelection: Selection,
     newSelection: Selection,
-    showLoading: () => void
+    showLoading: () => void,
+    setTitle: (title: string) => void,
+    hideLoading: () => void
 ): Promise<void> {
     const oldItems = getItems(currentSelection);
     const newItems = getItems(newSelection);
 
     const { added, removed, updated } = diffDbItems(newItems, oldItems);
+    const pdbs = added.filter(item => item.type === "pdb");
+    const emdbs = added.filter(item => item.type === "emdb");
 
     for (const item of removed) {
         plugin.visual.remove(getItemSelector(item));
@@ -239,46 +261,57 @@ async function applySelectionChangesToPlugin(
         setVisibility(plugin, item);
     }
 
-    for (const item of added) {
-        if (item.type === "emdb") {
-            showLoading();
-            await loadEmdb(plugin, item.id);
-            setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
-        } else {
+    if (pdbs.length > 0 || emdbs.length > 0) showLoading();
+    for (let i = 0; i < pdbs.length; i++) {
+        const item = pdbs[i];
+        if (item) {
             const pdbId: string = item.id;
             const url = `https://www.ebi.ac.uk/pdbe/model-server/v1/${pdbId}/full?encoding=cif`;
             const loadParams = { url, format: "mmcif", isBinary: false, assemblyId: "1" };
-            showLoading();
+            if (pdbs.length > 1) setTitle(i18n.t(`Loading PDB (${i + 1}/${pdbs.length})...`));
+            else setTitle(i18n.t("Loading PDB..."));
             await plugin.load(loadParams, false);
+            setVisibility(plugin, item);
         }
-        setVisibility(plugin, item);
     }
 
-    if (newSelection.chainId !== currentSelection.chainId) {
-        highlight(plugin, newSelection);
+    for (let i = 0; i < emdbs.length; i++) {
+        const item = emdbs[i];
+        if (item) {
+            if (emdbs.length > 1) setTitle(i18n.t(`Loading EMDB (${i + 1}/${emdbs.length})...`));
+            else setTitle(i18n.t("Loading EMDB..."));
+            await loadEmdb(plugin, item.id);
+            setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
+            setVisibility(plugin, item);
+        }
     }
+
+    if (pdbs.length > 0 || emdbs.length > 0) hideLoading();
+
+    // if (newSelection.chainId !== currentSelection.chainId) {
+    //     highlight(plugin, newSelection);
+    // }
 
     plugin.visual.reset({ camera: true });
 }
 
-async function highlight(plugin: PDBeMolstarPlugin, selection: Selection): Promise<void> {
-    plugin.visual.clearSelection().catch(_err => {});
-
-    const ligandsView = getLigandView(selection);
-    if (ligandsView) return;
-
-    /*
-    return plugin.visual.select({
-        data: [
-            {
-                struct_asym_id: selection.chainId,
-                color: "#9B9BBE",
-                focus: true,
-            },
-        ],
-        nonSelectedColor: { r: 255, g: 255, b: 255 },
-    });
-    */
+async function _highlight(_plugin: PDBeMolstarPlugin, _selection: Selection): Promise<void> {
+    // plugin.visual.clearSelection().catch(_err => {});
+    // console.log("times");
+    // const ligandsView = getLigandView(selection);
+    // if (ligandsView) return;
+    // // console.log(selection);
+    // return plugin.visual.select({
+    //     data: [
+    //         {
+    //             struct_asym_id: selection.chainId,
+    //             color: "#0000ff",
+    //             focus: true,
+    //             // 9B9BBE
+    //         },
+    //     ],
+    //     // nonSelectedColor: { r: 255, g: 255, b: 255 },
+    // });
 }
 
 const colors = {
@@ -298,7 +331,7 @@ function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selec
         encoding: "cif",
         loadMaps: false,
         validationAnnotation: true,
-        hideControls: false,
+        hideControls: true,
         superposition: false,
         domainAnnotation: true,
         expanded: false,

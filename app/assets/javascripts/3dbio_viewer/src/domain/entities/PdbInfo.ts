@@ -32,7 +32,7 @@ export function buildPdbInfo(options: BuildPdbInfoOptions): PdbInfo {
             if (!protein) return [];
 
             return chainIds.map(chainId => {
-                const shortName = _([chainId, protein.gene]).compact().join(" - ");
+                const shortName = _([chainId, protein.gen]).compact().join(" - ");
                 return {
                     id: [proteinId, chainId].join("-"),
                     shortName,

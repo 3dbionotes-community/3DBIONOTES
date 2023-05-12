@@ -1,8 +1,10 @@
 import React from "react";
-import i18n from "../../utils/i18n";
-import { Loader } from "../Loader";
-import { usePdbLoader } from "../../hooks/use-pdb";
-import { addCustomAnnotationsToPdb, addProteinNetworkToPdb } from "../../../domain/entities/Pdb";
+import { Loader, LoaderState } from "../Loader";
+import {
+    Pdb,
+    addCustomAnnotationsToPdb,
+    addProteinNetworkToPdb,
+} from "../../../domain/entities/Pdb";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { ViewerState } from "../../view-models/ViewerState";
 import { UploadData } from "../../../domain/entities/UploadData";
@@ -17,12 +19,12 @@ export interface ViewersProps {
     pdbInfo: Maybe<PdbInfo>;
     uploadData: Maybe<UploadData>;
     proteinNetwork: Maybe<ProteinNetwork>;
+    pdbLoader: LoaderState<Pdb>;
+    setPdbLoader: React.Dispatch<React.SetStateAction<LoaderState<Pdb>>>;
 }
 
 export const Viewers: React.FC<ViewersProps> = React.memo(props => {
-    const { viewerState, pdbInfo, uploadData, proteinNetwork } = props;
-    const { selection } = viewerState;
-    const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfo);
+    const { viewerState, pdbInfo, uploadData, proteinNetwork, pdbLoader, setPdbLoader } = props;
 
     const onAddAnnotations = React.useCallback(
         (annotations: Annotations) => {
@@ -50,7 +52,7 @@ export const Viewers: React.FC<ViewersProps> = React.memo(props => {
                 return pdbLoader;
             }
         });
-    }, [uploadData, setPdbLoader, pdbLoader.type]);
+    }, [uploadData, setPdbLoader, pdbLoader?.type]);
 
     // Add data from protein network
     React.useEffect(() => {
@@ -69,10 +71,11 @@ export const Viewers: React.FC<ViewersProps> = React.memo(props => {
 
     return (
         <React.Fragment>
-            <Loader state={pdbLoader} loadingMsg={i18n.t("Loading data...")} />
+            <Loader state={pdbLoader} />
 
-            {pdbLoader.type === "loaded" && (
+            {pdbLoader.type === "loaded" && pdbInfo && (
                 <PdbViewer
+                    pdbInfo={pdbInfo}
                     pdb={pdbLoader.data}
                     viewerState={viewerState}
                     onAddAnnotations={onAddAnnotations}

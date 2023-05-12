@@ -30,3 +30,8 @@
 .msp-image-preview img {
     width: 100%;
 }
+
+.msp-layout-region.msp-layout-bottom,
+.msp-layout-region.msp-layout-top {
+    display: none;
+}

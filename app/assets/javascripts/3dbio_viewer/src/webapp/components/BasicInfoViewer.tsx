@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { getEntityLinks, Pdb } from "../../domain/entities/Pdb";
 import { recordOfStyles } from "../../utils/ts-utils";
-import i18n from "../utils/i18n";
 import { Selection } from "../view-models/Selection";
 import { Links } from "./Link";
 import { ViewerTooltip } from "./viewer-tooltip/ViewerTooltip";
+import i18n from "../utils/i18n";
 
 export interface BasicInfoProps {
     pdb: Pdb;
@@ -23,19 +24,15 @@ export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
     const items: Item[] = getItems(pdb);
 
     return (
-        <Parent>
+        <ul>
             {items
                 .filter(item => !item.isDisabled)
                 .map(item => (
                     <Child key={item.name} name={item.name} value={item.value} help={item.help} />
                 ))}
-        </Parent>
+        </ul>
     );
 });
-
-const Parent: React.FC = ({ children }) => {
-    return <ul style={styles.ul}>{children}</ul>;
-};
 
 interface ChildProps {
     name: string;
@@ -49,7 +46,9 @@ const Child: React.FC<ChildProps> = props => {
 
     return (
         <li>
-            {name}: {value ?? "-"}
+            <span>
+                {name}: {value ?? "-"}
+            </span>
             {help && (
                 <ViewerTooltip
                     title={help}
@@ -57,7 +56,7 @@ const Child: React.FC<ChildProps> = props => {
                     setShowTooltip={setShowTooltip}
                 >
                     <span style={styles.help} onClick={() => setShowTooltip(!showTooltip)}>
-                        [?]
+                        <InfoOutlinedIcon fontSize={"small"} color="action" />
                     </span>
                 </ViewerTooltip>
             )}
@@ -66,8 +65,7 @@ const Child: React.FC<ChildProps> = props => {
 };
 
 const styles = recordOfStyles({
-    ul: { listStyleType: "none" },
-    help: { marginLeft: 10 },
+    help: { marginLeft: "0.375em", verticalAlign: "text-top", display: "inline-block", height: 20 },
 });
 
 function getItems(pdb: Pdb) {
@@ -75,7 +73,11 @@ function getItems(pdb: Pdb) {
 
     const items: Item[] = [
         { name: i18n.t("Protein Name"), value: pdb.protein.name },
-        { name: i18n.t("Gene Name"), value: pdb.protein.gene },
+        { name: i18n.t("Gene Name"), value: pdb.protein.gen },
+        {
+            name: i18n.t("Gene Bank ID"),
+            value: pdb.protein.genBank ? <Links links={getEntityLinks(pdb, "geneBank")} /> : "-",
+        },
         { name: i18n.t("Organism"), value: pdb.protein.organism },
         {
             name: i18n.t("Biological function"),

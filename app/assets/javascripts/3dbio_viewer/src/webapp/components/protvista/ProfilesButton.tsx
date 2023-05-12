@@ -1,9 +1,10 @@
-import React from "react";
 import _ from "lodash";
-import i18n from "../../utils/i18n";
+import React from "react";
+import { Category as CategoryIcon } from "@material-ui/icons";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import { Profile, ProfileId, profiles } from "../../../domain/entities/Profile";
 import { sendAnalytics } from "../../utils/analytics";
+import i18n from "../../utils/i18n";
 
 export interface ProfilesButtonProps {
     profile: Profile;
@@ -21,10 +22,8 @@ export const ProfilesButton: React.FC<ProfilesButtonProps> = React.memo(props =>
 
     const setProfile = React.useCallback(
         (profileId: ProfileId) => {
-            sendAnalytics({
-                type: "event",
-                action: "set_profile",
-                category: "viewer",
+            sendAnalytics("set_profile", {
+                on: "viewer",
                 label: profileId,
             });
             onChange(profiles[profileId]);
@@ -41,6 +40,7 @@ export const ProfilesButton: React.FC<ProfilesButtonProps> = React.memo(props =>
             items={dropdownItems}
             onClick={setProfile}
             showSelection={true}
+            leftIcon={<CategoryIcon fontSize="small" />}
         />
     );
 });

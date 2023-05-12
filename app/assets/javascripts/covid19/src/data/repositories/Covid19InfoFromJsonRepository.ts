@@ -16,12 +16,16 @@ import {
     filterPdbValidations,
     ValidationSource,
     ValidationMethod,
-} from "../domain/entities/Covid19Info";
-import { Covid19InfoRepository, SearchOptions } from "../domain/repositories/Covid19InfoRepository";
+    filterLigands,
+} from "../../domain/entities/Covid19Info";
+import {
+    Covid19InfoRepository,
+    SearchOptions,
+} from "../../domain/repositories/Covid19InfoRepository";
 import { SearchOptions as MiniSearchSearchOptions } from "minisearch";
-import { cache } from "../utils/cache";
-import { data } from "./covid19-data";
-import * as Data from "./Covid19Data.types";
+import { cache } from "../../utils/cache";
+import { data } from "../covid19-data";
+import * as Data from "../Covid19Data.types";
 
 export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     info: Covid19Info;
@@ -64,24 +68,32 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     }
 
     private filter(structures: Structure[], filterState: Covid19Filter): Structure[] {
-        const isFilterStateEnabled =
+        const isEntitiesStateEnabled =
             filterState.antibodies || filterState.nanobodies || filterState.sybodies;
         const isPdbValidationsFilterEnabled =
             filterState.pdbRedo || filterState.cstf || filterState.ceres;
+        const isIDREnabled = filterState.idr;
 
-        if (!isFilterStateEnabled && !isPdbValidationsFilterEnabled) return structures;
-        const structuresToFilter = isPdbValidationsFilterEnabled
+        if (!isEntitiesStateEnabled && !isPdbValidationsFilterEnabled && !isIDREnabled)
+            return structures;
+        const structuresWithValidations = isPdbValidationsFilterEnabled
             ? structures.filter(structure =>
-                  structure.validations.pdb.length > 0
+                  !_.isEmpty(structure.validations.pdb)
                       ? filterPdbValidations(structure.validations.pdb, filterState)
                       : false
               )
             : structures;
-        return isFilterStateEnabled
-            ? structuresToFilter.filter(
-                  structure => filterEntities(structure.entities, filterState).length > 0
+        const structuresWithEntities = isEntitiesStateEnabled
+            ? structuresWithValidations.filter(
+                  structure => !_.isEmpty(filterEntities(structure.entities, filterState))
               )
-            : structuresToFilter;
+            : structuresWithValidations;
+        const structuresWithIDR = isIDREnabled
+            ? structuresWithEntities.filter(
+                  structure => !_.isEmpty(filterLigands(structure.ligands))
+              )
+            : structuresWithEntities;
+        return structuresWithIDR;
     }
 
     private searchByText(
@@ -90,19 +102,18 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         matches: string[] = []
     ): Structure[] {
         const miniSearch = this.getMiniSearch();
-        const searchOptions =
-            matches.length > 0
-                ? {
-                      ...this.searchOptions,
-                      filter: (result: SearchResult) =>
-                          _.isEmpty(
-                              _.difference(
-                                  matches.map(m => m.toLowerCase()),
-                                  result.terms.map(m => m.toLowerCase())
-                              )
-                          ),
-                  }
-                : this.searchOptions;
+        const searchOptions = !_.isEmpty(matches)
+            ? {
+                  ...this.searchOptions,
+                  filter: (result: SearchResult) =>
+                      _.isEmpty(
+                          _.difference(
+                              matches.map(m => m.toLowerCase()),
+                              result.terms.map(m => m.toLowerCase())
+                          )
+                      ),
+              }
+            : this.searchOptions;
         const results = miniSearch.search(search, searchOptions);
         const matchingIds = results.map(getId);
         return _(structures).keyBy(getId).at(matchingIds).compact().value();
@@ -140,7 +151,7 @@ function getStructures(): Structure[] {
         .compact()
         .value();
 
-    if (repeatedIds.length > 0) {
+    if (!_.isEmpty(repeatedIds)) {
         console.error(`Repeated structure IDs: ${repeatedIds.join(", ")}`);
     }
 
@@ -194,13 +205,20 @@ function getLigands(
     dataLigands: Data.Covid19Data["Ligands"],
     ligandRefs: Data.Pdb["ligands"]
 ): Ligand[] {
-    const ligandsById = _(dataLigands)
-        .map((ligand): Ligand => ({ id: ligand.dbId, ...ligand }))
-        .keyBy(getId)
+    const ligandsByInChI = _(dataLigands)
+        .map(
+            (ligand): Ligand => ({
+                id: ligand.dbId,
+                inChI: ligand.IUPACInChIkey,
+                hasIDR: !!ligand.xRef,
+                ...ligand,
+            })
+        )
+        .keyBy(ligand => ligand.inChI)
         .value();
 
     return _(ligandRefs)
-        .map(ligandId => ligandsById[ligandId])
+        .map(ligandInChI => ligandsByInChI[ligandInChI])
         .compact()
         .value();
 }

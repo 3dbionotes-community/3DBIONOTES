@@ -18,6 +18,7 @@ export interface BlockComponentProps {
     pdb: Pdb;
     selection: Selection;
     block: BlockDef;
+    setBlockVisibility?: (blockVisibility: BlockVisibility) => void;
 }
 
 export type TrackDef = TrackDefinition;
@@ -36,4 +37,9 @@ export interface BlockDef extends ViewerBlockModel {
 export interface ProtvistaBlock extends ViewerBlockModel {
     tracks: TrackDef[];
     component?: React.FC<BlockComponentProps>;
+}
+
+export interface BlockVisibility {
+    block: BlockDef;
+    visible: boolean;
 }

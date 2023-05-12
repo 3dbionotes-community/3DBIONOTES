@@ -111,18 +111,18 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     // Disordered regions
     prediction: {
         id: "prediction" as const,
-        name: i18n.t("Prediction"),
-        source: "DIBS",
+        name: i18n.t("Prediction"), // (inferred)
+        source: "DIBS and ModyDB", // (dibs is in it)
         // TODO: color, shape
         description: i18n.t(
-            "Disordered Binding Site (DIBS) database is a large repository for protein complexes that are formed between Intrinsically Disordered"
+            "IDPRs are regions without ordered three-dimensional structure. They can possess many functions. They can, e.g., bind other proteins, interact with nucleic acids, or serve as scaffold proteins. Commonly, they are also involved in signaling pathways and have important roles in protein regulation."
         ),
     },
 
     // Motifs
     motifs: {
         id: "motifs" as const,
-        name: i18n.t("Motifs"),
+        name: i18n.t("Motifs"), // (domain & sites)
         source: "Uniprot",
         description: i18n.t(""),
         color: colors.motif,
@@ -132,7 +132,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     // Regions
     regions: {
         id: "regions" as const,
-        name: i18n.t("Regions"),
+        name: i18n.t("Regions"), // (domain & sites)
         source: "Uniprot",
         color: colors.region,
         shape: shapes.region,
@@ -141,7 +141,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     // Other regions
     coiledCoils: {
         id: "coiled-coils" as const,
-        name: i18n.t("Coiled coils"),
+        name: i18n.t("Coiled coils"), // (domain & sites)
         source: "Uniprot",
         color: colors.coiled,
         shape: shapes.coiled,
@@ -151,12 +151,12 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     },
     linearInteractingPeptide: {
         id: "lip" as const,
-        name: i18n.t("Linear interacting peptide"),
+        name: i18n.t("Linear interacting peptide"), // (domain & sites)
         source: "Uniprot/MobyDB",
         color: colors.linear_interacting_peptide,
         shape: "rectangle",
         description: i18n.t(
-            "This are regions that interact with other peptides. Protein-protein interactions are often mediated by short linear motifs (SLiMs) that are  normally located in intrinsically disordered regions (IDRs) of proteins"
+            "These are regions that interact with other peptides. Protein-protein interactions are often mediated by short linear motifs (SLiMs) that are  normally located in intrinsically disordered regions (IDRs) of proteins"
         ),
     },
     repeats: {
@@ -176,14 +176,14 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         color: colors.zn_fing,
         shape: shapes.zn_fing,
         description: i18n.t(
-            "Small, functional, independently folded domain that coordinates one or more zinc ions.  It is a structural motifs and hence, it should be inside of motifs annotations. Apply differents colours to represent the differents type of motifs"
+            "Small, functional, independently folded domain that coordinates one or more zinc ions."
         ),
     },
 
     // Sites
     activeSite: {
         id: "active-site" as const,
-        name: i18n.t("Active site"),
+        name: i18n.t("Active site"), // (domain & sites)
         source: "Uniprot",
         color: colors.act_site,
         shape: "circle",
@@ -191,17 +191,17 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     },
     bindingSite: {
         id: "binding-site" as const,
-        name: i18n.t("Binding site"),
+        name: i18n.t("Ligand Binding site"), // (domain & sites)
         source: "Uniprot",
         color: colors.binding,
         shape: shapes.binding,
         description: i18n.t(
-            "Binding site for any chemical group (co-enzyme, prothetic groups, etc)"
+            "Binding site for any chemical group (co-enzyme, prothetic groups, etc.)"
         ),
     },
     nucleotidesBinding: {
         id: "nucleotides-binding" as const,
-        name: i18n.t("Nucleotides binding"),
+        name: i18n.t("Nucleotides binding"), // (domain & sites)
         source: "Uniprot",
         color: colors.np_bind,
         shape: shapes.np_bind,
@@ -209,7 +209,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     },
     metalBinding: {
         id: "metal-binding" as const,
-        name: i18n.t("Metal binding"),
+        name: i18n.t("Metal binding"), // (domain & sites)
         source: "Uniprot",
         description: i18n.t("Binding site for a metal ion"),
         color: colors.metal,
@@ -217,7 +217,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     },
     otherStructuralRelevantSites: {
         id: "other-structural-relevant-sites" as const,
-        name: i18n.t("Others structural relevant sites"),
+        name: i18n.t("Others structural relevant sites"), // (domain & sites)
         source: "Uniprot, PhosphoSitePlus",
         description: i18n.t("Binding site for others chemical group"),
         color: colors.site,
@@ -235,12 +235,12 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     },
     chain: {
         id: "chain" as const,
-        name: i18n.t("Chain"),
+        name: i18n.t("Polyprotein chain"),
         color: colors.chain,
         shape: shapes.chain,
         source: "Uniprot",
         description: i18n.t(
-            "Mature region of the protein. This describes the extension of a polypeptide chain in the mature protein after processing"
+            "Mature region of the protein. This describes the extension of a polypeptide chain in the mature protein after processing."
         ),
     },
 
@@ -270,7 +270,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "glycosylation" as const,
         name: i18n.t("Glycosylation"),
         source: "Uniprot",
-        description: i18n.t("Residues with covalently attached glycan group(s)"),
+        description: i18n.t("Residues with covalently attached glycan group(s)."),
         color: colors.carbohyd,
         shape: shapes.carbohyd,
     },
@@ -278,7 +278,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         id: "methylation" as const,
         name: i18n.t("Methylation"),
         source: "PhosphoSitePlus, Uniprot",
-        description: i18n.t("Residues with covalently attached methyl group (s)"),
+        description: i18n.t("Residues with covalently attached methyl group (s)."),
         color: colors.metal,
         shape: shapes.metal,
     },
@@ -384,7 +384,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("DeepRes"),
         source: "Local server",
         description: i18n.t(
-            "Local quality method of the map based on the detection of 3D characteristics through Deep Learning. This method can be applied to any cryo-EM map and detects subtle changes in local quality after applying isotropic filters or other map processing methods."
+            "DeepRes estimates the local resolution using Deep Learning. This method can be applied to any cryo-EM map and detects subtle changes in local quality after applying isotropic filters or other map processing methods."
         ),
     },
     monoRes: {
@@ -392,18 +392,18 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("MonoRes"),
         source: "Local server",
         description: i18n.t(
-            "Local resolution method of the map based on the use of monogenic signals."
+            "MonoRes estimated the local resolution by means of the monogenic local amplitude"
         ),
     },
     blocRes: {
         id: "bloc-res" as const,
         name: i18n.t("BlocRes"),
         source: "Local server",
-        // ToDo check if this description is correct
         description: i18n.t(
-            "A space-frequency representation, the short-space Fourier transform, to assess the quality of a density map, voxel-by-voxel."
+            "Blocres estimates the local resoltuion by means of a local FSC. To do that, it requires two half maps and the local FSC is computed with a mobile window."
         ),
     },
+    //ToDo: Add DAQ
     mapQ: {
         id: "map-q" as const,
         name: i18n.t("MapQ"),
@@ -417,7 +417,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("FscQ"),
         source: "Local server",
         description: i18n.t(
-            "Method that measures the local quality of the fit between the atomic model and the cryo-EM map, being a quantitative measure of how the experimental data supports the structural model"
+            "FSC-Q measures the local quality of the fit between the atomic model and the cryo-EM map, being a quantitative measure of how the experimental data supports the structural model"
         ),
     },
 
@@ -435,16 +435,13 @@ export const subtracks = recordOf<SubtrackDefinition>()({
     residueAccessibility: {
         id: "residue-accessibility" as const,
         name: i18n.t("Residue accesibility"),
-        description: i18n.t(
-            "Graph, range of colors in the residues and show the surface of the protein (display mode). Allow download"
-        ),
     },
 
     // PPI Viewer
     proteinNetwork: {
         id: "protein-network" as const,
         name: i18n.t("Protein Network"),
-        source: "Interactome 3D, String",
+        source: "Interactome 3D",
         description: i18n.t(
             "Set of proteins that interact directly with the protein under study. It is shown as a network of interactions."
         ),

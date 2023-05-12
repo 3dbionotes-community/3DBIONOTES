@@ -27,14 +27,12 @@ export const CustomGridToolbarExport: React.FC<CustomGridToolbarExportProps> = R
     const exportDataGrid = React.useCallback(
         (format: Format) => {
             exportStructures(compositionRoot, gridApi, dataGrid, format);
-            sendAnalytics({
-                type: "event",
-                category: "covid_table",
-                action: "export",
+            sendAnalytics("export", {
+                type: "covid_table",
                 label: `Export ${format}: ${ellipsizedList(
                     dataGrid.structures.map(row => row.id)
                 )}`,
-                value: gridApi.getRowsCount(),
+                rowsCount: gridApi.getRowsCount(),
             });
             closeMenu();
         },

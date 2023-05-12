@@ -33,5 +33,12 @@ const MainComponent: React.FC = React.memo(() => {
         );
     } else if (appState.type !== "TRAINING") return null;
 
-    return <TrainingWizard onClose={exitTutorial} module={module} />;
+    return (
+        <>
+            <ActionButton
+                onClick={() => setAppState(appState => ({ ...appState, minimized: true }))}
+            />
+            <TrainingWizard onClose={exitTutorial} module={module} />
+        </>
+    );
 });

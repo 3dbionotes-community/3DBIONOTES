@@ -1,13 +1,32 @@
 .title {
+    display: flex;
+    align-items: center;
     font-weight: bold;
     margin-bottom: 15px;
     color: #123546;
 }
 
 .actions {
-    float: right;
+    display: flex;
+    justify-content: right;
+    align-content: stretch;
 }
 
 .section {
-    padding: 20px;
+    margin: 0 0 1.5em;
+    padding: 0 1.5em;
+}
+
+.tools-section {
+    display: flex;
+    justify-content: right;
+    align-content: stretch;
+    margin: 1em 0 1em;
+    padding: 0 1.5em;
+}
+
+.small-button {
+    margin-left: 0.75em;
+    padding: 0.3em 0.6em;
+    border-radius: 0.5em;
 }

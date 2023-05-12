@@ -1,8 +1,9 @@
 export interface Protein {
     id: ProteinId;
     name?: string;
-    gene?: string;
+    gen?: string;
     organism?: string;
+    genBank?: string[];
 }
 
 export type ProteinId = string;

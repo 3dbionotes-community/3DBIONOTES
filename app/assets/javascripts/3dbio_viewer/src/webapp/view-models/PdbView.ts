@@ -41,6 +41,7 @@ export interface VariantView extends Variant {
 }
 
 export interface TrackView {
+    id: string;
     label: string;
     help: string;
     labelType?: "text" | "html";

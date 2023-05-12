@@ -1,29 +1,150 @@
+import _ from "lodash";
 import React from "react";
 import * as d3Module from "d3";
 import { ProtvistaPdb, ProtvistaPdbProps } from "./ProtvistaPdb";
+import { HtmlTooltip } from "../HtmlTooltip";
+import { StatsValidation } from "../../../domain/entities/Pdb";
 import modelQualityStats from "../../../data/repositories/emv_modelquality_stats.json";
-import localResolutionStats from "../../../data/repositories/emv_localresolution_stats.json";
-import _ from "lodash";
+import i18n from "../../utils/i18n";
 
 declare global {
     const d3: typeof d3Module;
 }
 
-const dimensions = {
-    width: 350,
-    height: 200,
-};
-
 export const ProtvistaPdbValidation: React.FC<ProtvistaPdbProps> = React.memo(props => {
-    const ref = useGrid();
-    const svgRef = useBar();
+    const stats = _.first(props.pdb.emdbs)?.emv?.stats;
+    const _ref = useGrid(); /*temporal hidden*/
 
     return (
         <>
-            <svg ref={ref} />
-            <svg ref={svgRef} />
-            <ProtvistaPdb {...props} />
+            <div style={styles.svgContainers}>
+                {/* <svg ref={ref} /> */}
+                {stats && (
+                    <>
+                        <SVGBar stats={stats} />
+                        <div style={styles.info.container}>
+                            {stats.warnings?.map((warning, idx) => (
+                                <p key={idx} style={styles.info.warnings}>
+                                    {warning}
+                                </p>
+                            ))}
+                            {stats.errors?.map((error, idx) => (
+                                <p key={idx} style={styles.info.errors}>
+                                    {error}
+                                </p>
+                            ))}
+                        </div>
+                    </>
+                )}
+            </div>
+            <div>
+                <ProtvistaPdb {...props} />
+            </div>
         </>
+    );
+});
+
+interface SVGBarProps {
+    stats: StatsValidation;
+}
+
+const SVGBar: React.FC<SVGBarProps> = React.memo(({ stats }) => {
+    const [open, setOpen] = React.useState(false);
+    const [svgWidth, setSvgWidth] = React.useState(0);
+    const [anchorEl, setAnchorEl] = React.useState<SVGRectElement | null>(null);
+
+    const hideTooltip = React.useCallback(() => setOpen(false), []);
+    const showTooltip = React.useCallback(() => setOpen(true), []);
+    const measuredWidth = React.useCallback((el: HTMLDivElement) => {
+        if (el !== null) setSvgWidth(el.getBoundingClientRect().width);
+    }, []);
+
+    const defineRectEl = React.useCallback((el: SVGRectElement) => {
+        if (el !== null) setAnchorEl(el);
+    }, []);
+
+    const tooltipContent = React.useMemo(
+        () =>
+            (stats && (
+                <p style={styles.tooltip}>
+                    {`${i18n.t("Quartile-25")}: ${stats.quartile25}`}
+                    <br />
+                    {`${i18n.t("Median")}: ${stats.resolutionMedian} ${stats.unit}`}
+                    <br />
+                    {`${i18n.t("Quartile-75")}: ${stats.quartile75}`}
+                </p>
+            )) ||
+            "",
+        [stats]
+    );
+
+    return (
+        <div style={styles.bar}>
+            {stats.rank && (
+                <div ref={measuredWidth}>
+                    <div>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox={`0 0 ${svgWidth} 83`}
+                            style={styles.svgBar}
+                        >
+                            <defs>
+                                <linearGradient id="barGradient">
+                                    <stop stopColor="green" offset={0} />
+                                    <stop stopColor="white" offset={0.5} />
+                                    <stop stopColor="red" offset={1} />
+                                </linearGradient>
+                            </defs>
+                            <g>
+                                <rect
+                                    width={svgWidth}
+                                    height="35"
+                                    x="0"
+                                    y="24"
+                                    fill="url(#barGradient)"
+                                />
+                                <rect
+                                    width="5"
+                                    height="35"
+                                    x={(stats.rank / 100) * svgWidth}
+                                    y="24"
+                                    fill="#000000"
+                                    style={styles.rank}
+                                    onMouseEnter={showTooltip}
+                                    onMouseLeave={hideTooltip}
+                                    ref={defineRectEl}
+                                />
+                                <text x="0" y="79">
+                                    {i18n.t("Per 0")}
+                                </text>
+                                {/*x=52 from 1char is 8px and space is 4px*/}
+                                <text x={svgWidth - 52} y="79">
+                                    {i18n.t("Per 100")}
+                                </text>
+                                <text x={(stats.rank / 100) * svgWidth} y="16" textAnchor="middle">
+                                    {i18n.t("Rank") + ": " + stats?.rank}
+                                </text>
+                            </g>
+                        </svg>
+                    </div>
+                    <HtmlTooltip
+                        PopperProps={{
+                            disablePortal: true,
+                            anchorEl: anchorEl,
+                        }}
+                        onClose={hideTooltip}
+                        open={open}
+                        disableFocusListener
+                        disableHoverListener
+                        disableTouchListener
+                        title={tooltipContent}
+                        placement={"top"}
+                    >
+                        <span></span>
+                    </HtmlTooltip>
+                </div>
+            )}
+        </div>
     );
 });
 
@@ -32,6 +153,8 @@ function useGrid() {
 
     React.useEffect(() => {
         if (!svgRef.current) return;
+
+        svgRef.current.innerHTML = ""; //remove all to prevent overlapping
 
         const { axis_x, axis_y } = modelQualityStats.graph;
         const emvStatsCategories = modelQualityStats.data.categories;
@@ -77,7 +200,6 @@ function useGrid() {
             .select(svgRef.current)
             .attr("width", dimensions.width + 10)
             .attr("height", dimensions.height * 2)
-            .attr("transform", "translate(0, -80)")
             .append("g");
 
         const x_axis = grid.append("g");
@@ -238,125 +360,45 @@ function useGrid() {
     return svgRef;
 }
 
-function useBar() {
-    const svgRef = React.useRef<SVGSVGElement>(null);
+const dimensions = {
+    width: 350,
+    height: 200,
+};
 
-    React.useEffect(() => {
-        if (!svgRef.current) return;
-
-        const {
-            rank,
-            resolutionMedian,
-            quartile25,
-            quartile75,
-        } = localResolutionStats.data.metrics;
-
-        const svg = d3
-            .select(svgRef.current)
-            .attr("width", dimensions.width)
-            .attr("height", dimensions.height * 2.5);
-
-        const svgBar = svg.append("g");
-
-        const bar = svgBar
-            .append("rect")
-            .attr("width", 300)
-            .attr("height", dimensions.height / 6)
-            .attr("x", "20")
-            .attr("y", "90");
-
-        const svgDefs = svgBar.append("defs");
-        const mainGradient = svgDefs.append("linearGradient").attr("id", "mainGradient");
-        mainGradient.append("stop").attr("stop-color", "red").attr("offset", "0");
-        mainGradient.append("stop").attr("stop-color", "white").attr("offset", "0.5");
-        mainGradient.append("stop").attr("stop-color", "blue").attr("offset", "1");
-        bar.attr("fill", "url(#mainGradient)");
-
-        svgBar
-            .append("text")
-            .attr("transform", "translate(20, 85)")
-            .style("text-anchor", "middle")
-            .text("Per 0");
-
-        svgBar
-            .append("text")
-            .attr("transform", "translate(" + (300 * rank) / 100 + ", 85)")
-            .style("text-anchor", "middle")
-            .text("Rank: " + rank);
-
-        svgBar
-            .append("text")
-            .attr("transform", "translate(" + 300 + ", 85)")
-            .style("text-anchor", "middle")
-            .text("Per 100");
-
-        const percentileRank = svgBar
-            .append("rect")
-            .attr("width", 5)
-            .attr("height", dimensions.height / 6)
-            .attr("x", (rank / 100) * 300)
-            .attr("y", 90)
-            .style("cursor", "pointer");
-
-        const rankTooltip = svgBar
-            .append("g")
-            .attr("class", "rankTooltip")
-            .style("display", "none");
-
-        rankTooltip
-            .append("rect")
-            .attr("width", 170)
-            .attr("height", 70)
-            .attr("rx", 10)
-            .attr("fill-opacity", "0.5")
-            .attr("fill", "#000")
-            .attr("x", rank + 20)
-            .attr("y", 0);
-
-        rankTooltip
-            .append("text")
-            .text("Quartile-25: " + quartile25 + "Å")
-            .attr("x", rank + 30)
-            .attr("y", "20")
-            .attr("fill", "white");
-
-        rankTooltip
-            .append("text")
-            .text("Median: " + resolutionMedian + "Å")
-            .attr("x", rank + 30)
-            .attr("y", "40")
-            .attr("fill", "white");
-
-        rankTooltip
-            .append("text")
-            .text("Quartile-75: " + quartile75 + "Å")
-            .attr("x", rank + 30)
-            .attr("y", "60")
-            .attr("fill", "white");
-
-        percentileRank.on("mouseover", () => rankTooltip.style("display", "block"));
-        percentileRank.on("mouseout", () => rankTooltip.style("display", "none"));
-
-        const svgText = svg
-            .append("g")
-            .attr("transform", "translate(10, 140)")
-            .attr("width", 350)
-            .attr("height", dimensions.height * 2);
-
-        svgText
-            .append("foreignObject")
-            .attr("width", 300)
-            .attr("height", dimensions.height * 2)
-            .append("xhtml:div")
-            .style("font-size", "14px").html(`
-                <p>Alias irure aliquam, facilisi taciti tenetur rutrum consequat impedit! Nisl tortor voluptates! Felis scelerisque, anim sollicitudin nostra sem, aliquet doloremque diamlorem magnam provident elit? Nulla lobortis varius omnis tempus asperiores? Ratione omnis, nibh repellat? Netus minima, doloremque veniam dolorem accusamus, porttitor lacus taciti modi senectus? Fugit ut voluptates. Natoque cupidatat.
-                <p style="color: orange; border: 3px solid orange; border-radius: 6px; padding: 4px 16px; font-style: italic">${localResolutionStats.warnings.mapping}<p>
-                <p style="color: orangered; border: 3px solid orangered; border-radius: 6px; padding: 4px 16px; font-style: italic">${localResolutionStats.errors.processing}<p>
-            `);
-    }, []);
-
-    return svgRef;
-}
+const styles = {
+    svgContainers: {
+        display: "flex",
+        alignItems: "flex-start",
+        columnGap: "1em",
+    },
+    info: {
+        container: {
+            fontSize: "14px",
+            maxWidth: 350,
+        },
+        warnings: {
+            color: "orange",
+            border: "3px solid orange",
+            borderRadius: "6px",
+            padding: "4px 16px",
+            fontStyle: "italic",
+        },
+        errors: {
+            color: "orangered",
+            border: "3px solid orangered",
+            borderRadius: "6px",
+            padding: "4px 16px",
+            fontStyle: "italic",
+        },
+    },
+    bar: { flexGrow: 1 },
+    svgBar: {
+        width: "100%",
+        height: "100px",
+    },
+    rank: { cursor: "pointer" },
+    tooltip: { margin: 0 },
+};
 
 interface GridData {
     color: string;

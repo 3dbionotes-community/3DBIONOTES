@@ -1,11 +1,11 @@
-import React from "react";
 import _ from "lodash";
+import React from "react";
 import { MenuItem } from "@material-ui/core";
+import { ExpandMore, ExpandLess, Done } from "@material-ui/icons";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { PopperMenu } from "./PopperMenu";
-import Done from "@material-ui/icons/Done";
-import { ExpandMore } from "@material-ui/icons";
-import i18n from "d2-ui-components/locales";
+import i18n from "../../utils/i18n";
+import { StyledButton } from "../../training-app/components/action-button/ActionButton";
 
 export interface DropdownProps<Id extends string = string> {
     // Show text or, if empty, the selected item.
@@ -15,6 +15,8 @@ export interface DropdownProps<Id extends string = string> {
     onClick(id: Id): void;
     showSelection?: boolean;
     showExpandIcon?: boolean;
+    leftIcon?: React.ReactNode;
+    rightIcon?: React.ReactNode;
 }
 
 export interface DropdownItemModel<Id extends string> {
@@ -25,7 +27,7 @@ export interface DropdownItemModel<Id extends string> {
 export function Dropdown<Id extends string = string>(
     props: DropdownProps<Id>
 ): React.ReactElement | null {
-    const { items, text, onClick, showExpandIcon = false, selected } = props;
+    const { items, text, onClick, showExpandIcon = false, selected, rightIcon, leftIcon } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
     const showSelection = Boolean(selected);
@@ -48,10 +50,16 @@ export function Dropdown<Id extends string = string>(
 
     return (
         <React.Fragment>
-            <button ref={buttonRef} onClick={openMenu} className={isMenuOpen ? "open" : undefined}>
+            <StyledButton
+                ref={buttonRef}
+                onClick={openMenu}
+                className={isMenuOpen ? "open" : undefined}
+            >
+                {leftIcon}
                 {buttonText}
-                {showExpandIcon && <ExpandMore />}
-            </button>
+                {rightIcon}
+                {showExpandIcon && (isMenuOpen ? <ExpandLess /> : <ExpandMore />)}
+            </StyledButton>
 
             <PopperMenu isOpen={isMenuOpen} close={closeMenu} buttonRef={buttonRef}>
                 {items.map(item => (
@@ -89,7 +97,7 @@ function DropdownItem<Id extends string>(
                 <React.Fragment>
                     {isSelected && <Done />}
 
-                    <span style={isSelected ? undefined : styles.menuItemSelected}>
+                    <span style={isSelected ? styles.selected : styles.menuItemSelected}>
                         {item.text}
                     </span>
                 </React.Fragment>
@@ -101,7 +109,10 @@ function DropdownItem<Id extends string>(
 }
 
 const styles = {
+    selected: {
+        marginLeft: 8,
+    },
     menuItemSelected: {
-        marginLeft: 24,
+        marginLeft: 32,
     },
 };

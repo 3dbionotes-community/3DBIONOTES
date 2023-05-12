@@ -4,7 +4,7 @@ import { Tooltip, ClickAwayListener, Fade } from "@material-ui/core";
 interface ViewerTooltipProps {
     title: string;
     showTooltip: boolean;
-    setShowTooltip: (value: React.SetStateAction<boolean>) => void;
+    setShowTooltip: (value: boolean) => void;
     children: React.ReactElement;
 }
 

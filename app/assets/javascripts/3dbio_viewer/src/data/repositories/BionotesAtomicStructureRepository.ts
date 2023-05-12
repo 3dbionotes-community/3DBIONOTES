@@ -26,7 +26,7 @@ interface ChainMappingPost {
 
 export class BionotesAtomicStructureRepository implements AtomicStructureRepository {
     get(options: BuildOptions): FutureData<AtomicStructure> {
-        const url = routes.bionotesDev + "/upload";
+        const url = routes.bionotesStaging + "/upload";
 
         const params = {
             structure_file: options.structureFile,
@@ -40,7 +40,7 @@ export class BionotesAtomicStructureRepository implements AtomicStructureReposit
     }
 
     uploadMapping(structure: AtomicStructureMapping): FutureData<void> {
-        const url = routes.bionotesDev + "/chain_mapping";
+        const url = routes.bionotesStaging + "/chain_mapping";
 
         const base: ChainMappingPost = {
             rand: structure.token,

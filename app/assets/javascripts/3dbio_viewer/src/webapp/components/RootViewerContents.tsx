@@ -10,6 +10,9 @@ import { UploadData } from "../../domain/entities/UploadData";
 import { setFromError } from "../utils/error";
 import { ProteinNetwork } from "../../domain/entities/ProteinNetwork";
 import { debugFlags } from "../pages/app/debugFlags";
+import i18n from "../utils/i18n";
+import { usePdbLoader } from "../hooks/use-pdb";
+import { useBooleanState } from "../hooks/use-boolean";
 
 export interface RootViewerContentsProps {
     viewerState: ViewerState;
@@ -25,10 +28,14 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const { compositionRoot } = useAppContext();
     const { selection, setSelection } = viewerState;
     const [error, setError] = React.useState<string>();
-
+    const [loadingTitle, setLoadingTitle] = React.useState(i18n.t("Loading"));
     const [externalData, setExternalData] = React.useState<ExternalData>({ type: "none" });
+
     const uploadData = getUploadData(externalData);
+
     const { pdbInfo, setLigands } = usePdbInfo(selection, uploadData);
+    const [isLoading, { enable: showLoading, disable: hideLoading }] = useBooleanState(false);
+    const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfo);
 
     const uploadDataToken = selection.type === "uploadData" ? selection.token : undefined;
     const networkToken = selection.type === "network" ? selection.token : undefined;
@@ -50,6 +57,15 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
         }
     }, [uploadDataToken, networkToken, compositionRoot]);
 
+    React.useEffect(() => {
+        if (pdbLoader.type === "loading") {
+            setLoadingTitle(i18n.t("Loading PDB data..."));
+            showLoading();
+        } else {
+            hideLoading();
+        }
+    }, [pdbLoader.type, showLoading, hideLoading]);
+
     return (
         <div id="viewer">
             {error && <div style={{ color: "red" }}></div>}
@@ -70,6 +86,11 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             onSelectionChange={setSelection}
                             onLigandsLoaded={setLigands}
                             proteinNetwork={proteinNetwork}
+                            title={loadingTitle}
+                            setTitle={setLoadingTitle}
+                            isLoading={isLoading}
+                            showLoading={showLoading}
+                            hideLoading={hideLoading}
                         />
                     </div>
                 </>
@@ -82,6 +103,8 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                         pdbInfo={pdbInfo}
                         uploadData={uploadData}
                         proteinNetwork={proteinNetwork}
+                        pdbLoader={pdbLoader}
+                        setPdbLoader={setPdbLoader}
                     />
                 }
             </div>

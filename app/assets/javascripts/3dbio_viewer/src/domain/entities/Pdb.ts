@@ -4,6 +4,7 @@ import { BlockDef } from "../../webapp/components/protvista/Protvista.types";
 import { Annotations, getTracksFromAnnotations } from "./Annotation";
 import { Color } from "./Color";
 import { Experiment } from "./Experiment";
+import { LigandImageData } from "./LigandImageData";
 import { Link } from "./Link";
 import { Protein } from "./Protein";
 import { ProteinNetwork } from "./ProteinNetwork";
@@ -30,17 +31,45 @@ export interface Pdb {
     file: Maybe<string>;
     path: Maybe<string>;
     customAnnotations: Maybe<Annotations>;
+    ligands: Maybe<PdbLigand[]>;
+}
+
+export interface PdbLigand {
+    name: string;
+    inChI: string; //IUPACInChIkey
+    imageDataResource?: LigandImageData;
 }
 
 export type PdbId = string;
 
 export interface Emdb {
     id: EmdbId;
+    emv?: EMValidations;
 }
 
 export type EmdbId = string;
 
-type PdbEntity = "pdb" | "emdb" | "uniprot";
+export interface StatsValidation {
+    unit: "Angstrom";
+    rank: number;
+    resolutionMedian: number;
+    quartile25: number;
+    quartile75: number;
+    warnings?: string[];
+    errors?: string[];
+}
+
+export interface EMValidations {
+    stats: Maybe<StatsValidation>;
+    // deepres: {};
+    // monores: {};
+    // blocres: {};
+    // mapq: {};
+    // fscq: {};
+    // daq: {};
+}
+
+type PdbEntity = "pdb" | "emdb" | "uniprot" | "geneBank";
 
 export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
     switch (entity) {
@@ -58,6 +87,14 @@ export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
         case "uniprot": {
             const proteinId = pdb.protein.id.toUpperCase();
             return [{ name: proteinId, url: `https://www.uniprot.org/uniprot/${proteinId}` }];
+        }
+        case "geneBank": {
+            return pdb.protein.genBank
+                ? pdb.protein.genBank?.map(id => ({
+                      name: id ?? "-",
+                      url: `https://www.ncbi.nlm.nih.gov/gene/${id}`,
+                  }))
+                : [];
         }
     }
 }

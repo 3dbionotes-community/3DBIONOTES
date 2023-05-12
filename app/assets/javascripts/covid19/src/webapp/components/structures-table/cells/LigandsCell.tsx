@@ -1,18 +1,26 @@
+import _ from "lodash";
 import React from "react";
-import i18n from "../../../../utils/i18n";
+import styled from "styled-components";
+import { BadgeLigands, OnClickIDR } from "../badge/BadgeLigands";
 import { CellProps, styles } from "../Columns";
 import { Link } from "../Link";
 import { Wrapper } from "./Wrapper";
+import { getValidationSource } from "../../../../domain/entities/Covid19Info";
+import { HtmlTooltip } from "../HtmlTooltip";
+import i18n from "../../../../utils/i18n";
 
-export const LigandsCell: React.FC<CellProps> = React.memo(props => {
-    const { row, onClickDetails, moreDetails } = props;
+export interface LigandsCellProps extends CellProps {
+    onClickIDR?: OnClickIDR;
+}
+
+export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
+    const { row, onClickDetails, onClickIDR, moreDetails = true, validationSources } = props;
 
     const ligands = React.useMemo(() => {
         return row.ligands.map(ligand => {
             return {
-                id: ligand.id,
+                ...ligand,
                 url: ligand.externalLink,
-                name: ligand.name,
                 tooltip: (
                     <React.Fragment>
                         <div>
@@ -37,6 +45,43 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
         });
     }, [row.ligands]);
 
+    const idrValidationSource = React.useMemo(
+        () => getValidationSource(validationSources ?? [], "IDR"),
+        [validationSources]
+    );
+
+    const idrTooltip = React.useMemo(
+        () =>
+            idrValidationSource ? (
+                <div>
+                    {idrValidationSource.methods.map(method => (
+                        <>
+                            {idrValidationSource.methods.length > 1 ? (
+                                <strong>
+                                    {i18n.t(`{{methodName}} Method: `, {
+                                        nsSeparator: false,
+                                        methodName: method.name,
+                                    })}
+                                </strong>
+                            ) : (
+                                <strong>{i18n.t("Method: ", { nsSeparator: false })}</strong>
+                            )}
+                            <span>{method.description}</span>
+                            <br />
+                            <br />
+                        </>
+                    ))}
+                    {idrValidationSource.description && (
+                        <>
+                            <strong>{i18n.t("Source: ", { nsSeparator: false })}</strong>
+                            <span>{idrValidationSource.description}</span>
+                        </>
+                    )}
+                </div>
+            ) : undefined,
+        [idrValidationSource]
+    );
+
     return (
         <Wrapper
             onClickDetails={onClickDetails}
@@ -44,14 +89,45 @@ export const LigandsCell: React.FC<CellProps> = React.memo(props => {
             row={row}
             field="ligands"
         >
-            {ligands.map(ligand => (
-                <Link
-                    key={ligand.id}
-                    tooltip={ligand.tooltip}
-                    url={ligand.url}
-                    text={`${ligand.name} (${ligand.id})`}
-                />
-            ))}
+            {_(ligands)
+                .sortBy(ligand => (ligand.hasIDR ? 0 : 1))
+                .map(ligand => {
+                    return (
+                        <LigandItem key={ligand.id} moreDetails={moreDetails}>
+                            <Link
+                                tooltip={ligand.tooltip}
+                                url={ligand.url}
+                                text={`${ligand.name} (${ligand.id})`}
+                            />
+                            {ligand.hasIDR && row.pdb?.id && idrTooltip && (
+                                <HtmlTooltip title={idrTooltip}>
+                                    <span>
+                                        <BadgeLigands
+                                            pdbId={row.pdb.id}
+                                            ligand={ligand}
+                                            onClick={onClickIDR}
+                                            moreDetails={moreDetails}
+                                        />
+                                    </span>
+                                </HtmlTooltip>
+                            )}
+                        </LigandItem>
+                    );
+                })
+                .value()}
         </Wrapper>
     );
 });
+
+const LigandItem = styled.div<{ moreDetails?: boolean }>`
+    ${props => (props.moreDetails ? "" : "display: flex; align-items: center;")}
+    li {
+        text-align: left;
+    }
+    p {
+        margin-top: 0;
+        text-align: left;
+        display: ${props => (props.moreDetails ? "inherit" : "inline-flex")};
+        margin-right: ${props => (props.moreDetails ? "0" : "0.5em")};
+    }
+`;

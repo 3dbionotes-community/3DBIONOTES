@@ -47,7 +47,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     const runModelSearchAction = React.useCallback<ModelSearchProps["onSelect"]>(
         (action, item) => {
             const newSelection = runAction(selection, action, item);
-            sendAnalytics({ type: "event", category: "viewer_search_menu", action: action });
+            sendAnalytics(action, { type: "viewer_search_menu", item: item.id });
             onSelectionChange(newSelection);
             closeSearch();
         },
@@ -56,10 +56,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
 
     const openSearchWithAnalytics = React.useCallback(() => {
         openSearch();
-        sendAnalytics({
-            type: "event",
-            category: "dialog",
-            action: "open",
+        sendAnalytics("open_dialog", {
             label: "Search",
         });
     }, [openSearch]);
@@ -93,18 +90,6 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                             )}
                         </>
                     )}
-
-                    <button onClick={openSearchWithAnalytics}>
-                        <Search />
-                    </button>
-
-                    {isSearchOpen && (
-                        <ModelSearch
-                            title={i18n.t("Select or append a new model")}
-                            onClose={closeSearch}
-                            onSelect={runModelSearchAction}
-                        />
-                    )}
                 </div>
 
                 <div className="selection">
@@ -122,9 +107,20 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
             </div>
 
             <div className="selectors">
+                <button onClick={openSearchWithAnalytics}>
+                    <Search />
+                </button>
                 <Dropdown {...chainDropdownProps} showExpandIcon />
                 <Dropdown {...ligandsDropdownProps} showExpandIcon />
             </div>
+
+            {isSearchOpen && (
+                <ModelSearch
+                    title={i18n.t("Select or append a new model")}
+                    onClose={closeSearch}
+                    onSelect={runModelSearchAction}
+                />
+            )}
         </div>
     );
 };
@@ -164,7 +160,7 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
     return { text, items, onClick: setChain };
 }
 
-function getSelectedChain(pdbInfo: PdbInfo | undefined, selection: Selection) {
+export function getSelectedChain(pdbInfo: PdbInfo | undefined, selection: Selection) {
     const chains = pdbInfo?.chains || [];
     const selectedChain = chains.find(chain => chain.chainId === selection.chainId) || chains[0];
     return selectedChain;
