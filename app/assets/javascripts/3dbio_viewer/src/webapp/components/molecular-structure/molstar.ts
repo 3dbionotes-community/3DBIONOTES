@@ -3,10 +3,11 @@ import { StructureProperties as Props } from "molstar/lib/mol-model/structure";
 import { StateTransform } from "molstar/lib/mol-state/transform";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
 import { PluginContext } from "molstar/lib/mol-plugin/context";
-import { getMainPdbId, Selection } from "../../view-models/Selection";
+import { DbItem, getMainPdbId, Selection } from "../../view-models/Selection";
 import { Maybe } from "../../../utils/ts-utils";
 import { buildLigand, Ligand } from "../../../domain/entities/Ligand";
 import { StateObjectCell } from "molstar/lib/mol-state/object";
+import { debugVariable } from "../../../utils/debug";
 
 function getCellsWithPath(molstarPlugin: PluginContext) {
     const cells = Array.from(molstarPlugin.state.data.cells.values());
@@ -92,9 +93,9 @@ export function getLigands(pdbePlugin: PDBeMolstarPlugin, newSelection: Selectio
     return ligands;
 }
 
-export async function loadEmdb(pdbePlugin: PDBeMolstarPlugin, emdbId: string) {
+export async function loadEmdb(pdbePlugin: PDBeMolstarPlugin, url: string) {
     await pdbePlugin.loadEmdbFromUrl({
-        url: `https://maps.rcsb.org/em/${emdbId}/cell?detail=3`,
+        url: url,
         isBinary: true,
         format: "dscif",
     });
@@ -122,7 +123,7 @@ function findNode(
     }
 }
 
-function buildRootNode(plugin: PDBeMolstarPlugin): CellNode | undefined {
+export function buildRootNode(plugin: PDBeMolstarPlugin): CellNode | undefined {
     const cells = Array.from(plugin.state.cells.values());
     const cellsByRef = _.keyBy(cells, cells => cells.transform.ref);
     const rootCell = cellsByRef[StateTransform.RootRef];
@@ -135,11 +136,11 @@ function buildRootNode(plugin: PDBeMolstarPlugin): CellNode | undefined {
 
     function buildNode(cell: StateObjectCell): CellNode {
         const childrenCells = cellsGroupedByParentRef[cell.transform.ref] || [];
-        const children = childrenCells.map(cell => buildNode(cell));
+        const children = childrenCells.map(cell => buildNode(cell as any));
         return { ref: cell.transform.ref, cell, children };
     }
 
-    return buildNode(rootCell);
+    return buildNode(rootCell as any);
 }
 
 export function setEmdbOpacity(options: { plugin: PDBeMolstarPlugin; id: string; value: number }) {
@@ -154,3 +155,28 @@ export function setEmdbOpacity(options: { plugin: PDBeMolstarPlugin; id: string;
     const valuesUpdated = _.set(_.cloneDeep(values), "type.params.alpha", value);
     plugin.plugin.state.updateTransform(plugin.state, surface.ref, valuesUpdated);
 }
+
+export function getCurrentItems(plugin: PDBeMolstarPlugin) {
+    const rootNode = buildRootNode(plugin);
+    const currentItems = _(rootNode?.children || [])
+        .map(
+            (node): Maybe<DbItem & { ref: string }> => {
+                const label = node.cell.obj?.label;
+                const { isHidden } = node.cell.state;
+
+                const pdbId = label?.match(/\/v1\/([\w-]+)\//)?.[1];
+                const emdbId = label?.match(/\/em\/([\w-]+)\//)?.[1];
+                return pdbId
+                    ? { type: "pdb" as const, id: pdbId, visible: !isHidden, ref: node.ref }
+                    : emdbId
+                    ? { type: "emdb" as const, id: emdbId, visible: !isHidden, ref: node.ref }
+                    : undefined;
+            }
+        )
+        .compact()
+        .value();
+
+    return currentItems;
+}
+
+debugVariable({ buildRootNode });

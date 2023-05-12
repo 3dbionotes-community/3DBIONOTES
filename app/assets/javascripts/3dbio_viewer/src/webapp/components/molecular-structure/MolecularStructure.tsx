@@ -18,7 +18,7 @@ import {
 import { debugVariable, isDebugMode } from "../../../utils/debug";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
-import { getCurrentItems, getLigands, loadEmdb, removeDuplicates, setEmdbOpacity } from "./molstar";
+import { getCurrentItems, getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
 import { Ligand } from "../../../domain/entities/Ligand";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
@@ -133,7 +133,6 @@ function usePdbePlugin(options: MolecularStructureProps) {
                 plugin.events.loadComplete.subscribe(loaded => {
                     hideLoading();
                     console.debug("molstar.events.loadComplete", loaded);
-                    removeDuplicates(plugin);
                     if (loaded) setPluginLoad(new Date());
                     // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
                     window.dispatchEvent(new Event("resize"));
@@ -277,8 +276,8 @@ async function applySelectionChangesToPlugin(
     setTitle: (title: string) => void,
     hideLoading: () => void
 ): Promise<void> {
-    //const currentItems = getCurrentItems(plugin);
-    const currentItems = getItems(currentSelection);
+    const currentItems = getCurrentItems(plugin);
+    //const currentItems = getItems(currentSelection);
     const newItems = getItems(newSelection);
 
     const { added, removed, updated } = diffDbItems(newItems, currentItems);

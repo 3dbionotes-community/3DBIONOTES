@@ -151,7 +151,7 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
         [pdbInfo]
     );
 
-    const selectedChain = getSelectedChain(pdbInfo, selection);
+    const selectedChain = getSelectedChain(pdbInfo?.chains, selection);
 
     const text = selectedChain
         ? `${i18n.t("Chain")}: ${selectedChain.shortName}`
@@ -160,10 +160,8 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
     return { text, items, selected: selectedChain?.chainId, onClick: setChain };
 }
 
-export function getSelectedChain(pdbInfo: PdbInfo | undefined, selection: Selection) {
-    const chains = pdbInfo?.chains || [];
-    const selectedChain = chains.find(chain => chain.chainId === selection.chainId); // || chains[0];
-    return selectedChain;
+export function getSelectedChain(chains: PdbInfo["chains"] | undefined, selection: Selection) {
+    return chains?.find(chain => chain.chainId === selection.chainId) || chains?.[0];
 }
 
 function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
@@ -177,7 +175,7 @@ function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
         [selection, onSelectionChange, pdbInfo]
     );
 
-    const selectedChain = getSelectedChain(pdbInfo, selection);
+    const selectedChain = getSelectedChain(pdbInfo?.chains, selection);
 
     const items: DropdownProps["items"] = React.useMemo(() => {
         return pdbInfo?.ligands

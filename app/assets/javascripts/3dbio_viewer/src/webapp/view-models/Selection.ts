@@ -61,7 +61,7 @@ export interface WithVisibility<T> {
 export interface DbItem {
     type: Type;
     id: string;
-    visible: boolean;
+    visible: boolean | undefined;
 }
 
 export function getItemSelector(item: DbItem): Selector {
