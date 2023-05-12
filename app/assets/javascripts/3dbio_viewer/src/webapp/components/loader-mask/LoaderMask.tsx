@@ -1,6 +1,6 @@
 import React from "react";
-import { Backdrop, CircularProgress } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Backdrop, CircularProgress, makeStyles } from "@material-ui/core";
+import styled from "styled-components";
 
 interface LoaderProps {
     open: boolean;
@@ -13,8 +13,10 @@ export const LoaderMask: React.FC<LoaderProps> = React.memo(props => {
 
     return (
         <Backdrop className={classes.backdrop} open={open}>
-            <CircularProgress />
-            {title && <div>{title}</div>}
+            <Container>
+                <CircularProgress />
+                {title && <p className={classes.title}>{title}</p>}
+            </Container>
         </Backdrop>
     );
 });
@@ -23,5 +25,23 @@ const useStyles = makeStyles(theme => ({
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
         color: "#fff",
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+    },
+    title: {
+        fontWeight: "bold",
+        fontSize: "1em",
     },
 }));
+
+const Container = styled.div`
+    & {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & .MuiCircularProgress-colorPrimary {
+        color: #fff !important;
+    }
+`;
