@@ -18,7 +18,7 @@ import {
 import { debugVariable, isDebugMode } from "../../../utils/debug";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
-import { getCurrentItems, getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
+import { getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
 import { Ligand } from "../../../domain/entities/Ligand";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
@@ -29,6 +29,7 @@ import i18n from "../../utils/i18n";
 import "./molstar.css";
 import "./molstar-light.css";
 import { getSelectedChain } from "../viewer-selector/ViewerSelector";
+import { MolstarState, MolstarStateActions } from "./MolstarState";
 
 declare global {
     interface Window {
@@ -83,6 +84,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const [pdbePlugin0, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
     const [pluginLoad, setPluginLoad] = React.useState<Date>();
     const pdbePlugin = pdbePlugin0 && pluginLoad ? pdbePlugin0 : undefined;
+    const molstarState = React.useRef<MolstarState>({ type: "pdb", items: [], chainId: undefined });
+    debugVariable({ molstarState });
 
     // Keep a reference containing the previous value of selection. We need this value to diff
     // the new state against the old state and perform imperative operations (add/remove/update)
@@ -101,7 +104,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         }
 
         setVisibilityForSelection(pdbePlugin, newSelection);
-        highlight(pdbePlugin, chains, newSelection);
+        highlight(pdbePlugin, chains, newSelection, molstarState);
     }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection, chains]);
 
     const pluginRef = React.useCallback(
@@ -124,6 +127,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
             if (pluginAlreadyRendered) {
                 setTitle(i18n.t("Loading..."));
                 showLoading();
+                molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
                 await plugin.visual.update(initParams);
             } else if (!mainPdb && emdbId) {
                 compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
@@ -139,6 +143,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                 });
 
                 plugin.render(element, initParams);
+                molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
             }
 
             setPdbePlugin(plugin);
@@ -164,6 +169,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             applySelectionChangesToPlugin(
                 pdbePlugin,
+                molstarState,
                 chains,
                 currentSelection,
                 newSelection,
@@ -269,6 +275,7 @@ function setVisibility(plugin: PDBeMolstarPlugin, item: DbItem) {
 
 async function applySelectionChangesToPlugin(
     plugin: PDBeMolstarPlugin,
+    molstarState: MolstarStateRef,
     chains: Maybe<PdbInfo["chains"]>,
     currentSelection: Selection,
     newSelection: Selection,
@@ -276,18 +283,19 @@ async function applySelectionChangesToPlugin(
     setTitle: (title: string) => void,
     hideLoading: () => void
 ): Promise<void> {
-    const currentItems = getCurrentItems(plugin);
-    //const currentItems = getItems(currentSelection);
+    if (molstarState.current.type !== "pdb") return;
+
+    const oldItems = () => (molstarState.current.type === "pdb" ? molstarState.current.items : []);
     const newItems = getItems(newSelection);
 
-    const { added, removed, updated } = diffDbItems(newItems, currentItems);
+    const { added, removed, updated } = diffDbItems(newItems, oldItems());
 
     const pdbs = added.filter(item => item.type === "pdb");
     const emdbs = added.filter(item => item.type === "emdb");
 
     console.debug(
         "Update molstar:",
-        _({ currentItems, added, removed, updated })
+        _({ oldItems: oldItems(), added, removed, updated })
             .mapValues(objs => objs.map(obj => obj.id).join(", "))
             .pickBy()
             .value()
@@ -295,10 +303,18 @@ async function applySelectionChangesToPlugin(
 
     for (const item of removed) {
         plugin.visual.remove(getItemSelector(item));
+        molstarState.current = MolstarStateActions.updateItems(
+            molstarState.current,
+            _.differenceBy(oldItems(), [item], getId)
+        );
     }
 
     for (const item of updated) {
         setVisibility(plugin, item);
+        molstarState.current = MolstarStateActions.updateItems(
+            molstarState.current,
+            oldItems().map(item_ => (item_.id === item.id ? item : item_))
+        );
     }
 
     if (pdbs.length > 0 || emdbs.length > 0) showLoading();
@@ -311,6 +327,10 @@ async function applySelectionChangesToPlugin(
             const loadParams = { url, format: "mmcif", isBinary: false, assemblyId: "1" };
             if (pdbs.length > 1) setTitle(i18n.t(`Loading PDB (${i + 1}/${pdbs.length})...`));
             else setTitle(i18n.t("Loading PDB..."));
+            molstarState.current = MolstarStateActions.updateItems(
+                molstarState.current,
+                _.unionBy(oldItems(), [item], getId)
+            );
             await plugin.load(loadParams, false);
             setVisibility(plugin, item);
         }
@@ -321,6 +341,10 @@ async function applySelectionChangesToPlugin(
         if (item) {
             if (emdbs.length > 1) setTitle(i18n.t(`Loading EMDB (${i + 1}/${emdbs.length})...`));
             else setTitle(i18n.t("Loading EMDB..."));
+            molstarState.current = MolstarStateActions.updateItems(
+                molstarState.current,
+                _.unionBy(oldItems(), [item], getId)
+            );
             await loadEmdb(plugin, urls.emdb(item.id));
             setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
             setVisibility(plugin, item);
@@ -330,7 +354,7 @@ async function applySelectionChangesToPlugin(
     if (pdbs.length > 0 || emdbs.length > 0) hideLoading();
 
     if (newSelection.chainId !== currentSelection.chainId) {
-        highlight(plugin, chains, newSelection);
+        highlight(plugin, chains, newSelection, molstarState);
     }
 
     plugin.visual.reset({ camera: true });
@@ -339,13 +363,17 @@ async function applySelectionChangesToPlugin(
 async function highlight(
     plugin: PDBeMolstarPlugin,
     chains: Maybe<PdbInfo["chains"]>,
-    selection: Selection
+    selection: Selection,
+    molstarState: MolstarStateRef
 ): Promise<void> {
     plugin.visual.clearSelection().catch(_err => {});
     const ligandsView = getLigandView(selection);
     if (ligandsView) return;
 
     const chain = getSelectedChain(chains, selection);
+    const chainId = selection.chainId;
+    molstarState.current = MolstarStateActions.setChain(molstarState.current, chainId);
+
     if (!chain) return;
 
     try {
@@ -404,4 +432,10 @@ function getLigandView(selection: Selection): LigandView | undefined {
         auth_seq_id: parseInt(position),
         label_comp_id: component,
     };
+}
+
+type MolstarStateRef = React.MutableRefObject<MolstarState>;
+
+function getId<T extends { id: string }>(obj: T): string {
+    return obj.id;
 }
