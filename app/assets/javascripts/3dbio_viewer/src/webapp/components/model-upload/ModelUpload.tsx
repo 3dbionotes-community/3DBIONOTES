@@ -11,6 +11,8 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import { LoaderMask } from "../loader-mask/LoaderMask";
 import { StructureMappingUpload } from "./StructureMappingUpload";
 import { ErrorMessage } from "../error-message/ErrorMessage";
+import { StyledButton } from "../../training-app/components/action-button/ActionButton";
+import { recordOfStyles } from "../../../utils/ts-utils";
 
 export interface ModelUploadProps {
     title: string;
@@ -123,9 +125,17 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
 
                     {error && <ErrorMessage message={error} />}
 
-                    <button className="uploadSubmit" onClick={submit}>
-                        {i18n.t("Submit")}
-                    </button>
+                    <div style={dialogStyles.actionButtons}>
+                        <StyledButton
+                            className="uploadSubmit"
+                            type="submit"
+                            onClick={submit}
+                            style={dialogStyles.submitButton}
+                        >
+                            {i18n.t("Submit")}
+                        </StyledButton>
+                    </div>
+
                     {open && (
                         <LoaderMask open={open} title={i18n.t("Uploading Atomic Structure...")} />
                     )}
@@ -141,4 +151,15 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
             ) : null}
         </>
     );
+});
+
+const dialogStyles = recordOfStyles({
+    actionButtons: {
+        textAlign: "right",
+    },
+    submitButton: {
+        marginTop: "1.5em",
+        marginBottom: 0,
+        fontSize: "1em",
+    },
 });

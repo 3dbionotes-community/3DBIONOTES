@@ -5,7 +5,7 @@ import i18n from "../../utils/i18n";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
 import "./AnnotationsTool.css";
-import { isElementOfUnion } from "../../../utils/ts-utils";
+import { isElementOfUnion, recordOfStyles } from "../../../utils/ts-utils";
 import { ErrorMessage } from "../error-message/ErrorMessage";
 import {
     AnnotationIndex,
@@ -17,6 +17,7 @@ import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { TooltipTypography } from "../HtmlTooltip";
 import { DialogTitleHelp } from "../DialogTitleHelp";
+import { StyledButton } from "../../training-app/components/action-button/ActionButton";
 
 export interface AnnotationsToolProps {
     onClose(): void;
@@ -250,14 +251,17 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                         ></Dropzone>
                         {error && <ErrorMessage message={error} />}
 
-                        <button
-                            className="submitButton"
-                            type="submit"
-                            onClick={uploadAnnotationFile}
-                            disabled={isLoading}
-                        >
-                            {i18n.t("Upload")}
-                        </button>
+                        <div style={dialogStyles.actionButtons}>
+                            <StyledButton
+                                className="submitButton"
+                                type="submit"
+                                onClick={uploadAnnotationFile}
+                                disabled={isLoading}
+                                style={dialogStyles.submitButton}
+                            >
+                                {i18n.t("Submit")}
+                            </StyledButton>
+                        </div>
 
                         {isLoading && <CircularProgress style={{ marginLeft: 20 }} size={20} />}
                     </>
@@ -277,6 +281,17 @@ const Form: React.FC<{ isDisabled: boolean }> = props => {
         </form>
     );
 };
+
+const dialogStyles = recordOfStyles({
+    actionButtons: {
+        textAlign: "right",
+    },
+    submitButton: {
+        marginTop: "1.5em",
+        marginBottom: 0,
+        fontSize: "1em",
+    },
+});
 
 function getInitialAnnotationForm(): AnnotationWithTrack {
     return {
