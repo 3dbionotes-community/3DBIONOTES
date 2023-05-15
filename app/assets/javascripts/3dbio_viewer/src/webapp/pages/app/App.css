@@ -38,6 +38,7 @@ header {
 
 #viewer {
     display: flex;
+    /* height: 100vh; */
     height: calc(100vh - 85px);
 }
 
@@ -53,4 +54,12 @@ header {
 
 .contents {
     margin-bottom: 10px;
+}
+
+.MuiPaper-root {
+    background-color: inherit !important;
+}
+
+.MuiDialogContent-root {
+    background-color: #fff;
 }
