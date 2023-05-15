@@ -23,7 +23,7 @@ export const FrameViewer = React.forwardRef<HTMLIFrameElement, FrameViewerProps>
 
     const titleHeight = React.useMemo(() => {
         return titleRef.current ? titleRef.current?.getBoundingClientRect().height : undefined;
-    }, [titleRef.current]);
+    }, []);
 
     return (
         <StyledWrapperAccordion className="frame-viewer" titleHeight={titleHeight}>

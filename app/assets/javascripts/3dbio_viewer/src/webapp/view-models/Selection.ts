@@ -61,7 +61,7 @@ export interface WithVisibility<T> {
 export interface DbItem {
     type: Type;
     id: string;
-    visible: boolean;
+    visible: boolean | undefined;
 }
 
 export function getItemSelector(item: DbItem): Selector {
@@ -206,7 +206,8 @@ export function setSelectionChain(selection: Selection, chainId: string): Select
     return { ...selection, chainId, ligandId: undefined };
 }
 
-export function setSelectionLigand(selection: Selection, ligand: Ligand): Selection {
+export function setSelectionLigand(selection: Selection, ligand: Maybe<Ligand>): Selection {
+    if (!ligand) return { ...selection, ligandId: undefined };
     const chainId = ligand.shortChainId;
     return { ...selection, chainId, ligandId: ligand.shortId };
 }
@@ -316,5 +317,9 @@ export function getMainChanges(
 }
 
 export function getSelectedLigand(selection: Selection, pdbInfo: Maybe<PdbInfo>) {
-    return pdbInfo?.ligands.find(ligand => ligand.shortId === selection.ligandId);
+    const chainId = selection.chainId || pdbInfo?.chains[0]?.chainId;
+
+    return pdbInfo?.ligands.find(ligand => {
+        return ligand.shortChainId === chainId && ligand.shortId == selection.ligandId;
+    });
 }
