@@ -59,7 +59,7 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
     const showPlateTooltip = React.useCallback(
         () =>
             !tooltipTransitioning &&
-            showTooltip(plateRef.current, { type: "plate", subtitle: plate.name, plate }, "top"),
+            showTooltip(plateRef.current, { type: "plate", subtitle: plate.name, plate }),
         [plate, showTooltip, tooltipTransitioning]
     );
 
@@ -90,10 +90,12 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
                         <ClipPathCircles />
                     </clipPath>
                 </defs>
-                <PlateBackground ref={plateRef} onMouseEnter={showPlateTooltip} />
-                <LeftColumn />
-                <TopRow />
-                <path className="grid" d={wellsD} />
+                <g onMouseEnter={showPlateTooltip}>
+                    <PlateBackground ref={plateRef} />
+                    <LeftColumn />
+                    <TopRow />
+                    <path className="grid" d={wellsD} />
+                </g>
                 <g className="highlight-wells">
                     {wells
                         .filter(({ well: _well, type }) => type === "well")
@@ -125,9 +127,8 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
             <div style={displayTooltipStyle}>
                 <HtmlTooltip
                     PopperProps={{
-                        disablePortal: true,
+                        disablePortal: false,
                         anchorEl: anchorEl,
-                        keepMounted: true,
                     }}
                     onClose={hideTooltip}
                     open={open}
@@ -147,12 +148,11 @@ export const SVGPlate: React.FC<SVGPlateProps> = React.memo(({ plate, idx }) => 
 
 interface PlateBackgroundProps {
     tooltipPlacement?: TooltipProps["placement"];
-    onMouseEnter: () => void;
 }
 
 const PlateBackground = React.forwardRef<SVGGElement | null, PlateBackgroundProps>((props, ref) => {
     return (
-        <g ref={ref} onMouseOverCapture={props.onMouseEnter}>
+        <g ref={ref}>
             <image width="2122" height="1509" transform="scale(.24)" xlinkHref={plateShadowImage} />
             <path className="plate-background" d={backgroundPlateD} />
             <path className="fill-b9b9b9" d={outerLineD} />
@@ -375,6 +375,9 @@ const TooltipContainer = styled.div`
     max-width: 300px;
     & .MuiTypography-h6 {
         font-size: 1em;
+        color: rgb(0, 188, 212);
+        line-height: 1 !important;
+        margin-right: 0.5rem;
     }
     ul {
         font-family: inherit;
