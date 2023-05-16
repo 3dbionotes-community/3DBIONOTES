@@ -30,6 +30,7 @@ import "./molstar.css";
 import "./molstar-light.css";
 import { getSelectedChain } from "../viewer-selector/ViewerSelector";
 import { MolstarState, MolstarStateActions } from "./MolstarState";
+import { LoadParams } from "@3dbionotes/pdbe-molstar/lib/helpers";
 
 declare global {
     interface Window {
@@ -134,12 +135,18 @@ function usePdbePlugin(options: MolecularStructureProps) {
                     setSelection(setMainPdb(newSelection, pdbId));
                 }, console.error);
             } else {
-                plugin.events.loadComplete.subscribe(loaded => {
-                    hideLoading();
-                    console.debug("molstar.events.loadComplete", loaded);
-                    if (loaded) setPluginLoad(new Date());
-                    // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
-                    window.dispatchEvent(new Event("resize"));
+                plugin.events.loadComplete.subscribe({
+                    next: loaded => {
+                        hideLoading();
+                        console.debug("molstar.events.loadComplete", loaded);
+                        if (loaded) setPluginLoad(new Date());
+                        // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
+                        window.dispatchEvent(new Event("resize"));
+                    },
+                    error: err => {
+                        hideLoading();
+                        console.error(err);
+                    },
                 });
 
                 plugin.render(element, initParams);
@@ -324,15 +331,21 @@ async function applySelectionChangesToPlugin(
         if (item) {
             const pdbId: string = item.id;
             const url = urls.pdb(pdbId);
-            const loadParams = { url, format: "mmcif", isBinary: false, assemblyId: "1" };
+            const loadParams: LoadParams = {
+                url,
+                format: "mmcif",
+                isBinary: false,
+                assemblyId: "1",
+            };
             if (pdbs.length > 1) setTitle(i18n.t(`Loading PDB (${i + 1}/${pdbs.length})...`));
             else setTitle(i18n.t("Loading PDB..."));
+            await plugin.load(loadParams, false);
+            setVisibility(plugin, item);
+
             molstarState.current = MolstarStateActions.updateItems(
                 molstarState.current,
                 _.unionBy(oldItems(), [item], getId)
             );
-            await plugin.load(loadParams, false);
-            setVisibility(plugin, item);
         }
     }
 
@@ -439,4 +452,19 @@ type MolstarStateRef = React.MutableRefObject<MolstarState>;
 
 function getId<T extends { id: string }>(obj: T): string {
     return obj.id;
+}
+
+async function _checkPdbModelUrl(pdbId: Maybe<string>): Promise<boolean> {
+    if (!pdbId) return true;
+
+    const url = urls.pdb(pdbId);
+    const res = await fetch(url, { method: "HEAD" });
+
+    if (res.ok) {
+        return true;
+    } else {
+        const msg = `Error loading PDB model: url=${url} - ${res.status}`;
+        console.error(msg);
+        return false;
+    }
 }
