@@ -42,7 +42,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         [blocksVisibility]
     );
 
-    const selectedChain = React.useMemo(() => getSelectedChain(pdbInfo, selection), [
+    const selectedChain = React.useMemo(() => getSelectedChain(pdbInfo?.chains, selection), [
         pdbInfo,
         selection,
     ]);

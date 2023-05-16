@@ -9,15 +9,15 @@ import {
     getItems,
     getItemSelector,
     getMainChanges,
+    getMainEmdbId,
     getMainPdbId,
     Selection,
     setMainEmdb,
     setMainPdb,
 } from "../../view-models/Selection";
-import { debugVariable } from "../../../utils/debug";
+import { debugVariable, isDebugMode } from "../../../utils/debug";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
-import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
 import { Ligand } from "../../../domain/entities/Ligand";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
@@ -28,6 +28,8 @@ import { ProteinNetwork } from "../../../domain/entities/ProteinNetwork";
 import i18n from "../../utils/i18n";
 import "./molstar.css";
 import "./molstar-light.css";
+import { getSelectedChain } from "../viewer-selector/ViewerSelector";
+import { MolstarState, MolstarStateActions } from "./MolstarState";
 
 declare global {
     interface Window {
@@ -47,6 +49,11 @@ interface MolecularStructureProps {
     showLoading: () => void;
     hideLoading: () => void;
 }
+
+const urls = {
+    pdb: (id: string) => `https://www.ebi.ac.uk/pdbe/model-server/v1/${id}/full?encoding=cif`,
+    emdb: (id: string) => `https://maps.rcsb.org/em/${id}/cell?detail=3`,
+};
 
 export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
     const { pluginRef } = usePdbePlugin(props);
@@ -68,6 +75,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         onSelectionChange: setSelection,
         onLigandsLoaded,
         setTitle,
+        isLoading,
         showLoading,
         hideLoading,
     } = options;
@@ -76,6 +84,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const [pdbePlugin0, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
     const [pluginLoad, setPluginLoad] = React.useState<Date>();
     const pdbePlugin = pdbePlugin0 && pluginLoad ? pdbePlugin0 : undefined;
+    const molstarState = React.useRef<MolstarState>({ type: "pdb", items: [], chainId: undefined });
+    debugVariable({ molstarState });
 
     // Keep a reference containing the previous value of selection. We need this value to diff
     // the new state against the old state and perform imperative operations (add/remove/update)
@@ -83,16 +93,19 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const [prevSelectionRef, setPrevSelection] = useReference<Selection>();
 
     debugVariable({ pdbePlugin });
+    const chains = options.pdbInfo?.chains;
 
     React.useEffect(() => {
         if (!pluginLoad || !pdbePlugin) return;
-        const ligands = getLigands(pdbePlugin, newSelection) || [];
-        debugVariable({ ligands: ligands.length });
-        onLigandsLoaded(ligands);
+        if (!newSelection.ligandId) {
+            const ligands = getLigands(pdbePlugin, newSelection) || [];
+            debugVariable({ ligands: ligands.length });
+            onLigandsLoaded(ligands);
+        }
 
         setVisibilityForSelection(pdbePlugin, newSelection);
-        // highlight(pdbePlugin, newSelection);
-    }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection]);
+        highlight(pdbePlugin, chains, newSelection, molstarState);
+    }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection, chains]);
 
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
@@ -107,14 +120,22 @@ function usePdbePlugin(options: MolecularStructureProps) {
             const plugin = pdbePlugin || new window.PDBeMolstarPlugin();
             const initParams = getPdbePluginInitParams(plugin, newSelection);
             debugVariable({ pdbeMolstarPlugin: plugin });
+            const mainPdb = getMainPdbId(newSelection);
+            const emdbId = getMainEmdbId(newSelection);
 
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
             if (pluginAlreadyRendered) {
                 setTitle(i18n.t("Loading..."));
                 showLoading();
+                molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
                 await plugin.visual.update(initParams);
+            } else if (!mainPdb && emdbId) {
+                compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
+                    setSelection(setMainPdb(newSelection, pdbId));
+                }, console.error);
             } else {
                 plugin.events.loadComplete.subscribe(loaded => {
+                    hideLoading();
                     console.debug("molstar.events.loadComplete", loaded);
                     if (loaded) setPluginLoad(new Date());
                     // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
@@ -122,21 +143,34 @@ function usePdbePlugin(options: MolecularStructureProps) {
                 });
 
                 plugin.render(element, initParams);
+                molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
             }
 
             setPdbePlugin(plugin);
         },
-        [pdbePlugin, newSelection, prevSelectionRef, showLoading, setTitle]
+        [
+            pdbePlugin,
+            newSelection,
+            prevSelectionRef,
+            showLoading,
+            setTitle,
+            compositionRoot,
+            hideLoading,
+            setSelection,
+        ]
     );
 
     const updatePluginOnNewSelection = React.useCallback(() => {
         if (!pdbePlugin) return _.noop;
+        if (isLoading) return _.noop;
 
         function updateSelection(currentSelection: Selection, newSelection: Selection): void {
             if (!pdbePlugin) return;
 
             applySelectionChangesToPlugin(
                 pdbePlugin,
+                molstarState,
+                chains,
                 currentSelection,
                 newSelection,
                 showLoading,
@@ -159,16 +193,15 @@ function usePdbePlugin(options: MolecularStructureProps) {
         const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
 
         if (pdbId) {
-            return compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(emdbId => {
+            compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(emdbId => {
                 updateSelection(currentSelection, setMainEmdb(newSelection, emdbId));
             }, console.error);
         } else if (emdbId) {
-            return compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
+            compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
                 updateSelection(currentSelection, setMainPdb(newSelection, pdbId));
             }, console.error);
         } else {
             updateSelection(currentSelection, newSelection);
-            return _.noop;
         }
     }, [
         compositionRoot,
@@ -180,9 +213,11 @@ function usePdbePlugin(options: MolecularStructureProps) {
         showLoading,
         hideLoading,
         setTitle,
+        chains,
+        isLoading,
     ]);
 
-    const updatePluginOnNewSelectionEffect = useCallbackEffect(updatePluginOnNewSelection);
+    const updatePluginOnNewSelectionEffect = updatePluginOnNewSelection;
     React.useEffect(updatePluginOnNewSelectionEffect, [updatePluginOnNewSelectionEffect]);
 
     const uploadDataToken = newSelection.type === "uploadData" ? newSelection.token : undefined;
@@ -235,41 +270,67 @@ function setVisibilityForSelection(plugin: PDBeMolstarPlugin, selection: Selecti
 
 function setVisibility(plugin: PDBeMolstarPlugin, item: DbItem) {
     const selector = getItemSelector(item);
-    return plugin.visual.setVisibility(selector, item.visible);
+    return plugin.visual.setVisibility(selector, item.visible || false);
 }
 
 async function applySelectionChangesToPlugin(
     plugin: PDBeMolstarPlugin,
+    molstarState: MolstarStateRef,
+    chains: Maybe<PdbInfo["chains"]>,
     currentSelection: Selection,
     newSelection: Selection,
     showLoading: () => void,
     setTitle: (title: string) => void,
     hideLoading: () => void
 ): Promise<void> {
-    const oldItems = getItems(currentSelection);
+    if (molstarState.current.type !== "pdb") return;
+
+    const oldItems = () => (molstarState.current.type === "pdb" ? molstarState.current.items : []);
     const newItems = getItems(newSelection);
 
-    const { added, removed, updated } = diffDbItems(newItems, oldItems);
+    const { added, removed, updated } = diffDbItems(newItems, oldItems());
+
     const pdbs = added.filter(item => item.type === "pdb");
     const emdbs = added.filter(item => item.type === "emdb");
 
+    console.debug(
+        "Update molstar:",
+        _({ oldItems: oldItems(), added, removed, updated })
+            .mapValues(objs => objs.map(obj => obj.id).join(", "))
+            .pickBy()
+            .value()
+    );
+
     for (const item of removed) {
         plugin.visual.remove(getItemSelector(item));
+        molstarState.current = MolstarStateActions.updateItems(
+            molstarState.current,
+            _.differenceBy(oldItems(), [item], getId)
+        );
     }
 
     for (const item of updated) {
         setVisibility(plugin, item);
+        molstarState.current = MolstarStateActions.updateItems(
+            molstarState.current,
+            oldItems().map(item_ => (item_.id === item.id ? item : item_))
+        );
     }
 
     if (pdbs.length > 0 || emdbs.length > 0) showLoading();
+
     for (let i = 0; i < pdbs.length; i++) {
         const item = pdbs[i];
         if (item) {
             const pdbId: string = item.id;
-            const url = `https://www.ebi.ac.uk/pdbe/model-server/v1/${pdbId}/full?encoding=cif`;
+            const url = urls.pdb(pdbId);
             const loadParams = { url, format: "mmcif", isBinary: false, assemblyId: "1" };
             if (pdbs.length > 1) setTitle(i18n.t(`Loading PDB (${i + 1}/${pdbs.length})...`));
             else setTitle(i18n.t("Loading PDB..."));
+            molstarState.current = MolstarStateActions.updateItems(
+                molstarState.current,
+                _.unionBy(oldItems(), [item], getId)
+            );
             await plugin.load(loadParams, false);
             setVisibility(plugin, item);
         }
@@ -280,7 +341,11 @@ async function applySelectionChangesToPlugin(
         if (item) {
             if (emdbs.length > 1) setTitle(i18n.t(`Loading EMDB (${i + 1}/${emdbs.length})...`));
             else setTitle(i18n.t("Loading EMDB..."));
-            await loadEmdb(plugin, item.id);
+            molstarState.current = MolstarStateActions.updateItems(
+                molstarState.current,
+                _.unionBy(oldItems(), [item], getId)
+            );
+            await loadEmdb(plugin, urls.emdb(item.id));
             setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
             setVisibility(plugin, item);
         }
@@ -288,30 +353,43 @@ async function applySelectionChangesToPlugin(
 
     if (pdbs.length > 0 || emdbs.length > 0) hideLoading();
 
-    // if (newSelection.chainId !== currentSelection.chainId) {
-    //     highlight(plugin, newSelection);
-    // }
+    if (newSelection.chainId !== currentSelection.chainId) {
+        highlight(plugin, chains, newSelection, molstarState);
+    }
 
     plugin.visual.reset({ camera: true });
 }
 
-async function _highlight(_plugin: PDBeMolstarPlugin, _selection: Selection): Promise<void> {
-    // plugin.visual.clearSelection().catch(_err => {});
-    // console.log("times");
-    // const ligandsView = getLigandView(selection);
-    // if (ligandsView) return;
-    // // console.log(selection);
-    // return plugin.visual.select({
-    //     data: [
-    //         {
-    //             struct_asym_id: selection.chainId,
-    //             color: "#0000ff",
-    //             focus: true,
-    //             // 9B9BBE
-    //         },
-    //     ],
-    //     // nonSelectedColor: { r: 255, g: 255, b: 255 },
-    // });
+async function highlight(
+    plugin: PDBeMolstarPlugin,
+    chains: Maybe<PdbInfo["chains"]>,
+    selection: Selection,
+    molstarState: MolstarStateRef
+): Promise<void> {
+    plugin.visual.clearSelection().catch(_err => {});
+    const ligandsView = getLigandView(selection);
+    if (ligandsView) return;
+
+    const chain = getSelectedChain(chains, selection);
+    const chainId = selection.chainId;
+    molstarState.current = MolstarStateActions.setChain(molstarState.current, chainId);
+
+    if (!chain) return;
+
+    try {
+        await plugin.visual.select({
+            data: [
+                {
+                    struct_asym_id: chain.chainId,
+                    color: "#0000ff",
+                    focus: true,
+                },
+            ],
+            nonSelectedColor: { r: 255, g: 255, b: 255 },
+        });
+    } catch (err: any) {
+        console.error("highlight", err);
+    }
 }
 
 const colors = {
@@ -331,7 +409,8 @@ function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selec
         encoding: "cif",
         loadMaps: false,
         validationAnnotation: true,
-        hideControls: true,
+        hideControls: false,
+        showDebugPanels: isDebugMode(),
         superposition: false,
         domainAnnotation: true,
         expanded: false,
@@ -354,4 +433,10 @@ function getLigandView(selection: Selection): LigandView | undefined {
         auth_seq_id: parseInt(position),
         label_comp_id: component,
     };
+}
+
+type MolstarStateRef = React.MutableRefObject<MolstarState>;
+
+function getId<T extends { id: string }>(obj: T): string {
+    return obj.id;
 }
