@@ -7,6 +7,7 @@ import { profiles } from "../../../domain/entities/Profile";
 import { ProtvistaPdbValidation } from "./ProtvistaPdbValidation";
 import { IDRViewerBlock } from "../idr/IDRViewerBlock";
 import { FeatureAnnotationBlock } from "./FeatureAnnotationBlock";
+import { NMRBlock } from "../nmr/NMRBlock";
 
 export const blockDefs: BlockDef[] = [
     {
@@ -148,6 +149,16 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
         For this protein, we found \${ligandsAndSmallMoleculesCount} different ligands or small molecules.`),
         help: "",
         tracks: [tracks.structureCoverage, tracks.ligands],
+        profiles: [profiles.drugDesign, profiles.biomedicine],
+    },
+    {
+        id: "ligandInteraction2",
+        title: i18n.t("Ligand interaction"),
+        description: i18n.t(`
+        Text to be determined`),
+        help: "",
+        component: NMRBlock,
+        tracks: [tracks.structureCoverage, tracks.functionalMappingLigands],
         profiles: [profiles.drugDesign, profiles.biomedicine],
     },
     {
