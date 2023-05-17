@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import { BlockComponentProps } from "../protvista/Protvista.types";
-import { recordOfStyles } from "../../../utils/ts-utils";
+import { Maybe, recordOfStyles } from "../../../utils/ts-utils";
 import i18n from "../../utils/i18n";
 import { HtmlTooltip } from "../HtmlTooltip";
 
@@ -53,18 +53,32 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
 
         const [svgWidth, setSvgWidth] = React.useState(100);
         const [open, setOpen] = React.useState(false);
+        const [index, setIndex] = React.useState<Maybe<number>>(undefined);
         const [anchorEl, setAnchorEl] = React.useState<SVGTextElement | null>(null);
 
         const hideTooltip = React.useCallback(() => setOpen(false), []);
-        const showTooltip = React.useCallback(() => setOpen(true), []);
+        const showTooltip = React.useCallback((idx: number) => {
+            setOpen(true);
+            setIndex(idx);
+        }, []);
 
         const measuredWidth = React.useCallback((el: HTMLDivElement) => {
             if (el !== null) setSvgWidth(el.getBoundingClientRect().width);
         }, []);
 
-        const defineRectEl = React.useCallback((el: SVGTextElement) => {
-            if (el !== null) setAnchorEl(el);
-        }, []);
+        const ratiosRef = React.useMemo(
+            () =>
+                ratiosHardcode.map(ratio => ({
+                    ratio,
+                    ref: (idx: number) =>
+                        open && idx === index
+                            ? (el: SVGTextElement) => {
+                                  if (el !== null) setAnchorEl(el);
+                              }
+                            : null,
+                })),
+            [open, index]
+        );
 
         const height = React.useMemo(
             () => ratiosHardcode.length * (barHeight + 15) + topSpace + bottomSpace + topBarMargin,
@@ -106,23 +120,24 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
                                     y={height}
                                     fontWeight={700}
                                     textAnchor="middle"
-                                    ref={defineRectEl}
-                                    onMouseEnter={showTooltip}
-                                    onMouseLeave={hideTooltip}
                                 >
                                     {i18n.t("Number of Ligands")}
                                 </text>
-                                {ratiosHardcode.map((r, idx) => (
-                                    <RatioBar
-                                        key={idx}
-                                        idx={idx}
-                                        ratio={r.ratio}
-                                        total={r.total}
-                                        width={svgWidth}
-                                        title={"NSP" + idx}
-                                        ref={defineRectEl}
-                                    />
-                                ))}
+                                {ratiosRef.map(({ ratio: r, ref }, idx) => {
+                                    return (
+                                        <RatioBar
+                                            key={idx}
+                                            idx={idx}
+                                            ratio={r.ratio}
+                                            total={r.total}
+                                            width={svgWidth}
+                                            title={"NSP" + idx}
+                                            ref={ref(idx)}
+                                            showTooltip={() => showTooltip(idx)}
+                                            hideTooltip={hideTooltip}
+                                        />
+                                    );
+                                })}
                                 <path d={borders} stroke="#000" strokeWidth={1} />
                             </svg>
                         </div>
@@ -157,10 +172,12 @@ interface RatioBarProps {
     total: number;
     width: number;
     title: string;
+    showTooltip: () => void;
+    hideTooltip: () => void;
 }
 
 const RatioBar = React.forwardRef<SVGGElement | null, RatioBarProps>((props, ref) => {
-    const { idx, ratio, total, width, title } = props;
+    const { idx, ratio, total, width, title, showTooltip, hideTooltip } = props;
     const { barHeight, columnGap, rowGap, leftSpace, topSpace, topBarMargin } = svgProps;
 
     const availableWidth = React.useMemo(() => width - leftSpace, [width, leftSpace]);
@@ -207,7 +224,7 @@ const RatioBar = React.forwardRef<SVGGElement | null, RatioBarProps>((props, ref
     );
 
     return (
-        <g ref={ref}>
+        <g ref={ref} onMouseEnter={showTooltip} onMouseLeave={hideTooltip}>
             {ratio !== 0 && <Bar bar={leftBar} text={leftBarText} />}
             {ratio !== 1 && <Bar bar={rightBar} text={rightBarText} />}
             <text
