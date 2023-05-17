@@ -59,9 +59,9 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     React.useEffect(() => {
         if (pdbLoader.type === "loading") {
-            setLoadingTitle(i18n.t("Loading PDB data..."));
             showLoading();
-        } else {
+            setLoadingTitle(i18n.t("Loading PDB data..."));
+        } else if (pdbLoader.type === "loaded") {
             hideLoading();
         }
     }, [pdbLoader.type, showLoading, hideLoading]);
