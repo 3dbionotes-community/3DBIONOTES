@@ -4,6 +4,14 @@ import { BlockComponentProps } from "../protvista/Protvista.types";
 import { Maybe, recordOfStyles } from "../../../utils/ts-utils";
 import i18n from "../../utils/i18n";
 import { HtmlTooltip } from "../HtmlTooltip";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+} from "@material-ui/core";
 
 const ratiosHardcode = [
     {
@@ -105,7 +113,11 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
             <>
                 {true && (
                     <div style={styles.container}>
-                        <div ref={measuredWidth} style={styles.svgContainer}>
+                        <div
+                            ref={measuredWidth}
+                            style={styles.svgContainer}
+                            onMouseLeave={hideTooltip}
+                        >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox={`0 0 ${svgWidth + 1} ${height}`} //svgWidth + 1 because right stroke is on the middle of the pixel
@@ -134,7 +146,6 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
                                             title={"NSP" + idx}
                                             ref={ref(idx)}
                                             showTooltip={() => showTooltip(idx)}
-                                            hideTooltip={hideTooltip}
                                         />
                                     );
                                 })}
@@ -148,14 +159,15 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
                             perspiciatis soluta?
                         </p>
                         <HtmlTooltip
-                            PopperProps={{ anchorEl }}
-                            onClose={hideTooltip}
+                            PopperProps={{ disablePortal: true, anchorEl }}
                             open={open}
+                            onClose={hideTooltip}
                             disableFocusListener
                             disableHoverListener
                             disableTouchListener
                             title={tooltipContent}
                             placement={"top"}
+                            interactive
                         >
                             <span></span>
                         </HtmlTooltip>
@@ -173,11 +185,10 @@ interface RatioBarProps {
     width: number;
     title: string;
     showTooltip: () => void;
-    hideTooltip: () => void;
 }
 
 const RatioBar = React.forwardRef<SVGGElement | null, RatioBarProps>((props, ref) => {
-    const { idx, ratio, total, width, title, showTooltip, hideTooltip } = props;
+    const { idx, ratio, total, width, title, showTooltip } = props;
     const { barHeight, columnGap, rowGap, leftSpace, topSpace, topBarMargin } = svgProps;
 
     const availableWidth = React.useMemo(() => width - leftSpace, [width, leftSpace]);
@@ -224,7 +235,7 @@ const RatioBar = React.forwardRef<SVGGElement | null, RatioBarProps>((props, ref
     );
 
     return (
-        <g ref={ref} onMouseEnter={showTooltip} onMouseLeave={hideTooltip}>
+        <g ref={ref} onMouseEnter={showTooltip}>
             {ratio !== 0 && <Bar bar={leftBar} text={leftBarText} />}
             {ratio !== 1 && <Bar bar={rightBar} text={rightBarText} />}
             <text
@@ -274,7 +285,37 @@ interface TooltipContentProps {
 }
 
 const TooltipContent: React.FC<TooltipContentProps> = React.memo(({ ligands }) => {
-    return <p>c</p>;
+    return (
+        <TableContainer>
+            <Table size="small" aria-label="a dense table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell align="right">{i18n.t("Name")}</TableCell>
+                        <TableCell align="right">{i18n.t("SMILES")}</TableCell>
+                        <TableCell align="right">{i18n.t("InchiKey")}</TableCell>
+                        <TableCell align="right">{i18n.t("Formula")}</TableCell>
+                        <TableCell align="right">{i18n.t("PubChem_ID")}</TableCell>
+                        <TableCell align="right">{i18n.t("Target")}</TableCell>
+                        <TableCell align="right">{i18n.t("Result")}</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {/* {rows.map(row => (
+                        <TableRow key={row.name}>
+                            <TableCell component="th" scope="row">
+                                {row.name}
+                            </TableCell>
+                            <TableCell align="right">{row.calories}</TableCell>
+                            <TableCell align="right">{row.fat}</TableCell>
+                            <TableCell align="right">{row.carbs}</TableCell>
+                            <TableCell align="right">{row.protein}</TableCell>
+                        </TableRow>
+                    ))} */}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
 });
 
 const styles = recordOfStyles({
