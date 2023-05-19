@@ -245,16 +245,13 @@ export function buildDbItem(richId: string | undefined): DbItem | undefined {
 
     const [visible, id] = richId[0] === "!" ? [false, richId.slice(1)] : [true, richId];
 
-    let type: DbItem["type"];
     if (id.match(/^\d[\d\w]{3}$/)) {
-        type = "pdb";
-    } else if (id.match(/^EMD-\d+$/)) {
-        type = "emdb";
+        return { type: "pdb", id: id.toLowerCase(), visible };
+    } else if (id.match(/^EMD-\d+$/i)) {
+        return { type: "emdb", id: id.toUpperCase(), visible };
     } else {
         return;
     }
-
-    return { type, id, visible };
 }
 
 export function getItemParam(item: DbItem | undefined): string | undefined {
