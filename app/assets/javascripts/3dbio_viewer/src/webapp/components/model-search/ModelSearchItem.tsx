@@ -56,7 +56,7 @@ export const ModelSearchItem: React.FC<{
 
             <div className="id">
                 {item.id}
-                <HtmlTooltip title={description} style={tooltipStyles.icon}>
+                <HtmlTooltip title={description} style={tooltipStyles.icon} interactive>
                     <InfoIcon />
                 </HtmlTooltip>
             </div>
