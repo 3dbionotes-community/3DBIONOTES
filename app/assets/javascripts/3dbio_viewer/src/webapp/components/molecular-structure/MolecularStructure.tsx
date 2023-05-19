@@ -49,6 +49,7 @@ interface MolecularStructureProps {
     isLoading: boolean;
     showLoading: () => void;
     hideLoading: () => void;
+    setError: (message: string) => void;
 }
 
 const urls = {
@@ -63,9 +64,7 @@ export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
         <React.Fragment>
             <LoaderMask open={props.isLoading} title={props.title} />
 
-            <div ref={pluginRef} className="molecular-structure">
-                {i18n.t("Loading...")}
-            </div>
+            <div ref={pluginRef} className="molecular-structure"></div>
         </React.Fragment>
     );
 };
@@ -80,7 +79,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         showLoading,
         hideLoading,
     } = options;
-    const { proteinNetwork } = options;
+    const { proteinNetwork, setError } = options;
     const { compositionRoot } = useAppContext();
     const [pdbePlugin0, setPdbePlugin] = React.useState<PDBeMolstarPlugin>();
     const [pluginLoad, setPluginLoad] = React.useState<Date>();
@@ -153,7 +152,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
                     },
                 });
 
-                _checkPdbModelUrl(initParams.moleculeId).then(loaded => {
+                const pdbId = initParams.moleculeId;
+                checkPdbModelUrl(pdbId).then(loaded => {
                     if (loaded) {
                         plugin.render(element, initParams).then(() => {
                             showLoading();
@@ -165,9 +165,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
                             newSelection
                         );
                     } else {
-                        showLoading();
-                        setTitle("PDB not found...");
-                        console.error("PDB not found");
+                        hideLoading();
+                        setError(`PDB not found: ${pdbId}`);
                     }
                 });
             }
@@ -201,7 +200,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
                 newSelection,
                 showLoading,
                 setTitle,
-                hideLoading
+                hideLoading,
+                setError
             );
             setSelection(newSelection);
         }
@@ -241,6 +241,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         setTitle,
         chains,
         isLoading,
+        setError,
     ]);
 
     const updatePluginOnNewSelectionEffect = updatePluginOnNewSelection;
@@ -311,7 +312,8 @@ async function applySelectionChangesToPlugin(
     newSelection: Selection,
     showLoading: () => void,
     setTitle: (title: string) => void,
-    hideLoading: () => void
+    hideLoading: () => void,
+    setError: (message: string) => void
 ): Promise<void> {
     if (molstarState.current.type !== "pdb") return;
 
@@ -352,7 +354,7 @@ async function applySelectionChangesToPlugin(
         const item = pdbs[i];
         if (item) {
             const pdbId: string = item.id;
-            await _checkPdbModelUrl(pdbId).then(async loaded => {
+            await checkPdbModelUrl(pdbId).then(async loaded => {
                 if (loaded) {
                     const url = urls.pdb(pdbId);
                     const loadParams: LoadParams = {
@@ -372,9 +374,8 @@ async function applySelectionChangesToPlugin(
                         _.unionBy(oldItems(), [item], getId)
                     );
                 } else {
-                    showLoading();
-                    setTitle("PDB not found...");
-                    console.error("PDB not found");
+                    hideLoading();
+                    setError(`PDB not found: ${pdbId}`);
                 }
             });
         }
@@ -484,7 +485,7 @@ function getId<T extends { id: string }>(obj: T): string {
     return obj.id;
 }
 
-async function _checkPdbModelUrl(pdbId: Maybe<string>): Promise<boolean> {
+async function checkPdbModelUrl(pdbId: Maybe<string>): Promise<boolean> {
     if (!pdbId) return true;
 
     const url = urls.pdb(pdbId);

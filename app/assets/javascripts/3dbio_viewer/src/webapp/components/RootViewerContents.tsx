@@ -68,8 +68,6 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     return (
         <div id="viewer">
-            {error && <div style={{ color: "red" }}></div>}
-
             {!debugFlags.showOnlyValidations && (
                 <>
                     <ViewerSelector
@@ -80,6 +78,8 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                     />
 
                     <div id="left">
+                        {error && <div style={{ color: "red" }}>{error}</div>}
+
                         <MolecularStructure
                             pdbInfo={pdbInfo}
                             selection={selection}
@@ -91,6 +91,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             isLoading={isLoading}
                             showLoading={showLoading}
                             hideLoading={hideLoading}
+                            setError={setError}
                         />
                     </div>
                 </>
