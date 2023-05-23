@@ -59,17 +59,15 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     React.useEffect(() => {
         if (pdbLoader.type === "loading") {
-            setLoadingTitle(i18n.t("Loading PDB data..."));
             showLoading();
-        } else {
+            setLoadingTitle(i18n.t("Loading PDB data..."));
+        } else if (pdbLoader.type === "loaded") {
             hideLoading();
         }
     }, [pdbLoader.type, showLoading, hideLoading]);
 
     return (
         <div id="viewer">
-            {error && <div style={{ color: "red" }}></div>}
-
             {!debugFlags.showOnlyValidations && (
                 <>
                     <ViewerSelector
@@ -80,6 +78,8 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                     />
 
                     <div id="left">
+                        {error && <div style={{ color: "red" }}>{error}</div>}
+
                         <MolecularStructure
                             pdbInfo={pdbInfo}
                             selection={selection}
@@ -91,6 +91,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             isLoading={isLoading}
                             showLoading={showLoading}
                             hideLoading={hideLoading}
+                            setError={setError}
                         />
                     </div>
                 </>
