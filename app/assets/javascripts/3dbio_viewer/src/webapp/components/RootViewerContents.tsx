@@ -10,9 +10,11 @@ import { UploadData } from "../../domain/entities/UploadData";
 import { setFromError } from "../utils/error";
 import { ProteinNetwork } from "../../domain/entities/ProteinNetwork";
 import { debugFlags } from "../pages/app/debugFlags";
-import i18n from "../utils/i18n";
 import { usePdbLoader } from "../hooks/use-pdb";
 import { useBooleanState } from "../hooks/use-boolean";
+import { Resizable, ResizeCallbackData } from "react-resizable";
+import i18n from "../utils/i18n";
+import "./resizable-styles.css";
 
 export interface RootViewerContentsProps {
     viewerState: ViewerState;
@@ -40,6 +42,25 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const uploadDataToken = selection.type === "uploadData" ? selection.token : undefined;
     const networkToken = selection.type === "network" ? selection.token : undefined;
     const proteinNetwork = externalData.type === "network" ? externalData.data : undefined;
+
+    const [width, setWidth] = React.useState(0);
+
+    const measuredWidth = React.useCallback((el: HTMLDivElement) => {
+        if (el !== null) setWidth(el.getBoundingClientRect().width);
+    }, []);
+
+    const [widthStyle, setWidthStyle] = React.useState<{ width: string | number }>({
+        width: `calc(55%)`,
+    });
+
+    // On top layout
+    const onResize: (e: React.SyntheticEvent, data: ResizeCallbackData) => any = (
+        event,
+        { node, size, handle }
+    ) => {
+        setWidth(size.width);
+        setWidthStyle({ width: size.width });
+    };
 
     React.useEffect(() => {
         if (uploadDataToken) {
@@ -97,18 +118,20 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                 </>
             )}
 
-            <div id="right">
-                {
-                    <Viewers
-                        viewerState={viewerState}
-                        pdbInfo={pdbInfo}
-                        uploadData={uploadData}
-                        proteinNetwork={proteinNetwork}
-                        pdbLoader={pdbLoader}
-                        setPdbLoader={setPdbLoader}
-                    />
-                }
-            </div>
+            <Resizable width={width} onResize={onResize} axis="x" resizeHandles={["w"]}>
+                <div id="right" ref={measuredWidth} style={widthStyle}>
+                    {
+                        <Viewers
+                            viewerState={viewerState}
+                            pdbInfo={pdbInfo}
+                            uploadData={uploadData}
+                            proteinNetwork={proteinNetwork}
+                            pdbLoader={pdbLoader}
+                            setPdbLoader={setPdbLoader}
+                        />
+                    }
+                </div>
+            </Resizable>
         </div>
     );
 });

@@ -43,7 +43,8 @@ header {
 }
 
 #left {
-    width: 45%;
+    /* width: 45%; */
+    flex-grow: 1;
     position: relative;
 }
 
