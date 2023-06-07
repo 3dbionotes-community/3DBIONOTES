@@ -21,66 +21,79 @@ export interface ViewersProps {
     proteinNetwork: Maybe<ProteinNetwork>;
     pdbLoader: LoaderState<Pdb>;
     setPdbLoader: React.Dispatch<React.SetStateAction<LoaderState<Pdb>>>;
+    toolbarExpanded: boolean;
 }
 
-export const Viewers: React.FC<ViewersProps> = React.memo(props => {
-    const { viewerState, pdbInfo, uploadData, proteinNetwork, pdbLoader, setPdbLoader } = props;
+export const Viewers: React.FC<ViewersProps> = React.memo(
+    ({
+        viewerState,
+        pdbInfo,
+        uploadData,
+        proteinNetwork,
+        pdbLoader,
+        setPdbLoader,
+        toolbarExpanded,
+    }) => {
+        const onAddAnnotations = React.useCallback(
+            (annotations: Annotations) => {
+                setPdbLoader(pdbLoader => {
+                    if (pdbLoader.type === "loaded") {
+                        const newPdb = addCustomAnnotationsToPdb(pdbLoader.data, annotations);
+                        return { type: "loaded", data: newPdb };
+                    } else {
+                        return pdbLoader;
+                    }
+                });
+            },
+            [setPdbLoader]
+        );
 
-    const onAddAnnotations = React.useCallback(
-        (annotations: Annotations) => {
+        // Add custom annotations from uploadData
+        React.useEffect(() => {
+            if (pdbLoader.type !== "loaded") return;
+
             setPdbLoader(pdbLoader => {
-                if (pdbLoader.type === "loaded") {
-                    const newPdb = addCustomAnnotationsToPdb(pdbLoader.data, annotations);
+                if (pdbLoader.type === "loaded" && uploadData) {
+                    const newPdb = addCustomAnnotationsToPdb(
+                        pdbLoader.data,
+                        uploadData.annotations
+                    );
                     return { type: "loaded", data: newPdb };
                 } else {
                     return pdbLoader;
                 }
             });
-        },
-        [setPdbLoader]
-    );
+        }, [uploadData, setPdbLoader, pdbLoader?.type]);
 
-    // Add custom annotations from uploadData
-    React.useEffect(() => {
-        if (pdbLoader.type !== "loaded") return;
+        // Add data from protein network
+        React.useEffect(() => {
+            if (pdbLoader.type !== "loaded") return;
 
-        setPdbLoader(pdbLoader => {
-            if (pdbLoader.type === "loaded" && uploadData) {
-                const newPdb = addCustomAnnotationsToPdb(pdbLoader.data, uploadData.annotations);
-                return { type: "loaded", data: newPdb };
-            } else {
-                return pdbLoader;
-            }
-        });
-    }, [uploadData, setPdbLoader, pdbLoader?.type]);
+            setPdbLoader(pdbLoader => {
+                if (pdbLoader.type === "loaded") {
+                    if (proteinNetwork) goToElement("proteinInteraction");
+                    const newPdb = addProteinNetworkToPdb(pdbLoader.data, proteinNetwork);
+                    return { type: "loaded", data: newPdb };
+                } else {
+                    return pdbLoader;
+                }
+            });
+        }, [proteinNetwork, setPdbLoader, pdbLoader.type]);
 
-    // Add data from protein network
-    React.useEffect(() => {
-        if (pdbLoader.type !== "loaded") return;
+        return (
+            <React.Fragment>
+                <Loader state={pdbLoader} />
 
-        setPdbLoader(pdbLoader => {
-            if (pdbLoader.type === "loaded") {
-                if (proteinNetwork) goToElement("proteinInteraction");
-                const newPdb = addProteinNetworkToPdb(pdbLoader.data, proteinNetwork);
-                return { type: "loaded", data: newPdb };
-            } else {
-                return pdbLoader;
-            }
-        });
-    }, [proteinNetwork, setPdbLoader, pdbLoader.type]);
-
-    return (
-        <React.Fragment>
-            <Loader state={pdbLoader} />
-
-            {pdbLoader.type === "loaded" && pdbInfo && (
-                <PdbViewer
-                    pdbInfo={pdbInfo}
-                    pdb={pdbLoader.data}
-                    viewerState={viewerState}
-                    onAddAnnotations={onAddAnnotations}
-                />
-            )}
-        </React.Fragment>
-    );
-});
+                {pdbLoader.type === "loaded" && pdbInfo && (
+                    <PdbViewer
+                        pdbInfo={pdbInfo}
+                        pdb={pdbLoader.data}
+                        viewerState={viewerState}
+                        onAddAnnotations={onAddAnnotations}
+                        toolbarExpanded={toolbarExpanded}
+                    />
+                )}
+            </React.Fragment>
+        );
+    }
+);

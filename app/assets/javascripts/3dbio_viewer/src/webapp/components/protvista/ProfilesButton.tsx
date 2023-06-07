@@ -9,38 +9,39 @@ import i18n from "../../utils/i18n";
 export interface ProfilesButtonProps {
     profile: Profile;
     onChange(newProfile: Profile): void;
+    expanded: boolean;
 }
 
-export const ProfilesButton: React.FC<ProfilesButtonProps> = React.memo(props => {
-    const { profile, onChange } = props;
-
-    const dropdownItems: DropdownProps<ProfileId>["items"] = React.useMemo(() => {
-        return _.values(profiles).map(profile => {
-            return { text: profile.name, id: profile.id };
-        });
-    }, []);
-
-    const setProfile = React.useCallback(
-        (profileId: ProfileId) => {
-            sendAnalytics("set_profile", {
-                on: "viewer",
-                label: profileId,
+export const ProfilesButton: React.FC<ProfilesButtonProps> = React.memo(
+    ({ profile, onChange, expanded }) => {
+        const dropdownItems: DropdownProps<ProfileId>["items"] = React.useMemo(() => {
+            return _.values(profiles).map(profile => {
+                return { text: profile.name, id: profile.id };
             });
-            onChange(profiles[profileId]);
-        },
-        [onChange]
-    );
+        }, []);
 
-    const text = i18n.t("Profile") + ": " + profile.name;
+        const setProfile = React.useCallback(
+            (profileId: ProfileId) => {
+                sendAnalytics("set_profile", {
+                    on: "viewer",
+                    label: profileId,
+                });
+                onChange(profiles[profileId]);
+            },
+            [onChange]
+        );
 
-    return (
-        <Dropdown<ProfileId>
-            text={text}
-            selected={profile.id}
-            items={dropdownItems}
-            onClick={setProfile}
-            showSelection={true}
-            leftIcon={<CategoryIcon fontSize="small" />}
-        />
-    );
-});
+        const text = i18n.t("Profile") + ": " + profile.name;
+
+        return (
+            <Dropdown<ProfileId>
+                text={(expanded && text) || undefined}
+                selected={profile.id}
+                items={dropdownItems}
+                onClick={setProfile}
+                showSelection={true}
+                leftIcon={<CategoryIcon fontSize="small" />}
+            />
+        );
+    }
+);

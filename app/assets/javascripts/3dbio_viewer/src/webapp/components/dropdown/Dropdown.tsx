@@ -55,10 +55,7 @@ export function Dropdown<Id extends string = string>(
     if (!items || _.isEmpty(items)) return null;
 
     const buttonText =
-        text ||
-        (selected !== undefined
-            ? items.find(item => item.id === selected)?.text
-            : i18n.t("No value"));
+        text || (selected !== undefined ? items.find(item => item.id === selected)?.text : ""); //"" intended to remove text
 
     return (
         <React.Fragment>

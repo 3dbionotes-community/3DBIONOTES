@@ -8,17 +8,17 @@ import i18n from "../../utils/i18n";
 
 export interface JumpToButtonProps {
     blocks: BlockDef[];
+    expanded: boolean;
 }
 
-export const JumpToButton: React.FC<JumpToButtonProps> = React.memo(props => {
-    const { blocks } = props;
+export const JumpToButton: React.FC<JumpToButtonProps> = React.memo(({ blocks, expanded }) => {
     const items: DropdownProps["items"] = React.useMemo(() => {
         return blocks.map(block => ({ id: block.id, text: block.title }));
     }, [blocks]);
 
     return (
         <Dropdown
-            text={i18n.t("Jump to")}
+            text={(expanded && i18n.t("Jump to")) || undefined}
             items={items}
             onClick={goToElement}
             rightIcon={<ArrowForwardIcon fontSize="small" />}

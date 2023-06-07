@@ -1,5 +1,6 @@
-import React from "react";
 import _ from "lodash";
+import React from "react";
+import { ResizableBox, ResizeCallbackData } from "react-resizable";
 import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
 import { ViewerSelector } from "./viewer-selector/ViewerSelector";
@@ -12,9 +13,7 @@ import { ProteinNetwork } from "../../domain/entities/ProteinNetwork";
 import { debugFlags } from "../pages/app/debugFlags";
 import { usePdbLoader } from "../hooks/use-pdb";
 import { useBooleanState } from "../hooks/use-boolean";
-import { Resizable, ResizeCallbackData } from "react-resizable";
 import i18n from "../utils/i18n";
-import "./resizable-styles.css";
 
 export interface RootViewerContentsProps {
     viewerState: ViewerState;
@@ -32,6 +31,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const [error, setError] = React.useState<string>();
     const [loadingTitle, setLoadingTitle] = React.useState(i18n.t("Loading"));
     const [externalData, setExternalData] = React.useState<ExternalData>({ type: "none" });
+    const [toolbarExpanded, setToolbarExpanded] = React.useState(true);
 
     const uploadData = getUploadData(externalData);
 
@@ -43,24 +43,12 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const networkToken = selection.type === "network" ? selection.token : undefined;
     const proteinNetwork = externalData.type === "network" ? externalData.data : undefined;
 
-    const [width, setWidth] = React.useState(0);
-
-    const measuredWidth = React.useCallback((el: HTMLDivElement) => {
-        if (el !== null) setWidth(el.getBoundingClientRect().width);
-    }, []);
-
-    const [widthStyle, setWidthStyle] = React.useState<{ width: string | number }>({
-        width: `calc(55%)`,
-    });
-
-    // On top layout
-    const onResize: (e: React.SyntheticEvent, data: ResizeCallbackData) => any = (
-        event,
-        { node, size, handle }
-    ) => {
-        setWidth(size.width);
-        setWidthStyle({ width: size.width });
-    };
+    const toggleToolbarExpanded = React.useCallback(
+        (_e: React.SyntheticEvent, data: ResizeCallbackData) => {
+            setToolbarExpanded(data.size.width >= 520);
+        },
+        []
+    );
 
     React.useEffect(() => {
         if (uploadDataToken) {
@@ -118,20 +106,27 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                 </>
             )}
 
-            <Resizable width={width} onResize={onResize} axis="x" resizeHandles={["w"]}>
-                <div id="right" ref={measuredWidth} style={widthStyle}>
-                    {
-                        <Viewers
-                            viewerState={viewerState}
-                            pdbInfo={pdbInfo}
-                            uploadData={uploadData}
-                            proteinNetwork={proteinNetwork}
-                            pdbLoader={pdbLoader}
-                            setPdbLoader={setPdbLoader}
-                        />
-                    }
+            <ResizableBox
+                className=""
+                width={window.innerWidth * 0.55}
+                minConstraints={[400, 0]}
+                axis="x"
+                resizeHandles={["w"]}
+                onResize={toggleToolbarExpanded}
+                onResizeStop={redrawWindow}
+            >
+                <div id="right">
+                    <Viewers
+                        viewerState={viewerState}
+                        pdbInfo={pdbInfo}
+                        uploadData={uploadData}
+                        proteinNetwork={proteinNetwork}
+                        pdbLoader={pdbLoader}
+                        setPdbLoader={setPdbLoader}
+                        toolbarExpanded={toolbarExpanded}
+                    />
                 </div>
-            </Resizable>
+            </ResizableBox>
         </div>
     );
 });
@@ -142,4 +137,8 @@ function getUploadData(externalData: ExternalData) {
         : externalData.type === "network"
         ? externalData.data.uploadData
         : undefined;
+}
+
+function redrawWindow() {
+    window.dispatchEvent(new Event("resize"));
 }
