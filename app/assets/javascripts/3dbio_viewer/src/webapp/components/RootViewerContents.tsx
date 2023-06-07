@@ -107,7 +107,6 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             )}
 
             <ResizableBox
-                className=""
                 width={window.innerWidth * 0.55}
                 minConstraints={[400, 0]}
                 axis="x"
