@@ -4,10 +4,9 @@ import { MenuItem } from "@material-ui/core";
 import { ExpandMore, ExpandLess, Done } from "@material-ui/icons";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { PopperMenu } from "./PopperMenu";
-import i18n from "../../utils/i18n";
 import { StyledButton } from "../../training-app/components/action-button/ActionButton";
-import styled from "styled-components";
 import { Maybe } from "../../../utils/ts-utils";
+import styled from "styled-components";
 
 export interface DropdownProps<Id extends string = string> {
     // Show text or, if empty, the selected item.
