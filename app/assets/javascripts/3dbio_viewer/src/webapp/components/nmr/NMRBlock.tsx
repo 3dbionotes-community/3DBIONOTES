@@ -1,10 +1,12 @@
 import _ from "lodash";
 import React from "react";
 import { BlockComponentProps } from "../protvista/Protvista.types";
-import { Maybe, recordOfStyles } from "../../../utils/ts-utils";
+import { recordOfStyles } from "../../../utils/ts-utils";
 import i18n from "../../utils/i18n";
-import { HtmlTooltip } from "../HtmlTooltip";
 import {
+    Dialog,
+    DialogTitle,
+    IconButton,
     Table,
     TableBody,
     TableCell,
@@ -12,37 +14,8 @@ import {
     TableHead,
     TableRow,
 } from "@material-ui/core";
-
-const ratiosHardcode = [
-    {
-        ratio: 0.0049833887,
-        total: 602,
-    },
-    {
-        ratio: 0.049833887,
-        total: 602,
-    },
-    {
-        ratio: 0.0199335548,
-        total: 602,
-    },
-    {
-        ratio: 0.1,
-        total: 602,
-    },
-];
-
-const ligandsHardcode = [
-    {
-        name: "string",
-        smiles: "string",
-        inchiKey: "string",
-        formula: "string",
-        pubchem_id: 3,
-        target: "string",
-        binding: true,
-    },
-];
+import { NSPTarget } from "../../../domain/entities/Protein";
+import { Close as CloseIcon } from "@material-ui/icons";
 
 const svgProps = {
     //calculated lineHeight is 16px (fontSize 1rem)
@@ -58,14 +31,23 @@ const svgProps = {
 export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
     ({ pdb, block, setBlockVisibility }) => {
         const { barHeight, topSpace, leftSpace, bottomSpace, topBarMargin } = svgProps;
-
         const [svgWidth, setSvgWidth] = React.useState(100);
         const [open, setOpen] = React.useState(false);
-        const [index, setIndex] = React.useState<Maybe<number>>(undefined);
-        const [anchorEl, setAnchorEl] = React.useState<SVGTextElement | null>(null);
+        const [index, setIndex] = React.useState(0);
 
-        const hideTooltip = React.useCallback(() => setOpen(false), []);
-        const showTooltip = React.useCallback((idx: number) => {
+        const targets=React.useMemo(()=>pdb.protein.nspTargets?.map(target=>{
+            const total=target.bindingCount+target.notBindingCount;
+            return {
+                ...target,
+                ratio: target.bindingCount/total,
+                total
+            };
+        })??[],[])
+
+        const title=React.useMemo(()=>i18n.t("Ligand interaction NMR: {{target}}",{target:targets[index]?.name}),[targets,index]);
+
+        const closeDialog = React.useCallback(() => setOpen(false), []);
+        const openDialog = React.useCallback((idx: number) => {
             setOpen(true);
             setIndex(idx);
         }, []);
@@ -74,33 +56,14 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
             if (el !== null) setSvgWidth(el.getBoundingClientRect().width);
         }, []);
 
-        const ratiosRef = React.useMemo(
-            () =>
-                ratiosHardcode.map(ratio => ({
-                    ratio,
-                    ref: (idx: number) =>
-                        open && idx === index
-                            ? (el: SVGTextElement) => {
-                                  if (el !== null) setAnchorEl(el);
-                              }
-                            : null,
-                })),
-            [open, index]
-        );
-
         const height = React.useMemo(
-            () => ratiosHardcode.length * (barHeight + 15) + topSpace + bottomSpace + topBarMargin,
-            [barHeight, topSpace, bottomSpace, topBarMargin]
+            () => targets.length * (barHeight + 15) + topSpace + bottomSpace + topBarMargin,
+            [targets, barHeight, topSpace, bottomSpace, topBarMargin]
         );
 
         const borders = React.useMemo(
             () => `M${leftSpace},${topSpace}V${height}M0,${height - bottomSpace}H${svgWidth}`,
             [leftSpace, topSpace, height, svgWidth, bottomSpace]
-        );
-
-        const tooltipContent = React.useMemo(
-            () => <TooltipContent ligands={ligandsHardcode} />,
-            []
         );
 
         // React.useEffect(() => {
@@ -116,7 +79,7 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
                         <div
                             ref={measuredWidth}
                             style={styles.svgContainer}
-                            onMouseLeave={hideTooltip}
+                            onMouseLeave={closeDialog}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -135,17 +98,16 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
                                 >
                                     {i18n.t("Number of Ligands")}
                                 </text>
-                                {ratiosRef.map(({ ratio: r, ref }, idx) => {
+                                {targets.map((target, idx) => {
                                     return (
                                         <RatioBar
                                             key={idx}
                                             idx={idx}
-                                            ratio={r.ratio}
-                                            total={r.total}
+                                            ratio={target.ratio}
+                                            total={target.total}
                                             width={svgWidth}
-                                            title={"NSP" + idx}
-                                            ref={ref(idx)}
-                                            showTooltip={() => showTooltip(idx)}
+                                            title={target.name}
+                                            showTooltip={() => openDialog(idx)}
                                         />
                                     );
                                 })}
@@ -158,19 +120,17 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
                             laborum nostrum delectus fugit dignissimos! Quos, sed? Nihil,
                             perspiciatis soluta?
                         </p>
-                        <HtmlTooltip
-                            PopperProps={{ disablePortal: true, anchorEl }}
-                            open={open}
-                            onClose={hideTooltip}
-                            disableFocusListener
-                            disableHoverListener
-                            disableTouchListener
-                            title={tooltipContent}
-                            placement={"top"}
-                            interactive
-                        >
-                            <span></span>
-                        </HtmlTooltip>
+                        <Dialog open={open}
+                            onClose={closeDialog} maxWidth="xl" fullWidth className="model-search">
+                        <DialogTitle>
+                            {title}
+                            <IconButton onClick={closeDialog}>
+                                <CloseIcon />
+                            </IconButton>
+                        </DialogTitle>
+
+            <DialogContent targets={targets} selectedIndex={index}/>
+</Dialog>
                     </div>
                 )}
             </>
@@ -272,19 +232,14 @@ const Bar: React.FC<BarProps> = React.memo(({ bar, text: { x, y, value } }) => (
     </g>
 ));
 
-interface TooltipContentProps {
-    ligands: {
-        name: string;
-        smiles: string;
-        inchiKey: string;
-        formula: string;
-        pubchem_id: number;
-        target: string;
-        binding: boolean;
-    }[];
+interface DialogContentProps {
+    targets: NSPTarget[];
+    selectedIndex: number;
 }
 
-const TooltipContent: React.FC<TooltipContentProps> = React.memo(({ ligands }) => {
+const DialogContent: React.FC<DialogContentProps> = React.memo(({ targets, selectedIndex }) => {
+    const target=React.useMemo(()=>targets[selectedIndex],[targets,selectedIndex]);
+
     return (
         <TableContainer>
             <Table size="small" aria-label="a dense table">
@@ -301,17 +256,22 @@ const TooltipContent: React.FC<TooltipContentProps> = React.memo(({ ligands }) =
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {/* {rows.map(row => (
-                        <TableRow key={row.name}>
+                    {target?.fragments.map(({binding,ligand:{name:ligandName,smiles,inChI,formula,pubchemId}},idx) => (
+                        <TableRow key={idx}>
                             <TableCell component="th" scope="row">
-                                {row.name}
+                                {idx}
                             </TableCell>
-                            <TableCell align="right">{row.calories}</TableCell>
-                            <TableCell align="right">{row.fat}</TableCell>
-                            <TableCell align="right">{row.carbs}</TableCell>
-                            <TableCell align="right">{row.protein}</TableCell>
+                            <TableCell component="th" scope="row">
+                                {ligandName}
+                            </TableCell>
+                            <TableCell align="right">{smiles}</TableCell>
+                            <TableCell align="right">{inChI}</TableCell>
+                            <TableCell align="right">{formula}</TableCell>
+                            <TableCell align="right">{pubchemId}</TableCell>
+                            <TableCell align="right">{target.name}</TableCell>
+                            <TableCell align="right">{binding?i18n.t("Binding"):i18n.t("Not binding")}</TableCell>
                         </TableRow>
-                    ))} */}
+                    ))}
                 </TableBody>
             </Table>
         </TableContainer>

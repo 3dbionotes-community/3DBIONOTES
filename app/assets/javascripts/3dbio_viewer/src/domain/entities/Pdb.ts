@@ -38,6 +38,9 @@ export interface PdbLigand {
     name: string;
     inChI: string; //IUPACInChIkey
     imageDataResource?: LigandImageData;
+    smiles?: string;
+    formula?: string;
+    pubchemId?: string;
 }
 
 export type PdbId = string;
