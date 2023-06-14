@@ -1125,15 +1125,6 @@ body {
   background-color: #484848;
 }
 
-// material dialogs 1px white background fix
-.MuiPaper-root {
-  background-color: inherit !important;
-}
-
-.MuiDialogContent-root {
-  background-color: #fff;
-}
-
 // Send feedback partial
 #zammad-feedback-form {
   position: fixed;
