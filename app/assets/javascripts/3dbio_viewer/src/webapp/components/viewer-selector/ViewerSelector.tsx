@@ -16,21 +16,20 @@ import {
 } from "../../view-models/Selection";
 import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import { ModelSearch, ModelSearchProps } from "../model-search/ModelSearch";
-
-import "./ViewerSelector.css";
 import { SelectionItem } from "./SelectionItem";
 import { useUpdateActions } from "../../hooks/use-update-actions";
-import classnames from "classnames";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { sendAnalytics } from "../../utils/analytics";
 import { UploadData } from "../../../domain/entities/UploadData";
 import { Maybe } from "../../../utils/ts-utils";
+import "./ViewerSelector.css";
 
 interface ViewerSelectorProps {
     pdbInfo: PdbInfo | undefined;
     selection: Selection;
     onSelectionChange(newSelection: Selection): void;
     uploadData: Maybe<UploadData>;
+    expanded?: boolean;
 }
 
 const actions = { setOverlayItemVisibility, removeOverlayItem, setMainItemVisibility };
@@ -68,50 +67,50 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                     {uploadData && <div>{uploadData.title}</div>}
 
                     {selection.type === "free" && (
-                        <>
+                        <div className="selection-main-container">
                             {selection.main.pdb && (
-                                <MainItemBox label={i18n.t("PDB")}>
-                                    <SelectionItem
-                                        selection={selection}
-                                        item={selection.main?.pdb}
-                                        onVisibilityChange={update.setMainItemVisibility}
-                                    />
-                                </MainItemBox>
+                                <SelectionItem
+                                    label={i18n.t("PDB")}
+                                    type="main"
+                                    selection={selection}
+                                    item={selection.main?.pdb}
+                                    onVisibilityChange={update.setMainItemVisibility}
+                                />
                             )}
 
                             {selection.main.emdb && (
-                                <MainItemBox label={i18n.t("EMDB")} className="emdb">
-                                    <SelectionItem
-                                        selection={selection}
-                                        item={selection.main.emdb}
-                                        onVisibilityChange={update.setMainItemVisibility}
-                                    />
-                                </MainItemBox>
+                                <SelectionItem
+                                    label={i18n.t("EMDB")}
+                                    type="main"
+                                    selection={selection}
+                                    item={selection.main.emdb}
+                                    onVisibilityChange={update.setMainItemVisibility}
+                                />
                             )}
-                        </>
+                        </div>
                     )}
                 </div>
-
-                <div className="selection">
-                    {selection.type === "free" &&
-                        selection.overlay.map(item => (
-                            <SelectionItem
-                                key={item.id}
-                                selection={selection}
-                                item={item}
-                                onVisibilityChange={update.setOverlayItemVisibility}
-                                onRemove={update.removeOverlayItem}
-                            />
-                        ))}
+                <div className="selectors">
+                    <button onClick={openSearchWithAnalytics}>
+                        <Search />
+                    </button>
+                    <Dropdown {...chainDropdownProps} showExpandIcon />
+                    <Dropdown {...ligandsDropdownProps} showExpandIcon />
                 </div>
             </div>
 
-            <div className="selectors">
-                <button onClick={openSearchWithAnalytics}>
-                    <Search />
-                </button>
-                <Dropdown {...chainDropdownProps} showExpandIcon />
-                <Dropdown {...ligandsDropdownProps} showExpandIcon />
+            <div className="selection">
+                {selection.type === "free" &&
+                    selection.overlay.map(item => (
+                        <SelectionItem
+                            key={item.id}
+                            type="overlay"
+                            selection={selection}
+                            item={item}
+                            onVisibilityChange={update.setOverlayItemVisibility}
+                            onRemove={update.removeOverlayItem}
+                        />
+                    ))}
             </div>
 
             {isSearchOpen && (
@@ -125,19 +124,8 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
     );
 };
 
-const MainItemBox: React.FC<{ label: string; className?: string }> = props => {
-    const { label, className, children } = props;
-
-    return (
-        <div className={classnames("db-item", className)}>
-            <div className="label">{label}</div>
-            <div className="content">{children}</div>
-        </div>
-    );
-};
-
 function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
-    const { pdbInfo, selection, onSelectionChange } = options;
+    const { pdbInfo, selection, onSelectionChange, expanded } = options;
 
     const setChain = React.useCallback(
         (chainId: string) => {
@@ -153,9 +141,11 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
 
     const selectedChain = getSelectedChain(pdbInfo?.chains, selection);
 
-    const text = selectedChain
-        ? `${i18n.t("Chain")}: ${selectedChain.shortName}`
-        : i18n.t("Chains");
+    const text = expanded
+        ? selectedChain
+            ? `${i18n.t("Chain")}: ${selectedChain.shortName}`
+            : i18n.t("Chains")
+        : "C";
 
     return { text, items, selected: selectedChain?.chainId, onClick: setChain };
 }
@@ -165,7 +155,7 @@ export function getSelectedChain(chains: PdbInfo["chains"] | undefined, selectio
 }
 
 function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
-    const { pdbInfo, selection, onSelectionChange } = options;
+    const { pdbInfo, selection, onSelectionChange, expanded } = options;
 
     const setLigand = React.useCallback(
         (ligandId: Maybe<string>) => {
@@ -185,9 +175,11 @@ function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
 
     const selectedLigand = getSelectedLigand(selection, pdbInfo);
 
-    const text = selectedLigand
-        ? `${i18n.t("Ligand")}: ${selectedLigand.shortId}`
-        : i18n.t("Ligands");
+    const text = expanded
+        ? selectedLigand
+            ? `${i18n.t("Ligand")}: ${selectedLigand.shortId}`
+            : i18n.t("Ligands")
+        : "L";
 
     return {
         text,

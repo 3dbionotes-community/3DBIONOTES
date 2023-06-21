@@ -32,6 +32,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const [loadingTitle, setLoadingTitle] = React.useState(i18n.t("Loading"));
     const [externalData, setExternalData] = React.useState<ExternalData>({ type: "none" });
     const [toolbarExpanded, setToolbarExpanded] = React.useState(true);
+    const [viewerSelectorExpanded, setViewerSelectorExpanded] = React.useState(true);
 
     const uploadData = getUploadData(externalData);
 
@@ -46,6 +47,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const toggleToolbarExpanded = React.useCallback(
         (_e: React.SyntheticEvent, data: ResizeCallbackData) => {
             setToolbarExpanded(data.size.width >= 520);
+            setViewerSelectorExpanded(window.innerWidth - data.size.width >= 725);
         },
         []
     );
@@ -79,14 +81,14 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
         <div id="viewer">
             {!debugFlags.showOnlyValidations && (
                 <>
-                    <ViewerSelector
-                        pdbInfo={pdbInfo}
-                        selection={selection}
-                        onSelectionChange={setSelection}
-                        uploadData={uploadData}
-                    />
-
                     <div id="left">
+                        <ViewerSelector
+                            pdbInfo={pdbInfo}
+                            selection={selection}
+                            onSelectionChange={setSelection}
+                            uploadData={uploadData}
+                            expanded={viewerSelectorExpanded}
+                        />
                         {error && <div style={{ color: "red" }}>{error}</div>}
 
                         <MolecularStructure
@@ -109,6 +111,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             <ResizableBox
                 width={window.innerWidth * 0.55}
                 minConstraints={[400, 0]}
+                maxConstraints={[window.innerWidth - 600, 0]}
                 axis="x"
                 resizeHandles={["w"]}
                 onResize={toggleToolbarExpanded}
