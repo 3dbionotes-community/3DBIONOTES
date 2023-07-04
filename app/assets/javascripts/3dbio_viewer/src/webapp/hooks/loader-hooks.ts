@@ -1,11 +1,12 @@
+import _ from "lodash";
 import React from "react";
-import { FutureData } from "../../domain/entities/FutureData";
-import { Ligand } from "../../domain/entities/Ligand";
 import {
     getPdbInfoFromUploadData,
     PdbInfo,
     setPdbInfoLigands,
 } from "../../domain/entities/PdbInfo";
+import { FutureData } from "../../domain/entities/FutureData";
+import { Ligand } from "../../domain/entities/Ligand";
 import { UploadData } from "../../domain/entities/UploadData";
 import { Future } from "../../utils/future";
 import { Maybe } from "../../utils/ts-utils";
@@ -46,4 +47,78 @@ export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) 
     }, [pdbInfo, ligands]);
 
     return { pdbInfo: pdbInfoWithLigands, setLigands };
+}
+
+export function useMultipleLoaders<K extends string>(initialState?: Record<K, Loader>) {
+    const [loaders, setLoaders] = React.useState<Record<string, Loader>>(initialState ?? {});
+
+    const setLoader = React.useCallback(
+        (key: K, loader: Loader) =>
+            setLoaders(loaders => ({
+                ...loaders,
+                [key]: loader,
+            })),
+        []
+    );
+
+    const updateLoaderStatus = React.useCallback(
+        (key: K, status: Loader["status"], newMessage?: string) =>
+            setLoaders(loaders => {
+                const message = newMessage ?? loaders[key]?.message;
+                const priority = loaders[key]?.priority;
+
+                return message && priority
+                    ? {
+                          ...loaders,
+                          [key]: {
+                              message,
+                              status,
+                              priority,
+                          },
+                      }
+                    : loaders;
+            }),
+        []
+    );
+
+    const updateOnResolve = React.useCallback(
+        <T>(key: K, promise: Promise<T>, message?: string) => {
+            updateLoaderStatus(key, "loading", message);
+            return promise
+                .then(data => {
+                    updateLoaderStatus(key, "loaded");
+                    return data;
+                })
+                .catch(err => {
+                    updateLoaderStatus(key, "error");
+                    return Promise.reject(err);
+                });
+        },
+        [updateLoaderStatus]
+    );
+
+    const loading = React.useMemo(
+        () => _.values(loaders).some(({ status }) => status === "loading"),
+        [loaders]
+    );
+
+    const title = React.useMemo(
+        () =>
+            _(loaders)
+                .values()
+                .filter(({ status }) => status === "loading")
+                .orderBy(({ priority }) => priority, "desc")
+                .first()?.message ?? "",
+        [loaders]
+    );
+
+    return { loading, title, setLoader, updateLoaderStatus, updateOnResolve };
+}
+
+export type LoaderStatus = "pending" | "loading" | "loaded" | "error";
+
+interface Loader {
+    status: LoaderStatus;
+    message: string;
+    priority: number; //the higher the number, the higher the priority
 }
