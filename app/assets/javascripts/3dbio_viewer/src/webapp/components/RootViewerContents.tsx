@@ -4,15 +4,15 @@ import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
 import { ViewerSelector } from "./viewer-selector/ViewerSelector";
 import { ViewerState } from "../view-models/ViewerState";
-import { usePdbInfo } from "../hooks/loader-hooks";
+import { useMultipleLoaders, usePdbInfo } from "../hooks/loader-hooks";
 import { useAppContext } from "./AppContext";
 import { UploadData } from "../../domain/entities/UploadData";
 import { setFromError } from "../utils/error";
 import { ProteinNetwork } from "../../domain/entities/ProteinNetwork";
 import { debugFlags } from "../pages/app/debugFlags";
-import i18n from "../utils/i18n";
 import { usePdbLoader } from "../hooks/use-pdb";
-import { useBooleanState } from "../hooks/use-boolean";
+import { LoaderMask } from "./loader-mask/LoaderMask";
+import i18n from "../utils/i18n";
 
 export interface RootViewerContentsProps {
     viewerState: ViewerState;
@@ -23,18 +23,35 @@ type ExternalData =
     | { type: "uploadData"; data: UploadData }
     | { type: "network"; data: ProteinNetwork };
 
+const loaderMessages = {
+    //already ordered by priority
+    getRelatedPdbModel: [i18n.t("Getting PDB related model..."), 0],
+    initPlugin: [i18n.t("Starting pdbe-molstar with PDB..."), 1], //already loading PDB
+    updateVisualPlugin: [i18n.t("Updating selection..."), 2],
+    pdbLoader: [i18n.t("Loading PDB Data..."), 3],
+    loadModel: [i18n.t("Loading model..."), 4], //PDB, EMDB, PDB-REDO, CSTF, CERES
+} as const;
+
+export type LoaderKey = keyof typeof loaderMessages;
+
 export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(props => {
     const { viewerState } = props;
-    const { compositionRoot } = useAppContext();
     const { selection, setSelection } = viewerState;
+    const { compositionRoot } = useAppContext();
+
+    const { loading, title, updateLoaderStatus, updateOnResolve } = useMultipleLoaders<LoaderKey>(
+        _.mapValues(loaderMessages, ([message, priority]) => ({
+            message,
+            priority,
+            status: "pending" as const,
+        }))
+    );
+
     const [error, setError] = React.useState<string>();
-    const [loadingTitle, setLoadingTitle] = React.useState(i18n.t("Loading"));
     const [externalData, setExternalData] = React.useState<ExternalData>({ type: "none" });
 
     const uploadData = getUploadData(externalData);
-
     const { pdbInfo, setLigands } = usePdbInfo(selection, uploadData);
-    const [isLoading, { enable: showLoading, disable: hideLoading }] = useBooleanState(false);
     const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfo);
 
     const uploadDataToken = selection.type === "uploadData" ? selection.token : undefined;
@@ -58,58 +75,52 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     }, [uploadDataToken, networkToken, compositionRoot]);
 
     React.useEffect(() => {
-        if (pdbLoader.type === "loading") {
-            showLoading();
-            setLoadingTitle(i18n.t("Loading PDB data..."));
-        } else if (pdbLoader.type === "loaded") {
-            hideLoading();
-        }
-    }, [pdbLoader.type, showLoading, hideLoading]);
+        updateLoaderStatus("pdbLoader", pdbLoader.type);
+    }, [pdbLoader.type, updateLoaderStatus]);
 
     return (
-        <div id="viewer">
-            {!debugFlags.showOnlyValidations && (
-                <>
-                    <ViewerSelector
-                        pdbInfo={pdbInfo}
-                        selection={selection}
-                        onSelectionChange={setSelection}
-                        uploadData={uploadData}
-                    />
-
-                    <div id="left">
-                        {error && <div style={{ color: "red" }}>{error}</div>}
-
-                        <MolecularStructure
+        <>
+            <LoaderMask open={loading} title={title} />
+            <div id="viewer">
+                {!debugFlags.showOnlyValidations && (
+                    <>
+                        <ViewerSelector
                             pdbInfo={pdbInfo}
                             selection={selection}
                             onSelectionChange={setSelection}
-                            onLigandsLoaded={setLigands}
-                            proteinNetwork={proteinNetwork}
-                            title={loadingTitle}
-                            setTitle={setLoadingTitle}
-                            isLoading={isLoading}
-                            showLoading={showLoading}
-                            hideLoading={hideLoading}
-                            setError={setError}
+                            uploadData={uploadData}
                         />
-                    </div>
-                </>
-            )}
 
-            <div id="right">
-                {
-                    <Viewers
-                        viewerState={viewerState}
-                        pdbInfo={pdbInfo}
-                        uploadData={uploadData}
-                        proteinNetwork={proteinNetwork}
-                        pdbLoader={pdbLoader}
-                        setPdbLoader={setPdbLoader}
-                    />
-                }
+                        <div id="left">
+                            {error && <div style={{ color: "red" }}>{error}</div>}
+
+                            <MolecularStructure
+                                pdbInfo={pdbInfo}
+                                selection={selection}
+                                onSelectionChange={setSelection}
+                                onLigandsLoaded={setLigands}
+                                proteinNetwork={proteinNetwork}
+                                updateLoaderOnResolve={updateOnResolve}
+                                loaderBusy={loading}
+                            />
+                        </div>
+                    </>
+                )}
+
+                <div id="right">
+                    {
+                        <Viewers
+                            viewerState={viewerState}
+                            pdbInfo={pdbInfo}
+                            uploadData={uploadData}
+                            proteinNetwork={proteinNetwork}
+                            pdbLoader={pdbLoader}
+                            setPdbLoader={setPdbLoader}
+                        />
+                    }
+                </div>
             </div>
-        </div>
+        </>
     );
 });
 
