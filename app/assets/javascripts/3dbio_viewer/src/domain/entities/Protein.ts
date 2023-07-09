@@ -1,4 +1,4 @@
-import { PdbId, PdbLigand } from "./Pdb";
+import { PdbLigand } from "./Pdb";
 
 export interface Protein {
     id: ProteinId;
@@ -7,6 +7,7 @@ export interface Protein {
     organism?: string;
     genBank?: string[];
     nspTargets?: NSPTarget[];
+    // nmrSource?: NMRSource[];
 }
 
 export interface NSPTarget {
@@ -16,13 +17,20 @@ export interface NSPTarget {
     notBindingCount: number;
 }
 
-interface NMRFragment {
+export interface NMRFragment {
     name: string;
     description: string;
     externalLink: string;
-    pdbentry: PdbId;
     binding: boolean;
     ligand: PdbLigand;
+}
+
+export interface NMRSource {
+    dataSource: string;
+    name: string; // binding / not binding
+    description: string;
+    externalLink: string;
+    binding: boolean;
 }
 
 export type ProteinId = string;

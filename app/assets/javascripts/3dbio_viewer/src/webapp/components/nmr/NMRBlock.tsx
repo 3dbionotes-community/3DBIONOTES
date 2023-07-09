@@ -2,7 +2,6 @@ import _ from "lodash";
 import React from "react";
 import { BlockComponentProps } from "../protvista/Protvista.types";
 import { recordOfStyles } from "../../../utils/ts-utils";
-import i18n from "../../utils/i18n";
 import {
     Dialog,
     DialogTitle,
@@ -14,8 +13,9 @@ import {
     TableHead,
     TableRow,
 } from "@material-ui/core";
-import { NSPTarget } from "../../../domain/entities/Protein";
+import { NMRFragment, NSPTarget } from "../../../domain/entities/Protein";
 import { Close as CloseIcon } from "@material-ui/icons";
+import i18n from "../../utils/i18n";
 
 const svgProps = {
     //calculated lineHeight is 16px (fontSize 1rem)
@@ -35,22 +35,40 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
         const [open, setOpen] = React.useState(false);
         const [index, setIndex] = React.useState(0);
 
-        const targets=React.useMemo(()=>pdb.protein.nspTargets?.map(target=>{
-            const total=target.bindingCount+target.notBindingCount;
-            return {
-                ...target,
-                ratio: target.bindingCount/total,
-                total
-            };
-        })??[],[])
-
-        const title=React.useMemo(()=>i18n.t("Ligand interaction NMR: {{target}}",{target:targets[index]?.name}),[targets,index]);
-
         const closeDialog = React.useCallback(() => setOpen(false), []);
+
         const openDialog = React.useCallback((idx: number) => {
             setOpen(true);
+            console.log("here");
             setIndex(idx);
         }, []);
+
+        const targets = React.useMemo(
+            () =>
+                pdb.protein.nspTargets
+                    ?.map(target => {
+                        const total = target.bindingCount + target.notBindingCount;
+                        return {
+                            ...target,
+                            ratio: target.bindingCount / total,
+                            total,
+                        };
+                    })
+                    .sort((a, b) => {
+                        const getNspIndex = (target: NMRRatioTarget) =>
+                            Number.parseInt(
+                                (target.name.match(/NSP\d+/) ?? [])[0]?.replace("NSP", "") ?? "1"
+                            );
+
+                        return getNspIndex(a) - getNspIndex(b);
+                    }) ?? [],
+            [pdb.protein.nspTargets]
+        );
+
+        const title = React.useMemo(
+            () => i18n.t("Ligand interaction NMR: {{target}}", { target: targets[index]?.name }),
+            [targets, index]
+        );
 
         const measuredWidth = React.useCallback((el: HTMLDivElement) => {
             if (el !== null) setSvgWidth(el.getBoundingClientRect().width);
@@ -66,11 +84,11 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
             [leftSpace, topSpace, height, svgWidth, bottomSpace]
         );
 
-        // React.useEffect(() => {
-        //     if (true && setBlockVisibility) {
-        //         setBlockVisibility({ block, visible: true });
-        //     }
-        // }, [setBlockVisibility, block]);
+        React.useEffect(() => {
+            if (setBlockVisibility) {
+                setBlockVisibility({ block, visible: !_.isEmpty(pdb.protein.nspTargets) });
+            }
+        }, [setBlockVisibility, block, pdb.protein.nspTargets]);
 
         return (
             <>
@@ -107,7 +125,7 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
                                             total={target.total}
                                             width={svgWidth}
                                             title={target.name}
-                                            showTooltip={() => openDialog(idx)}
+                                            showDialog={() => openDialog(idx)}
                                         />
                                     );
                                 })}
@@ -120,17 +138,22 @@ export const NMRBlock: React.FC<BlockComponentProps> = React.memo(
                             laborum nostrum delectus fugit dignissimos! Quos, sed? Nihil,
                             perspiciatis soluta?
                         </p>
-                        <Dialog open={open}
-                            onClose={closeDialog} maxWidth="xl" fullWidth className="model-search">
-                        <DialogTitle>
-                            {title}
-                            <IconButton onClick={closeDialog}>
-                                <CloseIcon />
-                            </IconButton>
-                        </DialogTitle>
+                        <Dialog
+                            open={open}
+                            onClose={closeDialog}
+                            maxWidth="xl"
+                            fullWidth
+                            className="model-search"
+                        >
+                            <DialogTitle>
+                                {title}
+                                <IconButton onClick={closeDialog}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </DialogTitle>
 
-            <DialogContent targets={targets} selectedIndex={index}/>
-</Dialog>
+                            <DialogContent targets={targets} selectedIndex={index} />
+                        </Dialog>
                     </div>
                 )}
             </>
@@ -144,11 +167,11 @@ interface RatioBarProps {
     total: number;
     width: number;
     title: string;
-    showTooltip: () => void;
+    showDialog: () => void;
 }
 
 const RatioBar = React.forwardRef<SVGGElement | null, RatioBarProps>((props, ref) => {
-    const { idx, ratio, total, width, title, showTooltip } = props;
+    const { idx, ratio, total, width, title, showDialog } = props;
     const { barHeight, columnGap, rowGap, leftSpace, topSpace, topBarMargin } = svgProps;
 
     const availableWidth = React.useMemo(() => width - leftSpace, [width, leftSpace]);
@@ -157,7 +180,7 @@ const RatioBar = React.forwardRef<SVGGElement | null, RatioBarProps>((props, ref
         () => ({
             x: leftSpace, // absolute from left line,
             y: topBarMargin + topSpace + idx * (barHeight + rowGap),
-            width: availableWidth * ratio,
+            width: Math.max(availableWidth * ratio, 24),
             height: barHeight,
             fill: "#92e000",
         }),
@@ -195,14 +218,15 @@ const RatioBar = React.forwardRef<SVGGElement | null, RatioBarProps>((props, ref
     );
 
     return (
-        <g ref={ref} onMouseEnter={showTooltip}>
+        <g ref={ref} onClick={showDialog}>
             {ratio !== 0 && <Bar bar={leftBar} text={leftBarText} />}
             {ratio !== 1 && <Bar bar={rightBar} text={rightBarText} />}
             <text
                 textAnchor="middle"
                 transform={`translate(16,${leftBarText.y}) rotate(-90)`} // is a must for rotation purposes. Rotate attr does it for each glyph individually
             >
-                {title}
+                <title>{title}</title>
+                {title.substring(0, 6)}
             </text>
         </g>
     );
@@ -238,7 +262,7 @@ interface DialogContentProps {
 }
 
 const DialogContent: React.FC<DialogContentProps> = React.memo(({ targets, selectedIndex }) => {
-    const target=React.useMemo(()=>targets[selectedIndex],[targets,selectedIndex]);
+    const target = React.useMemo(() => targets[selectedIndex], [targets, selectedIndex]);
 
     return (
         <TableContainer>
@@ -256,27 +280,42 @@ const DialogContent: React.FC<DialogContentProps> = React.memo(({ targets, selec
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {target?.fragments.map(({binding,ligand:{name:ligandName,smiles,inChI,formula,pubchemId}},idx) => (
-                        <TableRow key={idx}>
-                            <TableCell component="th" scope="row">
-                                {idx}
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                {ligandName}
-                            </TableCell>
-                            <TableCell align="right">{smiles}</TableCell>
-                            <TableCell align="right">{inChI}</TableCell>
-                            <TableCell align="right">{formula}</TableCell>
-                            <TableCell align="right">{pubchemId}</TableCell>
-                            <TableCell align="right">{target.name}</TableCell>
-                            <TableCell align="right">{binding?i18n.t("Binding"):i18n.t("Not binding")}</TableCell>
-                        </TableRow>
-                    ))}
+                    {target?.fragments.map(
+                        (
+                            {
+                                binding,
+                                ligand: { name: ligandName, smiles, inChI, formula, pubchemId },
+                            },
+                            idx
+                        ) => (
+                            <TableRow key={idx}>
+                                <TableCell>{idx}</TableCell>
+                                <TableCell>{ligandName}</TableCell>
+                                <TableCell align="right">{smiles}</TableCell>
+                                <TableCell align="right">{inChI}</TableCell>
+                                <TableCell align="right">{formula}</TableCell>
+                                <TableCell align="right">{pubchemId}</TableCell>
+                                <TableCell align="right">{target.name}</TableCell>
+                                <TableCell align="right">
+                                    {binding ? i18n.t("Binding") : i18n.t("Not binding")}
+                                </TableCell>
+                            </TableRow>
+                        )
+                    )}
                 </TableBody>
             </Table>
         </TableContainer>
     );
 });
+
+interface NMRRatioTarget {
+    ratio: number;
+    total: number;
+    name: string;
+    fragments: NMRFragment[];
+    bindingCount: number;
+    notBindingCount: number;
+}
 
 const styles = recordOfStyles({
     container: {
@@ -284,8 +323,8 @@ const styles = recordOfStyles({
         columnGap: "2em",
         marginTop: "1em",
         alignItems: "center",
-        maxHeight: 700,
-        overflowY: "auto",
+        // maxHeight: 700,
+        // overflowY: "auto",
     },
     svgContainer: {
         flexGrow: 1,

@@ -48,10 +48,13 @@ import {
     pdbEntryResponseC,
     PdbLigandsResponse,
 } from "../../PdbLigands";
+import { getNMR, NMRScreeningFragment } from "../../NMRScreening";
+import { getResults, Pagination } from "../../codec-utils";
 
 interface Data {
     uniprot: UniprotResponse;
     pdbEmdbsEmValidations: PdbEmdbEmValidations[];
+    nmrScreenings: NMRScreeningFragment[];
     features: Features;
     cv19Tracks: Cv19Tracks;
     pdbAnnotations: PdbAnnotations;
@@ -127,7 +130,11 @@ export class ApiPdbRepository implements PdbRepository {
             antigenFragments: on(data.antigenic, antigenic => getAntigenicFragments(antigenic, proteinId)),
         };
 
-        const protein = getProtein(proteinId, data.uniprot);
+        const protein = {
+            ...getProtein(proteinId, data.uniprot),
+            nspTargets: data.nmrScreenings ? getNMR(data.nmrScreenings) : [],
+        };
+
         const experiment = on(data.pdbExperiment, pdbExperiment =>
             options.pdbId ? getExperiment(options.pdbId, pdbExperiment) : undefined
         );
@@ -203,6 +210,9 @@ function getData(options: Options): FutureData<Partial<Data>> {
                     pdbEmdbsEmValidations.map(emdb => emdb.emv.map(emv => ({ id: emdb.id, emv })))
                 );
             })
+        ),
+        nmrScreenings: onF(proteinId, proteinId =>
+            getJSON<Pagination<NMRScreeningFragment>>(`${bioUrlDev}/bws/api/nmr/${proteinId}/`).map((pagination)=>getResults(pagination))
         ),
         features: getJSON(`${ebiProteinsApiUrl}/features/${proteinId}`),
         cv19Tracks: getJSON(`${bioUrl}/cv19_annotations/${proteinId}_annotations.json`),
