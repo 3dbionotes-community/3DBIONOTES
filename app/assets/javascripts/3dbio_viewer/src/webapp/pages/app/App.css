@@ -63,3 +63,8 @@ header {
 .MuiDialogContent-root {
     background-color: #fff;
 }
+
+.MuiTooltip-tooltip a {
+    text-decoration: underline;
+    color: #72bee3;
+}
