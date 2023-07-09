@@ -12,7 +12,6 @@ import { Future } from "../../utils/future";
 import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
 import { getMainPdbId, Selection } from "../view-models/Selection";
-import { isDebugMode } from "../../utils/debug";
 
 export function useStateFromFuture<Value>(
     getFutureValue: () => FutureData<Value> | undefined
@@ -87,12 +86,12 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
             updateLoaderStatus(key, "loading", message);
             return promise
                 .then(data => {
-                    if (isDebugMode()) console.info(`Loader "${key}" loaded.`);
+                    console.debug(`Loader "${key}" loaded.`);
                     updateLoaderStatus(key, "loaded");
                     return data;
                 })
                 .catch(err => {
-                    if (isDebugMode()) console.info(`Loader "${key}" error while loading.`);
+                    console.debug(`Loader "${key}" error while loading.`);
                     updateLoaderStatus(key, "error");
                     return Promise.reject(err);
                 });
