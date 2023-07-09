@@ -166,7 +166,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                         );
                     } else {
                         hideLoading();
-                        setError(`PDB not found: ${pdbId}`);
+                        setError(`PDB not found${pdbId ? ": " + pdbId : ""}`);
                     }
                 });
             }
@@ -174,6 +174,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
             setPdbePlugin(plugin);
         },
         [
+            setError,
             pdbePlugin,
             newSelection,
             prevSelectionRef,
