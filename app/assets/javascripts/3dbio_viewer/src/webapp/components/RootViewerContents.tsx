@@ -26,7 +26,7 @@ type ExternalData =
 const loaderMessages = {
     //already ordered by priority
     getRelatedPdbModel: [i18n.t("Getting PDB related model..."), 0],
-    initPlugin: [i18n.t("Starting pdbe-molstar with PDB..."), 1], //already loading PDB
+    initPlugin: [i18n.t("Starting 3D Viewer..."), 1], //already loading PDB
     updateVisualPlugin: [i18n.t("Updating selection..."), 2],
     pdbLoader: [i18n.t("Loading PDB Data..."), 3],
     loadModel: [i18n.t("Loading model..."), 4], //PDB, EMDB, PDB-REDO, CSTF, CERES
@@ -39,7 +39,12 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const { selection, setSelection } = viewerState;
     const { compositionRoot } = useAppContext();
 
-    const { loading, title, updateLoaderStatus, updateOnResolve } = useMultipleLoaders<LoaderKey>(
+    const {
+        loading,
+        title,
+        updateLoaderStatus,
+        updateOnResolve: updateLoader,
+    } = useMultipleLoaders<LoaderKey>(
         _.mapValues(loaderMessages, ([message, priority]) => ({
             message,
             priority,
@@ -100,7 +105,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                                 onSelectionChange={setSelection}
                                 onLigandsLoaded={setLigands}
                                 proteinNetwork={proteinNetwork}
-                                updateLoaderOnResolve={updateOnResolve}
+                                updateLoader={updateLoader}
                                 loaderBusy={loading}
                             />
                         </div>

@@ -45,7 +45,7 @@ interface MolecularStructureProps {
     onLigandsLoaded(ligands: Ligand[]): void;
     proteinNetwork: Maybe<ProteinNetwork>;
     loaderBusy: boolean;
-    updateLoaderOnResolve: <T>(key: LoaderKey, promise: Promise<T>, message?: string) => Promise<T>;
+    updateLoader: <T>(key: LoaderKey, promise: Promise<T>, message?: string) => Promise<T>;
 }
 
 const urls = {
@@ -68,7 +68,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         selection: newSelection,
         onSelectionChange: setSelection,
         onLigandsLoaded,
-        updateLoaderOnResolve,
+        updateLoader,
         loaderBusy,
     } = options;
     const { proteinNetwork } = options;
@@ -118,20 +118,21 @@ function usePdbePlugin(options: MolecularStructureProps) {
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
             if (pluginAlreadyRendered) {
                 molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
-                await updateLoaderOnResolve("updateVisualPlugin", plugin.visual.update(initParams));
-            } else if (!mainPdb && emdbId) {
-                updateLoaderOnResolve(
+                await updateLoader("updateVisualPlugin", plugin.visual.update(initParams));
+            } else if (!mainPdb && emdbId)
+                updateLoader(
                     "getRelatedPdbModel",
-                    new Promise<void>((resolve, reject) => {
-                        compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
-                            if (!pdbId) reject("No PDB found for this EMDB model");
-                            setSelection(setMainPdb(newSelection, pdbId));
-                            resolve();
-                        }, console.error);
-                    })
+                    compositionRoot.getRelatedModels
+                        .pdbFromEmdb(emdbId)
+                        .toPromise()
+                        .then(pdbId => {
+                            if (!pdbId) throw new Error("No PDB found for this EMDB model");
+                            else setSelection(setMainPdb(newSelection, pdbId));
+                        })
+                        .catch(console.error)
                 );
-            } else {
-                updateLoaderOnResolve(
+            else {
+                updateLoader(
                     "initPlugin",
                     new Promise<void>((resolve, reject) => {
                         plugin.events.loadComplete.subscribe({
@@ -168,14 +169,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             setPdbePlugin(plugin);
         },
-        [
-            pdbePlugin,
-            newSelection,
-            prevSelectionRef,
-            compositionRoot,
-            setSelection,
-            updateLoaderOnResolve,
-        ]
+        [pdbePlugin, newSelection, prevSelectionRef, compositionRoot, setSelection, updateLoader]
     );
 
     const updatePluginOnNewSelection = React.useCallback(() => {
@@ -191,7 +185,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                 chains,
                 currentSelection,
                 newSelection,
-                updateLoaderOnResolve
+                updateLoader
             );
             setSelection(newSelection);
         }
@@ -228,7 +222,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         setSelection,
         loaderBusy,
         chains,
-        updateLoaderOnResolve,
+        updateLoader,
     ]);
 
     const updatePluginOnNewSelectionEffect = updatePluginOnNewSelection;
@@ -297,7 +291,7 @@ async function applySelectionChangesToPlugin(
     chains: Maybe<PdbInfo["chains"]>,
     currentSelection: Selection,
     newSelection: Selection,
-    updateLoaderOnResolve: MolecularStructureProps["updateLoaderOnResolve"]
+    updateLoader: MolecularStructureProps["updateLoader"]
 ): Promise<void> {
     if (molstarState.current.type !== "pdb") return;
 
@@ -345,7 +339,7 @@ async function applySelectionChangesToPlugin(
                     assemblyId: "1",
                 };
 
-                await updateLoaderOnResolve(
+                await updateLoader(
                     "loadModel",
                     plugin.load(loadParams, false),
                     pdbs.length > 1
@@ -371,7 +365,7 @@ async function applySelectionChangesToPlugin(
                 _.unionBy(oldItems(), [item], getId)
             );
 
-            await updateLoaderOnResolve(
+            await updateLoader(
                 "loadModel",
                 loadEmdb(plugin, urls.emdb(item.id)),
                 emdbs.length > 1
