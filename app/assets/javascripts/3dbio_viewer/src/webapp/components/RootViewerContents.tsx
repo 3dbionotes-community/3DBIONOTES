@@ -49,7 +49,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             setToolbarExpanded(data.size.width >= 520);
             setViewerSelectorExpanded(window.innerWidth - data.size.width >= 725);
         },
-        [window.innerWidth, setToolbarExpanded, setViewerSelectorExpanded]
+        [setToolbarExpanded, setViewerSelectorExpanded]
     );
 
     const resizableBoxProps = React.useMemo<
