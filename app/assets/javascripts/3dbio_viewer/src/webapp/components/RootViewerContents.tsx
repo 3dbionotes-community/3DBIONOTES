@@ -1,6 +1,6 @@
 import _ from "lodash";
 import React from "react";
-import { ResizableBox, ResizeCallbackData } from "react-resizable";
+import { ResizableBox, ResizableBoxProps, ResizeCallbackData } from "react-resizable";
 import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
 import { ViewerSelector } from "./viewer-selector/ViewerSelector";
@@ -31,8 +31,8 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const [error, setError] = React.useState<string>();
     const [loadingTitle, setLoadingTitle] = React.useState(i18n.t("Loading"));
     const [externalData, setExternalData] = React.useState<ExternalData>({ type: "none" });
-    const [toolbarExpanded, setToolbarExpanded] = React.useState(true);
-    const [viewerSelectorExpanded, setViewerSelectorExpanded] = React.useState(true);
+    const [toolbarExpanded, { set: setToolbarExpanded }] = useBooleanState(true);
+    const [viewerSelectorExpanded, { set: setViewerSelectorExpanded }] = useBooleanState(true);
 
     const uploadData = getUploadData(externalData);
 
@@ -49,6 +49,18 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             setToolbarExpanded(data.size.width >= 520);
             setViewerSelectorExpanded(window.innerWidth - data.size.width >= 725);
         },
+        [window.innerWidth, setToolbarExpanded, setViewerSelectorExpanded]
+    );
+
+    const resizableBoxProps = React.useMemo<
+        Pick<ResizableBoxProps, "width" | "minConstraints" | "maxConstraints" | "resizeHandles">
+    >(
+        () => ({
+            width: window.innerWidth * 0.55,
+            minConstraints: [400, 0],
+            maxConstraints: [window.innerWidth - 600, 0],
+            resizeHandles: ["w"],
+        }),
         []
     );
 
@@ -109,11 +121,11 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             )}
 
             <ResizableBox
-                width={window.innerWidth * 0.55}
-                minConstraints={[400, 0]}
-                maxConstraints={[window.innerWidth - 600, 0]}
+                width={resizableBoxProps.width ?? 0}
+                minConstraints={resizableBoxProps.minConstraints}
+                maxConstraints={resizableBoxProps.maxConstraints}
                 axis="x"
-                resizeHandles={["w"]}
+                resizeHandles={resizableBoxProps.resizeHandles}
                 onResize={toggleToolbarExpanded}
                 onResizeStop={redrawWindow}
             >

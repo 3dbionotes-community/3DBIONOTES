@@ -53,8 +53,10 @@ export function Dropdown<Id extends string = string>(
 
     if (!items || _.isEmpty(items)) return null;
 
-    const buttonText =
-        text || (selected !== undefined ? items.find(item => item.id === selected)?.text : ""); //"" intended to remove text
+    const buttonText = React.useMemo(() => {
+        if (text) return text;
+        if (selected !== undefined) return items.find(item => item.id === selected)?.text ?? ""; //"" intended to remove text
+    }, [text, items]);
 
     return (
         <React.Fragment>
