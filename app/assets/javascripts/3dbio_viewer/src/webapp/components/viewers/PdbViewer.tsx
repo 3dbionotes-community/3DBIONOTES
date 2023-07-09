@@ -11,8 +11,9 @@ import { getVisibleBlocks } from "../protvista/Protvista.helpers";
 import { debugFlags } from "../../pages/app/debugFlags";
 import { TrainingApp } from "../../training-app";
 import { modules } from "../../training-app/training-modules";
-import styles from "./Viewers.module.css";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
+import { BlockDef, BlockVisibility } from "../protvista/Protvista.types";
+import styles from "./Viewers.module.css";
 
 export interface PdbViewerProps {
     pdb: Pdb;
@@ -25,11 +26,23 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
     const { pdb, viewerState, onAddAnnotations, pdbInfo } = props;
     const { selection, profile, setProfile } = viewerState;
 
+    const [visibleBlocks, setVisibleBlocks] = React.useState<BlockVisibility[]>(
+        blockDefs.map(blockDef => ({ block: blockDef, visible: true }))
+    );
+
+    const setBlockVisibility = React.useCallback(
+        (block: BlockDef, visible: boolean) =>
+            setVisibleBlocks(visibleBlocks =>
+                visibleBlocks.map(i => (i.block.id === block.id ? { block, visible } : i))
+            ),
+        [setVisibleBlocks]
+    );
+
     const blocks = React.useMemo(() => {
-        return getVisibleBlocks(blockDefs, { pdb, profile }).filter(
+        return getVisibleBlocks(visibleBlocks, { pdb, profile }).filter(
             block => !debugFlags.showOnlyValidations || block.id === "mapValidation"
         );
-    }, [pdb, profile]);
+    }, [pdb, profile, visibleBlocks]);
 
     return (
         <React.Fragment>
@@ -39,7 +52,13 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
                 <JumpToButton blocks={blocks} />
                 {!debugFlags.hideTraining && <TrainingApp locale="en" modules={modules} />}
             </div>
-            <ProtvistaViewer pdbInfo={pdbInfo} blocks={blocks} pdb={pdb} selection={selection} />
+            <ProtvistaViewer
+                pdbInfo={pdbInfo}
+                blocks={blocks}
+                pdb={pdb}
+                selection={selection}
+                setBlockVisibility={setBlockVisibility}
+            />
         </React.Fragment>
     );
 });

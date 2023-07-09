@@ -4,7 +4,7 @@ import { Pdb, getEntityLinks } from "../../../domain/entities/Pdb";
 import { Selection } from "../../view-models/Selection";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
-import { BlockDef, BlockVisibility, TrackComponentProps } from "./Protvista.types";
+import { BlockDef, TrackComponentProps } from "./Protvista.types";
 import { PPIViewer } from "../ppi/PPIViewer";
 import { GeneViewer } from "../gene-viewer/GeneViewer";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
@@ -18,6 +18,7 @@ export interface ProtvistaViewerProps {
     pdbInfo: PdbInfo;
     selection: Selection;
     blocks: BlockDef[];
+    setBlockVisibility: (block: BlockDef, visible: boolean) => void;
 }
 
 const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
@@ -26,20 +27,11 @@ const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps
 };
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
-    const { pdb, selection, blocks, pdbInfo } = props;
+    const { pdb, selection, blocks, pdbInfo, setBlockVisibility } = props;
 
-    const [blocksVisibility, setBlocksVisibility] = React.useState(
-        blocks.map(block => ({ block, visible: true }))
-    );
-
-    const setBlockVisibility = React.useCallback(
-        (blockVisibility: BlockVisibility) =>
-            setBlocksVisibility(
-                blocksVisibility.map(i =>
-                    i.block.id === blockVisibility.block.id ? blockVisibility : i
-                )
-            ),
-        [blocksVisibility]
+    const setBlockVisible = React.useCallback(
+        (block: BlockDef) => (visible: boolean) => setBlockVisibility(block, visible),
+        [setBlockVisibility]
     );
 
     const selectedChain = React.useMemo(() => getSelectedChain(pdbInfo?.chains, selection), [
@@ -90,41 +82,39 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
 
     const renderBlocks = React.useMemo(
         () =>
-            blocksVisibility.map(({ block, visible }) => {
+            blocks.map(block => {
                 const CustomComponent = block.component;
                 return (
-                    visible && (
-                        <ViewerBlock key={block.id} block={block} namespace={namespace}>
-                            {CustomComponent ? (
-                                <CustomComponent
-                                    pdb={pdb}
-                                    selection={selection}
-                                    block={block}
-                                    setBlockVisibility={setBlockVisibility}
-                                />
-                            ) : (
-                                <ProtvistaPdb pdb={pdb} block={block} />
-                            )}
+                    <ViewerBlock key={block.id} block={block} namespace={namespace}>
+                        {CustomComponent ? (
+                            <CustomComponent
+                                pdb={pdb}
+                                selection={selection}
+                                block={block}
+                                setVisible={setBlockVisible(block)}
+                            />
+                        ) : (
+                            <ProtvistaPdb pdb={pdb} block={block} />
+                        )}
 
-                            {block.tracks.map((trackDef, idx) => {
-                                const CustomTrackComponent = trackComponentMapping[trackDef.id];
-                                return (
-                                    CustomTrackComponent && (
-                                        <CustomTrackComponent
-                                            block={block}
-                                            key={idx}
-                                            trackDef={trackDef}
-                                            pdb={pdb}
-                                            selection={selection}
-                                        />
-                                    )
-                                );
-                            })}
-                        </ViewerBlock>
-                    )
+                        {block.tracks.map((trackDef, idx) => {
+                            const CustomTrackComponent = trackComponentMapping[trackDef.id];
+                            return (
+                                CustomTrackComponent && (
+                                    <CustomTrackComponent
+                                        block={block}
+                                        key={idx}
+                                        trackDef={trackDef}
+                                        pdb={pdb}
+                                        selection={selection}
+                                    />
+                                )
+                            );
+                        })}
+                    </ViewerBlock>
                 );
             }),
-        [blocksVisibility, namespace, pdb, selection, setBlockVisibility]
+        [namespace, pdb, selection, blocks, setBlockVisible]
     );
 
     return <div style={styles.container}>{renderBlocks}</div>;

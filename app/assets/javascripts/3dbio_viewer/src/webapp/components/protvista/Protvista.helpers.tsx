@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import { BlockDef, ProtvistaTrackElement } from "./Protvista.types";
+import { BlockDef, BlockVisibility, ProtvistaTrackElement } from "./Protvista.types";
 import { PdbView } from "../../view-models/PdbView";
 import { Pdb, pdbHasCustomTracks } from "../../../domain/entities/Pdb";
 import { Profile, profiles } from "../../../domain/entities/Profile";
@@ -44,12 +44,13 @@ function isProtvistaPdbActionEvent(ev: any): ev is ProtvistaPdbActionEvent {
 }
 
 export function getVisibleBlocks(
-    blocks: BlockDef[],
+    visibleBlocks: BlockVisibility[],
     options: { pdb: Pdb; profile: Profile }
 ): BlockDef[] {
     const { pdb, profile } = options;
 
-    return blocks
+    return visibleBlocks
+        .flatMap(({ block, visible }) => (visible ? [block] : []))
         .filter(block => blockHasRelevantData(block, pdb))
         .filter(block => profile === profiles.general || block.profiles.includes(profile));
 }
