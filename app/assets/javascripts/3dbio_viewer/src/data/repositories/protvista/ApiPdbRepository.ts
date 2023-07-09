@@ -48,6 +48,7 @@ import {
     pdbEntryResponseC,
     PdbLigandsResponse,
 } from "../../PdbLigands";
+import { getPublicationsCodec, EntryPublications } from "../../PdbPublications";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -207,6 +208,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         features: getJSON(`${ebiProteinsApiUrl}/features/${proteinId}`),
         cv19Tracks: getJSON(`${bioUrl}/cv19_annotations/${proteinId}_annotations.json`),
         pdbAnnotations: onF(pdbId, pdbId => getJSON(`${pdbAnnotUrl}/all/${pdbId}/${chainId}/?format=json`)),
+        pdbPublications: onF(pdbId, pdbId => pdbId ? getValidatedJSON<EntryPublications>(`${ebiBaseUrl}/pdbe/api/pdb/entry/publications/${pdbId}`, getPublicationsCodec(pdbId)):Future.success(undefined)),
         coverage: onF(pdbId, pdbId => getJSON(`${bioUrl}/api/alignments/Coverage/${pdbId}${chainId}`)),
         ebiVariation: getJSON(`${ebiProteinsApiUrl}/variation/${proteinId}`),
         mobiUniprot: getJSON(`${bioUrl}/api/annotations/mobi/Uniprot/${proteinId}`),

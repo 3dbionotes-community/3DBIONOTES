@@ -7,6 +7,7 @@ import { profiles } from "../../../domain/entities/Profile";
 import { ProtvistaPdbValidation } from "./ProtvistaPdbValidation";
 import { IDRViewerBlock } from "../idr/IDRViewerBlock";
 import { FeatureAnnotationBlock } from "./FeatureAnnotationBlock";
+import { BasicInfoEntry } from "../BasicInfoEntry";
 
 export const blockDefs: BlockDef[] = [
     {
@@ -18,6 +19,21 @@ export const blockDefs: BlockDef[] = [
         ),
         tracks: [],
         component: BasicInfoViewer,
+        profiles: [
+            profiles.structural,
+            profiles.validation,
+            profiles.drugDesign,
+            profiles.biomedicine,
+            profiles.omics,
+        ],
+    },
+    {
+        id: "basicInfoEntry",
+        title: i18n.t("Basic information of the entry"),
+        description: "",
+        help: "",
+        tracks: [],
+        component: BasicInfoEntry,
         profiles: [
             profiles.structural,
             profiles.validation,
