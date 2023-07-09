@@ -166,7 +166,6 @@ function usePdbePlugin(options: MolecularStructureProps) {
                         );
                     } else {
                         hideLoading();
-                        setError(`PDB not found: ${pdbId}`);
                     }
                 });
             }
