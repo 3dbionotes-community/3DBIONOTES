@@ -72,31 +72,12 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         [pdb.protein]
     );
 
-    /* This snippet of code is just a patch and is intended to be well replaced with a better aproach, please. */
-    // THIS IS A VERY BAD APPROACH, PLEASE REMOVE WHEN POSSIBLE
-    const proteinPartners = React.useMemo(() => {
-        const ppiFrame = [...document.getElementsByTagName("iframe")].find(
-            frame => frame.name === "ppi"
-        );
-        if (ppiFrame && (ppiFrame.contentWindow as PPIWindow)) {
-            if ((ppiFrame.contentWindow as PPIWindow).cytoscape_graph)
-                /*sometimes prodcues error*/
-                return (
-                    (ppiFrame.contentWindow as PPIWindow).cytoscape_graph.elements.nodes.filter(
-                        (node: { data: { shape: string } }) => node.data.shape === "ellipse"
-                    ).length - 1
-                );
-            else return 0;
-        } else return 0;
-    }, []);
-
     const namespace = React.useMemo(
         () => ({
             poorQualityRegionMax: _.first(pdb.emdbs)?.emv?.stats?.quartile75,
             poorQualityRegionMin: _.first(pdb.emdbs)?.emv?.stats?.quartile25,
             proteinName: pdb.protein.name,
             ligandsAndSmallMoleculesCount,
-            proteinPartners,
             resolution: _.first(pdb.emdbs)?.emv?.stats?.resolutionMedian,
             chain: pdb.chainId,
             uniprotId: getEntityLinks(pdb, "uniprot")
@@ -104,7 +85,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                 .join(", "),
             genePhrase: geneName ? geneName + (geneBankEntry ?? "") : "",
         }),
-        [pdb, geneName, geneBankEntry, ligandsAndSmallMoleculesCount, proteinPartners]
+        [pdb, geneName, geneBankEntry, ligandsAndSmallMoleculesCount]
     );
 
     const renderBlocks = React.useMemo(
@@ -152,7 +133,3 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
 const styles = {
     container: { padding: "1em 0 2em" },
 };
-
-interface PPIWindow extends Window {
-    cytoscape_graph: any;
-}
