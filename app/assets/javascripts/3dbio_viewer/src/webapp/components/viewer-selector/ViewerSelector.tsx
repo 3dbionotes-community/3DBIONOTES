@@ -88,6 +88,16 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                                     />
                                 </MainItemBox>
                             )}
+
+                            {selection.main.pdbRedo && (
+                                <MainItemBox label={i18n.t("PDB-Redo")} className="pdbRedo">
+                                    <SelectionItem
+                                        selection={selection}
+                                        item={selection.main.pdbRedo}
+                                        onVisibilityChange={update.setMainItemVisibility}
+                                    />
+                                </MainItemBox>
+                            )}
                         </>
                     )}
                 </div>

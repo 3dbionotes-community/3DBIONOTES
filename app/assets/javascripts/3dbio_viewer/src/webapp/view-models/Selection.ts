@@ -6,17 +6,20 @@ import { Maybe } from "../../utils/ts-utils";
 
 /* Selection object from/to string.
 
-Example: 6w9c:A:NAG-701+EMD-8650|6lzg+!EMD-23150+EMD-15311
+Example: 6w9c:A:NAG-701+EMD-8650&pdbRedo|6lzg+!EMD-23150+EMD-15311
 
 Main: PDB = 6w9c (chain A, ligand NAG-701) , EMDB = EMD-8650
 Overlay: 6lzg, EMD-23150 (! -> invisible), EMD-15311.
+Add PDB-Redo of 6w9c if exist (! -> invisible)
 */
 
 const mainSeparator = "+";
 const overlaySeparator = "|";
 const chainSeparator = ":";
+const andSeparator = "&";
 
-export type Type = "pdb" | "emdb";
+type RefinedModelTypes = "pdbRedo" | "cstf" | "ceres";
+export type Type = "pdb" | "emdb" | RefinedModelTypes;
 
 export type ActionType = "select" | "append";
 
@@ -27,7 +30,7 @@ export interface BaseSelection {
 
 export interface FreeSelection extends BaseSelection {
     type: "free";
-    main: { pdb: Maybe<DbItem>; emdb: Maybe<DbItem> };
+    main: Record<Type, Maybe<DbItem>>;
     overlay: Array<DbItem>;
 }
 
@@ -47,21 +50,22 @@ export type Selection = FreeSelection | UploadDataSelection | NetworkSelection;
 
 export const emptySelection: FreeSelection = {
     type: "free",
-    main: { pdb: undefined, emdb: undefined },
+    main: {
+        pdb: undefined,
+        emdb: undefined,
+        pdbRedo: undefined,
+        cstf: undefined,
+        ceres: undefined,
+    },
     overlay: [],
     chainId: undefined,
     ligandId: undefined,
 };
 
-export interface WithVisibility<T> {
-    item: T;
-    visible: boolean;
-}
-
 export interface DbItem {
     type: Type;
     id: string;
-    visible: boolean | undefined;
+    visible?: boolean;
 }
 
 export function getItemSelector(item: DbItem): Selector {
@@ -72,15 +76,13 @@ export function getItemSelector(item: DbItem): Selector {
             // Example: with provider = "RCSB PDB EMD Density Server: EMD-8650"
             // Example: with URL "https://maps.rcsb.org/em/EMD-21375/cell?detail=3"
             return { label: new RegExp(`/${item.id}/`, "i") };
+        default:
+            return {};
     }
 }
 
-export function getMainPdbId(selection: Selection): Maybe<string> {
-    return selection.type === "free" ? selection.main.pdb?.id : undefined;
-}
-
-export function getMainEmdbId(selection: Selection): Maybe<string> {
-    return selection.type === "free" ? selection.main.emdb?.id : undefined;
+export function getMainItem(selection: Selection, modelType: Type): Maybe<string> {
+    return selection.type === "free" ? selection.main[modelType]?.id : undefined;
 }
 
 export function getChainId(selection: Selection): Maybe<string> {
@@ -89,7 +91,7 @@ export function getChainId(selection: Selection): Maybe<string> {
 
 /* toString, fromString */
 
-function splitPdbIdb(main: string): Array<string | undefined> {
+function splitPdbIdb(main: string): Array<Maybe<string>> {
     if (main.includes(mainSeparator)) {
         return main.split(mainSeparator, 2);
     } else if (main.startsWith("EMD")) {
@@ -99,9 +101,33 @@ function splitPdbIdb(main: string): Array<string | undefined> {
     }
 }
 
+function getRichRefinedModel(item: string) {
+    const getRefinedModel = (refinedModelType: RefinedModelTypes) => {
+        const isPresent = new RegExp(andSeparator + "!{0,1}" + refinedModelType).test(item);
+        if (!isPresent) return;
+        else
+            return {
+                type: refinedModelType,
+                visible: new RegExp(andSeparator + refinedModelType).test(item),
+            };
+    };
+
+    return {
+        pdbRedo: getRefinedModel("pdbRedo"),
+        cstf: getRefinedModel("cstf"),
+        ceres: getRefinedModel("ceres"),
+    };
+}
+
 export function getSelectionFromString(items: Maybe<string>): Selection {
     const [main = "", overlay = ""] = (items || "").split(overlaySeparator, 2);
-    const [mainPdbRich = "", mainEmdbRichId] = splitPdbIdb(main);
+    const { pdbRedo, cstf, ceres } = getRichRefinedModel(main);
+    const [mainPdbRich = "", mainEmdbRichId] = splitPdbIdb(
+        main.replace(
+            new RegExp(`(${andSeparator}pdbRedo|${andSeparator}cstf|${andSeparator}ceres)`),
+            ""
+        )
+    );
     const [mainPdbRichId, chainId, ligandId] = mainPdbRich.split(chainSeparator, 3);
     const overlayIds = overlay.split(mainSeparator);
 
@@ -110,6 +136,10 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
         main: {
             pdb: buildDbItem(mainPdbRichId),
             emdb: buildDbItem(mainEmdbRichId),
+            pdbRedo: buildRefinedModelDbItem(pdbRedo, mainPdbRichId),
+            cstf: undefined, //also only pdbId
+            ceres: undefined, //pdbId+emdbId
+            // ceres: buildRefinedModelDbItem(ceres, `${mainPdbRichId}+${mainEmdbRichId}`),
         },
         overlay: _.compact(overlayIds.map(buildDbItem)),
         chainId: chainId,
@@ -136,37 +166,34 @@ export function getStringFromSelection(selection: Selection): string {
         .dropRightWhile(_.isEmpty)
         .join(chainSeparator);
     const mainParts = main ? [pdbWithChainAndLigand, getItemParam(main.emdb)] : [];
+    const refinedModels = _.compact([
+        getModelItemParam(main.pdbRedo),
+        getModelItemParam(main.cstf),
+        getModelItemParam(main.ceres),
+    ]).map(s => s && andSeparator + s);
     const parts = [
-        _(mainParts).dropRightWhile(_.isEmpty).join(mainSeparator),
+        _(mainParts).dropRightWhile(_.isEmpty).join(mainSeparator) + refinedModels.join(""),
         overlay.map(getItemParam).join(mainSeparator),
     ];
+
     return _.compact(parts).join(overlaySeparator);
 }
 
 /* Updaters */
 
-export function setMainPdb(selection: Selection, pdbId: Maybe<string>): Selection {
-    if (selection.type !== "free" || !selection.main || selection.main?.pdb?.id === pdbId)
+export function setMainItem(
+    selection: Selection,
+    itemId: Maybe<string>,
+    modelType: Type
+): Selection {
+    if (selection.type !== "free" || !selection.main || selection.main?.[modelType]?.id === itemId)
         return selection;
 
     return {
         ...selection,
         main: {
             ...selection.main,
-            pdb: pdbId ? { type: "pdb", id: pdbId, visible: true } : undefined,
-        },
-    };
-}
-
-export function setMainEmdb(selection: Selection, emdbId: Maybe<string>): Selection {
-    if (selection.type !== "free" || !selection.main || selection.main?.emdb?.id === emdbId)
-        return selection;
-
-    return {
-        ...selection,
-        main: {
-            ...selection.main,
-            emdb: emdbId ? { type: "emdb", id: emdbId, visible: true } : undefined,
+            [modelType]: itemId ? { type: modelType, id: itemId, visible: true } : undefined,
         },
     };
 }
@@ -197,9 +224,26 @@ export function setMainItemVisibility(
     if (selection.type !== "free") return selection;
     const { main } = selection;
     if (!main) return selection;
-    const newMainPdb = main.pdb?.id === id ? { ...main.pdb, visible } : main.pdb;
-    const newMainEmdb = main.emdb?.id === id ? { ...main.emdb, visible } : main.emdb;
-    return { ...selection, main: { pdb: newMainPdb, emdb: newMainEmdb } };
+
+    const getNewMainItem = (type: Type): Maybe<DbItem> => {
+        const newMainItem = main[type];
+        return newMainItem
+            ? newMainItem.id === id
+                ? { ...newMainItem, visible }
+                : main[type]
+            : undefined;
+    };
+
+    return {
+        ...selection,
+        main: {
+            pdb: getNewMainItem("pdb"),
+            emdb: getNewMainItem("emdb"),
+            pdbRedo: getNewMainItem("pdbRedo"),
+            cstf: getNewMainItem("cstf"),
+            ceres: getNewMainItem("ceres"),
+        },
+    };
 }
 
 export function setSelectionChain(selection: Selection, chainId: string): Selection {
@@ -212,16 +256,16 @@ export function setSelectionLigand(selection: Selection, ligand: Maybe<Ligand>):
     return { ...selection, chainId, ligandId: ligand.shortId };
 }
 
-function getId(item: DbItem) {
-    return item.id;
+function getTypeId(item: DbItem) {
+    return item.type + "-" + item.id;
 }
 
 export function diffDbItems(newItems: DbItem[], oldItems: DbItem[]) {
-    const added = _.differenceBy(newItems, oldItems, getId);
-    const removed = _.differenceBy(oldItems, newItems, getId);
-    const commonIds = _.intersectionBy(oldItems, newItems, getId).map(getId);
-    const oldItemsById = _.keyBy(oldItems, getId);
-    const newItemsById = _.keyBy(newItems, getId);
+    const added = _.differenceBy(newItems, oldItems, getTypeId);
+    const removed = _.differenceBy(oldItems, newItems, getTypeId);
+    const commonIds = _.intersectionBy(oldItems, newItems, getTypeId).map(getTypeId);
+    const oldItemsById = _.keyBy(oldItems, getTypeId);
+    const newItemsById = _.keyBy(newItems, getTypeId);
     const updated = _(commonIds)
         .filter(id => !_.isEqual(oldItemsById[id], newItemsById[id]))
         .map(id => newItemsById[id])
@@ -234,13 +278,21 @@ export function diffDbItems(newItems: DbItem[], oldItems: DbItem[]) {
 export function getItems(selection: Maybe<Selection>): DbItem[] {
     return selection && selection.type === "free"
         ? _.concat(
-              selection.main ? _.compact([selection.main.pdb, selection.main.emdb]) : [],
+              selection.main
+                  ? _.compact([
+                        selection.main.pdb,
+                        selection.main.emdb,
+                        selection.main.pdbRedo,
+                        selection.main.cstf,
+                        selection.main.ceres,
+                    ])
+                  : [],
               selection.overlay
           )
         : [];
 }
 
-export function buildDbItem(richId: string | undefined): DbItem | undefined {
+export function buildDbItem(richId?: string): Maybe<DbItem> {
     if (!richId) return;
 
     const [visible, id] = richId[0] === "!" ? [false, richId.slice(1)] : [true, richId];
@@ -254,8 +306,24 @@ export function buildDbItem(richId: string | undefined): DbItem | undefined {
     }
 }
 
+export function buildRefinedModelDbItem(
+    richRefinedModel?: Omit<DbItem, "id">,
+    richId?: string
+): Maybe<DbItem> {
+    if (!richId || !richRefinedModel) return;
+
+    return {
+        ...richRefinedModel,
+        id: richId.replace("!", ""),
+    };
+}
+
 export function getItemParam(item: DbItem | undefined): string | undefined {
     return item ? [item.visible ? "" : "!", item.id].join("") : undefined;
+}
+
+export function getModelItemParam(item: DbItem | undefined): string | undefined {
+    return item ? [item.visible ? "" : "!", item.type].join("") : undefined;
 }
 
 export function runAction(selection: Selection, action: ActionType, item: DbItem): Selection {
@@ -269,12 +337,16 @@ export function runAction(selection: Selection, action: ActionType, item: DbItem
             const newMain: FreeSelection["main"] =
                 item.type === "pdb"
                     ? {
-                          ...baseMain,
+                          emdb: baseMain.emdb,
                           pdb: { type: "pdb", id: item.id, visible: true },
+                          pdbRedo: undefined,
+                          cstf: undefined,
+                          ceres: undefined,
                       }
                     : {
                           ...baseMain,
                           emdb: { type: "emdb", id: item.id, visible: true },
+                          ceres: undefined,
                       };
 
             return {
@@ -304,12 +376,12 @@ export function getMainChanges(
     prevSelection: Selection,
     newSelection: Selection
 ): { pdbId?: string; emdbId?: string } {
-    const newPdbId = getMainPdbId(newSelection);
-    const newEmdbId = getMainEmdbId(newSelection);
+    const newPdbId = getMainItem(newSelection, "pdb");
+    const newEmdbId = getMainItem(newSelection, "emdb");
 
     return {
-        pdbId: newPdbId != getMainPdbId(prevSelection) ? newPdbId : undefined,
-        emdbId: newEmdbId != getMainEmdbId(prevSelection) ? newEmdbId : undefined,
+        pdbId: newPdbId != getMainItem(prevSelection, "pdb") ? newPdbId : undefined,
+        emdbId: newEmdbId != getMainItem(prevSelection, "emdb") ? newEmdbId : undefined,
     };
 }
 

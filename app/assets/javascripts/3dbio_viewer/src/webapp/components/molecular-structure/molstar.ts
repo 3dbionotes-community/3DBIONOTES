@@ -3,7 +3,7 @@ import { StructureProperties as Props } from "molstar/lib/mol-model/structure";
 import { StateTransform } from "molstar/lib/mol-state/transform";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
 import { PluginContext } from "molstar/lib/mol-plugin/context";
-import { DbItem, getMainPdbId, Selection } from "../../view-models/Selection";
+import { DbItem, Selection, getMainItem } from "../../view-models/Selection";
 import { Maybe } from "../../../utils/ts-utils";
 import { buildLigand, Ligand } from "../../../domain/entities/Ligand";
 import { StateObjectCell } from "molstar/lib/mol-state/object";
@@ -31,7 +31,7 @@ function getCellsWithPath(molstarPlugin: PluginContext) {
 }
 
 export function getLigands(pdbePlugin: PDBeMolstarPlugin, newSelection: Selection) {
-    const mainPdbId = getMainPdbId(newSelection)?.toLowerCase();
+    const mainPdbId = getMainItem(newSelection, "pdb")?.toLowerCase();
     if (!mainPdbId) return;
 
     const molstarPlugin = pdbePlugin.plugin as PluginContext;
