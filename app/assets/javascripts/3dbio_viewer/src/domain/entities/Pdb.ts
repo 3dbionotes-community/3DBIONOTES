@@ -75,7 +75,7 @@ export interface PdbPublication {
     type: string;
     doi?: string;
     pubmedId?: string;
-    associatedEntries: PdbId[];
+    relatedEntries: PdbId[];
     journalInfo: {
         pdbAbbreviation?: string;
         isoAbbreviation?: string;

@@ -67,7 +67,7 @@ export function getPublications(publications: PublicationsCodec): PdbPublication
                 type,
                 doi: doi ?? undefined,
                 pubmedId: pubmed_id ?? undefined,
-                associatedEntries: associated_entries?.split(", ") ?? [],
+                relatedEntries: associated_entries?.split(", ") ?? [],
                 journalInfo: {
                     pdbAbbreviation: journal_info.pdb_abbreviation ?? undefined,
                     isoAbbreviation: journal_info.ISO_abbreviation ?? undefined,
