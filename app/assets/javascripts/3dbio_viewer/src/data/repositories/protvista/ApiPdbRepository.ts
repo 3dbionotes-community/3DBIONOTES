@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { FutureData } from "../../../domain/entities/FutureData";
-import { Pdb } from "../../../domain/entities/Pdb";
+import { Pdb, PdbPublication } from "../../../domain/entities/Pdb";
 import { PdbRepository } from "../../../domain/repositories/PdbRepository";
 import { Future } from "../../../utils/future";
 import { getTotalFeaturesLength } from "../../../domain/entities/Track";
@@ -48,7 +48,7 @@ import {
     pdbEntryResponseC,
     PdbLigandsResponse,
 } from "../../PdbLigands";
-import { getPublicationsCodec, EntryPublications } from "../../PdbPublications";
+import { getPublicationsCodec, EntryPublications, getPublications } from "../../PdbPublications";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -56,6 +56,7 @@ interface Data {
     features: Features;
     cv19Tracks: Cv19Tracks;
     pdbAnnotations: PdbAnnotations;
+    pdbPublications: PdbPublication[];
     ebiVariation: EbiVariation;
     coverage: Coverage;
     mobiUniprot: MobiUniprot;
@@ -168,6 +169,7 @@ export class ApiPdbRepository implements PdbRepository {
             path: undefined,
             customAnnotations: undefined,
             ligands,
+            publications: data.pdbPublications ?? [],
         };
     }
 }
@@ -208,7 +210,11 @@ function getData(options: Options): FutureData<Partial<Data>> {
         features: getJSON(`${ebiProteinsApiUrl}/features/${proteinId}`),
         cv19Tracks: getJSON(`${bioUrl}/cv19_annotations/${proteinId}_annotations.json`),
         pdbAnnotations: onF(pdbId, pdbId => getJSON(`${pdbAnnotUrl}/all/${pdbId}/${chainId}/?format=json`)),
-        pdbPublications: onF(pdbId, pdbId => pdbId ? getValidatedJSON<EntryPublications>(`${ebiBaseUrl}/pdbe/api/pdb/entry/publications/${pdbId}`, getPublicationsCodec(pdbId)):Future.success(undefined)),
+        pdbPublications: pdbId ?
+        onF(pdbId, pdbId => getValidatedJSON<EntryPublications>(
+            `${ebiBaseUrl}/pdbe/api/pdb/entry/publications/${pdbId}`,
+            getPublicationsCodec(pdbId)
+            ).map(entryPublications=>getPublications(entryPublications?.[pdbId]??[]))) : Future.success(undefined),
         coverage: onF(pdbId, pdbId => getJSON(`${bioUrl}/api/alignments/Coverage/${pdbId}${chainId}`)),
         ebiVariation: getJSON(`${ebiProteinsApiUrl}/variation/${proteinId}`),
         mobiUniprot: getJSON(`${bioUrl}/api/annotations/mobi/Uniprot/${proteinId}`),

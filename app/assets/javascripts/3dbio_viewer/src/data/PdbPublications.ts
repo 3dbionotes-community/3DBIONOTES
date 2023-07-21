@@ -1,12 +1,12 @@
 import { Codec, GetType, array, nullType, number, string } from "purify-ts";
 import { maybe } from "./PdbLigands";
 import { PdbPublication } from "../domain/entities/Pdb";
-import { Maybe } from "../utils/ts-utils";
 
 export const publicationsCodec = array(
+    //using so many "maybe" from examples: 7O7Z, 6ABA, 7SUB
+    //but truly I don't want to use them so often. Check with JR
+    //9zzz will return {}
     Codec.interface({
-        //maybe ref from examples: 7O7Z, 6ABA, 7SUB
-        //9zzz will return {}
         doi: maybe(string),
         title: string,
         pubmed_id: maybe(string),
@@ -45,16 +45,13 @@ export function getPublicationsCodec(pdbId: string): Codec<EntryPublications> {
 }
 
 export type EntryPublications = {
-    [x: string]: GetType<typeof publicationsCodec>;
+    [x: string]: PublicationsCodec;
 };
 
-export function getPublication(entryPublications: EntryPublications): PdbPublication[] {
-    const key = Object.keys(entryPublications)[0];
-    if (!key) return [];
-    const entries = entryPublications[key];
-    if (!entries) return [];
+type PublicationsCodec = GetType<typeof publicationsCodec>;
 
-    return entries.map(
+export function getPublications(publications: PublicationsCodec): PdbPublication[] {
+    return publications.map(
         ({
             title,
             type,
@@ -68,12 +65,21 @@ export function getPublication(entryPublications: EntryPublications): PdbPublica
             return {
                 title,
                 type,
-                doi,
-                pubmedId: pubmed_id,
-                associatedEntries: associated_entries,
-                journalInfo: undefined,
-                abstract: undefined,
-                authorList: undefined,
+                doi: doi ?? undefined,
+                pubmedId: pubmed_id ?? undefined,
+                associatedEntries: associated_entries?.split(", ") ?? [],
+                journalInfo: {
+                    pdbAbbreviation: journal_info.pdb_abbreviation ?? undefined,
+                    isoAbbreviation: journal_info.ISO_abbreviation ?? undefined,
+                    pages: journal_info.pages ?? undefined,
+                    volume: journal_info.volume ?? undefined,
+                    issue: journal_info.issue ?? undefined,
+                    year: journal_info.year ?? undefined,
+                },
+                abstract: {
+                    unassigned: abstract.unassigned ?? undefined,
+                },
+                authors: author_list.map(author => author.full_name),
             };
         }
     );

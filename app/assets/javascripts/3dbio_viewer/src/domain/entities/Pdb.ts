@@ -4,13 +4,12 @@ import { BlockDef } from "../../webapp/components/protvista/Protvista.types";
 import { Annotations, getTracksFromAnnotations } from "./Annotation";
 import { Color } from "./Color";
 import { Experiment } from "./Experiment";
-import { LigandImageData, Publication } from "./LigandImageData";
+import { LigandImageData } from "./LigandImageData";
 import { Link } from "./Link";
 import { Protein } from "./Protein";
 import { ProteinNetwork } from "./ProteinNetwork";
 import { Track } from "./Track";
 import { Variants } from "./Variant";
-import { string } from "purify-ts";
 
 export interface Pdb {
     id: Maybe<PdbId>;
@@ -33,7 +32,7 @@ export interface Pdb {
     path: Maybe<string>;
     customAnnotations: Maybe<Annotations>;
     ligands: Maybe<PdbLigand[]>;
-    publications: Publication;
+    publications: PdbPublication[];
 }
 
 export interface PdbLigand {
@@ -76,23 +75,19 @@ export interface PdbPublication {
     type: string;
     doi?: string;
     pubmedId?: string;
-    associatedEntries?: PdbId[];
-    journalInfo?: {
+    associatedEntries: PdbId[];
+    journalInfo: {
         pdbAbbreviation?: string;
         isoAbbreviation?: string;
         pages?: string;
         volume?: string;
         issue?: string;
-        year?: string;
+        year?: number;
     };
-    abstract?: {
+    abstract: {
         unassigned?: string;
     };
-    authors: {
-        fullName: string;
-        lastName?: string;
-        initials?: string;
-    };
+    authors: string[];
 }
 
 type PdbEntity = "pdb" | "emdb" | "uniprot" | "geneBank";
