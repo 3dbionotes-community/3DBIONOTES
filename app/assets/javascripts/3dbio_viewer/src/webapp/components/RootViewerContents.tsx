@@ -33,6 +33,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const [externalData, setExternalData] = React.useState<ExternalData>({ type: "none" });
     const [toolbarExpanded, { set: setToolbarExpanded }] = useBooleanState(true);
     const [viewerSelectorExpanded, { set: setViewerSelectorExpanded }] = useBooleanState(true);
+    const [innerWidth, setInnerWidth] = React.useState(window.innerWidth);
 
     const uploadData = getUploadData(externalData);
 
@@ -47,21 +48,21 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const toggleToolbarExpanded = React.useCallback(
         (_e: React.SyntheticEvent, data: ResizeCallbackData) => {
             setToolbarExpanded(data.size.width >= 520);
-            setViewerSelectorExpanded(window.innerWidth - data.size.width >= 725);
+            setViewerSelectorExpanded(innerWidth - data.size.width >= 725);
         },
-        [setToolbarExpanded, setViewerSelectorExpanded]
+        [setToolbarExpanded, setViewerSelectorExpanded, innerWidth]
     );
 
     const resizableBoxProps = React.useMemo<
         Pick<ResizableBoxProps, "width" | "minConstraints" | "maxConstraints" | "resizeHandles">
     >(
         () => ({
-            width: window.innerWidth * 0.55,
+            width: innerWidth * 0.55,
             minConstraints: [400, 0],
-            maxConstraints: [window.innerWidth - 600, 0],
+            maxConstraints: [innerWidth - 600, 0],
             resizeHandles: ["w"],
         }),
-        []
+        [innerWidth]
     );
 
     React.useEffect(() => {
@@ -88,6 +89,10 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             hideLoading();
         }
     }, [pdbLoader.type, showLoading, hideLoading]);
+
+    React.useLayoutEffect(() => {
+        setInnerWidth(window.innerWidth);
+    }, []);
 
     return (
         <div id="viewer">
