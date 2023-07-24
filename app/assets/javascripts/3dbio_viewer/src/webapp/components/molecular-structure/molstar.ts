@@ -162,10 +162,14 @@ export function getCurrentItems(plugin: PDBeMolstarPlugin) {
         .map(
             (node): Maybe<DbItem & { ref: string }> => {
                 const label = node.cell.obj?.label;
+                console.log("Label: " + label);
                 const { isHidden } = node.cell.state;
 
                 const pdbId = label?.match(/\/v1\/([\w-]+)\//)?.[1];
                 const emdbId = label?.match(/\/em\/([\w-]+)\//)?.[1];
+                // const pdbRedo = label?.match(/\/em\/([\w-]+)\//)?.[1];
+                // const cstf = label?.match(/\/em\/([\w-]+)\//)?.[1];
+                // const ceres = label?.match(/\/em\/([\w-]+)\//)?.[1];
                 return pdbId
                     ? { type: "pdb" as const, id: pdbId, visible: !isHidden, ref: node.ref }
                     : emdbId

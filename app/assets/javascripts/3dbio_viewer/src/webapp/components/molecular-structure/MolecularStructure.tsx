@@ -11,6 +11,8 @@ import {
     getItemSelector,
     getMainChanges,
     getMainItem,
+    getRefinedModelId,
+    RefinedModelType,
     Selection,
     setMainItem,
     Type,
@@ -18,7 +20,7 @@ import {
 import { debugVariable, isDebugMode } from "../../../utils/debug";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
-import { getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
+import { getCurrentItems, getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
 import { Ligand } from "../../../domain/entities/Ligand";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
@@ -320,7 +322,7 @@ async function applySelectionChangesToPlugin(
     setError: (message: string) => void
 ): Promise<void> {
     if (molstarState.current.type !== "pdb") return;
-
+    getCurrentItems(plugin);
     const oldItems = () => (molstarState.current.type === "pdb" ? molstarState.current.items : []);
     const updateItems = (item: DbItem) => {
         molstarState.current = MolstarStateActions.updateItems(
@@ -335,27 +337,28 @@ async function applySelectionChangesToPlugin(
             : i18n.t(`Loading ${modelType.toUpperCase()}...`);
     };
 
-    const loadItems = async (items: DbItem[], modelType: Type) => {
+    const loadRefinedItems = async (items: DbItem<RefinedModelType>[]) => {
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
             if (item) {
-                const id: string = item.id.replace(/(pdbRedo|cstf|ceres)-/g, "");
-                await checkModelUrl(id, modelType).then(async loaded => {
+                const id: string = getRefinedModelId(item);
+                await checkModelUrl(id, item.type).then(async loaded => {
                     if (loaded) {
-                        setTitle(getTitle(i, items, modelType));
-                        const url = urls[modelType](id);
+                        setTitle(getTitle(i, items, item.type));
+                        const url = urls[item.type](id);
                         const loadParams: LoadParams = {
                             url,
                             format: "mmcif",
                             isBinary: false,
                             assemblyId: "1",
+                            label: `${id.toUpperCase()}-${item.type.toLowerCase()}`,
                         };
                         await plugin.load(loadParams, false);
                         setVisibility(plugin, item);
                         updateItems(item);
                     } else {
                         hideLoading();
-                        setError(`${modelType.toUpperCase()} not found: ${id}`);
+                        setError(`${item.type.toUpperCase()} not found: ${id}`);
                     }
                 });
             }
@@ -437,11 +440,9 @@ async function applySelectionChangesToPlugin(
         }
     }
 
-    ([
-        [pdbRedo, "pdbRedo"],
-        // [cstf, "cstf"],
-        // [ceres, "ceres"],
-    ] as const).forEach(([items, type]) => loadItems(items, type));
+    ([pdbRedo, cstf, ceres] as DbItem<RefinedModelType>[][]).forEach(items =>
+        loadRefinedItems(items)
+    );
 
     if (newSelection.chainId !== currentSelection.chainId) {
         highlight(plugin, chains, newSelection, molstarState);
@@ -532,10 +533,10 @@ function getId<T extends { id: string }>(obj: T): string {
     return obj.id;
 }
 
-async function checkModelUrl(pdbId: Maybe<string>, modelType: Type): Promise<boolean> {
-    if (!pdbId) return true;
+async function checkModelUrl(id: Maybe<string>, modelType: Type): Promise<boolean> {
+    if (!id) return true;
 
-    const url = urls[modelType](pdbId);
+    const url = urls[modelType](id);
     const res = await fetch(url, { method: "HEAD" });
 
     if (res.ok) {
