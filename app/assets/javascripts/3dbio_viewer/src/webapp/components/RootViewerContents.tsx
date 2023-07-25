@@ -110,13 +110,10 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             )}
 
             <ResizableBox
-                width={resizableBoxProps.width ?? 0}
-                minConstraints={resizableBoxProps.minConstraints}
-                maxConstraints={resizableBoxProps.maxConstraints}
                 axis="x"
-                resizeHandles={resizableBoxProps.resizeHandles}
                 onResize={toggleToolbarExpanded}
                 onResizeStop={redrawWindow}
+                {...resizableBoxProps}
             >
                 <div id="right">
                     <Viewers
@@ -146,7 +143,9 @@ function useResizableBox() {
     const [innerWidth, setInnerWidth] = React.useState(window.innerWidth);
 
     const resizableBoxProps = React.useMemo<
-        Pick<ResizableBoxProps, "width" | "minConstraints" | "maxConstraints" | "resizeHandles">
+        Required<
+            Pick<ResizableBoxProps, "width" | "minConstraints" | "maxConstraints" | "resizeHandles">
+        >
     >(
         () => ({
             width: innerWidth * 0.55,
