@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import { ResizableBox, ResizableBoxProps, ResizeCallbackData } from "react-resizable";
-import { Fab, FabProps, IconButton } from "@material-ui/core";
+import { Fab, IconButton } from "@material-ui/core";
 import { KeyboardArrowUp as KeyboardArrowUpIcon } from "@material-ui/icons";
 import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
@@ -191,11 +191,12 @@ function useGoToTop<K extends HTMLElement>() {
         function scrollFunction() {
             if (ref.current) setScrolled(ref.current.scrollTop > 20);
         }
-        if (ref.current) {
-            ref.current.addEventListener("scroll", scrollFunction);
+        const el = ref.current; //suggested by eslint
+        if (el) {
+            el.addEventListener("scroll", scrollFunction);
         }
         return () => {
-            if (ref.current) ref.current.removeEventListener("scroll", scrollFunction);
+            if (el) el.removeEventListener("scroll", scrollFunction);
         };
     }, []);
 
