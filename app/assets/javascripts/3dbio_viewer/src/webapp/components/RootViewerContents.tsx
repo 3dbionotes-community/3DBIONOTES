@@ -33,7 +33,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const [externalData, setExternalData] = React.useState<ExternalData>({ type: "none" });
     const [toolbarExpanded, { set: setToolbarExpanded }] = useBooleanState(true);
     const [viewerSelectorExpanded, { set: setViewerSelectorExpanded }] = useBooleanState(true);
-    const [innerWidth, setInnerWidth] = React.useState(window.innerWidth);
+    const { innerWidth, resizableBoxProps } = useResizableBox();
 
     const uploadData = getUploadData(externalData);
 
@@ -51,18 +51,6 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             setViewerSelectorExpanded(innerWidth - data.size.width >= 725);
         },
         [setToolbarExpanded, setViewerSelectorExpanded, innerWidth]
-    );
-
-    const resizableBoxProps = React.useMemo<
-        Pick<ResizableBoxProps, "width" | "minConstraints" | "maxConstraints" | "resizeHandles">
-    >(
-        () => ({
-            width: innerWidth * 0.55,
-            minConstraints: [400, 0],
-            maxConstraints: [innerWidth - 600, 0],
-            resizeHandles: ["w"],
-        }),
-        [innerWidth]
     );
 
     React.useEffect(() => {
@@ -89,10 +77,6 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             hideLoading();
         }
     }, [pdbLoader.type, showLoading, hideLoading]);
-
-    React.useLayoutEffect(() => {
-        setInnerWidth(window.innerWidth);
-    }, []);
 
     return (
         <div id="viewer">
@@ -156,6 +140,28 @@ function getUploadData(externalData: ExternalData) {
         : externalData.type === "network"
         ? externalData.data.uploadData
         : undefined;
+}
+
+function useResizableBox() {
+    const [innerWidth, setInnerWidth] = React.useState(window.innerWidth);
+
+    const resizableBoxProps = React.useMemo<
+        Pick<ResizableBoxProps, "width" | "minConstraints" | "maxConstraints" | "resizeHandles">
+    >(
+        () => ({
+            width: innerWidth * 0.55,
+            minConstraints: [400, 0],
+            maxConstraints: [innerWidth - 600, 0],
+            resizeHandles: ["w"],
+        }),
+        [innerWidth]
+    );
+
+    React.useLayoutEffect(() => {
+        setInnerWidth(window.innerWidth);
+    }, []);
+
+    return { innerWidth, resizableBoxProps };
 }
 
 function redrawWindow() {
