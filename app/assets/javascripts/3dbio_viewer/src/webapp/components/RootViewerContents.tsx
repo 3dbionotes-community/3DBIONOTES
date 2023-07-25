@@ -1,6 +1,8 @@
 import _ from "lodash";
 import React from "react";
 import { ResizableBox, ResizableBoxProps, ResizeCallbackData } from "react-resizable";
+import { Fab, FabProps, IconButton } from "@material-ui/core";
+import { KeyboardArrowUp as KeyboardArrowUpIcon } from "@material-ui/icons";
 import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
 import { ViewerSelector } from "./viewer-selector/ViewerSelector";
@@ -14,6 +16,7 @@ import { debugFlags } from "../pages/app/debugFlags";
 import { usePdbLoader } from "../hooks/use-pdb";
 import { useBooleanState } from "../hooks/use-boolean";
 import i18n from "../utils/i18n";
+import styled from "styled-components";
 
 export interface RootViewerContentsProps {
     viewerState: ViewerState;
@@ -34,6 +37,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const [toolbarExpanded, { set: setToolbarExpanded }] = useBooleanState(true);
     const [viewerSelectorExpanded, { set: setViewerSelectorExpanded }] = useBooleanState(true);
     const { innerWidth, resizableBoxProps } = useResizableBox();
+    const { scrolled, goToTop, ref } = useGoToTop<HTMLDivElement>();
 
     const uploadData = getUploadData(externalData);
 
@@ -115,7 +119,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                 onResizeStop={redrawWindow}
                 {...resizableBoxProps}
             >
-                <div id="right">
+                <div id="right" ref={ref}>
                     <Viewers
                         viewerState={viewerState}
                         pdbInfo={pdbInfo}
@@ -127,6 +131,13 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                     />
                 </div>
             </ResizableBox>
+            {scrolled && (
+                <StyledFab onClick={goToTop}>
+                    <IconButton aria-label="delete">
+                        <KeyboardArrowUpIcon fontSize="large" />
+                    </IconButton>
+                </StyledFab>
+            )}
         </div>
     );
 });
@@ -157,12 +168,53 @@ function useResizableBox() {
     );
 
     React.useLayoutEffect(() => {
-        setInnerWidth(window.innerWidth);
+        function updateInnerWidth() {
+            setInnerWidth(window.innerWidth);
+        }
+        window.addEventListener("resize", updateInnerWidth);
+        return () => window.removeEventListener("resize", updateInnerWidth);
     }, []);
 
     return { innerWidth, resizableBoxProps };
 }
 
+function useGoToTop<K extends HTMLElement>() {
+    const [scrolled, setScrolled] = React.useState(false);
+    const ref = React.useRef<K>(null);
+
+    const goToTop = React.useCallback(() => {
+        if (!ref.current) return;
+        ref.current.scrollTop = 0;
+    }, [ref]);
+
+    React.useEffect(() => {
+        function scrollFunction() {
+            if (ref.current) setScrolled(ref.current.scrollTop > 20);
+        }
+        if (ref.current) {
+            ref.current.addEventListener("scroll", scrollFunction);
+        }
+        return () => {
+            if (ref.current) ref.current.removeEventListener("scroll", scrollFunction);
+        };
+    }, []);
+
+    return { scrolled, goToTop, ref };
+}
+
 function redrawWindow() {
     window.dispatchEvent(new Event("resize"));
 }
+
+const StyledFab = styled(Fab)`
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    background-color: #123546;
+    &:hover {
+        background-color: #123546;
+    }
+    &.MuiFab-root .MuiSvgIcon-root {
+        fill: #fff;
+    }
+`;
