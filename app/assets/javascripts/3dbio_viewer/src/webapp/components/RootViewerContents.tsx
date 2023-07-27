@@ -105,7 +105,8 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             <LoaderMask open={loading} title={title} />
             <div id="viewer">
                 {!debugFlags.showOnlyValidations && (
-                    <>
+                    <div id="left">
+                        {error && <div style={{ color: "red" }}>{error}</div>}
                         <ViewerSelector
                             pdbInfo={pdbInfo}
                             selection={selection}
@@ -113,21 +114,16 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             uploadData={uploadData}
                             expanded={viewerSelectorExpanded}
                         />
-
-                        <div id="left">
-                            {error && <div style={{ color: "red" }}>{error}</div>}
-
-                            <MolecularStructure
-                                pdbInfo={pdbInfo}
-                                selection={selection}
-                                onSelectionChange={setSelection}
-                                onLigandsLoaded={setLigands}
-                                proteinNetwork={proteinNetwork}
-                                updateLoader={updateLoader}
-                                loaderBusy={loading}
-                            />
-                        </div>
-                    </>
+                        <MolecularStructure
+                            pdbInfo={pdbInfo}
+                            selection={selection}
+                            onSelectionChange={setSelection}
+                            onLigandsLoaded={setLigands}
+                            proteinNetwork={proteinNetwork}
+                            updateLoader={updateLoader}
+                            loaderBusy={loading}
+                        />
+                    </div>
                 )}
 
                 <ResizableBox
