@@ -403,7 +403,6 @@ export const subtracks = recordOf<SubtrackDefinition>()({
             "Blocres estimates the local resoltuion by means of a local FSC. To do that, it requires two half maps and the local FSC is computed with a mobile window."
         ),
     },
-    //ToDo: Add DAQ
     mapQ: {
         id: "map-q" as const,
         name: i18n.t("MapQ"),
@@ -417,7 +416,15 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         name: i18n.t("FscQ"),
         source: "Local server",
         description: i18n.t(
-            "FSC-Q measures the local quality of the fit between the atomic model and the cryo-EM map, being a quantitative measure of how the experimental data supports the structural model"
+            "FSC-Q measures the local quality of the fit between the atomic model and the cryo-EM map, being a quantitative measure of how the experimental data supports the structural model."
+        ),
+    },
+    daq: {
+        id: "daq" as const,
+        name: i18n.t("DAQ"),
+        source: "Local server",
+        description: i18n.t(
+            "DAQ measures the resolubility of the atoms in models obtained in cryo-EM using Deep Learning. It is a measure of the quality of the map-to-model fit."
         ),
     },
 
