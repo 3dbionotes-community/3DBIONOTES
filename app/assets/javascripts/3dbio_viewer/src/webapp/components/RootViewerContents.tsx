@@ -17,6 +17,7 @@ import { debugFlags } from "../pages/app/debugFlags";
 import { usePdbLoader } from "../hooks/use-pdb";
 import { useBooleanState } from "../hooks/use-boolean";
 import { LoaderMask } from "./loader-mask/LoaderMask";
+import { isDev } from "../../routes";
 import i18n from "../utils/i18n";
 
 export interface RootViewerContentsProps {
@@ -103,7 +104,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     return (
         <>
             <LoaderMask open={loading} title={title} />
-            <div id="viewer">
+            <div id="viewer" className={!isDev ? "prod" : undefined}>
                 {!debugFlags.showOnlyValidations && (
                     <div id="left">
                         {error && <div style={{ color: "red" }}>{error}</div>}

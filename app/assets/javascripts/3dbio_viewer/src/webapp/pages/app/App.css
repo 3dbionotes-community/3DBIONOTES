@@ -38,13 +38,12 @@ header {
 
 #viewer {
     display: flex;
-    /*
-     * For development purposes the line below can be uncommented and comment the next one,
-     * but on prod, the other lines needs to be because we have the header (85px) and if 100vh is present,
-     * we will have doble scroll.
-     */
-    /* height: 100vh; */
-    height: calc(100vh - 85px);
+    height: 100vh;
+}
+
+#viewer.prod {
+    display: flex;
+    height: calc(100vh - 85px); /* 85px from header */
 }
 
 #left {
