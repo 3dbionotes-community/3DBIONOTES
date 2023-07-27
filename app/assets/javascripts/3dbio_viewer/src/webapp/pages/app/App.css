@@ -39,7 +39,7 @@ header {
 #viewer {
     display: flex;
     /* height: 100vh; */
-    height: calc(100vh - 85px);
+    height: calc(100vh);
 }
 
 #left {
