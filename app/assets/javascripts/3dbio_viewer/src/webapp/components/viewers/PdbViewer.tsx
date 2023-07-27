@@ -11,35 +11,48 @@ import { getVisibleBlocks } from "../protvista/Protvista.helpers";
 import { debugFlags } from "../../pages/app/debugFlags";
 import { TrainingApp } from "../../training-app";
 import { modules } from "../../training-app/training-modules";
-import styles from "./Viewers.module.css";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
+import styles from "./Viewers.module.css";
 
 export interface PdbViewerProps {
     pdb: Pdb;
     pdbInfo: PdbInfo;
     viewerState: ViewerState;
     onAddAnnotations(annotations: Annotations): void;
+    toolbarExpanded: boolean;
 }
 
-export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
-    const { pdb, viewerState, onAddAnnotations, pdbInfo } = props;
-    const { selection, profile, setProfile } = viewerState;
+export const PdbViewer: React.FC<PdbViewerProps> = React.memo(
+    ({ pdb, viewerState, onAddAnnotations, pdbInfo, toolbarExpanded }) => {
+        const { selection, profile, setProfile } = viewerState;
 
-    const blocks = React.useMemo(() => {
-        return getVisibleBlocks(blockDefs, { pdb, profile }).filter(
-            block => !debugFlags.showOnlyValidations || block.id === "mapValidation"
+        const blocks = React.useMemo(() => {
+            return getVisibleBlocks(blockDefs, { pdb, profile }).filter(
+                block => !debugFlags.showOnlyValidations || block.id === "mapValidation"
+            );
+        }, [pdb, profile]);
+
+        return (
+            <React.Fragment>
+                <div className={styles["tools-section"]}>
+                    <ToolsButton onAddAnnotations={onAddAnnotations} expanded={toolbarExpanded} />
+                    <ProfilesButton
+                        profile={profile}
+                        onChange={setProfile}
+                        expanded={toolbarExpanded}
+                    />
+                    <JumpToButton blocks={blocks} expanded={toolbarExpanded} />
+                    {!debugFlags.hideTraining && (
+                        <TrainingApp locale="en" modules={modules} expanded={toolbarExpanded} />
+                    )}
+                </div>
+                <ProtvistaViewer
+                    pdbInfo={pdbInfo}
+                    blocks={blocks}
+                    pdb={pdb}
+                    selection={selection}
+                />
+            </React.Fragment>
         );
-    }, [pdb, profile]);
-
-    return (
-        <React.Fragment>
-            <div className={styles["tools-section"]}>
-                <ToolsButton onAddAnnotations={onAddAnnotations} />
-                <ProfilesButton profile={profile} onChange={setProfile} />
-                <JumpToButton blocks={blocks} />
-                {!debugFlags.hideTraining && <TrainingApp locale="en" modules={modules} />}
-            </div>
-            <ProtvistaViewer pdbInfo={pdbInfo} blocks={blocks} pdb={pdb} selection={selection} />
-        </React.Fragment>
-    );
-});
+    }
+);

@@ -9,11 +9,11 @@ import i18n from "../../utils/i18n";
 export interface ProfilesButtonProps {
     profile: Profile;
     onChange(newProfile: Profile): void;
+    expanded: boolean;
 }
 
 export const ProfilesButton: React.FC<ProfilesButtonProps> = React.memo(props => {
-    const { profile, onChange } = props;
-
+    const { profile, onChange, expanded } = props;
     const dropdownItems: DropdownProps<ProfileId>["items"] = React.useMemo(() => {
         return _.values(profiles).map(profile => {
             return { text: profile.name, id: profile.id };
@@ -35,7 +35,7 @@ export const ProfilesButton: React.FC<ProfilesButtonProps> = React.memo(props =>
 
     return (
         <Dropdown<ProfileId>
-            text={text}
+            text={(expanded && text) || undefined}
             selected={profile.id}
             items={dropdownItems}
             onClick={setProfile}
