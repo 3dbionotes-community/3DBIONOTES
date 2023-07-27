@@ -201,18 +201,19 @@ function useGoToTop<K extends HTMLElement>() {
         ref.current.scrollTop = 0;
     }, [ref]);
 
+    const el = ref.current; //suggested by eslint
     React.useEffect(() => {
+        if (!el) return;
         function scrollFunction() {
             if (ref.current) setScrolled(ref.current.scrollTop > 20);
         }
-        const el = ref.current; //suggested by eslint
         if (el) {
             el.addEventListener("scroll", scrollFunction);
         }
         return () => {
             if (el) el.removeEventListener("scroll", scrollFunction);
         };
-    }, []);
+    }, [el]);
 
     return { scrolled, goToTop, ref };
 }
