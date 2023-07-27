@@ -1,5 +1,9 @@
-import React from "react";
 import _ from "lodash";
+import React from "react";
+import styled from "styled-components";
+import { ResizableBox, ResizableBoxProps, ResizeCallbackData } from "react-resizable";
+import { Fab, IconButton } from "@material-ui/core";
+import { KeyboardArrowUp as KeyboardArrowUpIcon } from "@material-ui/icons";
 import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
 import { ViewerSelector } from "./viewer-selector/ViewerSelector";
@@ -11,6 +15,7 @@ import { setFromError } from "../utils/error";
 import { ProteinNetwork } from "../../domain/entities/ProteinNetwork";
 import { debugFlags } from "../pages/app/debugFlags";
 import { usePdbLoader } from "../hooks/use-pdb";
+import { useBooleanState } from "../hooks/use-boolean";
 import { LoaderMask } from "./loader-mask/LoaderMask";
 import i18n from "../utils/i18n";
 
@@ -54,6 +59,10 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     const [error, setError] = React.useState<string>();
     const [externalData, setExternalData] = React.useState<ExternalData>({ type: "none" });
+    const [toolbarExpanded, { set: setToolbarExpanded }] = useBooleanState(true);
+    const [viewerSelectorExpanded, { set: setViewerSelectorExpanded }] = useBooleanState(true);
+    const { innerWidth, resizableBoxProps } = useResizableBox();
+    const { scrolled, goToTop, ref } = useGoToTop<HTMLDivElement>();
 
     const uploadData = getUploadData(externalData);
     const { pdbInfo, setLigands } = usePdbInfo(selection, uploadData);
@@ -62,6 +71,14 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const uploadDataToken = selection.type === "uploadData" ? selection.token : undefined;
     const networkToken = selection.type === "network" ? selection.token : undefined;
     const proteinNetwork = externalData.type === "network" ? externalData.data : undefined;
+
+    const toggleToolbarExpanded = React.useCallback(
+        (_e: React.SyntheticEvent, data: ResizeCallbackData) => {
+            setToolbarExpanded(data.size.width >= 520);
+            setViewerSelectorExpanded(innerWidth - data.size.width >= 725);
+        },
+        [setToolbarExpanded, setViewerSelectorExpanded, innerWidth]
+    );
 
     React.useEffect(() => {
         if (uploadDataToken) {
@@ -94,6 +111,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             selection={selection}
                             onSelectionChange={setSelection}
                             uploadData={uploadData}
+                            expanded={viewerSelectorExpanded}
                         />
 
                         <div id="left">
@@ -112,8 +130,13 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                     </>
                 )}
 
-                <div id="right">
-                    {
+                <ResizableBox
+                    axis="x"
+                    onResize={toggleToolbarExpanded}
+                    onResizeStop={redrawWindow}
+                    {...resizableBoxProps}
+                >
+                    <div id="right" ref={ref}>
                         <Viewers
                             viewerState={viewerState}
                             pdbInfo={pdbInfo}
@@ -121,10 +144,18 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             proteinNetwork={proteinNetwork}
                             pdbLoader={pdbLoader}
                             setPdbLoader={setPdbLoader}
+                            toolbarExpanded={toolbarExpanded}
                         />
-                    }
-                </div>
+                    </div>
+                </ResizableBox>
             </div>
+            {scrolled && (
+                <StyledFab onClick={goToTop}>
+                    <IconButton aria-label="delete">
+                        <KeyboardArrowUpIcon fontSize="large" />
+                    </IconButton>
+                </StyledFab>
+            )}
         </>
     );
 });
@@ -136,3 +167,73 @@ function getUploadData(externalData: ExternalData) {
         ? externalData.data.uploadData
         : undefined;
 }
+
+function useResizableBox() {
+    const [innerWidth, setInnerWidth] = React.useState(window.innerWidth);
+
+    const resizableBoxProps = React.useMemo<
+        Required<
+            Pick<ResizableBoxProps, "width" | "minConstraints" | "maxConstraints" | "resizeHandles">
+        >
+    >(
+        () => ({
+            width: innerWidth * 0.55,
+            minConstraints: [400, 0],
+            maxConstraints: [innerWidth - 600, 0],
+            resizeHandles: ["w"],
+        }),
+        [innerWidth]
+    );
+
+    React.useLayoutEffect(() => {
+        function updateInnerWidth() {
+            setInnerWidth(window.innerWidth);
+        }
+        window.addEventListener("resize", updateInnerWidth);
+        return () => window.removeEventListener("resize", updateInnerWidth);
+    }, []);
+
+    return { innerWidth, resizableBoxProps };
+}
+
+function useGoToTop<K extends HTMLElement>() {
+    const [scrolled, setScrolled] = React.useState(false);
+    const ref = React.useRef<K>(null);
+
+    const goToTop = React.useCallback(() => {
+        if (!ref.current) return;
+        ref.current.scrollTop = 0;
+    }, [ref]);
+
+    React.useEffect(() => {
+        function scrollFunction() {
+            if (ref.current) setScrolled(ref.current.scrollTop > 20);
+        }
+        const el = ref.current; //suggested by eslint
+        if (el) {
+            el.addEventListener("scroll", scrollFunction);
+        }
+        return () => {
+            if (el) el.removeEventListener("scroll", scrollFunction);
+        };
+    }, []);
+
+    return { scrolled, goToTop, ref };
+}
+
+function redrawWindow() {
+    window.dispatchEvent(new Event("resize"));
+}
+
+const StyledFab = styled(Fab)`
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    background-color: #123546;
+    &:hover {
+        background-color: #123546;
+    }
+    &.MuiFab-root .MuiSvgIcon-root {
+        fill: #fff;
+    }
+`;
