@@ -134,19 +134,28 @@ export const trackDefinitions = {
         ),
         subtracks: [subtracks.rotamerOutlier, subtracks.phiPsiOutliers],
     }),
-    emValidation: definition({
-        id: "em-validation" as const,
-        name: i18n.t("EM - Validation"),
+    validationLocalResolution: definition({
+        id: "em-validation-local-resolution" as const,
+        name: i18n.t("Validation - Local Resolution"),
+        description: i18n.t(
+            "Different validation methods and local quality of the map-to-models fit in cryo-EM"
+        ),
+        subtracks: [
+            subtracks.deepRes,
+            subtracks.monoRes,
+            subtracks.blocRes,
+        ],
+    }),
+    validationMapToModel: definition({
+        id: "em-validation-map-to-model" as const,
+        name: i18n.t("Validation - Map to model"),
         description: i18n.t(
             "Different validation methods and local quality of the map-to-models fit in cryo-EM"
         ),
         subtracks: [
             subtracks.fscQ,
             subtracks.mapQ,
-            // TODO: Add DAQ
-            subtracks.deepRes,
-            subtracks.monoRes,
-            subtracks.blocRes,
+            subtracks.daq,
         ],
     }),
     pockets: definition({
