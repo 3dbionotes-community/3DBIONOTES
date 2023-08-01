@@ -38,8 +38,13 @@ header {
 
 #viewer {
     display: flex;
-    /* height: 100vh; */
-    height: calc(100vh);
+    height: 100vh;
+}
+
+#viewer.prod {
+    display: flex;
+    height: calc(100vh - 85px);
+    /* 85px from header */
 }
 
 #left {
@@ -66,6 +71,11 @@ header {
 
 .MuiDialogContent-root {
     background-color: #fff;
+}
+
+.MuiTooltip-tooltip a {
+    text-decoration: underline;
+    color: #72bee3;
 }
 
 .react-resizable {
