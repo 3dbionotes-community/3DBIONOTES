@@ -8,15 +8,14 @@ import { Build as BuildIcon } from "@material-ui/icons";
 
 export interface ToolsButtonProps {
     onAddAnnotations(annotations: Annotations): void;
+    expanded: boolean;
 }
 
 type ItemId = "custom-annotations" | "network";
 
 type Props = DropdownProps<ItemId>;
 
-export const ToolsButton: React.FC<ToolsButtonProps> = props => {
-    const { onAddAnnotations } = props;
-
+export const ToolsButton: React.FC<ToolsButtonProps> = ({ onAddAnnotations, expanded }) => {
     const [isAnnotationToolOpen, annotationToolActions] = useBooleanState(false);
 
     const items = React.useMemo<Props["items"]>(() => {
@@ -36,7 +35,7 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
     return (
         <>
             <Dropdown<ItemId>
-                text={i18n.t("Tools")}
+                text={(expanded && i18n.t("Tools")) || undefined}
                 items={items}
                 onClick={openMenuItem}
                 leftIcon={<BuildIcon fontSize="small" />}

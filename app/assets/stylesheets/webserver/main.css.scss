@@ -1125,15 +1125,6 @@ body {
   background-color: #484848;
 }
 
-// material dialogs 1px white background fix
-.MuiPaper-root {
-  background-color: inherit !important;
-}
-
-.MuiDialogContent-root {
-  background-color: #fff;
-}
-
 // Send feedback partial
 #zammad-feedback-form {
   position: fixed;
@@ -1146,4 +1137,22 @@ body {
   font-weight: 600;
   border-radius: 0.3rem 0.3rem 0 0;
   z-index: 999;
+}
+
+.zammad-form-modal {
+  .zammad-form-modal-body {
+    max-width: 600px !important; //reference from .sm material-ui dialog
+    form.zammad-form {
+      button[type="submit"] {
+        background: #607d8b;
+        border: 0;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 0.3rem;
+      }
+      h2 {
+        font-size: 1.25em;
+      }
+    }
+  }
 }

@@ -20,45 +20,53 @@ export interface PdbViewerProps {
     pdbInfo: PdbInfo;
     viewerState: ViewerState;
     onAddAnnotations(annotations: Annotations): void;
+    toolbarExpanded: boolean;
 }
 
-export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
-    const { pdb, viewerState, onAddAnnotations, pdbInfo } = props;
-    const { selection, profile, setProfile } = viewerState;
+export const PdbViewer: React.FC<PdbViewerProps> = React.memo(
+    ({ pdb, viewerState, onAddAnnotations, pdbInfo, toolbarExpanded }) => {
+        const { selection, profile, setProfile } = viewerState;
 
-    const [visibleBlocks, setVisibleBlocks] = React.useState<BlockVisibility[]>(
-        blockDefs.map(blockDef => ({ block: blockDef, visible: true }))
-    );
-
-    const setBlockVisibility = React.useCallback(
-        (block: BlockDef, visible: boolean) =>
-            setVisibleBlocks(visibleBlocks =>
-                visibleBlocks.map(i => (i.block.id === block.id ? { block, visible } : i))
-            ),
-        [setVisibleBlocks]
-    );
-
-    const blocks = React.useMemo(() => {
-        return getVisibleBlocks(visibleBlocks, { pdb, profile }).filter(
-            block => !debugFlags.showOnlyValidations || block.id === "mapValidation"
+        const [visibleBlocks, setVisibleBlocks] = React.useState<BlockVisibility[]>(
+            blockDefs.map(blockDef => ({ block: blockDef, visible: true }))
         );
-    }, [pdb, profile, visibleBlocks]);
 
-    return (
-        <React.Fragment>
-            <div className={styles["tools-section"]}>
-                <ToolsButton onAddAnnotations={onAddAnnotations} />
-                <ProfilesButton profile={profile} onChange={setProfile} />
-                <JumpToButton blocks={blocks} />
-                {!debugFlags.hideTraining && <TrainingApp locale="en" modules={modules} />}
-            </div>
-            <ProtvistaViewer
-                pdbInfo={pdbInfo}
-                blocks={blocks}
-                pdb={pdb}
-                selection={selection}
-                setBlockVisibility={setBlockVisibility}
-            />
-        </React.Fragment>
-    );
-});
+        const setBlockVisibility = React.useCallback(
+            (block: BlockDef, visible: boolean) =>
+                setVisibleBlocks(visibleBlocks =>
+                    visibleBlocks.map(i => (i.block.id === block.id ? { block, visible } : i))
+                ),
+            [setVisibleBlocks]
+        );
+
+        const blocks = React.useMemo(() => {
+            return getVisibleBlocks(visibleBlocks, { pdb, profile }).filter(
+                block => !debugFlags.showOnlyValidations || block.id === "mapValidation"
+            );
+        }, [pdb, profile, visibleBlocks]);
+
+        return (
+            <React.Fragment>
+                <div className={styles["tools-section"]}>
+                    <ToolsButton onAddAnnotations={onAddAnnotations} expanded={toolbarExpanded} />
+                    <ProfilesButton
+                        profile={profile}
+                        onChange={setProfile}
+                        expanded={toolbarExpanded}
+                    />
+                    <JumpToButton blocks={blocks} expanded={toolbarExpanded} />
+                    {!debugFlags.hideTraining && (
+                        <TrainingApp locale="en" modules={modules} expanded={toolbarExpanded} />
+                    )}
+                </div>
+                <ProtvistaViewer
+                    pdbInfo={pdbInfo}
+                    blocks={blocks}
+                    pdb={pdb}
+                    selection={selection}
+                    setBlockVisibility={setBlockVisibility}
+                />
+            </React.Fragment>
+        );
+    }
+);

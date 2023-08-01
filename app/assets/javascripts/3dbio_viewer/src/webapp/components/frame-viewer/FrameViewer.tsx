@@ -19,17 +19,17 @@ interface FrameViewerProps {
 export const FrameViewer = React.forwardRef<HTMLIFrameElement, FrameViewerProps>((props, ref) => {
     const { name, title, src, children, height, trackDef } = props;
     const [expanded, { toggle: toggleFrame }] = useBooleanState(true);
-    const titleRef = React.useRef<HTMLDivElement>(null);
+    const [defaultHeight,setDefaultHeight] = React.useState(0);
 
-    const titleHeight = React.useMemo(() => {
-        return titleRef.current ? titleRef.current?.getBoundingClientRect().height : undefined;
+    const measuredHeight = React.useCallback((el: HTMLDivElement) => {
+        if (el !== null) setDefaultHeight(el.getBoundingClientRect().height);
     }, []);
 
     return (
-        <StyledWrapperAccordion className="frame-viewer" titleHeight={titleHeight}>
+        <StyledWrapperAccordion className="frame-viewer" titleHeight={defaultHeight}>
             <StyledAccordion square expanded={expanded} onChange={toggleFrame}>
                 <StyledAccordionSummary>
-                    <div className="title" ref={titleRef}>
+                    <div className="title" ref={measuredHeight}>
                         {title}
                         {trackDef.description && (
                             <button className="viewer-track-help" title={trackDef.description}>
