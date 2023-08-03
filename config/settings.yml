@@ -1,4 +1,4 @@
-GS_BaseUrl: "http://rinchen-dos.cnb.csic.es/"
+GS_BaseUrl: "https://3dbionotes.cnb.csic.es/"
 GS_EnsemblServer: "http://rest.ensembl.org/"
 GS_UniServer: "http://www.uniprot.org/"
 GS_SIFTSUrl: "http://ftp.ebi.ac.uk/pub/databases/msd/sifts/xml/"
