@@ -3,7 +3,7 @@ import { StructureProperties as Props } from "molstar/lib/mol-model/structure";
 import { StateTransform } from "molstar/lib/mol-state/transform";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
 import { PluginContext } from "molstar/lib/mol-plugin/context";
-import { DbItem, Selection, getMainItem } from "../../view-models/Selection";
+import { DbItem, Selection, Type, getMainItem } from "../../view-models/Selection";
 import { Maybe } from "../../../utils/ts-utils";
 import { buildLigand, Ligand } from "../../../domain/entities/Ligand";
 import { StateObjectCell } from "molstar/lib/mol-state/object";
@@ -162,19 +162,25 @@ export function getCurrentItems(plugin: PDBeMolstarPlugin) {
         .map(
             (node): Maybe<DbItem & { ref: string }> => {
                 const label = node.cell.obj?.label;
-                console.log("Label: " + label);
                 const { isHidden } = node.cell.state;
 
-                const pdbId = label?.match(/\/v1\/([\w-]+)\//)?.[1];
-                const emdbId = label?.match(/\/em\/([\w-]+)\//)?.[1];
-                // const pdbRedo = label?.match(/\/em\/([\w-]+)\//)?.[1];
-                // const cstf = label?.match(/\/em\/([\w-]+)\//)?.[1];
-                // const ceres = label?.match(/\/em\/([\w-]+)\//)?.[1];
-                return pdbId
-                    ? { type: "pdb" as const, id: pdbId, visible: !isHidden, ref: node.ref }
-                    : emdbId
-                    ? { type: "emdb" as const, id: emdbId, visible: !isHidden, ref: node.ref }
-                    : undefined;
+                const pdbId: [string | undefined, Type] = [label?.match(/^(\d[\d\w]{3})$/)?.[1], "pdb"];
+                const emdbId: [string | undefined, Type] = [label?.match(/\/em\/([\w-]+)\//)?.[1], "emdb"];
+                const pdbRedo: [string | undefined, Type] = [label?.match(/^(\d[\d\w]{3}-pdbRedo)$/)?.[1], "pdbRedo"];
+                const cstf: [string | undefined, Type] = [label?.match(/^(\d[\d\w]{3}-cstf)$/)?.[1], "cstf"];
+
+                return _.compact(
+                    [pdbId, emdbId, pdbRedo, cstf].map(([id, type]) =>
+                        id && type
+                            ? {
+                                  type: type,
+                                  id: id,
+                                  visible: !isHidden,
+                                  ref: node.ref,
+                              }
+                            : undefined
+                    )
+                )[0];
             }
         )
         .compact()

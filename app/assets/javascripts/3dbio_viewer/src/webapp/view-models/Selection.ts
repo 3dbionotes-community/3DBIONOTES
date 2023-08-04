@@ -69,22 +69,13 @@ export interface DbItem<K = Type> {
 }
 
 export function getItemSelector(item: DbItem): Selector {
-    console.log(item.type);
     switch (item.type) {
-        case "pdb": // Example: label = "6w9c"
+        case "pdb" || "pdbRedo" || "ceres" || "cstf": // Example: label = "6w9c"
             return { label: new RegExp(`^${item.id}$`, "i") };
         case "emdb":
             // Example: with provider = "RCSB PDB EMD Density Server: EMD-8650"
             // Example: with URL "https://maps.rcsb.org/em/EMD-21375/cell?detail=3"
             return { label: new RegExp(`/${item.id}/`, "i") };
-        case "pdbRedo":
-            // Example: https://pdb-redo.eu/db/6aba/6aba_final.cif
-            return {
-                label: new RegExp(
-                    `/.*pdb-redo.*${getRefinedModelId(item as DbItem<RefinedModelType>)}.*/`,
-                    "i"
-                ),
-            };
         default:
             return {};
     }

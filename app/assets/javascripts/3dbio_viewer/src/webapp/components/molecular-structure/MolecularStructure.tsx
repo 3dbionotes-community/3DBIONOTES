@@ -57,8 +57,9 @@ const urls: Record<Type, (id: string) => string> = {
     pdb: (id: string) => `https://www.ebi.ac.uk/pdbe/model-server/v1/${id}/full?encoding=cif`,
     emdb: (id: string) => `https://maps.rcsb.org/em/${id}/cell?detail=3`,
     pdbRedo: (id: string) => `https://pdb-redo.eu/db/${id}/${id}_final.cif`,
-    cstf: (id: string) => `https://pdb-redo.eu/db/${id}/${id}_final.cif`,
-    ceres: (id: string) => `https://pdb-redo.eu/db/${id}/${id}_final.cif`,
+    cstf: (id: string) =>
+        `https://raw.githubusercontent.com/thorn-lab/coronavirus_structural_task_force/master/pdb/surface_glycoprotein/SARS-CoV-2/${id}/isolde/${id}_refine_7.cif`, //github?
+    ceres: (id: string) => ``,
 };
 
 export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
@@ -89,6 +90,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const [pluginLoad, setPluginLoad] = React.useState<Date>();
     const pdbePlugin = pdbePlugin0 && pluginLoad ? pdbePlugin0 : undefined;
     const molstarState = React.useRef<MolstarState>({ type: "pdb", items: [], chainId: undefined });
+    const [loadingSelection, setLoadingSelection] = React.useState(false);
     debugVariable({ molstarState });
 
     // Keep a reference containing the previous value of selection. We need this value to diff
@@ -159,13 +161,11 @@ function usePdbePlugin(options: MolecularStructureProps) {
                 const pdbId = initParams.moleculeId;
                 checkModelUrl(pdbId, "pdb").then(loaded => {
                     if (loaded) {
-                        console.log(initParams);
                         plugin.render(element, initParams).then(() => {
                             showLoading();
                             // Starting pdbe-molstar-plugin, but because the plugin cannot init without PDB, we are already loading the PDB.
                             setTitle("Loading PDB...");
                         });
-                        console.log("new selection", newSelection);
                         molstarState.current = MolstarStateActions.fromInitParams(
                             initParams,
                             newSelection
@@ -197,6 +197,10 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
         function updateSelection(currentSelection: Selection, newSelection: Selection): void {
             if (!pdbePlugin) return;
+            const oldItems = getItems(currentSelection);
+            const newItems = getItems(newSelection);
+            const { added, removed, updated } = diffDbItems(oldItems, newItems);
+            if (_.isEmpty(added) && _.isEmpty(removed) && _.isEmpty(updated)) return;
 
             applySelectionChangesToPlugin(
                 pdbePlugin,
@@ -265,6 +269,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         pdbePlugin.load(
             {
                 url: `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.cif`,
+                label: uploadDataToken,
                 format: "mmcif",
                 isBinary: false,
                 assemblyId: "1",
@@ -290,6 +295,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         pdbePlugin.load(
             {
                 url: `${routes.bionotes}/${pdbPath}`,
+                label: pdbPath,
                 format: "pdb",
                 isBinary: false,
                 assemblyId: "1",
@@ -322,7 +328,7 @@ async function applySelectionChangesToPlugin(
     setError: (message: string) => void
 ): Promise<void> {
     if (molstarState.current.type !== "pdb") return;
-    getCurrentItems(plugin);
+
     const oldItems = () => (molstarState.current.type === "pdb" ? molstarState.current.items : []);
     const updateItems = (item: DbItem) => {
         molstarState.current = MolstarStateActions.updateItems(
@@ -348,10 +354,10 @@ async function applySelectionChangesToPlugin(
                         const url = urls[item.type](id);
                         const loadParams: LoadParams = {
                             url,
+                            label: item.id,
                             format: "mmcif",
                             isBinary: false,
                             assemblyId: "1",
-                            label: `${id.toUpperCase()}-${item.type.toLowerCase()}`,
                         };
                         await plugin.load(loadParams, false);
                         setVisibility(plugin, item);
@@ -368,9 +374,6 @@ async function applySelectionChangesToPlugin(
     const newItems = getItems(newSelection);
 
     const { added, removed, updated } = diffDbItems(newItems, oldItems());
-
-    console.log(newItems, oldItems());
-    console.log(diffDbItems(newItems, oldItems()));
 
     const pdbs = added.filter(item => item.type === "pdb");
     const emdbs = added.filter(item => item.type === "emdb");
@@ -413,6 +416,7 @@ async function applySelectionChangesToPlugin(
                     const url = urls.pdb(pdbId);
                     const loadParams: LoadParams = {
                         url,
+                        label: pdbId,
                         format: "mmcif",
                         isBinary: false,
                         assemblyId: "1",
@@ -459,6 +463,7 @@ async function highlight(
     molstarState: MolstarStateRef
 ): Promise<void> {
     plugin.visual.clearSelection().catch(_err => {});
+    plugin.visual.clearHighlight().catch(_err => {}); //remove previous highlight
     const ligandsView = getLigandView(selection);
     if (ligandsView) return;
 
@@ -477,6 +482,7 @@ async function highlight(
                     focus: true,
                 },
             ],
+            structureNumber: 1, //rooting to the main PDB
             nonSelectedColor: { r: 255, g: 255, b: 255 },
         });
     } catch (err: any) {
