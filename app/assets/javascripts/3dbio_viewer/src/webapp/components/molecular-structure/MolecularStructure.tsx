@@ -109,7 +109,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
             onLigandsLoaded(ligands);
         }
 
-        setVisibilityForSelection(pdbePlugin, newSelection);
+        //the line below should be unnecessary as setVisbility is added on each item on load
+        // setVisibilityForSelection(pdbePlugin, newSelection);
         highlight(pdbePlugin, chains, newSelection, molstarState);
     }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection, chains]);
 
