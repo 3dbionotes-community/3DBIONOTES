@@ -59,7 +59,6 @@ const urls: Record<Type, (id: string) => string> = {
     pdbRedo: (id: string) => `https://pdb-redo.eu/db/${id}/${id}_final.cif`,
     cstf: (id: string) =>
         `https://raw.githubusercontent.com/thorn-lab/coronavirus_structural_task_force/master/pdb/surface_glycoprotein/SARS-CoV-2/${id}/isolde/${id}_refine_7.cif`, //github?
-    ceres: (id: string) => ``,
 };
 
 export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
@@ -380,7 +379,6 @@ async function applySelectionChangesToPlugin(
     const emdbs = added.filter(item => item.type === "emdb");
     const pdbRedo = added.filter(item => item.type === "pdbRedo");
     const cstf = added.filter(item => item.type === "cstf");
-    const ceres = added.filter(item => item.type === "ceres");
 
     if (!_.isEmpty(newItems)) showLoading();
 
@@ -445,9 +443,7 @@ async function applySelectionChangesToPlugin(
         }
     }
 
-    ([pdbRedo, cstf, ceres] as DbItem<RefinedModelType>[][]).forEach(items =>
-        loadRefinedItems(items)
-    );
+    ([pdbRedo, cstf] as DbItem<RefinedModelType>[][]).forEach(items => loadRefinedItems(items));
 
     if (newSelection.chainId !== currentSelection.chainId) {
         highlight(plugin, chains, newSelection, molstarState);

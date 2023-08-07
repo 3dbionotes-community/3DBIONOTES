@@ -6,7 +6,7 @@ import { Maybe } from "../../utils/ts-utils";
 
 /* Selection object from/to string.
 
-Example: 6w9c:A:NAG-701+EMD-8650|6lzg+!EMD-23150+EMD-15311|6w9c-pdbRedo+6w9c-ceres
+Example: 6w9c:A:NAG-701+EMD-8650|6lzg+!EMD-23150+EMD-15311|6w9c-pdbRedo+6w9c-cstf
 
 Main: PDB = 6w9c (chain A, ligand NAG-701) , EMDB = EMD-8650
 Overlay: 6lzg, EMD-23150 (! -> invisible), EMD-15311.
@@ -17,7 +17,7 @@ const mainSeparator = "+";
 const overlaySeparator = "|";
 const chainSeparator = ":";
 
-export type RefinedModelType = "pdbRedo" | "cstf" | "ceres";
+export type RefinedModelType = "pdbRedo" | "cstf";
 export type MainType = "pdb" | "emdb";
 
 export type Type = MainType | RefinedModelType;
@@ -70,7 +70,7 @@ export interface DbItem<K = Type> {
 
 export function getItemSelector(item: DbItem): Selector {
     switch (item.type) {
-        case "pdb" || "pdbRedo" || "ceres" || "cstf": // Example: label = "6w9c"
+        case "pdb" || "pdbRedo" || "cstf": // Example: label = "6w9c"
             return { label: new RegExp(`^${item.id}$`, "i") };
         case "emdb":
             // Example: with provider = "RCSB PDB EMD Density Server: EMD-8650"
@@ -109,7 +109,7 @@ function buildRefinedModels(item: string): DbItem<RefinedModelType>[] {
             if (
                 id &&
                 id.match(/^!{0,1}\d[\d\w]{3}$/) && //pdb regex
-                (type === "pdbRedo" || type === "cstf" || type === "ceres")
+                (type === "pdbRedo" || type === "cstf")
             )
                 return [
                     {
