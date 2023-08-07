@@ -20,7 +20,7 @@ import {
 import { debugVariable, isDebugMode } from "../../../utils/debug";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
-import { getCurrentItems, getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
+import { getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
 import { Ligand } from "../../../domain/entities/Ligand";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
@@ -89,7 +89,6 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const [pluginLoad, setPluginLoad] = React.useState<Date>();
     const pdbePlugin = pdbePlugin0 && pluginLoad ? pdbePlugin0 : undefined;
     const molstarState = React.useRef<MolstarState>({ type: "pdb", items: [], chainId: undefined });
-    const [loadingSelection, setLoadingSelection] = React.useState(false);
     debugVariable({ molstarState });
 
     // Keep a reference containing the previous value of selection. We need this value to diff
@@ -305,10 +304,6 @@ function usePdbePlugin(options: MolecularStructureProps) {
     }, [pdbePlugin, newSelection.chainId, proteinNetwork, compositionRoot]);
 
     return { pluginRef, pdbePlugin };
-}
-
-function setVisibilityForSelection(plugin: PDBeMolstarPlugin, selection: Selection) {
-    getItems(selection).forEach(item => setVisibility(plugin, item));
 }
 
 function setVisibility(plugin: PDBeMolstarPlugin, item: DbItem) {
