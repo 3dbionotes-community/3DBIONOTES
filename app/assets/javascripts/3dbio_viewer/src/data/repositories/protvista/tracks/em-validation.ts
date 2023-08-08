@@ -26,7 +26,7 @@ export interface PdbAnnotation {
     data: Array<{ begin: string; value: number }>;
 }
 
-type KnownAlgorithm = "deepres" | "monores" | "blocres" | "mapq" | "fscq";
+type KnownAlgorithm = "deepres" | "monores" | "blocres" | "mapq" | "fscq" | "daq";
 
 const subtrackByAlgorithm: Record<KnownAlgorithm, SubtrackDefinition> = {
     deepres: subtracks.deepRes,
@@ -34,6 +34,7 @@ const subtrackByAlgorithm: Record<KnownAlgorithm, SubtrackDefinition> = {
     blocres: subtracks.blocRes,
     mapq: subtracks.mapQ,
     fscq: subtracks.fscQ,
+    daq: subtracks.daq,
 };
 
 const MAXQ_COLOR_UPPPER_THRESHOLD = 0.8;

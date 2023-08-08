@@ -4,13 +4,14 @@ import styled from "styled-components";
 
 export interface ActionButtonProps {
     onClick: () => void;
+    expanded: boolean;
 }
 
-export const ActionButton: React.FC<ActionButtonProps> = ({ onClick }) => {
+export const ActionButton: React.FC<ActionButtonProps> = ({ onClick, expanded }) => {
     return (
         <StyledButton onClick={onClick}>
             <EmojiObjectsIcon fontSize="small" />
-            Tutorial
+            {expanded && <>Tutorial</>}
         </StyledButton>
     );
 };

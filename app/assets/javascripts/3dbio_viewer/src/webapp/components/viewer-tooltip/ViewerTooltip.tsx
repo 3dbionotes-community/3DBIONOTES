@@ -2,7 +2,7 @@ import React from "react";
 import { Tooltip, ClickAwayListener, Fade } from "@material-ui/core";
 
 interface ViewerTooltipProps {
-    title: string;
+    title: NonNullable<React.ReactNode>;
     showTooltip: boolean;
     setShowTooltip: (value: boolean) => void;
     children: React.ReactElement;
