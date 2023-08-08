@@ -132,7 +132,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                         .toPromise()
                         .then(pdbId => {
                             if (!pdbId) throw new Error("No PDB found for this EMDB model");
-                            else setSelection(setMainPdb(newSelection, pdbId));
+                            else setSelection(setMainItem(newSelection, pdbId, "pdb"));
                         })
                         .catch(console.error)
                 );
@@ -160,7 +160,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                         if (pdbId)
                             checkModelUrl(pdbId, "pdb")
                                 .then(loaded => {
-                                    if (!loaded) {
+                                    if (loaded) {
                                         plugin.render(element, initParams);
                                         molstarState.current = MolstarStateActions.fromInitParams(
                                             initParams,
@@ -325,7 +325,6 @@ async function applySelectionChangesToPlugin(
                 const id: string = getRefinedModelId(item);
                 await checkModelUrl(id, item.type).then(async loaded => {
                     if (loaded) {
-                        setTitle(getTitle(i, items, item.type));
                         const url = urls[item.type](id);
                         const loadParams: LoadParams = {
                             url,
@@ -334,12 +333,13 @@ async function applySelectionChangesToPlugin(
                             isBinary: false,
                             assemblyId: "1",
                         };
-                        await plugin.load(loadParams, false);
+                        await updateLoader(
+                            "loadModel",
+                            plugin.load(loadParams, false),
+                            getTitle(i, items, item.type)
+                        );
                         setVisibility(plugin, item);
                         updateItems(item);
-                    } else {
-                        hideLoading();
-                        setError(`${item.type.toUpperCase()} not found: ${id}`);
                     }
                 });
             }

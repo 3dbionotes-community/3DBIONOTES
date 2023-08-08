@@ -101,9 +101,8 @@ function splitPdbIdb(main: string): Array<Maybe<string>> {
     }
 }
 
-function buildRefinedModels(item: string): DbItem<RefinedModelType>[] {
-    return item
-        .split(mainSeparator)
+function buildRefinedModels(items: string[]): DbItem<RefinedModelType>[] {
+    return items
         .map(m => m.split("-"))
         .flatMap(([id, type]) => {
             if (
@@ -123,11 +122,15 @@ function buildRefinedModels(item: string): DbItem<RefinedModelType>[] {
 }
 
 export function getSelectionFromString(items: Maybe<string>): Selection {
-    const [main = "", overlay = "", refinedOverlay = ""] = (items || "").split(overlaySeparator, 3);
-    const refinedModels = buildRefinedModels(refinedOverlay);
+    const [main = "", overlay = ""] = (items || "").split(overlaySeparator, 2);
+    const overlayIds = overlay.split(mainSeparator);
+    const overlayRefined = overlayIds.filter(i => i.includes("pdbRedo") || i.includes("cstf"));
+    const overlayNotRefined = overlayIds.filter(
+        i => !(i.includes("pdbRedo") || i.includes("cstf"))
+    );
+    const refinedModels = buildRefinedModels(overlayRefined);
     const [mainPdbRich = "", mainEmdbRichId] = splitPdbIdb(main);
     const [mainPdbRichId, chainId, ligandId] = mainPdbRich.split(chainSeparator, 3);
-    const overlayIds = overlay.split(mainSeparator);
 
     const selection: Selection = {
         type: "free",
@@ -135,7 +138,7 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
             pdb: buildDbItem(mainPdbRichId),
             emdb: buildDbItem(mainEmdbRichId),
         },
-        overlay: _.compact(overlayIds.map(buildDbItem)),
+        overlay: _.compact(overlayNotRefined.map(buildDbItem)),
         refinedModels: refinedModels,
         chainId: chainId,
         ligandId: ligandId,
@@ -155,7 +158,7 @@ export function getSelectionFromNetworkToken(token: string, chainId: Maybe<strin
 export function getStringFromSelection(selection: Selection): string {
     if (selection.type !== "free") return "";
 
-    const { main, overlay, chainId, ligandId, refinedModels } = selection;
+    const { main, overlay, chainId, refinedModels, ligandId } = selection;
     const pdb = getItemParam(main.pdb);
     const pdbWithChainAndLigand = _([pdb, chainId, ligandId])
         .dropRightWhile(_.isEmpty)
@@ -163,12 +166,9 @@ export function getStringFromSelection(selection: Selection): string {
     const mainParts = main ? [pdbWithChainAndLigand, getItemParam(main.emdb)] : [];
     const parts = [
         _(mainParts).dropRightWhile(_.isEmpty).join(mainSeparator),
-        overlay.map(getItemParam).join(mainSeparator),
-        refinedModels.map(getItemParam).join(mainSeparator),
+        [...overlay, ...refinedModels].map(getItemParam).join(mainSeparator),
     ];
-
-    if (parts[2]) return parts.join(overlaySeparator);
-    else return _.compact(parts).join(overlaySeparator);
+    return _.compact(parts).join(overlaySeparator);
 }
 
 /* Updaters */
