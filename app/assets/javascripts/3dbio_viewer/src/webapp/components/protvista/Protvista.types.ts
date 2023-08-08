@@ -17,6 +17,7 @@ export interface ProtvistaTrackElement extends HTMLDivElement {
 export interface BlockComponentProps {
     pdb: Pdb;
     selection: Selection;
+    setSelection: (newSelection: Selection) => void;
     block: BlockDef;
     setBlockVisibility?: (blockVisibility: BlockVisibility) => void;
 }

@@ -18,6 +18,7 @@ export interface ProtvistaViewerProps {
     pdbInfo: PdbInfo;
     selection: Selection;
     blocks: BlockDef[];
+    setSelection: (newSelection: Selection) => void;
 }
 
 const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
@@ -26,7 +27,7 @@ const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps
 };
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
-    const { pdb, selection, blocks, pdbInfo } = props;
+    const { pdb, selection, blocks, pdbInfo, setSelection } = props;
 
     const [blocksVisibility, setBlocksVisibility] = React.useState(
         blocks.map(block => ({ block, visible: true }))
@@ -118,6 +119,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                                 <CustomComponent
                                     pdb={pdb}
                                     selection={selection}
+                                    setSelection={setSelection}
                                     block={block}
                                     setBlockVisibility={setBlockVisibility}
                                 />
@@ -135,6 +137,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                                             trackDef={trackDef}
                                             pdb={pdb}
                                             selection={selection}
+                                            setSelection={setSelection}
                                         />
                                     )
                                 );
@@ -143,7 +146,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                     )
                 );
             }),
-        [blocksVisibility, namespace, pdb, selection, setBlockVisibility]
+        [blocksVisibility, namespace, pdb, selection, setSelection, setBlockVisibility]
     );
 
     return <div style={styles.container}>{renderBlocks}</div>;

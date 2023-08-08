@@ -1,9 +1,12 @@
-a {
+a,
+.anchor {
     color: #268bbe;
     text-decoration: none;
     background-color: transparent;
+    cursor: pointer;
 }
-a:hover {
+a:hover,
+.anchor:hover {
     text-decoration: underline;
 }
 label {

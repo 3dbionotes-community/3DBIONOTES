@@ -23,7 +23,7 @@ export interface PdbViewerProps {
 
 export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
     const { pdb, viewerState, onAddAnnotations, pdbInfo } = props;
-    const { selection, profile, setProfile } = viewerState;
+    const { selection, profile, setProfile, setSelection } = viewerState;
 
     const blocks = React.useMemo(() => {
         return getVisibleBlocks(blockDefs, { pdb, profile }).filter(
@@ -39,7 +39,13 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
                 <JumpToButton blocks={blocks} />
                 {!debugFlags.hideTraining && <TrainingApp locale="en" modules={modules} />}
             </div>
-            <ProtvistaViewer pdbInfo={pdbInfo} blocks={blocks} pdb={pdb} selection={selection} />
+            <ProtvistaViewer
+                pdbInfo={pdbInfo}
+                blocks={blocks}
+                pdb={pdb}
+                selection={selection}
+                setSelection={setSelection}
+            />
         </React.Fragment>
     );
 });
