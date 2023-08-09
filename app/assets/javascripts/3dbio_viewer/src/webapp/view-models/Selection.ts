@@ -70,7 +70,11 @@ export interface DbItem<K = Type> {
 
 export function getItemSelector(item: DbItem): Selector {
     switch (item.type) {
-        case "pdb" || "pdbRedo" || "cstf": // Example: label = "6w9c"
+        case "pdb": // Example: label = "6w9c"
+            return { label: new RegExp(`^${item.id}$`, "i") };
+        case "pdbRedo": // Example: label = "6w9c-pdbRedo"
+            return { label: new RegExp(`^${item.id}$`, "i") };
+        case "cstf": // Example: label = "6w9c-cstf"
             return { label: new RegExp(`^${item.id}$`, "i") };
         case "emdb":
             // Example: with provider = "RCSB PDB EMD Density Server: EMD-8650"
