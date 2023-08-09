@@ -185,6 +185,11 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
         function updateSelection(currentSelection: Selection, newSelection: Selection): void {
             if (!pdbePlugin) return;
+            const oldItems = getItems(currentSelection);
+            const newItems = getItems(newSelection);
+            const { added, removed, updated } = diffDbItems(oldItems, newItems);
+            if (_.isEmpty(added) && _.isEmpty(removed) && _.isEmpty(updated)) return;
+
             const validSelection =
                 newSelection.type === "free"
                     ? Promise.all(
@@ -196,35 +201,29 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             validSelection.then(newValidModels => {
                 console.debug("Valid models", newValidModels);
-
                 const refinedNewSelection = {
                     ...newSelection,
-                    refinedModels: newValidModels ?? [],
+                    refinedModels: newValidModels,
                 };
-                const oldItems = getItems(currentSelection);
-                const newItems = getItems(newSelection);
                 const newRefinedItems = getItems(refinedNewSelection);
-
-                const { added, removed, updated } = diffDbItems(oldItems, newItems);
                 const {
                     added: refinedAdded,
                     removed: refinedRemoved,
                     updated: refinedUpdated,
                 } = diffDbItems(oldItems, newRefinedItems);
-                if (_.isEmpty(added) && _.isEmpty(removed) && _.isEmpty(updated)) return;
                 /* Refined added/removed/updated are only valid models and when there is a change on them.
                 Changes on not valid models will not trigger applySelectionChangesToPlugin() but on setSelection()
                 to remove unvalid ones*/
                 //prettier-ignore
                 if (!( _.isEmpty(refinedAdded) && _.isEmpty(refinedRemoved) && _.isEmpty(refinedUpdated)))
-                    applySelectionChangesToPlugin(
+                    updateLoader("updateVisualPlugin",applySelectionChangesToPlugin(
                         pdbePlugin,
                         molstarState,
                         chains,
                         currentSelection,
                         refinedNewSelection,
                         updateLoader
-                    );
+                    ));
                 setSelection(refinedNewSelection);
             });
         }
@@ -547,7 +546,8 @@ async function checkModelUrl(id: Maybe<string>, modelType: Type): Promise<boolea
     if (!id) return true;
 
     const url = urls[modelType](id);
-    const res = await fetch(url, { method: "GET" });
+    //method HEAD makes 404 be 200 anyways
+    const res = await fetch(url, { method: "GET", cache: "force-cache" }); //we are only caching if url exist
 
     if (res.ok && res.status != 404 && res.status != 500) {
         return true;
