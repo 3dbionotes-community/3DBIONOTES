@@ -90,7 +90,6 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                         </div>
                     )}
                 </div>
-
                 <div className="selectors">
                     <button onClick={openSearchWithAnalytics}>
                         <Search />
