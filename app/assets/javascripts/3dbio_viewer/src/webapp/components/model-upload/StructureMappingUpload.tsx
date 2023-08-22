@@ -73,7 +73,7 @@ export const StructureMappingUpload: React.FC<UploadConfirmationProps> = React.m
                     res => onLoaded({ ...res, extension: fileExtension }),
                     err => setError(err.message)
                 );
-        }, [compositionRoot, rows, selectedIds, atomicStructure, onLoaded, fileExtension])
+        }, [compositionRoot, rows, selectedIds, atomicStructure, onLoaded, fileExtension, jobTitle])
     );
 
     return (

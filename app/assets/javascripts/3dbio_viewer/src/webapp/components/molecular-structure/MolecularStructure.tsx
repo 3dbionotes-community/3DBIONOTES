@@ -166,7 +166,10 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                 })
                                 .catch(err => reject(err));
                         else if (newSelection.type === "uploadData") {
-                            if (!uploadDataToken) reject("No token found");
+                            if (!uploadDataToken) {
+                                reject("No token found");
+                                return;
+                            }
                             const customData = {
                                 url: `${
                                     routes.bionotesStaging
@@ -193,7 +196,16 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             setPdbePlugin(plugin);
         },
-        [pdbePlugin, newSelection, prevSelectionRef, compositionRoot, setSelection, updateLoader]
+        [
+            pdbePlugin,
+            newSelection,
+            prevSelectionRef,
+            compositionRoot,
+            setSelection,
+            updateLoader,
+            extension,
+            uploadDataToken,
+        ]
     );
 
     const updatePluginOnNewSelection = React.useCallback(() => {
@@ -291,7 +303,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
         // For future reference on this commit: setTitle(i18n.t("Applying..."));
         // hide on promise finished.
-    }, [pdbePlugin, uploadDataToken, compositionRoot, extension]);
+    }, [pdbePlugin, uploadDataToken, compositionRoot, extension, updateLoader]);
 
     React.useEffect(() => {
         if (!pdbePlugin) return;
