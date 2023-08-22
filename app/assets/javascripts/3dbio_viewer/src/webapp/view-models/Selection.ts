@@ -31,9 +31,16 @@ export interface FreeSelection extends BaseSelection {
     overlay: Array<DbItem>;
 }
 
+export type AllowedExtension = "pdb" | "cif" | "ent";
+
+export function getAllowedFileExtension(fileName: string) {
+    return fileName.replace(/^.*\.(pdb|cif|ent)$/gi, "$1") as AllowedExtension;
+}
+
 export interface UploadDataSelection extends BaseSelection {
     type: "uploadData";
     token: string;
+    extension: AllowedExtension;
 }
 
 export interface NetworkSelection extends BaseSelection {
@@ -119,8 +126,12 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
     return selection;
 }
 
-export function getSelectionFromUploadDataToken(token: string, chainId: Maybe<string>): Selection {
-    return { ...emptySelection, type: "uploadData", token, chainId };
+export function getSelectionFromUploadDataToken(
+    token: string,
+    chainId: Maybe<string>,
+    extension: AllowedExtension
+): Selection {
+    return { ...emptySelection, type: "uploadData", token, chainId, extension };
 }
 
 export function getSelectionFromNetworkToken(token: string, chainId: Maybe<string>): Selection {

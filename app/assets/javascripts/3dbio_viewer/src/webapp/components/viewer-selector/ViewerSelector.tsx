@@ -62,11 +62,15 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
 
     return (
         <div id="viewer-selector">
+            {uploadData && uploadData.title && (
+                <div className="viewer-selector-title">
+                    <div className="overline">{i18n.t("Job Title")}</div>
+                    {uploadData.title}
+                </div>
+            )}
             <div className="db">
-                <div className="status">
-                    {uploadData && <div>{uploadData.title}</div>}
-
-                    {selection.type === "free" && (
+                {selection.type === "free" && (
+                    <div className="status">
                         <div className="selection-main-container">
                             {selection.main.pdb && (
                                 <SelectionItem
@@ -88,14 +92,17 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                                 />
                             )}
                         </div>
-                    )}
-                </div>
-                <div className="selectors">
+                    </div>
+                )}
+
+                <div className={"selectors" + (uploadData ? " invert" : "")}>
                     <button onClick={openSearchWithAnalytics}>
                         <Search />
                     </button>
-                    <Dropdown {...chainDropdownProps} showExpandIcon />
-                    <Dropdown {...ligandsDropdownProps} showExpandIcon />
+                    <span>
+                        <Dropdown {...chainDropdownProps} showExpandIcon />
+                        <Dropdown {...ligandsDropdownProps} showExpandIcon />
+                    </span>
                 </div>
             </div>
 

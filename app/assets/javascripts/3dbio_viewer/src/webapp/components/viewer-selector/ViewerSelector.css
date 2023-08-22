@@ -76,9 +76,34 @@
     align-items: center;
 }
 
+.viewer-selector-title .overline {
+    color: #123546;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 0.5em;
+}
+
+.viewer-selector-title {
+    color: #123546;
+    font-weight: 700;
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+.selectors button {
+    margin-left: 0;
+}
+
 .selectors {
     display: flex;
     align-items: center;
+    column-gap: 10px;
+}
+
+.selectors.invert {
+    flex-direction: row-reverse;
 }
 
 .selectors .close {

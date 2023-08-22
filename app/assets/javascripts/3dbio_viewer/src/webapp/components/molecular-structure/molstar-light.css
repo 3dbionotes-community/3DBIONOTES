@@ -1250,7 +1250,7 @@ fieldset[disabled] .msp-plugin .msp-btn-link:focus {
 }
 .msp-plugin .msp-toggle-color-picker .msp-color-picker {
     position: absolute;
-    z-index: 100000;
+    z-index: 1200;
     background: #e7e7e7;
     border-top: 1px solid #e7e7e7;
     padding-bottom: 5px;
@@ -2317,7 +2317,7 @@ fieldset[disabled] .msp-plugin .msp-btn-link:focus {
     right: 10px;
     bottom: 10px;
     max-width: 95%;
-    z-index: 10000;
+    z-index: 1200;
 }
 .msp-plugin .msp-highlight-info {
     color: #4aa3df;

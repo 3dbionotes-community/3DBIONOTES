@@ -13,6 +13,7 @@ import { StructureMappingUpload } from "./StructureMappingUpload";
 import { ErrorMessage } from "../error-message/ErrorMessage";
 import { StyledButton } from "../../training-app/components/action-button/ActionButton";
 import { recordOfStyles } from "../../../utils/ts-utils";
+import { AllowedExtension, getAllowedFileExtension } from "../../view-models/Selection";
 
 export interface ModelUploadProps {
     title: string;
@@ -32,6 +33,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const [jobTitle, setJobTitle] = useState<string>("");
     const [error, setError] = useState<string>();
     const [atomicStructure, setAtomicStructure] = useState<AtomicStructure>();
+    const [fileExtension, setFileExtension] = useState<AllowedExtension>("cif");
     const structureFileRef = useRef<DropzoneRef>(null);
     const annotationFileRef = useRef<DropzoneRef>(null);
 
@@ -40,6 +42,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
         const structureFile = getFile(structureFileRef);
 
         if (structureFile) {
+            setFileExtension(getAllowedFileExtension(structureFile.name));
             const uploadParams = {
                 jobTitle,
                 structureFile,
@@ -113,7 +116,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                     <Dropzone
                         ref={structureFileRef}
                         onDrop={() => setError("")}
-                        accept=".pdb,.cif"
+                        accept=".pdb,.cif,.ent"
                     ></Dropzone>
 
                     <label className="fileFormat">{i18n.t("Upload your annotations")}</label>
@@ -145,8 +148,10 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
             {isUploadConfirmationOpen && atomicStructure ? (
                 <StructureMappingUpload
                     atomicStructure={atomicStructure}
+                    jobTitle={jobTitle}
                     onClose={closeUploadConfirmation}
                     onLoaded={onLoaded}
+                    fileExtension={fileExtension}
                 />
             ) : null}
         </>

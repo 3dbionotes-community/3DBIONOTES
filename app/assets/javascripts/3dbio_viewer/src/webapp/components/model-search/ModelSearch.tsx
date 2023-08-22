@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import queryString from "query-string";
 import {
     CircularProgress,
     Dialog,
@@ -12,7 +13,7 @@ import { Close, CloudUpload as CloudUploadIcon, Search } from "@material-ui/icon
 import { DbModel, DbModelType } from "../../../domain/entities/DbModel";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { useBooleanState } from "../../hooks/use-boolean";
-import { ActionType, DbItem } from "../../view-models/Selection";
+import { ActionType, AllowedExtension, DbItem } from "../../view-models/Selection";
 import { useAppContext } from "../AppContext";
 import { ModelSearchItem } from "./ModelSearchItem";
 import { ModelUpload } from "../model-upload/ModelUpload";
@@ -86,8 +87,10 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
         setFormState(prevForm => ({ ...prevForm, startIndex: prevForm.startIndex + pageSize }));
     }, []);
     const goToLoaded = React.useCallback(
-        (options: { token: string }) => {
-            goTo(`/uploaded/${options.token}`);
+        (options: { token: string; extension: AllowedExtension }) => {
+            const params = { type: options.extension };
+            const query = queryString.stringify(params);
+            goTo(`/uploaded/${options.token}` + (query ? `?${query}` : ""));
             onClose();
         },
         [goTo, onClose]
