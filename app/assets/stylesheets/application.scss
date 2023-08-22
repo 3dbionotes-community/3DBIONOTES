@@ -1,2 +1,10 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
+
+protvista-tooltip table.tooltip {
+    position: revert;
+    display: revert;
+    font-family: Verdana, Arial, sans-serif; //from protvista
+    line-height: normal;
+    opacity: revert;
+}
