@@ -68,6 +68,15 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
 
     const submit = useCallbackEffect(submitCb);
 
+    const downloadExample = React.useCallback<React.MouseEventHandler<HTMLAnchorElement>>(
+        ev => {
+            ev.stopPropagation();
+            ev.preventDefault();
+            compositionRoot.downloadAnnotationsExample.execute();
+        },
+        [compositionRoot]
+    );
+
     return (
         <>
             <Dialog open={true} onClose={onClose} maxWidth="md">
@@ -119,7 +128,15 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                         accept=".pdb,.cif,.ent"
                     ></Dropzone>
 
-                    <label className="fileFormat">{i18n.t("Upload your annotations")}</label>
+                    <label className="fileFormat">
+                        <span>
+                            {i18n.t("Upload your annotations file in JSON format")} (
+                            <a href="#" onClick={downloadExample}>
+                                {i18n.t("example")}
+                            </a>
+                            )
+                        </span>
+                    </label>
                     <Dropzone
                         ref={annotationFileRef}
                         onDrop={() => setError("")}
