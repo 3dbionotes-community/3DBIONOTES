@@ -3,6 +3,7 @@ import _ from "lodash";
 import { Ligand } from "../../domain/entities/Ligand";
 import { PdbInfo } from "../../domain/entities/PdbInfo";
 import { Maybe } from "../../utils/ts-utils";
+import { UploadedParams } from "../components/viewer-selector/viewer-selector.hooks";
 
 /* Selection object from/to string.
 
@@ -126,11 +127,8 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
     return selection;
 }
 
-export function getSelectionFromUploadDataToken(
-    token: string,
-    chainId: Maybe<string>,
-    extension: AllowedExtension
-): Selection {
+export function getSelectionFromUploadDataToken(selectionParams: UploadedParams): Selection {
+    const { token, chain: chainId, type: extension } = selectionParams;
     return { ...emptySelection, type: "uploadData", token, chainId, extension };
 }
 

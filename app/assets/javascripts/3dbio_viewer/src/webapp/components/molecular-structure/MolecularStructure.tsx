@@ -87,8 +87,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
     debugVariable({ pdbePlugin });
     const chains = options.pdbInfo?.chains;
 
-    const uploadDataToken = newSelection.type === "uploadData" ? newSelection.token : undefined;
-    const extension = newSelection.type === "uploadData" ? newSelection.extension : "";
+    const [uploadDataToken, extension] =
+        newSelection.type === "uploadData" ? [newSelection.token, newSelection.extension] : [];
 
     React.useEffect(() => {
         if (!pluginLoad || !pdbePlugin) return;
@@ -170,12 +170,13 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                 reject("No token found");
                                 return;
                             }
+                            if (!extension) {
+                                reject(i18n.t('The extension must be "pdb", "ent", "cif".'));
+                                return;
+                            }
+                            const supportedExtension = extension === "ent" ? "pdb" : extension;
                             const customData = {
-                                url: `${
-                                    routes.bionotesStaging
-                                }/upload/${uploadDataToken}/structure_file.${
-                                    extension === "ent" ? "pdb" : extension
-                                }`,
+                                url: `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.${supportedExtension}`,
                                 format: extension === "cif" ? "mmcif" : "pdb",
                                 binary: false,
                             };
@@ -267,11 +268,10 @@ function usePdbePlugin(options: MolecularStructureProps) {
     React.useEffect(() => {
         if (!pdbePlugin) return;
         if (!uploadDataToken) return;
+        if (!extension) return;
         pdbePlugin.visual.remove({});
-
-        const uploadUrl = `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.${
-            extension === "ent" ? "pdb" : extension
-        }`;
+        const supportedExtension = extension === "ent" ? "pdb" : extension;
+        const uploadUrl = `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.${supportedExtension}`;
 
         updateLoader(
             "loadModel",

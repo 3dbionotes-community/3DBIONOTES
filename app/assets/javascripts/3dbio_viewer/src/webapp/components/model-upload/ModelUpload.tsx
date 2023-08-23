@@ -72,7 +72,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
         ev => {
             ev.stopPropagation();
             ev.preventDefault();
-            compositionRoot.downloadAnnotationsExample.execute();
+            return compositionRoot.downloadAnnotationsExample.execute();
         },
         [compositionRoot]
     );

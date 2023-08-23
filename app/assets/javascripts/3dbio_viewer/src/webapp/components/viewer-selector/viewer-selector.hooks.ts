@@ -31,7 +31,7 @@ export interface SelectorParams {
     profile?: string;
 }
 
-interface UploadedParams {
+export interface UploadedParams {
     token: string;
     type: AllowedExtension;
     chain: Maybe<string>;
@@ -62,18 +62,14 @@ export function useViewerState(section: Section): ViewerState {
                 return { selection, profile };
             }
             case "uploaded": {
-                const params2 = {
+                const urlParams = {
                     ...params,
                     type: values.type,
                     chain: values.chain,
                     profile: values.profile,
                 } as UploadedParams;
-                const selection = getSelectionFromUploadDataToken(
-                    params2.token,
-                    params2.chain,
-                    params2.type
-                );
-                const profile = getProfileFromString(params2.profile);
+                const selection = getSelectionFromUploadDataToken(urlParams);
+                const profile = getProfileFromString(urlParams.profile);
                 return { selection, profile };
             }
             case "network": {
