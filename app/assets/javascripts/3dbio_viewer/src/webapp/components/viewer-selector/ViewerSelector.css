@@ -102,6 +102,11 @@
     column-gap: 10px;
 }
 
+.selectors > span {
+    display: flex;
+    column-gap: 10px;
+}
+
 .selectors.invert {
     flex-direction: row-reverse;
 }
