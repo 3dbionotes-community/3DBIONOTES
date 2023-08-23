@@ -3,6 +3,7 @@ import { Selector } from "@3dbionotes/pdbe-molstar/lib";
 import { Ligand } from "../../domain/entities/Ligand";
 import { PdbInfo } from "../../domain/entities/PdbInfo";
 import { Maybe } from "../../utils/ts-utils";
+import { UploadedParams } from "../components/viewer-selector/viewer-selector.hooks";
 
 /* Selection object from/to string.
 
@@ -36,9 +37,16 @@ export interface FreeSelection extends BaseSelection {
     refinedModels: Array<DbItem<RefinedModelType>>;
 }
 
+export type AllowedExtension = "pdb" | "cif" | "ent";
+
+export function getAllowedFileExtension(fileName: string) {
+    return fileName.replace(/^.*\.(pdb|cif|ent)$/gi, "$1") as AllowedExtension;
+}
+
 export interface UploadDataSelection extends BaseSelection {
     type: "uploadData";
     token: string;
+    extension: AllowedExtension;
 }
 
 export interface NetworkSelection extends BaseSelection {
@@ -151,8 +159,9 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
     return selection;
 }
 
-export function getSelectionFromUploadDataToken(token: string, chainId: Maybe<string>): Selection {
-    return { ...emptySelection, type: "uploadData", token, chainId };
+export function getSelectionFromUploadDataToken(selectionParams: UploadedParams): Selection {
+    const { token, chain: chainId, type: extension } = selectionParams;
+    return { ...emptySelection, type: "uploadData", token, chainId, extension };
 }
 
 export function getSelectionFromNetworkToken(token: string, chainId: Maybe<string>): Selection {

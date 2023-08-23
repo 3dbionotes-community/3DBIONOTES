@@ -47,6 +47,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     const {
         loading,
+        errorThrown,
         title,
         updateLoaderStatus,
         updateOnResolve: updateLoader,
@@ -103,7 +104,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     return (
         <>
-            <LoaderMask open={loading} title={title} />
+            <LoaderMask open={loading || errorThrown} title={title} errorThrown={errorThrown} />
             <div id="viewer" className={!isDev ? "prod" : undefined}>
                 {!debugFlags.showOnlyValidations && (
                     <div id="left">

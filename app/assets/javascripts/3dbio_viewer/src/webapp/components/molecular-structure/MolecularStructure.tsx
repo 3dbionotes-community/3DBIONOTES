@@ -91,6 +91,9 @@ function usePdbePlugin(options: MolecularStructureProps) {
     debugVariable({ pdbePlugin });
     const chains = options.pdbInfo?.chains;
 
+    const [uploadDataToken, extension] =
+        newSelection.type === "uploadData" ? [newSelection.token, newSelection.extension] : [];
+
     React.useEffect(() => {
         if (!pluginLoad || !pdbePlugin) return;
         if (!newSelection.ligandId) {
@@ -169,14 +172,52 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                     }
                                 })
                                 .catch(err => reject(err));
-                        else reject("PDB is not defined");
+                        else if (newSelection.type === "uploadData") {
+                            if (!uploadDataToken) {
+                                reject("No token found");
+                                return;
+                            }
+                            if (!extension) {
+                                reject(i18n.t('The extension must be "pdb", "ent", "cif".'));
+                                return;
+                            }
+                            const supportedExtension = extension === "ent" ? "pdb" : extension;
+                            const customData = {
+                                url: `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.${supportedExtension}`,
+                                format: extension === "cif" ? "mmcif" : "pdb",
+                                binary: false,
+                            };
+                            checkUploadedModelUrl(customData.url)
+                                .then(result => {
+                                    if (result) {
+                                        const newParams = { ...initParams, customData };
+                                        plugin.render(element, newParams);
+                                        molstarState.current = MolstarStateActions.fromInitParams(
+                                            newParams,
+                                            newSelection
+                                        );
+                                    } else reject("Invalid token and/or type");
+                                })
+                                .catch(_err =>
+                                    reject(`Could not find uploaded model: ${customData.url}`)
+                                );
+                        } else reject("PDB is not defined");
                     })
                 );
             }
 
             setPdbePlugin(plugin);
         },
-        [pdbePlugin, newSelection, prevSelectionRef, compositionRoot, setSelection, updateLoader]
+        [
+            pdbePlugin,
+            newSelection,
+            prevSelectionRef,
+            compositionRoot,
+            setSelection,
+            updateLoader,
+            extension,
+            uploadDataToken,
+        ]
     );
 
     const updatePluginOnNewSelection = React.useCallback(() => {
@@ -266,26 +307,48 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const updatePluginOnNewSelectionEffect = updatePluginOnNewSelection;
     React.useEffect(updatePluginOnNewSelectionEffect, [updatePluginOnNewSelectionEffect]);
 
-    const uploadDataToken = newSelection.type === "uploadData" ? newSelection.token : undefined;
-
     React.useEffect(() => {
         if (!pdbePlugin) return;
         if (!uploadDataToken) return;
+        if (!extension) return;
         pdbePlugin.visual.remove({});
+        const supportedExtension = extension === "ent" ? "pdb" : extension;
+        const uploadUrl = `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.${supportedExtension}`;
+
+        updateLoader(
+            "loadModel",
+            new Promise<void>((resolve, reject) => {
+                checkUploadedModelUrl(uploadUrl)
+                    .then(result => {
+                        if (result) {
+                            pdbePlugin.events.loadComplete.subscribe({
+                                next: loaded => {
+                                    console.debug("molstar.events.loadComplete", loaded);
+                                    if (loaded) resolve();
+                                    else reject("PDB molstar did not load");
+                                },
+                                error: err => reject(err),
+                            });
+                            pdbePlugin.load(
+                                {
+                                    url: uploadUrl,
+                                    label: uploadDataToken,
+                                    format: extension === "cif" ? "mmcif" : "pdb",
+                                    isBinary: false,
+                                    assemblyId: "1",
+                                },
+                                false
+                            );
+                        } else reject("Invalid token and/or type");
+                    })
+                    .catch(_err => reject(`Could not find uploaded model: ${uploadUrl}`));
+            }),
+            i18n.t("Loading uploded model...")
+        );
 
         // For future reference on this commit: setTitle(i18n.t("Applying..."));
         // hide on promise finished.
-        pdbePlugin.load(
-            {
-                url: `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.cif`,
-                label: uploadDataToken,
-                format: "mmcif",
-                isBinary: false,
-                assemblyId: "1",
-            },
-            false
-        );
-    }, [pdbePlugin, uploadDataToken, compositionRoot]);
+    }, [pdbePlugin, uploadDataToken, compositionRoot, extension, updateLoader]);
 
     React.useEffect(() => {
         if (!pdbePlugin) return;
@@ -556,4 +619,15 @@ async function checkModelUrl(id: Maybe<string>, modelType: Type): Promise<boolea
         console.error(msg);
         return false;
     }
+}
+
+function checkUploadedModelUrl(url: string): Promise<boolean> {
+    return fetch(url, { method: "HEAD", cache: "force-cache" }).then(res => {
+        if (res.ok && res.status != 404 && res.status != 500) return true;
+        else {
+            const msg = `Error loading model: url=${url} - ${res.status}`;
+            console.error(msg);
+            return false;
+        }
+    });
 }
