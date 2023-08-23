@@ -11,7 +11,7 @@ import { UploadData } from "../../domain/entities/UploadData";
 import { Future } from "../../utils/future";
 import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
-import { getMainPdbId, Selection } from "../view-models/Selection";
+import { getMainItem, Selection } from "../view-models/Selection";
 
 export function useStateFromFuture<Value>(
     getFutureValue: () => FutureData<Value> | undefined
@@ -29,7 +29,7 @@ export function useStateFromFuture<Value>(
 
 export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) {
     const { compositionRoot } = useAppContext();
-    const mainPdbId = getMainPdbId(selection);
+    const mainPdbId = getMainItem(selection, "pdb");
     const [ligands, setLigands] = React.useState<Ligand[]>();
 
     const getPdbInfo = React.useCallback((): Maybe<FutureData<PdbInfo>> => {

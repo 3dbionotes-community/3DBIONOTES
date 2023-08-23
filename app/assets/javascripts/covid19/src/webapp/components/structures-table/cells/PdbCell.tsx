@@ -78,7 +78,7 @@ const PdbCell2: React.FC<{
                         validationSources={validationSources}
                     />
                 ) : (
-                    <Grid container justify="center">
+                    <Grid container justifyContent="center">
                         <ClickAwayListener onClickAway={handleTooltipClose}>
                             <HtmlTooltip
                                 onClose={handleTooltipClose}
