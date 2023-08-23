@@ -108,7 +108,7 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
 
             <div className="selection">
                 {selection.type === "free" &&
-                    selection.overlay.map(item => (
+                    [...selection.overlay, ...selection.refinedModels].map(item => (
                         <SelectionItem
                             key={item.id}
                             type="overlay"

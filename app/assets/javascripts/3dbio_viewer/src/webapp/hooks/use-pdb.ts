@@ -6,7 +6,7 @@ import { PdbOptions } from "../../domain/repositories/PdbRepository";
 import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
 import { LoaderState, useLoader } from "../components/Loader";
-import { getChainId, getMainPdbId, Selection } from "../view-models/Selection";
+import { getChainId, getMainItem, Selection } from "../view-models/Selection";
 
 export function usePdbLoader(
     selection: Selection,
@@ -15,7 +15,7 @@ export function usePdbLoader(
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
 
-    const pdbId = getMainPdbId(selection);
+    const pdbId = getMainItem(selection, "pdb");
     const chainId = getChainId(selection);
     const chains = pdbInfo?.chains;
     const pdbOptions: PdbOptions | undefined = React.useMemo(() => {
