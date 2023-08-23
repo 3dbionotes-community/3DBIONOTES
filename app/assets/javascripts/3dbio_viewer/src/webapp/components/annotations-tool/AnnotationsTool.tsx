@@ -1,23 +1,26 @@
-import React, { useCallback, useState, useRef } from "react";
 import _ from "lodash";
-import { CircularProgress, Dialog, DialogContent, Switch } from "@material-ui/core";
-import i18n from "../../utils/i18n";
-import { useBooleanState } from "../../hooks/use-boolean";
-import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
-import "./AnnotationsTool.css";
-import { isElementOfUnion, recordOfStyles } from "../../../utils/ts-utils";
-import { ErrorMessage } from "../error-message/ErrorMessage";
+import React, { useCallback, useState, useRef } from "react";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import { Box, CircularProgress, Dialog, DialogContent } from "@material-ui/core";
+import { Description as DescriptionIcon, Edit as EditIcon } from "@material-ui/icons";
 import {
     AnnotationIndex,
     indexValues,
     Annotations,
     AnnotationWithTrack,
 } from "../../../domain/entities/Annotation";
+import { useBooleanState } from "../../hooks/use-boolean";
+import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
+import { isElementOfUnion, recordOfStyles } from "../../../utils/ts-utils";
+import { ErrorMessage } from "../error-message/ErrorMessage";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { TooltipTypography } from "../HtmlTooltip";
 import { DialogTitleHelp } from "../DialogTitleHelp";
 import { StyledButton } from "../../training-app/components/action-button/ActionButton";
+import i18n from "../../utils/i18n";
+import "./AnnotationsTool.css";
 
 export interface AnnotationsToolProps {
     onClose(): void;
@@ -35,7 +38,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
 
     const annotationFileRef = useRef<DropzoneRef>(null);
     const [error, setError] = useState<string>();
-    const [isManual, { toggle: toggleIsManual }] = useBooleanState(false);
+    const [isManual, setIsManual] = useState(false);
     const [annotationForm, setAnnotationForm] = useState<AnnotationWithTrack>(
         getInitialAnnotationForm
     );
@@ -78,11 +81,6 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
         }, [compositionRoot, openAnnotations, loadingActions])
     );
 
-    const switchToggle = useCallback(() => {
-        setError("");
-        toggleIsManual();
-    }, [toggleIsManual]);
-
     const downloadExample = React.useCallback<React.MouseEventHandler<HTMLAnchorElement>>(
         ev => {
             ev.stopPropagation();
@@ -92,8 +90,16 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
         [compositionRoot]
     );
 
+    const handleManualToggle = React.useCallback(
+        (_event: React.MouseEvent<HTMLElement>, isManual: boolean) => {
+            setError("");
+            setIsManual(isManual);
+        },
+        [setError, setIsManual]
+    );
+
     return (
-        <Dialog open={true} onClose={onClose} maxWidth="lg">
+        <Dialog open={true} onClose={onClose} maxWidth="xs">
             <DialogTitleHelp
                 title={i18n.t("Add annotation")}
                 onClose={onClose}
@@ -106,21 +112,38 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                 }
             />
             <DialogContent>
-                <label>
-                    {isManual ? (
-                        i18n.t("Add annotation manually")
-                    ) : (
-                        <span>
-                            {i18n.t("Upload annotation file in JSON format")} (
-                            <a href="#" onClick={downloadExample}>
-                                {i18n.t("example")}
-                            </a>
-                            )
-                        </span>
-                    )}
-                </label>
-
-                <Switch value={isManual} onChange={switchToggle} color="primary" />
+                <Box marginBottom={2} fontWeight="fontWeightBold">
+                    <span>
+                        {i18n.t(
+                            "Upload your custom annotations manually or by file in JSON format "
+                        )}
+                        <a href="#" onClick={downloadExample}>
+                            {i18n.t("example")}
+                        </a>
+                        {":"}
+                    </span>
+                </Box>
+                <Box>
+                    <ToggleButtonGroup
+                        value={isManual}
+                        exclusive
+                        onChange={handleManualToggle}
+                        aria-label={i18n.t("add custom annotations options")}
+                    >
+                        <ToggleButton value={false} aria-label={i18n.t("add by file")}>
+                            <DescriptionIcon />
+                            <Box display="inline" marginLeft={1}>
+                                {i18n.t("Add by file")}
+                            </Box>
+                        </ToggleButton>
+                        <ToggleButton value={true} aria-label={i18n.t("add manually")}>
+                            <EditIcon />
+                            <Box display="inline" marginLeft={1}>
+                                {i18n.t("Add manually")}
+                            </Box>
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </Box>
 
                 {isManual ? (
                     <Form isDisabled={isLoading}>
@@ -243,7 +266,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                         </button>
                     </Form>
                 ) : (
-                    <>
+                    <Box marginTop={4}>
                         <Dropzone
                             ref={annotationFileRef}
                             onDrop={() => setError("")}
@@ -264,7 +287,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                         </div>
 
                         {isLoading && <CircularProgress style={{ marginLeft: 20 }} size={20} />}
-                    </>
+                    </Box>
                 )}
             </DialogContent>
         </Dialog>
