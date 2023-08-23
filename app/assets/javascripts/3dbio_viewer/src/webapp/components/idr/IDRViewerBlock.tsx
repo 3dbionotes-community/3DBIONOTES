@@ -20,7 +20,7 @@ import { BlockComponentProps } from "../protvista/Protvista.types";
 import i18n from "../../utils/i18n";
 
 export const IDRViewerBlock: React.FC<BlockComponentProps> = React.memo(
-    ({ pdb, block, setBlockVisibility }) => {
+    ({ pdb, block, setVisible }) => {
         const [showTooltip, { set: setShowTooltip, toggle: toggleTooltip }] = useBooleanState(
             false
         );
@@ -77,10 +77,8 @@ export const IDRViewerBlock: React.FC<BlockComponentProps> = React.memo(
         }, []);
 
         React.useEffect(() => {
-            if (_.isEmpty(idrs) && setBlockVisibility) {
-                setBlockVisibility({ block, visible: false });
-            }
-        }, [setBlockVisibility, block, idrs]);
+            if (_.isEmpty(idrs) && setVisible) setVisible(false);
+        }, [setVisible, block, idrs]);
 
         return (
             <>

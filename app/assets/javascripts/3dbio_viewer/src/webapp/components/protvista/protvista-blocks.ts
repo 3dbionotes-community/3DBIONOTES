@@ -131,16 +131,6 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
         profiles: [profiles.drugDesign],
     },
     {
-        id: "proteinInteraction",
-        title: i18n.t("Protein interactions for this protein"),
-        description: i18n.t(`This section shows other proteins observed together with the protein of interest in PDB entries as a interaction network and as a list. In addittion, we show the protein residues that are interacting with the other proteins. 
-
-        For this protein, we found \${proteinPartners} different partners.`),
-        help: "",
-        tracks: [tracks.structureCoverage, tracks.ppiViewer],
-        profiles: [profiles.drugDesign, profiles.biomedicine],
-    },
-    {
         id: "ligandInteraction",
         title: i18n.t("Ligand interaction"),
         description: i18n.t(`
