@@ -117,7 +117,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                     </ViewerBlock>
                 );
             }),
-        [namespace, pdb, selection, blocks, setBlockVisible]
+        [namespace, pdb, selection, blocks, setBlockVisible, setSelection]
     );
 
     return <div style={styles.container}>{renderBlocks}</div>;
