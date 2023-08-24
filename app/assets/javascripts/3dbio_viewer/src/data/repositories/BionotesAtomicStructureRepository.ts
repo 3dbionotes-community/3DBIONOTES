@@ -17,7 +17,7 @@ import { postFormRequest } from "../../utils/form-request";
 
 interface ChainMappingPost {
     rand: string;
-    file: "structure_file.cif";
+    file: string;
     mapping: string; // JSON string of Mapping
     // app/controllers/main_controller.rb: acc, db, title, organism, gene_symbol = params[ch].split("__")
     // Example: A: "Q64FG1__trembl__S2 protein (Fragment)__SARS coronavirus GD322__S2";
@@ -39,13 +39,18 @@ export class BionotesAtomicStructureRepository implements AtomicStructureReposit
         );
     }
 
-    uploadMapping(structure: AtomicStructureMapping): FutureData<void> {
+    uploadMapping(
+        structure: AtomicStructureMapping,
+        fileName: string,
+        title: string
+    ): FutureData<void> {
         const url = routes.bionotesStaging + "/chain_mapping";
 
         const base: ChainMappingPost = {
             rand: structure.token,
-            file: "structure_file.cif",
+            file: fileName,
             mapping: JSON.stringify(structure.mapping),
+            title,
         };
 
         const chainsInfo = _(structure.chainObjects)

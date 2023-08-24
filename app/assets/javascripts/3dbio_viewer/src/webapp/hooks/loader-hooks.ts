@@ -11,7 +11,8 @@ import { UploadData } from "../../domain/entities/UploadData";
 import { Future } from "../../utils/future";
 import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
-import { getMainPdbId, Selection } from "../view-models/Selection";
+import { getMainItem, Selection } from "../view-models/Selection";
+import i18n from "../utils/i18n";
 
 export function useStateFromFuture<Value>(
     getFutureValue: () => FutureData<Value> | undefined
@@ -29,7 +30,7 @@ export function useStateFromFuture<Value>(
 
 export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) {
     const { compositionRoot } = useAppContext();
-    const mainPdbId = getMainPdbId(selection);
+    const mainPdbId = getMainItem(selection, "pdb");
     const [ligands, setLigands] = React.useState<Ligand[]>();
 
     const getPdbInfo = React.useCallback((): Maybe<FutureData<PdbInfo>> => {
@@ -92,7 +93,7 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
                 })
                 .catch(err => {
                     console.debug(`Loader "${key}" error while loading.`);
-                    updateLoaderStatus(key, "error");
+                    updateLoaderStatus(key, "error", err);
                     return Promise.reject(err);
                 });
         },
@@ -104,17 +105,22 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
         [loaders]
     );
 
+    const errorThrown = React.useMemo(
+        () => _.values(loaders).some(({ status }) => status === "error"),
+        [loaders]
+    );
+
     const title = React.useMemo(
         () =>
             _(loaders)
                 .values()
-                .filter(({ status }) => status === "loading")
-                .orderBy(({ priority }) => priority, "desc")
-                .first()?.message ?? "",
+                .filter(({ status }) => status === "loading" || status === "error")
+                .orderBy(({ priority, status }) => (status === "error" ? 10 : priority), "desc")
+                .first()?.message ?? i18n.t("Loading..."),
         [loaders]
     );
 
-    return { loading, title, setLoader, updateLoaderStatus, updateOnResolve };
+    return { loading, errorThrown, title, setLoader, updateLoaderStatus, updateOnResolve };
 }
 
 export type LoaderStatus = "pending" | "loading" | "loaded" | "error";

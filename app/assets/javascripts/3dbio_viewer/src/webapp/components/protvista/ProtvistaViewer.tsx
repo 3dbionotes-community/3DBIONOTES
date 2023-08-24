@@ -4,7 +4,7 @@ import { Pdb, getEntityLinks } from "../../../domain/entities/Pdb";
 import { Selection } from "../../view-models/Selection";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
-import { BlockDef, BlockVisibility, TrackComponentProps } from "./Protvista.types";
+import { BlockDef, TrackComponentProps } from "./Protvista.types";
 import { PPIViewer } from "../ppi/PPIViewer";
 import { GeneViewer } from "../gene-viewer/GeneViewer";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
@@ -19,6 +19,7 @@ export interface ProtvistaViewerProps {
     selection: Selection;
     blocks: BlockDef[];
     setSelection: (newSelection: Selection) => void;
+    setBlockVisibility: (block: BlockDef, visible: boolean) => void;
 }
 
 const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
@@ -27,20 +28,11 @@ const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps
 };
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
-    const { pdb, selection, blocks, pdbInfo, setSelection } = props;
+    const { pdb, selection, blocks, pdbInfo, setBlockVisibility, setSelection } = props;
 
-    const [blocksVisibility, setBlocksVisibility] = React.useState(
-        blocks.map(block => ({ block, visible: true }))
-    );
-
-    const setBlockVisibility = React.useCallback(
-        (blockVisibility: BlockVisibility) =>
-            setBlocksVisibility(
-                blocksVisibility.map(i =>
-                    i.block.id === blockVisibility.block.id ? blockVisibility : i
-                )
-            ),
-        [blocksVisibility]
+    const setBlockVisible = React.useCallback(
+        (block: BlockDef) => (visible: boolean) => setBlockVisibility(block, visible),
+        [setBlockVisibility]
     );
 
     const selectedChain = React.useMemo(() => getSelectedChain(pdbInfo?.chains, selection), [
@@ -73,31 +65,12 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         [pdb.protein]
     );
 
-    /* This snippet of code is just a patch and is intended to be well replaced with a better aproach, please. */
-    // THIS IS A VERY BAD APPROACH, PLEASE REMOVE WHEN POSSIBLE
-    const proteinPartners = React.useMemo(() => {
-        const ppiFrame = [...document.getElementsByTagName("iframe")].find(
-            frame => frame.name === "ppi"
-        );
-        if (ppiFrame && (ppiFrame.contentWindow as PPIWindow)) {
-            if ((ppiFrame.contentWindow as PPIWindow).cytoscape_graph)
-                /*sometimes prodcues error*/
-                return (
-                    (ppiFrame.contentWindow as PPIWindow).cytoscape_graph.elements.nodes.filter(
-                        (node: { data: { shape: string } }) => node.data.shape === "ellipse"
-                    ).length - 1
-                );
-            else return 0;
-        } else return 0;
-    }, []);
-
     const namespace = React.useMemo(
         () => ({
             poorQualityRegionMax: _.first(pdb.emdbs)?.emv?.stats?.quartile75,
             poorQualityRegionMin: _.first(pdb.emdbs)?.emv?.stats?.quartile25,
             proteinName: pdb.protein.name,
             ligandsAndSmallMoleculesCount,
-            proteinPartners,
             resolution: _.first(pdb.emdbs)?.emv?.stats?.resolutionMedian,
             chain: pdb.chainId,
             uniprotId: getEntityLinks(pdb, "uniprot")
@@ -105,48 +78,46 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                 .join(", "),
             genePhrase: geneName ? geneName + (geneBankEntry ?? "") : "",
         }),
-        [pdb, geneName, geneBankEntry, ligandsAndSmallMoleculesCount, proteinPartners]
+        [pdb, geneName, geneBankEntry, ligandsAndSmallMoleculesCount]
     );
 
     const renderBlocks = React.useMemo(
         () =>
-            blocksVisibility.map(({ block, visible }) => {
+            blocks.map(block => {
                 const CustomComponent = block.component;
                 return (
-                    visible && (
-                        <ViewerBlock key={block.id} block={block} namespace={namespace}>
-                            {CustomComponent ? (
-                                <CustomComponent
-                                    pdb={pdb}
-                                    selection={selection}
-                                    setSelection={setSelection}
-                                    block={block}
-                                    setBlockVisibility={setBlockVisibility}
-                                />
-                            ) : (
-                                <ProtvistaPdb pdb={pdb} block={block} />
-                            )}
+                    <ViewerBlock key={block.id} block={block} namespace={namespace}>
+                        {CustomComponent ? (
+                            <CustomComponent
+                                pdb={pdb}
+                                selection={selection}
+                                block={block}
+                                setVisible={setBlockVisible(block)}
+                                setSelection={setSelection}
+                            />
+                        ) : (
+                            <ProtvistaPdb pdb={pdb} block={block} />
+                        )}
 
-                            {block.tracks.map((trackDef, idx) => {
-                                const CustomTrackComponent = trackComponentMapping[trackDef.id];
-                                return (
-                                    CustomTrackComponent && (
-                                        <CustomTrackComponent
-                                            block={block}
-                                            key={idx}
-                                            trackDef={trackDef}
-                                            pdb={pdb}
-                                            selection={selection}
-                                            setSelection={setSelection}
-                                        />
-                                    )
-                                );
-                            })}
-                        </ViewerBlock>
-                    )
+                        {block.tracks.map((trackDef, idx) => {
+                            const CustomTrackComponent = trackComponentMapping[trackDef.id];
+                            return (
+                                CustomTrackComponent && (
+                                    <CustomTrackComponent
+                                        block={block}
+                                        key={idx}
+                                        trackDef={trackDef}
+                                        pdb={pdb}
+                                        selection={selection}
+                                        setSelection={setSelection}
+                                    />
+                                )
+                            );
+                        })}
+                    </ViewerBlock>
                 );
             }),
-        [blocksVisibility, namespace, pdb, selection, setSelection, setBlockVisibility]
+        [namespace, pdb, selection, blocks, setBlockVisible]
     );
 
     return <div style={styles.container}>{renderBlocks}</div>;
@@ -155,7 +126,3 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
 const styles = {
     container: { padding: "1em 0 2em" },
 };
-
-interface PPIWindow extends Window {
-    cytoscape_graph: any;
-}

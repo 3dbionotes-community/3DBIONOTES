@@ -19,7 +19,7 @@ export interface BlockComponentProps {
     selection: Selection;
     setSelection: (newSelection: Selection) => void;
     block: BlockDef;
-    setBlockVisibility?: (blockVisibility: BlockVisibility) => void;
+    setVisible?: (visible: boolean) => void;
 }
 
 export type TrackDef = TrackDefinition;

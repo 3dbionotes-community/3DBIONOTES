@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import queryString from "query-string";
 import {
     CircularProgress,
     Dialog,
@@ -12,7 +13,7 @@ import { Close, CloudUpload as CloudUploadIcon, Search } from "@material-ui/icon
 import { DbModel, DbModelType } from "../../../domain/entities/DbModel";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { useBooleanState } from "../../hooks/use-boolean";
-import { ActionType, DbItem } from "../../view-models/Selection";
+import { ActionType, AllowedExtension, DbItem, MainType } from "../../view-models/Selection";
 import { useAppContext } from "../AppContext";
 import { ModelSearchItem } from "./ModelSearchItem";
 import { ModelUpload } from "../model-upload/ModelUpload";
@@ -22,8 +23,8 @@ import { sendAnalytics } from "../../utils/analytics";
 import { useGoto } from "../../hooks/use-goto";
 import { Maybe } from "../../../utils/ts-utils";
 import { StyledButton } from "../../training-app/components/action-button/ActionButton";
-import "./ModelSearch.css";
 import i18n from "../../utils/i18n";
+import "./ModelSearch.css";
 
 /* Search PDB/EMDB models from text and model type. As the search items to show are limited,
    we get all the matching models and use an infinite scroll just to render more items. Only a
@@ -33,7 +34,7 @@ import i18n from "../../utils/i18n";
 export interface ModelSearchProps {
     title: string;
     onClose(): void;
-    onSelect(actionType: ActionType, selected: DbItem): void;
+    onSelect(actionType: ActionType, selected: DbItem<MainType>): void;
 }
 
 export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
@@ -86,8 +87,10 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
         setFormState(prevForm => ({ ...prevForm, startIndex: prevForm.startIndex + pageSize }));
     }, []);
     const goToLoaded = React.useCallback(
-        (options: { token: string }) => {
-            goTo(`/uploaded/${options.token}`);
+        (options: { token: string; extension: AllowedExtension }) => {
+            const params = { type: options.extension };
+            const query = queryString.stringify(params);
+            goTo(`/uploaded/${options.token}` + (query ? `?${query}` : ""));
             onClose();
         },
         [goTo, onClose]

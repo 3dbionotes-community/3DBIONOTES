@@ -12,6 +12,7 @@ import { debugFlags } from "../../pages/app/debugFlags";
 import { TrainingApp } from "../../training-app";
 import { modules } from "../../training-app/training-modules";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
+import { BlockDef, BlockVisibility } from "../protvista/Protvista.types";
 import styles from "./Viewers.module.css";
 
 export interface PdbViewerProps {
@@ -26,11 +27,23 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
     const { pdb, viewerState, onAddAnnotations, pdbInfo, toolbarExpanded } = props;
     const { selection, profile, setProfile, setSelection } = viewerState;
 
+    const [visibleBlocks, setVisibleBlocks] = React.useState<BlockVisibility[]>(
+        blockDefs.map(blockDef => ({ block: blockDef, visible: true }))
+    );
+
+    const setBlockVisibility = React.useCallback(
+        (block: BlockDef, visible: boolean) =>
+            setVisibleBlocks(visibleBlocks =>
+                visibleBlocks.map(i => (i.block.id === block.id ? { block, visible } : i))
+            ),
+        [setVisibleBlocks]
+    );
+
     const blocks = React.useMemo(() => {
-        return getVisibleBlocks(blockDefs, { pdb, profile }).filter(
+        return getVisibleBlocks(visibleBlocks, { pdb, profile }).filter(
             block => !debugFlags.showOnlyValidations || block.id === "mapValidation"
         );
-    }, [pdb, profile]);
+    }, [pdb, profile, visibleBlocks]);
 
     return (
         <React.Fragment>
@@ -52,6 +65,7 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
                 pdb={pdb}
                 selection={selection}
                 setSelection={setSelection}
+                setBlockVisibility={setBlockVisibility}
             />
         </React.Fragment>
     );

@@ -25,67 +25,10 @@ class MainController < ApplicationController
     if request.referer
       logger.info("  HTTP Referer: #{request.referer}")
     end
-    @log = ""
-    @title = "Home"
-    @noAlignments = false
-    @isAvailable = true
-    @viewerType = viewer_type(params[:viewer_type])
-    @source_url = request.referer || ws_database_path
-
-    annotations = params[:annotations_file]
-    if params[:annotations_file]
-      begin
-        annotations = params[:annotations_file].read
-        annotations.gsub!(/\r\n?/, "")
-        #annotations.gsub!(/\s/,"")
-        annotations = JSON.parse(annotations)
-        @external_annotations = annotations.to_json
-      rescue
-        logger.info("ERROR PARSING JSON FILE " + annotations)
-        @external_annotations = nil
-      end
-    elsif params[:annotations_url]
-      url = params[:annotations_url]
-      ann_content, http_code, http_code_name = getUrl(url, verbose = true)
-      if http_code.to_i > 399
-        logger.info("ERROR URL " + url + " was not reachable http_error" + http_code_name)
-      elsif http_code.to_i == 0
-        logger.info("ERROR exception URL " + url + " http_error " + http_code_name)
-      else
-        begin
-          annotations = JSON.parse(ann_content)
-          @external_annotations = annotations.to_json
-        rescue
-          logger.info("ERROR PARSING JSON FILE " + ann_content)
-          @external_annotations = nil
-        end
-      end
-    end
     identifierName = params[:queryId]
     if !identifierName.nil?
       identifierName.strip!
-    end
-    identifierType = identify_type(identifierName)
-    @identifierName = identifierName
-    @identifierType = identifierType
-
-    if identifierType.nil? and !identifierName.nil?
-      @notExists = true
-    end
-
-    if !identifierType.nil? and !identifierName.nil?
-      @changeSelector = false
-      @badName = true
-      @notExists = true
-      @isAvailable = false
-      @emdb = ""
-      if identifierType == "EMDB"
-        fetch_emdb_data(identifierName)
-      elsif identifierType == "PDB"
-        fetch_pdb_data(identifierName)
-      elsif identifierType == "Uniprot"
-        fetch_uniprot_data(identifierName)
-      end
+      redirect_to ws_path + "/viewer/#/" + identifierName
     end
   end
 
