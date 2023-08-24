@@ -2,6 +2,7 @@ import _ from "lodash";
 import React, { useState } from "react";
 import { ViewerTooltip } from "./viewer-tooltip/ViewerTooltip";
 import css from "./viewers/Viewers.module.css";
+import { recordOfStyles } from "../../utils/ts-utils";
 
 export interface BlockProps {
     block: ViewerBlockModel;
@@ -36,7 +37,7 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
                             onClick={() => setShowTooltip(!showTooltip)}
                             className={css["small-button"]}
                         >
-                            ?
+                            <i className="icon icon-common icon-question" style={styles.icon}></i>
                         </button>
                     </ViewerTooltip>
                 )}
@@ -47,4 +48,8 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
             {children}
         </div>
     );
+});
+
+const styles = recordOfStyles({
+    icon: { fontSize: 11 },
 });
