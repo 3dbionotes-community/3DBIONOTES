@@ -180,41 +180,55 @@ function getData(options: Options): FutureData<Partial<Data>> {
     const ebiProteinsApiUrl = `${ebiBaseUrl}/proteins/api`;
     const pdbAnnotUrl = `${bioUrl}/ws/lrs/pdbAnnotFromMap`;
 
+    const pdbEmdbsEmValidations = onF(pdbId, pdbId =>
+        getJSON<PdbEmdbMapping>(`${emdbsFromPdbUrl}/${pdbId}`).flatMap(pdbEmdbMapping => {
+            const emdbs = pdbEmdbMapping ? getEmdbsFromMapping(pdbEmdbMapping, pdbId) : [];
+            const pdbEmdbsEmValidations = emdbs?.map(id => ({
+                id,
+                emv: Future.joinObj({
+                    localResolution: getValidatedJSON<ConsensusResponse>(
+                        `${bioUrlDev}/bws/api/emv/${id}/localresolution/consensus/`,
+                        consensusResponseC
+                    ).flatMap(consensus =>
+                        getValidatedJSON<RankResponse>(
+                            `${bioUrlDev}/bws/api/emv/${id}/localresolution/rank/`,
+                            rankResponseC
+                        ).map(rank => ({ consensus, rank }))
+                    ),
+                    // deepres, monores, blocres, mapq, fscq, daq:
+                    // getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
+                }),
+            }));
+
+            return Future.parallel(
+                pdbEmdbsEmValidations.map(emdb => emdb.emv.map(emv => ({ id: emdb.id, emv })))
+            );
+        })
+    );
+
+    const pdbPublications = onF(pdbId, pdbId =>
+        getValidatedJSON<EntryPublications>(
+            `${ebiBaseUrl}/pdbe/api/pdb/entry/publications/${pdbId}`,
+            getPublicationsCodec(pdbId)
+        ).map(entryPublications => getPublications(entryPublications?.[pdbId] ?? []))
+    );
+
+    const ligands = onF(pdbId, pdbId =>
+        getValidatedJSON<PdbEntryResponse>(
+            `${bioUrlDev}/bws/api/pdbentry/${pdbId}/ligands/`,
+            pdbEntryResponseC
+        ).map(pdbEntryResponse => pdbEntryResponse?.results)
+    );
+
     // Move URLS to each track module?
     //prettier-ignore
     const data$: DataRequests = {
         uniprot: getXML(`${routes.uniprot}/uniprotkb/${proteinId}.xml`),
-        pdbEmdbsEmValidations: onF(pdbId, pdbId =>
-            getJSON<PdbEmdbMapping>(`${emdbsFromPdbUrl}/${pdbId}`).flatMap(pdbEmdbMapping => {
-                const emdbs = pdbEmdbMapping ? getEmdbsFromMapping(pdbEmdbMapping, pdbId) : [];
-                const pdbEmdbsEmValidations = emdbs?.map(id => ({
-                    id,
-                    emv:
-                        Future.joinObj({
-                        localResolution: getValidatedJSON<ConsensusResponse>(`${bioUrlDev}/bws/api/emv/${id}/localresolution/consensus/`, consensusResponseC).flatMap(
-                            consensus=>getValidatedJSON<RankResponse>(`${bioUrlDev}/bws/api/emv/${id}/localresolution/rank/`, rankResponseC).map(rank=>({consensus,rank}))),
-                        // deepres: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
-                        // monores: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
-                        // blocres: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
-                        // mapq: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
-                        // fscq: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
-                        // daq: getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
-                    }),
-                }));
-
-                return Future.parallel(
-                    pdbEmdbsEmValidations.map(emdb => emdb.emv.map(emv => ({ id: emdb.id, emv })))
-                );
-            })
-        ),
+        pdbEmdbsEmValidations,
         features: getJSON(`${ebiProteinsApiUrl}/features/${proteinId}`),
         cv19Tracks: getJSON(`${bioUrl}/cv19_annotations/${proteinId}_annotations.json`),
         pdbAnnotations: onF(pdbId, pdbId => getJSON(`${pdbAnnotUrl}/all/${pdbId}/${chainId}/?format=json`)),
-        pdbPublications: pdbId ?
-        onF(pdbId, pdbId => getValidatedJSON<EntryPublications>(
-            `${ebiBaseUrl}/pdbe/api/pdb/entry/publications/${pdbId}`,
-            getPublicationsCodec(pdbId)
-            ).map(entryPublications=>getPublications(entryPublications?.[pdbId]??[]))) : Future.success(undefined),
+        pdbPublications,
         coverage: onF(pdbId, pdbId => getJSON(`${bioUrl}/api/alignments/Coverage/${pdbId}${chainId}`)),
         ebiVariation: getJSON(`${ebiProteinsApiUrl}/variation/${proteinId}`),
         mobiUniprot: getJSON(`${bioUrl}/api/annotations/mobi/Uniprot/${proteinId}`),
@@ -232,12 +246,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         antigenic: getJSON(`${ebiProteinsApiUrl}/antigen/${proteinId}`),
         mutagenesis: getJSON(`${bioUrl}/api/annotations/biomuta/Uniprot/${proteinId}`),
         genomicVariantsCNCB: getJSON(`${bioUrl}/ws/lrs/features/variants/Genomic_Variants_CNCB/${proteinId}/`),
-        ligands: onF(pdbId, pdbId =>
-            getValidatedJSON<PdbEntryResponse>(
-                `${bioUrlDev}/bws/api/pdbentry/${pdbId}/ligands/`,
-                pdbEntryResponseC
-            ).map(pdbEntryResponse => pdbEntryResponse?.results)
-        ),
+        ligands,
     };
 
     return Future.joinObj(data$);

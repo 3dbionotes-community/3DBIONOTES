@@ -45,7 +45,7 @@ export function getPublicationsCodec(pdbId: string): Codec<EntryPublications> {
 }
 
 export type EntryPublications = {
-    [x: string]: PublicationsCodec;
+    [pdbId: string]: PublicationsCodec;
 };
 
 type PublicationsCodec = GetType<typeof publicationsCodec>;
@@ -66,7 +66,9 @@ export function getPublications(publications: PublicationsCodec): PdbPublication
                 title,
                 type,
                 doi: doi ?? undefined,
+                doiUrl: doi ? "//dx.doi.org/" + doi : undefined,
                 pubmedId: pubmed_id ?? undefined,
+                pubmedUrl: pubmed_id ? "//europepmc.org/article/MED/" + pubmed_id : undefined,
                 relatedEntries: associated_entries?.split(", ") ?? [],
                 journalInfo: {
                     pdbAbbreviation: journal_info.pdb_abbreviation ?? undefined,

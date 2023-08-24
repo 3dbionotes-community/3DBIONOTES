@@ -7,6 +7,7 @@ import { HtmlTooltip } from "../HtmlTooltip";
 import { plateShadowImage } from "./plate-shadow-image";
 import { OntologyType } from "./IDRViewerBlock";
 import i18n from "../../utils/i18n";
+import { Anchor } from "../Anchor";
 
 interface SVGPlateProps {
     idx: number;
@@ -243,9 +244,9 @@ const TooltipContent: React.FC<TooltipContentProps> = React.memo(props => {
                             <li>{i18n.t("Channels")}: <span>{well.channels}</span></li>
                             <li>{i18n.t("External link")}:{" "}
                                 <span>
-                                    <a href={well.externalLink} target="_blank" rel="noreferrer">
+                                    <Anchor href={well.externalLink}>
                                         {well.externalLink}
-                                    </a>
+                                    </Anchor>
                                 </span>
                             </li>
                         </ul>

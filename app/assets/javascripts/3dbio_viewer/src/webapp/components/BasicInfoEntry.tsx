@@ -3,6 +3,7 @@ import React from "react";
 import { Pdb, PdbPublication } from "../../domain/entities/Pdb";
 import { DbItem, MainType, Selection, buildDbItem } from "../view-models/Selection";
 import i18n from "../utils/i18n";
+import { Anchor } from "./Anchor";
 
 export interface BasicInfoProps {
     pdb: Pdb;
@@ -57,14 +58,9 @@ export const BasicInfoEntry: React.FC<BasicInfoProps> = React.memo(props => {
                                 if (href)
                                     return (
                                         <React.Fragment key={idx}>
-                                            <a
-                                                key={idx}
-                                                href={href}
-                                                target="_blank"
-                                                rel="noreferrer noopener"
-                                            >
+                                            <Anchor key={idx} href={href}>
                                                 {value}
-                                            </a>
+                                            </Anchor>
                                             {links.length != 1 && idx < links.length - 1 && ", "}
                                         </React.Fragment>
                                     );
@@ -90,7 +86,7 @@ export const BasicInfoEntry: React.FC<BasicInfoProps> = React.memo(props => {
 });
 
 function getItems(publication: PdbPublication) {
-    const items: Item[] = [
+    const items: Item[] = _.compact([
         { name: i18n.t("Title"), value: publication.title },
         { name: i18n.t("Abstract"), value: publication.abstract.unassigned },
         { name: i18n.t("Authors"), value: publication.authors.join(", ") },
@@ -109,29 +105,25 @@ function getItems(publication: PdbPublication) {
                 itemToAdd: buildDbItem(entry),
             })),
         },
-        {
+        publication.pubmedId && {
             name: i18n.t("PMID"),
-            links: publication.pubmedId
-                ? [
-                      {
-                          value: publication.pubmedId,
-                          href: "//europepmc.org/article/MED/" + publication.pubmedId,
-                      },
-                  ]
-                : undefined,
+            links: [
+                {
+                    value: publication.pubmedId,
+                    href: publication.pubmedHref,
+                },
+            ],
         },
-        {
+        publication.doi && {
             name: i18n.t("DOI"),
-            links: publication.doi
-                ? [
-                      {
-                          value: publication.doi,
-                          href: "//dx.doi.org/" + publication.doi,
-                      },
-                  ]
-                : undefined,
+            links: [
+                {
+                    value: publication.doi,
+                    href: publication.doiHref,
+                },
+            ],
         },
-    ];
+    ]);
 
     return items;
 }

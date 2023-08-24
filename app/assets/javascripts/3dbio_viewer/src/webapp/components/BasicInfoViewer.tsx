@@ -7,6 +7,7 @@ import { Links } from "./Link";
 import { ViewerTooltip } from "./viewer-tooltip/ViewerTooltip";
 import i18n from "../utils/i18n";
 import _ from "lodash";
+import { Anchor } from "./Anchor";
 
 export interface BasicInfoProps {
     pdb: Pdb;
@@ -113,13 +114,9 @@ function getItems(pdb: Pdb) {
                     {i18n.t(
                         "This determines the possible use given to the structure of the protein (Å). Depending on the global resolution range and the local resolution of the relevant sites, we can introduce the possible uses depending on the tables that are usually used (ex. "
                     )}
-                    <a
-                        href="https://science.sciencemag.org/content/294/5540/93"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
+                    <Anchor href="https://science.sciencemag.org/content/294/5540/93">
                         https://science.sciencemag.org/content/294/5540/93
-                    </a>
+                    </Anchor>
                     {")"}
                 </span>
             ),
