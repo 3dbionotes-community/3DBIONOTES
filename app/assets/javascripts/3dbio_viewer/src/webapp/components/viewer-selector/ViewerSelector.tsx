@@ -60,6 +60,11 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
         });
     }, [openSearch]);
 
+    const overlayItems = React.useMemo(
+        () => selection.type === "free" && [...selection.overlay, ...selection.refinedModels],
+        [selection]
+    );
+
     return (
         <div id="viewer-selector">
             {uploadData && uploadData.title && (
@@ -106,9 +111,9 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                 </div>
             </div>
 
-            <div className="selection">
-                {selection.type === "free" &&
-                    [...selection.overlay, ...selection.refinedModels].map(item => (
+            {selection.type === "free" && !_.isEmpty(overlayItems) && overlayItems && (
+                <div className="selection">
+                    {overlayItems.map(item => (
                         <SelectionItem
                             key={item.id}
                             type="overlay"
@@ -118,8 +123,8 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                             onRemove={update.removeOverlayItem}
                         />
                     ))}
-            </div>
-
+                </div>
+            )}
             {isSearchOpen && (
                 <ModelSearch
                     title={i18n.t("Select or append a new model")}

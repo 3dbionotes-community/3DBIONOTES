@@ -1,10 +1,10 @@
 #viewer-selector {
     display: flex;
     flex-direction: column;
-    row-gap: 1.5rem;
+    row-gap: 1.25rem;
     width: 100%;
     position: absolute; /*don't hesitate, parent div is "relative" not "static"*/
-    padding: 1.25em;
+    padding: 1.25em 1.25em 1.5em;
     z-index: 500;
     display: flex;
     box-sizing: border-box;

@@ -2266,7 +2266,7 @@ fieldset[disabled] .msp-plugin .msp-btn-link:focus {
 .msp-plugin .msp-viewport-controls {
     position: absolute;
     right: 1.25em;
-    top: calc(1.25em + 108px);
+    top: calc(1.25em + 132px);
     width: 32px;
 }
 .msp-plugin .msp-viewport-controls-buttons {

@@ -149,9 +149,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
             </div>
             {scrolled && (
                 <StyledFab onClick={goToTop}>
-                    <IconButton aria-label="delete">
-                        <KeyboardArrowUpIcon fontSize="large" />
-                    </IconButton>
+                    <KeyboardArrowUpIcon fontSize="large" />
                 </StyledFab>
             )}
         </>
@@ -175,7 +173,7 @@ function useResizableBox() {
         >
     >(
         () => ({
-            width: innerWidth * 0.55,
+            width: innerWidth * 0.5,
             minConstraints: [400, 0],
             maxConstraints: [innerWidth - 600, 0],
             resizeHandles: ["w"],
