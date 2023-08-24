@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import { Pdb, PdbPublication } from "../../domain/entities/Pdb";
-import { DbItem, Selection, buildDbItem } from "../view-models/Selection";
+import { DbItem, MainType, Selection, buildDbItem } from "../view-models/Selection";
 import i18n from "../utils/i18n";
 
 export interface BasicInfoProps {
@@ -16,7 +16,7 @@ interface Item {
     links?: {
         value: string;
         href?: string;
-        itemToAdd?: DbItem;
+        itemToAdd?: DbItem<MainType>;
     }[];
 }
 
@@ -24,7 +24,7 @@ export const BasicInfoEntry: React.FC<BasicInfoProps> = React.memo(props => {
     const { pdb, selection, setSelection } = props;
 
     const addOverlayItem = React.useCallback(
-        (item: DbItem) => () =>
+        (item: DbItem<MainType>) => () =>
             selection.type === "free" &&
             setSelection({
                 ...selection,
