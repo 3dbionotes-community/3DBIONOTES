@@ -110,7 +110,7 @@ function getItems(publication: PdbPublication) {
             links: [
                 {
                     value: publication.pubmedId,
-                    href: publication.pubmedHref,
+                    href: publication.pubmedUrl,
                 },
             ],
         },
@@ -119,7 +119,7 @@ function getItems(publication: PdbPublication) {
             links: [
                 {
                     value: publication.doi,
-                    href: publication.doiHref,
+                    href: publication.doiUrl,
                 },
             ],
         },
