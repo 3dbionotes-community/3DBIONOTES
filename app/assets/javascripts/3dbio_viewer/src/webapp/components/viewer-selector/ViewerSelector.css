@@ -4,11 +4,12 @@
     row-gap: 1.5rem;
     width: 100%;
     position: absolute; /*don't hesitate, parent div is "relative" not "static"*/
-    margin-top: 1.25em;
-    padding: 0 1.25em;
+    padding: 1.25em;
     z-index: 500;
     display: flex;
     box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(1px);
 }
 
 .status {

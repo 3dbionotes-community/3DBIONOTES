@@ -2,6 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { Link as LinkE } from "../../domain/entities/Link";
 import { renderJoin } from "../utils/react";
+import { Anchor } from "./Anchor";
 
 export interface LinkProps {
     name: string;
@@ -12,11 +13,7 @@ export const Link: React.FC<LinkProps> = React.memo(props => {
     const { name, url } = props;
 
     if (url) {
-        return (
-            <a href={url} target="_blank" rel="noreferrer">
-                {name}
-            </a>
-        );
+        return <Anchor href={url}>{name}</Anchor>;
     } else {
         return <span>{name}</span>;
     }

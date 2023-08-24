@@ -32,6 +32,7 @@ export interface Pdb {
     path: Maybe<string>;
     customAnnotations: Maybe<Annotations>;
     ligands: Maybe<PdbLigand[]>;
+    publications: PdbPublication[];
 }
 
 export interface PdbLigand {
@@ -67,6 +68,28 @@ export interface EMValidations {
     // mapq: {};
     // fscq: {};
     // daq: {};
+}
+
+export interface PdbPublication {
+    title: string;
+    type: string;
+    doi?: string;
+    doiUrl?: string;
+    pubmedId?: string;
+    pubmedUrl?: string;
+    relatedEntries: PdbId[];
+    journalInfo: {
+        pdbAbbreviation?: string;
+        isoAbbreviation?: string;
+        pages?: string;
+        volume?: string;
+        issue?: string;
+        year?: number;
+    };
+    abstract: {
+        unassigned?: string;
+    };
+    authors: string[];
 }
 
 type PdbEntity = "pdb" | "emdb" | "uniprot" | "geneBank";

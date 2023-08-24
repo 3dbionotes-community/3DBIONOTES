@@ -18,6 +18,7 @@ export interface ProtvistaViewerProps {
     pdbInfo: PdbInfo;
     selection: Selection;
     blocks: BlockDef[];
+    setSelection: (newSelection: Selection) => void;
     setBlockVisibility: (block: BlockDef, visible: boolean) => void;
 }
 
@@ -27,7 +28,7 @@ const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps
 };
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
-    const { pdb, selection, blocks, pdbInfo, setBlockVisibility } = props;
+    const { pdb, selection, blocks, pdbInfo, setBlockVisibility, setSelection } = props;
 
     const setBlockVisible = React.useCallback(
         (block: BlockDef) => (visible: boolean) => setBlockVisibility(block, visible),
@@ -92,6 +93,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                                 selection={selection}
                                 block={block}
                                 setVisible={setBlockVisible(block)}
+                                setSelection={setSelection}
                             />
                         ) : (
                             <ProtvistaPdb pdb={pdb} block={block} />
@@ -107,6 +109,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                                         trackDef={trackDef}
                                         pdb={pdb}
                                         selection={selection}
+                                        setSelection={setSelection}
                                     />
                                 )
                             );
@@ -114,7 +117,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                     </ViewerBlock>
                 );
             }),
-        [namespace, pdb, selection, blocks, setBlockVisible]
+        [namespace, pdb, selection, blocks, setBlockVisible, setSelection]
     );
 
     return <div style={styles.container}>{renderBlocks}</div>;

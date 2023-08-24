@@ -18,6 +18,7 @@ import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 import { HtmlTooltip } from "../HtmlTooltip";
 import { BlockComponentProps } from "../protvista/Protvista.types";
 import i18n from "../../utils/i18n";
+import { Anchor } from "../Anchor";
 
 export const IDRViewerBlock: React.FC<BlockComponentProps> = React.memo(
     ({ pdb, block, setVisible }) => {
@@ -213,17 +214,13 @@ const AssayFC: React.FC<AssayFCProps> = React.memo(({ assay, dataSource }) => (
         />
         <ListItem name={"Data DOI"}>
             <span>
-                <a href={assay.dataDoi} target="_blank" rel="noreferrer noopener">
-                    {assay.dataDoi}
-                </a>
+                <Anchor href={assay.dataDoi}>{assay.dataDoi}</Anchor>
             </span>
         </ListItem>
         <ListItem name={"BioStudies Accession ID"} value={assay.bioStudiesAccessionId} />
         <ListItem name={"Source"}>
             <span>
-                <a href={dataSource.href} target="_blank" rel="noreferrer noopener">
-                    {dataSource.label}
-                </a>
+                <Anchor href={dataSource.href}>{dataSource.label}</Anchor>
             </span>
         </ListItem>
     </>
@@ -245,9 +242,7 @@ const ScreenFC: React.FC<ScreenFCProps> = React.memo(({ screen }) => (
         </ListItem>
         <ListItem name={"Data DOI"}>
             <span>
-                <a href={screen.doi} target="_blank" rel="noreferrer noopener">
-                    {screen.doi}
-                </a>
+                <Anchor href={screen.doi}>{screen.doi}</Anchor>
             </span>
         </ListItem>
     </div>
@@ -359,9 +354,7 @@ export const OntologyType: React.FC<OntologyTypeProps> = React.memo(({ term: typ
             {type.name}
             {" ("}
             <HtmlTooltip title={tooltip}>
-                <a href={type.externalLink} target="_blank" rel="noreferrer noopener">
-                    {type.id}
-                </a>
+                <Anchor href={type.externalLink}>{type.id}</Anchor>
             </HtmlTooltip>
             {")"}
         </span>

@@ -14,6 +14,7 @@ import { ErrorMessage } from "../error-message/ErrorMessage";
 import { StyledButton } from "../../training-app/components/action-button/ActionButton";
 import { recordOfStyles } from "../../../utils/ts-utils";
 import { AllowedExtension, getAllowedFileExtension } from "../../view-models/Selection";
+import { Anchor } from "../Anchor";
 
 export interface ModelUploadProps {
     title: string;
@@ -107,19 +108,9 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
 
                     <label className="fileFormat">
                         {i18n.t("Structure file in")}
-                        <a
-                            href="http://www.wwpdb.org/documentation/file-format"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            {" "}
-                            PDB{" "}
-                        </a>
+                        <Anchor href="http://www.wwpdb.org/documentation/file-format"> PDB </Anchor>
                         {i18n.t("or")}
-                        <a href="http://mmcif.wwpdb.org/" target="_blank" rel="noreferrer">
-                            {" "}
-                            mmCIF{" "}
-                        </a>{" "}
+                        <Anchor href="http://mmcif.wwpdb.org/"> mmCIF </Anchor>{" "}
                         {i18n.t("format (*)")}
                     </label>
                     <Dropzone
