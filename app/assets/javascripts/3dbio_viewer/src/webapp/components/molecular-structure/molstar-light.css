@@ -966,7 +966,7 @@ fieldset[disabled] .msp-plugin .msp-btn-link:focus {
     text-decoration: none;
 }
 .msp-plugin .msp-btn-link-toggle-on {
-    color: #202020;
+    color: #747474;
 }
 .msp-plugin .msp-btn-link-toggle-off,
 .msp-plugin .msp-btn-link-toggle-off:active,
@@ -2222,7 +2222,7 @@ fieldset[disabled] .msp-plugin .msp-btn-link:focus {
     top: 0;
     right: 0;
     bottom: 0;
-    background: black;
+    background: #ffffff;
 }
 .msp-plugin .msp-viewport .msp-btn-link {
     background: rgba(0, 0, 0, 0.2);
