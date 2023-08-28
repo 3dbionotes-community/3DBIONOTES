@@ -169,7 +169,10 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                             initParams,
                                             newSelection
                                         );
-                                    }
+                                    } else
+                                        reject(
+                                            `Model with PDB id ${pdbId.toUpperCase()} was not found`
+                                        );
                                 })
                                 .catch(err => reject(err));
                         else if (newSelection.type === "uploadData") {
@@ -178,7 +181,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                 return;
                             }
                             if (!extension) {
-                                reject(i18n.t('The extension must be "pdb", "ent", "cif".'));
+                                reject(i18n.t('The extension must be "pdb", "ent", "cif"'));
                                 return;
                             }
                             const supportedExtension = extension === "ent" ? "pdb" : extension;
@@ -606,7 +609,7 @@ function getId<T extends { id: string }>(obj: T): string {
 }
 
 async function checkModelUrl(id: Maybe<string>, modelType: Type): Promise<boolean> {
-    if (!id) return true;
+    if (!id) return false;
 
     const url = urls[modelType](id);
     //method HEAD makes 404 be 200 anyways
@@ -621,7 +624,7 @@ async function checkModelUrl(id: Maybe<string>, modelType: Type): Promise<boolea
     }
 }
 
-function checkUploadedModelUrl(url: string): Promise<boolean> {
+async function checkUploadedModelUrl(url: string): Promise<boolean> {
     return fetch(url, { method: "HEAD", cache: "force-cache" }).then(res => {
         if (res.ok && res.status != 404 && res.status != 500) return true;
         else {
