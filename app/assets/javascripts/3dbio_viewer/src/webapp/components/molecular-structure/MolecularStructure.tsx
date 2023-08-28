@@ -171,7 +171,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                         );
                                     } else
                                         reject(
-                                            `Model with PDB id ${pdbId.toUpperCase()} was not found`
+                                            `The 3D model of ${pdbId.toUpperCase()} was not found`
                                         );
                                 })
                                 .catch(err => reject(err));
