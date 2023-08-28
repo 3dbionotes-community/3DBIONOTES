@@ -169,10 +169,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                             initParams,
                                             newSelection
                                         );
-                                    } else
-                                        reject(
-                                            `The 3D model of ${pdbId.toUpperCase()} was not found`
-                                        );
+                                    } else reject(`${pdbId} model was not found`);
                                 })
                                 .catch(err => reject(err));
                         else if (newSelection.type === "uploadData") {
@@ -288,7 +285,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
             compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(emdbId => {
                 updateSelection(currentSelection, setMainItem(newSelection, emdbId, "emdb"));
             }, console.error);
-        } else if (emdbId) {
+        } else if (emdbId && getMainItem(currentSelection, "pdb") === undefined) {
             compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
                 updateSelection(currentSelection, setMainItem(newSelection, pdbId, "pdb"));
             }, console.error);
@@ -495,7 +492,8 @@ async function applySelectionChangesToPlugin(
                     );
                     setVisibility(plugin, item);
                     updateItems(item);
-                }
+                } else if (getMainItem(newSelection, "pdb") === pdbId)
+                    updateLoader("loadModel", Promise.reject(`${pdbId} was not found`));
             });
         }
     }
