@@ -23,6 +23,7 @@ import { sendAnalytics } from "../../utils/analytics";
 import { UploadData } from "../../../domain/entities/UploadData";
 import { Maybe } from "../../../utils/ts-utils";
 import "./ViewerSelector.css";
+import { pdbeIconStyles } from "../ViewerBlock";
 
 interface ViewerSelectorProps {
     pdbInfo: PdbInfo | undefined;
@@ -153,13 +154,15 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
 
     const selectedChain = getSelectedChain(pdbInfo?.chains, selection);
 
-    const text = expanded
-        ? selectedChain
-            ? `${i18n.t("Chain")}: ${selectedChain.shortName}`
-            : i18n.t("Chains")
-        : "C";
+    const text = selectedChain
+        ? `${i18n.t("Chain")}: ${selectedChain.shortName}`
+        : i18n.t("Chains");
 
-    return { text, items, selected: selectedChain?.chainId, onClick: setChain };
+    const leftIcon = (
+        <i className="icon icon-conceptual icon-structures" style={pdbeIconStyles["icon-lg"]}></i>
+    );
+
+    return { text, items, leftIcon, selected: selectedChain?.chainId, onClick: setChain, expanded };
 }
 
 export function getSelectedChain(chains: PdbInfo["chains"] | undefined, selection: Selection) {
@@ -187,17 +190,21 @@ function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
 
     const selectedLigand = getSelectedLigand(selection, pdbInfo);
 
-    const text = expanded
-        ? selectedLigand
-            ? `${i18n.t("Ligand")}: ${selectedLigand.shortId}`
-            : i18n.t("Ligands")
-        : "L";
+    const text = selectedLigand
+        ? `${i18n.t("Ligand")}: ${selectedLigand.shortId}`
+        : i18n.t("Ligands");
+
+    const leftIcon = (
+        <i className="icon icon-conceptual icon-chemical" style={pdbeIconStyles["icon-lg"]}></i>
+    );
 
     return {
         text,
         items,
+        leftIcon,
         onClick: setLigand,
         selected: selectedLigand?.shortId,
         deselectable: true,
+        expanded,
     };
 }

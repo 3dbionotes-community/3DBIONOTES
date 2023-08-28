@@ -76,8 +76,8 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     const toggleToolbarExpanded = React.useCallback(
         (_e: React.SyntheticEvent, data: ResizeCallbackData) => {
-            setToolbarExpanded(data.size.width >= 520);
-            setViewerSelectorExpanded(innerWidth - data.size.width >= 725);
+            setToolbarExpanded(data.size.width >= 475);
+            setViewerSelectorExpanded(innerWidth - data.size.width >= 750);
         },
         [setToolbarExpanded, setViewerSelectorExpanded, innerWidth]
     );

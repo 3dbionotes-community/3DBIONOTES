@@ -35,12 +35,13 @@ export const ProfilesButton: React.FC<ProfilesButtonProps> = React.memo(props =>
 
     return (
         <Dropdown<ProfileId>
-            text={(expanded && text) || undefined}
+            text={text}
             selected={profile.id}
             items={dropdownItems}
             onClick={setProfile}
             showSelection={true}
             leftIcon={<CategoryIcon fontSize="small" />}
+            expanded={expanded}
         />
     );
 });

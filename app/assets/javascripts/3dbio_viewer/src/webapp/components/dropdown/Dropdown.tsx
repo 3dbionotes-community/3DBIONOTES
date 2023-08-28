@@ -19,6 +19,7 @@ export interface DropdownProps<Id extends string = string> {
     leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
     deselectable?: boolean;
+    expanded?: boolean;
 }
 
 export interface DropdownItemModel<Id extends string> {
@@ -29,8 +30,17 @@ export interface DropdownItemModel<Id extends string> {
 export function Dropdown<Id extends string = string>(
     props: DropdownProps<Id>
 ): React.ReactElement | null {
-    const { items, text, onClick, showExpandIcon = false, selected, rightIcon, leftIcon } = props;
-    const { deselectable } = props;
+    const {
+        items,
+        text,
+        onClick,
+        showExpandIcon = false,
+        selected,
+        rightIcon,
+        leftIcon,
+        expanded,
+        deselectable,
+    } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
     const showSelection = Boolean(selected);
@@ -52,9 +62,10 @@ export function Dropdown<Id extends string = string>(
     );
 
     const buttonText = React.useMemo(() => {
+        if (!expanded) return;
         if (text) return text;
-        if (selected !== undefined) return items?.find(item => item.id === selected)?.text ?? ""; //"" intended to remove text
-    }, [text, items, selected]);
+        if (selected !== undefined) return items?.find(item => item.id === selected)?.text;
+    }, [text, items, selected, expanded]);
 
     if (!items || _.isEmpty(items)) return null;
 

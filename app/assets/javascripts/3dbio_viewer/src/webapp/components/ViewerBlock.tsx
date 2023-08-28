@@ -37,7 +37,10 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
                             onClick={() => setShowTooltip(!showTooltip)}
                             className={css["small-button"]}
                         >
-                            <i className="icon icon-common icon-question" style={styles.icon}></i>
+                            <i
+                                className="icon icon-common icon-question"
+                                style={pdbeIconStyles.icon}
+                            ></i>
                         </button>
                     </ViewerTooltip>
                 )}
@@ -50,6 +53,7 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
     );
 });
 
-const styles = recordOfStyles({
+export const pdbeIconStyles = recordOfStyles({
     icon: { fontSize: 11 },
+    "icon-lg": { fontSize: 20 },
 });
