@@ -32,6 +32,7 @@ const useStyles = makeStyles(theme => ({
     title: {
         fontWeight: "bold",
         fontSize: "1em",
+        marginTop: "1em",
     },
 }));
 
