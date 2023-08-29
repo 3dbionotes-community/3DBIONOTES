@@ -169,7 +169,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                             initParams,
                                             newSelection
                                         );
-                                    } else reject(`${pdbId} model was not found`);
+                                    } else reject(`${pdbId} was not found`);
                                 })
                                 .catch(err => reject(err));
                         else if (newSelection.type === "uploadData") {
@@ -472,7 +472,7 @@ async function applySelectionChangesToPlugin(
     for (let i = 0; i < pdbs.length; i++) {
         const item = pdbs[i];
         if (item) {
-            const pdbId: string = item.id;
+            const pdbId = item.id;
             await checkModelUrl(pdbId, "pdb").then(async loaded => {
                 if (loaded) {
                     const url = urls.pdb(pdbId);
@@ -501,16 +501,21 @@ async function applySelectionChangesToPlugin(
     for (let i = 0; i < emdbs.length; i++) {
         const item = emdbs[i];
         if (item) {
-            updateItems(item);
-            await updateLoader(
-                "loadModel",
-                loadEmdb(plugin, urls.emdb(item.id)),
-                emdbs.length > 1
-                    ? i18n.t(`Loading EMDB (${i + 1}/${emdbs.length})...`)
-                    : i18n.t("Loading EMDB...")
-            );
-            setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
-            setVisibility(plugin, item);
+            const emdbId = item.id;
+            await checkModelUrl(emdbId, "emdb").then(async loaded => {
+                if (loaded) {
+                    await updateLoader(
+                        "loadModel",
+                        loadEmdb(plugin, urls.emdb(item.id)),
+                        emdbs.length > 1
+                            ? i18n.t(`Loading EMDB (${i + 1}/${emdbs.length})...`)
+                            : i18n.t("Loading EMDB...")
+                    );
+                    setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
+                    setVisibility(plugin, item);
+                    updateItems(item);
+                }
+            });
         }
     }
 
