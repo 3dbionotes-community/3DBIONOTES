@@ -48,7 +48,11 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
     return (
         <React.Fragment>
             <div className={styles["tools-section"]}>
-                <ToolsButton onAddAnnotations={onAddAnnotations} expanded={toolbarExpanded} />
+                <ToolsButton
+                    onAddAnnotations={onAddAnnotations}
+                    expanded={toolbarExpanded}
+                    pdb={pdb}
+                />
                 <ProfilesButton
                     profile={profile}
                     onChange={setProfile}

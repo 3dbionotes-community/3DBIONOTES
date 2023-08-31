@@ -5,21 +5,28 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import { AnnotationsTool } from "../annotations-tool/AnnotationsTool";
 import { Annotations } from "../../../domain/entities/Annotation";
 import { Build as BuildIcon } from "@material-ui/icons";
+import { useAppContext } from "../AppContext";
+import { Pdb } from "../../../domain/entities/Pdb";
 
 export interface ToolsButtonProps {
     onAddAnnotations(annotations: Annotations): void;
     expanded: boolean;
+    pdb: Pdb;
 }
 
-type ItemId = "custom-annotations" | "network";
+type ItemId = "custom-annotations" | "network" | "download-annotations";
 
 type Props = DropdownProps<ItemId>;
 
-export const ToolsButton: React.FC<ToolsButtonProps> = ({ onAddAnnotations, expanded }) => {
+export const ToolsButton: React.FC<ToolsButtonProps> = ({ onAddAnnotations, expanded, pdb }) => {
     const [isAnnotationToolOpen, annotationToolActions] = useBooleanState(false);
+    const { compositionRoot } = useAppContext();
 
     const items = React.useMemo<Props["items"]>(() => {
-        return [{ text: i18n.t("Upload custom annotations"), id: "custom-annotations" }];
+        return [
+            { text: i18n.t("Upload custom annotations"), id: "custom-annotations" },
+            { text: i18n.t("Download all annotations"), id: "download-annotations" },
+        ];
     }, []);
 
     const openMenuItem = React.useCallback<Props["onClick"]>(
@@ -27,6 +34,11 @@ export const ToolsButton: React.FC<ToolsButtonProps> = ({ onAddAnnotations, expa
             switch (itemId) {
                 case "custom-annotations":
                     return annotationToolActions.open();
+                case "download-annotations":
+                    return compositionRoot.exportAllAnnotations.execute(pdb.protein.id).run(
+                        () => {},
+                        () => {}
+                    );
             }
         },
         [annotationToolActions]
