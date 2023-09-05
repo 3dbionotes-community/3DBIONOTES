@@ -26,7 +26,7 @@ export class ExportDataBionotesRepository implements ExportDataRepository {
 
         //prettier-ignore
         const nameUrls = ([
-            [`uniprot-${proteinId}`, `${routes.uniprot}/uniprotkb/${proteinId}`],
+            [`uniprotkb-${proteinId}`, `${routes.uniprot}/uniprotkb/${proteinId}`],
             [`proteins-features-${proteinId}`, `${ebiProteinsApiUrl}/features/${proteinId}`],
             [`proteins-variation-${proteinId}`, `${ebiProteinsApiUrl}/variation/${proteinId}`],
             [`proteins-proteomics-${proteinId}`, `${ebiProteinsApiUrl}/proteomics/${proteinId}`],
