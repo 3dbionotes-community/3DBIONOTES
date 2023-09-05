@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import { ViewerTooltip } from "./viewer-tooltip/ViewerTooltip";
 import { recordOfStyles } from "../../utils/ts-utils";
 import css from "./viewers/Viewers.module.css";
+import i18n from "d2-ui-components/locales";
 
 export interface BlockProps {
     block: ViewerBlockModel;
     namespace: Record<string, string | number | undefined>;
+    onDownload?: () => void;
 }
 
 export interface ViewerBlockModel {
@@ -17,9 +19,9 @@ export interface ViewerBlockModel {
 }
 
 export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
-    const { block, namespace, children } = props;
-    const [showTooltip, setShowTooltip] = useState(false);
+    const { block, namespace, children, onDownload } = props;
     const { title, description, help } = block;
+    const [showTooltip, setShowTooltip] = useState(false);
     const stringNamespace = _.mapValues(namespace, value => (value ?? "?").toString());
     const interpolatedDescription = _.template(description)(stringNamespace);
 
@@ -29,18 +31,23 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
                 {title}
                 <div className={css["block-actions"]}>
                     {help && (
-                        <ViewerTooltip
+                        <TooltipIconButton
                             title={help}
+                            onClick={() => setShowTooltip(!showTooltip)}
+                            className="icon icon-common icon-question"
                             showTooltip={showTooltip}
                             setShowTooltip={setShowTooltip}
-                        >
-                            <EbiIconButton
-                                onClick={() => setShowTooltip(!showTooltip)}
-                                className="icon icon-common icon-question"
-                            />
-                        </ViewerTooltip>
+                        />
                     )}
-                    <EbiIconButton onClick={() => {}} className="icon icon-common icon-download" />
+                    {onDownload && (
+                        <TooltipIconButton
+                            title={i18n.t("Download block annotations")}
+                            onClick={() => onDownload()}
+                            className="icon icon-common icon-download"
+                            showTooltip={showTooltip}
+                            setShowTooltip={setShowTooltip}
+                        />
+                    )}
                 </div>
             </div>
 
@@ -51,11 +58,26 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
     );
 });
 
-const EbiIconButton: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = props => (
-    <button onClick={props.onClick} className={css["small-button"]}>
-        <i className={props.className} style={styles.icon}></i>
-    </button>
-);
+interface TooltipIconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    showTooltip: boolean;
+    setShowTooltip: (value: boolean) => void;
+}
+
+const TooltipIconButton: React.FC<TooltipIconButtonProps> = props => {
+    const { title, showTooltip, setShowTooltip } = props;
+
+    return (
+        <ViewerTooltip
+            title={<>{title}</>}
+            showTooltip={showTooltip}
+            setShowTooltip={setShowTooltip}
+        >
+            <button onClick={props.onClick} className={css["small-button"]}>
+                <i className={props.className} style={styles.icon}></i>
+            </button>
+        </ViewerTooltip>
+    );
+};
 
 const styles = recordOfStyles({
     icon: { fontSize: 11 },

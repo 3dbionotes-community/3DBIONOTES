@@ -109,8 +109,17 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
     const { pdb, selection, setSelection, block, namespace, setVisible } = props;
     const CustomComponent = block.component;
 
+    const downloadTracks = React.useCallback(() => {
+        console.log("download tracks");
+    }, []);
+
     return (
-        <ViewerBlock key={block.id} block={block} namespace={namespace}>
+        <ViewerBlock
+            key={block.id}
+            block={block}
+            namespace={namespace}
+            onDownload={block.component === undefined ? downloadTracks : undefined}
+        >
             {CustomComponent ? (
                 <CustomComponent
                     pdb={pdb}
