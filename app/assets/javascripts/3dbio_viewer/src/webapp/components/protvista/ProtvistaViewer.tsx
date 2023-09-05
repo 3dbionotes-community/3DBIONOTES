@@ -1,10 +1,10 @@
-import React from "react";
 import _ from "lodash";
+import React from "react";
 import { Pdb, getEntityLinks } from "../../../domain/entities/Pdb";
 import { Selection } from "../../view-models/Selection";
-import { ViewerBlock } from "../ViewerBlock";
+import { BlockProps, ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
-import { BlockDef, TrackComponentProps } from "./Protvista.types";
+import { BlockComponentProps, BlockDef, TrackComponentProps } from "./Protvista.types";
 import { PPIViewer } from "../ppi/PPIViewer";
 import { GeneViewer } from "../gene-viewer/GeneViewer";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
@@ -83,45 +83,64 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
 
     const renderBlocks = React.useMemo(
         () =>
-            blocks.map(block => {
-                const CustomComponent = block.component;
-                return (
-                    <ViewerBlock key={block.id} block={block} namespace={namespace}>
-                        {CustomComponent ? (
-                            <CustomComponent
-                                pdb={pdb}
-                                selection={selection}
-                                block={block}
-                                setVisible={setBlockVisible(block)}
-                                setSelection={setSelection}
-                            />
-                        ) : (
-                            <ProtvistaPdb pdb={pdb} block={block} />
-                        )}
-
-                        {block.tracks.map((trackDef, idx) => {
-                            const CustomTrackComponent = trackComponentMapping[trackDef.id];
-                            return (
-                                CustomTrackComponent && (
-                                    <CustomTrackComponent
-                                        block={block}
-                                        key={idx}
-                                        trackDef={trackDef}
-                                        pdb={pdb}
-                                        selection={selection}
-                                        setSelection={setSelection}
-                                    />
-                                )
-                            );
-                        })}
-                    </ViewerBlock>
-                );
-            }),
+            blocks.map((block, idx) => (
+                <ProtvistaBlock
+                    key={idx}
+                    block={block}
+                    namespace={namespace}
+                    pdb={pdb}
+                    selection={selection}
+                    setSelection={setSelection}
+                    setVisible={setBlockVisible}
+                />
+            )),
         [namespace, pdb, selection, blocks, setBlockVisible, setSelection]
     );
 
     return <div style={styles.container}>{renderBlocks}</div>;
 };
+
+interface ProtvistaBlockProps extends Omit<BlockComponentProps, "setVisible"> {
+    namespace: BlockProps["namespace"];
+    setVisible: (block: BlockDef) => (visible: boolean) => void;
+}
+
+const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
+    const { pdb, selection, setSelection, block, namespace, setVisible } = props;
+    const CustomComponent = block.component;
+
+    return (
+        <ViewerBlock key={block.id} block={block} namespace={namespace}>
+            {CustomComponent ? (
+                <CustomComponent
+                    pdb={pdb}
+                    selection={selection}
+                    block={block}
+                    setVisible={setVisible(block)}
+                    setSelection={setSelection}
+                />
+            ) : (
+                <ProtvistaPdb pdb={pdb} block={block} />
+            )}
+
+            {block.tracks.map((trackDef, idx) => {
+                const CustomTrackComponent = trackComponentMapping[trackDef.id];
+                return (
+                    CustomTrackComponent && (
+                        <CustomTrackComponent
+                            block={block}
+                            key={idx}
+                            trackDef={trackDef}
+                            pdb={pdb}
+                            selection={selection}
+                            setSelection={setSelection}
+                        />
+                    )
+                );
+            })}
+        </ViewerBlock>
+    );
+});
 
 const styles = {
     container: { padding: "1em 0 2em" },
