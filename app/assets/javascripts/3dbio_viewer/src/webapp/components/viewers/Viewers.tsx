@@ -13,6 +13,7 @@ import { Annotations } from "../../../domain/entities/Annotation";
 import { ProteinNetwork } from "../../../domain/entities/ProteinNetwork";
 import { PdbViewer } from "./PdbViewer";
 import { goToElement } from "../protvista/JumpToButton";
+import { LoaderKey } from "../RootViewerContents";
 
 export interface ViewersProps {
     viewerState: ViewerState;
@@ -22,6 +23,7 @@ export interface ViewersProps {
     pdbLoader: LoaderState<Pdb>;
     setPdbLoader: React.Dispatch<React.SetStateAction<LoaderState<Pdb>>>;
     toolbarExpanded: boolean;
+    updateLoader: <T>(key: LoaderKey, promise: Promise<T>, message?: string) => Promise<T>;
 }
 
 export const Viewers: React.FC<ViewersProps> = React.memo(
@@ -33,6 +35,7 @@ export const Viewers: React.FC<ViewersProps> = React.memo(
         pdbLoader,
         setPdbLoader,
         toolbarExpanded,
+        updateLoader,
     }) => {
         const onAddAnnotations = React.useCallback(
             (annotations: Annotations) => {
@@ -91,6 +94,7 @@ export const Viewers: React.FC<ViewersProps> = React.memo(
                         viewerState={viewerState}
                         onAddAnnotations={onAddAnnotations}
                         toolbarExpanded={toolbarExpanded}
+                        updateLoader={updateLoader}
                     />
                 )}
             </React.Fragment>
