@@ -73,12 +73,12 @@ const TooltipIconButton: React.FC<TooltipIconButtonProps> = props => {
             setShowTooltip={setShowTooltip}
         >
             <button onClick={props.onClick} className={css["small-button"]}>
-                <i className={props.className} style={styles.icon}></i>
+                <i className={props.className} style={ebiStyles.icon}></i>
             </button>
         </ViewerTooltip>
     );
 };
 
-const styles = recordOfStyles({
+export const ebiStyles = recordOfStyles({
     icon: { fontSize: 11 },
 });

@@ -19,6 +19,7 @@ import { HtmlTooltip } from "../HtmlTooltip";
 import { BlockComponentProps } from "../protvista/Protvista.types";
 import i18n from "../../utils/i18n";
 import { Anchor } from "../Anchor";
+import { ebiStyles } from "../ViewerBlock";
 
 export const IDRViewerBlock: React.FC<BlockComponentProps> = React.memo(
     ({ pdb, block, setVisible }) => {
@@ -95,7 +96,10 @@ export const IDRViewerBlock: React.FC<BlockComponentProps> = React.memo(
                                 setShowTooltip={setShowTooltip}
                             >
                                 <button style={styles.smallButton} onClick={toggleTooltip}>
-                                    ?
+                                    <i
+                                        className="icon icon-common icon-question"
+                                        style={ebiStyles.icon}
+                                    />
                                 </button>
                             </ViewerTooltip>
                         </div>
@@ -306,7 +310,7 @@ const Section: React.FC<SectionProps> = React.memo(({ children, title, subtitle,
                         setShowTooltip={setShowTooltip}
                     >
                         <button style={styles.smallButton} onClick={toggleTooltip}>
-                            ?
+                            <i className="icon icon-common icon-question" style={ebiStyles.icon} />
                         </button>
                     </ViewerTooltip>
                 )}
