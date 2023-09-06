@@ -2,11 +2,13 @@ import _ from "lodash";
 import JSZip from "jszip";
 import { FutureData, fromPromise } from "../../domain/entities/FutureData";
 import { ExportDataRepository } from "../../domain/repositories/ExportDataRepository";
+import { Emdb } from "../../domain/entities/Pdb";
+import { Track } from "../../domain/entities/Track";
+import { getBioAnnotationsFromTracks } from "../BionotesAnnotations";
+import { downloadBlob, downloadFile } from "../../utils/download";
 import { Future } from "../../utils/future";
 import { routes } from "../../routes";
-import { downloadBlob } from "../../utils/download";
 import { getJSON } from "../request-utils";
-import { Emdb } from "../../domain/entities/Pdb";
 
 export interface AnnotationsFile {
     blob: Blob;
@@ -14,6 +16,15 @@ export interface AnnotationsFile {
 }
 
 export class ExportDataBionotesRepository implements ExportDataRepository {
+    exportAnnotations(blockId: string, tracks: Track[]): void {
+        const bioAnnotations = getBioAnnotationsFromTracks(tracks);
+        return downloadFile({
+            filename: blockId,
+            data: JSON.stringify(bioAnnotations),
+            mimeType: "application/json",
+        });
+    }
+
     exportAllAnnotations(props: {
         proteinId: string;
         pdbId: string;

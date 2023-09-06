@@ -9,6 +9,8 @@ import { PPIViewer } from "../ppi/PPIViewer";
 import { GeneViewer } from "../gene-viewer/GeneViewer";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { getSelectedChain } from "../viewer-selector/ViewerSelector";
+import { useAppContext } from "../AppContext";
+import { getBlockTracks } from "./Protvista.helpers";
 import i18n from "../../utils/i18n";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
@@ -107,10 +109,14 @@ interface ProtvistaBlockProps extends Omit<BlockComponentProps, "setVisible"> {
 
 const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
     const { pdb, selection, setSelection, block, namespace, setVisible } = props;
+    const { compositionRoot } = useAppContext();
     const CustomComponent = block.component;
 
     const downloadTracks = React.useCallback(() => {
-        console.log("download tracks");
+        return compositionRoot.exportAnnotations.execute(
+            block.id,
+            getBlockTracks(pdb.tracks, block)
+        );
     }, []);
 
     return (

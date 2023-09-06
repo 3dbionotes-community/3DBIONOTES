@@ -20,6 +20,7 @@ import { BionotesOntologyRepository } from "./data/repositories/BionotesOntology
 import { BionotesOrganismRepository } from "./data/repositories/BionotesOrganismRepository";
 import { ExportAllAnnotationsUseCase } from "./domain/usecases/ExportAllAnnotationsUseCase";
 import { ExportDataBionotesRepository } from "./data/repositories/ExportDataBionotesRepository";
+import { ExportAnnotationsUseCase } from "./domain/usecases/ExportAnnotationsUseCase";
 
 export function getCompositionRoot() {
     const pdbRepository = new ApiPdbRepository();
@@ -46,6 +47,7 @@ export function getCompositionRoot() {
         getUploadData: new GetUploadDataUseCase(uploadDataRepository),
         downloadAnnotationsExample: new DownloadAnnotationsExampleUseCase(uploadDataRepository),
         exportAllAnnotations: new ExportAllAnnotationsUseCase(exportDataRepository),
+        exportAnnotations: new ExportAnnotationsUseCase(exportDataRepository),
         buildNetwork: new BuildNetworkUseCase(networkRepository),
         getNetwork: new GetNetworkUseCase(networkRepository),
     };

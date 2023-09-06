@@ -21,7 +21,8 @@ export interface ViewerBlockModel {
 export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
     const { block, namespace, children, onDownload } = props;
     const { title, description, help } = block;
-    const [showTooltip, setShowTooltip] = useState(false);
+    const [showHelpTooltip, setShowHelpTooltip] = useState(false);
+    const [showDownloadTooltip, setShowDownloadTooltip] = useState(false);
     const stringNamespace = _.mapValues(namespace, value => (value ?? "?").toString());
     const interpolatedDescription = _.template(description)(stringNamespace);
 
@@ -33,10 +34,10 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
                     {help && (
                         <TooltipIconButton
                             title={help}
-                            onClick={() => setShowTooltip(!showTooltip)}
+                            onClick={() => setShowHelpTooltip(!showHelpTooltip)}
                             className="icon icon-common icon-question"
-                            showTooltip={showTooltip}
-                            setShowTooltip={setShowTooltip}
+                            showTooltip={showHelpTooltip}
+                            setShowTooltip={setShowHelpTooltip}
                         />
                     )}
                     {onDownload && (
@@ -44,8 +45,8 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
                             title={i18n.t("Download block annotations")}
                             onClick={() => onDownload()}
                             className="icon icon-common icon-download"
-                            showTooltip={showTooltip}
-                            setShowTooltip={setShowTooltip}
+                            showTooltip={showDownloadTooltip}
+                            setShowTooltip={setShowDownloadTooltip}
                         />
                     )}
                 </div>

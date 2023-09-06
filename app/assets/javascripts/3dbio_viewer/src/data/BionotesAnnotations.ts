@@ -5,6 +5,7 @@ import { FutureData } from "../domain/entities/FutureData";
 import { UploadDataChain } from "../domain/entities/UploadData";
 import { parseFromCodec } from "../utils/codec";
 import { Maybe } from "../utils/ts-utils";
+import { Track, hasFragments } from "../domain/entities/Track";
 
 const bioAnnotationDataC = Codec.interface({
     begin: number,
@@ -81,4 +82,25 @@ export function getChainsFromOptionsArray(optionsArray: OptionsArray): UploadDat
         const uploadChain = JSON.parse(obj) as OptionArrayInfo;
         return { name, pdbPath: uploadChain.pdbList, ...uploadChain };
     });
+}
+
+export function getBioAnnotationsFromTracks(tracks: Track[]): BioAnnotations {
+    return tracks.map(track => ({
+        track_name: track.label,
+        visualization_type: undefined,
+        chain: undefined,
+        data: track.subtracks.flatMap(subtrack =>
+            hasFragments(subtrack)
+                ? subtrack.locations.flatMap(location =>
+                      location.fragments.map(fragment => ({
+                          begin: fragment.start,
+                          end: fragment.end,
+                          type: subtrack.type,
+                          color: fragment.color,
+                          description: fragment.description,
+                      }))
+                  )
+                : []
+        ),
+    }));
 }

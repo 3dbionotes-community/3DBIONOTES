@@ -1,6 +1,7 @@
 import { FutureData } from "../entities/FutureData";
 import { Emdb } from "../entities/Pdb";
 import { Maybe } from "../../utils/ts-utils";
+import { Track } from "../entities/Track";
 
 export interface ExportDataRepository {
     exportAllAnnotations(props: {
@@ -9,4 +10,5 @@ export interface ExportDataRepository {
         chainId: string;
         emdbs: Emdb[];
     }): FutureData<void>;
+    exportAnnotations(blockId: string, tracks: Track[]): void;
 }

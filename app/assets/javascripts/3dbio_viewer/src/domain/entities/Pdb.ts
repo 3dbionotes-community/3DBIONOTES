@@ -132,11 +132,3 @@ export function addProteinNetworkToPdb(pdb: Pdb, proteinNetwork: Maybe<ProteinNe
     const customAnnotations = proteinNetwork?.uploadData.annotations;
     return { ...pdb, proteinNetwork, customAnnotations };
 }
-
-export function pdbHasCustomTracks(block: BlockDef, pdb: Pdb): boolean {
-    return block.hasUploadedTracks ? pdb.tracks.some(track => track.isCustom) : false;
-}
-
-export function getCustomTracksFromPdb(block: BlockDef, pdb: Pdb): Track[] {
-    return block.hasUploadedTracks ? pdb.tracks.filter(track => track.isCustom) : [];
-}
