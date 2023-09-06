@@ -1,6 +1,5 @@
 import _ from "lodash";
 import { Maybe } from "../../utils/ts-utils";
-import { BlockDef } from "../../webapp/components/protvista/Protvista.types";
 import { Annotations, getTracksFromAnnotations } from "./Annotation";
 import { Color } from "./Color";
 import { Experiment } from "./Experiment";

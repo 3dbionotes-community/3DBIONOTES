@@ -117,7 +117,7 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
             block.id,
             getBlockTracks(pdb.tracks, block)
         );
-    }, []);
+    }, [compositionRoot.exportAnnotations, block, pdb.tracks]);
 
     return (
         <ViewerBlock

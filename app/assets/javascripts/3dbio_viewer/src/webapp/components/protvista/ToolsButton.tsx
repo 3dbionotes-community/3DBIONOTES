@@ -47,7 +47,7 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
                     );
             }
         },
-        [annotationToolActions]
+        [annotationToolActions, compositionRoot.exportAllAnnotations, pdb, updateLoader]
     );
 
     return (
