@@ -1,7 +1,7 @@
 import _ from "lodash";
 import JSZip from "jszip";
 import { FutureData, fromPromise } from "../../domain/entities/FutureData";
-import { ExportDataRepository } from "../../domain/repositories/ExportDataRepository";
+import { AnnotationsExportRepository } from "../../domain/repositories/AnnotationsExportRepository";
 import { Emdb } from "../../domain/entities/Pdb";
 import { Track } from "../../domain/entities/Track";
 import { getBioAnnotationsFromTracks } from "../BionotesAnnotations";
@@ -15,12 +15,12 @@ export interface AnnotationsFile {
     filename: string;
 }
 
-export class ExportDataBionotesRepository implements ExportDataRepository {
-    exportAnnotations(blockId: string, tracks: Track[]): void {
-        const bioAnnotations = getBioAnnotationsFromTracks(tracks);
+export class AnnotationsExportApiRepository implements AnnotationsExportRepository {
+    exportAnnotations(blockId: string, tracks: Track[], chain: string): void {
+        const bioAnnotations = getBioAnnotationsFromTracks(tracks, chain);
         return downloadFile({
             filename: blockId,
-            data: JSON.stringify(bioAnnotations),
+            data: JSON.stringify(bioAnnotations, null, 4),
             mimeType: "application/json",
         });
     }
@@ -79,7 +79,7 @@ export class ExportDataBionotesRepository implements ExportDataRepository {
                     _.toPairs(data).map(([key, value]) => {
                         if (_.isEmpty(value)) return;
                         return {
-                            blob: new Blob([JSON.stringify(value)], {
+                            blob: new Blob([JSON.stringify(value, null, 4)], {
                                 type: "application/json",
                             }),
                             filename: key + ".json",

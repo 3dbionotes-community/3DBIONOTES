@@ -115,7 +115,8 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
     const downloadTracks = React.useCallback(() => {
         return compositionRoot.exportAnnotations.execute(
             block.id,
-            getBlockTracks(pdb.tracks, block)
+            getBlockTracks(pdb.tracks, block),
+            pdb.chainId
         );
     }, [compositionRoot.exportAnnotations, block, pdb.tracks]);
 

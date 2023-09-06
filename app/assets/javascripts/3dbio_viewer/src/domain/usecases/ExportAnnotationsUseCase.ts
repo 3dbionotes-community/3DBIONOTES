@@ -1,10 +1,10 @@
 import { Track } from "../entities/Track";
-import { ExportDataRepository } from "../repositories/ExportDataRepository";
+import { AnnotationsExportRepository } from "../repositories/AnnotationsExportRepository";
 
 export class ExportAnnotationsUseCase {
-    constructor(private exportDataRepository: ExportDataRepository) {}
+    constructor(private annotationsExportRepository: AnnotationsExportRepository) {}
 
-    execute(blockId: string, tracks: Track[]): void {
-        return this.exportDataRepository.exportAnnotations(blockId, tracks);
+    execute(blockId: string, tracks: Track[], chain: string): void {
+        return this.annotationsExportRepository.exportAnnotations(blockId, tracks, chain);
     }
 }
