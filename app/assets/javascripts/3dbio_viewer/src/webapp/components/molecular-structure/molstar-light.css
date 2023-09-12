@@ -2297,6 +2297,7 @@ fieldset[disabled] .msp-plugin .msp-btn-link:focus {
     left: 0;
     width: 100%;
     height: 100%;
+    border-radius: 8px;
 }
 .msp-plugin .msp-viewport-controls-panel {
     width: 290px;
