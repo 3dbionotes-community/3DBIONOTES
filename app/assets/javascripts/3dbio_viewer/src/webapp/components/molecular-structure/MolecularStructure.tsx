@@ -67,6 +67,21 @@ export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
     );
 };
 
+const loaderErrors = {
+    pdbNotLoaded: i18n.t("PDB molstar did not load"),
+    invalidToken: i18n.t("Invalid token and/or type"),
+    tokenNotFound: i18n.t("No token found"),
+    undefinedPdb: i18n.t("PDB is not defined"),
+    pdbNotMatching: i18n.t("No PDB found for this EMDB model"),
+    invalidExtension: i18n.t('The extension must be "pdb", "ent", "cif"'),
+    unexpectedUploadError: (url: string) =>
+        i18n.t(`Unkown error while loading the model URL: ${url}`),
+    pdbNotFound: (pdbId: string) => i18n.t(`${pdbId} was not found`),
+    pdbRequest: (url: string, status: number) =>
+        i18n.t(`Error loading PDB model: url=${url} - ${status}`),
+    request: (url: string, status: number) => i18n.t(`Error loading model: url=${url} - ${status}`),
+};
+
 function usePdbePlugin(options: MolecularStructureProps) {
     const {
         selection: newSelection,
@@ -134,7 +149,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                         .pdbFromEmdb(emdbId)
                         .toPromise()
                         .then(pdbId => {
-                            if (!pdbId) throw new Error("No PDB found for this EMDB model");
+                            if (!pdbId) throw new Error(loaderErrors.pdbNotMatching);
                             else setSelection(setMainItem(newSelection, pdbId, "pdb"));
                         })
                         .catch(console.error)
@@ -149,7 +164,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                 if (loaded) {
                                     setPluginLoad(new Date());
                                     resolve();
-                                } else reject("PDB molstar did not load");
+                                } else reject(loaderErrors.pdbNotLoaded);
                                 // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
                                 window.dispatchEvent(new Event("resize"));
                             },
@@ -169,16 +184,16 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                             initParams,
                                             newSelection
                                         );
-                                    } else reject(`${pdbId} was not found`);
+                                    } else reject(loaderErrors.pdbNotFound);
                                 })
                                 .catch(err => reject(err));
                         else if (newSelection.type === "uploadData") {
                             if (!uploadDataToken) {
-                                reject("No token found");
+                                reject(loaderErrors.tokenNotFound);
                                 return;
                             }
                             if (!extension) {
-                                reject(i18n.t('The extension must be "pdb", "ent", "cif"'));
+                                reject(loaderErrors.invalidExtension);
                                 return;
                             }
                             const supportedExtension = extension === "ent" ? "pdb" : extension;
@@ -196,12 +211,12 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                             newParams,
                                             newSelection
                                         );
-                                    } else reject("Invalid token and/or type");
+                                    } else reject(loaderErrors.invalidToken);
                                 })
                                 .catch(_err =>
-                                    reject(`Could not find uploaded model: ${customData.url}`)
+                                    reject(loaderErrors.unexpectedUploadError(customData.url))
                                 );
-                        } else reject("PDB is not defined");
+                        } else reject(loaderErrors.undefinedPdb);
                     })
                 );
             }
@@ -325,7 +340,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                 next: loaded => {
                                     console.debug("molstar.events.loadComplete", loaded);
                                     if (loaded) resolve();
-                                    else reject("PDB molstar did not load");
+                                    else reject(loaderErrors.pdbNotLoaded);
                                 },
                                 error: err => reject(err),
                             });
@@ -339,9 +354,9 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                 },
                                 false
                             );
-                        } else reject("Invalid token and/or type");
+                        } else reject(loaderErrors.invalidToken);
                     })
-                    .catch(_err => reject(`Could not find uploaded model: ${uploadUrl}`));
+                    .catch(_err => reject(loaderErrors.unexpectedUploadError(uploadUrl)));
             }),
             i18n.t("Loading uploded model...")
         );
@@ -493,7 +508,7 @@ async function applySelectionChangesToPlugin(
                     setVisibility(plugin, item);
                     updateItems(item);
                 } else if (getMainItem(newSelection, "pdb") === pdbId)
-                    updateLoader("loadModel", Promise.reject(`${pdbId} was not found`));
+                    updateLoader("loadModel", Promise.reject(loaderErrors.pdbNotFound(pdbId)));
             });
         }
     }
@@ -621,7 +636,7 @@ async function checkModelUrl(id: Maybe<string>, modelType: Type): Promise<boolea
     if (res.ok && res.status != 404 && res.status != 500) {
         return true;
     } else {
-        const msg = `Error loading PDB model: url=${url} - ${res.status}`;
+        const msg = loaderErrors.pdbRequest(url, res.status);
         console.error(msg);
         return false;
     }
@@ -631,7 +646,7 @@ async function checkUploadedModelUrl(url: string): Promise<boolean> {
     return fetch(url, { method: "HEAD", cache: "force-cache" }).then(res => {
         if (res.ok && res.status != 404 && res.status != 500) return true;
         else {
-            const msg = `Error loading model: url=${url} - ${res.status}`;
+            const msg = loaderErrors.request(url, res.status);
             console.error(msg);
             return false;
         }
