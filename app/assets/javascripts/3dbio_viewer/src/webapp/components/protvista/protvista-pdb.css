@@ -114,27 +114,6 @@ protvista-tooltip .description {
     padding: 20px 0 0 0;
 }
 
-.protvistaResetSectionIcon {
-    position: relative;
-    top: -1px;
-    left: 0px;
-    border: 1px solid #ffffff;
-    background-color: #828181;
-    border-radius: 50%;
-    cursor: pointer;
-    text-align: center;
-    text-align: center;
-    width: 17px;
-    height: 17px;
-    line-height: 15px;
-    margin-left: 6px;
-    padding: 0px 0px 0px 0px;
-}
-
-.protvistaResetSectionIcon i {
-    font-size: 70%;
-}
-
 protvista-tooltip .tooltip-body {
     padding: 0.2em;
 }
