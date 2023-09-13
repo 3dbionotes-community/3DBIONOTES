@@ -74,19 +74,22 @@ export class AnnotationsExportApiRepository implements AnnotationsExportReposito
         };
 
         return Future.joinObj(data$).flatMap(data => {
-            return this.generateZip(
-                _.compact(
-                    _.toPairs(data).map(([key, value]) => {
-                        if (_.isEmpty(value)) return;
-                        return {
-                            blob: new Blob([JSON.stringify(value, null, 4)], {
-                                type: "application/json",
-                            }),
-                            filename: key + ".json",
-                        };
-                    })
-                )
-            ).map(zipBlob => downloadBlob({ blob: zipBlob, filename: "protvista-data.zip" }));
+            const pairs = _.toPairs(data).map(([key, value]) => {
+                if (_.isEmpty(value)) return;
+                return {
+                    blob: new Blob([JSON.stringify(value, null, 4)], {
+                        type: "application/json",
+                    }),
+                    filename: key + ".json",
+                };
+            });
+
+            if (pairs.every(pair => pair === undefined))
+                return Future.error({ message: "No data available to download" });
+
+            return this.generateZip(_.compact(pairs)).map(zipBlob =>
+                downloadBlob({ blob: zipBlob, filename: "protvista-data.zip" })
+            );
         });
     }
 
