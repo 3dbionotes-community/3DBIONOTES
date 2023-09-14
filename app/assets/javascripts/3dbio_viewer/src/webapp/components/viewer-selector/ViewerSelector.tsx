@@ -102,7 +102,10 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                 )}
 
                 <div className={"selectors" + (uploadData ? " invert" : "")}>
-                    <button onClick={openSearchWithAnalytics}>
+                    <button
+                        onClick={openSearchWithAnalytics}
+                        title={i18n.t("Select or append a new model")}
+                    >
                         <Search />
                     </button>
                     <span>

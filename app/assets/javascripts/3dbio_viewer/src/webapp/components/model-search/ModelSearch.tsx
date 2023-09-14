@@ -23,6 +23,8 @@ import { sendAnalytics } from "../../utils/analytics";
 import { useGoto } from "../../hooks/use-goto";
 import { Maybe } from "../../../utils/ts-utils";
 import { StyledButton } from "../../training-app/components/action-button/ActionButton";
+import { DialogTitleHelp } from "../DialogTitleHelp";
+import { TooltipTypography } from "../HtmlTooltip";
 import i18n from "../../utils/i18n";
 import "./ModelSearch.css";
 
@@ -105,12 +107,19 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
-            <DialogTitle>
+            <DialogTitleHelp
+                title={title}
+                onClose={onClose}
+                tooltip={
+                    <TooltipTypography variant="body2">
+                        {i18n.t(
+                            'Explore and visualize other protein models. You can find specific atomic models and volume maps using PDB or EMDB IDs, respectively, or upload them from local files for a customized view. Use "Append" to visualize the new model along with the one already shown or "Select" to replace it.'
+                        )}
+                    </TooltipTypography>
+                }
+            >
                 {title}
-                <IconButton onClick={onClose}>
-                    <Close />
-                </IconButton>
-            </DialogTitle>
+            </DialogTitleHelp>
 
             <DialogContent id="scrollableDiv">
                 <div className="params">

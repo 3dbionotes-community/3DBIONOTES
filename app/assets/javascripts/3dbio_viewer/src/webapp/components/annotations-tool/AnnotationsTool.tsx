@@ -105,9 +105,9 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                 onClose={onClose}
                 tooltip={
                     <TooltipTypography variant="body2">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur eaque
-                        aspernatur, adipisci harum dolor neque dicta voluptas a asperiores sequi
-                        atque quibusdam cumque. At excepturi nobis ea, tempora omnis eum
+                        {i18n.t(
+                            "Add custom annotations to the set of automatically mapped annotations onto the 3D model. You can upload custom annotations through a JSON file or manually fill in the details using the web form."
+                        )}
                     </TooltipTypography>
                 }
             />
