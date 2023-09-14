@@ -156,7 +156,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             onChange={e =>
                                 setAnnotationForm({ ...annotationForm, trackName: e.target.value })
                             }
-                            className="form-control"
+                            className="form-control-viewer"
                         />
 
                         <label htmlFor="type">{i18n.t("Type")}</label>
@@ -169,7 +169,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             onChange={e =>
                                 setAnnotationForm({ ...annotationForm, type: e.target.value })
                             }
-                            className="form-control"
+                            className="form-control-viewer"
                         />
 
                         <label htmlFor="description">{i18n.t("Description")}</label>
@@ -185,7 +185,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                                     description: e.target.value,
                                 })
                             }
-                            className="form-control"
+                            className="form-control-viewer"
                         />
 
                         <label htmlFor="color">{i18n.t("Color")}</label>
@@ -203,12 +203,12 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             onChange={e =>
                                 setAnnotationForm({ ...annotationForm, color: e.target.value })
                             }
-                            className="form-control"
+                            className="form-control-viewer"
                         />
 
                         <label htmlFor="index">{i18n.t("Index")}</label>
                         <select
-                            className="form-control"
+                            className="form-control-viewer"
                             value={annotationForm.index}
                             onChange={e =>
                                 setAnnotationForm({
@@ -237,7 +237,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                                     start: Number(e.target.value),
                                 })
                             }
-                            className="form-control"
+                            className="form-control-viewer"
                         />
 
                         <label htmlFor="end">{i18n.t("Ending value")}</label>
@@ -252,7 +252,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                                     end: Number(e.target.value),
                                 })
                             }
-                            className="form-control"
+                            className="form-control-viewer"
                         />
 
                         {error && <ErrorMessage message={error} />}

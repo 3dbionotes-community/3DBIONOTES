@@ -2,14 +2,8 @@ import _ from "lodash";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import queryString from "query-string";
-import {
-    CircularProgress,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-} from "@material-ui/core";
-import { Close, CloudUpload as CloudUploadIcon, Search } from "@material-ui/icons";
+import { CircularProgress, Dialog, DialogContent } from "@material-ui/core";
+import { CloudUpload as CloudUploadIcon, Search } from "@material-ui/icons";
 import { DbModel, DbModelType } from "../../../domain/entities/DbModel";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { useBooleanState } from "../../hooks/use-boolean";

@@ -20,7 +20,7 @@ const SpeciesSelect: React.FC<SpeciesSelectProps> = React.memo(props => {
     const setSpecies = useCallbackFromEventValue(onSpeciesChange);
 
     return (
-        <select className="form-control" value={value} onChange={setSpecies}>
+        <select className="form-control-viewer" value={value} onChange={setSpecies}>
             {options.map(option => (
                 <option key={option.value} value={option.value}>
                     {option.text}
