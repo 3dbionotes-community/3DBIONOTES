@@ -18,6 +18,7 @@ import { usePdbLoader } from "../hooks/use-pdb";
 import { useBooleanState } from "../hooks/use-boolean";
 import { LoaderMask } from "./loader-mask/LoaderMask";
 import { isDev } from "../../routes";
+import { getMainItem } from "../view-models/Selection";
 import i18n from "../utils/i18n";
 
 export interface RootViewerContentsProps {
@@ -100,8 +101,14 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     }, [uploadDataToken, networkToken, compositionRoot]);
 
     React.useEffect(() => {
-        updateLoaderStatus("pdbLoader", pdbLoader.type);
-    }, [pdbLoader.type, updateLoaderStatus]);
+        updateLoaderStatus(
+            "pdbLoader",
+            pdbLoader.type,
+            pdbLoader.type === "error"
+                ? i18n.t(`No data available for ${getMainItem(selection, "pdb") ?? "PDB"}`)
+                : undefined
+        );
+    }, [pdbLoader.type, updateLoaderStatus, selection]);
 
     return (
         <>
