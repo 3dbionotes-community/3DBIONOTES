@@ -614,7 +614,7 @@ function getLigandView(selection: Selection): LigandView | undefined {
     if (!component || !position) return;
 
     return {
-        auth_asym_id: chainId + "_1",
+        auth_asym_id: chainId, //+_1 on previous versions
         auth_seq_id: parseInt(position),
         label_comp_id: component,
     };
