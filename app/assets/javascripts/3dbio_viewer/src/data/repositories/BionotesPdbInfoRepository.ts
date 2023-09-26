@@ -20,7 +20,10 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
 
         return Future.joinObj(data$).flatMap(data => {
             const { uniprotMapping, emdbMapping } = data;
-            const proteinsMapping = uniprotMapping[pdbId.toLowerCase()] || {};
+            const proteinsMapping = uniprotMapping[pdbId.toLowerCase()];
+            if (!proteinsMapping)
+                return Future.error({ message: `Uniprot mapping not found for ${pdbId}` });
+
             const emdbIds = getEmdbsFromMapping(emdbMapping, pdbId);
             const proteins = _(proteinsMapping).keys().join(",");
             const proteinsInfoUrl = `${routes.bionotes}/api/lengths/UniprotMulti/${proteins}`;

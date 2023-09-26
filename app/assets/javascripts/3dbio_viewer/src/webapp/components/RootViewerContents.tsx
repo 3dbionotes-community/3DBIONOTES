@@ -2,7 +2,7 @@ import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 import { ResizableBox, ResizableBoxProps, ResizeCallbackData } from "react-resizable";
-import { Fab, IconButton } from "@material-ui/core";
+import { Fab } from "@material-ui/core";
 import { KeyboardArrowUp as KeyboardArrowUpIcon } from "@material-ui/icons";
 import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
@@ -18,6 +18,7 @@ import { usePdbLoader } from "../hooks/use-pdb";
 import { useBooleanState } from "../hooks/use-boolean";
 import { LoaderMask } from "./loader-mask/LoaderMask";
 import { isDev } from "../../routes";
+import { getMainItem } from "../view-models/Selection";
 import i18n from "../utils/i18n";
 
 export interface RootViewerContentsProps {
@@ -67,8 +68,9 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const { scrolled, goToTop, ref } = useGoToTop<HTMLDivElement>();
 
     const uploadData = getUploadData(externalData);
-    const { pdbInfo, setLigands } = usePdbInfo(selection, uploadData);
-    const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfo);
+    const { pdbInfoLoader, setLigands } = usePdbInfo(selection, uploadData);
+    const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfoLoader);
+    const pdbInfo = pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined;
 
     const uploadDataToken = selection.type === "uploadData" ? selection.token : undefined;
     const networkToken = selection.type === "network" ? selection.token : undefined;
@@ -99,8 +101,14 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     }, [uploadDataToken, networkToken, compositionRoot]);
 
     React.useEffect(() => {
-        updateLoaderStatus("pdbLoader", pdbLoader.type);
-    }, [pdbLoader.type, updateLoaderStatus]);
+        updateLoaderStatus(
+            "pdbLoader",
+            pdbLoader.type,
+            pdbLoader.type === "error"
+                ? i18n.t(`No data available for ${getMainItem(selection, "pdb") ?? "PDB"}`)
+                : undefined
+        );
+    }, [pdbLoader.type, updateLoaderStatus, selection]);
 
     return (
         <>
