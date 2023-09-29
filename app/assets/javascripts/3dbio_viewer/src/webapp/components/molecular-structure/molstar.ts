@@ -35,6 +35,7 @@ export function getLigands(pdbePlugin: PDBeMolstarPlugin, newSelection: Selectio
     if (!mainPdbId) return;
 
     const molstarPlugin = pdbePlugin.plugin as PluginContext;
+    if (!molstarPlugin) return;
 
     const cells = getCellsWithPath(molstarPlugin);
 

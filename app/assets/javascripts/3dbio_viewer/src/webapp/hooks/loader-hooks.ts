@@ -13,19 +13,28 @@ import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
 import { getMainItem, Selection } from "../view-models/Selection";
 import i18n from "../utils/i18n";
+import { LoaderState, useLoader } from "../components/Loader";
 
 export function useStateFromFuture<Value>(
     getFutureValue: () => FutureData<Value> | undefined
-): Value | undefined {
-    const [value, setValue] = React.useState<Value>();
+): LoaderState<Value> {
+    const [loader, setLoader] = useLoader<Value>();
 
     const getValue = React.useCallback(() => {
-        return getFutureValue()?.run(setValue, console.error);
-    }, [getFutureValue, setValue]);
+        return getFutureValue()?.run(
+            value => {
+                setLoader({ type: "loaded", data: value });
+            },
+            err => {
+                console.error(err);
+                setLoader({ type: "error", message: err.message });
+            }
+        );
+    }, [getFutureValue, setLoader]);
 
     React.useEffect(getValue, [getValue]);
 
-    return value;
+    return loader;
 }
 
 export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) {
@@ -41,13 +50,15 @@ export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) 
         }
     }, [mainPdbId, compositionRoot, uploadData]);
 
-    const pdbInfo = useStateFromFuture(getPdbInfo);
+    const pdbInfoLoader = useStateFromFuture(getPdbInfo);
 
-    const pdbInfoWithLigands = React.useMemo(() => {
-        return pdbInfo && ligands ? setPdbInfoLigands(pdbInfo, ligands) : pdbInfo;
-    }, [pdbInfo, ligands]);
+    const pdbInfoWithLigandsLoader = React.useMemo((): LoaderState<PdbInfo> => {
+        return pdbInfoLoader.type === "loaded" && ligands
+            ? { type: "loaded", data: setPdbInfoLigands(pdbInfoLoader.data, ligands) }
+            : pdbInfoLoader;
+    }, [pdbInfoLoader, ligands]);
 
-    return { pdbInfo: pdbInfoWithLigands, setLigands };
+    return { pdbInfoLoader: pdbInfoWithLigandsLoader, setLigands };
 }
 
 export function useMultipleLoaders<K extends string>(initialState?: Record<K, Loader>) {

@@ -1,3 +1,7 @@
+.frame-viewer {
+    margin: 0;
+}
+
 .frame-viewer iframe {
     border: none;
 }

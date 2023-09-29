@@ -103,7 +103,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                         onChange={e => setJobTitle(e.target.value)}
                         id="jobTitle"
                         type="text"
-                        className="form-control"
+                        className="form-control-viewer"
                     />
 
                     <label className="fileFormat">

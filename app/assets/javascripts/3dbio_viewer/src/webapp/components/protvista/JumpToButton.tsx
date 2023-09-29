@@ -18,10 +18,11 @@ export const JumpToButton: React.FC<JumpToButtonProps> = React.memo(({ blocks, e
 
     return (
         <Dropdown
-            text={expanded ? i18n.t("Jump to") : undefined}
+            text={i18n.t("Jump to")}
             items={items}
             onClick={goToElement}
             rightIcon={<ArrowForwardIcon fontSize="small" />}
+            expanded={expanded}
         />
     );
 });

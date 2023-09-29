@@ -2,14 +2,8 @@ import _ from "lodash";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import queryString from "query-string";
-import {
-    CircularProgress,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-} from "@material-ui/core";
-import { Close, CloudUpload as CloudUploadIcon, Search } from "@material-ui/icons";
+import { CircularProgress, Dialog, DialogContent } from "@material-ui/core";
+import { CloudUpload as CloudUploadIcon, Search } from "@material-ui/icons";
 import { DbModel, DbModelType } from "../../../domain/entities/DbModel";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { useBooleanState } from "../../hooks/use-boolean";
@@ -23,6 +17,8 @@ import { sendAnalytics } from "../../utils/analytics";
 import { useGoto } from "../../hooks/use-goto";
 import { Maybe } from "../../../utils/ts-utils";
 import { StyledButton } from "../../training-app/components/action-button/ActionButton";
+import { DialogTitleHelp } from "../DialogTitleHelp";
+import { TooltipTypography } from "../HtmlTooltip";
 import i18n from "../../utils/i18n";
 import "./ModelSearch.css";
 
@@ -105,12 +101,19 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
-            <DialogTitle>
+            <DialogTitleHelp
+                title={title}
+                onClose={onClose}
+                tooltip={
+                    <TooltipTypography variant="body2">
+                        {i18n.t(
+                            'Explore and visualize other protein models. You can find specific atomic models and volume maps using PDB or EMDB IDs, respectively, or upload them from local files for a customized view. Use "Append" to visualize the new model along with the one already shown or "Select" to replace it.'
+                        )}
+                    </TooltipTypography>
+                }
+            >
                 {title}
-                <IconButton onClick={onClose}>
-                    <Close />
-                </IconButton>
-            </DialogTitle>
+            </DialogTitleHelp>
 
             <DialogContent id="scrollableDiv">
                 <div className="params">

@@ -13,7 +13,7 @@ const UniProtAccession: React.FC<UniProtAccessionTextAreaProps> = React.memo(pro
             id="uniProtAccession"
             name="uniProtAccession"
             rows={5}
-            className="form-control"
+            className="form-control-viewer"
             value={value}
             onChange={e => onChange(e.target.value)}
         ></textarea>
