@@ -5,6 +5,8 @@ import { FutureData } from "../domain/entities/FutureData";
 import { UploadDataChain } from "../domain/entities/UploadData";
 import { parseFromCodec } from "../utils/codec";
 import { Maybe } from "../utils/ts-utils";
+import { Track, hasFragments } from "../domain/entities/Track";
+import { shapeTypes } from "../domain/entities/Shape";
 
 const bioAnnotationDataC = Codec.interface({
     begin: number,
@@ -12,6 +14,7 @@ const bioAnnotationDataC = Codec.interface({
     type: optional(string),
     color: optional(string),
     description: optional(string),
+    shape: optional(exactly(...shapeTypes)),
 });
 
 const bioAnnotationTrackC = Codec.interface({
@@ -70,6 +73,7 @@ function getTrackAnnotationsItem(bioAnnotationTrack: BioAnnotationTrack): Maybe<
                     type: repoAnnotation.type || "data",
                     color: repoAnnotation.color || "#AAA",
                     description: repoAnnotation.description || "",
+                    shape: repoAnnotation.shape || "rectangle",
                 };
             }
         ),
@@ -81,4 +85,26 @@ export function getChainsFromOptionsArray(optionsArray: OptionsArray): UploadDat
         const uploadChain = JSON.parse(obj) as OptionArrayInfo;
         return { name, pdbPath: uploadChain.pdbList, ...uploadChain };
     });
+}
+
+export function getBioAnnotationsFromTracks(tracks: Track[], chain: string): BioAnnotations {
+    return tracks.map(track => ({
+        track_name: track.label,
+        visualization_type: undefined,
+        chain: chain,
+        data: track.subtracks.flatMap(subtrack =>
+            hasFragments(subtrack)
+                ? subtrack.locations.flatMap(location =>
+                      location.fragments.map(fragment => ({
+                          begin: fragment.start,
+                          end: fragment.end,
+                          type: subtrack.type,
+                          color: fragment.color,
+                          description: fragment.description,
+                          shape: subtrack.shape,
+                      }))
+                  )
+                : []
+        ),
+    }));
 }

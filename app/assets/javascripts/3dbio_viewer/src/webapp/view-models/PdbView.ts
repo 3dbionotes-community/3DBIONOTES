@@ -2,7 +2,7 @@ import _ from "lodash";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { Color } from "../../domain/entities/Color";
-import { getCustomTracksFromPdb, Pdb } from "../../domain/entities/Pdb";
+import { Pdb } from "../../domain/entities/Pdb";
 import { Shape } from "../../domain/entities/Shape";
 import { hasFragments, Subtrack, Track } from "../../domain/entities/Track";
 import { Variant, Variants } from "../../domain/entities/Variant";
@@ -10,6 +10,7 @@ import { GenericTooltip } from "../components/protvista/GenericTooltip";
 import { BlockDef } from "../components/protvista/Protvista.types";
 import { Tooltip } from "../components/protvista/Tooltip";
 import { trackDefinitions } from "../../domain/definitions/tracks";
+import { getBlockTracks } from "../components/protvista/Protvista.helpers";
 
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
 
@@ -74,14 +75,9 @@ export function getPdbView(
     options: { block: BlockDef; showAllTracks?: boolean }
 ): PdbView {
     const { block, showAllTracks = false } = options;
-    const pdbTracksById = _.keyBy(pdb.tracks, t => t.id);
-
-    const data = showAllTracks
-        ? pdb.tracks
-        : _.compact(block.tracks.map(trackDef => pdbTracksById[trackDef.id]));
+    const data = showAllTracks ? pdb.tracks : getBlockTracks(pdb.tracks, block);
 
     const tracks = _(data)
-        .concat(getCustomTracksFromPdb(block, pdb))
         .map((pdbTrack): TrackView | undefined => {
             const subtracks = getSubtracks(pdb, pdbTrack);
             if (_.isEmpty(subtracks)) return undefined;

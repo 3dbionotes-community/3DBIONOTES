@@ -14,6 +14,7 @@ import { modules } from "../../training-app/training-modules";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { BlockDef, BlockVisibility } from "../protvista/Protvista.types";
 import styles from "./Viewers.module.css";
+import { LoaderKey } from "../RootViewerContents";
 
 export interface PdbViewerProps {
     pdb: Pdb;
@@ -21,10 +22,11 @@ export interface PdbViewerProps {
     viewerState: ViewerState;
     onAddAnnotations(annotations: Annotations): void;
     toolbarExpanded: boolean;
+    updateLoader: <T>(key: LoaderKey, promise: Promise<T>, message?: string) => Promise<T>;
 }
 
 export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
-    const { pdb, viewerState, onAddAnnotations, pdbInfo, toolbarExpanded } = props;
+    const { pdb, viewerState, onAddAnnotations, pdbInfo, toolbarExpanded, updateLoader } = props;
     const { selection, profile, setProfile, setSelection } = viewerState;
 
     const [visibleBlocks, setVisibleBlocks] = React.useState<BlockVisibility[]>(
@@ -48,7 +50,12 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
     return (
         <React.Fragment>
             <div className={styles["tools-section"]}>
-                <ToolsButton onAddAnnotations={onAddAnnotations} expanded={toolbarExpanded} />
+                <ToolsButton
+                    onAddAnnotations={onAddAnnotations}
+                    expanded={toolbarExpanded}
+                    pdb={pdb}
+                    updateLoader={updateLoader}
+                />
                 <ProfilesButton
                     profile={profile}
                     onChange={setProfile}

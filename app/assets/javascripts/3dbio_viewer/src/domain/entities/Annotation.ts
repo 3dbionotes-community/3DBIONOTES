@@ -3,6 +3,7 @@ import { getName } from "../../data/repositories/protvista/utils";
 import { subtracks } from "../definitions/subtracks";
 import { Fragment2 } from "./Fragment2";
 import { Subtrack, Track } from "./Track";
+import { Shape } from "./Shape";
 
 export interface Annotations {
     tracks: TrackAnnotations[];
@@ -22,6 +23,7 @@ export interface Annotation {
     start: number;
     end: number;
     index?: AnnotationIndex;
+    shape: Shape;
 }
 
 export interface AnnotationWithTrack extends Annotation {
@@ -46,7 +48,10 @@ export function getTracksFromAnnotations(annotationsCollection: Annotations): Tr
                             type: type,
                             accession: type,
                             label: getName(type),
-                            shape: "rectangle",
+                            shape:
+                                _(objs.map(({ shape }) => shape))
+                                    .uniq()
+                                    .first() || "rectangle",
                             locations: [
                                 {
                                     fragments: objs.map(

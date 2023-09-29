@@ -1,6 +1,5 @@
 import _ from "lodash";
 import { Maybe } from "../../utils/ts-utils";
-import { BlockDef } from "../../webapp/components/protvista/Protvista.types";
 import { Annotations, getTracksFromAnnotations } from "./Annotation";
 import { Color } from "./Color";
 import { Experiment } from "./Experiment";
@@ -131,12 +130,4 @@ export function addCustomAnnotationsToPdb(pdb: Pdb, annotations: Annotations): P
 export function addProteinNetworkToPdb(pdb: Pdb, proteinNetwork: Maybe<ProteinNetwork>): Pdb {
     const customAnnotations = proteinNetwork?.uploadData.annotations;
     return { ...pdb, proteinNetwork, customAnnotations };
-}
-
-export function pdbHasCustomTracks(block: BlockDef, pdb: Pdb): boolean {
-    return block.hasUploadedTracks ? pdb.tracks.some(track => track.isCustom) : false;
-}
-
-export function getCustomTracksFromPdb(block: BlockDef, pdb: Pdb): Track[] {
-    return block.hasUploadedTracks ? pdb.tracks.filter(track => track.isCustom) : [];
 }

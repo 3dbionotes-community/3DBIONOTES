@@ -23,7 +23,7 @@ import { sendAnalytics } from "../../utils/analytics";
 import { UploadData } from "../../../domain/entities/UploadData";
 import { Maybe } from "../../../utils/ts-utils";
 import "./ViewerSelector.css";
-import { pdbeIconStyles } from "../ViewerBlock";
+import { ebiStyles } from "../ViewerBlock";
 
 interface ViewerSelectorProps {
     pdbInfo: PdbInfo | undefined;
@@ -162,7 +162,7 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
         : i18n.t("Chains");
 
     const leftIcon = (
-        <i className="icon icon-conceptual icon-structures" style={pdbeIconStyles["icon-lg"]}></i>
+        <i className="icon icon-conceptual icon-structures" style={ebiStyles["icon-lg"]}></i>
     );
 
     return { text, items, leftIcon, selected: selectedChain?.chainId, onClick: setChain, expanded };
@@ -198,7 +198,7 @@ function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
         : i18n.t("Ligands");
 
     const leftIcon = (
-        <i className="icon icon-conceptual icon-chemical" style={pdbeIconStyles["icon-lg"]}></i>
+        <i className="icon icon-conceptual icon-chemical" style={ebiStyles["icon-lg"]}></i>
     );
 
     return {

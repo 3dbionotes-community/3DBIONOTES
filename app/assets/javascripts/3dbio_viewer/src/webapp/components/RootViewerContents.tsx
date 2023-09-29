@@ -1,8 +1,8 @@
 import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
-import { ResizableBox, ResizableBoxProps, ResizeCallbackData } from "react-resizable";
 import { Fab } from "@material-ui/core";
+import { ResizableBox, ResizableBoxProps, ResizeCallbackData } from "react-resizable";
 import { KeyboardArrowUp as KeyboardArrowUpIcon } from "@material-ui/icons";
 import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
@@ -37,6 +37,7 @@ const loaderMessages = {
     updateVisualPlugin: [i18n.t("Updating selection..."), 2],
     pdbLoader: [i18n.t("Loading PDB Data..."), 3],
     loadModel: [i18n.t("Loading model..."), 4], //PDB, EMDB, PDB-REDO, CSTF, CERES
+    exportAnnotations: [i18n.t("Retrieving all annotations..."), 5],
 } as const;
 
 export type LoaderKey = keyof typeof loaderMessages;
@@ -151,6 +152,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             pdbLoader={pdbLoader}
                             setPdbLoader={setPdbLoader}
                             toolbarExpanded={toolbarExpanded}
+                            updateLoader={updateLoader}
                         />
                     </div>
                 </ResizableBox>

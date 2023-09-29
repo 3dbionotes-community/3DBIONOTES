@@ -2,8 +2,9 @@ import React from "react";
 import _ from "lodash";
 import { BlockDef, BlockVisibility, ProtvistaTrackElement } from "./Protvista.types";
 import { PdbView } from "../../view-models/PdbView";
-import { Pdb, pdbHasCustomTracks } from "../../../domain/entities/Pdb";
+import { Pdb } from "../../../domain/entities/Pdb";
 import { Profile, profiles } from "../../../domain/entities/Profile";
+import { Track } from "../../../domain/entities/Track";
 
 interface AddAction {
     type: "add";
@@ -71,4 +72,21 @@ function blockHasRelevantData(block: BlockDef, pdb: Pdb): boolean {
 
         return hasCustomComponent || hasRelevantTracks;
     }
+}
+
+export function pdbHasCustomTracks(block: BlockDef, pdb: Pdb): boolean {
+    return block.hasUploadedTracks ? pdb.tracks.some(track => track.isCustom) : false;
+}
+
+export function getCustomTracksFromPdb(block: BlockDef, pdbTracks: Track[]): Track[] {
+    return block.hasUploadedTracks ? pdbTracks.filter(track => track.isCustom) : [];
+}
+
+export function getBlockTracks(pdbTracks: Track[], block: BlockDef): Track[] {
+    const pdbTracksById = _.keyBy(pdbTracks, t => t.id);
+    const customTracks = getCustomTracksFromPdb(block, pdbTracks);
+    return _(block.tracks.map(trackDef => pdbTracksById[trackDef.id]))
+        .concat(customTracks)
+        .compact()
+        .value();
 }

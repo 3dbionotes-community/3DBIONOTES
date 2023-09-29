@@ -21,6 +21,7 @@ import { DialogTitleHelp } from "../DialogTitleHelp";
 import { StyledButton } from "../../training-app/components/action-button/ActionButton";
 import i18n from "../../utils/i18n";
 import "./AnnotationsTool.css";
+import { Shape, shapeTypes } from "../../../domain/entities/Shape";
 
 export interface AnnotationsToolProps {
     onClose(): void;
@@ -30,6 +31,22 @@ export interface AnnotationsToolProps {
 const indexTranslations: Record<AnnotationIndex, string> = {
     sequence: i18n.t("Sequence"),
     structure: i18n.t("Structure"),
+};
+
+const shapeTranslations: Record<Shape, string> = {
+    rectangle: i18n.t("Rectangle"),
+    bridge: i18n.t("Bridge"),
+    diamond: i18n.t("Diamond"),
+    chevron: i18n.t("Chevron"),
+    catFace: i18n.t("CatFace"),
+    triangle: i18n.t("Triangle"),
+    wave: i18n.t("Wave"),
+    hexagon: i18n.t("Hexagon"),
+    pentagon: i18n.t("Pentagon"),
+    circle: i18n.t("Circle"),
+    arrow: i18n.t("Arrow"),
+    doubleBar: i18n.t("DoubleBar"),
+    variant: i18n.t("Variant"),
 };
 
 export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props => {
@@ -224,6 +241,24 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             ))}
                         </select>
 
+                        <label htmlFor="shape">{i18n.t("Shape")}</label>
+                        <select
+                            className="form-control"
+                            value={annotationForm.shape}
+                            onChange={e =>
+                                setAnnotationForm({
+                                    ...annotationForm,
+                                    shape: getAnnotationShapeFromEv(e),
+                                })
+                            }
+                        >
+                            {shapeTypes.map(value => (
+                                <option key={value} value={value}>
+                                    {shapeTranslations[value]}
+                                </option>
+                            ))}
+                        </select>
+
                         <label htmlFor="start">{i18n.t("Starting value (*)")}</label>
 
                         <input
@@ -322,6 +357,7 @@ function getInitialAnnotationForm(): AnnotationWithTrack {
         type: "",
         description: "",
         color: "",
+        shape: "rectangle",
         index: "sequence",
         start: 0,
         end: 0,
@@ -331,6 +367,11 @@ function getInitialAnnotationForm(): AnnotationWithTrack {
 function getAnnotationIndexFromEv(ev: React.ChangeEvent<HTMLSelectElement>): AnnotationIndex {
     const { value } = ev.target;
     return isElementOfUnion(value, indexValues) ? value : indexValues[0];
+}
+
+function getAnnotationShapeFromEv(ev: React.ChangeEvent<HTMLSelectElement>): Shape {
+    const { value } = ev.target;
+    return isElementOfUnion(value, shapeTypes) ? value : shapeTypes[0];
 }
 
 function getAnnotationsFromAnnotationFromTrack(annotation: AnnotationWithTrack): Annotations {
@@ -344,6 +385,7 @@ function getAnnotationsFromAnnotationFromTrack(annotation: AnnotationWithTrack):
                     end: annotation.end,
                     color: annotation.color,
                     description: annotation.description,
+                    shape: annotation.shape,
                 },
             ],
         },
