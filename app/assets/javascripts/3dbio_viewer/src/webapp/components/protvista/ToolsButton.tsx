@@ -35,10 +35,11 @@ export const ToolsButton: React.FC<ToolsButtonProps> = ({ onAddAnnotations, expa
     return (
         <>
             <Dropdown<ItemId>
-                text={(expanded && i18n.t("Tools")) || undefined}
+                text={i18n.t("Tools")}
                 items={items}
                 onClick={openMenuItem}
                 leftIcon={<BuildIcon fontSize="small" />}
+                expanded={expanded}
             />
 
             {isAnnotationToolOpen && (
