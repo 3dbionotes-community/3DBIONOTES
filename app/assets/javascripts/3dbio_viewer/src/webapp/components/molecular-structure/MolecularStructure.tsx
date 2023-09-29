@@ -4,6 +4,7 @@ import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
 import { LoadParams } from "@3dbionotes/pdbe-molstar/lib/helpers";
 import {
+    BaseSelection,
     DbItem,
     diffDbItems,
     emptySelection,
@@ -96,6 +97,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const [pluginLoad, setPluginLoad] = React.useState<Date>();
     const pdbePlugin = pdbePlugin0 && pluginLoad ? pdbePlugin0 : undefined;
     const molstarState = React.useRef<MolstarState>({ type: "pdb", items: [], chainId: undefined });
+    const chainId = newSelection.chainId;
+    const ligandId = newSelection.ligandId;
     debugVariable({ molstarState });
 
     // Keep a reference containing the previous value of selection. We need this value to diff
@@ -117,10 +120,16 @@ function usePdbePlugin(options: MolecularStructureProps) {
             onLigandsLoaded(ligands);
         }
 
-        //the line below should be unnecessary as setVisbility is added on each item on load
-        // setVisibilityForSelection(pdbePlugin, newSelection);
-        highlight(pdbePlugin, chains, newSelection, molstarState);
-    }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection, chains]);
+        const currentSelection = prevSelectionRef.current || emptySelection;
+        if (newSelection.chainId !== currentSelection.chainId) {
+            highlight(pdbePlugin, chains, newSelection, molstarState);
+        }
+    }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection, chains, prevSelectionRef]);
+
+    React.useEffect(() => {
+        if (!pluginLoad || !pdbePlugin) return;
+        highlight(pdbePlugin, chains, { chainId, ligandId }, molstarState, false);
+    }, [pluginLoad, prevSelectionRef, chains, chainId, ligandId, pdbePlugin]);
 
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
@@ -163,10 +172,10 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                 console.debug("molstar.events.loadComplete", loaded);
                                 if (loaded) {
                                     setPluginLoad(new Date());
+                                    // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
+                                    window.dispatchEvent(new Event("resize"));
                                     resolve();
                                 } else reject(loaderErrors.pdbNotLoaded);
-                                // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
-                                window.dispatchEvent(new Event("resize"));
                             },
                             error: err => {
                                 console.error(err);
@@ -270,16 +279,25 @@ function usePdbePlugin(options: MolecularStructureProps) {
                 /* Refined added/removed/updated are only valid models and when there is a change on them.
                 Changes on not valid models will not trigger applySelectionChangesToPlugin() but on setSelection()
                 to remove unvalid ones*/
-                //prettier-ignore
-                if (!( _.isEmpty(refinedAdded) && _.isEmpty(refinedRemoved) && _.isEmpty(refinedUpdated)))
-                    updateLoader("updateVisualPlugin",applySelectionChangesToPlugin(
-                        pdbePlugin,
-                        molstarState,
-                        chains,
-                        currentSelection,
-                        refinedNewSelection,
-                        updateLoader
-                    ));
+
+                const hasChanges = !(
+                    _.isEmpty(refinedAdded) &&
+                    _.isEmpty(refinedRemoved) &&
+                    _.isEmpty(refinedUpdated)
+                );
+
+                if (hasChanges)
+                    updateLoader(
+                        "updateVisualPlugin",
+                        applySelectionChangesToPlugin(
+                            pdbePlugin,
+                            molstarState,
+                            chains,
+                            currentSelection,
+                            refinedNewSelection,
+                            updateLoader
+                        )
+                    );
                 setSelection(refinedNewSelection);
             });
         }
@@ -540,22 +558,25 @@ async function applySelectionChangesToPlugin(
         highlight(plugin, chains, newSelection, molstarState);
     }
 
-    plugin.visual.reset({ camera: true });
+    if (added.length + removed.length > 0) {
+        plugin.visual.reset({ camera: true });
+    }
 }
 
 async function highlight(
     plugin: PDBeMolstarPlugin,
     chains: Maybe<PdbInfo["chains"]>,
-    selection: Selection,
-    molstarState: MolstarStateRef
+    selection: BaseSelection,
+    molstarState: MolstarStateRef,
+    focus = true
 ): Promise<void> {
     plugin.visual.clearSelection().catch(_err => {});
     plugin.visual.clearHighlight().catch(_err => {}); //remove previous highlight
     const ligandsView = getLigandView(selection);
     if (ligandsView) return;
 
-    const chain = getSelectedChain(chains, selection);
     const chainId = selection.chainId;
+    const chain = getSelectedChain(chains, chainId);
     molstarState.current = MolstarStateActions.setChain(molstarState.current, chainId);
 
     if (!chain) return;
@@ -566,7 +587,7 @@ async function highlight(
                 {
                     struct_asym_id: chain.chainId,
                     color: "#0000ff",
-                    focus: true,
+                    focus,
                 },
             ],
             structureNumber: 1, //rooting to the main PDB
@@ -607,7 +628,7 @@ function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selec
     };
 }
 
-function getLigandView(selection: Selection): LigandView | undefined {
+function getLigandView(selection: BaseSelection): LigandView | undefined {
     const { chainId, ligandId } = selection;
     if (!chainId || !ligandId) return;
     const [component, position] = ligandId.split("-");

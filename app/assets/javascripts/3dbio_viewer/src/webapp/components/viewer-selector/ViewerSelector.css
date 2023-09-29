@@ -58,6 +58,12 @@
     padding: 6px;
 }
 
+.db-item-main .MuiIconButton-root:hover {
+    background: #ababab;
+    color: #fff;
+    padding: 6px;
+}
+
 .db-item-main .label-main .label {
     color: #123546;
     font-weight: 700;
