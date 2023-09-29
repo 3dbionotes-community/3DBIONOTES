@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import { MenuItem } from "@material-ui/core";
-import { ExpandMore, ExpandLess, Done } from "@material-ui/icons";
+import { ExpandMore, ExpandLess, Done, Close as CloseIcon } from "@material-ui/icons";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { PopperMenu } from "./PopperMenu";
 import { StyledButton } from "../../training-app/components/action-button/ActionButton";
@@ -19,6 +19,7 @@ export interface DropdownProps<Id extends string = string> {
     leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
     deselectable?: boolean;
+    expanded?: boolean;
 }
 
 export interface DropdownItemModel<Id extends string> {
@@ -29,8 +30,17 @@ export interface DropdownItemModel<Id extends string> {
 export function Dropdown<Id extends string = string>(
     props: DropdownProps<Id>
 ): React.ReactElement | null {
-    const { items, text, onClick, showExpandIcon = false, selected, rightIcon, leftIcon } = props;
-    const { deselectable } = props;
+    const {
+        items,
+        text,
+        onClick,
+        showExpandIcon = false,
+        selected,
+        rightIcon,
+        leftIcon,
+        expanded,
+        deselectable,
+    } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
     const showSelection = Boolean(selected);
@@ -52,9 +62,10 @@ export function Dropdown<Id extends string = string>(
     );
 
     const buttonText = React.useMemo(() => {
+        if (!expanded) return;
         if (text) return text;
-        if (selected !== undefined) return items?.find(item => item.id === selected)?.text ?? ""; //"" intended to remove text
-    }, [text, items, selected]);
+        if (selected !== undefined) return items?.find(item => item.id === selected)?.text;
+    }, [text, items, selected, expanded]);
 
     if (!items || _.isEmpty(items)) return null;
 
@@ -66,7 +77,11 @@ export function Dropdown<Id extends string = string>(
                 className={isMenuOpen ? "open" : undefined}
             >
                 {leftIcon}
-                {selected && deselectable && <InnerButton onClick={deselect}>✕</InnerButton>}
+                {selected && deselectable && (
+                    <InnerButton onClick={deselect}>
+                        <CloseIcon fontSize="small" />
+                    </InnerButton>
+                )}
                 {buttonText}
                 {rightIcon}
                 {showExpandIcon && (isMenuOpen ? <ExpandLess /> : <ExpandMore />)}
@@ -90,10 +105,11 @@ export function Dropdown<Id extends string = string>(
 }
 
 const InnerButton = styled.button`
-    margin: 0;
+    display: inline-block;
+    margin: 0 0.1em 0 0;
     padding: 0;
     &:hover {
-        background-color: #aae;
+        color: #f33;
     }
 `;
 

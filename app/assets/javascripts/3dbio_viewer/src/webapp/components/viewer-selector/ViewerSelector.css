@@ -2,7 +2,8 @@
     display: flex;
     flex-direction: column;
     row-gap: 1.25rem;
-    width: 100%;
+    left: 0;
+    width: calc(100% - 1px); /*right border*/
     position: absolute; /*don't hesitate, parent div is "relative" not "static"*/
     padding: 1.25em 1.25em 1.5em;
     z-index: 500;
@@ -53,6 +54,12 @@
 
 .db-item-main .MuiIconButton-root {
     background: #8d8d8d;
+    color: #fff;
+    padding: 6px;
+}
+
+.db-item-main .MuiIconButton-root:hover {
+    background: #ababab;
     color: #fff;
     padding: 6px;
 }

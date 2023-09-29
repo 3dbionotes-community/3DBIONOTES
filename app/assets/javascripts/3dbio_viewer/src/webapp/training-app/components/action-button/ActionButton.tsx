@@ -1,6 +1,7 @@
 import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
 import React from "react";
 import styled from "styled-components";
+import i18n from "../../../utils/i18n";
 
 export interface ActionButtonProps {
     onClick: () => void;
@@ -11,7 +12,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({ onClick, expanded })
     return (
         <StyledButton onClick={onClick}>
             <EmojiObjectsIcon fontSize="small" />
-            {expanded && <>Tutorial</>}
+            {expanded && i18n.t("Tutorial")}
         </StyledButton>
     );
 };

@@ -37,10 +37,10 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         [setBlockVisibility]
     );
 
-    const selectedChain = React.useMemo(() => getSelectedChain(pdbInfo?.chains, selection), [
-        pdbInfo,
-        selection,
-    ]);
+    const selectedChain = React.useMemo(
+        () => getSelectedChain(pdbInfo?.chains, selection.chainId),
+        [pdbInfo, selection]
+    );
 
     const ligandsAndSmallMoleculesCount = React.useMemo(
         () =>

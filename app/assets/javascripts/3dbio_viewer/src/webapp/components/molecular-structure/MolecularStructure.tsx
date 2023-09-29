@@ -4,6 +4,7 @@ import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
 import { LoadParams } from "@3dbionotes/pdbe-molstar/lib/helpers";
 import {
+    BaseSelection,
     DbItem,
     diffDbItems,
     emptySelection,
@@ -67,6 +68,21 @@ export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
     );
 };
 
+const loaderErrors = {
+    pdbNotLoaded: i18n.t("PDB molstar did not load"),
+    invalidToken: i18n.t("Invalid token and/or type"),
+    tokenNotFound: i18n.t("No token found"),
+    undefinedPdb: i18n.t("PDB is not defined"),
+    pdbNotMatching: i18n.t("No PDB found for this EMDB model"),
+    invalidExtension: i18n.t('The extension must be "pdb", "ent", "cif"'),
+    unexpectedUploadError: (url: string) =>
+        i18n.t(`Unkown error while loading the model URL: ${url}`),
+    pdbNotFound: (pdbId: string) => i18n.t(`${pdbId} was not found`),
+    pdbRequest: (url: string, status: number) =>
+        i18n.t(`Error loading PDB model: url=${url} - ${status}`),
+    request: (url: string, status: number) => i18n.t(`Error loading model: url=${url} - ${status}`),
+};
+
 function usePdbePlugin(options: MolecularStructureProps) {
     const {
         selection: newSelection,
@@ -81,6 +97,8 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const [pluginLoad, setPluginLoad] = React.useState<Date>();
     const pdbePlugin = pdbePlugin0 && pluginLoad ? pdbePlugin0 : undefined;
     const molstarState = React.useRef<MolstarState>({ type: "pdb", items: [], chainId: undefined });
+    const chainId = newSelection.chainId;
+    const ligandId = newSelection.ligandId;
     debugVariable({ molstarState });
 
     // Keep a reference containing the previous value of selection. We need this value to diff
@@ -102,10 +120,16 @@ function usePdbePlugin(options: MolecularStructureProps) {
             onLigandsLoaded(ligands);
         }
 
-        //the line below should be unnecessary as setVisbility is added on each item on load
-        // setVisibilityForSelection(pdbePlugin, newSelection);
-        highlight(pdbePlugin, chains, newSelection, molstarState);
-    }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection, chains]);
+        const currentSelection = prevSelectionRef.current || emptySelection;
+        if (newSelection.chainId !== currentSelection.chainId) {
+            highlight(pdbePlugin, chains, newSelection, molstarState);
+        }
+    }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection, chains, prevSelectionRef]);
+
+    React.useEffect(() => {
+        if (!pluginLoad || !pdbePlugin) return;
+        highlight(pdbePlugin, chains, { chainId, ligandId }, molstarState, false);
+    }, [pluginLoad, prevSelectionRef, chains, chainId, ligandId, pdbePlugin]);
 
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
@@ -134,7 +158,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                         .pdbFromEmdb(emdbId)
                         .toPromise()
                         .then(pdbId => {
-                            if (!pdbId) throw new Error("No PDB found for this EMDB model");
+                            if (!pdbId) throw new Error(loaderErrors.pdbNotMatching);
                             else setSelection(setMainItem(newSelection, pdbId, "pdb"));
                         })
                         .catch(console.error)
@@ -148,10 +172,10 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                 console.debug("molstar.events.loadComplete", loaded);
                                 if (loaded) {
                                     setPluginLoad(new Date());
+                                    // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
+                                    window.dispatchEvent(new Event("resize"));
                                     resolve();
-                                } else reject("PDB molstar did not load");
-                                // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
-                                window.dispatchEvent(new Event("resize"));
+                                } else reject(loaderErrors.pdbNotLoaded);
                             },
                             error: err => {
                                 console.error(err);
@@ -169,16 +193,16 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                             initParams,
                                             newSelection
                                         );
-                                    }
+                                    } else reject(loaderErrors.pdbNotFound);
                                 })
                                 .catch(err => reject(err));
                         else if (newSelection.type === "uploadData") {
                             if (!uploadDataToken) {
-                                reject("No token found");
+                                reject(loaderErrors.tokenNotFound);
                                 return;
                             }
                             if (!extension) {
-                                reject(i18n.t('The extension must be "pdb", "ent", "cif".'));
+                                reject(loaderErrors.invalidExtension);
                                 return;
                             }
                             const supportedExtension = extension === "ent" ? "pdb" : extension;
@@ -196,12 +220,12 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                             newParams,
                                             newSelection
                                         );
-                                    } else reject("Invalid token and/or type");
+                                    } else reject(loaderErrors.invalidToken);
                                 })
                                 .catch(_err =>
-                                    reject(`Could not find uploaded model: ${customData.url}`)
+                                    reject(loaderErrors.unexpectedUploadError(customData.url))
                                 );
-                        } else reject("PDB is not defined");
+                        } else reject(loaderErrors.undefinedPdb);
                     })
                 );
             }
@@ -255,16 +279,25 @@ function usePdbePlugin(options: MolecularStructureProps) {
                 /* Refined added/removed/updated are only valid models and when there is a change on them.
                 Changes on not valid models will not trigger applySelectionChangesToPlugin() but on setSelection()
                 to remove unvalid ones*/
-                //prettier-ignore
-                if (!( _.isEmpty(refinedAdded) && _.isEmpty(refinedRemoved) && _.isEmpty(refinedUpdated)))
-                    updateLoader("updateVisualPlugin",applySelectionChangesToPlugin(
-                        pdbePlugin,
-                        molstarState,
-                        chains,
-                        currentSelection,
-                        refinedNewSelection,
-                        updateLoader
-                    ));
+
+                const hasChanges = !(
+                    _.isEmpty(refinedAdded) &&
+                    _.isEmpty(refinedRemoved) &&
+                    _.isEmpty(refinedUpdated)
+                );
+
+                if (hasChanges)
+                    updateLoader(
+                        "updateVisualPlugin",
+                        applySelectionChangesToPlugin(
+                            pdbePlugin,
+                            molstarState,
+                            chains,
+                            currentSelection,
+                            refinedNewSelection,
+                            updateLoader
+                        )
+                    );
                 setSelection(refinedNewSelection);
             });
         }
@@ -285,7 +318,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
             compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(emdbId => {
                 updateSelection(currentSelection, setMainItem(newSelection, emdbId, "emdb"));
             }, console.error);
-        } else if (emdbId) {
+        } else if (emdbId && getMainItem(currentSelection, "pdb") === undefined) {
             compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
                 updateSelection(currentSelection, setMainItem(newSelection, pdbId, "pdb"));
             }, console.error);
@@ -325,7 +358,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                 next: loaded => {
                                     console.debug("molstar.events.loadComplete", loaded);
                                     if (loaded) resolve();
-                                    else reject("PDB molstar did not load");
+                                    else reject(loaderErrors.pdbNotLoaded);
                                 },
                                 error: err => reject(err),
                             });
@@ -339,9 +372,9 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                 },
                                 false
                             );
-                        } else reject("Invalid token and/or type");
+                        } else reject(loaderErrors.invalidToken);
                     })
-                    .catch(_err => reject(`Could not find uploaded model: ${uploadUrl}`));
+                    .catch(_err => reject(loaderErrors.unexpectedUploadError(uploadUrl)));
             }),
             i18n.t("Loading uploded model...")
         );
@@ -472,7 +505,7 @@ async function applySelectionChangesToPlugin(
     for (let i = 0; i < pdbs.length; i++) {
         const item = pdbs[i];
         if (item) {
-            const pdbId: string = item.id;
+            const pdbId = item.id;
             await checkModelUrl(pdbId, "pdb").then(async loaded => {
                 if (loaded) {
                     const url = urls.pdb(pdbId);
@@ -492,7 +525,8 @@ async function applySelectionChangesToPlugin(
                     );
                     setVisibility(plugin, item);
                     updateItems(item);
-                }
+                } else if (getMainItem(newSelection, "pdb") === pdbId)
+                    updateLoader("loadModel", Promise.reject(loaderErrors.pdbNotFound(pdbId)));
             });
         }
     }
@@ -500,16 +534,21 @@ async function applySelectionChangesToPlugin(
     for (let i = 0; i < emdbs.length; i++) {
         const item = emdbs[i];
         if (item) {
-            updateItems(item);
-            await updateLoader(
-                "loadModel",
-                loadEmdb(plugin, urls.emdb(item.id)),
-                emdbs.length > 1
-                    ? i18n.t(`Loading EMDB (${i + 1}/${emdbs.length})...`)
-                    : i18n.t("Loading EMDB...")
-            );
-            setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
-            setVisibility(plugin, item);
+            const emdbId = item.id;
+            await checkModelUrl(emdbId, "emdb").then(async loaded => {
+                if (loaded) {
+                    await updateLoader(
+                        "loadModel",
+                        loadEmdb(plugin, urls.emdb(item.id)),
+                        emdbs.length > 1
+                            ? i18n.t(`Loading EMDB (${i + 1}/${emdbs.length})...`)
+                            : i18n.t("Loading EMDB...")
+                    );
+                    setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
+                    setVisibility(plugin, item);
+                    updateItems(item);
+                }
+            });
         }
     }
 
@@ -519,22 +558,25 @@ async function applySelectionChangesToPlugin(
         highlight(plugin, chains, newSelection, molstarState);
     }
 
-    plugin.visual.reset({ camera: true });
+    if (added.length + removed.length > 0) {
+        plugin.visual.reset({ camera: true });
+    }
 }
 
 async function highlight(
     plugin: PDBeMolstarPlugin,
     chains: Maybe<PdbInfo["chains"]>,
-    selection: Selection,
-    molstarState: MolstarStateRef
+    selection: BaseSelection,
+    molstarState: MolstarStateRef,
+    focus = true
 ): Promise<void> {
     plugin.visual.clearSelection().catch(_err => {});
     plugin.visual.clearHighlight().catch(_err => {}); //remove previous highlight
     const ligandsView = getLigandView(selection);
     if (ligandsView) return;
 
-    const chain = getSelectedChain(chains, selection);
     const chainId = selection.chainId;
+    const chain = getSelectedChain(chains, chainId);
     molstarState.current = MolstarStateActions.setChain(molstarState.current, chainId);
 
     if (!chain) return;
@@ -545,7 +587,7 @@ async function highlight(
                 {
                     struct_asym_id: chain.chainId,
                     color: "#0000ff",
-                    focus: true,
+                    focus,
                 },
             ],
             structureNumber: 1, //rooting to the main PDB
@@ -586,14 +628,14 @@ function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selec
     };
 }
 
-function getLigandView(selection: Selection): LigandView | undefined {
+function getLigandView(selection: BaseSelection): LigandView | undefined {
     const { chainId, ligandId } = selection;
     if (!chainId || !ligandId) return;
     const [component, position] = ligandId.split("-");
     if (!component || !position) return;
 
     return {
-        auth_asym_id: chainId + "_1",
+        auth_asym_id: chainId, //+_1 on previous versions
         auth_seq_id: parseInt(position),
         label_comp_id: component,
     };
@@ -606,7 +648,7 @@ function getId<T extends { id: string }>(obj: T): string {
 }
 
 async function checkModelUrl(id: Maybe<string>, modelType: Type): Promise<boolean> {
-    if (!id) return true;
+    if (!id) return false;
 
     const url = urls[modelType](id);
     //method HEAD makes 404 be 200 anyways
@@ -615,17 +657,17 @@ async function checkModelUrl(id: Maybe<string>, modelType: Type): Promise<boolea
     if (res.ok && res.status != 404 && res.status != 500) {
         return true;
     } else {
-        const msg = `Error loading PDB model: url=${url} - ${res.status}`;
+        const msg = loaderErrors.pdbRequest(url, res.status);
         console.error(msg);
         return false;
     }
 }
 
-function checkUploadedModelUrl(url: string): Promise<boolean> {
+async function checkUploadedModelUrl(url: string): Promise<boolean> {
     return fetch(url, { method: "HEAD", cache: "force-cache" }).then(res => {
         if (res.ok && res.status != 404 && res.status != 500) return true;
         else {
-            const msg = `Error loading model: url=${url} - ${res.status}`;
+            const msg = loaderErrors.request(url, res.status);
             console.error(msg);
             return false;
         }

@@ -82,4 +82,5 @@ const TooltipIconButton: React.FC<TooltipIconButtonProps> = props => {
 
 export const ebiStyles = recordOfStyles({
     icon: { fontSize: 11 },
+    "icon-lg": { fontSize: 20 },
 });

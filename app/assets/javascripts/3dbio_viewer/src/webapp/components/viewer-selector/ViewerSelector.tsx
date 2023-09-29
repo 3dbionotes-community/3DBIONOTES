@@ -23,6 +23,7 @@ import { sendAnalytics } from "../../utils/analytics";
 import { UploadData } from "../../../domain/entities/UploadData";
 import { Maybe } from "../../../utils/ts-utils";
 import "./ViewerSelector.css";
+import { pdbeIconStyles } from "../ViewerBlock";
 
 interface ViewerSelectorProps {
     pdbInfo: PdbInfo | undefined;
@@ -101,7 +102,10 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                 )}
 
                 <div className={"selectors" + (uploadData ? " invert" : "")}>
-                    <button onClick={openSearchWithAnalytics}>
+                    <button
+                        onClick={openSearchWithAnalytics}
+                        title={i18n.t("Select or append a new model")}
+                    >
                         <Search />
                     </button>
                     <span>
@@ -151,19 +155,21 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
         [pdbInfo]
     );
 
-    const selectedChain = getSelectedChain(pdbInfo?.chains, selection);
+    const selectedChain = getSelectedChain(pdbInfo?.chains, selection.chainId);
 
-    const text = expanded
-        ? selectedChain
-            ? `${i18n.t("Chain")}: ${selectedChain.shortName}`
-            : i18n.t("Chains")
-        : "C";
+    const text = selectedChain
+        ? `${i18n.t("Chain")}: ${selectedChain.shortName}`
+        : i18n.t("Chains");
 
-    return { text, items, selected: selectedChain?.chainId, onClick: setChain };
+    const leftIcon = (
+        <i className="icon icon-conceptual icon-structures" style={pdbeIconStyles["icon-lg"]}></i>
+    );
+
+    return { text, items, leftIcon, selected: selectedChain?.chainId, onClick: setChain, expanded };
 }
 
-export function getSelectedChain(chains: PdbInfo["chains"] | undefined, selection: Selection) {
-    return chains?.find(chain => chain.chainId === selection.chainId) || chains?.[0];
+export function getSelectedChain(chains: PdbInfo["chains"] | undefined, chainId: Maybe<string>) {
+    return chains?.find(chain => chain.chainId === chainId) || chains?.[0];
 }
 
 function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
@@ -177,7 +183,7 @@ function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
         [selection, onSelectionChange, pdbInfo]
     );
 
-    const selectedChain = getSelectedChain(pdbInfo?.chains, selection);
+    const selectedChain = getSelectedChain(pdbInfo?.chains, selection.chainId);
 
     const items: DropdownProps["items"] = React.useMemo(() => {
         return pdbInfo?.ligands
@@ -187,17 +193,21 @@ function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
 
     const selectedLigand = getSelectedLigand(selection, pdbInfo);
 
-    const text = expanded
-        ? selectedLigand
-            ? `${i18n.t("Ligand")}: ${selectedLigand.shortId}`
-            : i18n.t("Ligands")
-        : "L";
+    const text = selectedLigand
+        ? `${i18n.t("Ligand")}: ${selectedLigand.shortId}`
+        : i18n.t("Ligands");
+
+    const leftIcon = (
+        <i className="icon icon-conceptual icon-chemical" style={pdbeIconStyles["icon-lg"]}></i>
+    );
 
     return {
         text,
         items,
+        leftIcon,
         onClick: setLigand,
         selected: selectedLigand?.shortId,
         deselectable: true,
+        expanded,
     };
 }
