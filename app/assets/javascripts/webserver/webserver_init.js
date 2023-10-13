@@ -15,10 +15,10 @@
     window,
     document,
     "script",
-    "https://www.googletagmanager.com/gtag/js?id=G-1WTRK5CB7C",
+    "https://www.googletagmanager.com/gtag/js?id=G-1WTRK5CB7C", // GA4 KEY CHANGE ALSO
     "gtag"
 );
-gtag("config", "G-1WTRK5CB7C"); //change on prod
+gtag("config", "G-1WTRK5CB7C"); // RINCHEN: G-1WTRK5CB7C / 3DBIONOTES: G-BRPGRQ278S
 
 var $j = jQuery.noConflict();
 
