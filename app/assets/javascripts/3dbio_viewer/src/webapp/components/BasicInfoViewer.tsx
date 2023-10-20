@@ -6,6 +6,8 @@ import { Selection } from "../view-models/Selection";
 import { Links } from "./Link";
 import { ViewerTooltip } from "./viewer-tooltip/ViewerTooltip";
 import i18n from "../utils/i18n";
+import _ from "lodash";
+import { Anchor } from "./Anchor";
 
 export interface BasicInfoProps {
     pdb: Pdb;
@@ -16,7 +18,7 @@ interface Item {
     name: string;
     value: React.ReactNode;
     isDisabled?: boolean;
-    help?: string;
+    help?: React.ReactNode;
 }
 
 export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
@@ -37,7 +39,7 @@ export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
 interface ChildProps {
     name: string;
     value: React.ReactNode;
-    help?: string;
+    help?: React.ReactNode;
 }
 
 const Child: React.FC<ChildProps> = props => {
@@ -71,7 +73,7 @@ const styles = recordOfStyles({
 function getItems(pdb: Pdb) {
     const resolution = pdb.experiment?.resolution;
 
-    const items: Item[] = [
+    const items: Item[] = _.compact([
         { name: i18n.t("Protein Name"), value: pdb.protein.name },
         { name: i18n.t("Gene Name"), value: pdb.protein.gen },
         {
@@ -100,19 +102,26 @@ function getItems(pdb: Pdb) {
             name: i18n.t("Chain"),
             value: pdb.chainId,
         },
-        {
+        !_.isEmpty(pdb.emdbs) && {
             name: i18n.t("EMDB ID"),
             value: <Links links={getEntityLinks(pdb, "emdb")} emptyValue="-" />,
-            help: i18n.t("Do you want to load the associated map with this protein structure?"),
         },
         {
             name: i18n.t("Resolution"),
             value: resolution ? `${resolution.toString()} Å` : undefined,
-            help: i18n.t(
-                "This determines the possible use given to the structure of the protein (Å). Depending on the global resolution range and the local resolution of the relevant sites, we can introduce the possible uses depending on the tables that are usually used (ex. https://science.sciencemag.org/content/294/5540/93)"
+            help: (
+                <span>
+                    {i18n.t(
+                        "This determines the possible use given to the structure of the protein (Å). Depending on the global resolution range and the local resolution of the relevant sites, we can introduce the possible uses depending on the tables that are usually used (ex. "
+                    )}
+                    <Anchor href="https://science.sciencemag.org/content/294/5540/93">
+                        https://science.sciencemag.org/content/294/5540/93
+                    </Anchor>
+                    {")"}
+                </span>
             ),
         },
-    ];
+    ]);
 
     return items;
 }

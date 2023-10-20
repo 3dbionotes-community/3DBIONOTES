@@ -1,23 +1,27 @@
-import React, { useCallback, useState, useRef } from "react";
 import _ from "lodash";
-import { CircularProgress, Dialog, DialogContent, Switch } from "@material-ui/core";
-import i18n from "../../utils/i18n";
-import { useBooleanState } from "../../hooks/use-boolean";
-import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
-import "./AnnotationsTool.css";
-import { isElementOfUnion, recordOfStyles } from "../../../utils/ts-utils";
-import { ErrorMessage } from "../error-message/ErrorMessage";
+import React, { useCallback, useState, useRef } from "react";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import { Box, CircularProgress, Dialog, DialogContent } from "@material-ui/core";
+import { Description as DescriptionIcon, Edit as EditIcon } from "@material-ui/icons";
 import {
     AnnotationIndex,
     indexValues,
     Annotations,
     AnnotationWithTrack,
 } from "../../../domain/entities/Annotation";
+import { useBooleanState } from "../../hooks/use-boolean";
+import { Dropzone, DropzoneRef } from "../dropzone/Dropzone";
+import { isElementOfUnion, recordOfStyles } from "../../../utils/ts-utils";
+import { ErrorMessage } from "../error-message/ErrorMessage";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { TooltipTypography } from "../HtmlTooltip";
 import { DialogTitleHelp } from "../DialogTitleHelp";
 import { StyledButton } from "../../training-app/components/action-button/ActionButton";
+import i18n from "../../utils/i18n";
+import "./AnnotationsTool.css";
+import { Shape, shapeTypes } from "../../../domain/entities/Shape";
 
 export interface AnnotationsToolProps {
     onClose(): void;
@@ -29,13 +33,29 @@ const indexTranslations: Record<AnnotationIndex, string> = {
     structure: i18n.t("Structure"),
 };
 
+const shapeTranslations: Record<Shape, string> = {
+    rectangle: i18n.t("Rectangle"),
+    bridge: i18n.t("Bridge"),
+    diamond: i18n.t("Diamond"),
+    chevron: i18n.t("Chevron"),
+    catFace: i18n.t("CatFace"),
+    triangle: i18n.t("Triangle"),
+    wave: i18n.t("Wave"),
+    hexagon: i18n.t("Hexagon"),
+    pentagon: i18n.t("Pentagon"),
+    circle: i18n.t("Circle"),
+    arrow: i18n.t("Arrow"),
+    doubleBar: i18n.t("DoubleBar"),
+    variant: i18n.t("Variant"),
+};
+
 export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props => {
     const { onClose, onAdd } = props;
     const { compositionRoot } = useAppContext();
 
     const annotationFileRef = useRef<DropzoneRef>(null);
     const [error, setError] = useState<string>();
-    const [isManual, { toggle: toggleIsManual }] = useBooleanState(false);
+    const [isManual, setIsManual] = useState(false);
     const [annotationForm, setAnnotationForm] = useState<AnnotationWithTrack>(
         getInitialAnnotationForm
     );
@@ -78,11 +98,6 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
         }, [compositionRoot, openAnnotations, loadingActions])
     );
 
-    const switchToggle = useCallback(() => {
-        setError("");
-        toggleIsManual();
-    }, [toggleIsManual]);
-
     const downloadExample = React.useCallback<React.MouseEventHandler<HTMLAnchorElement>>(
         ev => {
             ev.stopPropagation();
@@ -92,35 +107,60 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
         [compositionRoot]
     );
 
+    const handleManualToggle = React.useCallback(
+        (_event: React.MouseEvent<HTMLElement>, isManual: boolean) => {
+            setError("");
+            setIsManual(isManual);
+        },
+        [setError, setIsManual]
+    );
+
     return (
-        <Dialog open={true} onClose={onClose} maxWidth="lg">
+        <Dialog open={true} onClose={onClose} maxWidth="xs">
             <DialogTitleHelp
                 title={i18n.t("Add annotation")}
                 onClose={onClose}
                 tooltip={
                     <TooltipTypography variant="body2">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur eaque
-                        aspernatur, adipisci harum dolor neque dicta voluptas a asperiores sequi
-                        atque quibusdam cumque. At excepturi nobis ea, tempora omnis eum
+                        {i18n.t(
+                            "Add custom annotations to the set of automatically mapped annotations onto the 3D model. You can upload custom annotations through a JSON file or manually fill in the details using the web form."
+                        )}
                     </TooltipTypography>
                 }
             />
             <DialogContent>
-                <label>
-                    {isManual ? (
-                        i18n.t("Add annotation manually")
-                    ) : (
-                        <span>
-                            {i18n.t("Upload annotation file in JSON format")} (
-                            <a href="#" onClick={downloadExample}>
-                                {i18n.t("example")}
-                            </a>
-                            )
-                        </span>
-                    )}
-                </label>
-
-                <Switch value={isManual} onChange={switchToggle} color="primary" />
+                <Box marginBottom={2} fontWeight="fontWeightBold">
+                    <span>
+                        {i18n.t(
+                            "Upload your custom annotations manually or by file in JSON format "
+                        )}
+                        <a href="#" onClick={downloadExample}>
+                            {i18n.t("example")}
+                        </a>
+                        {":"}
+                    </span>
+                </Box>
+                <Box>
+                    <ToggleButtonGroup
+                        value={isManual}
+                        exclusive
+                        onChange={handleManualToggle}
+                        aria-label={i18n.t("add custom annotations options")}
+                    >
+                        <ToggleButton value={false} aria-label={i18n.t("add by file")}>
+                            <DescriptionIcon />
+                            <Box display="inline" marginLeft={1}>
+                                {i18n.t("Add by file")}
+                            </Box>
+                        </ToggleButton>
+                        <ToggleButton value={true} aria-label={i18n.t("add manually")}>
+                            <EditIcon />
+                            <Box display="inline" marginLeft={1}>
+                                {i18n.t("Add manually")}
+                            </Box>
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </Box>
 
                 {isManual ? (
                     <Form isDisabled={isLoading}>
@@ -133,7 +173,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             onChange={e =>
                                 setAnnotationForm({ ...annotationForm, trackName: e.target.value })
                             }
-                            className="form-control"
+                            className="form-control-viewer"
                         />
 
                         <label htmlFor="type">{i18n.t("Type")}</label>
@@ -146,7 +186,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             onChange={e =>
                                 setAnnotationForm({ ...annotationForm, type: e.target.value })
                             }
-                            className="form-control"
+                            className="form-control-viewer"
                         />
 
                         <label htmlFor="description">{i18n.t("Description")}</label>
@@ -162,7 +202,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                                     description: e.target.value,
                                 })
                             }
-                            className="form-control"
+                            className="form-control-viewer"
                         />
 
                         <label htmlFor="color">{i18n.t("Color")}</label>
@@ -180,12 +220,12 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             onChange={e =>
                                 setAnnotationForm({ ...annotationForm, color: e.target.value })
                             }
-                            className="form-control"
+                            className="form-control-viewer"
                         />
 
                         <label htmlFor="index">{i18n.t("Index")}</label>
                         <select
-                            className="form-control"
+                            className="form-control-viewer"
                             value={annotationForm.index}
                             onChange={e =>
                                 setAnnotationForm({
@@ -197,6 +237,24 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             {indexValues.map(value => (
                                 <option key={value} value={value}>
                                     {indexTranslations[value]}
+                                </option>
+                            ))}
+                        </select>
+
+                        <label htmlFor="shape">{i18n.t("Shape")}</label>
+                        <select
+                            className="form-control"
+                            value={annotationForm.shape}
+                            onChange={e =>
+                                setAnnotationForm({
+                                    ...annotationForm,
+                                    shape: getAnnotationShapeFromEv(e),
+                                })
+                            }
+                        >
+                            {shapeTypes.map(value => (
+                                <option key={value} value={value}>
+                                    {shapeTranslations[value]}
                                 </option>
                             ))}
                         </select>
@@ -214,7 +272,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                                     start: Number(e.target.value),
                                 })
                             }
-                            className="form-control"
+                            className="form-control-viewer"
                         />
 
                         <label htmlFor="end">{i18n.t("Ending value")}</label>
@@ -229,7 +287,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                                     end: Number(e.target.value),
                                 })
                             }
-                            className="form-control"
+                            className="form-control-viewer"
                         />
 
                         {error && <ErrorMessage message={error} />}
@@ -243,7 +301,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                         </button>
                     </Form>
                 ) : (
-                    <>
+                    <Box marginTop={4}>
                         <Dropzone
                             ref={annotationFileRef}
                             onDrop={() => setError("")}
@@ -264,7 +322,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                         </div>
 
                         {isLoading && <CircularProgress style={{ marginLeft: 20 }} size={20} />}
-                    </>
+                    </Box>
                 )}
             </DialogContent>
         </Dialog>
@@ -299,6 +357,7 @@ function getInitialAnnotationForm(): AnnotationWithTrack {
         type: "",
         description: "",
         color: "",
+        shape: "rectangle",
         index: "sequence",
         start: 0,
         end: 0,
@@ -308,6 +367,11 @@ function getInitialAnnotationForm(): AnnotationWithTrack {
 function getAnnotationIndexFromEv(ev: React.ChangeEvent<HTMLSelectElement>): AnnotationIndex {
     const { value } = ev.target;
     return isElementOfUnion(value, indexValues) ? value : indexValues[0];
+}
+
+function getAnnotationShapeFromEv(ev: React.ChangeEvent<HTMLSelectElement>): Shape {
+    const { value } = ev.target;
+    return isElementOfUnion(value, shapeTypes) ? value : shapeTypes[0];
 }
 
 function getAnnotationsFromAnnotationFromTrack(annotation: AnnotationWithTrack): Annotations {
@@ -321,6 +385,7 @@ function getAnnotationsFromAnnotationFromTrack(annotation: AnnotationWithTrack):
                     end: annotation.end,
                     color: annotation.color,
                     description: annotation.description,
+                    shape: annotation.shape,
                 },
             ],
         },

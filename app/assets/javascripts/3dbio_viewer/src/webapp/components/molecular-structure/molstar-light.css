@@ -966,7 +966,7 @@ fieldset[disabled] .msp-plugin .msp-btn-link:focus {
     text-decoration: none;
 }
 .msp-plugin .msp-btn-link-toggle-on {
-    color: #202020;
+    color: #747474;
 }
 .msp-plugin .msp-btn-link-toggle-off,
 .msp-plugin .msp-btn-link-toggle-off:active,
@@ -1250,7 +1250,7 @@ fieldset[disabled] .msp-plugin .msp-btn-link:focus {
 }
 .msp-plugin .msp-toggle-color-picker .msp-color-picker {
     position: absolute;
-    z-index: 100000;
+    z-index: 1200;
     background: #e7e7e7;
     border-top: 1px solid #e7e7e7;
     padding-bottom: 5px;
@@ -2222,7 +2222,7 @@ fieldset[disabled] .msp-plugin .msp-btn-link:focus {
     top: 0;
     right: 0;
     bottom: 0;
-    background: black;
+    background: #ffffff;
 }
 .msp-plugin .msp-viewport .msp-btn-link {
     background: rgba(0, 0, 0, 0.2);
@@ -2265,8 +2265,8 @@ fieldset[disabled] .msp-plugin .msp-btn-link:focus {
 }
 .msp-plugin .msp-viewport-controls {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 1.25em;
+    top: calc(1.25em + 132px);
     width: 32px;
 }
 .msp-plugin .msp-viewport-controls-buttons {
@@ -2297,6 +2297,7 @@ fieldset[disabled] .msp-plugin .msp-btn-link:focus {
     left: 0;
     width: 100%;
     height: 100%;
+    border-radius: 8px;
 }
 .msp-plugin .msp-viewport-controls-panel {
     width: 290px;
@@ -2317,7 +2318,7 @@ fieldset[disabled] .msp-plugin .msp-btn-link:focus {
     right: 10px;
     bottom: 10px;
     max-width: 95%;
-    z-index: 10000;
+    z-index: 1200;
 }
 .msp-plugin .msp-highlight-info {
     color: #4aa3df;

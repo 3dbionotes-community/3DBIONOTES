@@ -1,18 +1,13 @@
 import _ from "lodash";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {
-    CircularProgress,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-} from "@material-ui/core";
-import { Close, CloudUpload as CloudUploadIcon, Search } from "@material-ui/icons";
+import queryString from "query-string";
+import { CircularProgress, Dialog, DialogContent } from "@material-ui/core";
+import { CloudUpload as CloudUploadIcon, Search } from "@material-ui/icons";
 import { DbModel, DbModelType } from "../../../domain/entities/DbModel";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { useBooleanState } from "../../hooks/use-boolean";
-import { ActionType, DbItem } from "../../view-models/Selection";
+import { ActionType, AllowedExtension, DbItem, MainType } from "../../view-models/Selection";
 import { useAppContext } from "../AppContext";
 import { ModelSearchItem } from "./ModelSearchItem";
 import { ModelUpload } from "../model-upload/ModelUpload";
@@ -22,8 +17,10 @@ import { sendAnalytics } from "../../utils/analytics";
 import { useGoto } from "../../hooks/use-goto";
 import { Maybe } from "../../../utils/ts-utils";
 import { StyledButton } from "../../training-app/components/action-button/ActionButton";
-import "./ModelSearch.css";
+import { DialogTitleHelp } from "../DialogTitleHelp";
+import { TooltipTypography } from "../HtmlTooltip";
 import i18n from "../../utils/i18n";
+import "./ModelSearch.css";
 
 /* Search PDB/EMDB models from text and model type. As the search items to show are limited,
    we get all the matching models and use an infinite scroll just to render more items. Only a
@@ -33,7 +30,7 @@ import i18n from "../../utils/i18n";
 export interface ModelSearchProps {
     title: string;
     onClose(): void;
-    onSelect(actionType: ActionType, selected: DbItem): void;
+    onSelect(actionType: ActionType, selected: DbItem<MainType>): void;
 }
 
 export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
@@ -86,8 +83,10 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
         setFormState(prevForm => ({ ...prevForm, startIndex: prevForm.startIndex + pageSize }));
     }, []);
     const goToLoaded = React.useCallback(
-        (options: { token: string }) => {
-            goTo(`/uploaded/${options.token}`);
+        (options: { token: string; extension: AllowedExtension }) => {
+            const params = { type: options.extension };
+            const query = queryString.stringify(params);
+            goTo(`/uploaded/${options.token}` + (query ? `?${query}` : ""));
             onClose();
         },
         [goTo, onClose]
@@ -102,12 +101,19 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
 
     return (
         <Dialog open={true} onClose={onClose} maxWidth="xl" fullWidth className="model-search">
-            <DialogTitle>
+            <DialogTitleHelp
+                title={title}
+                onClose={onClose}
+                tooltip={
+                    <TooltipTypography variant="body2">
+                        {i18n.t(
+                            'Explore and visualize other protein models. You can find specific atomic models and volume maps using PDB or EMDB IDs, respectively, or upload them from local files for a customized view. Use "Append" to visualize the new model along with the one already shown or "Select" to replace it.'
+                        )}
+                    </TooltipTypography>
+                }
+            >
                 {title}
-                <IconButton onClick={onClose}>
-                    <Close />
-                </IconButton>
-            </DialogTitle>
+            </DialogTitleHelp>
 
             <DialogContent id="scrollableDiv">
                 <div className="params">

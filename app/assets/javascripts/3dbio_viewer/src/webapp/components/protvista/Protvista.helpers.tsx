@@ -1,9 +1,10 @@
 import React from "react";
 import _ from "lodash";
-import { BlockDef, ProtvistaTrackElement } from "./Protvista.types";
+import { BlockDef, BlockVisibility, ProtvistaTrackElement } from "./Protvista.types";
 import { PdbView } from "../../view-models/PdbView";
-import { Pdb, pdbHasCustomTracks } from "../../../domain/entities/Pdb";
+import { Pdb } from "../../../domain/entities/Pdb";
 import { Profile, profiles } from "../../../domain/entities/Profile";
+import { Track } from "../../../domain/entities/Track";
 
 interface AddAction {
     type: "add";
@@ -44,12 +45,13 @@ function isProtvistaPdbActionEvent(ev: any): ev is ProtvistaPdbActionEvent {
 }
 
 export function getVisibleBlocks(
-    blocks: BlockDef[],
+    visibleBlocks: BlockVisibility[],
     options: { pdb: Pdb; profile: Profile }
 ): BlockDef[] {
     const { pdb, profile } = options;
 
-    return blocks
+    return visibleBlocks
+        .flatMap(({ block, visible }) => (visible ? [block] : []))
         .filter(block => blockHasRelevantData(block, pdb))
         .filter(block => profile === profiles.general || block.profiles.includes(profile));
 }
@@ -70,4 +72,21 @@ function blockHasRelevantData(block: BlockDef, pdb: Pdb): boolean {
 
         return hasCustomComponent || hasRelevantTracks;
     }
+}
+
+export function pdbHasCustomTracks(block: BlockDef, pdb: Pdb): boolean {
+    return block.hasUploadedTracks ? pdb.tracks.some(track => track.isCustom) : false;
+}
+
+export function getCustomTracksFromPdb(block: BlockDef, pdbTracks: Track[]): Track[] {
+    return block.hasUploadedTracks ? pdbTracks.filter(track => track.isCustom) : [];
+}
+
+export function getBlockTracks(pdbTracks: Track[], block: BlockDef): Track[] {
+    const pdbTracksById = _.keyBy(pdbTracks, t => t.id);
+    const customTracks = getCustomTracksFromPdb(block, pdbTracks);
+    return _(block.tracks.map(trackDef => pdbTracksById[trackDef.id]))
+        .concat(customTracks)
+        .compact()
+        .value();
 }

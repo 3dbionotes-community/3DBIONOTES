@@ -22,7 +22,7 @@ import {
 import { Ontology, OntologyTerm as BioOntologyTerm } from "../domain/entities/Ontology";
 import { PdbLigand } from "../domain/entities/Pdb";
 
-function maybeNull<Data>(type: Codec<Data>) {
+export function maybe<Data>(type: Codec<Data>) {
     return oneOf([type, nullType]);
 }
 
@@ -31,9 +31,9 @@ const additionalAnalysisC = Codec.interface({
     relation: exactly("'<'", "'>'", "'='"),
     value: number,
     description: string,
-    units: maybeNull(string),
-    pvalue: maybeNull(number),
-    dataComment: maybeNull(string),
+    units: maybe(string),
+    pvalue: maybe(number),
+    dataComment: maybe(string),
 });
 
 const wellC = Codec.interface({
@@ -45,7 +45,7 @@ const wellC = Codec.interface({
     cellLine: string,
     controlType: optional(string),
     qualityControl: string,
-    micromolarConcentration: maybeNull(number),
+    micromolarConcentration: maybe(number),
     percentageInhibition: number,
     hitOver75Activity: string,
     numberCells: number,
@@ -144,8 +144,8 @@ export const pdbLigandsC = array(pdbLigandC);
 
 export const pdbEntryResponseC = Codec.interface({
     count: number,
-    next: maybeNull(string),
-    previous: maybeNull(string),
+    next: maybe(string),
+    previous: maybe(string),
     results: pdbLigandsC,
 });
 

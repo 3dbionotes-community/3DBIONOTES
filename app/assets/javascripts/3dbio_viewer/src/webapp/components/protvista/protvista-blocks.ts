@@ -8,6 +8,7 @@ import { ProtvistaPdbValidation } from "./ProtvistaPdbValidation";
 import { IDRViewerBlock } from "../idr/IDRViewerBlock";
 import { FeatureAnnotationBlock } from "./FeatureAnnotationBlock";
 import { NMRBlock } from "../nmr/NMRBlock";
+import { BasicInfoEntry } from "../BasicInfoEntry";
 
 export const blockDefs: BlockDef[] = [
     {
@@ -19,6 +20,21 @@ export const blockDefs: BlockDef[] = [
         ),
         tracks: [],
         component: BasicInfoViewer,
+        profiles: [
+            profiles.structural,
+            profiles.validation,
+            profiles.drugDesign,
+            profiles.biomedicine,
+            profiles.omics,
+        ],
+    },
+    {
+        id: "basicInfoEntry",
+        title: i18n.t("Basic information of the entry"),
+        description: "",
+        help: "",
+        tracks: [],
+        component: BasicInfoEntry,
         profiles: [
             profiles.structural,
             profiles.validation,
@@ -115,7 +131,8 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
             tracks.sequenceInformation,
             tracks.pdbRedo,
             tracks.molprobity,
-            tracks.emValidation,
+            tracks.validationLocalResolution,
+            tracks.validationMapToModel,
         ],
         component: ProtvistaPdbValidation,
         profiles: [profiles.structural, profiles.validation, profiles.drugDesign],
@@ -129,16 +146,6 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
         help: "",
         tracks: [tracks.structureCoverage, tracks.residueAccessibility],
         profiles: [profiles.drugDesign],
-    },
-    {
-        id: "proteinInteraction",
-        title: i18n.t("Protein interactions for this protein"),
-        description: i18n.t(`This section shows other proteins observed together with the protein of interest in PDB entries as a interaction network and as a list. In addittion, we show the protein residues that are interacting with the other proteins. 
-
-        For this protein, we found \${proteinPartners} different partners.`),
-        help: "",
-        tracks: [tracks.structureCoverage, tracks.ppiViewer],
-        profiles: [profiles.drugDesign, profiles.biomedicine],
     },
     {
         id: "ligandInteraction",

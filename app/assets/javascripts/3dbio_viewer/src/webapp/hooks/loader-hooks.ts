@@ -1,34 +1,45 @@
+import _ from "lodash";
 import React from "react";
-import { FutureData } from "../../domain/entities/FutureData";
-import { Ligand } from "../../domain/entities/Ligand";
 import {
     getPdbInfoFromUploadData,
     PdbInfo,
     setPdbInfoLigands,
 } from "../../domain/entities/PdbInfo";
+import { FutureData } from "../../domain/entities/FutureData";
+import { Ligand } from "../../domain/entities/Ligand";
 import { UploadData } from "../../domain/entities/UploadData";
 import { Future } from "../../utils/future";
 import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
-import { getMainPdbId, Selection } from "../view-models/Selection";
+import { getMainItem, Selection } from "../view-models/Selection";
+import i18n from "../utils/i18n";
+import { LoaderState, useLoader } from "../components/Loader";
 
 export function useStateFromFuture<Value>(
     getFutureValue: () => FutureData<Value> | undefined
-): Value | undefined {
-    const [value, setValue] = React.useState<Value>();
+): LoaderState<Value> {
+    const [loader, setLoader] = useLoader<Value>();
 
     const getValue = React.useCallback(() => {
-        return getFutureValue()?.run(setValue, console.error);
-    }, [getFutureValue, setValue]);
+        return getFutureValue()?.run(
+            value => {
+                setLoader({ type: "loaded", data: value });
+            },
+            err => {
+                console.error(err);
+                setLoader({ type: "error", message: err.message });
+            }
+        );
+    }, [getFutureValue, setLoader]);
 
     React.useEffect(getValue, [getValue]);
 
-    return value;
+    return loader;
 }
 
 export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) {
     const { compositionRoot } = useAppContext();
-    const mainPdbId = getMainPdbId(selection);
+    const mainPdbId = getMainItem(selection, "pdb");
     const [ligands, setLigands] = React.useState<Ligand[]>();
 
     const getPdbInfo = React.useCallback((): Maybe<FutureData<PdbInfo>> => {
@@ -39,11 +50,94 @@ export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) 
         }
     }, [mainPdbId, compositionRoot, uploadData]);
 
-    const pdbInfo = useStateFromFuture(getPdbInfo);
+    const pdbInfoLoader = useStateFromFuture(getPdbInfo);
 
-    const pdbInfoWithLigands = React.useMemo(() => {
-        return pdbInfo && ligands ? setPdbInfoLigands(pdbInfo, ligands) : pdbInfo;
-    }, [pdbInfo, ligands]);
+    const pdbInfoWithLigandsLoader = React.useMemo((): LoaderState<PdbInfo> => {
+        return pdbInfoLoader.type === "loaded" && ligands
+            ? { type: "loaded", data: setPdbInfoLigands(pdbInfoLoader.data, ligands) }
+            : pdbInfoLoader;
+    }, [pdbInfoLoader, ligands]);
 
-    return { pdbInfo: pdbInfoWithLigands, setLigands };
+    return { pdbInfoLoader: pdbInfoWithLigandsLoader, setLigands };
+}
+
+export function useMultipleLoaders<K extends string>(initialState?: Record<K, Loader>) {
+    const [loaders, setLoaders] = React.useState<Record<string, Loader>>(initialState ?? {});
+
+    const setLoader = React.useCallback(
+        (key: K, loader: Loader) =>
+            setLoaders(loaders => ({
+                ...loaders,
+                [key]: loader,
+            })),
+        []
+    );
+
+    const updateLoaderStatus = React.useCallback(
+        (key: K, status: Loader["status"], newMessage?: string) =>
+            setLoaders(loaders => {
+                const message = newMessage ?? loaders[key]?.message;
+                const priority = loaders[key]?.priority;
+
+                return message && priority
+                    ? {
+                          ...loaders,
+                          [key]: {
+                              message,
+                              status,
+                              priority,
+                          },
+                      }
+                    : loaders;
+            }),
+        []
+    );
+
+    const updateOnResolve = React.useCallback(
+        <T>(key: K, promise: Promise<T>, message?: string) => {
+            updateLoaderStatus(key, "loading", message);
+            return promise
+                .then(data => {
+                    console.debug(`Loader "${key}" loaded.`);
+                    updateLoaderStatus(key, "loaded");
+                    return data;
+                })
+                .catch(err => {
+                    console.debug(`Loader "${key}" error while loading.`);
+                    updateLoaderStatus(key, "error", err);
+                    return Promise.reject(err);
+                });
+        },
+        [updateLoaderStatus]
+    );
+
+    const loading = React.useMemo(
+        () => _.values(loaders).some(({ status }) => status === "loading"),
+        [loaders]
+    );
+
+    const errorThrown = React.useMemo(
+        () => _.values(loaders).some(({ status }) => status === "error"),
+        [loaders]
+    );
+
+    const title = React.useMemo(
+        () =>
+            _(loaders)
+                .values()
+                .filter(({ status }) => status === "loading" || status === "error")
+                .orderBy(({ priority, status }) => (status === "error" ? 10 : priority), "desc")
+                .first()?.message ?? i18n.t("Loading..."),
+        [loaders]
+    );
+
+    return { loading, errorThrown, title, setLoader, updateLoaderStatus, updateOnResolve };
+}
+
+export type LoaderStatus = "pending" | "loading" | "loaded" | "error";
+
+interface Loader {
+    status: LoaderStatus;
+    message: string;
+    priority: number; //the higher the number, the higher the priority
 }

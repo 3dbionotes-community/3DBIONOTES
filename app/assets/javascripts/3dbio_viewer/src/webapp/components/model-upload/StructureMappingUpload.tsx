@@ -9,11 +9,14 @@ import { AtomicStructure, ChainObject } from "../../../domain/entities/AtomicStr
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import "./ModelUpload.css";
+import { AllowedExtension } from "../../view-models/Selection";
 
 export interface UploadConfirmationProps {
     atomicStructure: AtomicStructure;
     onClose(): void;
-    onLoaded(options: { token: string }): void;
+    onLoaded(options: { token: string; extension: AllowedExtension }): void;
+    fileExtension: AllowedExtension;
+    jobTitle: string;
 }
 
 type ObjectId = string;
@@ -25,7 +28,7 @@ interface Column {
 }
 
 export const StructureMappingUpload: React.FC<UploadConfirmationProps> = React.memo(props => {
-    const { atomicStructure, onClose, onLoaded } = props;
+    const { atomicStructure, onClose, onLoaded, fileExtension, jobTitle } = props;
     const { compositionRoot } = useAppContext();
     const [selectedIds, setSelectedIds] = React.useState<ObjectId[]>([]);
 
@@ -65,12 +68,12 @@ export const StructureMappingUpload: React.FC<UploadConfirmationProps> = React.m
             }
 
             return compositionRoot.uploadAtomicStructureMapping
-                .execute(atomicStructure, chainObjects)
+                .execute(atomicStructure, chainObjects, fileExtension, jobTitle)
                 .run(
-                    res => onLoaded(res),
+                    res => onLoaded({ ...res, extension: fileExtension }),
                     err => setError(err.message)
                 );
-        }, [compositionRoot, rows, selectedIds, atomicStructure, onLoaded])
+        }, [compositionRoot, rows, selectedIds, atomicStructure, onLoaded, fileExtension, jobTitle])
     );
 
     return (
