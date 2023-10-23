@@ -337,7 +337,7 @@ function getPdbValidations(pdb: Data.Pdb, emdb: Data.Emdb | null): PdbValidation
                       case "CERES":
                           return {
                               ...validation,
-                              queryLink: getQueryLink(validation),
+                              queryLink: undefined,
                               badgeColor: "w3-blue",
                           };
                       default:
