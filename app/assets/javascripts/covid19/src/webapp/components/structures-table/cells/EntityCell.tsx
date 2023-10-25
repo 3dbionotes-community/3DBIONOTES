@@ -4,6 +4,8 @@ import i18n from "../../../../utils/i18n";
 import { CellProps } from "../Columns";
 import { Link } from "../Link";
 import { Wrapper } from "./Wrapper";
+import { BadgeEntities } from "../badge/BadgeEntities";
+import { HtmlTooltip } from "../HtmlTooltip";
 
 export const EntityCell: React.FC<CellProps> = React.memo(props => {
     const { row, onClickDetails, moreDetails } = props;
@@ -32,6 +34,13 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
 
             return {
                 name: entity.name,
+                nmr:
+                    entity.start && entity.end
+                        ? {
+                              start: entity.start,
+                              end: entity.end,
+                          }
+                        : undefined,
                 tooltip: !_.isEmpty(
                     _.compact([uniprot, altNames, organism, details, antibody, nanobody, sybody])
                 ) && (
@@ -45,6 +54,31 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
                         {sybody}
                     </React.Fragment>
                 ),
+                sourceTooltip: <div>
+                {idrValidationSource.methods.map(method => (
+                    <>
+                        {idrValidationSource.methods.length > 1 ? (
+                            <strong>
+                                {i18n.t(`{{methodName}} Method: `, {
+                                    nsSeparator: false,
+                                    methodName: method.name,
+                                })}
+                            </strong>
+                        ) : (
+                            <strong>{i18n.t("Method: ", { nsSeparator: false })}</strong>
+                        )}
+                        <span>{method.description}</span>
+                        <br />
+                        <br />
+                    </>
+                ))}
+                {idrValidationSource.description && (
+                    <>
+                        <strong>{i18n.t("Source: ", { nsSeparator: false })}</strong>
+                        <span>{idrValidationSource.description}</span>
+                    </>
+                )}
+            </div>
             };
         });
     }, [row.entities]);
@@ -57,7 +91,16 @@ export const EntityCell: React.FC<CellProps> = React.memo(props => {
             field="entities"
         >
             {entities.map((entity, idx) => (
-                <Link key={idx} tooltip={entity.tooltip} text={entity.name} />
+                <>
+                    <Link key={idx} tooltip={entity.tooltip} text={entity.name} />
+                    {entity.nmr && (
+                        <HtmlTooltip title={"gregre"}>
+                            <span>
+                                <BadgeEntities moreDetails={moreDetails} />
+                            </span>
+                        </HtmlTooltip>
+                    )}
+                </>
             ))}
         </Wrapper>
     );

@@ -224,7 +224,19 @@ function getLigands(
 }
 
 function getEntitiesForStructure(structure: Data.Structure): Entity[] {
-    return _(structure.pdb?.entities).compact().value();
+    //simulate nmr
+    const start = Math.random() * 100;
+    const end = Math.random() * 100 + start;
+    const hasNMR = Math.random() < 0.5;
+    return _(
+        structure.pdb?.entities.map(entity => ({
+            ...entity,
+            start: hasNMR ? start : null,
+            end: hasNMR ? end : null,
+        }))
+    )
+        .compact()
+        .value();
 }
 
 function getId<T extends { id: string }>(obj: T): string {
@@ -232,7 +244,17 @@ function getId<T extends { id: string }>(obj: T): string {
 }
 
 function getPdb(pdb: Data.Pdb): Pdb {
-    const entities = pdb.entities.map(entity => ({ id: pdb.dbId, ...entity }));
+    //simulate nmr
+    const start = Math.random() * 100;
+    const end = Math.random() * 100 + start;
+    const hasNMR = Math.random() < 0.5;
+
+    const entities = pdb.entities.map(entity => ({
+        id: pdb.dbId,
+        start: hasNMR ? start : null,
+        end: hasNMR ? end : null,
+        ...entity,
+    }));
     const pdbE: Pdb = {
         id: pdb.dbId,
         method: pdb.method,

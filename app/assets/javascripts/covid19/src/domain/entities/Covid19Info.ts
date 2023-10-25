@@ -34,6 +34,8 @@ export interface Entity {
     isAntibody: boolean;
     isNanobody: boolean;
     isSybody: boolean;
+    start: number | null;
+    end: number | null;
 }
 
 export interface Ligand {
