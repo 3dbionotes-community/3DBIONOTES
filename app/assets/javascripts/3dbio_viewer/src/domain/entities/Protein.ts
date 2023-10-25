@@ -6,7 +6,7 @@ export interface Protein {
     gen?: string;
     organism?: string;
     genBank?: string[];
-    nspTargets?: NSPTarget[];
+    nspTargets: NSPTarget[];
     // nmrSource?: NMRSource[];
 }
 
@@ -15,19 +15,19 @@ export interface NSPTarget {
     fragments: NMRFragment[];
     bindingCount: number;
     notBindingCount: number;
+    start: number;
+    end: number;
 }
 
 export interface NMRFragment {
     name: string;
-    description: string;
-    externalLink: string;
     binding: boolean;
     ligand: PdbLigand;
 }
 
 export interface NMRSource {
     dataSource: string;
-    name: string; // binding / not binding
+    name: string; // "NMR Not-Binding" / "NMR Binding"
     description: string;
     externalLink: string;
     binding: boolean;

@@ -140,11 +140,7 @@ export const trackDefinitions = {
         description: i18n.t(
             "Different validation methods and local quality of the map-to-models fit in cryo-EM"
         ),
-        subtracks: [
-            subtracks.deepRes,
-            subtracks.monoRes,
-            subtracks.blocRes,
-        ],
+        subtracks: [subtracks.deepRes, subtracks.monoRes, subtracks.blocRes],
     }),
     validationMapToModel: definition({
         id: "em-validation-map-to-model" as const,
@@ -152,11 +148,7 @@ export const trackDefinitions = {
         description: i18n.t(
             "Different validation methods and local quality of the map-to-models fit in cryo-EM"
         ),
-        subtracks: [
-            subtracks.fscQ,
-            subtracks.mapQ,
-            subtracks.daq,
-        ],
+        subtracks: [subtracks.fscQ, subtracks.mapQ, subtracks.daq],
     }),
     pockets: definition({
         id: "pockets" as const,
@@ -186,6 +178,11 @@ export const trackDefinitions = {
         id: "ligands" as const,
         name: i18n.t("Ligands"),
         subtracks: [subtracks.ligands],
+    }),
+    nmr: definition({
+        id: "nmr" as const,
+        name: i18n.t("Functional mapping ligands"),
+        subtracks: [subtracks.nmr],
     }),
     functionalMappingLigands: definition({
         id: "functional-mapping-ligands" as const,

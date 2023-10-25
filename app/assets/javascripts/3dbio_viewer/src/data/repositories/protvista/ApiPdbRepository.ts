@@ -51,6 +51,7 @@ import {
 import { getNMR, NMRScreeningFragment } from "../../NMRScreening";
 import { getResults, Pagination } from "../../codec-utils";
 import { getPublicationsCodec, EntryPublications, getPublications } from "../../PdbPublications";
+import { getNMRFragments } from "./tracks/nmr";
 
 interface Data {
     uniprot: UniprotResponse;
@@ -112,6 +113,8 @@ export class ApiPdbRepository implements PdbRepository {
             proteinId
         );
 
+        const nspTargets = on(data.nmrScreenings, nmr => getNMR(nmr)) ?? [];
+
         // prettier-ignore
         const fragmentsList = {
             featureFragments: on(data.features, features => getFeatureFragments(options.proteinId, features)),
@@ -130,11 +133,12 @@ export class ApiPdbRepository implements PdbRepository {
             dbPtmFragments: on(data.dbPtm, dbPtm => getDbPtmFragments(dbPtm, proteinId)),
             molprobityFragments: on(data.molprobity, molprobity => getMolprobityFragments(molprobity, options.chainId)),
             antigenFragments: on(data.antigenic, antigenic => getAntigenicFragments(antigenic, proteinId)),
+            nmrFragments: getNMRFragments(nspTargets),
         };
 
         const protein = {
             ...getProtein(proteinId, data.uniprot),
-            nspTargets: data.nmrScreenings ? getNMR(data.nmrScreenings) : [],
+            nspTargets,
         };
 
         const experiment = on(data.pdbExperiment, pdbExperiment =>

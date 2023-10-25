@@ -67,6 +67,7 @@ export function getPdbInfoFromUploadData(uploadData: UploadData): PdbInfo {
                     name: chain.uniprotTitle,
                     gene: chain.gene_symbol,
                     organism: chain.organism,
+                    nspTargets: [],
                 },
             };
         }),
