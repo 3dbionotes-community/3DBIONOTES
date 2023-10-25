@@ -21,6 +21,7 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
     const { pdb, subtrack, fragment } = props;
     const { description, alignmentScore } = fragment;
     const score = alignmentScore ? alignmentScore + " %" : undefined;
+    const isNMR = subtrack.accession === "nmr";
 
     return (
         <TooltipTable>
@@ -33,6 +34,16 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
             <CrossReferences fragment={fragment} />
             <Tools pdb={pdb} subtrack={subtrack} fragment={fragment} />
             <Legend fragment={fragment} />
+            {isNMR && (
+                <tr>
+                    <td>{i18n.t("CV19-NMR-Consortium")}</td>
+                    <td>
+                        <button data-start={fragment.start} data-end={fragment.end}>
+                            {i18n.t("Library of tested ligands")}
+                        </button>
+                    </td>
+                </tr>
+            )}
         </TooltipTable>
     );
 });
