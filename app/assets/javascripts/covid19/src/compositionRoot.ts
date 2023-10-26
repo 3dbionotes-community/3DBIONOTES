@@ -10,6 +10,8 @@ import { LigandsApiRepository } from "./data/repositories/LigandsApiRepository";
 import { GetLigandImageDataResourcesUseCase } from "./domain/usecases/GetLigandImageDataResourcesUseCase";
 import { BionotesOntologyRepository } from "./data/repositories/BioOntologyRepository";
 import { BionotesOrganismRepository } from "./data/repositories/BionotesOrganismRepository";
+import { EntitiesApiRepository } from "./data/repositories/EntitiesApiRepository";
+import { GetNMRTargetUseCase } from "./domain/usecases/GetNMRTargetUseCase";
 
 export function getCompositionRoot() {
     const covid19InfoRepository = new Covid19InfoFromJsonRepository();
@@ -18,6 +20,7 @@ export function getCompositionRoot() {
     const ligandsRepository = new LigandsApiRepository();
     const ontologyRepository = new BionotesOntologyRepository();
     const organismRepository = new BionotesOrganismRepository();
+    const entitiesRepository = new EntitiesApiRepository();
 
     return {
         getCovid19Info: new GetCovid19InfoUseCase(covid19InfoRepository),
@@ -34,6 +37,9 @@ export function getCompositionRoot() {
                 ontologyRepository,
                 organismRepository
             ),
+        },
+        entities: {
+            getNMR: new GetNMRTargetUseCase(entitiesRepository),
         },
     };
 }
