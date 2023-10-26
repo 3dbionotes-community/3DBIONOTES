@@ -48,6 +48,14 @@ export interface Ligand {
     hasIDR: boolean;
 }
 
+export interface NMRLigand {
+    name: string;
+    inChI: string; //IUPACInChIkey
+    smiles?: string;
+    formula?: string;
+    pubchemId?: string;
+}
+
 export interface LigandInstance {
     info: Ligand;
     instances: number;
@@ -137,9 +145,9 @@ export interface Validations {
     emdb: EmdbValidation[];
 }
 
-export type SourceName = PdbSourceName | EmdbSourceName | "IDR";
+export type SourceName = PdbSourceName | EmdbSourceName | "IDR" | "NMR";
 
-export type MethodName = PdbMethodName | EmdbMethodName | "IDR";
+export type MethodName = PdbMethodName | EmdbMethodName | "IDR" | "NMR";
 
 export type PdbSourceName = "PDB-REDO" | "CSTF" | "CERES";
 
@@ -203,6 +211,21 @@ export interface Sample {
 export interface Details {
     sample?: Sample;
     refdoc?: RefDoc[];
+}
+
+export interface NSPTarget {
+    name: string;
+    fragments: NMRFragment[];
+    bindingCount: number;
+    notBindingCount: number;
+    start: number;
+    end: number;
+}
+
+export interface NMRFragment {
+    name: string;
+    binding: boolean;
+    ligand: NMRLigand;
 }
 
 export const filterKeys = [
