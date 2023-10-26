@@ -9,17 +9,19 @@ export interface DialogProps {
     open: boolean;
     headerChildren?: React.ReactNode;
     maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
+    scroll?: "paper" | "body";
     onClose(): void;
 }
 
 export const Dialog: React.FC<DialogProps> = React.memo(
-    ({ onClose, className, title, open, children, maxWidth, headerChildren }) => {
+    ({ onClose, className, title, open, children, maxWidth, headerChildren, scroll }) => {
         return (
             <StyledDialog
                 className={className}
                 open={open}
                 onClose={onClose}
                 maxWidth={maxWidth ?? "md"}
+                scroll={scroll}
             >
                 <StyledDialogTitle>
                     <Title title={title}>{title}</Title>

@@ -3,7 +3,7 @@ import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps, GridSortModel } from "@material-ui/data-grid";
 import { updateStructures } from "../../../domain/entities/Covid19Info";
-import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
+import { getColumns, IDROptions, DetailsDialogOptions, NMROptions } from "./Columns";
 import { Covid19Filter, Id } from "../../../domain/entities/Covid19Info";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
@@ -14,6 +14,7 @@ import { sendAnalytics } from "../../../utils/analytics";
 import { IDRDialog } from "./IDRDialog";
 import { useInfoDialog } from "../../hooks/useInfoDialog";
 import { CustomGridPagination, CustomGridPaginationProps } from "./CustomGridPagination";
+import { NMRDialog } from "./NMRDialog";
 
 export interface StructuresTableProps {
     search: string;
@@ -41,7 +42,9 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     } = useInfoDialog<DetailsDialogOptions>();
     const [isDetailsOpen, closeDetails, showDetailsDialog] = detailsDialogState;
     const { info: idrOptions, useDialogState: idrDialogState } = useInfoDialog<IDROptions>();
+    const { info: nmrOptions, useDialogState: nmrDialogState } = useInfoDialog<NMROptions>();
     const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
+    const [isNMROpen, closeNMR, showNMRDialog] = nmrDialogState;
 
     const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
     const [filterState, setFilterState0] = React.useState(initialFilterState);
@@ -49,17 +52,28 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const openDetailsDialog = React.useCallback(
         (options: DetailsDialogOptions, gaLabel: string) => {
             closeIDR();
+            closeNMR();
             showDetailsDialog(options, gaLabel);
         },
-        [closeIDR, showDetailsDialog]
+        [closeIDR, showDetailsDialog, closeNMR]
     );
 
     const openIDRDialog = React.useCallback(
         (options: IDROptions, gaLabel: string) => {
             closeDetails();
+            closeNMR();
             showIDRDialog(options, gaLabel);
         },
-        [closeDetails, showIDRDialog]
+        [closeDetails, showIDRDialog, closeNMR]
+    );
+
+    const openNMRDialog = React.useCallback(
+        (options: NMROptions, gaLabel: string) => {
+            closeDetails();
+            closeIDR();
+            showNMRDialog(options, gaLabel);
+        },
+        [closeDetails, closeIDR, showNMRDialog]
     );
 
     const setFilterState = React.useCallback((value: React.SetStateAction<Covid19Filter>) => {
@@ -115,8 +129,9 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         return getColumns(data, {
             onClickDetails: openDetailsDialog,
             onClickIDR: openIDRDialog,
+            onClickNMR: openNMRDialog,
         });
-    }, [data, openDetailsDialog, openIDRDialog]);
+    }, [data, openDetailsDialog, openIDRDialog, openNMRDialog]);
 
     const components = React.useMemo(
         () => ({ Toolbar: Toolbar, Pagination: CustomGridPagination }),
@@ -218,10 +233,14 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                     row={detailsInfo.row}
                     data={data}
                     onClickIDR={openIDRDialog}
+                    onClickNMR={openNMRDialog}
                 />
             )}
             {idrOptions && (
                 <IDRDialog open={isIDROpen} onClose={closeIDR} idrOptions={idrOptions} />
+            )}
+            {nmrOptions && (
+                <NMRDialog open={isNMROpen} onClose={closeNMR} nmrOptions={nmrOptions} />
             )}
         </div>
     );
