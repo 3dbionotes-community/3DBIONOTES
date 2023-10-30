@@ -19,7 +19,7 @@ interface FrameViewerProps {
 export const FrameViewer = React.forwardRef<HTMLIFrameElement, FrameViewerProps>((props, ref) => {
     const { name, title, src, children, height, trackDef } = props;
     const [expanded, { toggle: toggleFrame }] = useBooleanState(true);
-    const [defaultHeight,setDefaultHeight] = React.useState(0);
+    const [defaultHeight, setDefaultHeight] = React.useState(0);
 
     const measuredHeight = React.useCallback((el: HTMLDivElement) => {
         if (el !== null) setDefaultHeight(el.getBoundingClientRect().height);
@@ -28,12 +28,12 @@ export const FrameViewer = React.forwardRef<HTMLIFrameElement, FrameViewerProps>
     return (
         <StyledWrapperAccordion className="frame-viewer" titleHeight={defaultHeight}>
             <StyledAccordion square expanded={expanded} onChange={toggleFrame}>
-                <StyledAccordionSummary>
+                <StyledAccordionSummary className="protvistaCol1">
                     <div className="title" ref={measuredHeight}>
-                        {title}
+                        <span>{title}</span>
                         {trackDef.description && (
                             <button className="viewer-track-help" title={trackDef.description}>
-                                ?
+                                <i className="icon icon-common icon-question" />
                             </button>
                         )}
                     </div>
@@ -43,7 +43,7 @@ export const FrameViewer = React.forwardRef<HTMLIFrameElement, FrameViewerProps>
                                 <div key={idx} className="viewer-subtrack">
                                     {subtrack.name}
                                     <button className="subtrack-help" title={subtrack.description}>
-                                        ?
+                                        <i className="icon icon-common icon-question" />
                                     </button>
                                 </div>
                             ))}
@@ -108,7 +108,8 @@ const StyledAccordion = styled(Accordion)`
         }
     }
 
-    & .MuiCollapse-container {
+    & .MuiCollapse-container,
+    & .MuiCollapse-root {
         flex-grow: 1;
     }
 `;
@@ -129,46 +130,49 @@ const StyledWrapperAccordion = styled.div<StyledWrapperAccordionProps>`
 
 const StyledAccordionSummary = styled(AccordionSummary)`
     & .title {
+        span {
+            flex-grow: 1;
+        }
+        display: flex;
+        align-items: center;
         position: relative;
+        padding: 0 1em;
+        line-height: 22px;
+        min-height: 45px;
         ::before {
             content: " ";
             display: inline-block;
-            width: 0;
-            height: 0;
+            width: 10px;
+            height: 10px;
             border-top: 5px solid transparent;
             border-bottom: 5px solid transparent;
             border-left: 5px solid #333;
-            margin-right: 8px;
-            -webkit-transition: all 0.1s;
-            /* Safari */
-            transition: all 0.1s;
+            margin-right: 0.5em;
+            box-sizing: border-box;
         }
+        box-sizing: unset;
     }
 
     &.MuiAccordionSummary-root {
         border-top: 0.5px solid #fff;
         background: #f7f7f7;
-        min-height: 0;
-        width: 15%;
-        box-sizing: border-box;
+        min-height: 45px;
         display: flex;
         align-items: flex-start;
         padding: 0;
+        box-sizing: unset;
     }
 
     & .MuiAccordionSummary-content {
         display: flex;
         flex-direction: column;
-        box-sizing: border-box;
         margin: 0;
         padding: 0;
         font-family: Helvetica, Arial, FreeSans, "Liberation Sans", sans-serif !important;
-
+        box-sizing: unset;
         .title {
             background: #e2e2e2;
             line-height: 22px;
-            padding: 0.8em 1.3em 0.8em 0.8em;
-            word-break: break-all;
         }
     }
 
@@ -179,19 +183,20 @@ const StyledAccordionSummary = styled(AccordionSummary)`
         .title {
             background: #607d8b;
             color: #fff;
-            padding: 0.8em 1.3em 0.8em 0.8em;
         }
 
         .title::before {
             content: " ";
             display: inline-block;
-            width: 0;
-            height: 0;
+            width: 10px;
+            height: 10px;
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
             border-top: 5px solid #333;
-            margin-right: 8px;
+            margin-right: 0.5em;
+            box-sizing: border-box;
         }
+        box-sizing: unset;
     }
 
     .viewer-subtrack {
