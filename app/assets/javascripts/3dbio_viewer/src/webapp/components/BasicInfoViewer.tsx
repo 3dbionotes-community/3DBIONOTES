@@ -27,6 +27,11 @@ export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
 
     return (
         <ul>
+            <li>
+                <span>
+                    <strong>{pdb.protein.name}</strong>
+                </span>
+            </li>
             {items
                 .filter(item => !item.isDisabled)
                 .map(item => (
@@ -74,12 +79,6 @@ function getItems(pdb: Pdb) {
     const resolution = pdb.experiment?.resolution;
 
     const items: Item[] = _.compact([
-        { name: i18n.t("Protein Name"), value: pdb.protein.name },
-        { name: i18n.t("Gene Name"), value: pdb.protein.gen },
-        {
-            name: i18n.t("Gene Bank ID"),
-            value: pdb.protein.genBank ? <Links links={getEntityLinks(pdb, "geneBank")} /> : "-",
-        },
         { name: i18n.t("Organism"), value: pdb.protein.organism },
         {
             name: i18n.t("Biological function"),
@@ -91,16 +90,8 @@ function getItems(pdb: Pdb) {
         },
         { name: i18n.t("Obtaining method"), value: pdb.experiment?.method },
         {
-            name: i18n.t("Uniprot ID"),
-            value: <Links links={getEntityLinks(pdb, "uniprot")} />,
-        },
-        {
             name: i18n.t("PDB ID"),
             value: <Links links={getEntityLinks(pdb, "pdb")} />,
-        },
-        {
-            name: i18n.t("Chain"),
-            value: pdb.chainId,
         },
         !_.isEmpty(pdb.emdbs) && {
             name: i18n.t("EMDB ID"),

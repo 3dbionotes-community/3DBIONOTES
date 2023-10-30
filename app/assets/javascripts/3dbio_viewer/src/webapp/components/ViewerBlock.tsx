@@ -25,11 +25,12 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
     const [showDownloadTooltip, setShowDownloadTooltip] = useState(false);
     const stringNamespace = _.mapValues(namespace, value => (value ?? "?").toString());
     const interpolatedDescription = _.template(description)(stringNamespace);
+    const interpolatedTitle = _.template(title)(stringNamespace);
 
     return (
         <div className={css.section} id={block.id}>
             <div className={css.title}>
-                {title}
+                {interpolatedTitle}
                 <div className={css["block-actions"]}>
                     {help && (
                         <TooltipIconButton
