@@ -26,6 +26,7 @@ export const blockDefs: BlockDef[] = [
             profiles.biomedicine,
             profiles.omics,
         ],
+        isSubtitle: false,
     },
     {
         id: "basicInfoEntry",
@@ -41,6 +42,7 @@ export const blockDefs: BlockDef[] = [
             profiles.biomedicine,
             profiles.omics,
         ],
+        isSubtitle: false,
     },
     {
         id: "featureAnnotation",
@@ -60,6 +62,7 @@ export const blockDefs: BlockDef[] = [
             profiles.biomedicine,
             profiles.omics,
         ],
+        isSubtitle: false,
     },
     {
         id: "uploadData",
@@ -69,6 +72,7 @@ export const blockDefs: BlockDef[] = [
         tracks: [],
         hasUploadedTracks: true,
         profiles: [profiles.general],
+        isSubtitle: true,
     },
     {
         id: "structuralInfo",
@@ -87,6 +91,7 @@ export const blockDefs: BlockDef[] = [
             tracks.otherRegions /* Coiled coil (D&S), LIPS (D&S), Repeats (D&S), Zinc finger (D&S) */,
         ],
         profiles: [profiles.structural, profiles.drugDesign],
+        isSubtitle: true,
     },
     {
         id: "relevantSites",
@@ -100,6 +105,7 @@ export const blockDefs: BlockDef[] = [
             tracks.sites /* active site (D&S), biding site, nucleotide binding, metal binding */,
         ],
         profiles: [profiles.structural, profiles.drugDesign, profiles.biomedicine],
+        isSubtitle: true,
     },
     {
         id: "processing",
@@ -114,6 +120,7 @@ export const blockDefs: BlockDef[] = [
             tracks.ptm /* All from Phosphite/uniprot PTM */ /* Renamed to Modified residue */,
         ],
         profiles: [profiles.structural, profiles.biomedicine],
+        isSubtitle: true,
     },
     {
         id: "mapValidation",
@@ -135,6 +142,7 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
         ],
         component: ProtvistaPdbValidation,
         profiles: [profiles.structural, profiles.validation, profiles.drugDesign],
+        isSubtitle: true,
     },
     {
         id: "residueAccessibility",
@@ -145,6 +153,7 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
         help: "",
         tracks: [tracks.structureCoverage, tracks.residueAccessibility],
         profiles: [profiles.drugDesign],
+        isSubtitle: true,
     },
     {
         id: "ligandInteraction",
@@ -156,6 +165,7 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
         help: "",
         tracks: [tracks.structureCoverage, tracks.ligands],
         profiles: [profiles.drugDesign, profiles.biomedicine],
+        isSubtitle: true,
     },
     {
         id: "bioimageDataStudies",
@@ -167,6 +177,7 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
         tracks: [],
         component: IDRViewerBlock,
         profiles: [profiles.drugDesign, profiles.biomedicine],
+        isSubtitle: true,
     },
     {
         id: "variants",
@@ -177,6 +188,7 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
         ),
         tracks: [tracks.structureCoverage, tracks.geneViewer, tracks.mutagenesis, tracks.variants],
         profiles: [profiles.omics, profiles.biomedicine],
+        isSubtitle: true,
     },
     // <- Diseases and his relation with the variants
     {
@@ -186,6 +198,7 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
         help: "",
         tracks: [tracks.structureCoverage, tracks.peptides],
         profiles: [profiles.omics],
+        isSubtitle: true,
     },
     {
         id: "inmunology",
@@ -194,6 +207,7 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
         help: "",
         tracks: [tracks.structureCoverage, tracks.epitomes, tracks.antigenicSequence],
         profiles: [profiles.drugDesign, profiles.biomedicine],
+        isSubtitle: true,
     },
 ];
 
@@ -236,4 +250,5 @@ export const testblock: BlockDef = {
         */
     ],
     profiles: [],
+    isSubtitle: true,
 };

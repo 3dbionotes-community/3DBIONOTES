@@ -33,6 +33,7 @@ export interface BlockDef extends ViewerBlockModel {
     component?: React.FC<BlockComponentProps>;
     profiles: Profile[];
     hasUploadedTracks?: boolean;
+    isSubtitle: boolean;
 }
 
 export interface ProtvistaBlock extends ViewerBlockModel {
