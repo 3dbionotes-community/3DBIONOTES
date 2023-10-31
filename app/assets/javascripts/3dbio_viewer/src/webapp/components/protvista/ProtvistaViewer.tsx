@@ -159,5 +159,5 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
 });
 
 const styles = {
-    container: { padding: "1em 0 2em" },
+    container: { padding: "0 0 2em" },
 };

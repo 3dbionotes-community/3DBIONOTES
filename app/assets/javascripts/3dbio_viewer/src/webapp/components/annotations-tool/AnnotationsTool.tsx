@@ -243,7 +243,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
 
                         <label htmlFor="shape">{i18n.t("Shape")}</label>
                         <select
-                            className="form-control"
+                            className="form-control-viewer"
                             value={annotationForm.shape}
                             onChange={e =>
                                 setAnnotationForm({
