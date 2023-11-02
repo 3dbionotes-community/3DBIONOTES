@@ -313,7 +313,7 @@ function getPdbValidations(pdb: Data.Pdb, emdb: Data.Emdb | null): PdbValidation
     const pdbId = pdb.dbId.toLowerCase();
     const emdbId = emdb && emdb.dbId.toUpperCase();
     const getQueryLink = (validation: Data.RefModel) => {
-        return `/!${pdbId}${emdbId ? "+!" + emdbId : ""}|${getValidationQueryLink(
+        return `/${pdbId}${emdbId ? "+" + emdbId : ""}|${getValidationQueryLink(
             pdbId,
             validation
         )}`;
