@@ -87,8 +87,8 @@ export const BasicInfoEntry: React.FC<BasicInfoProps> = React.memo(props => {
 
 function getItems(publication: PdbPublication) {
     const items: Item[] = _.compact([
-        { name: i18n.t("Title"), value: publication.title },
-        { name: i18n.t("Abstract"), value: publication.abstract.unassigned },
+        { name: i18n.t("Title"), value: escapeHTML(publication.title) },
+        { name: i18n.t("Abstract"), value: escapeHTML(publication.abstract.unassigned) },
         { name: i18n.t("Authors"), value: publication.authors.join(", ") },
         {
             name: i18n.t("Journal"),
@@ -126,4 +126,11 @@ function getItems(publication: PdbPublication) {
     ]);
 
     return items;
+}
+
+function escapeHTML(str?: string) {
+    const t = document.createElement("div");
+    t.innerHTML = str ?? "";
+    [...t.children].forEach(el => el.remove());
+    return str ? t.innerText : undefined;
 }
