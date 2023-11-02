@@ -7,15 +7,14 @@ import { HtmlTooltip } from "./HtmlTooltip";
 import { urlPrefix } from "./cells/TitleCell";
 
 interface ThumbnailProps {
-    type: "pdb" | "emdb";
     value: DbItem;
     tooltip: Tooltip;
 }
 
 export const Thumbnail: React.FC<ThumbnailProps> = React.memo(props => {
-    const { value, tooltip, type } = props;
+    const { value, tooltip } = props;
     const { imageUrl: imageSrc, id: name } = value;
-    const href = urlPrefix + (type === "emdb" ? value.id.toUpperCase() : value.id.toLowerCase());
+    const href = urlPrefix + value.queryLink;
 
     return (
         <div style={styles.thumbnailWrapper}>

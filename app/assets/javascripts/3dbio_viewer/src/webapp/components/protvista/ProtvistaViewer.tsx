@@ -125,7 +125,7 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
             key={block.id}
             block={block}
             namespace={namespace}
-            onDownload={block.component === undefined ? downloadTracks : undefined}
+            onDownload={!_.isEmpty(block.tracks) ? downloadTracks : undefined}
         >
             {CustomComponent ? (
                 <CustomComponent
