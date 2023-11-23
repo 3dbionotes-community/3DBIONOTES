@@ -14,13 +14,15 @@ import {
     LinearProgress,
     CircularProgress,
 } from "@material-ui/core";
-import { GetApp } from "@material-ui/icons";
+import { GetApp, Stop as StopIcon } from "@material-ui/icons";
 import { Dialog } from "./Dialog";
 import { NMROptions, SetNMRPagination } from "./Columns";
 import { NSPTarget } from "../../../domain/entities/Covid19Info";
 import { NMRPagination } from "../../../domain/repositories/EntitiesRepository";
-import i18n from "../../../utils/i18n";
 import { useBooleanState } from "../../hooks/useBoolean";
+import { useAppContext } from "../../contexts/app-context";
+import { Cancel } from "fluture";
+import i18n from "../../../utils/i18n";
 
 export interface NMRDialogProps {
     onClose(): void;
@@ -31,11 +33,28 @@ export interface NMRDialogProps {
 export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
     const { onClose, open } = props;
     const { target, error, pagination, setPagination, loading } = props.nmrOptions;
+    const { compositionRoot } = useAppContext();
+    const [isExporting, { enable: showExporting, disable: hideExporting }] = useBooleanState(false);
 
     const title = React.useMemo(
         () => i18n.t("Ligand interaction NMR: {{target}}", { target: target?.name ?? "" }),
         [target]
     );
+
+    const saveTarget = React.useCallback(() => {
+        if (target) {
+            showExporting();
+            return compositionRoot.entities.saveNMR
+                .execute(target.uniprotId, target.start, target.end)
+                .run(
+                    () => hideExporting(),
+                    err => {
+                        hideExporting();
+                        console.error(err);
+                    }
+                );
+        }
+    }, [target, compositionRoot, hideExporting, showExporting]);
 
     return (
         <StyledDialog
@@ -48,13 +67,25 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
         >
             {loading && <StyledLinearProgress />}
             {error && <Typography>{error}</Typography>}
-            {target && pagination && setPagination && (
+            {target && pagination && setPagination && saveTarget && (
                 <>
                     {pagination.pageSize >= 25 && (
-                        <Toolbar pagination={pagination} setPagination={setPagination} />
+                        <Toolbar
+                            pagination={pagination}
+                            setPagination={setPagination}
+                            saveTarget={saveTarget}
+                            isExporting={isExporting}
+                            hideExporting={hideExporting}
+                        />
                     )}
                     <DialogContent target={target} />
-                    <Toolbar pagination={pagination} setPagination={setPagination} />
+                    <Toolbar
+                        pagination={pagination}
+                        setPagination={setPagination}
+                        saveTarget={saveTarget}
+                        isExporting={isExporting}
+                        hideExporting={hideExporting}
+                    />
                 </>
             )}
         </StyledDialog>
@@ -68,14 +99,20 @@ interface DialogContentProps {
 interface ToolbarProps {
     pagination: NMRPagination;
     setPagination: SetNMRPagination;
+    saveTarget: () => Cancel | undefined;
+    hideExporting: () => void;
+    isExporting: boolean;
 }
 
 const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
     const {
         pagination,
         setPagination: { setPage, setPageSize },
+        isExporting,
+        saveTarget,
+        hideExporting,
     } = props;
-    const [isExporting, { enable: showExporting, disable: hideExporting }] = useBooleanState(true);
+    const [saving, setSaving] = React.useState<Cancel>();
 
     const handleChangePage = React.useCallback(
         (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -92,19 +129,37 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
         [setPage, setPageSize]
     );
 
+    const onClick = React.useCallback(() => {
+        if (isExporting) return;
+        const cancel = saveTarget();
+        setSaving(_saving => cancel);
+    }, [isExporting, saveTarget]);
+
+    const stopSaving = React.useCallback(() => {
+        saving && saving();
+        hideExporting();
+    }, [hideExporting, saving]);
+
     return (
         <div style={styles.toolbar}>
             <div style={styles.exportButton}>
                 <Button
-                    variant={"outlined"}
+                    variant="outlined"
                     disabled={isExporting}
                     color="inherit"
                     startIcon={<GetApp />}
                     size="small"
+                    onClick={onClick}
+                    style={{ opacity: isExporting ? 0.5 : 1 }}
                 >
                     {i18n.t("Export all fragments")}
                 </Button>
-                {isExporting && <StyledCircularProgress size={16} />}
+                {isExporting && (
+                    <div style={styles.exportStopButton} onClick={stopSaving}>
+                        <StyledCircularProgress size={20} />
+                        <StopIcon color="inherit" style={styles.stop} />
+                    </div>
+                )}
             </div>
             <TablePagination
                 component="div"
@@ -171,6 +226,15 @@ const styles = {
         position: "relative",
         justifyContent: "center",
     },
+    exportStopButton: {
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        color: "#009688",
+        position: "absolute",
+        justifyContent: "center",
+    },
+    stop: { position: "absolute", fontSize: "14px" },
 } as const;
 
 interface StyledTableRowProps {

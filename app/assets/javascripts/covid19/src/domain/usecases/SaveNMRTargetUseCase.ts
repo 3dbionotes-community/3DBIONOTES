@@ -1,9 +1,11 @@
 import { EntitiesRepository } from "../repositories/EntitiesRepository";
 
-export class GetNMRTargetUseCase {
+export class SaveNMRTargetUseCase {
     constructor(private entitiesRepository: EntitiesRepository) {}
 
     execute(uniprotId: string, start: number, end: number) {
-        return this.entitiesRepository.getNMRTarget(uniprotId, start, end);
+        return this.entitiesRepository
+            .getNMRTarget(uniprotId, start, end)
+            .map(target => this.entitiesRepository.saveNMRTarget(target));
     }
 }

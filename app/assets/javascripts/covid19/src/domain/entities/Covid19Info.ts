@@ -214,6 +214,7 @@ export interface Details {
 }
 
 export interface NSPTarget {
+    uniprotId: string;
     name: string;
     fragments: NMRFragment[];
     bindingCount: number;

@@ -9,6 +9,7 @@ export interface EntitiesRepository {
         pagination: NMRPagination
     ) => FutureData<{ target: NSPTarget; pagination: NMRPagination }>;
     getNMRTarget: (uniprotId: string, start: number, end: number) => FutureData<NSPTarget>;
+    saveNMRTarget: (target: NSPTarget) => void;
 }
 
 export interface NMRPagination {

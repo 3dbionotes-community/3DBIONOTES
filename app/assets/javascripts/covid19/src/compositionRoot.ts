@@ -12,7 +12,7 @@ import { BionotesOntologyRepository } from "./data/repositories/BioOntologyRepos
 import { BionotesOrganismRepository } from "./data/repositories/BionotesOrganismRepository";
 import { EntitiesApiRepository } from "./data/repositories/EntitiesApiRepository";
 import { GetPartialNMRTargetUseCase } from "./domain/usecases/GetPartialNMRTargetUseCase";
-import { GetNMRTargetUseCase } from "./domain/usecases/GetNMRTargetUseCase";
+import { SaveNMRTargetUseCase } from "./domain/usecases/SaveNMRTargetUseCase";
 
 export function getCompositionRoot() {
     const covid19InfoRepository = new Covid19InfoFromJsonRepository();
@@ -41,7 +41,7 @@ export function getCompositionRoot() {
         },
         entities: {
             getPartialNMR: new GetPartialNMRTargetUseCase(entitiesRepository),
-            getNMR: new GetNMRTargetUseCase(entitiesRepository),
+            saveNMR: new SaveNMRTargetUseCase(entitiesRepository),
         },
     };
 }

@@ -8,6 +8,8 @@ import { nmrFragmentCodec, NMRScreeningFragment } from "../NMRScreening";
 import { getResults, Pagination, paginationCodec } from "../codec-utils";
 import { Future } from "../utils/future";
 import i18n from "../../utils/i18n";
+import { lookup } from "mime-types";
+import FileSaver from "file-saver";
 
 export class EntitiesApiRepository implements EntitiesRepository {
     getPartialNMRTarget(
@@ -21,7 +23,7 @@ export class EntitiesApiRepository implements EntitiesRepository {
             `${bionotesApi}/nmr/${uniprotId}?start=${start}&end=${end}&limit=${pagination.pageSize}&page=${pagination.page}`,
             paginationCodec(nmrFragmentCodec)
         ).flatMap(p =>
-            getNMRTarget(getResults(p)).map(target => ({
+            getNMRTarget(uniprotId, getResults(p)).map(target => ({
                 pagination: p ? { ...pagination, count: p.count } : pagination,
                 target,
             }))
@@ -39,14 +41,15 @@ export class EntitiesApiRepository implements EntitiesRepository {
                     page + 1
                 }`,
                 paginationCodec(nmrFragmentCodec)
-            ).flatMap(pagination => getNMRTarget(getResults(pagination)));
+            ).flatMap(pagination => getNMRTarget(uniprotId, getResults(pagination)));
 
         const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
             `${bionotesApi}/nmr/${uniprotId}?start=${start}&end=${end}&limit=1`,
             paginationCodec(nmrFragmentCodec)
         )
             .flatMap(pagination => {
-                const pages = Math.ceil(pagination?.count ?? 0 / chunkSize);
+                const pages = pagination?.count ?? 0;
+                console.log(pagination?.count);
                 return Future.sequential(_.times(pages).map(page => targetChunk$(page)));
             })
             .map(targets =>
@@ -60,9 +63,29 @@ export class EntitiesApiRepository implements EntitiesRepository {
 
         return nmrTarget$;
     }
+
+    saveNMRTarget(target: NSPTarget) {
+        const contents = JSON.stringify(target, null, 4);
+        return this.save({
+            contents,
+            name: `${target.name.toLowerCase().replaceAll(/\s/g, "-")}`,
+            extension: "json",
+        });
+    }
+
+    private save(options: { name: string; contents: string; extension: string }) {
+        const { name, extension, contents } = options;
+        const filename = `${name}.${extension}`;
+        const mimeType = lookup(filename);
+        const blob = new Blob([contents], { type: mimeType || undefined });
+        FileSaver.saveAs(blob, filename);
+    }
 }
 
-export function getNMRTarget(nmrScreenings: NMRScreeningFragment[]): FutureData<NSPTarget> {
+export function getNMRTarget(
+    uniprotId: string,
+    nmrScreenings: NMRScreeningFragment[]
+): FutureData<NSPTarget> {
     const fragments = nmrScreenings.map(nmr => ({
         ...nmr,
         binding: !nmr.details.type.toLowerCase().includes("not"),
@@ -112,6 +135,7 @@ export function getNMRTarget(nmrScreenings: NMRScreeningFragment[]): FutureData<
 
     return Future.success({
         name: targetName,
+        uniprotId,
         fragments: tFragments,
         bindingCount: fragments.filter(({ binding }) => binding).length,
         notBindingCount: fragments.filter(({ binding }) => !binding).length,
