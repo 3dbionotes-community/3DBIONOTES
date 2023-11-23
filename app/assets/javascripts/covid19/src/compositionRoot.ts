@@ -11,6 +11,7 @@ import { GetLigandImageDataResourcesUseCase } from "./domain/usecases/GetLigandI
 import { BionotesOntologyRepository } from "./data/repositories/BioOntologyRepository";
 import { BionotesOrganismRepository } from "./data/repositories/BionotesOrganismRepository";
 import { EntitiesApiRepository } from "./data/repositories/EntitiesApiRepository";
+import { GetPartialNMRTargetUseCase } from "./domain/usecases/GetPartialNMRTargetUseCase";
 import { GetNMRTargetUseCase } from "./domain/usecases/GetNMRTargetUseCase";
 
 export function getCompositionRoot() {
@@ -39,6 +40,7 @@ export function getCompositionRoot() {
             ),
         },
         entities: {
+            getPartialNMR: new GetPartialNMRTargetUseCase(entitiesRepository),
             getNMR: new GetNMRTargetUseCase(entitiesRepository),
         },
     };

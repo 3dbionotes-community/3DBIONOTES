@@ -61,7 +61,7 @@ function useNMRPagination(
             loading: true,
         }));
 
-        return compositionRoot.entities.getNMR
+        return compositionRoot.entities.getPartialNMR
             .execute(uniprotId, start, end, { page, pageSize, count })
             .run(
                 ({ target, pagination }) => {
@@ -98,7 +98,7 @@ function useNMRPagination(
 
     const getNMR = React.useCallback(
         (onClick: OnClickNMR) => {
-            return compositionRoot.entities.getNMR
+            return compositionRoot.entities.getPartialNMR
                 .execute(uniprotId, start, end, { page, pageSize, count })
                 .run(
                     ({ target, pagination }) => {

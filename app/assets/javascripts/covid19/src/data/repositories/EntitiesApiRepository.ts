@@ -10,7 +10,7 @@ import { Future } from "../utils/future";
 import i18n from "../../utils/i18n";
 
 export class EntitiesApiRepository implements EntitiesRepository {
-    getNMRTarget(
+    getPartialNMRTarget(
         uniprotId: string,
         start: number,
         end: number,
@@ -26,6 +26,37 @@ export class EntitiesApiRepository implements EntitiesRepository {
                 target,
             }))
         );
+
+        return nmrTarget$;
+    }
+
+    getNMRTarget(uniprotId: string, start: number, end: number): FutureData<NSPTarget> {
+        const { bionotesApi } = routes;
+        const chunkSize = 50;
+        const targetChunk$ = (page: number) =>
+            getValidatedJSON<Pagination<NMRScreeningFragment>>(
+                `${bionotesApi}/nmr/${uniprotId}?start=${start}&end=${end}&limit=${chunkSize}&page=${
+                    page + 1
+                }`,
+                paginationCodec(nmrFragmentCodec)
+            ).flatMap(pagination => getNMRTarget(getResults(pagination)));
+
+        const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
+            `${bionotesApi}/nmr/${uniprotId}?start=${start}&end=${end}&limit=1`,
+            paginationCodec(nmrFragmentCodec)
+        )
+            .flatMap(pagination => {
+                const pages = Math.ceil(pagination?.count ?? 0 / chunkSize);
+                return Future.sequential(_.times(pages).map(page => targetChunk$(page)));
+            })
+            .map(targets =>
+                targets.reduce((acc, v) => ({
+                    ...acc,
+                    bindingCount: acc.bindingCount + v.bindingCount,
+                    notBindingCount: acc.notBindingCount + v.notBindingCount,
+                    fragments: [...acc.fragments, ...v.fragments],
+                }))
+            );
 
         return nmrTarget$;
     }
