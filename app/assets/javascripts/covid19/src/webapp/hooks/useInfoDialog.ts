@@ -5,6 +5,7 @@ import { useBooleanState } from "./useBoolean";
 
 type UseInfoDialogReturn<T> = {
     info: Maybe<T>;
+    setInfo: (info: T) => void;
     useDialogState: [
         isDialogOpen: boolean,
         closeDialog: () => void,
@@ -27,5 +28,5 @@ export function useInfoDialog<T>(): UseInfoDialogReturn<T> {
         [openDialog]
     );
 
-    return { info, useDialogState: [isDialogOpen, closeDialog, showDialog] };
+    return { info, setInfo, useDialogState: [isDialogOpen, closeDialog, showDialog] };
 }

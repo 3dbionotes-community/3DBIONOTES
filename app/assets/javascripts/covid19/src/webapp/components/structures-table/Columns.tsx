@@ -25,6 +25,7 @@ import { LigandImageData } from "../../../domain/entities/LigandImageData";
 import { OnClickDetails } from "./badge/BadgeDetails";
 import { OnClickIDR } from "./badge/BadgeLigands";
 import { OnClickNMR } from "./badge/BadgeEntities";
+import { NMRPagination } from "../../../domain/repositories/EntitiesRepository";
 
 type Row = Structure;
 export type Field = keyof Row;
@@ -38,7 +39,14 @@ export interface IDROptions {
 
 export interface NMROptions {
     target?: NSPTarget;
+    pagination?: NMRPagination;
+    setPagination?: SetNMRPagination;
     error?: string;
+}
+
+export interface SetNMRPagination {
+    setPage: (page: number) => void;
+    setPageSize: (pageSize: number) => void;
 }
 
 export interface DetailsDialogOptions {
@@ -165,6 +173,7 @@ export function getColumns(
         onClickDetails: OnClickDetails;
         onClickIDR: OnClickIDR;
         onClickNMR: OnClickNMR;
+        setNMROptions: (nmrOptions: NMROptions) => void;
     }
 ): { definition: GridColDef[]; base: Columns } {
     const definition = columnsBase.map(
@@ -183,6 +192,7 @@ export function getColumns(
                                 onClickDetails={options.onClickDetails}
                                 onClickIDR={options.onClickIDR}
                                 onClickNMR={options.onClickNMR}
+                                setNMROptions={options.setNMROptions}
                                 validationSources={data.validationSources}
                             />
                         </div>

@@ -42,7 +42,11 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     } = useInfoDialog<DetailsDialogOptions>();
     const [isDetailsOpen, closeDetails, showDetailsDialog] = detailsDialogState;
     const { info: idrOptions, useDialogState: idrDialogState } = useInfoDialog<IDROptions>();
-    const { info: nmrOptions, useDialogState: nmrDialogState } = useInfoDialog<NMROptions>();
+    const {
+        info: nmrOptions,
+        setInfo: setNMROptions,
+        useDialogState: nmrDialogState,
+    } = useInfoDialog<NMROptions>();
     const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
     const [isNMROpen, closeNMR, showNMRDialog] = nmrDialogState;
 
@@ -130,8 +134,9 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
             onClickDetails: openDetailsDialog,
             onClickIDR: openIDRDialog,
             onClickNMR: openNMRDialog,
+            setNMROptions: setNMROptions,
         });
-    }, [data, openDetailsDialog, openIDRDialog, openNMRDialog]);
+    }, [data, openDetailsDialog, openIDRDialog, openNMRDialog, setNMROptions]);
 
     const components = React.useMemo(
         () => ({ Toolbar: Toolbar, Pagination: CustomGridPagination }),
@@ -234,6 +239,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                     data={data}
                     onClickIDR={openIDRDialog}
                     onClickNMR={openNMRDialog}
+                    setNMROptions={setNMROptions}
                 />
             )}
             {idrOptions && (

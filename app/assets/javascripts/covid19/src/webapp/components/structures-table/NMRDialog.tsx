@@ -2,19 +2,21 @@ import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 import {
-    Fab,
+    Button,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
+    TablePagination,
     TableRow,
     Typography,
 } from "@material-ui/core";
-import { GetApp as GetAppIcon } from "@material-ui/icons";
+import { GetApp } from "@material-ui/icons";
 import { Dialog } from "./Dialog";
-import { NMROptions } from "./Columns";
+import { NMROptions, SetNMRPagination } from "./Columns";
 import { NSPTarget } from "../../../domain/entities/Covid19Info";
+import { NMRPagination } from "../../../domain/repositories/EntitiesRepository";
 import i18n from "../../../utils/i18n";
 
 export interface NMRDialogProps {
@@ -25,7 +27,7 @@ export interface NMRDialogProps {
 
 export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
     const { onClose, open } = props;
-    const { target, error } = props.nmrOptions;
+    const { target, error, pagination, setPagination } = props.nmrOptions;
 
     const title = React.useMemo(
         () => i18n.t("Ligand interaction NMR: {{target}}", { target: target?.name ?? "" }),
@@ -35,13 +37,11 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
     return (
         <StyledDialog open={open} onClose={onClose} title={title} maxWidth="xl" scroll="paper">
             {error && <Typography>{error}</Typography>}
-            {target && (
+            {target && pagination && setPagination && (
                 <>
+                    <Toolbar pagination={pagination} setPagination={setPagination} />
                     <DialogContent target={target} />
-                    <StyledFab onClick={() => {}} variant="extended">
-                        <GetAppIcon style={{ marginRight: "0.5rem" }} />
-                        {i18n.t("Export")}
-                    </StyledFab>
+                    <Toolbar pagination={pagination} setPagination={setPagination} />
                 </>
             )}
         </StyledDialog>
@@ -51,6 +51,51 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
 interface DialogContentProps {
     target: NSPTarget;
 }
+
+interface ToolbarProps {
+    pagination: NMRPagination;
+    setPagination: SetNMRPagination;
+}
+
+const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
+    const {
+        pagination,
+        setPagination: { setPage, setPageSize },
+    } = props;
+
+    const handleChangePage = React.useCallback(
+        (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+            setPage(newPage);
+        },
+        [setPage]
+    );
+
+    const handleChangeRowsPerPage = React.useCallback(
+        (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            setPageSize(parseInt(event.target.value, 10));
+            setPage(1);
+        },
+        [setPage, setPageSize]
+    );
+
+    return (
+        <div style={styles.toolbar}>
+            <div>
+                <Button variant="contained" startIcon={<GetApp />}>
+                    {i18n.t("Export fragments")}
+                </Button>
+            </div>
+            <TablePagination
+                component="div"
+                count={pagination.count}
+                page={pagination.page}
+                onPageChange={handleChangePage}
+                rowsPerPage={pagination.pageSize}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+        </div>
+    );
+});
 
 const DialogContent: React.FC<DialogContentProps> = React.memo(({ target }) => {
     return (
@@ -96,6 +141,10 @@ const DialogContent: React.FC<DialogContentProps> = React.memo(({ target }) => {
     );
 });
 
+const styles = {
+    toolbar: { display: "flex", justifyContent: "space-between", padding: "1em" },
+} as const;
+
 interface StyledTableRowProps {
     binding: boolean;
 }
@@ -112,23 +161,9 @@ const StyledTableRow = styled(StyledHeadTableRow)<StyledTableRowProps>`
     border: ${props => (props.binding ? "1px solid #9ccc65" : "1px solid #ef5350")};
 `;
 
-const StyledFab = styled(Fab)`
-    position: absolute;
-    bottom: 2em;
-    right: 3em;
-    color: #fff;
-    padding-right: 1.5em;
-    background-color: #123546;
-    &:hover {
-        background-color: #123546;
-    }
-    &.MuiFab-root .MuiSvgIcon-root {
-        fill: #fff;
-    }
-`;
-
 const StyledDialog = styled(Dialog)`
     .MuiDialogContent-root {
         padding: 0 !important;
+        position: relative;
     }
 `;

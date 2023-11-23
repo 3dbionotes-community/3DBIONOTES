@@ -6,7 +6,7 @@ import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 import { Covid19Info, Structure } from "../../../domain/entities/Covid19Info";
 import { OnClickIDR } from "./badge/BadgeLigands";
 import { OnClickNMR } from "./badge/BadgeEntities";
-import { Field } from "./Columns";
+import { Field, NMROptions } from "./Columns";
 import { PdbCell } from "./cells/PdbCell";
 import { EmdbCell } from "./cells/EmdbCell";
 import { EntityCell } from "./cells/EntityCell";
@@ -24,10 +24,20 @@ export interface DetailsDialogProps {
     data: Covid19Info;
     onClickIDR: OnClickIDR;
     onClickNMR: OnClickNMR;
+    setNMROptions: (nmrOptions: NMROptions) => void;
 }
 
 export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
-    const { onClose, expandedAccordion, row, data, open, onClickIDR, onClickNMR } = props;
+    const {
+        onClose,
+        expandedAccordion,
+        row,
+        data,
+        open,
+        onClickIDR,
+        onClickNMR,
+        setNMROptions,
+    } = props;
 
     return (
         <Dialog open={open} onClose={onClose} title={row.title}>
@@ -44,6 +54,7 @@ export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
                             row={row}
                             moreDetails={false}
                             onClickNMR={onClickNMR}
+                            setNMROptions={setNMROptions}
                             validationSources={data.validationSources}
                         />
                     </ModifiedAccordion>

@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import i18n from "../../../../utils/i18n";
-import { CellProps } from "../Columns";
+import { CellProps, NMROptions } from "../Columns";
 import { Link } from "../Link";
 import { Wrapper } from "./Wrapper";
 import { BadgeEntities, OnClickNMR } from "../badge/BadgeEntities";
@@ -10,10 +10,18 @@ import { getValidationSource } from "../../../../domain/entities/Covid19Info";
 
 export interface EntitiyCellProps extends CellProps {
     onClickNMR?: OnClickNMR;
+    setNMROptions: (nmrOptions: NMROptions) => void;
 }
 
 export const EntityCell: React.FC<EntitiyCellProps> = React.memo(props => {
-    const { row, onClickDetails, onClickNMR, moreDetails, validationSources } = props;
+    const {
+        row,
+        onClickDetails,
+        onClickNMR,
+        moreDetails,
+        validationSources,
+        setNMROptions,
+    } = props;
 
     const nmrValidationSource = React.useMemo(
         () => getValidationSource(validationSources ?? [], "NMR"),
@@ -114,6 +122,7 @@ export const EntityCell: React.FC<EntitiyCellProps> = React.memo(props => {
                                     uniprotId={entity.uniprotAcc}
                                     start={entity.nmr.start}
                                     end={entity.nmr.end}
+                                    setNMROptions={setNMROptions}
                                 />
                             </span>
                         </HtmlTooltip>

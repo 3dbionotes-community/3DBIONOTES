@@ -3,19 +3,29 @@ import { routes } from "../../routes";
 import { getValidatedJSON } from "../utils/request-utils";
 import { FutureData } from "../../domain/entities/FutureData";
 import { NSPTarget } from "../../domain/entities/Covid19Info";
-import { EntitiesRepository } from "../../domain/repositories/EntitiesRepository";
+import { NMRPagination, EntitiesRepository } from "../../domain/repositories/EntitiesRepository";
 import { nmrFragmentCodec, NMRScreeningFragment } from "../NMRScreening";
-import { getResults, Pagination, pagination } from "../codec-utils";
+import { getResults, Pagination, paginationCodec } from "../codec-utils";
 import { Future } from "../utils/future";
 import i18n from "../../utils/i18n";
 
 export class EntitiesApiRepository implements EntitiesRepository {
-    getNMRTarget(uniprotId: string, start: number, end: number): FutureData<NSPTarget> {
+    getNMRTarget(
+        uniprotId: string,
+        start: number,
+        end: number,
+        pagination: NMRPagination
+    ): FutureData<{ target: NSPTarget; pagination: NMRPagination }> {
         const { bionotesApi } = routes;
         const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
-            `${bionotesApi}/nmr/${uniprotId}?start=${start}&end=${end}`,
-            pagination(nmrFragmentCodec)
-        ).flatMap(pagination => getNMRTarget(getResults(pagination)));
+            `${bionotesApi}/nmr/${uniprotId}?start=${start}&end=${end}&limit=${pagination.pageSize}&page=${pagination.page}`,
+            paginationCodec(nmrFragmentCodec)
+        ).flatMap(p =>
+            getNMRTarget(getResults(p)).map(target => ({
+                pagination: p ? { ...pagination, count: p.count } : pagination,
+                target,
+            }))
+        );
 
         return nmrTarget$;
     }
@@ -33,7 +43,6 @@ export function getNMRTarget(nmrScreenings: NMRScreeningFragment[]): FutureData<
         .value();
 
     const target = targets[0];
-    console.log(fragments);
     if (!target) return Future.error({ message: i18n.t("NMR Error: no target found") });
     if (targets.length > 1)
         return Future.error({
