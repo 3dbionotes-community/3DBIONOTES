@@ -60,6 +60,10 @@ export class Future<E, D> {
         return new Future(instance);
     }
 
+    static sequential<E, D>(futures: Array<Future<E, D>>): Future<E, Array<D>> {
+        return Future.parallel(futures, { maxConcurrency: 1 });
+    }
+
     static parallel<E, D>(
         futures: Array<Future<E, D>>,
         options: { maxConcurrency?: number } = {}
