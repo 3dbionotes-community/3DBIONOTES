@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Badge } from "./Badge";
 import { useAppContext } from "../../../contexts/app-context";
 import { NMROptions } from "../Columns";
+import { SetNMROptions } from "../StructuresTable";
 import i18n from "../../../../utils/i18n";
 
 export type OnClickNMR = (options: NMROptions, gaLabel: string) => void;
@@ -13,7 +14,7 @@ export interface BadgeEntitiesProps {
     uniprotId: string;
     start: number;
     end: number;
-    setNMROptions: (nmrOptions: NMROptions) => void;
+    setNMROptions: SetNMROptions;
 }
 
 export const BadgeEntities: React.FC<BadgeEntitiesProps> = React.memo(props => {
@@ -23,9 +24,9 @@ export const BadgeEntities: React.FC<BadgeEntitiesProps> = React.memo(props => {
     const notifyClick = React.useCallback(
         (e: MouseEvent) => {
             e.preventDefault();
-            if (onClick) return getNMR(uniprotId, start, end, onClick);
+            if (onClick) return getNMR(onClick);
         },
-        [onClick, uniprotId, start, end, getNMR]
+        [onClick, getNMR]
     );
 
     return moreDetails ? (
@@ -47,27 +48,41 @@ function useNMRPagination(
     uniprotId: string,
     start: number,
     end: number,
-    setNMROptions: (nmrOptions: NMROptions) => void
+    setNMROptions: SetNMROptions
 ) {
     const [page, setPage] = React.useState(1);
-    const [pageSize, setPageSize] = React.useState(25);
+    const [pageSize, setPageSize] = React.useState(10);
     const [count, setCount] = React.useState(0);
     const { compositionRoot } = useAppContext();
 
     React.useEffect(() => {
-        compositionRoot.entities.getNMR
+        setNMROptions(nmrOptions => ({
+            ...nmrOptions,
+            loading: true,
+        }));
+
+        return compositionRoot.entities.getNMR
             .execute(uniprotId, start, end, { page, pageSize, count })
-            .run(({ target, pagination }) => {
-                setCount(pagination.count);
-                setNMROptions({
-                    target,
-                    pagination: { page, pageSize, count: pagination.count },
-                    setPagination: {
-                        setPage,
-                        setPageSize,
-                    },
-                });
-            }, console.error);
+            .run(
+                ({ target, pagination }) => {
+                    setCount(pagination.count);
+                    return setNMROptions({
+                        target,
+                        pagination: { page, pageSize, count: pagination.count },
+                        setPagination: {
+                            setPage,
+                            setPageSize,
+                        },
+                        loading: false,
+                    });
+                },
+                err => {
+                    setNMROptions({
+                        error: err.message,
+                        loading: false,
+                    });
+                }
+            );
     }, [
         page,
         pageSize,
@@ -82,7 +97,7 @@ function useNMRPagination(
     ]);
 
     const getNMR = React.useCallback(
-        (uniprotId: string, start: number, end: number, onClick: OnClickNMR) => {
+        (onClick: OnClickNMR) => {
             return compositionRoot.entities.getNMR
                 .execute(uniprotId, start, end, { page, pageSize, count })
                 .run(
@@ -107,7 +122,7 @@ function useNMRPagination(
                         )
                 );
         },
-        [page, pageSize, count, compositionRoot, setPage, setPageSize]
+        [page, pageSize, count, compositionRoot, setPage, setPageSize, end, start, uniprotId]
     );
 
     return getNMR;

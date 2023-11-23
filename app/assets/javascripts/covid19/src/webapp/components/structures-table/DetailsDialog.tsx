@@ -6,7 +6,7 @@ import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 import { Covid19Info, Structure } from "../../../domain/entities/Covid19Info";
 import { OnClickIDR } from "./badge/BadgeLigands";
 import { OnClickNMR } from "./badge/BadgeEntities";
-import { Field, NMROptions } from "./Columns";
+import { Field } from "./Columns";
 import { PdbCell } from "./cells/PdbCell";
 import { EmdbCell } from "./cells/EmdbCell";
 import { EntityCell } from "./cells/EntityCell";
@@ -14,6 +14,7 @@ import { LigandsCell } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
 import { DetailsCell } from "./cells/DetailsCell";
 import { Dialog } from "./Dialog";
+import { SetNMROptions } from "./StructuresTable";
 import i18n from "../../../utils/i18n";
 
 export interface DetailsDialogProps {
@@ -24,7 +25,7 @@ export interface DetailsDialogProps {
     data: Covid19Info;
     onClickIDR: OnClickIDR;
     onClickNMR: OnClickNMR;
-    setNMROptions: (nmrOptions: NMROptions) => void;
+    setNMROptions: SetNMROptions;
 }
 
 export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {

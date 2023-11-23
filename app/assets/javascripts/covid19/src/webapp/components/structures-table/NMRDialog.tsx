@@ -11,6 +11,8 @@ import {
     TablePagination,
     TableRow,
     Typography,
+    LinearProgress,
+    CircularProgress,
 } from "@material-ui/core";
 import { GetApp } from "@material-ui/icons";
 import { Dialog } from "./Dialog";
@@ -18,6 +20,7 @@ import { NMROptions, SetNMRPagination } from "./Columns";
 import { NSPTarget } from "../../../domain/entities/Covid19Info";
 import { NMRPagination } from "../../../domain/repositories/EntitiesRepository";
 import i18n from "../../../utils/i18n";
+import { useBooleanState } from "../../hooks/useBoolean";
 
 export interface NMRDialogProps {
     onClose(): void;
@@ -27,7 +30,7 @@ export interface NMRDialogProps {
 
 export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
     const { onClose, open } = props;
-    const { target, error, pagination, setPagination } = props.nmrOptions;
+    const { target, error, pagination, setPagination, loading } = props.nmrOptions;
 
     const title = React.useMemo(
         () => i18n.t("Ligand interaction NMR: {{target}}", { target: target?.name ?? "" }),
@@ -35,11 +38,21 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
     );
 
     return (
-        <StyledDialog open={open} onClose={onClose} title={title} maxWidth="xl" scroll="paper">
+        <StyledDialog
+            open={open}
+            onClose={onClose}
+            title={title}
+            fullWidth={true}
+            maxWidth="xl"
+            scroll="paper"
+        >
+            {loading && <StyledLinearProgress />}
             {error && <Typography>{error}</Typography>}
             {target && pagination && setPagination && (
                 <>
-                    <Toolbar pagination={pagination} setPagination={setPagination} />
+                    {pagination.pageSize >= 25 && (
+                        <Toolbar pagination={pagination} setPagination={setPagination} />
+                    )}
                     <DialogContent target={target} />
                     <Toolbar pagination={pagination} setPagination={setPagination} />
                 </>
@@ -62,6 +75,7 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
         pagination,
         setPagination: { setPage, setPageSize },
     } = props;
+    const [isExporting, { enable: showExporting, disable: hideExporting }] = useBooleanState(true);
 
     const handleChangePage = React.useCallback(
         (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -80,10 +94,17 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
 
     return (
         <div style={styles.toolbar}>
-            <div>
-                <Button variant="contained" startIcon={<GetApp />}>
-                    {i18n.t("Export fragments")}
+            <div style={styles.exportButton}>
+                <Button
+                    variant={"outlined"}
+                    disabled={isExporting}
+                    color="inherit"
+                    startIcon={<GetApp />}
+                    size="small"
+                >
+                    {i18n.t("Export all fragments")}
                 </Button>
+                {isExporting && <StyledCircularProgress size={16} />}
             </div>
             <TablePagination
                 component="div"
@@ -142,7 +163,14 @@ const DialogContent: React.FC<DialogContentProps> = React.memo(({ target }) => {
 });
 
 const styles = {
-    toolbar: { display: "flex", justifyContent: "space-between", padding: "1em" },
+    toolbar: { display: "flex", justifyContent: "space-between", paddingLeft: "1em" },
+    exportButton: {
+        display: "flex",
+        alignItems: "center",
+        color: "#607d8b",
+        position: "relative",
+        justifyContent: "center",
+    },
 } as const;
 
 interface StyledTableRowProps {
@@ -165,5 +193,21 @@ const StyledDialog = styled(Dialog)`
     .MuiDialogContent-root {
         padding: 0 !important;
         position: relative;
+    }
+`;
+
+const StyledLinearProgress = styled(LinearProgress)`
+    &.MuiLinearProgress-colorPrimary {
+        background-color: #c6ece8;
+    }
+    & .MuiLinearProgress-barColorPrimary {
+        background-color: #009688;
+    }
+`;
+
+const StyledCircularProgress = styled(CircularProgress)`
+    position: absolute;
+    &.MuiCircularProgress-colorPrimary {
+        color: #009688;
     }
 `;

@@ -5,7 +5,7 @@ import { useBooleanState } from "./useBoolean";
 
 type UseInfoDialogReturn<T> = {
     info: Maybe<T>;
-    setInfo: (info: T) => void;
+    setInfo: React.Dispatch<React.SetStateAction<T | undefined>>;
     useDialogState: [
         isDialogOpen: boolean,
         closeDialog: () => void,

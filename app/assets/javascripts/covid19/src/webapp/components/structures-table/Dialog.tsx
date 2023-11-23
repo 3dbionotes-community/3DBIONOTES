@@ -9,33 +9,45 @@ export interface DialogProps {
     open: boolean;
     headerChildren?: React.ReactNode;
     maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
+    fullWidth?: boolean;
     scroll?: "paper" | "body";
     onClose(): void;
 }
 
-export const Dialog: React.FC<DialogProps> = React.memo(
-    ({ onClose, className, title, open, children, maxWidth, headerChildren, scroll }) => {
-        return (
-            <StyledDialog
-                className={className}
-                open={open}
-                onClose={onClose}
-                maxWidth={maxWidth ?? "md"}
-                scroll={scroll}
-            >
-                <StyledDialogTitle>
-                    <Title title={title}>{title}</Title>
-                    {headerChildren}
-                    <StyledIconButton onClick={onClose}>
-                        <Close />
-                    </StyledIconButton>
-                </StyledDialogTitle>
+export const Dialog: React.FC<DialogProps> = React.memo(props => {
+    const {
+        onClose,
+        className,
+        title,
+        open,
+        children,
+        maxWidth,
+        headerChildren,
+        scroll,
+        fullWidth,
+    } = props;
 
-                <DialogContent>{children}</DialogContent>
-            </StyledDialog>
-        );
-    }
-);
+    return (
+        <StyledDialog
+            className={className}
+            open={open}
+            onClose={onClose}
+            maxWidth={maxWidth ?? "md"}
+            fullWidth={fullWidth}
+            scroll={scroll}
+        >
+            <StyledDialogTitle>
+                <Title title={title}>{title}</Title>
+                {headerChildren}
+                <StyledIconButton onClick={onClose}>
+                    <Close />
+                </StyledIconButton>
+            </StyledDialogTitle>
+
+            <DialogContent>{children}</DialogContent>
+        </StyledDialog>
+    );
+});
 
 const StyledDialog = styled(MuiDialog)`
     .MuiDialog-paper {

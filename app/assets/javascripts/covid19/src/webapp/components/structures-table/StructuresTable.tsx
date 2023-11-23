@@ -252,6 +252,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     );
 });
 
+export type SetNMROptions = React.Dispatch<React.SetStateAction<NMROptions | undefined>>;
+
 type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
 
 const useStyles = makeStyles({

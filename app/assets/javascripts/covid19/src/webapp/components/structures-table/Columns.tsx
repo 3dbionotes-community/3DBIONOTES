@@ -26,6 +26,7 @@ import { OnClickDetails } from "./badge/BadgeDetails";
 import { OnClickIDR } from "./badge/BadgeLigands";
 import { OnClickNMR } from "./badge/BadgeEntities";
 import { NMRPagination } from "../../../domain/repositories/EntitiesRepository";
+import { SetNMROptions } from "./StructuresTable";
 
 type Row = Structure;
 export type Field = keyof Row;
@@ -42,6 +43,7 @@ export interface NMROptions {
     pagination?: NMRPagination;
     setPagination?: SetNMRPagination;
     error?: string;
+    loading?: boolean;
 }
 
 export interface SetNMRPagination {
@@ -173,7 +175,7 @@ export function getColumns(
         onClickDetails: OnClickDetails;
         onClickIDR: OnClickIDR;
         onClickNMR: OnClickNMR;
-        setNMROptions: (nmrOptions: NMROptions) => void;
+        setNMROptions: SetNMROptions;
     }
 ): { definition: GridColDef[]; base: Columns } {
     const definition = columnsBase.map(

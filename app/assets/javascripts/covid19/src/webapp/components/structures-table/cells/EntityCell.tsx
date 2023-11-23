@@ -1,16 +1,17 @@
 import _ from "lodash";
 import React from "react";
 import i18n from "../../../../utils/i18n";
-import { CellProps, NMROptions } from "../Columns";
+import { CellProps } from "../Columns";
 import { Link } from "../Link";
 import { Wrapper } from "./Wrapper";
 import { BadgeEntities, OnClickNMR } from "../badge/BadgeEntities";
 import { HtmlTooltip } from "../HtmlTooltip";
 import { getValidationSource } from "../../../../domain/entities/Covid19Info";
+import { SetNMROptions } from "../StructuresTable";
 
 export interface EntitiyCellProps extends CellProps {
     onClickNMR?: OnClickNMR;
-    setNMROptions: (nmrOptions: NMROptions) => void;
+    setNMROptions: SetNMROptions;
 }
 
 export const EntityCell: React.FC<EntitiyCellProps> = React.memo(props => {
