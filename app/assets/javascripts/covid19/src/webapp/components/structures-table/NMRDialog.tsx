@@ -79,6 +79,11 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
                         />
                     )}
                     <DialogContent target={target} />
+                    {pagination.pageSize >= 25 && (
+                        <div style={styles.bottomProgress}>
+                            {loading && <StyledLinearProgress />}
+                        </div>
+                    )}
                     <Toolbar
                         pagination={pagination}
                         setPagination={setPagination}
@@ -174,51 +179,57 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
 });
 
 const DialogContent: React.FC<DialogContentProps> = React.memo(({ target }) => {
+    const headers = ["Name", "SMILES", "InchiKey", "Formula", "PubChem_ID", "Target", "Result"];
+    const Headers = headers.map((h, idx) => (
+        <TableCell align="left" key={idx}>
+            {h}
+        </TableCell>
+    ));
+
+    const Items = _.sortBy(target.fragments, f => !f.binding).map((fragment, idx) => {
+        const {
+            binding,
+            ligand: { name: ligandName, smiles, inChI, formula, pubchemId },
+        } = fragment;
+
+        return (
+            <StyledTableRow key={idx} binding={binding}>
+                <TableCell>{idx}</TableCell>
+                <TableCell>{ligandName}</TableCell>
+                <TableCell align="left">{smiles}</TableCell>
+                <TableCell align="left">{inChI}</TableCell>
+                <TableCell align="left">{formula}</TableCell>
+                <TableCell align="left">{pubchemId}</TableCell>
+                <TableCell align="left">{target.name}</TableCell>
+                <TableCell align="left">
+                    {binding ? i18n.t("Binding") : i18n.t("Not binding")}
+                </TableCell>
+            </StyledTableRow>
+        );
+    });
+
     return (
         <TableContainer>
             <Table size="small" aria-label={i18n.t("Ligand interaction")}>
                 <TableHead>
                     <StyledHeadTableRow>
                         <TableCell></TableCell>
-                        <TableCell align="left">{i18n.t("Name")}</TableCell>
-                        <TableCell align="left">{i18n.t("SMILES")}</TableCell>
-                        <TableCell align="left">{i18n.t("InchiKey")}</TableCell>
-                        <TableCell align="left">{i18n.t("Formula")}</TableCell>
-                        <TableCell align="left">{i18n.t("PubChem_ID")}</TableCell>
-                        <TableCell align="left">{i18n.t("Target")}</TableCell>
-                        <TableCell align="left">{i18n.t("Result")}</TableCell>
+                        {Headers}
                     </StyledHeadTableRow>
                 </TableHead>
-                <TableBody>
-                    {_.sortBy(target.fragments, f => !f.binding).map((fragment, idx) => {
-                        const {
-                            binding,
-                            ligand: { name: ligandName, smiles, inChI, formula, pubchemId },
-                        } = fragment;
-
-                        return (
-                            <StyledTableRow key={idx} binding={binding}>
-                                <TableCell>{idx}</TableCell>
-                                <TableCell>{ligandName}</TableCell>
-                                <TableCell align="left">{smiles}</TableCell>
-                                <TableCell align="left">{inChI}</TableCell>
-                                <TableCell align="left">{formula}</TableCell>
-                                <TableCell align="left">{pubchemId}</TableCell>
-                                <TableCell align="left">{target.name}</TableCell>
-                                <TableCell align="left">
-                                    {binding ? i18n.t("Binding") : i18n.t("Not binding")}
-                                </TableCell>
-                            </StyledTableRow>
-                        );
-                    })}
-                </TableBody>
+                <TableBody>{Items}</TableBody>
             </Table>
         </TableContainer>
     );
 });
 
 const styles = {
-    toolbar: { display: "flex", justifyContent: "space-between", paddingLeft: "1em" },
+    toolbar: {
+        display: "flex",
+        justifyContent: "space-between",
+        paddingLeft: "1em",
+        margin: "0.25em 0",
+    },
     exportButton: {
         display: "flex",
         alignItems: "center",
@@ -235,6 +246,7 @@ const styles = {
         justifyContent: "center",
     },
     stop: { position: "absolute", fontSize: "14px" },
+    bottomProgress: { height: "4px" },
 } as const;
 
 interface StyledTableRowProps {

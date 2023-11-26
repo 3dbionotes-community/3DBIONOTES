@@ -4,7 +4,10 @@ import { Badge } from "./Badge";
 import { useAppContext } from "../../../contexts/app-context";
 import { NMROptions } from "../Columns";
 import { SetNMROptions } from "../StructuresTable";
+import { LoaderMask } from "../../loader-mask/LoaderMask";
+import { useBooleanState } from "../../../hooks/useBoolean";
 import i18n from "../../../../utils/i18n";
+import { Portal } from "@material-ui/core";
 
 export type OnClickNMR = (options: NMROptions, gaLabel: string) => void;
 
@@ -19,28 +22,40 @@ export interface BadgeEntitiesProps {
 
 export const BadgeEntities: React.FC<BadgeEntitiesProps> = React.memo(props => {
     const { moreDetails = true, uniprotId, start, end, onClick, setNMROptions } = props;
+    const [loading, { enable: showLoading, disable: hideLoading }] = useBooleanState(false);
+
     const getNMR = useNMRPagination(uniprotId, start, end, setNMROptions);
 
     const notifyClick = React.useCallback(
         (e: MouseEvent) => {
             e.preventDefault();
-            if (onClick) return getNMR(onClick);
+            if (onClick) {
+                showLoading();
+                return getNMR(onClick, hideLoading);
+            }
         },
-        [onClick, getNMR]
+        [onClick, getNMR, hideLoading, showLoading]
     );
 
-    return moreDetails ? (
-        <BadgeGroup>
-            <Badge onClick={notifyClick} backgroundColor={"w3-deep-purple"}>
-                {i18n.t("C19-NMR")} <i className="fa fa-info-circle icon-right"></i>
-            </Badge>
-        </BadgeGroup>
-    ) : (
-        <BadgeInlineGroup>
-            <Badge onClick={notifyClick} backgroundColor={"w3-deep-purple"}>
-                {i18n.t("C19-NMR")} <i className="fa fa-info-circle icon-right"></i>
-            </Badge>
-        </BadgeInlineGroup>
+    return (
+        <>
+            {moreDetails ? (
+                <BadgeGroup>
+                    <Badge onClick={notifyClick} backgroundColor={"w3-deep-purple"}>
+                        {i18n.t("C19-NMR")} <i className="fa fa-info-circle icon-right"></i>
+                    </Badge>
+                </BadgeGroup>
+            ) : (
+                <BadgeInlineGroup>
+                    <Badge onClick={notifyClick} backgroundColor={"w3-deep-purple"}>
+                        {i18n.t("C19-NMR")} <i className="fa fa-info-circle icon-right"></i>
+                    </Badge>
+                </BadgeInlineGroup>
+            )}
+            <Portal>
+                <LoaderMask open={loading} title={i18n.t("Loading NMR...")} />
+            </Portal>
+        </>
     );
 });
 
@@ -50,12 +65,13 @@ function useNMRPagination(
     end: number,
     setNMROptions: SetNMROptions
 ) {
-    const [page, setPage] = React.useState(1);
+    const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(10);
     const [count, setCount] = React.useState(0);
     const { compositionRoot } = useAppContext();
 
     React.useEffect(() => {
+        if (count === 0) return;
         setNMROptions(nmrOptions => ({
             ...nmrOptions,
             loading: true,
@@ -97,9 +113,10 @@ function useNMRPagination(
     ]);
 
     const getNMR = React.useCallback(
-        (onClick: OnClickNMR) => {
+        (onClick: OnClickNMR, hideLoading: () => void) => {
             return compositionRoot.entities.getPartialNMR
                 .execute(uniprotId, start, end, { page, pageSize, count })
+                .tap(() => hideLoading())
                 .run(
                     ({ target, pagination }) => {
                         setCount(pagination.count);
