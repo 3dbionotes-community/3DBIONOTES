@@ -237,6 +237,7 @@ export const filterKeys = [
     "cstf",
     "ceres",
     "idr",
+    "nmr",
 ] as const;
 
 export type FilterKey = typeof filterKeys[number];
@@ -250,6 +251,10 @@ export function filterEntities(entities: Entity[], filterState: Covid19Filter): 
             entity.isNanobody === filterState.nanobodies &&
             entity.isSybody === filterState.sybodies
     );
+}
+
+export function filterNMR(entities: Entity[]): Entity[] {
+    return entities.filter(entity => entity.start && entity.end);
 }
 
 export function filterLigands(ligands: Ligand[]): Ligand[] {
@@ -287,6 +292,7 @@ export function getTranslations() {
             cstf: i18n.t("CSTF"),
             ceres: i18n.t("CERES"),
             idr: i18n.t("IDR"),
+            nmr: i18n.t("NMR"),
         } as Record<FilterKey, string>,
     };
 }

@@ -17,6 +17,7 @@ import {
     ValidationSource,
     ValidationMethod,
     filterLigands,
+    filterNMR,
 } from "../../domain/entities/Covid19Info";
 import {
     Covid19InfoRepository,
@@ -73,9 +74,16 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         const isPdbValidationsFilterEnabled =
             filterState.pdbRedo || filterState.cstf || filterState.ceres;
         const isIDREnabled = filterState.idr;
+        const isNMREnabled = filterState.nmr;
 
-        if (!isEntitiesStateEnabled && !isPdbValidationsFilterEnabled && !isIDREnabled)
+        if (
+            !isEntitiesStateEnabled &&
+            !isPdbValidationsFilterEnabled &&
+            !isIDREnabled &&
+            !isNMREnabled
+        )
             return structures;
+
         const structuresWithValidations = isPdbValidationsFilterEnabled
             ? structures.filter(structure =>
                   !_.isEmpty(structure.validations.pdb)
@@ -83,17 +91,24 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
                       : false
               )
             : structures;
+
         const structuresWithEntities = isEntitiesStateEnabled
             ? structuresWithValidations.filter(
                   structure => !_.isEmpty(filterEntities(structure.entities, filterState))
               )
             : structuresWithValidations;
+
         const structuresWithIDR = isIDREnabled
             ? structuresWithEntities.filter(
                   structure => !_.isEmpty(filterLigands(structure.ligands))
               )
             : structuresWithEntities;
-        return structuresWithIDR;
+
+        const structuresWithNMR = isNMREnabled
+            ? structuresWithIDR.filter(structure => !_.isEmpty(filterNMR(structure.entities)))
+            : structuresWithIDR;
+
+        return structuresWithNMR;
     }
 
     private searchByText(

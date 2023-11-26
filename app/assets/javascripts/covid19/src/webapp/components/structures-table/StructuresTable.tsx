@@ -279,6 +279,7 @@ const initialFilterState: Covid19Filter = {
     cstf: false,
     ceres: false,
     idr: false,
+    nmr: false,
 };
 
 function useRenderedRows() {

@@ -67,6 +67,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
             cstf: getTooltip(getValidationSource(validationSources, "CSTF")),
             ceres: getTooltip(getValidationSource(validationSources, "CERES")),
             idr: getTooltip(getValidationSource(validationSources, "IDR")),
+            nmr: getTooltip(getValidationSource(validationSources, "NMR")),
         }),
         [validationSources, getTooltip]
     );
@@ -131,6 +132,12 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                         checked={filterState.idr}
                         setFilterState={setFilterState}
                         tooltip={filterTooltips.idr}
+                    />
+                    <FilterItem
+                        filterKey="nmr"
+                        checked={filterState.nmr}
+                        setFilterState={setFilterState}
+                        tooltip={filterTooltips.nmr}
                     />
                 </MenuList>
             </GridMenu>
