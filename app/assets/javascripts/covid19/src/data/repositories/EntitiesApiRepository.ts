@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _, { pick } from "lodash";
 import { routes } from "../../routes";
 import { getValidatedJSON } from "../utils/request-utils";
 import { FutureData } from "../../domain/entities/FutureData";
@@ -20,11 +20,15 @@ export class EntitiesApiRepository implements EntitiesRepository {
     ): FutureData<{ target: NSPTarget; pagination: NMRPagination }> {
         const { bionotesApi } = routes;
         const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
-            `${bionotesApi}/nmr/${uniprotId}?start=${start}&end=${end}&limit=${pagination.pageSize}&page=${pagination.page}`,
+            `${bionotesApi}/nmr/${uniprotId}?start=${start}&end=${end}&limit=${
+                pagination.pageSize
+            }&page=${pagination.page + 1}`,
             paginationCodec(nmrFragmentCodec)
         ).flatMap(p =>
             getNMRTarget(uniprotId, getResults(p)).map(target => ({
-                pagination: p ? { ...pagination, count: p.count } : pagination,
+                pagination: p
+                    ? { ...pagination, page: pagination.page - 1, count: p.count }
+                    : pagination,
                 target,
             }))
         );
@@ -48,8 +52,7 @@ export class EntitiesApiRepository implements EntitiesRepository {
             paginationCodec(nmrFragmentCodec)
         )
             .flatMap(pagination => {
-                const pages = pagination?.count ?? 0;
-                console.log(pagination?.count);
+                const pages = Math.ceil((pagination?.count ?? 0) / chunkSize);
                 return Future.sequential(_.times(pages).map(page => targetChunk$(page)));
             })
             .map(targets =>
@@ -65,7 +68,27 @@ export class EntitiesApiRepository implements EntitiesRepository {
     }
 
     saveNMRTarget(target: NSPTarget) {
-        const contents = JSON.stringify(target, null, 4);
+        const targetKeys = ["name", "uniprotId", "start", "end", "fragments"];
+        const fragmentKeys = ["name", "ligand", "binding"];
+        const ligandKeys = ["formula", "inChI", "name", "pubchemId", "smiles"];
+
+        const fragments = target.fragments.map(f => {
+            const fragment = {
+                ...f,
+                ligand: pick(f.ligand, ligandKeys),
+            };
+
+            return pick(fragment, fragmentKeys);
+        });
+
+        const t = {
+            ...target,
+            fragments,
+        };
+
+        const content = pick(t, targetKeys);
+        const contents = JSON.stringify(content, null, 4);
+
         return this.save({
             contents,
             name: `${target.name.toLowerCase().replaceAll(/\s/g, "-")}`,
