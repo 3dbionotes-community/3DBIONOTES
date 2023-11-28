@@ -17,8 +17,8 @@ export const nmrFragmentCodec = Codec.interface({
     uniprotentry: string,
     ligandentity: oneOf([Codec.interface(commonLigand), pdbLigandC]),
     details: Codec.interface({
-        type: string, //binding | notbinding
-        entity: string, //NSP
+        type: string, // binding | notbinding
+        entity: string, // NMR Target
     }),
     start: number,
     end: number,

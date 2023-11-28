@@ -24,14 +24,6 @@ export interface NMRFragment {
     ligand: PdbLigand;
 }
 
-export interface NMRSource {
-    dataSource: string;
-    name: string; // "NMR Not-Binding" / "NMR Binding"
-    description: string;
-    externalLink: string;
-    binding: boolean;
-}
-
 export type ProteinId = string;
 
 export type ChainId = string;
