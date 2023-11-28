@@ -1,11 +1,12 @@
+import { BasicNMRTarget } from "../entities/Protein";
 import { NMRRepository } from "../repositories/NMRRepository";
 
 export class SaveNMRTargetUseCase {
     constructor(private nmrRepository: NMRRepository) {}
 
-    execute(uniprotId: string, start: number, end: number) {
+    execute(target: BasicNMRTarget) {
         return this.nmrRepository
-            .getNMRTarget(uniprotId, start, end)
+            .getNMRTarget(target)
             .map(target => this.nmrRepository.saveNMRTarget(target));
     }
 }

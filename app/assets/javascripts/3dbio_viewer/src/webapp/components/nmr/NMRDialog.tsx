@@ -28,19 +28,19 @@ import { NMRPagination } from "../../../domain/repositories/NMRRepository";
 import i18n from "../../utils/i18n";
 
 interface NMRDialogProps {
-    nmr: BasicNMRTarget;
+    basicTarget: BasicNMRTarget;
     open: boolean;
     closeDialog: () => void;
 }
 
 export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
-    const { nmr, open, closeDialog } = props;
+    const { basicTarget, open, closeDialog } = props;
     const {
         getNMR,
         target,
         saveTarget,
         pagination: [pagination, setPagination],
-    } = useNMR(nmr.uniprotId, nmr.start, nmr.end);
+    } = useNMR(basicTarget);
     const [isSaving, savingActions] = useBooleanState();
     const [isLoading, loadingActions] = useBooleanState();
 
@@ -231,7 +231,7 @@ const DialogContent: React.FC<DialogContentProps> = React.memo(({ target }) => {
     );
 });
 
-function useNMR(uniprotId: string, start: number, end: number) {
+function useNMR(basicTarget: BasicNMRTarget) {
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(25);
     const [count, setCount] = React.useState(0);
@@ -240,31 +240,31 @@ function useNMR(uniprotId: string, start: number, end: number) {
 
     React.useEffect(() => {
         setCount(0);
-    }, [start, end]);
+    }, [basicTarget]);
 
     const getNMR = React.useCallback(
         (loading: { show: () => void; hide: () => void }) => {
             loading.show();
             return compositionRoot.getPartialNMR
-                .execute(uniprotId, start, end, { page, pageSize, count })
+                .execute(basicTarget, { page, pageSize, count })
                 .tap(() => loading.hide())
                 .run(({ target, pagination }) => {
                     setCount(pagination.count);
                     setTarget(target);
                 }, console.error);
         },
-        [compositionRoot, end, start, uniprotId, count, pageSize, page]
+        [compositionRoot, count, pageSize, page, basicTarget]
     );
 
     const saveTarget = React.useCallback(
         (loading: { show: () => void; hide: () => void }) => {
             loading.show();
             return compositionRoot.saveNMR
-                .execute(uniprotId, start, end)
+                .execute(basicTarget)
                 .tap(() => loading.hide())
                 .run(() => {}, console.error);
         },
-        [compositionRoot, end, start, uniprotId]
+        [compositionRoot, basicTarget]
     );
 
     return {

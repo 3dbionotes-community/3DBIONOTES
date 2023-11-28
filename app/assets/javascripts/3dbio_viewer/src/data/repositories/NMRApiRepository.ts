@@ -7,17 +7,16 @@ import { NMRPagination, NMRRepository } from "../../domain/repositories/NMRRepos
 import { nmrFragmentCodec, NMRScreeningFragment } from "../NMRScreening";
 import { getResults, Pagination, paginationCodec } from "../codec-utils";
 import { getValidatedJSON } from "../request-utils";
-import { NMRTarget } from "../../domain/entities/Protein";
+import { BasicNMRTarget, NMRTarget } from "../../domain/entities/Protein";
 import { Future } from "../../utils/future";
 import i18n from "../../domain/utils/i18n";
 
 export class NMRApiRepository implements NMRRepository {
     getPartialNMRTarget(
-        uniprotId: string,
-        start: number,
-        end: number,
+        target: BasicNMRTarget,
         pagination: NMRPagination
     ): FutureData<{ target: NMRTarget; pagination: NMRPagination }> {
+        const { uniprotId, start, end } = target;
         const { bionotesStaging } = routes;
         const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
             `${bionotesStaging}/bws/api/nmr/${uniprotId}?start=${start}&end=${end}&limit=${
@@ -36,7 +35,8 @@ export class NMRApiRepository implements NMRRepository {
         return nmrTarget$;
     }
 
-    getNMRTarget(uniprotId: string, start: number, end: number): FutureData<NMRTarget> {
+    getNMRTarget(target: BasicNMRTarget): FutureData<NMRTarget> {
+        const { uniprotId, start, end } = target;
         const { bionotesStaging } = routes;
         const chunkSize = 50;
         const targetChunk$ = (page: number) =>

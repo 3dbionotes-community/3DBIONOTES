@@ -126,7 +126,11 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         <div style={styles.container}>
             {renderBlocks}
             {nmrTarget && (
-                <NMRDialog nmr={nmrTarget} open={openNMRDialog} closeDialog={closeNMRDialog} />
+                <NMRDialog
+                    basicTarget={nmrTarget}
+                    open={openNMRDialog}
+                    closeDialog={closeNMRDialog}
+                />
             )}
         </div>
     );
