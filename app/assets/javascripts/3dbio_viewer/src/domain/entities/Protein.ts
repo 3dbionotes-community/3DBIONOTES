@@ -8,7 +8,7 @@ export interface Protein {
     genBank?: string[];
 }
 
-export interface NSPTarget {
+export interface NMRTarget {
     name: string;
     uniprotId: string;
     fragments: NMRFragment[];

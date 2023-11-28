@@ -1,9 +1,9 @@
 import _ from "lodash";
 import { Fragments } from "../../../../domain/entities/Fragment2";
-import { NSPTarget } from "../../../../domain/entities/Protein";
+import { NMRTarget } from "../../../../domain/entities/Protein";
 import { subtracks } from "../definitions";
 
-export function getNMRFragments(nmr: NSPTarget[]): Fragments {
+export function getNMRFragments(nmr: NMRTarget[]): Fragments {
     return nmr.flatMap(target => ({
         subtrack: subtracks.nmr,
         start: target.start,

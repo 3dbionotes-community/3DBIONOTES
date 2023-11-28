@@ -19,7 +19,7 @@ import {
     TableRow,
     Typography,
 } from "@material-ui/core";
-import { NSPTarget } from "../../../domain/entities/Protein";
+import { NMRTarget } from "../../../domain/entities/Protein";
 import { Close as CloseIcon, GetApp as GetAppIcon, Stop as StopIcon } from "@material-ui/icons";
 import { NMRTarget } from "../protvista/ProtvistaViewer";
 import { useAppContext } from "../AppContext";
@@ -184,7 +184,7 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
 });
 
 interface DialogContentProps {
-    target: NSPTarget;
+    target: NMRTarget;
 }
 
 const DialogContent: React.FC<DialogContentProps> = React.memo(({ target }) => {
@@ -237,7 +237,7 @@ function useNMR(uniprotId: string, start: number, end: number) {
     const [pageSize, setPageSize] = React.useState(25);
     const [count, setCount] = React.useState(0);
     const { compositionRoot } = useAppContext();
-    const [target, setTarget] = React.useState<NSPTarget>();
+    const [target, setTarget] = React.useState<NMRTarget>();
 
     React.useEffect(() => {
         setCount(0);

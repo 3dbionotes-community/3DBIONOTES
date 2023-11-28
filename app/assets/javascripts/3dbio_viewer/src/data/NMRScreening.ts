@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { Codec, GetType, nullType, number, oneOf, string } from "purify-ts";
-import { NSPTarget } from "../domain/entities/Protein";
+import { NMRTarget } from "../domain/entities/Protein";
 import { commonLigand, pdbLigandC } from "./PdbLigands";
 
 const featureTypeCodec = Codec.interface({
@@ -28,7 +28,7 @@ export const nmrFragmentCodec = Codec.interface({
 
 export type NMRScreeningFragment = GetType<typeof nmrFragmentCodec>;
 
-export function getNMR(nmrScreenings: NMRScreeningFragment[]): NSPTarget[] {
+export function getNMR(nmrScreenings: NMRScreeningFragment[]): NMRTarget[] {
     const fragments = nmrScreenings.map(nmr => ({
         ...nmr,
         binding: !nmr.details.type.toLowerCase().includes("not"),

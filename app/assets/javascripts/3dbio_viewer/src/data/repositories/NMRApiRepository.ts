@@ -7,7 +7,7 @@ import { NMRPagination, NMRRepository } from "../../domain/repositories/NMRRepos
 import { nmrFragmentCodec, NMRScreeningFragment } from "../NMRScreening";
 import { getResults, Pagination, paginationCodec } from "../codec-utils";
 import { getValidatedJSON } from "../request-utils";
-import { NSPTarget } from "../../domain/entities/Protein";
+import { NMRTarget } from "../../domain/entities/Protein";
 import { Future } from "../../utils/future";
 import i18n from "../../domain/utils/i18n";
 
@@ -17,7 +17,7 @@ export class NMRApiRepository implements NMRRepository {
         start: number,
         end: number,
         pagination: NMRPagination
-    ): FutureData<{ target: NSPTarget; pagination: NMRPagination }> {
+    ): FutureData<{ target: NMRTarget; pagination: NMRPagination }> {
         const { bionotesStaging } = routes;
         const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
             `${bionotesStaging}/bws/api/nmr/${uniprotId}?start=${start}&end=${end}&limit=${
@@ -36,7 +36,7 @@ export class NMRApiRepository implements NMRRepository {
         return nmrTarget$;
     }
 
-    getNMRTarget(uniprotId: string, start: number, end: number): FutureData<NSPTarget> {
+    getNMRTarget(uniprotId: string, start: number, end: number): FutureData<NMRTarget> {
         const { bionotesStaging } = routes;
         const chunkSize = 50;
         const targetChunk$ = (page: number) =>
@@ -67,7 +67,7 @@ export class NMRApiRepository implements NMRRepository {
         return nmrTarget$;
     }
 
-    saveNMRTarget(target: NSPTarget) {
+    saveNMRTarget(target: NMRTarget) {
         const targetKeys = ["name", "uniprotId", "start", "end", "fragments"];
         const fragmentKeys = ["name", "ligand", "binding"];
         const ligandKeys = ["formula", "inChI", "name", "pubchemId", "smiles"];
@@ -108,7 +108,7 @@ export class NMRApiRepository implements NMRRepository {
 export function getNMRTarget(
     uniprotId: string,
     nmrScreenings: NMRScreeningFragment[]
-): FutureData<NSPTarget> {
+): FutureData<NMRTarget> {
     const fragments = nmrScreenings.map(nmr => ({
         ...nmr,
         binding: !nmr.details.type.toLowerCase().includes("not"),
