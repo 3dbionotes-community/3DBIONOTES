@@ -1,14 +1,12 @@
-import { NSPTarget } from "../entities/Covid19Info";
+import { BasicNSPTarget, NSPTarget } from "../entities/Covid19Info";
 import { FutureData } from "../entities/FutureData";
 
 export interface EntitiesRepository {
     getPartialNMRTarget: (
-        uniprotId: string,
-        start: number,
-        end: number,
+        target: BasicNSPTarget,
         pagination: NMRPagination
     ) => FutureData<{ target: NSPTarget; pagination: NMRPagination }>;
-    getNMRTarget: (uniprotId: string, start: number, end: number) => FutureData<NSPTarget>;
+    getNMRTarget: (target: BasicNSPTarget) => FutureData<NSPTarget>;
     saveNMRTarget: (target: NSPTarget) => void;
 }
 

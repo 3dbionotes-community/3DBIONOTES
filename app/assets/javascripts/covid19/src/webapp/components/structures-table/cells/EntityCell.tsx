@@ -120,9 +120,11 @@ export const EntityCell: React.FC<EntitiyCellProps> = React.memo(props => {
                                 <BadgeEntities
                                     moreDetails={moreDetails}
                                     onClick={onClickNMR}
-                                    uniprotId={entity.uniprotAcc}
-                                    start={entity.nmr.start}
-                                    end={entity.nmr.end}
+                                    target={{
+                                        uniprotId: entity.uniprotAcc,
+                                        start: entity.nmr.start,
+                                        end: entity.nmr.end,
+                                    }}
                                     setNMROptions={setNMROptions}
                                 />
                             </span>

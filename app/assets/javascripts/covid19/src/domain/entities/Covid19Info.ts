@@ -213,14 +213,17 @@ export interface Details {
     refdoc?: RefDoc[];
 }
 
-export interface NSPTarget {
+export interface BasicNSPTarget {
     uniprotId: string;
+    start: number;
+    end: number;
+}
+
+export interface NSPTarget extends BasicNSPTarget {
     name: string;
     fragments: NMRFragment[];
     bindingCount: number;
     notBindingCount: number;
-    start: number;
-    end: number;
 }
 
 export interface NMRFragment {

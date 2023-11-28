@@ -45,7 +45,7 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
         if (target) {
             showExporting();
             return compositionRoot.entities.saveNMR
-                .execute(target.uniprotId, target.start, target.end)
+                .execute(target)
                 .tap(() => hideExporting())
                 .run(() => {}, console.error);
         }

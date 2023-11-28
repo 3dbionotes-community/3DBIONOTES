@@ -2,7 +2,7 @@ import _, { pick } from "lodash";
 import { routes } from "../../routes";
 import { getValidatedJSON } from "../utils/request-utils";
 import { FutureData } from "../../domain/entities/FutureData";
-import { NSPTarget } from "../../domain/entities/Covid19Info";
+import { BasicNSPTarget, NSPTarget } from "../../domain/entities/Covid19Info";
 import { NMRPagination, EntitiesRepository } from "../../domain/repositories/EntitiesRepository";
 import { nmrFragmentCodec, NMRScreeningFragment } from "../NMRScreening";
 import { getResults, Pagination, paginationCodec } from "../codec-utils";
@@ -13,11 +13,10 @@ import i18n from "../../utils/i18n";
 
 export class EntitiesApiRepository implements EntitiesRepository {
     getPartialNMRTarget(
-        uniprotId: string,
-        start: number,
-        end: number,
+        target: BasicNSPTarget,
         pagination: NMRPagination
     ): FutureData<{ target: NSPTarget; pagination: NMRPagination }> {
+        const { uniprotId, start, end } = target;
         const { bionotesApi } = routes;
         const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
             `${bionotesApi}/nmr/${uniprotId}?start=${start}&end=${end}&limit=${
@@ -36,7 +35,8 @@ export class EntitiesApiRepository implements EntitiesRepository {
         return nmrTarget$;
     }
 
-    getNMRTarget(uniprotId: string, start: number, end: number): FutureData<NSPTarget> {
+    getNMRTarget(target: BasicNSPTarget): FutureData<NSPTarget> {
+        const { uniprotId, start, end } = target;
         const { bionotesApi } = routes;
         const chunkSize = 50;
         const targetChunk$ = (page: number) =>
