@@ -6,12 +6,11 @@ export interface Protein {
     gen?: string;
     organism?: string;
     genBank?: string[];
-    nspTargets: NSPTarget[];
-    // nmrSource?: NMRSource[];
 }
 
 export interface NSPTarget {
     name: string;
+    uniprotId: string;
     fragments: NMRFragment[];
     bindingCount: number;
     notBindingCount: number;

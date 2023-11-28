@@ -10,7 +10,7 @@ const featureTypeCodec = Codec.interface({
     externalLink: string,
 });
 
-const nmrFragmentCodec = Codec.interface({
+export const nmrFragmentCodec = Codec.interface({
     name: string,
     description: string,
     externalLink: string,
@@ -59,11 +59,13 @@ export function getNMR(nmrScreenings: NMRScreeningFragment[]): NSPTarget[] {
 
         const start = _.first(fragments.map(({ start }) => start));
         const end = _.first(fragments.map(({ end }) => end));
-        if (!start || !end) return [];
+        const uniprotId = _.first(targetFragments.map(({ uniprotentry }) => uniprotentry));
+        if (!start || !end || !uniprotId) return [];
 
         return [
             {
                 name,
+                uniprotId,
                 fragments,
                 bindingCount: fragments.filter(({ binding }) => binding).length,
                 notBindingCount: fragments.filter(({ binding }) => !binding).length,

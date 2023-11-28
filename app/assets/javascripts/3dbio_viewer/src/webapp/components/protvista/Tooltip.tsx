@@ -34,16 +34,7 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
             <CrossReferences fragment={fragment} />
             <Tools pdb={pdb} subtrack={subtrack} fragment={fragment} />
             <Legend fragment={fragment} />
-            {isNMR && (
-                <tr>
-                    <td>{i18n.t("CV19-NMR-Consortium")}</td>
-                    <td>
-                        <button data-start={fragment.start} data-end={fragment.end}>
-                            {i18n.t("Library of tested ligands")}
-                        </button>
-                    </td>
-                </tr>
-            )}
+            {isNMR && <NMR start={fragment.start} end={fragment.end} />}
         </TooltipTable>
     );
 });
@@ -57,6 +48,19 @@ const styles = {
         height: 10,
         marginRight: 5,
     },
+};
+
+const NMR: React.FC<{ start: number; end: number }> = props => {
+    return (
+        <tr>
+            <td>{i18n.t("CV19-NMR-Consortium")}</td>
+            <td>
+                <button data-start={props.start} data-end={props.end}>
+                    {i18n.t("Library of tested ligands")}
+                </button>
+            </td>
+        </tr>
+    );
 };
 
 const TooltipTable: React.FC = props => {

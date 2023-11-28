@@ -11,10 +11,11 @@ import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { getSelectedChain } from "../viewer-selector/ViewerSelector";
 import { useAppContext } from "../AppContext";
 import { ProtvistaAction, getBlockTracks } from "./Protvista.helpers";
+import { NMRDialog } from "../nmr/NMRDialog";
 import i18n from "../../utils/i18n";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
-import { NMRDialog } from "../nmr/NMRDialog";
+import { useBooleanState } from "../../hooks/use-boolean";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
@@ -33,8 +34,10 @@ const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks, pdbInfo, setBlockVisibility, setSelection } = props;
 
-    const [openNMRDialog, setOpenNMRDialog] = React.useState(false);
-    const closeNMRDialog = React.useCallback(() => setOpenNMRDialog(false), []);
+    const [nmrTarget, setNMRTarget] = React.useState<NMRTarget>();
+    const [openNMRDialog, { enable: showNMRDialog, disable: closeNMRDialog }] = useBooleanState(
+        false
+    );
 
     const setBlockVisible = React.useCallback(
         (block: BlockDef) => (visible: boolean) => setBlockVisibility(block, visible),
@@ -87,6 +90,20 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         [pdb, geneName, geneBankEntry, ligandsAndSmallMoleculesCount]
     );
 
+    const action = React.useCallback(
+        (protvistaAction: ProtvistaAction) => {
+            if (protvistaAction.type === "showDialog") {
+                showNMRDialog();
+                setNMRTarget({
+                    start: protvistaAction.start,
+                    end: protvistaAction.end,
+                    uniprotId: pdb.protein.id,
+                });
+            }
+        },
+        [pdb.protein.id, setNMRTarget, showNMRDialog]
+    );
+
     const renderBlocks = React.useMemo(
         () =>
             blocks.map((block, idx) => (
@@ -98,20 +115,18 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                     selection={selection}
                     setSelection={setSelection}
                     setVisible={setBlockVisible}
-                    protvistaAction={
-                        block.id === "ligandInteraction"
-                            ? details => setOpenNMRDialog(true)
-                            : undefined
-                    }
+                    protvistaAction={action}
                 />
             )),
-        [namespace, pdb, selection, blocks, setBlockVisible, setSelection]
+        [namespace, pdb, selection, blocks, setBlockVisible, setSelection, action]
     );
 
     return (
         <div style={styles.container}>
             {renderBlocks}
-            <NMRDialog pdb={pdb} open={openNMRDialog} closeDialog={closeNMRDialog} />
+            {nmrTarget && (
+                <NMRDialog nmr={nmrTarget} open={openNMRDialog} closeDialog={closeNMRDialog} />
+            )}
         </div>
     );
 };
@@ -176,3 +191,9 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
 const styles = {
     container: { padding: "1em 0 2em" },
 };
+
+export interface NMRTarget {
+    start: number;
+    end: number;
+    uniprotId: string;
+}

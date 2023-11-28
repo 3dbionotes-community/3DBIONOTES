@@ -37,7 +37,7 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
                     .map(
                         ([proteinId, proteinInfo]): Protein => {
                             const [_length, name, gen, organism] = proteinInfo;
-                            return { id: proteinId, name, gen, organism, nspTargets: [] };
+                            return { id: proteinId, name, gen, organism };
                         }
                     )
                     .value();

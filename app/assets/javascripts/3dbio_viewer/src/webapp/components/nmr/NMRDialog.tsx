@@ -1,72 +1,221 @@
 import _ from "lodash";
 import React from "react";
+import styled from "styled-components";
 import {
+    Button,
+    CircularProgress,
     Dialog,
     DialogTitle,
     Fab,
     IconButton,
+    LinearProgress,
+    Portal,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
+    TablePagination,
     TableRow,
+    Typography,
 } from "@material-ui/core";
 import { NSPTarget } from "../../../domain/entities/Protein";
-import { Close as CloseIcon, GetApp as GetAppIcon } from "@material-ui/icons";
+import { Close as CloseIcon, GetApp as GetAppIcon, Stop as StopIcon } from "@material-ui/icons";
+import { NMRTarget } from "../protvista/ProtvistaViewer";
+import { useAppContext } from "../AppContext";
+import { useBooleanState } from "../../hooks/use-boolean";
+import { LoaderMask } from "../loader-mask/LoaderMask";
 import i18n from "../../utils/i18n";
-import { Pdb } from "../../../domain/entities/Pdb";
-import styled from "styled-components";
+import { Cancel } from "../../../utils/future";
 
 interface NMRDialogProps {
-    pdb: Pdb;
+    nmr: NMRTarget;
     open: boolean;
     closeDialog: () => void;
 }
 
 export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
-    const { pdb, open, closeDialog } = props;
-    const [index, setIndex] = React.useState(0);
+    const { nmr, open, closeDialog } = props;
+    const {
+        getNMR,
+        target,
+        saveTarget,
+        pagination: [pagination, setPagination],
+    } = useNMR(nmr.uniprotId, nmr.start, nmr.end);
+    const [isSaving, savingActions] = useBooleanState();
+    const [isLoading, loadingActions] = useBooleanState();
 
-    const targets = React.useMemo(() => pdb.protein.nspTargets, [pdb.protein.nspTargets]);
-    const title = React.useMemo(
-        () => i18n.t("Ligand interaction NMR: {{target}}", { target: targets[index]?.name }),
-        [targets, index]
+    const save = React.useCallback(
+        () => saveTarget({ show: savingActions.open, hide: savingActions.close }),
+        [saveTarget, savingActions]
     );
 
-    return (
-        <Dialog
-            open={open}
-            onClose={closeDialog}
-            maxWidth="xl"
-            fullWidth
-            className="model-search"
-            scroll="paper"
-        >
-            <DialogTitle>
-                {title}
-                <IconButton onClick={closeDialog}>
-                    <CloseIcon />
-                </IconButton>
-            </DialogTitle>
+    const title = React.useMemo(
+        () => i18n.t("Ligand interaction NMR: {{target}}", { target: target?.name ?? "" }),
+        [target]
+    );
 
-            <DialogContent targets={targets} selectedIndex={index} />
-            <StyledFab onClick={() => {}} variant="extended">
-                <GetAppIcon style={{ marginRight: "0.5rem" }} />
-                {i18n.t("Export")}
-            </StyledFab>
-        </Dialog>
+    React.useEffect(() => {
+        getNMR({ show: loadingActions.open, hide: loadingActions.close });
+    }, [getNMR, loadingActions]);
+
+    return (
+        <>
+            <Dialog
+                open={Boolean(open && target)}
+                onClose={closeDialog}
+                maxWidth="xl"
+                fullWidth
+                className="model-search"
+                scroll="paper"
+            >
+                <DialogTitle>
+                    {title}
+                    <IconButton onClick={closeDialog}>
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+
+                {target ? (
+                    <>
+                        {isLoading && pagination.count > 0 && <StyledLinearProgress />}
+                        <DialogContent target={target} />
+                        <Toolbar
+                            pagination={pagination}
+                            setPagination={setPagination}
+                            save={save}
+                            isSaving={isSaving}
+                            hideSaving={savingActions.close}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <Typography>{i18n.t("Unable to retrieve NMR")}</Typography>
+                    </>
+                )}
+            </Dialog>
+            <Portal>
+                <LoaderMask
+                    open={isLoading && pagination.count === 0}
+                    title={i18n.t("Loading NMR...")}
+                />
+            </Portal>
+        </>
+    );
+});
+
+interface ToolbarProps {
+    pagination: NMRPagination;
+    setPagination: SetNMRPagination;
+    save: () => Cancel | undefined;
+    hideSaving: () => void;
+    isSaving: boolean;
+}
+
+const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
+    const {
+        pagination,
+        setPagination: { setPage, setPageSize },
+        isSaving,
+        save,
+        hideSaving,
+    } = props;
+    const [saving, setSaving] = React.useState<Cancel>();
+
+    const handleChangePage = React.useCallback(
+        (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+            setPage(newPage);
+        },
+        [setPage]
+    );
+
+    const handleChangeRowsPerPage = React.useCallback(
+        (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            setPageSize(parseInt(event.target.value, 10));
+            setPage(1);
+        },
+        [setPage, setPageSize]
+    );
+
+    const onClick = React.useCallback(() => {
+        if (isSaving) return;
+        const cancel = save();
+        setSaving(_saving => cancel);
+    }, [isSaving, save]);
+
+    const stopSaving = React.useCallback(() => {
+        if (saving) {
+            saving();
+            hideSaving();
+        }
+    }, [saving, hideSaving]);
+
+    return (
+        <div style={styles.toolbar}>
+            <div style={styles.exportButton}>
+                <Button
+                    variant="outlined"
+                    disabled={isSaving}
+                    color="inherit"
+                    startIcon={<GetAppIcon />}
+                    size="small"
+                    onClick={onClick}
+                    style={{ opacity: isSaving ? 0.5 : 1 }}
+                >
+                    {i18n.t("Export all fragments")}
+                </Button>
+                {isSaving && (
+                    <div style={styles.exportStopButton} onClick={stopSaving}>
+                        <StyledCircularProgress size={20} />
+                        <StopIcon color="inherit" style={styles.stop} />
+                    </div>
+                )}
+            </div>
+            <TablePagination
+                component="div"
+                count={pagination.count}
+                page={pagination.page}
+                onPageChange={handleChangePage}
+                rowsPerPage={pagination.pageSize}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+        </div>
     );
 });
 
 interface DialogContentProps {
-    targets: NSPTarget[];
-    selectedIndex: number;
+    target: NSPTarget;
 }
 
-const DialogContent: React.FC<DialogContentProps> = React.memo(({ targets, selectedIndex }) => {
-    const target = React.useMemo(() => targets[selectedIndex], [targets, selectedIndex]);
-    if (!target) return <></>;
+const DialogContent: React.FC<DialogContentProps> = React.memo(({ target }) => {
+    const headers = ["Name", "SMILES", "InchiKey", "Formula", "PubChem_ID", "Target", "Result"];
+    const Headers = headers.map((h, idx) => (
+        <TableCell align="left" key={idx}>
+            {h}
+        </TableCell>
+    ));
+
+    const Items = _.sortBy(target.fragments, f => !f.binding).map((fragment, idx) => {
+        const {
+            binding,
+            ligand: { name: ligandName, smiles, inChI, formula, pubchemId },
+        } = fragment;
+
+        return (
+            <StyledTableRow key={idx} binding={binding}>
+                <TableCell>{idx}</TableCell>
+                <TableCell>{ligandName}</TableCell>
+                <TableCell align="left">{smiles}</TableCell>
+                <TableCell align="left">{inChI}</TableCell>
+                <TableCell align="left">{formula}</TableCell>
+                <TableCell align="left">{pubchemId}</TableCell>
+                <TableCell align="left">{target.name}</TableCell>
+                <TableCell align="left">
+                    {binding ? i18n.t("Binding") : i18n.t("Not binding")}
+                </TableCell>
+            </StyledTableRow>
+        );
+    });
 
     return (
         <TableContainer>
@@ -74,45 +223,98 @@ const DialogContent: React.FC<DialogContentProps> = React.memo(({ targets, selec
                 <TableHead>
                     <StyledHeadTableRow>
                         <TableCell></TableCell>
-                        <TableCell align="left">{i18n.t("Name")}</TableCell>
-                        <TableCell align="left">{i18n.t("SMILES")}</TableCell>
-                        <TableCell align="left">{i18n.t("InchiKey")}</TableCell>
-                        <TableCell align="left">{i18n.t("Formula")}</TableCell>
-                        <TableCell align="left">{i18n.t("PubChem_ID")}</TableCell>
-                        <TableCell align="left">{i18n.t("Target")}</TableCell>
-                        <TableCell align="left">{i18n.t("Result")}</TableCell>
+                        {Headers}
                     </StyledHeadTableRow>
                 </TableHead>
-                <TableBody>
-                    {_.sortBy(target.fragments, f => !f.binding).map((fragment, idx) => {
-                        const {
-                            binding,
-                            ligand: { name: ligandName, smiles, inChI, formula, pubchemId },
-                        } = fragment;
-
-                        return (
-                            <StyledTableRow key={idx} binding={binding}>
-                                <TableCell>{idx}</TableCell>
-                                <TableCell>{ligandName}</TableCell>
-                                <TableCell align="left">{smiles}</TableCell>
-                                <TableCell align="left">{inChI}</TableCell>
-                                <TableCell align="left">{formula}</TableCell>
-                                <TableCell align="left">{pubchemId}</TableCell>
-                                <TableCell align="left">{target.name}</TableCell>
-                                <TableCell align="left">
-                                    {binding ? i18n.t("Binding") : i18n.t("Not binding")}
-                                </TableCell>
-                            </StyledTableRow>
-                        );
-                    })}
-                </TableBody>
+                <TableBody>{Items}</TableBody>
             </Table>
         </TableContainer>
     );
 });
 
-interface StyledTableRowProps {
-    binding: boolean;
+function useNMR(uniprotId: string, start: number, end: number) {
+    const [page, setPage] = React.useState(0);
+    const [pageSize, setPageSize] = React.useState(25);
+    const [count, setCount] = React.useState(0);
+    const { compositionRoot } = useAppContext();
+    const [target, setTarget] = React.useState<NSPTarget>();
+
+    React.useEffect(() => {
+        setCount(0);
+    }, [start, end]);
+
+    const getNMR = React.useCallback(
+        (loading: { show: () => void; hide: () => void }) => {
+            loading.show();
+            return compositionRoot.getPartialNMR
+                .execute(uniprotId, start, end, { page, pageSize, count })
+                .tap(() => loading.hide())
+                .run(({ target, pagination }) => {
+                    setCount(pagination.count);
+                    setTarget(target);
+                }, console.error);
+        },
+        [compositionRoot, end, start, uniprotId, count, pageSize, page]
+    );
+
+    const saveTarget = React.useCallback(
+        (loading: { show: () => void; hide: () => void }) => {
+            loading.show();
+            return compositionRoot.saveNMR
+                .execute(uniprotId, start, end)
+                .tap(() => loading.hide())
+                .run(() => {}, console.error);
+        },
+        [compositionRoot, end, start, uniprotId]
+    );
+
+    return {
+        getNMR,
+        target,
+        saveTarget,
+        pagination: [
+            { page, pageSize, count } as NMRPagination,
+            { setPage, setPageSize, setCount } as SetNMRPagination,
+        ] as const,
+    };
+}
+
+const styles = {
+    toolbar: {
+        display: "flex",
+        justifyContent: "space-between",
+        paddingLeft: "1em",
+        margin: "0.25em 0",
+    },
+    exportButton: {
+        display: "flex",
+        alignItems: "center",
+        color: "#607d8b",
+        position: "relative",
+        justifyContent: "center",
+    },
+    exportStopButton: {
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        color: "#009688",
+        position: "absolute",
+        justifyContent: "center",
+    },
+    stop: { position: "absolute", fontSize: "14px" },
+    bottomProgress: { height: "4px" },
+} as const;
+
+interface NMRPagination {
+    page: number;
+    pageSize: number;
+    count: number;
+}
+
+interface SetNMRPagination {
+    setPage: React.Dispatch<React.SetStateAction<number>>;
+    setPageSize: React.Dispatch<React.SetStateAction<number>>;
+    setCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const StyledHeadTableRow = styled(TableRow)`
@@ -122,22 +324,23 @@ const StyledHeadTableRow = styled(TableRow)`
     }
 `;
 
-const StyledTableRow = styled(StyledHeadTableRow)<StyledTableRowProps>`
+const StyledTableRow = styled(StyledHeadTableRow)<{ binding: boolean }>`
     background: ${props => (props.binding ? "#dcedc8" : "#ffcdd2")};
     border: ${props => (props.binding ? "1px solid #9ccc65" : "1px solid #ef5350")};
 `;
 
-const StyledFab = styled(Fab)`
-    position: absolute;
-    bottom: 2em;
-    right: 3em;
-    color: #fff;
-    padding-right: 1.5em;
-    background-color: #123546;
-    &:hover {
-        background-color: #123546;
+const StyledLinearProgress = styled(LinearProgress)`
+    &.MuiLinearProgress-colorPrimary {
+        background-color: #c6ece8;
     }
-    &.MuiFab-root .MuiSvgIcon-root {
-        fill: #fff;
+    & .MuiLinearProgress-barColorPrimary {
+        background-color: #009688;
+    }
+`;
+
+const StyledCircularProgress = styled(CircularProgress)`
+    position: absolute;
+    &.MuiCircularProgress-colorPrimary {
+        color: #009688;
     }
 `;

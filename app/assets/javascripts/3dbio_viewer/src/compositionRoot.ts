@@ -21,6 +21,9 @@ import { BionotesOrganismRepository } from "./data/repositories/BionotesOrganism
 import { ExportAllAnnotationsUseCase } from "./domain/usecases/ExportAllAnnotationsUseCase";
 import { AnnotationsExportApiRepository } from "./data/repositories/AnnotationsExportApiRepository";
 import { ExportAnnotationsUseCase } from "./domain/usecases/ExportAnnotationsUseCase";
+import { GetPartialNMRTargetUseCase } from "./domain/usecases/GetPartialNMRTargetUseCase";
+import { SaveNMRTargetUseCase } from "./domain/usecases/SaveNMRTargetUseCase";
+import { NMRApiRepository } from "./data/repositories/NMRApiRepository";
 
 export function getCompositionRoot() {
     const pdbRepository = new ApiPdbRepository();
@@ -33,6 +36,7 @@ export function getCompositionRoot() {
     const ontologyRepository = new BionotesOntologyRepository();
     const organismRepository = new BionotesOrganismRepository();
     const annotationsExportRepository = new AnnotationsExportApiRepository();
+    const nmrRepository = new NMRApiRepository();
 
     return {
         getPdb: new GetPdbUseCase(pdbRepository, ontologyRepository, organismRepository),
@@ -50,6 +54,8 @@ export function getCompositionRoot() {
         exportAnnotations: new ExportAnnotationsUseCase(annotationsExportRepository),
         buildNetwork: new BuildNetworkUseCase(networkRepository),
         getNetwork: new GetNetworkUseCase(networkRepository),
+        getPartialNMR: new GetPartialNMRTargetUseCase(nmrRepository),
+        saveNMR: new SaveNMRTargetUseCase(nmrRepository),
     };
 }
 

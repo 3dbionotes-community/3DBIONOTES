@@ -26,7 +26,7 @@ export interface UniprotResponse {
 
 export function getProtein(proteinId: string, res: UniprotResponse | undefined): Protein {
     const entry = res?.uniprot.entry[0];
-    if (!entry) return { id: proteinId, nspTargets: [] };
+    if (!entry) return { id: proteinId };
 
     const tempName = entry.protein?.[0]?.recommendedName?.[0]?.fullName?.[0];
     const name = typeof tempName === "string" ? tempName : tempName?._;
@@ -42,5 +42,5 @@ export function getProtein(proteinId: string, res: UniprotResponse | undefined):
 
     const gen = genEntry ? genEntry._ : undefined;
 
-    return { id: proteinId, name, gen, organism, genBank, nspTargets: [] };
+    return { id: proteinId, name, gen, organism, genBank };
 }

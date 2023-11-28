@@ -4,7 +4,7 @@ export function maybeNull<Data>(type: Codec<Data>) {
     return oneOf([type, nullType]);
 }
 
-export function pagination<Data>(type: Codec<Data>): Codec<Pagination<Data>> {
+export function paginationCodec<Data>(type: Codec<Data>): Codec<Pagination<Data>> {
     return Codec.interface({
         count: number,
         next: maybeNull(string),

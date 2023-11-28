@@ -113,8 +113,6 @@ export class ApiPdbRepository implements PdbRepository {
             proteinId
         );
 
-        const nspTargets = on(data.nmrScreenings, nmr => getNMR(nmr)) ?? [];
-
         // prettier-ignore
         const fragmentsList = {
             featureFragments: on(data.features, features => getFeatureFragments(options.proteinId, features)),
@@ -133,13 +131,10 @@ export class ApiPdbRepository implements PdbRepository {
             dbPtmFragments: on(data.dbPtm, dbPtm => getDbPtmFragments(dbPtm, proteinId)),
             molprobityFragments: on(data.molprobity, molprobity => getMolprobityFragments(molprobity, options.chainId)),
             antigenFragments: on(data.antigenic, antigenic => getAntigenicFragments(antigenic, proteinId)),
-            nmrFragments: getNMRFragments(nspTargets),
+            nmrFragments: on(data.nmrScreenings, nmr => getNMRFragments(getNMR(nmr))),
         };
 
-        const protein = {
-            ...getProtein(proteinId, data.uniprot),
-            nspTargets,
-        };
+        const protein = getProtein(proteinId, data.uniprot);
 
         const experiment = on(data.pdbExperiment, pdbExperiment =>
             options.pdbId ? getExperiment(options.pdbId, pdbExperiment) : undefined
@@ -231,13 +226,17 @@ function getData(options: Options): FutureData<Partial<Data>> {
         ).map(pdbEntryResponse => pdbEntryResponse?.results)
     );
 
+    const nmrScreenings = onF(proteinId, proteinId =>
+        getJSON<Pagination<NMRScreeningFragment>>(
+            `${bioUrlDev}/bws/api/nmr/${proteinId}?limit=1`
+        ).map(pagination => getResults(pagination))
+    );
+
     // Move URLS to each track module?
     //prettier-ignore
     const data$: DataRequests = {
         uniprot: getXML(`${routes.uniprot}/uniprotkb/${proteinId}.xml`),
-        nmrScreenings: onF(proteinId, proteinId =>
-            getJSON<Pagination<NMRScreeningFragment>>(`${bioUrlDev}/bws/api/nmr/${proteinId}/`).map((pagination)=>getResults(pagination))
-        ),
+        nmrScreenings,
         pdbEmdbsEmValidations,
         features: getJSON(`${ebiProteinsApiUrl}/features/${proteinId}`),
         cv19Tracks: getJSON(`${bioUrl}/cv19_annotations/${proteinId}_annotations.json`),
