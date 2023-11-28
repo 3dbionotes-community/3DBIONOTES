@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2023-04-03T01:34:38.763Z\n"
-"PO-Revision-Date: 2023-04-03T01:34:38.763Z\n"
+"POT-Creation-Date: 2023-11-26T09:50:23.996Z\n"
+"PO-Revision-Date: 2023-11-26T09:50:23.996Z\n"
 
 msgid "No ontologies found."
 msgstr ""
@@ -36,6 +36,9 @@ msgid "CERES"
 msgstr ""
 
 msgid "IDR"
+msgstr ""
+
+msgid "NMR"
 msgstr ""
 
 msgid "COVID-19 Structural Hub"
@@ -128,6 +131,18 @@ msgstr ""
 msgid "Ontology"
 msgstr ""
 
+msgid "Export all fragments"
+msgstr ""
+
+msgid "Binding"
+msgstr ""
+
+msgid "Not binding"
+msgstr ""
+
+msgid "Ligand interaction"
+msgstr ""
+
 msgid "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
 msgstr ""
 
@@ -205,6 +220,15 @@ msgid "Examples"
 msgstr ""
 
 msgid "View more"
+msgstr ""
+
+msgid "C19-NMR"
+msgstr ""
+
+msgid "Loading NMR..."
+msgstr ""
+
+msgid "Loading IDR..."
 msgstr ""
 
 msgid "Sample"
