@@ -1,14 +1,10 @@
-import { array, Codec, GetType, nullType, number, oneOf, string } from "purify-ts";
-
-function maybeNull<Data>(type: Codec<Data>) {
-    return oneOf([type, nullType]);
-}
+import { array, Codec, GetType, nullable, number, string } from "purify-ts";
 
 function getOntologiesResponse<T>(codec: Codec<T>) {
     return Codec.interface({
         count: number,
-        next: maybeNull(string),
-        previous: maybeNull(string),
+        next: nullable(string),
+        previous: nullable(string),
         results: codec,
     });
 }

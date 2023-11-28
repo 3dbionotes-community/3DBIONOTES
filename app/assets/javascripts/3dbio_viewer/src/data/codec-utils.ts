@@ -1,14 +1,10 @@
-import { Codec, array, nullType, number, oneOf, string } from "purify-ts";
-
-export function maybeNull<Data>(type: Codec<Data>) {
-    return oneOf([type, nullType]);
-}
+import { Codec, array, nullable, number, string } from "purify-ts";
 
 export function paginationCodec<Data>(type: Codec<Data>): Codec<Pagination<Data>> {
     return Codec.interface({
         count: number,
-        next: maybeNull(string),
-        previous: maybeNull(string),
+        next: nullable(string),
+        previous: nullable(string),
         results: array(type),
     });
 }
