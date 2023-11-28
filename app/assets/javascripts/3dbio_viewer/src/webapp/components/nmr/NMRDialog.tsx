@@ -24,6 +24,7 @@ import { useAppContext } from "../AppContext";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { LoaderMask } from "../loader-mask/LoaderMask";
 import { Cancel } from "../../../utils/future";
+import { NMRPagination } from "../../../domain/repositories/NMRRepository";
 import i18n from "../../utils/i18n";
 
 interface NMRDialogProps {
@@ -302,12 +303,6 @@ const styles = {
     stop: { position: "absolute", fontSize: "14px" },
     bottomProgress: { height: "4px" },
 } as const;
-
-interface NMRPagination {
-    page: number;
-    pageSize: number;
-    count: number;
-}
 
 interface SetNMRPagination {
     setPage: React.Dispatch<React.SetStateAction<number>>;
