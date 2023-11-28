@@ -6,7 +6,6 @@ import {
     CircularProgress,
     Dialog,
     DialogTitle,
-    Fab,
     IconButton,
     LinearProgress,
     Portal,
@@ -19,17 +18,16 @@ import {
     TableRow,
     Typography,
 } from "@material-ui/core";
-import { NMRTarget } from "../../../domain/entities/Protein";
+import { BasicNMRTarget, NMRTarget } from "../../../domain/entities/Protein";
 import { Close as CloseIcon, GetApp as GetAppIcon, Stop as StopIcon } from "@material-ui/icons";
-import { NMRTarget } from "../protvista/ProtvistaViewer";
 import { useAppContext } from "../AppContext";
 import { useBooleanState } from "../../hooks/use-boolean";
 import { LoaderMask } from "../loader-mask/LoaderMask";
-import i18n from "../../utils/i18n";
 import { Cancel } from "../../../utils/future";
+import i18n from "../../utils/i18n";
 
 interface NMRDialogProps {
-    nmr: NMRTarget;
+    nmr: BasicNMRTarget;
     open: boolean;
     closeDialog: () => void;
 }

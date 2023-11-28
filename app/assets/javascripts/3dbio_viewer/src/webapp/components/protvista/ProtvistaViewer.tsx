@@ -12,10 +12,11 @@ import { getSelectedChain } from "../viewer-selector/ViewerSelector";
 import { useAppContext } from "../AppContext";
 import { ProtvistaAction, getBlockTracks } from "./Protvista.helpers";
 import { NMRDialog } from "../nmr/NMRDialog";
+import { useBooleanState } from "../../hooks/use-boolean";
 import i18n from "../../utils/i18n";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
-import { useBooleanState } from "../../hooks/use-boolean";
+import { BasicNMRTarget } from "../../../domain/entities/Protein";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
@@ -34,7 +35,7 @@ const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks, pdbInfo, setBlockVisibility, setSelection } = props;
 
-    const [nmrTarget, setNMRTarget] = React.useState<NMRTarget>();
+    const [nmrTarget, setNMRTarget] = React.useState<BasicNMRTarget>();
     const [openNMRDialog, { enable: showNMRDialog, disable: closeNMRDialog }] = useBooleanState(
         false
     );
@@ -191,9 +192,3 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
 const styles = {
     container: { padding: "1em 0 2em" },
 };
-
-export interface NMRTarget {
-    start: number;
-    end: number;
-    uniprotId: string;
-}
