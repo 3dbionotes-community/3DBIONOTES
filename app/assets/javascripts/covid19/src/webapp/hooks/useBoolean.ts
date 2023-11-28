@@ -8,17 +8,21 @@ interface UseBooleanActions {
     set: (newValue: boolean) => void;
     toggle: Callback;
     enable: Callback;
+    open: Callback;
     disable: Callback;
+    close: Callback;
 }
 
-export function useBooleanState(initialValue: boolean): UseBooleanReturn {
-    const [value, setValue] = React.useState(initialValue);
+export function useBooleanState(initialValue?: boolean): UseBooleanReturn {
+    const [value, setValue] = React.useState(initialValue ?? false);
 
     const actions = React.useMemo(() => {
         return {
             set: (newValue: boolean) => setValue(newValue),
             enable: () => setValue(true),
+            open: () => setValue(true),
             disable: () => setValue(false),
+            close: () => setValue(false),
             toggle: () => setValue(value_ => !value_),
         };
     }, [setValue]);

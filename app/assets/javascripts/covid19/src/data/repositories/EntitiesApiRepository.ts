@@ -7,9 +7,9 @@ import { NMRPagination, EntitiesRepository } from "../../domain/repositories/Ent
 import { nmrFragmentCodec, NMRScreeningFragment } from "../NMRScreening";
 import { getResults, Pagination, paginationCodec } from "../codec-utils";
 import { Future } from "../utils/future";
-import i18n from "../../utils/i18n";
 import { lookup } from "mime-types";
 import FileSaver from "file-saver";
+import i18n from "../../utils/i18n";
 
 export class EntitiesApiRepository implements EntitiesRepository {
     getPartialNMRTarget(

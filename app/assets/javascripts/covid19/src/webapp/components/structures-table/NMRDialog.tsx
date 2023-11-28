@@ -46,13 +46,8 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
             showExporting();
             return compositionRoot.entities.saveNMR
                 .execute(target.uniprotId, target.start, target.end)
-                .run(
-                    () => hideExporting(),
-                    err => {
-                        hideExporting();
-                        console.error(err);
-                    }
-                );
+                .tap(() => hideExporting())
+                .run(() => {}, console.error);
         }
     }, [target, compositionRoot, hideExporting, showExporting]);
 
@@ -249,10 +244,6 @@ const styles = {
     bottomProgress: { height: "4px" },
 } as const;
 
-interface StyledTableRowProps {
-    binding: boolean;
-}
-
 const StyledHeadTableRow = styled(TableRow)`
     background: #fff;
     & .MuiTableCell-root {
@@ -260,7 +251,7 @@ const StyledHeadTableRow = styled(TableRow)`
     }
 `;
 
-const StyledTableRow = styled(StyledHeadTableRow)<StyledTableRowProps>`
+const StyledTableRow = styled(StyledHeadTableRow)<{ binding: boolean }>`
     background: ${props => (props.binding ? "#dcedc8" : "#ffcdd2")};
     border: ${props => (props.binding ? "1px solid #9ccc65" : "1px solid #ef5350")};
 `;

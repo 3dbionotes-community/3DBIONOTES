@@ -22,7 +22,7 @@ export interface BadgeEntitiesProps {
 
 export const BadgeEntities: React.FC<BadgeEntitiesProps> = React.memo(props => {
     const { moreDetails = true, uniprotId, start, end, onClick, setNMROptions } = props;
-    const [loading, { enable: showLoading, disable: hideLoading }] = useBooleanState(false);
+    const [loading, { open: showLoading, close: hideLoading }] = useBooleanState(false);
 
     const getNMR = useNMRPagination(uniprotId, start, end, setNMROptions);
 
@@ -66,7 +66,7 @@ function useNMRPagination(
     setNMROptions: SetNMROptions
 ) {
     const [page, setPage] = React.useState(0);
-    const [pageSize, setPageSize] = React.useState(10);
+    const [pageSize, setPageSize] = React.useState(25);
     const [count, setCount] = React.useState(0);
     const { compositionRoot } = useAppContext();
 
