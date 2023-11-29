@@ -482,7 +482,6 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         description: i18n.t(""),
     },
 
-    //NMR
     nmr: {
         id: "nmr" as const,
         name: i18n.t("Functional mapping ligands"),

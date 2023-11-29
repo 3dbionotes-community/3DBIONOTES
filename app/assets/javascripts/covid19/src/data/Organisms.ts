@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { array, Codec, GetType, nullable, number, string } from "purify-ts";
 import { Organism } from "../domain/entities/LigandImageData";
 

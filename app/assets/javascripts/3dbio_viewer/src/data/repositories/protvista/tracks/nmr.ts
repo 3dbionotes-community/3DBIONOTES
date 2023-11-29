@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { Fragments } from "../../../../domain/entities/Fragment2";
 import { NMRTarget } from "../../../../domain/entities/Protein";
 import { subtracks } from "../definitions";

@@ -30,6 +30,7 @@ export const BadgeEntities: React.FC<BadgeEntitiesProps> = React.memo(props => {
             e.preventDefault();
             if (onClick) {
                 showLoading();
+                //This can be extracted to NMR Dialog with useEffect
                 return getNMR(onClick, hideLoading);
             }
         },
