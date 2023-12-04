@@ -50,7 +50,7 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
     );
 
     const title = React.useMemo(
-        () => i18n.t("Ligand interaction NMR: {{target}}", { target: target?.name ?? "" }),
+        () => `${i18n.t("Ligand interaction NMR")}: ${target?.name ?? ""}`,
         [target]
     );
 
@@ -78,7 +78,7 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
                 {target ? (
                     <>
                         {isLoading && pagination.count > 0 && <StyledLinearProgress />}
-                        <DialogContent target={target} />
+                        <DialogContent target={target} pagination={pagination} />
                         <Toolbar
                             pagination={pagination}
                             setPagination={setPagination}
@@ -184,9 +184,10 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
 
 interface DialogContentProps {
     target: NMRTarget;
+    pagination: NMRPagination;
 }
 
-const DialogContent: React.FC<DialogContentProps> = React.memo(({ target }) => {
+const DialogContent: React.FC<DialogContentProps> = React.memo(({ target, pagination }) => {
     const headers = ["Name", "SMILES", "InchiKey", "Formula", "PubChem_ID", "Target", "Result"];
     const Headers = headers.map((h, idx) => (
         <TableCell align="left" key={idx}>
@@ -202,7 +203,7 @@ const DialogContent: React.FC<DialogContentProps> = React.memo(({ target }) => {
 
         return (
             <StyledTableRow key={idx} binding={binding}>
-                <TableCell>{idx}</TableCell>
+                <TableCell>{pagination.pageSize * pagination.page + idx + 1}</TableCell>
                 <TableCell>{ligandName}</TableCell>
                 <TableCell align="left">{smiles}</TableCell>
                 <TableCell align="left">{inChI}</TableCell>

@@ -37,7 +37,7 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
     const [isExporting, { enable: showExporting, disable: hideExporting }] = useBooleanState(false);
 
     const title = React.useMemo(
-        () => i18n.t("Ligand interaction NMR: {{target}}", { target: target?.name ?? "" }),
+        () => `${i18n.t("Ligand interaction NMR")}: ${target?.name ?? ""}`,
         [target]
     );
 
@@ -64,7 +64,7 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
             {error && <Typography>{error}</Typography>}
             {target && pagination && setPagination && saveTarget && (
                 <>
-                    {pagination.pageSize >= 25 && (
+                    {/* {pagination.pageSize >= 25 && (
                         <Toolbar
                             pagination={pagination}
                             setPagination={setPagination}
@@ -72,13 +72,13 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
                             isExporting={isExporting}
                             hideExporting={hideExporting}
                         />
-                    )}
-                    <DialogContent target={target} />
-                    {pagination.pageSize >= 25 && (
+                    )} */}
+                    <DialogContent target={target} pagination={pagination} />
+                    {/* {pagination.pageSize >= 25 && (
                         <div style={styles.bottomProgress}>
                             {loading && <StyledLinearProgress />}
                         </div>
-                    )}
+                    )} */}
                     <Toolbar
                         pagination={pagination}
                         setPagination={setPagination}
@@ -94,6 +94,7 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
 
 interface DialogContentProps {
     target: NSPTarget;
+    pagination: NMRPagination;
 }
 
 interface ToolbarProps {
@@ -173,7 +174,7 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
     );
 });
 
-const DialogContent: React.FC<DialogContentProps> = React.memo(({ target }) => {
+const DialogContent: React.FC<DialogContentProps> = React.memo(({ target, pagination }) => {
     const headers = ["Name", "SMILES", "InchiKey", "Formula", "PubChem_ID", "Target", "Result"];
     const Headers = headers.map((h, idx) => (
         <TableCell align="left" key={idx}>
@@ -189,7 +190,7 @@ const DialogContent: React.FC<DialogContentProps> = React.memo(({ target }) => {
 
         return (
             <StyledTableRow key={idx} binding={binding}>
-                <TableCell>{idx}</TableCell>
+                <TableCell>{pagination.pageSize * pagination.page + idx + 1}</TableCell>
                 <TableCell>{ligandName}</TableCell>
                 <TableCell align="left">{smiles}</TableCell>
                 <TableCell align="left">{inChI}</TableCell>
@@ -259,7 +260,6 @@ const StyledTableRow = styled(StyledHeadTableRow)<{ binding: boolean }>`
 const StyledDialog = styled(Dialog)`
     .MuiDialogContent-root {
         padding: 0 !important;
-        position: relative;
     }
 `;
 

@@ -120,11 +120,15 @@ export function getNMRTarget(
         .value();
 
     const target = targets[0];
-    if (!target) return Future.error({ message: i18n.t("NMR Error: no target found") });
+    if (!target)
+        return Future.error({
+            message: i18n.t("NMR Error: no target found", { nsSeparator: false }),
+        });
     if (targets.length > 1)
         return Future.error({
             message: i18n.t(
-                `NMR Error: target should only be one. Instead received ${targets.length}.`
+                `NMR Error: target should only be one. Instead received ${targets.length}.`,
+                { nsSeparator: false }
             ),
         });
 
@@ -152,7 +156,8 @@ export function getNMRTarget(
     if (!start || !end)
         return Future.error({
             message: i18n.t(
-                "NMR Unexpected Error: no start / no end on fragments. Unable to get target."
+                "NMR Unexpected Error: no start / no end on fragments. Unable to get target.",
+                { nsSeparator: false }
             ),
         });
 
