@@ -1143,6 +1143,9 @@ body {
   .zammad-form-modal-body {
     max-width: 600px !important; //reference from .sm material-ui dialog
     form.zammad-form {
+      label {
+        font-weight: 400;
+      }
       button[type="submit"] {
         background: #607d8b;
         border: 0;
@@ -1152,6 +1155,7 @@ body {
       }
       h2 {
         font-size: 1.25em;
+        font-weight: 400;
       }
     }
   }
