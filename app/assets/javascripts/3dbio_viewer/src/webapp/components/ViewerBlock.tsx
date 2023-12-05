@@ -53,7 +53,7 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
                     )}
                 </div>
             </div>
-            <div className={css.contents}>{interpolatedDescription}</div>
+            {description !== "" && <div className={css.contents}>{interpolatedDescription}</div>}
             {children}
         </div>
     );

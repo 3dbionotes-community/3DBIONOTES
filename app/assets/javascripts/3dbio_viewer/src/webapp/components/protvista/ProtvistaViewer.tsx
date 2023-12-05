@@ -120,10 +120,15 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
         );
     }, [compositionRoot.exportAnnotations, block, pdb.tracks, pdb.chainId]);
 
+    const modifiedBlock =
+        block.id === "mapValidation" && _.first(props.pdb.emdbs)?.emv?.stats
+            ? block
+            : { ...block, description: "" };
+
     return (
         <ViewerBlock
             key={block.id}
-            block={block}
+            block={modifiedBlock}
             namespace={namespace}
             onDownload={!_.isEmpty(block.tracks) ? downloadTracks : undefined}
         >
