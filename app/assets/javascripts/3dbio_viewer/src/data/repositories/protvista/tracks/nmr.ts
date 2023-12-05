@@ -1,8 +1,8 @@
 import { Fragments } from "../../../../domain/entities/Fragment2";
-import { NMRTarget } from "../../../../domain/entities/Protein";
+import { NMRFragmentTarget } from "../../../../domain/entities/Protein";
 import { subtracks } from "../definitions";
 
-export function getNMRFragments(nmr: NMRTarget[]): Fragments {
+export function getNMRFragments(nmr: NMRFragmentTarget[]): Fragments {
     return nmr.flatMap(target => ({
         subtrack: subtracks.nmr,
         start: target.start,

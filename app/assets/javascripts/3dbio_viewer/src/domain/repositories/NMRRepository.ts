@@ -1,13 +1,13 @@
 import { FutureData } from "../entities/FutureData";
-import { BasicNMRTarget, NMRTarget } from "../entities/Protein";
+import { BasicNMRFragmentTarget, NMRFragmentTarget } from "../entities/Protein";
 
 export interface NMRRepository {
     getPartialNMRTarget: (
-        target: BasicNMRTarget,
+        target: BasicNMRFragmentTarget,
         pagination: NMRPagination
-    ) => FutureData<{ target: NMRTarget; pagination: NMRPagination }>;
-    getNMRTarget: (target: BasicNMRTarget) => FutureData<NMRTarget>;
-    saveNMRTarget: (target: NMRTarget) => void;
+    ) => FutureData<{ target: NMRFragmentTarget; pagination: NMRPagination }>;
+    getNMRTarget: (target: BasicNMRFragmentTarget) => FutureData<NMRFragmentTarget>;
+    saveNMRTarget: (target: NMRFragmentTarget) => void;
 }
 
 export interface NMRPagination {

@@ -8,13 +8,13 @@ export interface Protein {
     genBank?: string[];
 }
 
-export interface BasicNMRTarget {
+export interface BasicNMRFragmentTarget {
     uniprotId: string;
     start: number;
     end: number;
 }
 
-export interface NMRTarget extends BasicNMRTarget {
+export interface NMRFragmentTarget extends BasicNMRFragmentTarget {
     name: string;
     fragments: NMRFragment[];
     bindingCount: number;

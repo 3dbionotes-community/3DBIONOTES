@@ -18,7 +18,7 @@ import {
     TableRow,
     Typography,
 } from "@material-ui/core";
-import { BasicNMRTarget, NMRTarget } from "../../../domain/entities/Protein";
+import { BasicNMRFragmentTarget, NMRFragmentTarget } from "../../../domain/entities/Protein";
 import { Close as CloseIcon, GetApp as GetAppIcon, Stop as StopIcon } from "@material-ui/icons";
 import { useAppContext } from "../AppContext";
 import { useBooleanState } from "../../hooks/use-boolean";
@@ -28,7 +28,7 @@ import { NMRPagination } from "../../../domain/repositories/NMRRepository";
 import i18n from "../../utils/i18n";
 
 interface NMRDialogProps {
-    basicTarget: BasicNMRTarget;
+    basicTarget: BasicNMRFragmentTarget;
     open: boolean;
     closeDialog: () => void;
 }
@@ -183,7 +183,7 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
 });
 
 interface DialogContentProps {
-    target: NMRTarget;
+    target: NMRFragmentTarget;
     pagination: NMRPagination;
 }
 
@@ -232,12 +232,12 @@ const DialogContent: React.FC<DialogContentProps> = React.memo(({ target, pagina
     );
 });
 
-function useNMR(basicTarget: BasicNMRTarget) {
+function useNMR(basicTarget: BasicNMRFragmentTarget) {
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(25);
     const [count, setCount] = React.useState(0);
     const { compositionRoot } = useAppContext();
-    const [target, setTarget] = React.useState<NMRTarget>();
+    const [target, setTarget] = React.useState<NMRFragmentTarget>();
 
     React.useEffect(() => {
         setCount(0);

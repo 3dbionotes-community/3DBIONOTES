@@ -16,7 +16,7 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import i18n from "../../utils/i18n";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
-import { BasicNMRTarget } from "../../../domain/entities/Protein";
+import { BasicNMRFragmentTarget } from "../../../domain/entities/Protein";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
@@ -35,7 +35,7 @@ const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks, pdbInfo, setBlockVisibility, setSelection } = props;
 
-    const [nmrTarget, setNMRTarget] = React.useState<BasicNMRTarget>();
+    const [nmrTarget, setNMRTarget] = React.useState<BasicNMRFragmentTarget>();
     const [openNMRDialog, { enable: showNMRDialog, disable: closeNMRDialog }] = useBooleanState(
         false
     );

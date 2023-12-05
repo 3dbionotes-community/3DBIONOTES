@@ -7,15 +7,15 @@ import { NMRPagination, NMRRepository } from "../../domain/repositories/NMRRepos
 import { nmrFragmentCodec, NMRScreeningFragment } from "../NMRScreening";
 import { getResults, Pagination, paginationCodec } from "../codec-utils";
 import { getValidatedJSON } from "../request-utils";
-import { BasicNMRTarget, NMRTarget } from "../../domain/entities/Protein";
+import { BasicNMRFragmentTarget, NMRFragmentTarget } from "../../domain/entities/Protein";
 import { Future } from "../../utils/future";
 import i18n from "../../domain/utils/i18n";
 
 export class NMRApiRepository implements NMRRepository {
     getPartialNMRTarget(
-        target: BasicNMRTarget,
+        target: BasicNMRFragmentTarget,
         pagination: NMRPagination
-    ): FutureData<{ target: NMRTarget; pagination: NMRPagination }> {
+    ): FutureData<{ target: NMRFragmentTarget; pagination: NMRPagination }> {
         const { uniprotId, start, end } = target;
         const { bionotesStaging } = routes;
         const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
@@ -35,7 +35,7 @@ export class NMRApiRepository implements NMRRepository {
         return nmrTarget$;
     }
 
-    getNMRTarget(target: BasicNMRTarget): FutureData<NMRTarget> {
+    getNMRTarget(target: BasicNMRFragmentTarget): FutureData<NMRFragmentTarget> {
         const { uniprotId, start, end } = target;
         const { bionotesStaging } = routes;
         const chunkSize = 50;
@@ -67,7 +67,7 @@ export class NMRApiRepository implements NMRRepository {
         return nmrTarget$;
     }
 
-    saveNMRTarget(target: NMRTarget) {
+    saveNMRTarget(target: NMRFragmentTarget) {
         const targetKeys = ["name", "uniprotId", "start", "end", "fragments"];
         const fragmentKeys = ["name", "ligand", "binding"];
         const ligandKeys = ["formula", "inChI", "name", "pubchemId", "smiles"];
@@ -108,7 +108,7 @@ export class NMRApiRepository implements NMRRepository {
 export function getNMRTarget(
     uniprotId: string,
     nmrScreenings: NMRScreeningFragment[]
-): FutureData<NMRTarget> {
+): FutureData<NMRFragmentTarget> {
     const fragments = nmrScreenings.map(nmr => ({
         ...nmr,
         binding: !nmr.details.type.toLowerCase().includes("not"),
