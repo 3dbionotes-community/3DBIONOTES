@@ -2,8 +2,8 @@ import _ from "lodash";
 import React from "react";
 import { Pdb, PdbPublication } from "../../domain/entities/Pdb";
 import { DbItem, MainType, Selection, buildDbItem } from "../view-models/Selection";
-import i18n from "../utils/i18n";
 import { Anchor } from "./Anchor";
+import i18n from "../utils/i18n";
 
 export interface BasicInfoProps {
     pdb: Pdb;
@@ -42,44 +42,54 @@ export const BasicInfoEntry: React.FC<BasicInfoProps> = React.memo(props => {
         [pdb.publications]
     );
 
+    const valueItem = (item: Item, idx: number) =>
+        !item.links && (
+            <li key={idx}>
+                <span>
+                    {item.name}: {item.value ?? "-"}
+                </span>
+            </li>
+        );
+
+    const linksItem = (item: Item, idx: number) => {
+        const { links, name } = item;
+        if (!links || _.isEmpty(links)) return;
+        const linksContent = links.map(({ value, href, itemToAdd }, idx) => {
+            if (href)
+                return (
+                    <React.Fragment key={idx}>
+                        <Anchor key={idx} href={href}>
+                            {value}
+                        </Anchor>
+                        {links.length != 1 && idx < links.length - 1 && ", "}
+                    </React.Fragment>
+                );
+            else if (itemToAdd)
+                return (
+                    <React.Fragment key={idx}>
+                        <span className="anchor" onClick={addOverlayItem(itemToAdd)}>
+                            {value}
+                        </span>
+                        {links.length != 1 && idx < links.length - 1 && ", "}
+                    </React.Fragment>
+                );
+        });
+
+        return (
+            <li key={idx}>
+                <span>{name}: </span>
+                {linksContent}
+            </li>
+        );
+    };
+
     return (
         <ul>
-            {items.map(({ name, value, links }, idx) => (
-                <li key={idx}>
-                    {!links && (
-                        <span>
-                            {name}: {value ?? "-"}
-                        </span>
-                    )}
-                    {links && (
-                        <span>
-                            {name}:{" "}
-                            {links.map(({ value, href, itemToAdd }, idx) => {
-                                if (href)
-                                    return (
-                                        <React.Fragment key={idx}>
-                                            <Anchor key={idx} href={href}>
-                                                {value}
-                                            </Anchor>
-                                            {links.length != 1 && idx < links.length - 1 && ", "}
-                                        </React.Fragment>
-                                    );
-                                else if (itemToAdd)
-                                    return (
-                                        <React.Fragment key={idx}>
-                                            <span
-                                                className="anchor"
-                                                onClick={addOverlayItem(itemToAdd)}
-                                            >
-                                                {value}
-                                            </span>
-                                            {links.length != 1 && idx < links.length - 1 && ", "}
-                                        </React.Fragment>
-                                    );
-                            })}
-                        </span>
-                    )}
-                </li>
+            {items.map((item, idx) => (
+                <>
+                    {valueItem(item, idx)}
+                    {linksItem(item, idx)}
+                </>
             ))}
         </ul>
     );
