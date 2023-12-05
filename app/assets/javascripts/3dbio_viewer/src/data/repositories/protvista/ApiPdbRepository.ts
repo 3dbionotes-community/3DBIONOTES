@@ -48,15 +48,15 @@ import {
     pdbEntryResponseC,
     PdbLigandsResponse,
 } from "../../PdbLigands";
-import { getNMR, NMRScreeningFragment } from "../../NMRScreening";
-import { getResults, Pagination } from "../../codec-utils";
+import { getResults, Pagination, paginationCodec } from "../../codec-utils";
 import { getPublicationsCodec, EntryPublications, getPublications } from "../../PdbPublications";
-import { getNMRFragments } from "./tracks/nmr";
+import { getNMRSubtrack } from "./tracks/nmr";
+import { NMRTarget, nmrTargetCodec } from "../../NMRTarget";
 
 interface Data {
     uniprot: UniprotResponse;
     pdbEmdbsEmValidations: PdbEmdbEmValidations[];
-    nmrScreenings: NMRScreeningFragment[];
+    nmrTargets: NMRTarget[];
     features: Features;
     cv19Tracks: Cv19Tracks;
     pdbAnnotations: PdbAnnotations;
@@ -131,7 +131,7 @@ export class ApiPdbRepository implements PdbRepository {
             dbPtmFragments: on(data.dbPtm, dbPtm => getDbPtmFragments(dbPtm, proteinId)),
             molprobityFragments: on(data.molprobity, molprobity => getMolprobityFragments(molprobity, options.chainId)),
             antigenFragments: on(data.antigenic, antigenic => getAntigenicFragments(antigenic, proteinId)),
-            nmrFragments: on(data.nmrScreenings, nmr => getNMRFragments(getNMR(nmr))),
+            nmrFragments: on(data.nmrTargets, nmr => getNMRSubtrack(nmr)),
         };
 
         const protein = getProtein(proteinId, data.uniprot);
@@ -226,9 +226,10 @@ function getData(options: Options): FutureData<Partial<Data>> {
         ).map(pdbEntryResponse => pdbEntryResponse?.results)
     );
 
-    const nmrScreenings = onF(proteinId, proteinId =>
-        getJSON<Pagination<NMRScreeningFragment>>(
-            `${bioUrlDev}/bws/api/nmr/${proteinId}?limit=1`
+    const nmrTargets = onF(proteinId, proteinId =>
+        getValidatedJSON<Pagination<NMRTarget>>(
+            `${bioUrlDev}/bws/api/nmr/targets/${proteinId}/`,
+            paginationCodec(nmrTargetCodec)
         ).map(pagination => getResults(pagination))
     );
 
@@ -236,7 +237,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
     //prettier-ignore
     const data$: DataRequests = {
         uniprot: getXML(`${routes.uniprot}/uniprotkb/${proteinId}.xml`),
-        nmrScreenings,
+        nmrTargets,
         pdbEmdbsEmValidations,
         features: getJSON(`${ebiProteinsApiUrl}/features/${proteinId}`),
         cv19Tracks: getJSON(`${bioUrl}/cv19_annotations/${proteinId}_annotations.json`),

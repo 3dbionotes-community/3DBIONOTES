@@ -1,11 +1,13 @@
 import { Fragments } from "../../../../domain/entities/Fragment2";
-import { NMRFragmentTarget } from "../../../../domain/entities/Protein";
+import { NMRTarget } from "../../../NMRTarget";
 import { subtracks } from "../definitions";
 
-export function getNMRFragments(nmr: NMRFragmentTarget[]): Fragments {
-    return nmr.flatMap(target => ({
+export function getNMRSubtrack(target: NMRTarget[]): Fragments {
+    return target.map(t => ({
         subtrack: subtracks.nmr,
-        start: target.start,
-        end: target.end,
+        start: t.start,
+        end: t.end,
+        description: t.entity,
+        color: "#f00",
     }));
 }
