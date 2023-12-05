@@ -1,15 +1,10 @@
 import _ from "lodash";
 import React from "react";
-import { Pdb, PdbPublication } from "../../domain/entities/Pdb";
-import { DbItem, MainType, Selection, buildDbItem } from "../view-models/Selection";
+import { PdbPublication } from "../../domain/entities/Pdb";
+import { DbItem, MainType, buildDbItem } from "../view-models/Selection";
 import { Anchor } from "./Anchor";
 import i18n from "../utils/i18n";
-
-export interface BasicInfoProps {
-    pdb: Pdb;
-    selection: Selection;
-    setSelection: (newSelection: Selection) => void;
-}
+import { BlockComponentProps } from "./protvista/Protvista.types";
 
 interface Item {
     name: string;
@@ -21,8 +16,8 @@ interface Item {
     }[];
 }
 
-export const BasicInfoEntry: React.FC<BasicInfoProps> = React.memo(props => {
-    const { pdb, selection, setSelection } = props;
+export const BasicInfoEntry: React.FC<BlockComponentProps> = React.memo(props => {
+    const { pdb, selection, setSelection, setVisible } = props;
 
     const addOverlayItem = React.useCallback(
         (item: DbItem<MainType>) => () =>
@@ -41,6 +36,10 @@ export const BasicInfoEntry: React.FC<BasicInfoProps> = React.memo(props => {
             [],
         [pdb.publications]
     );
+
+    React.useEffect(() => {
+        if (_.isEmpty(items) && setVisible) setVisible(false);
+    }, [items, setVisible]);
 
     const valueItem = (item: Item, idx: number) =>
         !item.links && (

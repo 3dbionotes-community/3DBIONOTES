@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { useState } from "react";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { getEntityLinks, Pdb } from "../../domain/entities/Pdb";
@@ -5,9 +6,8 @@ import { recordOfStyles } from "../../utils/ts-utils";
 import { Selection } from "../view-models/Selection";
 import { Links } from "./Link";
 import { ViewerTooltip } from "./viewer-tooltip/ViewerTooltip";
-import i18n from "../utils/i18n";
-import _ from "lodash";
 import { Anchor } from "./Anchor";
+import i18n from "../utils/i18n";
 
 export interface BasicInfoProps {
     pdb: Pdb;
@@ -27,13 +27,15 @@ export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
 
     return (
         <ul>
-            <li>
-                <span>
-                    <strong>{pdb.protein.name}</strong>
-                </span>
-            </li>
+            {pdb.protein.name && (
+                <li>
+                    <span>
+                        <strong>{pdb.protein.name}</strong>
+                    </span>
+                </li>
+            )}
             {items
-                .filter(item => !item.isDisabled)
+                .filter(item => !item.isDisabled && Boolean(item.value))
                 .map(item => (
                     <Child key={item.name} name={item.name} value={item.value} help={item.help} />
                 ))}
@@ -91,7 +93,7 @@ function getItems(pdb: Pdb) {
         { name: i18n.t("Obtaining method"), value: pdb.experiment?.method },
         {
             name: i18n.t("PDB ID"),
-            value: <Links links={getEntityLinks(pdb, "pdb")} />,
+            value: pdb.id && <Links links={getEntityLinks(pdb, "pdb")} />,
         },
         !_.isEmpty(pdb.emdbs) && {
             name: i18n.t("EMDB ID"),
