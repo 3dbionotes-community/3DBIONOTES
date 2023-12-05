@@ -120,10 +120,11 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
         );
     }, [compositionRoot.exportAnnotations, block, pdb.tracks, pdb.chainId]);
 
-    const modifiedBlock =
-        block.id === "mapValidation" && _.first(props.pdb.emdbs)?.emv?.stats
-            ? block
-            : { ...block, description: "" };
+    const modifiedBlock = //shouldn't also the block itself be hidden?
+        block.id === "mapValidation" &&
+        (!_.first(pdb.emdbs)?.emv?.stats || (selection.type == "free" && !selection.main.emdb))
+            ? { ...block, description: "" }
+            : block;
 
     return (
         <ViewerBlock
