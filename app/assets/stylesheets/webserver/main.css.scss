@@ -47,6 +47,22 @@ body {
   text-align: justify;
 }
 
+#cookiesConsent {
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #123546;
+  color: #fff;
+  z-index: 1001;
+  column-gap: 1em;
+  
+  p {
+    max-width: 900px; 
+  }
+}
+
 @media (min-width: 576px) {
   .jumbotron {
     padding: 4rem 2rem;
