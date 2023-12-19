@@ -27,10 +27,10 @@ export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
 
     return (
         <ul>
-            {pdb.protein.name && (
+            {pdb.title && (
                 <li>
                     <span>
-                        <strong>{pdb.protein.name}</strong>
+                        <strong>{pdb.title}</strong>
                     </span>
                 </li>
             )}
