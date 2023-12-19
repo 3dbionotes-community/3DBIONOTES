@@ -12,6 +12,11 @@ body {
   margin-bottom: 250px;
 }
 
+header {
+  position: relative;
+  z-index: 1299; //below dialog backdrop (1300)
+}
+
 /*bootstrap override*/
 @media (min-width: 1400px) {
   .container-xl,
