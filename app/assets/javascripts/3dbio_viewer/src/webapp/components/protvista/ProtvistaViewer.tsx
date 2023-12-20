@@ -75,6 +75,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
             ligandsAndSmallMoleculesCount,
             resolution: _.first(pdb.emdbs)?.emv?.stats?.resolutionMedian,
             chain: pdb.chainId,
+            chainWithProtein: `${pdb.chainId}${pdb.protein.name ? " - " + pdb.protein.name : ""}`,
             uniprotId: getEntityLinks(pdb, "uniprot")
                 .map(link => link.name)
                 .join(", "),
