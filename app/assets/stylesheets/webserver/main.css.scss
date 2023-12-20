@@ -1161,6 +1161,10 @@ body {
 }
 
 .zammad-form-modal {
+  z-index: 2000 !important;
+}
+
+.zammad-form-modal {
   .zammad-form-modal-body {
     max-width: 600px !important; //reference from .sm material-ui dialog
     form.zammad-form {
