@@ -1,7 +1,7 @@
 #videoWrapper {
   width: 536px;
-  overflow: hidden;
-  display: block;
+  display: flex;
+  margin-bottom: 3em;
 }
 
 #welcome {
@@ -11,7 +11,12 @@
 }
 
 #welcomeVideo {
-  margin-left: -2px;
+ border-radius: 0.75em;
+ outline: 2px solid #f2f0f2;
+ outline-offset: -2px;
+ box-shadow: 10px 10px 49px 2px rgba(0,0,0,0.64);
+ -webkit-box-shadow: 10px 10px 49px 2px rgba(0,0,0,0.64);
+ -moz-box-shadow: 10px 10px 49px 2px rgba(0,0,0,0.64);
 }
 
 #Navbar {
