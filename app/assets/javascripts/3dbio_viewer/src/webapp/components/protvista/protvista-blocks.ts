@@ -46,7 +46,7 @@ export const blockDefs: BlockDef[] = [
     },
     {
         id: "featureAnnotation",
-        title: i18n.t(`Feature annotations of the chain \${chain}`),
+        title: i18n.t(`Feature annotations of the chain \${chainWithProtein}`),
         description: i18n.t(
             `The chain \${chain} of the molecular complex is the protein \${proteinName} (Uniprot ID \${uniprotId})\${genePhrase}. In the following, the numbered residues of the protein are displayed horizontally. Below the sequence, you can see the tracks showing the most relevant feature annotations of the protein.`
         ),

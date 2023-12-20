@@ -17,26 +17,24 @@ export const ProtvistaPdbValidation: React.FC<ProtvistaPdbProps> = React.memo(pr
 
     return (
         <>
-            <div style={styles.svgContainers}>
-                {/* <svg ref={ref} /> */}
-                {stats && (
-                    <>
-                        <SVGBar stats={stats} />
-                        <div style={styles.info.container}>
-                            {stats.warnings?.map((warning, idx) => (
-                                <p key={idx} style={styles.info.warnings}>
-                                    {warning}
-                                </p>
-                            ))}
-                            {stats.errors?.map((error, idx) => (
-                                <p key={idx} style={styles.info.errors}>
-                                    {error}
-                                </p>
-                            ))}
-                        </div>
-                    </>
-                )}
-            </div>
+            {stats && (
+                <div style={styles.svgContainers}>
+                    {/* <svg ref={ref} /> */}
+                    <SVGBar stats={stats} />
+                    <div style={styles.info.container}>
+                        {stats.warnings?.map((warning, idx) => (
+                            <p key={idx} style={styles.info.warnings}>
+                                {warning}
+                            </p>
+                        ))}
+                        {stats.errors?.map((error, idx) => (
+                            <p key={idx} style={styles.info.errors}>
+                                {error}
+                            </p>
+                        ))}
+                    </div>
+                </div>
+            )}
             <div>
                 <ProtvistaPdb {...props} />
             </div>
@@ -64,17 +62,15 @@ const SVGBar: React.FC<SVGBarProps> = React.memo(({ stats }) => {
     }, []);
 
     const tooltipContent = React.useMemo(
-        () =>
-            (stats && (
-                <p style={styles.tooltip}>
-                    {`${i18n.t("Quartile-25")}: ${stats.quartile25}`}
-                    <br />
-                    {`${i18n.t("Median")}: ${stats.resolutionMedian} ${stats.unit}`}
-                    <br />
-                    {`${i18n.t("Quartile-75")}: ${stats.quartile75}`}
-                </p>
-            )) ||
-            "",
+        () => (
+            <p style={styles.tooltip}>
+                {`${i18n.t("Quartile-25")}: ${stats.quartile25}`}
+                <br />
+                {`${i18n.t("Median")}: ${stats.resolutionMedian} ${stats.unit}`}
+                <br />
+                {`${i18n.t("Quartile-75")}: ${stats.quartile75}`}
+            </p>
+        ),
         [stats]
     );
 

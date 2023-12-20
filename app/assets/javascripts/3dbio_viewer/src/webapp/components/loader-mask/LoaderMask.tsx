@@ -26,8 +26,6 @@ export const LoaderMask: React.FC<LoaderProps> = React.memo(props => {
 
 const useStyles = makeStyles(theme => ({
     backdrop: {
-        height: !isDev ? "calc(100vh - 85px)" : undefined,
-        top: !isDev ? 85 : undefined,
         zIndex: theme.zIndex.drawer + 1,
         color: "#fff",
         backgroundColor: "rgba(0, 0, 0, 0.7)",
