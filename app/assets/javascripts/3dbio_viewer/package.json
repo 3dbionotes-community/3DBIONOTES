@@ -37,6 +37,7 @@
     "devDependencies": {
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
+        "@testing-library/react-hooks": "^8.0.1",
         "@testing-library/user-event": "^12.1.10",
         "@types/axios": "^0.14.0",
         "@types/classnames": "^2.2.11",
@@ -74,7 +75,8 @@
         "build": "INLINE_RUNTIME_CHUNK=false react-scripts build && yarn create-build-symlinks",
         "create-build-symlinks": "ts-node -O '{\"module\":\"commonjs\"}' src/scripts/create-build-symlinks.ts",
         "lint": "eslint . --ext .ts,.tsx",
-        "prettify": "prettier \"./src/**/*.{js,jsx,json,css,ts,tsx}\" --write"
+        "prettify": "prettier \"./src/**/*.{js,jsx,json,css,ts,tsx}\" --write",
+        "test": "PORT=3001 && jest --testURL http://localhost:$PORT"
     },
     "eslintConfig": {
         "extends": [
@@ -101,9 +103,12 @@
     },
     "jest": {
         "transform": {
-            "^.+\\.tsx?$": "ts-jest"
+            "^.+\\.[tj]sx{0,1}?$": "ts-jest"
         },
         "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+        "transformIgnorePatterns": [
+            "/node_modules/(?!@eyeseetea/d2-ui-components)"
+        ],
         "moduleFileExtensions": [
             "ts",
             "tsx",
