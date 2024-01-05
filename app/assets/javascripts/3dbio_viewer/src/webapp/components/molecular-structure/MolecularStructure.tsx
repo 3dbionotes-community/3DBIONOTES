@@ -149,8 +149,26 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
             if (pluginAlreadyRendered) {
+                //When ligand has changed
                 molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
                 await updateLoader("updateVisualPlugin", plugin.visual.update(initParams));
+                if (newSelection.ligandId === undefined && newSelection.type === "free") {
+                    const plainSelection = {
+                        ...emptySelection,
+                        main: { pdb: newSelection.main.pdb, emdb: undefined },
+                    };
+                    await updateLoader(
+                        "updateVisualPlugin",
+                        applySelectionChangesToPlugin(
+                            plugin,
+                            molstarState,
+                            chains,
+                            plainSelection,
+                            newSelection,
+                            updateLoader
+                        )
+                    );
+                }
             } else if (!mainPdb && emdbId)
                 updateLoader(
                     "getRelatedPdbModel",
