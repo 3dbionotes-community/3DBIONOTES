@@ -27,7 +27,9 @@ export class LigandsApiRepository implements LigandsRepository {
             .flatMap(
                 (ligand): FutureData<LigandImageData> => {
                     if (!ligand)
-                        return Future.error(err(i18n.t("Error from API: No ligands found.")));
+                        return Future.error(
+                            err(i18n.t("Error from API: No ligands found.", { nsSeparator: false }))
+                        );
                     const idr = getPdbLigand({ ligand, ontologies, ontologyTerms, organisms })
                         .imageDataResource;
                     if (!idr)
