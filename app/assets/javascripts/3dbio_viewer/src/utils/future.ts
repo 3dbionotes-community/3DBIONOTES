@@ -34,6 +34,13 @@ export class Future<E, D> {
         });
     }
 
+    tap(effectFn: (data: D) => void): Future<E, D> {
+        return this.map(data => {
+            effectFn(data);
+            return data;
+        });
+    }
+
     /* Static methods */
 
     static fromComputation<E, D>(computation: Computation<E, D>): Future<E, D> {

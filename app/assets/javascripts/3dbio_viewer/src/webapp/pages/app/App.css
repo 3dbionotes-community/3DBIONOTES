@@ -32,21 +32,113 @@ button::focus {
     border: 1px solid rgb(77, 77, 77);
 }
 
+header {
+    max-height: 85px;
+}
+
 #viewer {
     display: flex;
     height: 100vh;
 }
 
+#viewer.prod {
+    display: flex;
+    height: calc(100vh - 85px);
+    /* 85px from header */
+}
+
 #left {
-    width: 45%;
+    flex-grow: 1;
     position: relative;
 }
 
 #right {
-    width: 55%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#right > div {
     overflow: auto;
 }
 
 .contents {
     margin-bottom: 10px;
+}
+
+.MuiPaper-root {
+    background-color: inherit !important;
+}
+
+.MuiDialogContent-root {
+    background-color: #fff;
+}
+
+.MuiTooltip-tooltip a {
+    text-decoration: underline;
+    color: #72bee3;
+}
+
+.react-resizable {
+    position: relative;
+    overflow-y: hidden;
+}
+
+.react-resizable-handle {
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: inherit;
+}
+
+.react-resizable-handle-sw {
+    bottom: 0;
+    left: 0;
+    cursor: sw-resize;
+}
+
+.react-resizable-handle-se {
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+}
+
+.react-resizable-handle-nw {
+    top: 0;
+    left: 0;
+    cursor: nw-resize;
+}
+
+.react-resizable-handle-ne {
+    top: 0;
+    right: 0;
+    cursor: ne-resize;
+}
+
+.react-resizable-handle-w,
+.react-resizable-handle-e {
+    top: 0;
+    cursor: ew-resize;
+}
+
+.react-resizable-handle-w {
+    left: 0;
+}
+
+.react-resizable-handle-e {
+    right: 0;
+}
+
+.react-resizable-handle-n,
+.react-resizable-handle-s {
+    left: 0;
+    cursor: ns-resize;
+}
+
+.react-resizable-handle-n {
+    top: 0;
+}
+
+.react-resizable-handle-s {
+    bottom: 0;
 }

@@ -30,3 +30,16 @@
 .msp-image-preview img {
     width: 100%;
 }
+
+.msp-layout-region.msp-layout-top {
+    display: none;
+}
+
+#viewer .msp-plugin .msp-layout-standard-outside .msp-layout-bottom {
+    top: auto;
+    bottom: 0px;
+}
+
+#viewer .msp-layout-region.msp-layout-main {
+    margin-bottom: 97px;
+}

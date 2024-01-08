@@ -28,7 +28,32 @@ $ cp config/secrets.example.yml config/secrets.yml
 $ bundle exec rake db:migrate RAILS_ENV=development
 $ bundle exec rails server
 ```
+
+### Setup Developent on macOS
+
+Before you start your setup, make sure you have homebrew, ruby, rvm and python2 installed.
+Use rvm or rbenv to select the Ruby version specified in Gemfile and then run:
+
+```
+$ git submodule update --recursive --init
+$ rvm install ruby-2.4.1
+$ gem install bundler:2.2.15
+$ brew install gsl mysql
+$ gem install bundler:2.0.0.pre.3
+```
+
+In the Gemfile, remove Gem specs for `mini_racer` and `libv8` and the dependency for `mini_racer`
+
+```
+$ bundle _2.0.0.pre.3_ install
+$ cp config/database.example.yml config/database.yml
+$ cp config/secrets.example.yml config/secrets.yml
+$ bundle exec rake db:migrate RAILS_ENV=development
+$ bundle exec rails server
+```
+
 ### Setup Viewer
+
 If you want to set up the React protein viewer as well, open up a separate terminal tab (while the Ruby app is running!) and run:
 
 ```
@@ -36,7 +61,8 @@ $ cd app/assets/javascripts/3dbio_viewer/
 $ yarn install
 $ yarn start
 ```
-Then go to localhost:3001 and you'll see the viewer! 
+
+Then go to localhost:3001 and you'll see the viewer!
 
 ### Setup Production
 
@@ -93,6 +119,7 @@ $ touch tmp/restart.txt
 ## Delayed Jobs
 
 The network sections run a set of jobs in the background on the server. To work properly, a delayed job daemon needs to be running on the server:
+
 ```
 $ RAILS_ENV=production bin/delayed_job -n 6 restart
 ```
@@ -101,66 +128,66 @@ $ RAILS_ENV=production bin/delayed_job -n 6 restart
 
 The application contains two git sub-modules:
 
-- myProtVista
-   - Repository: https://github.com/3dbionotes-community/myProtVista
-   - Path: app/assets/javascripts/annotations_viewer/myProtVista
-   - Installation dependencies: node version 8
-   - How to install:
-     ```
-     $ npm install
-     $ npm run build
-     ```
+-   myProtVista
 
+    -   Repository: https://github.com/3dbionotes-community/myProtVista
+    -   Path: app/assets/javascripts/annotations_viewer/myProtVista
+    -   Installation dependencies: node version 8
+    -   How to install:
+        ```
+        $ npm install
+        $ npm run build
+        ```
 
-- extendProtVista
-   - Repository: https://github.com/3dbionotes-community/extendProtVista
-   - Path: app/assets/javascripts/annotations_viewer/extendProtVista
-   - Installation dependencies: node version 8
-   - How to install:
-     ```
-     $ npm install
-     $ npm run build
-     ```
+-   extendProtVista
+    -   Repository: https://github.com/3dbionotes-community/extendProtVista
+    -   Path: app/assets/javascripts/annotations_viewer/extendProtVista
+    -   Installation dependencies: node version 8
+    -   How to install:
+        ```
+        $ npm install
+        $ npm run build
+        ```
 
 Some extra modules are also part of the application:
-- featureAnalysis
-   - Path: app/assets/javascripts/annotations_viewer/featureAnalysis
-   - Installation dependencies: node version 8
-   - How to install:
-     ```
-     $ npm install
-     $ npm run build
-     ```
 
-- structure_viewer
-   - Path: app/assets/javascripts/structure_viewer
-   - Installation dependencies: node version 8
-   - How to install:
-     ```
-     $ npm install
-     $ npm run build
-     ```
+-   featureAnalysis
 
-- interface_viewer
-   - Path: app/assets/javascripts/interface_viewer
-   - Installation dependencies: node version 8
-   - How to install:
-     ```
-     $ npm install
-     $ npm run build
-     ```
+    -   Path: app/assets/javascripts/annotations_viewer/featureAnalysis
+    -   Installation dependencies: node version 8
+    -   How to install:
+        ```
+        $ npm install
+        $ npm run build
+        ```
+
+-   structure_viewer
+
+    -   Path: app/assets/javascripts/structure_viewer
+    -   Installation dependencies: node version 8
+    -   How to install:
+        ```
+        $ npm install
+        $ npm run build
+        ```
+
+-   interface_viewer
+    -   Path: app/assets/javascripts/interface_viewer
+    -   Installation dependencies: node version 8
+    -   How to install:
+        ```
+        $ npm install
+        $ npm run build
+        ```
 
 ## Other dependencies
-- ngl
-   - Repository: https://github.com/arose/ngl
 
-- jsmol
-   - Path: app/assets/javascripts/jsmol
+-   ngl
 
+    -   Repository: https://github.com/arose/ngl
 
-
-
-
+-   jsmol
+    -   Path: app/assets/javascripts/jsmol
 
 Copyright (c) 2020, [Biocomputing Unit](http://biocomputingunit.es), CNB-CSIC
 

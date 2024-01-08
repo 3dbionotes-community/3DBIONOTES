@@ -17,6 +17,9 @@ export interface ProtvistaTrackElement extends HTMLDivElement {
 export interface BlockComponentProps {
     pdb: Pdb;
     selection: Selection;
+    setSelection: (newSelection: Selection) => void;
+    block: BlockDef;
+    setVisible?: (visible: boolean) => void;
 }
 
 export type TrackDef = TrackDefinition;
@@ -30,9 +33,15 @@ export interface BlockDef extends ViewerBlockModel {
     component?: React.FC<BlockComponentProps>;
     profiles: Profile[];
     hasUploadedTracks?: boolean;
+    isSubtitle: boolean;
 }
 
 export interface ProtvistaBlock extends ViewerBlockModel {
     tracks: TrackDef[];
     component?: React.FC<BlockComponentProps>;
+}
+
+export interface BlockVisibility {
+    block: BlockDef;
+    visible: boolean;
 }

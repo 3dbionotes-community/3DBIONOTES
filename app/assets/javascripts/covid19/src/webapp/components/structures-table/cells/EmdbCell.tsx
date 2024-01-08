@@ -22,5 +22,5 @@ export const EmdbCell: React.FC<CellProps> = React.memo(props => {
         </React.Fragment>
     );
 
-    return emdb ? <Thumbnail type="emdb" value={emdb} tooltip={tooltip} /> : null;
+    return emdb ? <Thumbnail value={emdb} tooltip={tooltip} /> : null;
 });

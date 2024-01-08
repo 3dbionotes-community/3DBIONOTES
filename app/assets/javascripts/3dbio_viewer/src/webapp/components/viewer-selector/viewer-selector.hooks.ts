@@ -3,6 +3,7 @@ import _ from "lodash";
 import queryString from "query-string";
 import { useGoto } from "../../hooks/use-goto";
 import {
+    AllowedExtension,
     getSelectionFromNetworkToken,
     getSelectionFromString,
     getSelectionFromUploadDataToken,
@@ -30,8 +31,9 @@ export interface SelectorParams {
     profile?: string;
 }
 
-interface UploadedParams {
+export interface UploadedParams {
     token: string;
+    type: AllowedExtension;
     chain: Maybe<string>;
     profile?: string;
 }
@@ -60,13 +62,14 @@ export function useViewerState(section: Section): ViewerState {
                 return { selection, profile };
             }
             case "uploaded": {
-                const params2 = {
+                const urlParams = {
                     ...params,
+                    type: values.type,
                     chain: values.chain,
                     profile: values.profile,
                 } as UploadedParams;
-                const selection = getSelectionFromUploadDataToken(params2.token, params2.chain);
-                const profile = getProfileFromString(params2.profile);
+                const selection = getSelectionFromUploadDataToken(urlParams);
+                const profile = getProfileFromString(urlParams.profile);
                 return { selection, profile };
             }
             case "network": {
@@ -95,7 +98,11 @@ export function useViewerState(section: Section): ViewerState {
                     break;
                 }
                 case "uploadData": {
-                    const params = { chain: selection.chainId, profile: profilePath };
+                    const params = {
+                        chain: selection.chainId,
+                        profile: profilePath,
+                        type: selection.extension,
+                    };
                     const query = queryString.stringify(params);
                     goTo(`/uploaded/${selection.token}` + (query ? `?${query}` : ""));
                     break;

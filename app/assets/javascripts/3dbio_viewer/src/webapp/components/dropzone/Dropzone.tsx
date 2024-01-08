@@ -25,7 +25,7 @@ export const Dropzone = React.forwardRef(
             files: acceptedFiles,
         }));
         return (
-            <div {...getRootProps()} style={{ outline: "none" }}>
+            <div {...getRootProps()} style={styles.dropzone}>
                 <div>
                     <Shade onClick={open}>
                         <input {...getInputProps()} />
@@ -56,6 +56,10 @@ const getColor = (props: DropzoneRootProps) => {
         return "#2196f3";
     }
     return "#eeeeee";
+};
+
+const styles = {
+    dropzone: { outline: "none", marginTop: "0.75em" },
 };
 
 const Shade = styled.div<DropzoneRootProps>`

@@ -1,11 +1,16 @@
 #viewer-selector {
-    width: 40%;
-    position: absolute;
-    margin-top: 20px;
-    left: 10px;
-    z-index: 1000;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    row-gap: 1.25rem;
+    left: 0;
+    width: calc(100% - 1px); /*right border*/
+    position: absolute; /*don't hesitate, parent div is "relative" not "static"*/
+    padding: 1.25em 1.25em 1.5em;
+    z-index: 500;
+    display: flex;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(1px);
 }
 
 .status {
@@ -13,9 +18,13 @@
     align-items: center;
 }
 
+.db {
+    display: flex;
+    justify-content: space-between;
+}
+
 .selection {
     display: flex;
-    margin-top: 4px;
 }
 
 .selection .unselected {
@@ -26,29 +35,46 @@
     background-color: #ccc;
 }
 
-.db-item .MuiIconButton-root {
-    background: #8d8d8d !important;
-    color: #fff !important;
-    height: fit-content;
-    padding: 6px;
-    margin-bottom: 8px;
-    margin-right: 4px;
+.selection-main-container {
+    display: flex;
+    column-gap: 1.25rem;
 }
 
-.db-item .label {
-    margin-left: 42px;
+.db-item-main {
+    display: flex;
+    align-items: center;
+    column-gap: 0.625rem;
+}
+
+.db-item-main .label-main {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
+}
+
+.db-item-main .MuiIconButton-root {
+    background: #8d8d8d;
+    color: #fff;
+    padding: 6px;
+}
+
+.db-item-main .MuiIconButton-root:hover {
+    background: #ababab;
+    color: #fff;
+    padding: 6px;
+}
+
+.db-item-main .label-main .label {
     color: #123546;
     font-weight: 700;
+    line-height: 1;
 }
 
-.db-item .id {
+.db-item-main .label-main .id {
     color: #123546;
     font-weight: 700;
     font-size: 1.5em;
-}
-
-.db-item.emdb {
-    margin-left: 15px;
+    line-height: 1;
 }
 
 #viewer-selector .status button,
@@ -58,9 +84,39 @@
     align-items: center;
 }
 
+.viewer-selector-title .overline {
+    color: #123546;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 0.5em;
+}
+
+.viewer-selector-title {
+    color: #123546;
+    font-weight: 700;
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+.selectors button {
+    margin-left: 0;
+}
+
 .selectors {
-    position: absolute;
-    right: 0px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.selectors > span {
+    display: flex;
+    column-gap: 10px;
+}
+
+.selectors.invert {
+    flex-direction: row-reverse;
 }
 
 .selectors .close {

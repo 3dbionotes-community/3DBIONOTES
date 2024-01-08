@@ -6,16 +6,17 @@ import { PdbOptions } from "../../domain/repositories/PdbRepository";
 import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
 import { LoaderState, useLoader } from "../components/Loader";
-import { getChainId, getMainPdbId, Selection } from "../view-models/Selection";
+import { getChainId, getMainItem, Selection } from "../view-models/Selection";
 
 export function usePdbLoader(
     selection: Selection,
-    pdbInfo: Maybe<PdbInfo>
+    pdbInfoLoader: LoaderState<PdbInfo>
 ): [LoaderState<Pdb>, React.Dispatch<React.SetStateAction<LoaderState<Pdb>>>] {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
+    const pdbInfo = pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined;
 
-    const pdbId = getMainPdbId(selection);
+    const pdbId = getMainItem(selection, "pdb");
     const chainId = getChainId(selection);
     const chains = pdbInfo?.chains;
     const pdbOptions: PdbOptions | undefined = React.useMemo(() => {
@@ -23,14 +24,16 @@ export function usePdbLoader(
     }, [pdbId, chainId, chains]);
 
     React.useEffect(() => {
+        if (pdbInfoLoader.type === "error") return setLoader(pdbInfoLoader);
         if (!pdbOptions) return;
+
         setLoader({ type: "loading" });
 
         return compositionRoot.getPdb.execute(pdbOptions).run(
             pdb => setLoader({ type: "loaded", data: pdb }),
             error => setLoader({ type: "error", message: error.message })
         );
-    }, [compositionRoot, setLoader, pdbOptions]);
+    }, [compositionRoot, setLoader, pdbOptions, pdbInfoLoader]);
 
     return [loader, setLoader];
 }

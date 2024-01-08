@@ -80,7 +80,7 @@ export class BionotesNetworkRepository implements NetworkRepository {
     constructor() {}
 
     build(options: BuildNetworkOptions): FutureData<BuildNetworkResult> {
-        const url = routes.bionotesDev + "/network/build";
+        const url = routes.bionotesStaging + "/network/build";
         const { network, onProgress = _.noop } = options;
 
         const params: BuildNetworkApiOptions = {
@@ -100,7 +100,7 @@ export class BionotesNetworkRepository implements NetworkRepository {
     }
 
     get(options: { jobId: string }): FutureData<ProteinNetwork> {
-        const url = routes.bionotesDev + `/network.json?job_id=${options.jobId}`;
+        const url = routes.bionotesStaging + `/network.json?job_id=${options.jobId}`;
 
         return request<BioNetworkResponse>({ method: "get", url }).flatMap(({ data }) => {
             return getAnnotationsFromJson(data.externalAnnotations).map(

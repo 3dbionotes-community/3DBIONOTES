@@ -1,5 +1,5 @@
 #welcome.d-flex.align-items-xl-center
-  .container.d-flex.align-items-center.justify-content-between
+  .container.d-flex.align-items-center.justify-content-around
     %div
       .jumbotron
         %p
@@ -17,11 +17,11 @@
           %a.mt-2.d-block{"target" => "_blank", "href" => "https://doi.org/10.1093/bioinformatics/btab397"} https://doi.org/10.1093/bioinformatics/btab397 
         %p.mt-4
           %a.cta-covid.btn.btn-primary.btn-lg{:href => ws_covid19_path, :role => "button"} COVID-19 Structural Hub
-          %a.cta-example.btn.btn-secondary.btn-lg{"data-id" => "EMD-21375", :href => "/?queryId=EMD-21375", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
+          %a.cta-example.btn.btn-secondary.btn-lg{"data-id" => "EMD-21375", :href => "/ws/viewer/#/6VSB+EMD-21375", :role => "button", :style => "margin-left: 10px;"} Example (EMD-21375)
     %div
       #videoWrapper
-        %video#welcomeVideo{:autoplay => "", :height => "auto", :loop => "", :muted => "", :width => "540"}
-          %source{:src => "https://www.oyasin.es/Window-mockup-web.mp4", :type => "video/mp4"}
+        %video#welcomeVideo{:autoplay => "", :height => "auto", :loop => "", :muted => "", :width => "540", :poster => "assets/thumbnail-min.png"}
+          %source{:src => "/assets/3dbionotes_demo.mp4", :type => "video/mp4"}
 .d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
   .container
     .searchBox

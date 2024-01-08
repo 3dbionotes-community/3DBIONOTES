@@ -12,6 +12,11 @@ body {
   margin-bottom: 250px;
 }
 
+header {
+  position: relative;
+  z-index: 1299; //below dialog backdrop (1300)
+}
+
 /*bootstrap override*/
 @media (min-width: 1400px) {
   .container-xl,
@@ -45,6 +50,22 @@ body {
   padding: 32px;
   font-size: 18px;
   text-align: justify;
+}
+
+#cookiesConsent {
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #123546;
+  color: #fff;
+  z-index: 1001;
+  column-gap: 1em;
+  
+  p {
+    max-width: 900px; 
+  }
 }
 
 @media (min-width: 576px) {
@@ -1136,13 +1157,20 @@ body {
   padding: 0.75em 1.5em;
   font-weight: 600;
   border-radius: 0.3rem 0.3rem 0 0;
-  z-index: 999;
+  z-index: 2000;
+}
+
+.zammad-form-modal {
+  z-index: 2000 !important;
 }
 
 .zammad-form-modal {
   .zammad-form-modal-body {
     max-width: 600px !important; //reference from .sm material-ui dialog
     form.zammad-form {
+      label {
+        font-weight: 400;
+      }
       button[type="submit"] {
         background: #607d8b;
         border: 0;
@@ -1152,6 +1180,7 @@ body {
       }
       h2 {
         font-size: 1.25em;
+        font-weight: 400;
       }
     }
   }

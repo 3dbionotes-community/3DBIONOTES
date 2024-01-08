@@ -69,7 +69,7 @@ export interface Pdb extends DbItem {
     ligands: IUPACInChIkey[];
     details: Details[];
     dbauthors?: string[];
-    refModels?: RefModel[];
+    refModels: RefModel[];
 }
 
 export interface Emdb extends DbItem {
