@@ -107,7 +107,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const [prevSelectionRef, setPrevSelection] = useReference<Selection>();
 
     debugVariable({ pdbePlugin });
-    const chains = options.pdbInfo?.chains;
+    const chains = React.useMemo(() => options.pdbInfo?.chains ?? [], [options.pdbInfo?.chains]);
 
     const [uploadDataToken, extension] =
         newSelection.type === "uploadData" ? [newSelection.token, newSelection.extension] : [];
@@ -134,6 +134,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
             if (!element) return;
+            if (_.isEmpty(chains)) return;
             const currentSelection = prevSelectionRef.current;
             const pluginAlreadyRendered = Boolean(pdbePlugin);
             const ligandChanged =
@@ -259,6 +260,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
             updateLoader,
             extension,
             uploadDataToken,
+            chains,
         ]
     );
 
