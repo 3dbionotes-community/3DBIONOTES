@@ -19,6 +19,7 @@ export interface PdbView {
     displaySequence: boolean;
     displayConservation: boolean;
     displayVariants: boolean;
+    chainId?: string;
     offset?: number;
     legends?: {
         alignment: "left" | "right" | "center";
@@ -72,9 +73,9 @@ export interface FragmentView {
 
 export function getPdbView(
     pdb: Pdb,
-    options: { block: BlockDef; showAllTracks?: boolean }
+    options: { block: BlockDef; showAllTracks?: boolean; chainId?: string }
 ): PdbView {
-    const { block, showAllTracks = false } = options;
+    const { block, showAllTracks = false, chainId } = options;
     const data = showAllTracks ? pdb.tracks : getBlockTracks(pdb.tracks, block);
 
     const tracks = _(data)
@@ -105,6 +106,7 @@ export function getPdbView(
         displayVariants: Boolean(variants),
         tracks,
         variants,
+        chainId,
     };
 }
 
