@@ -29,7 +29,7 @@ import { routes } from "../../../routes";
 import { ProteinNetwork } from "../../../domain/entities/ProteinNetwork";
 import { getSelectedChain } from "../viewer-selector/ViewerSelector";
 import { MolstarState, MolstarStateActions } from "./MolstarState";
-import { LoaderKey } from "../RootViewerContents";
+import { LoaderKey, loaderKeys } from "../RootViewerContents";
 import i18n from "../../utils/i18n";
 import "./molstar.css";
 import "./molstar-light.css";
@@ -77,11 +77,13 @@ const loaderErrors = {
     invalidExtension: i18n.t('The extension must be "pdb", "ent", "cif"'),
     unexpectedUploadError: (url: string) =>
         i18n.t(`Unkown error while loading the model URL: ${url}`),
-    pdbNotFound: (pdbId: string) => i18n.t(`${pdbId} was not found`),
+    modelNotFound: (pdbId: string) => i18n.t(`${pdbId} was not found`),
     pdbRequest: (url: string, status: number) =>
         i18n.t(`Error loading PDB model: url=${url} - ${status}`),
     request: (url: string, status: number) => i18n.t(`Error loading model: url=${url} - ${status}`),
 };
+
+const errorsKeys = _.mapValues(loaderErrors, (_v, k) => k);
 
 function usePdbePlugin(options: MolecularStructureProps) {
     const {
@@ -147,25 +149,39 @@ function usePdbePlugin(options: MolecularStructureProps) {
             const mainPdb = getMainItem(newSelection, "pdb");
             const emdbId = getMainItem(newSelection, "emdb");
 
-            // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
+            function loadVoidMolstar(message: string) {
+                if (!element) return;
+                plugin.render(element, getVoidInitParams()).then(() =>
+                    plugin.canvas.showToast({
+                        title: i18n.t("Error"),
+                        message,
+                        key: "init",
+                    })
+                );
+            }
+
             if (pluginAlreadyRendered) {
                 molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
-                await updateLoader("updateVisualPlugin", plugin.visual.update(initParams));
+                updateLoader(loaderKeys.updateVisualPlugin, plugin.visual.update(initParams));
             } else if (!mainPdb && emdbId)
                 updateLoader(
-                    "getRelatedPdbModel",
-                    compositionRoot.getRelatedModels
-                        .pdbFromEmdb(emdbId)
-                        .toPromise()
-                        .then(pdbId => {
-                            if (!pdbId) throw new Error(loaderErrors.pdbNotMatching);
-                            else setSelection(setMainItem(newSelection, pdbId, "pdb"));
-                        })
-                        .catch(console.error)
+                    loaderKeys.getRelatedPdbModel,
+                    new Promise<void>((resolve, reject) => {
+                        compositionRoot.getRelatedModels
+                            .pdbFromEmdb(emdbId)
+                            .toPromise()
+                            .then(pdbId => {
+                                if (!pdbId) reject(loaderErrors.pdbNotMatching);
+                                else {
+                                    setSelection(setMainItem(newSelection, pdbId, "pdb"));
+                                    resolve();
+                                }
+                            });
+                    })
                 );
             else {
                 updateLoader(
-                    "initPlugin",
+                    loaderKeys.initPlugin,
                     new Promise<void>((resolve, reject) => {
                         plugin.events.loadComplete.subscribe({
                             next: loaded => {
@@ -182,52 +198,70 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                 reject(err);
                             },
                         });
-
-                        const pdbId = initParams.moleculeId;
-                        if (pdbId)
-                            checkModelUrl(pdbId, "pdb")
-                                .then(loaded => {
-                                    if (loaded) {
-                                        plugin.render(element, initParams);
-                                        molstarState.current = MolstarStateActions.fromInitParams(
-                                            initParams,
-                                            newSelection
-                                        );
-                                    } else reject(loaderErrors.pdbNotFound);
-                                })
-                                .catch(err => reject(err));
-                        else if (newSelection.type === "uploadData") {
-                            if (!uploadDataToken) {
-                                reject(loaderErrors.tokenNotFound);
-                                return;
-                            }
-                            if (!extension) {
-                                reject(loaderErrors.invalidExtension);
-                                return;
-                            }
-                            const supportedExtension = extension === "ent" ? "pdb" : extension;
-                            const customData = {
-                                url: `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.${supportedExtension}`,
-                                format: extension === "cif" ? "mmcif" : "pdb",
-                                binary: false,
-                            };
-                            checkUploadedModelUrl(customData.url)
-                                .then(result => {
-                                    if (result) {
-                                        const newParams = { ...initParams, customData };
-                                        plugin.render(element, newParams);
-                                        molstarState.current = MolstarStateActions.fromInitParams(
-                                            newParams,
-                                            newSelection
-                                        );
-                                    } else reject(loaderErrors.invalidToken);
-                                })
-                                .catch(_err =>
-                                    reject(loaderErrors.unexpectedUploadError(customData.url))
-                                );
-                        } else reject(loaderErrors.undefinedPdb);
                     })
                 );
+
+                const pdbId = initParams.moleculeId;
+                if (pdbId)
+                    checkModelUrl(pdbId, "pdb")
+                        .then(loaded => {
+                            if (loaded) {
+                                plugin.render(element, initParams);
+                                molstarState.current = MolstarStateActions.fromInitParams(
+                                    initParams,
+                                    newSelection
+                                );
+                            } else loadVoidMolstar(loaderErrors.modelNotFound(pdbId));
+                        })
+                        .catch(err => loadVoidMolstar(err));
+                else if (newSelection.type === "uploadData") {
+                    if (!uploadDataToken) {
+                        loadVoidMolstar(loaderErrors.tokenNotFound);
+                        await updateLoader(
+                            loaderKeys.uploadedModel,
+                            Promise.reject(loaderErrors.tokenNotFound)
+                        );
+                        return;
+                    }
+                    if (!extension) {
+                        loadVoidMolstar(loaderErrors.invalidExtension);
+                        await updateLoader(
+                            loaderKeys.uploadedModel,
+                            Promise.reject(loaderErrors.invalidExtension)
+                        );
+                        return;
+                    }
+                    const supportedExtension = extension === "ent" ? "pdb" : extension;
+                    const customData = {
+                        url: `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.${supportedExtension}`,
+                        format: extension === "cif" ? "mmcif" : "pdb",
+                        binary: false,
+                    };
+                    await checkUploadedModelUrl(customData.url)
+                        .then(result => {
+                            if (result) {
+                                const newParams = { ...initParams, customData };
+                                plugin.render(element, newParams);
+                                molstarState.current = MolstarStateActions.fromInitParams(
+                                    newParams,
+                                    newSelection
+                                );
+                            } else {
+                                loadVoidMolstar(loaderErrors.invalidToken);
+                                return updateLoader(
+                                    loaderKeys.uploadedModel,
+                                    Promise.reject(loaderErrors.invalidToken)
+                                );
+                            }
+                        })
+                        .catch(_err => {
+                            loadVoidMolstar(loaderErrors.unexpectedUploadError(customData.url));
+                            return updateLoader(
+                                loaderKeys.uploadedModel,
+                                Promise.reject(loaderErrors.unexpectedUploadError(customData.url))
+                            );
+                        });
+                } else loadVoidMolstar(loaderErrors.undefinedPdb);
             }
 
             setPdbePlugin(plugin);
@@ -258,8 +292,19 @@ function usePdbePlugin(options: MolecularStructureProps) {
             const validSelection =
                 newSelection.type === "free"
                     ? Promise.all(
-                          newSelection.refinedModels.map(async m =>
-                              (await checkModelUrl(getRefinedModelId(m), m.type)) ? m : undefined
+                          newSelection.refinedModels.map(
+                              async m =>
+                                  await checkModelUrl(getRefinedModelId(m), m.type).then(loaded => {
+                                      if (loaded) return m;
+                                      else {
+                                          pdbePlugin.canvas.showToast({
+                                              title: i18n.t("Error"),
+                                              message: loaderErrors.modelNotFound(m.id),
+                                              key: errorsKeys.modelNotFound,
+                                          });
+                                          return undefined;
+                                      }
+                                  })
                           )
                       ).then(models => _.compact(models))
                     : Promise.resolve([]);
@@ -349,7 +394,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
         const uploadUrl = `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.${supportedExtension}`;
 
         updateLoader(
-            "loadModel",
+            loaderKeys.uploadedModel,
             new Promise<void>((resolve, reject) => {
                 checkUploadedModelUrl(uploadUrl)
                     .then(result => {
@@ -372,11 +417,24 @@ function usePdbePlugin(options: MolecularStructureProps) {
                                 },
                                 false
                             );
-                        } else reject(loaderErrors.invalidToken);
+                        } else {
+                            reject(loaderErrors.invalidToken);
+                            pdbePlugin.canvas.showToast({
+                                title: i18n.t("Error"),
+                                message: loaderErrors.invalidToken,
+                                key: errorsKeys.invalidToken,
+                            });
+                        }
                     })
-                    .catch(_err => reject(loaderErrors.unexpectedUploadError(uploadUrl)));
-            }),
-            i18n.t("Loading uploded model...")
+                    .catch(_err => {
+                        reject(loaderErrors.unexpectedUploadError(uploadUrl));
+                        pdbePlugin.canvas.showToast({
+                            title: i18n.t("Error"),
+                            message: loaderErrors.unexpectedUploadError(uploadUrl),
+                            key: errorsKeys.unexpectedUploadError,
+                        });
+                    });
+            })
         );
 
         // For future reference on this commit: setTitle(i18n.t("Applying..."));
@@ -463,7 +521,12 @@ async function applySelectionChangesToPlugin(
                         );
                         setVisibility(plugin, item);
                         updateItems(item);
-                    }
+                    } else
+                        plugin.canvas.showToast({
+                            title: i18n.t("Error"),
+                            message: loaderErrors.modelNotFound(id),
+                            key: errorsKeys.modelNotFound,
+                        });
                 });
             }
         }
@@ -485,6 +548,10 @@ async function applySelectionChangesToPlugin(
             .pickBy()
             .value()
     );
+
+    if (added.length + removed.length) {
+        plugin.canvas.hideToasts();
+    }
 
     for (const item of removed) {
         plugin.visual.remove(getItemSelector(item));
@@ -526,7 +593,13 @@ async function applySelectionChangesToPlugin(
                     setVisibility(plugin, item);
                     updateItems(item);
                 } else if (getMainItem(newSelection, "pdb") === pdbId)
-                    updateLoader("loadModel", Promise.reject(loaderErrors.pdbNotFound(pdbId)));
+                    updateLoader("loadModel", Promise.reject(loaderErrors.modelNotFound(pdbId)));
+                if (!loaded)
+                    plugin.canvas.showToast({
+                        title: i18n.t("Error"),
+                        message: loaderErrors.modelNotFound(pdbId),
+                        key: errorsKeys.modelNotFound,
+                    });
             });
         }
     }
@@ -547,7 +620,12 @@ async function applySelectionChangesToPlugin(
                     setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
                     setVisibility(plugin, item);
                     updateItems(item);
-                }
+                } else
+                    plugin.canvas.showToast({
+                        title: i18n.t("Error"),
+                        message: loaderErrors.modelNotFound(emdbId),
+                        key: errorsKeys.modelNotFound,
+                    });
             });
         }
     }
@@ -558,7 +636,7 @@ async function applySelectionChangesToPlugin(
         highlight(plugin, chains, newSelection, molstarState);
     }
 
-    if (added.length + removed.length > 0) {
+    if (added.length + removed.length) {
         plugin.visual.reset({ camera: true });
     }
 }
@@ -604,6 +682,26 @@ const colors = {
 };
 
 type LigandView = InitParams["ligandView"];
+
+function getVoidInitParams(): InitParams {
+    return {
+        moleculeId: undefined,
+        pdbeUrl: "https://www.ebi.ac.uk/pdbe/",
+        encoding: "cif",
+        loadMaps: false,
+        validationAnnotation: true,
+        hideControls: false,
+        showDebugPanels: isDebugMode(),
+        superposition: false,
+        domainAnnotation: true,
+        expanded: false,
+        bgColor: colors.white,
+        subscribeEvents: true,
+        assemblyId: "1", // For assembly type? Check model type-
+        ligandView: undefined,
+        mapSettings: {},
+    };
+}
 
 function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selection): InitParams {
     const pdbId = getMainItem(newSelection, "pdb");
