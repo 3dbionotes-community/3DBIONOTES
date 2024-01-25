@@ -103,7 +103,7 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
                     return data;
                 })
                 .catch(err => {
-                    console.debug(`Loader "${key}" error while loading.`);
+                    console.error(`Loader "${key}": error while loading.`);
                     updateLoaderStatus(key, "error", err);
                     return Promise.reject(err);
                 });
@@ -125,8 +125,8 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
         () =>
             _(loaders)
                 .values()
-                .filter(({ status }) => status === "loading" || status === "error")
-                .orderBy(({ priority, status }) => (status === "error" ? 10 : priority), "desc")
+                .filter(({ status }) => status === "loading")
+                .orderBy(({ priority }) => priority, "desc")
                 .first()?.message ?? i18n.t("Loading..."),
         [loaders]
     );

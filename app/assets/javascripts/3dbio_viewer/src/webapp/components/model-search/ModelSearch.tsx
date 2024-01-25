@@ -207,6 +207,7 @@ const styles = {
         display: "flex" as const,
         flexDirection: "row" as const,
         flexWrap: "wrap" as const,
+        justifyContent: "center" as const,
     },
     matching: {
         marginLeft: "0.5em",
