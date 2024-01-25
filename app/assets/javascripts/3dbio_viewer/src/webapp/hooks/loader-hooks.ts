@@ -73,13 +73,23 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
         []
     );
 
+    const getLoader = React.useCallback((key: K) => loaders[key], [loaders]);
+
+    const resetLoaders = React.useCallback(
+        (state?: Record<string, Loader>) => setLoaders(state ?? {}),
+        []
+    );
+
     const updateLoaderStatus = React.useCallback(
         (key: K, status: Loader["status"], newMessage?: string) =>
             setLoaders(loaders => {
-                const message = newMessage ?? loaders[key]?.message;
-                const priority = loaders[key]?.priority;
+                const prevStatus = loaders[key]?.status;
+                if (prevStatus === status) return loaders;
 
-                return message && priority
+                const message = newMessage ?? loaders[key]?.message;
+                const priority = loaders[key]?.priority ?? 0;
+
+                return message
                     ? {
                           ...loaders,
                           [key]: {
@@ -131,7 +141,16 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
         [loaders]
     );
 
-    return { loading, errorThrown, title, setLoader, updateLoaderStatus, updateOnResolve };
+    return {
+        loading,
+        errorThrown,
+        title,
+        setLoader,
+        updateLoaderStatus,
+        updateOnResolve,
+        getLoader,
+        resetLoaders,
+    };
 }
 
 export type LoaderStatus = "pending" | "loading" | "loaded" | "error";

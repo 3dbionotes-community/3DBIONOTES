@@ -7,6 +7,7 @@ import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
 import { LoaderState, useLoader } from "../components/Loader";
 import { getChainId, getMainItem, Selection } from "../view-models/Selection";
+import i18n from "../utils/i18n";
 
 export function usePdbLoader(
     selection: Selection,
@@ -19,21 +20,33 @@ export function usePdbLoader(
     const pdbId = getMainItem(selection, "pdb");
     const chainId = getChainId(selection);
     const chains = pdbInfo?.chains;
+
     const pdbOptions: PdbOptions | undefined = React.useMemo(() => {
         return getPdbOptions(pdbId, chainId, chains);
     }, [pdbId, chainId, chains]);
 
+    const pdbInfoLoaderMessage = pdbInfoLoader.type === "error" ? pdbInfoLoader.message : undefined;
+
+    React.useEffect(() => setLoader({ type: "loading" }), [pdbId, setLoader]);
+
     React.useEffect(() => {
-        if (pdbInfoLoader.type === "error") return setLoader(pdbInfoLoader);
+        if (pdbInfoLoader.type === "error" && pdbInfoLoaderMessage)
+            setLoader({ type: "error", message: pdbInfoLoaderMessage });
+        if (pdbInfoLoader.type === "loaded" && !pdbOptions)
+            setLoader({
+                type: "error",
+                message: i18n.t(
+                    "No chains found for this PDB. Therefore we are unable to retrieve any data."
+                ),
+                //This shouldn't be happening and btw EMDB can be present, so is very possible to have something at least to show...
+            });
         if (!pdbOptions) return;
-
-        setLoader({ type: "loading" });
-
         return compositionRoot.getPdb.execute(pdbOptions).run(
             pdb => setLoader({ type: "loaded", data: pdb }),
             error => setLoader({ type: "error", message: error.message })
         );
-    }, [compositionRoot, setLoader, pdbOptions, pdbInfoLoader]);
+    }, [compositionRoot, setLoader, pdbOptions, pdbInfoLoader.type, pdbInfoLoaderMessage]);
+    //Do not add pdbInfoLoader as dependency as .ligands will update. Making the loading screen show again (╥_╥)
 
     return [loader, setLoader];
 }

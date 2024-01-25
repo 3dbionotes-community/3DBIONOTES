@@ -3,7 +3,6 @@ import React from "react";
 import styled from "styled-components";
 import { Fab } from "@material-ui/core";
 import { ResizableBox, ResizableBoxProps, ResizeCallbackData } from "react-resizable";
-import { KeyboardArrowUp as KeyboardArrowUpIcon } from "@material-ui/icons";
 import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
 import { ViewerSelector } from "./viewer-selector/ViewerSelector";
@@ -30,17 +29,28 @@ type ExternalData =
     | { type: "uploadData"; data: UploadData }
     | { type: "network"; data: ProteinNetwork };
 
+export type LoaderKey = keyof typeof loaderMessages;
+
 const loaderMessages = {
     //already ordered by priority
     getRelatedPdbModel: [i18n.t("Getting PDB related model..."), 0],
     initPlugin: [i18n.t("Starting 3D Viewer..."), 1], //already loading PDB
     updateVisualPlugin: [i18n.t("Updating selection..."), 2],
     pdbLoader: [i18n.t("Loading PDB Data..."), 3],
+    uploadedModel: [i18n.t("Loading uploaded model..."), 2],
     loadModel: [i18n.t("Loading model..."), 4], //PDB, EMDB, PDB-REDO, CSTF, CERES
     exportAnnotations: [i18n.t("Retrieving all annotations..."), 5],
 } as const;
 
-export type LoaderKey = keyof typeof loaderMessages;
+export const loaderKeys: {
+    [P in LoaderKey]: LoaderKey;
+} = _.mapValues(loaderMessages, (_v, k) => k as LoaderKey);
+
+const loadersInitialState = _.mapValues(loaderMessages, ([message, priority]) => ({
+    message,
+    priority,
+    status: "pending" as const,
+}));
 
 export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(props => {
     const { viewerState } = props;
@@ -49,17 +59,12 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     const {
         loading,
-        errorThrown,
         title,
         updateLoaderStatus,
         updateOnResolve: updateLoader,
-    } = useMultipleLoaders<LoaderKey>(
-        _.mapValues(loaderMessages, ([message, priority]) => ({
-            message,
-            priority,
-            status: "pending" as const,
-        }))
-    );
+        getLoader,
+        resetLoaders,
+    } = useMultipleLoaders<LoaderKey>(loadersInitialState);
 
     const [error, setError] = React.useState<string>();
     const [externalData, setExternalData] = React.useState<ExternalData>({ type: "none" });
@@ -69,6 +74,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const { scrolled, goToTop, ref } = useGoToTop<HTMLDivElement>();
 
     const uploadData = getUploadData(externalData);
+
     const { pdbInfoLoader, setLigands } = usePdbInfo(selection, uploadData);
     const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfoLoader);
     const pdbInfo = pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined;
@@ -76,6 +82,16 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const uploadDataToken = selection.type === "uploadData" ? selection.token : undefined;
     const networkToken = selection.type === "network" ? selection.token : undefined;
     const proteinNetwork = externalData.type === "network" ? externalData.data : undefined;
+
+    const criticalLoaders = React.useMemo(
+        () =>
+            _.compact([
+                getLoader(loaderKeys.uploadedModel),
+                getLoader(loaderKeys.initPlugin),
+                getLoader(loaderKeys.getRelatedPdbModel),
+            ]),
+        [getLoader]
+    );
 
     const toggleToolbarExpanded = React.useCallback(
         (_e: React.SyntheticEvent, data: ResizeCallbackData) => {
@@ -101,19 +117,24 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
         }
     }, [uploadDataToken, networkToken, compositionRoot]);
 
+    const pdbId = React.useMemo(() => getMainItem(selection, "pdb"), [selection]);
+
     React.useEffect(() => {
-        updateLoaderStatus(
-            "pdbLoader",
-            pdbLoader.type,
-            pdbLoader.type === "error"
-                ? i18n.t(`No data available for ${getMainItem(selection, "pdb") ?? "PDB"}`)
-                : undefined
-        );
-    }, [pdbLoader.type, updateLoaderStatus, selection]);
+        resetLoaders(_.omit(loadersInitialState, [loaderKeys.initPlugin]));
+    }, [pdbId, resetLoaders]);
+
+    React.useEffect(() => {
+        const critical = criticalLoaders.find(loader => loader.status === "error");
+        if (critical) setPdbLoader({ type: "error", message: critical.message });
+    }, [criticalLoaders, setPdbLoader]);
+
+    React.useEffect(() => {
+        updateLoaderStatus("pdbLoader", pdbLoader.type);
+    }, [pdbLoader.type, updateLoaderStatus]);
 
     return (
         <>
-            <LoaderMask open={loading || errorThrown} title={title} errorThrown={errorThrown} />
+            <LoaderMask open={loading} title={title} />
             <div id="viewer" className={!isDev ? "prod" : undefined}>
                 {!debugFlags.showOnlyValidations && (
                     <div id="left">
@@ -157,11 +178,11 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                     </div>
                 </ResizableBox>
             </div>
-            {scrolled && (
+            {/* {scrolled && (
                 <StyledFab onClick={goToTop}>
                     <KeyboardArrowUpIcon fontSize="large" />
                 </StyledFab>
-            )}
+            )} */}
         </>
     );
 });

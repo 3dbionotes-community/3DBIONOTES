@@ -169,7 +169,7 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                         >
                             {visibleItems.map((item, idx) => (
                                 <ModelSearchItem key={idx} item={item} onSelect={onSelect} />
-                            ))}{" "}
+                            ))}
                             {/* working on calling the search api when the user gets to the end */}
                         </InfiniteScroll>
                     )}
