@@ -1,0 +1,26 @@
+name: Yarn CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '16.14.0'
+        cache: 'npm'
+        
+    - name: Install dependencies and build (3dbio_viewer, covid19)
+      run: |
+          cd app/assets/javascripts/3dbio_viewer
+          yarn install
+          yarn build
+          cd ../../../../
+          cd app/assets/javascripts/covid19
+          yarn install
+          yarn build
