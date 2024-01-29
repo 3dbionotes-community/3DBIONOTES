@@ -74,7 +74,11 @@ const Tools: React.FC<{ pdb: Pdb; subtrack: Subtrack; fragment: FragmentP }> = p
     return (
         <TooltipRow
             title={i18n.t("Tools")}
-            object={getFragmentToolsLink({ protein: pdb.protein.id, subtrack, fragment })}
+            object={
+                pdb.protein
+                    ? getFragmentToolsLink({ protein: pdb.protein.id, subtrack, fragment })
+                    : undefined
+            }
         >
             {link => <Link name={link.name} url={link.url} />}
         </TooltipRow>

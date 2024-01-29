@@ -22,7 +22,7 @@ export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(() =
 
     return (
         <ViewerBlock block={block} namespace={namespace}>
-            {i18n.t("Protein")}: {loader.data.protein.id} | {i18n.t("PDB")}: {loader.data.id} |
+            {i18n.t("Protein")}: {loader.data.protein?.id} | {i18n.t("PDB")}: {loader.data.id} |
             {i18n.t("Chain")}: {loader.data.chainId}
             <ProtvistaPdb pdb={loader.data} block={block} showAllTracks={false} />
         </ViewerBlock>

@@ -52,11 +52,17 @@ const Child: React.FC<ChildProps> = props => {
 
 function getItems(pdb: Pdb): Item[] {
     return _.compact([
-        { name: i18n.t("Gene Name"), value: pdb.protein.gen },
-        {
-            name: i18n.t("Gene Bank ID"),
-            value: pdb.protein.genBank ? <Links links={getEntityLinks(pdb, "geneBank")} /> : "-",
-        },
+        pdb.protein ? { name: i18n.t("Gene Name"), value: pdb.protein.gen } : undefined,
+        pdb.protein
+            ? {
+                  name: i18n.t("Gene Bank ID"),
+                  value: pdb.protein.genBank ? (
+                      <Links links={getEntityLinks(pdb, "geneBank")} />
+                  ) : (
+                      "-"
+                  ),
+              }
+            : undefined,
         {
             name: i18n.t("Uniprot ID"),
             value: <Links links={getEntityLinks(pdb, "uniprot")} />,

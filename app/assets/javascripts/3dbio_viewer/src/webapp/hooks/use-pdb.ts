@@ -52,5 +52,5 @@ export function getPdbOptions(
               .get(chainId, defaultChain)
         : defaultChain;
 
-    return chain ? { pdbId, proteinId: chain.protein.id, chainId: chain.chainId } : undefined;
+    return chain ? { pdbId, proteinId: chain.protein?.id, chainId: chain.chainId } : undefined;
 }
