@@ -3,9 +3,7 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -13,7 +11,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '16.14.0'
-        
     - name: Install dependencies and build (3dbio_viewer, covid19)
       run: |
           cd app/assets/javascripts/3dbio_viewer
