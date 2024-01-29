@@ -2,7 +2,7 @@ import React from "react";
 import { Backdrop, CircularProgress, makeStyles } from "@material-ui/core";
 import { Cancel as CancelIcon } from "@material-ui/icons";
 import styled from "styled-components";
-import { isDev } from "../../../routes";
+import { isDev as _isDev } from "../../../routes";
 
 interface LoaderProps {
     open: boolean;
