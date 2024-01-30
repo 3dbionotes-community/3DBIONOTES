@@ -85,10 +85,10 @@ export const BasicInfoEntry: React.FC<BlockComponentProps> = React.memo(props =>
     return (
         <ul>
             {items.map((item, idx) => (
-                <>
+                <React.Fragment key={idx}>
                     {valueItem(item, idx)}
                     {linksItem(item, idx)}
-                </>
+                </React.Fragment>
             ))}
         </ul>
     );
