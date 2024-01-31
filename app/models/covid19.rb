@@ -4,7 +4,7 @@ class Covid19
       {
         name: "7K7P",
         description: "NSP1: Leader protein of 1a and 1ab polyproteins. NSP1 inhibits host cell translation by interacting with the 40S small ribosomal subunit. Slowing down infected host protein production, NSP1 facilitates efficient viral protein translation and evasion from host immune response, thus helping the virus to proliferate.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7k7p_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7k7p_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7k7p"
       },
       {
@@ -16,43 +16,43 @@ class Covid19
       {
         name: "7TI9",
         description: "Ubiquitin-like domain 1 of Nsp3.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7ti9_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7ti9_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7ti9"
       },
       {
         name: "5S73",
         description: "MacroDomain I of NSP3 (Mac1): Domain that recognizes and hydrolizes the ADP-ribose label from proteins associated with the host innate immune response.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5s73_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5s73_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/5s73"
       },
       {
         name: "7THH",
         description: "SARS-unique domain C of NSP3 (DPUP).",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7thh_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7thh_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7thh"
       },
       {
         name: "7NFV",
         description: "PL-Pro: Domain Papain-like proteinase of NSP3. PL-Pro processes proteolytically three cleavage sites located at the N-terminus of the polyproteins 1a and 1ab. In addition, PL-Pro possesses a deubiquitinating/deISGylating activity and processes polyubiquitin chains from cellular substrates. It participates together with NSP4 in the assembly of virally-induced cytoplasmic double-membrane vesicles necessary for viral replication. It also antagonizes innate immune induction of type I interferon by blocking phosphorylation, dimerization and subsequent nuclear translocation of host IRF3. It prevents host cell NF-kappa-B signaling as well.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7nfv_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7nfv_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7nfv"
       },
       {
         name: "7LGO",
         description: "NAB: Nucleic acid binding domain of NSP3.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7lgo_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7lgo_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7lgo"
       },
       {
         name: "7RQG",
         description: "Y3 domain of Nsp3.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7rqg_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7rqg_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7rqg"
       },
       {
         name: "5R8T",
         description: "NSP5: Protease that processes proteolytically the C-terminus of the polyproteins 1a and 1ab at seven and twelve sites, respectively.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5r8t_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5r8t_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/5r8t"
       },
       {
@@ -64,37 +64,37 @@ class Covid19
       {
         name: "6WXD",
         description: "NSP9: Able to bind ssRNA, NSP9 forms a covalent RNA-protein intermediate. This RNA is first transferred by the NiRAN domain of NSP12 to NSP9 . Then, the NiRAN NSP12 domain transfers the RNA to GDP to start the building process of the RNA cap structure. Bound to the NSP12 NiRAN domain, NSP9 inhibits the guanylyl tranferase enzymatic activity of NSP12.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6wxd_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6wxd_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/6wxd"
       },
       {
         name: "6ZPE",
         description: "NSP10: Stimulating both NSP14 exoribonuclease and NSP16 methyltransferase activities, NSP10 plays an essential role in viral mRNA proofreading and cap methylation.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6zpe_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/6zpe_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/6zpe"
       },
       {
         name: "5ROB",
         description: "NSP13: Its helicase RNA duplex-unwinding activity contributes to elongate the RNA product. Additionally, its fosfatase activity catalizes the first step of the mRNA cap synthesis.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5rob_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5rob_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/5rob"
       },
       {
         name: "5SMK",
         description: "NSP14: Enzyme with two different catalytic activities: Exoribonuclease activity in its N-terminal end, and N7-methyltransferase activity in its C-terminal end. Its proofreading exoribonuclease lowers viral sensitivity to nucleoside analogs.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5smk_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5smk_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/5smk"
       },
       {
         name: "5SBF",
         description: "NSP15: As uridylate-specific enzyme, NSP15 hydrolizes both ssRNA and dsRNA, probably to avoid trigger the host inmune response.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5sbf_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/5sbf_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/5sbf"
       },
       {
         name: "7L6T",
         description: "NSP16: Methyltransferase that catalyzes the last reaction to build the viral mRNA cap, the methylation of the ribose 2'-OH.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7l6t_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7l6t_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7l6t"
       },
       {
@@ -112,37 +112,37 @@ class Covid19
       {
         name: "7NTK",
         description: "Protein E: Envelope small membrane protein. As a viroporin, it self-assembles in host membranes forming pentameric protein pores that can affect the integrity of the lipid bilayer or disrupt the membrane potential, thus facilitating the release of viral particles from host cells.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7ntk_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7ntk_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7ntk"
       },
       {
         name: "7VPH",
         description: "ORF6: Although it is ot necessary for viral invasion and replication, ORF6 plays a relevant role in immune evasion. It directly interacts with the host complex Rae1-Nup98 preventing the nuclear export of host mRNA, antagonizing interferon signaling.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7vph_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7vph_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7vph"
       },
       {
         name: "7CI3",
         description: "ORF7a: Although dispensable for virus replication in cell culture, ORF7a acts as a immunomodulator factor that binds to immune cells and triggers inflammatory responses.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7ci3_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7ci3_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7ci3"
       },
       {
         name: "7F5F",
         description: "ORF8: With a core fold similar to ORF7a, the structure of ORF8 reveals two novel dimer interfaces that allow forming host large-scale assemblies, potentially mediating immune suppression and evasion activities.",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7jtl_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7jtl_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7f5f"
       },
       {
         name: "7CDZ",
         description: "Nucleoprotein N-terminal domain: The nucleoprotein (N protein) is involved in viral assembly, replication and host immune response regulation. Its N-terminal domain (N-NTD) is responsible for RNA binding and packaging of the positive strand viral genome RNA into a helical ribonucleocapsid (RNP).",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7cdz_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7cdz_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7cdz"
       },
       {
         name: "7CE0",
         description: "Nucleoprotein C-terminal domain: The nucleoprotein (N protein) is involved in viral assembly, replication and host immune response regulation. Its C-terminal domain (N-CTD) is responsible for RNA binding and packaging of the positive strand viral genome RNA into a helical ribonucleocapsid (RNP).",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7ce0_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/7ce0_deposited_chain_front_image-800x800.png",
         query_url: "/ws/viewer/#/7ce0"
       },
       {
@@ -238,7 +238,7 @@ class Covid19
         name: pdb_key,
         description: pdb_hash["description"],
         query_url: "/ws/viewer/#/#{pdb_key}&viewer_type=ngl&button=#query",
-        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/#{pdb_key}_deposited_chain_front_image-200x200.png",
+        image_url: "https://www.ebi.ac.uk/pdbe/static/entry/#{pdb_key}_deposited_chain_front_image-800x800.png",
         external: {text: "EBI", url: "https://www.ebi.ac.uk/pdbe/entry/pdb/#{pdb_key}"},
         api: "https://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/#{pdb_key}",
         type: 'pdb',
