@@ -33,6 +33,7 @@ export interface Pdb {
     customAnnotations: Maybe<Annotations>;
     ligands: Maybe<PdbLigand[]>;
     publications: PdbPublication[];
+    organism: Maybe<string>;
 }
 
 export interface PdbLigand {

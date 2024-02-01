@@ -10,6 +10,6 @@ export interface PdbRepository {
 
 export interface PdbOptions {
     proteinId: Maybe<ProteinId>;
-    pdbId: Maybe<PdbId>;
+    pdbId: PdbId;
     chainId: ChainId;
 }

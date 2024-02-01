@@ -22,6 +22,7 @@ export function usePdbLoader(
     const chains = pdbInfo?.chains;
 
     const pdbOptions: PdbOptions | undefined = React.useMemo(() => {
+        if (!pdbId) return;
         return getPdbOptions(pdbId, chainId, chains);
     }, [pdbId, chainId, chains]);
 
@@ -52,7 +53,7 @@ export function usePdbLoader(
 }
 
 export function getPdbOptions(
-    pdbId: Maybe<PdbId>,
+    pdbId: PdbId,
     chainId: Maybe<string>,
     chains: Maybe<PdbInfo["chains"]>
 ): Maybe<PdbOptions> {

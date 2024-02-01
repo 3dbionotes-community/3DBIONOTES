@@ -16,7 +16,7 @@ import { getProteomicsFragments, Proteomics } from "./tracks/proteomics";
 import { getPdbRedoFragments, PdbRedo } from "./tracks/pdb-redo";
 import { getEpitomesFragments, IedbAnnotationsResponse } from "./tracks/epitomes";
 import { getProtein, UniprotResponse } from "./uniprot";
-import { getExperiment, PdbExperiment } from "./ebi-pdbe-api";
+import { getExperiment, getFallbackOrganism, PdbExperiment, PdbMolecules } from "./ebi-pdbe-api";
 import { getTracksFromFragments } from "../../../domain/entities/Fragment2";
 import { getPfamDomainFragments, PfamAnnotations } from "./tracks/pfam-domain";
 import { getSmartDomainFragments, SmartAnnotations } from "./tracks/smart-domain";
@@ -69,6 +69,7 @@ interface Data {
     pdbRedo: PdbRedo;
     iedb: IedbAnnotationsResponse;
     pdbExperiment: PdbExperiment;
+    pdbMolecules: PdbMolecules;
     elmdbUniprot: ElmdbUniprot;
     molprobity: MolprobityResponse;
     antigenic: AntigenicResponse;
@@ -94,7 +95,7 @@ export class ApiPdbRepository implements PdbRepository {
         const { ontologies, ontologyTerms, organisms } = idrOptions;
 
         debugVariable({ apiData: data });
-        const { proteinId } = options;
+        const { proteinId, pdbId, chainId } = options;
 
         const variants = proteinId ? getVariants(
             data.ebiVariation,
@@ -118,19 +119,21 @@ export class ApiPdbRepository implements PdbRepository {
 
         const fragments = {
             functionalMappingFragments: on(data.cv19Tracks, getFunctionalMappingFragments),
-            structureCoverageFragments: on(data.coverage, coverage => getStructureCoverageFragments(coverage, options.chainId)),
-            emValidationFragments: on(data.pdbAnnotations, pdbAnnotations => getEmValidationFragments(pdbAnnotations, options.chainId)),
-            pdbRedoFragments: on(data.pdbRedo, pdbRedo => getPdbRedoFragments(pdbRedo, options.chainId)),
+            structureCoverageFragments: on(data.coverage, coverage => getStructureCoverageFragments(coverage, chainId)),
+            emValidationFragments: on(data.pdbAnnotations, pdbAnnotations => getEmValidationFragments(pdbAnnotations, chainId)),
+            pdbRedoFragments: on(data.pdbRedo, pdbRedo => getPdbRedoFragments(pdbRedo, chainId)),
             epitomesFragments: on(data.iedb, getEpitomesFragments),
-            molprobityFragments: on(data.molprobity, molprobity => getMolprobityFragments(molprobity, options.chainId)),
+            molprobityFragments: on(data.molprobity, molprobity => getMolprobityFragments(molprobity, chainId)),
         };
 
         const fragmentsList = { ...proteinFragments, ...fragments };
 
         const protein = proteinId ? getProtein(proteinId, data.uniprot) : undefined;
         const experiment = on(data.pdbExperiment, pdbExperiment =>
-            options.pdbId ? getExperiment(options.pdbId, pdbExperiment) : undefined
+            getExperiment(pdbId, pdbExperiment)
         );
+
+        const fallbackOrganism = on(data.pdbMolecules, pdbMolecules => getFallbackOrganism(pdbId, pdbMolecules));
 
         const sequence = data.features ? data.features.sequence : "";
 
@@ -155,15 +158,16 @@ export class ApiPdbRepository implements PdbRepository {
         );
 
         const pdbTitle =
-            options.pdbId && data.pdbSummary && _.first(data.pdbSummary[options.pdbId])?.title;
+            data.pdbSummary && _.first(data.pdbSummary[pdbId])?.title;
 
         return {
-            id: options.pdbId,
+            id: pdbId,
             title: pdbTitle,
             emdbs: emdbs || [],
             protein,
             sequence,
-            chainId: options.chainId,
+            organism: protein?.organism ?? fallbackOrganism,
+            chainId: chainId,
             length: getTotalFeaturesLength(tracks),
             tracks,
             variants: pdbVariants,
@@ -184,45 +188,39 @@ function getData(options: PdbOptions): FutureData<Partial<Data>> {
     const ebiProteinsApiUrl = `${ebiBaseUrl}/proteins/api`;
     const pdbAnnotUrl = `${bioUrl}/ws/lrs/pdbAnnotFromMap`;
 
-    const pdbEmdbsEmValidations = onF(pdbId, pdbId =>
-        getJSON<PdbEmdbMapping>(`${emdbsFromPdbUrl}/${pdbId}`).flatMap(pdbEmdbMapping => {
-            const emdbs = pdbEmdbMapping ? getEmdbsFromMapping(pdbEmdbMapping, pdbId) : [];
-            const pdbEmdbsEmValidations = emdbs?.map(id => ({
-                id,
-                emv: Future.joinObj({
-                    localResolution: getValidatedJSON<ConsensusResponse>(
-                        `${bioUrlDev}/bws/api/emv/${id}/localresolution/consensus/`,
-                        consensusResponseC
-                    ).flatMap(consensus =>
-                        getValidatedJSON<RankResponse>(
-                            `${bioUrlDev}/bws/api/emv/${id}/localresolution/rank/`,
-                            rankResponseC
-                        ).map(rank => ({ consensus, rank }))
-                    ),
-                    // deepres, monores, blocres, mapq, fscq, daq:
-                    // getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
-                }),
-            }));
+    const pdbEmdbsEmValidations = getJSON<PdbEmdbMapping>(`${emdbsFromPdbUrl}/${pdbId}`).flatMap(pdbEmdbMapping => {
+        const emdbs = pdbEmdbMapping ? getEmdbsFromMapping(pdbEmdbMapping, pdbId) : [];
+        const pdbEmdbsEmValidations = emdbs?.map(id => ({
+            id,
+            emv: Future.joinObj({
+                localResolution: getValidatedJSON<ConsensusResponse>(
+                    `${bioUrlDev}/bws/api/emv/${id}/localresolution/consensus/`,
+                    consensusResponseC
+                ).flatMap(consensus =>
+                    getValidatedJSON<RankResponse>(
+                        `${bioUrlDev}/bws/api/emv/${id}/localresolution/rank/`,
+                        rankResponseC
+                    ).map(rank => ({ consensus, rank }))
+                ),
+                // deepres, monores, blocres, mapq, fscq, daq:
+                // getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
+            }),
+        }));
 
-            return Future.parallel(
-                pdbEmdbsEmValidations.map(emdb => emdb.emv.map(emv => ({ id: emdb.id, emv })))
-            );
-        })
-    );
+        return Future.parallel(
+            pdbEmdbsEmValidations.map(emdb => emdb.emv.map(emv => ({ id: emdb.id, emv })))
+        );
+    });
 
-    const pdbPublications = onF(pdbId, pdbId =>
-        getValidatedJSON<EntryPublications>(
-            `${ebiBaseUrl}/pdbe/api/pdb/entry/publications/${pdbId}`,
-            getPublicationsCodec(pdbId)
-        ).map(entryPublications => getPublications(entryPublications?.[pdbId] ?? []))
-    );
+    const pdbPublications = getValidatedJSON<EntryPublications>(
+        `${ebiBaseUrl}/pdbe/api/pdb/entry/publications/${pdbId}`,
+        getPublicationsCodec(pdbId)
+    ).map(entryPublications => getPublications(entryPublications?.[pdbId] ?? []))
 
-    const ligands = onF(pdbId, pdbId =>
-        getValidatedJSON<PdbEntryResponse>(
-            `${bioUrlDev}/bws/api/pdbentry/${pdbId}/ligands/`,
-            pdbEntryResponseC
-        ).map(pdbEntryResponse => pdbEntryResponse?.results)
-    );
+    const ligands = getValidatedJSON<PdbEntryResponse>(
+        `${bioUrlDev}/bws/api/pdbentry/${pdbId}/ligands/`,
+        pdbEntryResponseC
+    ).map(pdbEntryResponse => pdbEntryResponse?.results)
 
     // Move URLS to each track module?
     //prettier-ignore
@@ -231,10 +229,10 @@ function getData(options: PdbOptions): FutureData<Partial<Data>> {
         pdbEmdbsEmValidations,
         features: onF(proteinId, proteinId => getJSON(`${ebiProteinsApiUrl}/features/${proteinId}`)),
         cv19Tracks: onF(proteinId, proteinId => getJSON(`${bioUrl}/cv19_annotations/${proteinId}_annotations.json`)),
-        pdbAnnotations: onF(pdbId, pdbId => getJSON(`${pdbAnnotUrl}/all/${pdbId}/${chainId}/?format=json`)),
+        pdbAnnotations: getJSON(`${pdbAnnotUrl}/all/${pdbId}/${chainId}/?format=json`),
         pdbPublications,
-        coverage: onF(pdbId, pdbId => getJSON(`${bioUrl}/api/alignments/Coverage/${pdbId}${chainId}`)),
-        pdbSummary: onF(pdbId, pdbId => getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/summary/${pdbId}`)),
+        coverage: getJSON(`${bioUrl}/api/alignments/Coverage/${pdbId}${chainId}`),
+        pdbSummary: getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/summary/${pdbId}`),
         ebiVariation: onF(proteinId, proteinId => getJSON(`${ebiProteinsApiUrl}/variation/${proteinId}`)),
         mobiUniprot: onF(proteinId, proteinId => getJSON(`${bioUrl}/api/annotations/mobi/Uniprot/${proteinId}`)),
         phosphositeUniprot: onF(proteinId, proteinId => getJSON(`${bioUrl}/api/annotations/Phosphosite/Uniprot/${proteinId}`)),
@@ -243,11 +241,12 @@ function getData(options: PdbOptions): FutureData<Partial<Data>> {
         smartAnnotations: onF(proteinId, proteinId => getJSON(`${bioUrl}/api/annotations/SMART/Uniprot/${proteinId}`)),
         interproAnnotations: onF(proteinId, proteinId => getJSON(`${bioUrl}/api/annotations/interpro/Uniprot/${proteinId}`)),
         proteomics: onF(proteinId, proteinId => getJSON(`${ebiProteinsApiUrl}/proteomics/${proteinId}`)),
-        pdbRedo: onF(pdbId, pdbId => getJSON(`${bioUrl}/api/annotations/PDB_REDO/${pdbId}`)),
+        pdbRedo: getJSON(`${bioUrl}/api/annotations/PDB_REDO/${pdbId}`),
         iedb: onF(proteinId, proteinId => getJSON(`${bioUrl}/api/annotations/IEDB/Uniprot/${proteinId}`)),
-        pdbExperiment: onF(pdbId, pdbId => getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/experiment/${pdbId}`)),
+        pdbExperiment: getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/experiment/${pdbId}`),
+        pdbMolecules: getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/molecules/${pdbId}`),
         elmdbUniprot: onF(proteinId, proteinId => getJSON(`${bioUrl}/api/annotations/elmdb/Uniprot/${proteinId}`)),
-        molprobity: onF(pdbId, pdbId => getJSON(`${bioUrl}/compute/molprobity/${pdbId}`)),
+        molprobity: getJSON(`${bioUrl}/compute/molprobity/${pdbId}`),
         antigenic: onF(proteinId, proteinId => getJSON(`${ebiProteinsApiUrl}/antigen/${proteinId}`)),
         mutagenesis: onF(proteinId, proteinId => getJSON(`${bioUrl}/api/annotations/biomuta/Uniprot/${proteinId}`)),
         genomicVariantsCNCB: onF(proteinId, proteinId => getJSON(`${bioUrl}/ws/lrs/features/variants/Genomic_Variants_CNCB/${proteinId}/`)),
