@@ -8,8 +8,11 @@ import { ProtvistaPdbValidation } from "./ProtvistaPdbValidation";
 import { IDRViewerBlock } from "../idr/IDRViewerBlock";
 import { BasicInfoEntry } from "../BasicInfoEntry";
 import { ChainInfoViewer } from "../ChainInfoViewer";
+import { Protein } from "../../../domain/entities/Protein";
+import { Maybe } from "../../../utils/ts-utils";
+import React from "react";
 
-export const blockDefs: BlockDef[] = [
+export const getBlockDefs: (protein: Maybe<Protein>) => BlockDef[] = (protein) => _.compact([
     {
         id: "basicInfo",
         title: i18n.t("Basic information of the molecule assembly"),
@@ -44,7 +47,7 @@ export const blockDefs: BlockDef[] = [
         ],
         isSubtitle: false,
     },
-    {
+    protein && {
         id: "featureAnnotation",
         title: i18n.t(`Feature annotations of the chain \${chainWithProtein}`),
         description: i18n.t(
@@ -53,7 +56,7 @@ export const blockDefs: BlockDef[] = [
         help: i18n.t(
             "These features, shown as small boxes correlative to the numbering of the protein residues, have been retrieved from several external databases characterizing proteins functionally or/and structurally.  Please be aware that in some cases the atomic structure may not be completely traced. The actual coverage is reported in the structure coverage track."
         ),
-        component: ChainInfoViewer,
+        component: React.memo((props) => ChainInfoViewer({ ...props, protein })),
         tracks: [],
         profiles: [
             profiles.structural,
@@ -209,7 +212,7 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
         profiles: [profiles.drugDesign, profiles.biomedicine],
         isSubtitle: true,
     },
-];
+]);
 
 export const testblock: BlockDef = {
     id: "testBlock",

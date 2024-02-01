@@ -1,12 +1,12 @@
+import _ from "lodash";
 import React from "react";
-import { getEntityLinks, Pdb } from "../../domain/entities/Pdb";
 import { Selection } from "../view-models/Selection";
 import { Links } from "./Link";
+import { getProteinEntityLinks, Protein } from "../../domain/entities/Protein";
 import i18n from "../utils/i18n";
-import _ from "lodash";
 
 export interface ChainInfoProps {
-    pdb: Pdb;
+    protein: Protein;
     selection: Selection;
 }
 
@@ -18,8 +18,8 @@ interface Item {
 }
 
 export const ChainInfoViewer: React.FC<ChainInfoProps> = React.memo(props => {
-    const { pdb } = props;
-    const items: Item[] = getItems(pdb);
+    const { protein } = props;
+    const items: Item[] = getProteinItems(protein);
 
     return (
         <ul>
@@ -50,16 +50,20 @@ const Child: React.FC<ChildProps> = props => {
     );
 };
 
-function getItems(pdb: Pdb): Item[] {
+function getProteinItems(protein: Protein): Item[] {
     return _.compact([
-        { name: i18n.t("Gene Name"), value: pdb.protein.gen },
+        { name: i18n.t("Gene Name"), value: protein.gen },
         {
             name: i18n.t("Gene Bank ID"),
-            value: pdb.protein.genBank ? <Links links={getEntityLinks(pdb, "geneBank")} /> : "-",
+            value: protein.genBank ? (
+                <Links links={getProteinEntityLinks(protein, "geneBank")} />
+            ) : (
+                "-"
+            ),
         },
         {
             name: i18n.t("Uniprot ID"),
-            value: <Links links={getEntityLinks(pdb, "uniprot")} />,
+            value: <Links links={getProteinEntityLinks(protein, "uniprot")} />,
         },
     ]);
 }

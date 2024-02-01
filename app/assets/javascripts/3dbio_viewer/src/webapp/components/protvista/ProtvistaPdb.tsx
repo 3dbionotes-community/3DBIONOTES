@@ -9,7 +9,7 @@ export interface ProtvistaPdbProps {
     pdb: Pdb;
     block: BlockDef;
     showAllTracks?: boolean;
-    setVisible?: (visible: boolean) => void;
+    setVisible: (visible: boolean) => void;
     onAction?(action: ProtvistaAction): void;
 }
 
@@ -19,7 +19,7 @@ export const ProtvistaPdb: React.FC<ProtvistaPdbProps> = React.memo(props => {
 
     const pdbView = React.useMemo(() => {
         const pdbView = getPdbView(pdb, { block, showAllTracks });
-        if (block.id === "mapValidation" && setVisible) {
+        if (block.id === "mapValidation") {
             const stats = _.first(pdb.emdbs)?.emv?.stats;
             //if only structure coverage is selected and there is no stats
             if (pdbView.tracks.every(track => track.id === "structure-coverage") && !stats)

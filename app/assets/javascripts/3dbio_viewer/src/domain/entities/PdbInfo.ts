@@ -13,17 +13,18 @@ export interface PdbInfo {
         name: string;
         shortName: string;
         chainId: ChainId;
-        protein: Protein;
+        protein: Maybe<Protein>;
     }>;
     ligands: Ligand[];
 }
 
-interface BuildPdbInfoOptions extends Omit<PdbInfo, "chains"> {
+interface BuildPdbInfoOptions extends PdbInfo {
     proteins: Protein[];
-    proteinsMapping: Record<ProteinId, ChainId[]>;
+    proteinsMapping: Maybe<Record<ProteinId, ChainId[]>>;
 }
 
 export function buildPdbInfo(options: BuildPdbInfoOptions): PdbInfo {
+    if (!options.proteinsMapping && _.isEmpty(options.proteins)) return options;
     const proteinById = _.keyBy(options.proteins, protein => protein.id);
     const chains = _(options.proteinsMapping)
         .toPairs()

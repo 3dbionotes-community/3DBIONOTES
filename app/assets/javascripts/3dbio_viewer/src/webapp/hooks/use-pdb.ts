@@ -61,9 +61,9 @@ export function getPdbOptions(
     const defaultChain = chains[0];
     const chain = chainId
         ? _(chains)
-              .keyBy(chain => chain.chainId)
-              .get(chainId, defaultChain)
+            .keyBy(chain => chain.chainId)
+            .get(chainId, defaultChain)
         : defaultChain;
 
-    return chain ? { pdbId, proteinId: chain.protein.id, chainId: chain.chainId } : undefined;
+    return chain ? { pdbId, proteinId: chain.protein?.id, chainId: chain.chainId } : undefined;
 }

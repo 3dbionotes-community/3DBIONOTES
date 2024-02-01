@@ -38,7 +38,7 @@ export const BasicInfoEntry: React.FC<BlockComponentProps> = React.memo(props =>
     );
 
     React.useEffect(() => {
-        if (_.isEmpty(items) && setVisible) setVisible(false);
+        if (_.isEmpty(items)) setVisible(false);
     }, [items, setVisible]);
 
     const valueItem = (item: Item, idx: number) =>

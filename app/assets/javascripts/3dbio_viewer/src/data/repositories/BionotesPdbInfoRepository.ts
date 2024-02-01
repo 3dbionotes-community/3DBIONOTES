@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { FutureData } from "../../domain/entities/FutureData";
+import { FutureData, Error } from "../../domain/entities/FutureData";
 import { PdbId } from "../../domain/entities/Pdb";
 import { buildPdbInfo, PdbInfo } from "../../domain/entities/PdbInfo";
 import { ChainId, Protein, ProteinId } from "../../domain/entities/Protein";
@@ -13,25 +13,53 @@ import i18n from "../../domain/utils/i18n";
 export class BionotesPdbInfoRepository implements PdbInfoRepository {
     get(pdbId: PdbId): FutureData<PdbInfo> {
         const proteinMappingUrl = `${routes.bionotes}/api/mappings/PDB/Uniprot/${pdbId}`;
+        const fallbackMappingUrl = `${routes.ebi}/pdbe/api/pdb/entry/polymer_coverage/${pdbId}/`;
         const emdbMapping = `${emdbsFromPdbUrl}/${pdbId}`;
         const data$ = {
             uniprotMapping: getFromUrl<UniprotFromPdbMapping>(proteinMappingUrl).flatMapError(
                 throwServiceUnavailable
             ),
+            fallbackMapping: getFromUrl<ChainsFromPolymer>(fallbackMappingUrl),
             emdbMapping: getFromUrl<PdbEmdbMapping>(emdbMapping),
         };
 
         return Future.joinObj(data$).flatMap(data => {
-            const { uniprotMapping, emdbMapping } = data;
+            const { uniprotMapping, emdbMapping, fallbackMapping } = data;
             const proteinsMapping = uniprotMapping[pdbId.toLowerCase()];
+            const fallback = fallbackMapping[pdbId.toLowerCase()];
+            const throwError = Future.error<Error, PdbInfo>({
+                message: `No data found for PDB ${pdbId}. But you can try and visualize another PDB. If you believe this is incorrect, please contact us at: ...`,
+            });
+
             if (!proteinsMapping) {
                 console.error(`Uniprot mapping not found for ${pdbId}`);
-                return Future.error({
-                    message: `No data found for PDB ${pdbId}. But you can try and visualize another PDB. If you believe this is incorrect, please contact us at: ...`,
-                });
+                return throwError;
+            }
+
+            if (!fallback) {
+                console.error(`No fallback chains found for ${pdbId}`);
+                return throwError;
             }
 
             const emdbIds = getEmdbsFromMapping(emdbMapping, pdbId);
+
+            if (proteinsMapping instanceof Array) {
+                return Future.success<PdbInfo, Error>(buildPdbInfo({
+                    id: pdbId,
+                    emdbs: emdbIds.map(emdbId => ({ id: emdbId })),
+                    ligands: [],
+                    proteins: [],
+                    proteinsMapping: undefined,
+                    chains: fallback.molecules.flatMap(({ chains }) => chains).map(chain => ({
+                        id: chain.struct_asym_id,
+                        shortName: chain.struct_asym_id,
+                        name: chain.struct_asym_id,
+                        chainId: chain.struct_asym_id,
+                        protein: undefined
+                    }))
+                }));
+            }
+
             const proteins = _(proteinsMapping).keys().join(",");
             const proteinsInfoUrl = `${routes.bionotes}/api/lengths/UniprotMulti/${proteins}`;
             const proteinsInfo$ = proteins
@@ -53,6 +81,7 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
                     id: pdbId,
                     emdbs: emdbIds.map(emdbId => ({ id: emdbId })),
                     ligands: [],
+                    chains: [],
                     proteins,
                     proteinsMapping,
                 });
@@ -71,7 +100,13 @@ function throwServiceUnavailable<T>(err: RequestError): Future<RequestError, T> 
     });
 }
 
-type UniprotFromPdbMapping = Record<PdbId, Record<ProteinId, ChainId[]>>;
+type UniprotFromPdbMapping = Record<PdbId, Record<ProteinId, ChainId[]> | never[]>;
+
+type PolymerMolecules = {
+    chains: { struct_asym_id: string }[];
+}[]
+
+type ChainsFromPolymer = Record<PdbId, { molecules: PolymerMolecules }>;
 
 type ProteinsInfo = Record<PdbId, ProteinInfo>;
 

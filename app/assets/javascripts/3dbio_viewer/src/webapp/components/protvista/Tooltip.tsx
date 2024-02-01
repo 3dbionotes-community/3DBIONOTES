@@ -8,6 +8,7 @@ import { Subtrack } from "../../../domain/entities/Track";
 import i18n from "../../utils/i18n";
 import { renderJoin } from "../../utils/react";
 import { Link } from "../Link";
+import { Protein } from "../../../domain/entities/Protein";
 
 interface TooltipProps {
     pdb: Pdb;
@@ -31,7 +32,7 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
             <Source subtrack={subtrack} />
             <Evidences fragment={fragment} />
             <CrossReferences fragment={fragment} />
-            <Tools pdb={pdb} subtrack={subtrack} fragment={fragment} />
+            {pdb.protein && <Tools protein={pdb.protein} subtrack={subtrack} fragment={fragment} />}
             <Legend fragment={fragment} />
         </TooltipTable>
     );
@@ -68,13 +69,13 @@ const Legend: React.FC<{ fragment: FragmentP }> = props => {
     );
 };
 
-const Tools: React.FC<{ pdb: Pdb; subtrack: Subtrack; fragment: FragmentP }> = props => {
-    const { pdb, subtrack, fragment } = props;
+const Tools: React.FC<{ protein: Protein; subtrack: Subtrack; fragment: FragmentP }> = props => {
+    const { protein, subtrack, fragment } = props;
 
     return (
         <TooltipRow
             title={i18n.t("Tools")}
-            object={getFragmentToolsLink({ protein: pdb.protein.id, subtrack, fragment })}
+            object={getFragmentToolsLink({ protein: protein.id, subtrack, fragment })}
         >
             {link => <Link name={link.name} url={link.url} />}
         </TooltipRow>
