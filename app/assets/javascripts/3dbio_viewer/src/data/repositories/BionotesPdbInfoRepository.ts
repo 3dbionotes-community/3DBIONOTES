@@ -6,7 +6,7 @@ import { ChainId, Protein, ProteinId } from "../../domain/entities/Protein";
 import { PdbInfoRepository } from "../../domain/repositories/PdbInfoRepository";
 import { routes } from "../../routes";
 import { Future } from "../../utils/future";
-import { getFromUrl, RequestError } from "../request-utils";
+import { getFromUrl } from "../request-utils";
 import { emdbsFromPdbUrl, getEmdbsFromMapping, PdbEmdbMapping } from "./mapping";
 import i18n from "../../domain/utils/i18n";
 
@@ -16,10 +16,8 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
         const fallbackMappingUrl = `${routes.ebi}/pdbe/api/pdb/entry/polymer_coverage/${pdbId}/`;
         const emdbMapping = `${emdbsFromPdbUrl}/${pdbId}`;
         const data$ = {
-            uniprotMapping: getFromUrl<UniprotFromPdbMapping>(proteinMappingUrl).flatMapError(
-                throwServiceUnavailable
-            ),
-            fallbackMapping: getFromUrl<ChainsFromPolymer>(fallbackMappingUrl),
+            uniprotMapping: getFromUrl<UniprotFromPdbMapping>(proteinMappingUrl).flatMapError(() => throwError<UniprotFromPdbMapping>("serviceUnavailable")),
+            fallbackMapping: getFromUrl<ChainsFromPolymer>(fallbackMappingUrl).flatMapError(() => throwError<ChainsFromPolymer>("noData")),
             emdbMapping: getFromUrl<PdbEmdbMapping>(emdbMapping),
         };
 
@@ -27,18 +25,15 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
             const { uniprotMapping, emdbMapping, fallbackMapping } = data;
             const proteinsMapping = uniprotMapping[pdbId.toLowerCase()];
             const fallback = fallbackMapping[pdbId.toLowerCase()];
-            const throwError = Future.error<Error, PdbInfo>({
-                message: `No data found for PDB ${pdbId}. But you can try and visualize another PDB. If you believe this is incorrect, please contact us at: ...`,
-            });
 
             if (!proteinsMapping) {
                 console.error(`Uniprot mapping not found for ${pdbId}`);
-                return throwError;
+                return throwError("noData");
             }
 
             if (!fallback) {
                 console.error(`No fallback chains found for ${pdbId}`);
-                return throwError;
+                return throwError("noData");
             }
 
             const emdbIds = getEmdbsFromMapping(emdbMapping, pdbId);
@@ -90,14 +85,19 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
     }
 }
 
-function throwServiceUnavailable<T>(err: RequestError): Future<RequestError, T> {
-    console.error("Service unavailable: ", err.message);
+type ErrorType = "serviceUnavailable" | "noData";
 
-    return Future.error({
-        message: i18n.t(
-            "We apologize. Some of the services we relay on, are temporarily unavailable. Our team is working to resolve the issue, and we appreciate your patience. Please try again later."
-        ),
-    });
+function throwError<T>(type: ErrorType): FutureData<T> {
+    switch (type) {
+        case "serviceUnavailable": return Future.error({
+            message: i18n.t(
+                "We apologize. Some of the services we relay on, are temporarily unavailable. Our team is working to resolve the issue, and we appreciate your patience. Please try again later."
+            ),
+        });
+        case "noData": return Future.error({
+            message: i18n.t(`No data found for this PDB. But you can try and visualize another PDB. If you believe this is incorrect, please contact us using the "Send Feedback" button below.`),
+        })
+    }
 }
 
 type UniprotFromPdbMapping = Record<PdbId, Record<ProteinId, ChainId[]> | never[]>;
