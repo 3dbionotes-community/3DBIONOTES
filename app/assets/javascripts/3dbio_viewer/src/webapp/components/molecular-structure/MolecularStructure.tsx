@@ -180,26 +180,25 @@ function usePdbePlugin(options: MolecularStructureProps) {
                     })
                 );
             else {
-                updateLoader(
-                    loaderKeys.initPlugin,
-                    new Promise<void>((resolve, reject) => {
-                        plugin.events.loadComplete.subscribe({
-                            next: loaded => {
-                                console.debug("molstar.events.loadComplete", loaded);
-                                if (loaded) {
-                                    setPluginLoad(new Date());
-                                    // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
-                                    window.dispatchEvent(new Event("resize"));
-                                    resolve();
-                                } else reject(loaderErrors.pdbNotLoaded);
-                            },
-                            error: err => {
-                                console.error(err);
-                                reject(err);
-                            },
-                        });
-                    })
-                );
+                const loadComplete = new Promise<void>((resolve, reject) => {
+                    plugin.events.loadComplete.subscribe({
+                        next: loaded => {
+                            console.debug("molstar.events.loadComplete", loaded);
+                            if (loaded) {
+                                setPluginLoad(new Date());
+                                // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
+                                window.dispatchEvent(new Event("resize"));
+                                resolve();
+                            } else reject(loaderErrors.pdbNotLoaded);
+                        },
+                        error: err => {
+                            console.error(err);
+                            reject(err);
+                        },
+                    });
+                });
+
+                updateLoader(loaderKeys.initPlugin, loadComplete);
 
                 const pdbId = initParams.moleculeId;
                 if (pdbId)
@@ -540,6 +539,11 @@ async function applySelectionChangesToPlugin(
     const emdbs = added.filter(item => item.type === "emdb");
     const pdbRedo = added.filter(item => item.type === "pdbRedo");
     const cstf = added.filter(item => item.type === "cstf");
+
+    if (!(added.length + removed.length + updated.length)) {
+        const mainPdb = oldItems()[0];
+        if (mainPdb) setVisibility(plugin, mainPdb);
+    }
 
     console.debug(
         "Update molstar:",

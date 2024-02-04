@@ -61,8 +61,8 @@ export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) 
     return { pdbInfoLoader: pdbInfoWithLigandsLoader, setLigands };
 }
 
-export function useMultipleLoaders<K extends string>(initialState?: Record<K, Loader>) {
-    const [loaders, setLoaders] = React.useState<Record<string, Loader>>(initialState ?? {});
+export function useMultipleLoaders<K extends string>(initialState: MultipleLoader<K>) {
+    const [loaders, setLoaders] = React.useState<MultipleLoader<K>>(initialState);
 
     const setLoader = React.useCallback(
         (key: K, loader: Loader) =>
@@ -73,10 +73,8 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
         []
     );
 
-    const getLoader = React.useCallback((key: K) => loaders[key], [loaders]);
-
     const resetLoaders = React.useCallback(
-        (state?: Record<string, Loader>) => setLoaders(state ?? {}),
+        (state: MultipleLoader<K>) => setLoaders(state),
         []
     );
 
@@ -91,13 +89,13 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
 
                 return message
                     ? {
-                          ...loaders,
-                          [key]: {
-                              message,
-                              status,
-                              priority,
-                          },
-                      }
+                        ...loaders,
+                        [key]: {
+                            message,
+                            status,
+                            priority,
+                        },
+                    }
                     : loaders;
             }),
         []
@@ -122,12 +120,12 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
     );
 
     const loading = React.useMemo(
-        () => _.values(loaders).some(({ status }) => status === "loading"),
+        () => _.values<Loader>(loaders).some(loader => loader.status === "loading"),
         [loaders]
     );
 
     const errorThrown = React.useMemo(
-        () => _.values(loaders).some(({ status }) => status === "error"),
+        () => _.values<Loader>(loaders).some(loader => loader.status === "error"),
         [loaders]
     );
 
@@ -148,7 +146,7 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
         setLoader,
         updateLoaderStatus,
         updateOnResolve,
-        getLoader,
+        loaders,
         resetLoaders,
     };
 }
@@ -160,3 +158,5 @@ interface Loader {
     message: string;
     priority: number; //the higher the number, the higher the priority
 }
+
+type MultipleLoader<K extends string> = Record<K, Loader>;

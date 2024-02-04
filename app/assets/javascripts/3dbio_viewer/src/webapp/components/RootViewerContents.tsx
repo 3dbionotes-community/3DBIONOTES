@@ -62,7 +62,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
         title,
         updateLoaderStatus,
         updateOnResolve: updateLoader,
-        getLoader,
+        loaders,
         resetLoaders,
     } = useMultipleLoaders<LoaderKey>(loadersInitialState);
 
@@ -84,13 +84,8 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const proteinNetwork = externalData.type === "network" ? externalData.data : undefined;
 
     const criticalLoaders = React.useMemo(
-        () =>
-            _.compact([
-                getLoader(loaderKeys.uploadedModel),
-                getLoader(loaderKeys.initPlugin),
-                getLoader(loaderKeys.getRelatedPdbModel),
-            ]),
-        [getLoader]
+        () => [loaders.uploadedModel, loaders.initPlugin, loaders.getRelatedPdbModel],
+        [loaders.uploadedModel, loaders.initPlugin, loaders.getRelatedPdbModel]
     );
 
     const toggleToolbarExpanded = React.useCallback(
@@ -120,8 +115,10 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const pdbId = React.useMemo(() => getMainItem(selection, "pdb"), [selection]);
 
     React.useEffect(() => {
-        resetLoaders(_.omit(loadersInitialState, [loaderKeys.initPlugin]));
-    }, [pdbId, resetLoaders]);
+        const init = loaders.initPlugin;
+        if (init.status !== "loaded") return;
+        resetLoaders({ ...loadersInitialState, initPlugin: init });
+    }, [pdbId, resetLoaders, loaders.initPlugin]);
 
     React.useEffect(() => {
         const critical = criticalLoaders.find(loader => loader.status === "error");
