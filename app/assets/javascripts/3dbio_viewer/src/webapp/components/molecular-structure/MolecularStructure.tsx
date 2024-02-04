@@ -540,10 +540,8 @@ async function applySelectionChangesToPlugin(
     const pdbRedo = added.filter(item => item.type === "pdbRedo");
     const cstf = added.filter(item => item.type === "cstf");
 
-    if (!(added.length + removed.length + updated.length)) {
-        const mainPdb = oldItems()[0];
-        if (mainPdb) setVisibility(plugin, mainPdb);
-    }
+    const mainPdb = oldItems()[0];
+    if (mainPdb) setVisibility(plugin, mainPdb);
 
     console.debug(
         "Update molstar:",
