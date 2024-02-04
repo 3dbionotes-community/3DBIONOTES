@@ -121,12 +121,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
             debugVariable({ ligands: ligands.length });
             onLigandsLoaded(ligands);
         }
-
-        const currentSelection = prevSelectionRef.current || emptySelection;
-        if (newSelection.chainId !== currentSelection.chainId) {
-            highlight(pdbePlugin, chains, newSelection, molstarState);
-        }
-    }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection, chains, prevSelectionRef]);
+    }, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection]);
 
     React.useEffect(() => {
         if (!pluginLoad || !pdbePlugin) return;
@@ -633,10 +628,6 @@ async function applySelectionChangesToPlugin(
     }
 
     ([pdbRedo, cstf] as DbItem<RefinedModelType>[][]).forEach(items => loadRefinedItems(items));
-
-    if (newSelection.chainId !== currentSelection.chainId) {
-        highlight(plugin, chains, newSelection, molstarState);
-    }
 
     if (added.length + removed.length) {
         plugin.visual.reset({ camera: true });
