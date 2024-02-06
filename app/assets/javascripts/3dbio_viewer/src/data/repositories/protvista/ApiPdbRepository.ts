@@ -40,13 +40,13 @@ import {
     getEmValidations,
     PdbEmdbEmValidations,
     RankResponse,
-    rankResponseC
+    rankResponseC,
 } from "../../PdbEmdbEmValidations";
 import {
     getPdbLigand,
     PdbEntryResponse,
     pdbEntryResponseC,
-    PdbLigandsResponse
+    PdbLigandsResponse,
 } from "../../PdbLigands";
 import { getPublicationsCodec, EntryPublications, getPublications } from "../../PdbPublications";
 
