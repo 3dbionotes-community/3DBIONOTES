@@ -5,57 +5,27 @@ import { PdbRepository } from "../../../domain/repositories/PdbRepository";
 import { Future } from "../../../utils/future";
 import { getTotalFeaturesLength } from "../../../domain/entities/Track";
 import { debugVariable } from "../../../utils/debug";
-import {
-    getEmValidationFragments as _getEmValidationFragments,
-    PdbAnnotations,
-} from "./tracks/em-validation";
+import { getEmValidationFragments, PdbAnnotations } from "./tracks/em-validation";
 import { EbiVariation, GenomicVariantsCNCBResponse, getVariants } from "./tracks/variants";
-import {
-    getPhosphiteFragments as _getPhosphiteFragments,
-    PhosphositeUniprot,
-} from "./tracks/phosphite";
-import { Features, getFeatureFragments as _getFeatureFragments } from "./tracks/feature";
+import { getPhosphiteFragments, PhosphositeUniprot } from "./tracks/phosphite";
+import { Features, getFeatureFragments } from "./tracks/feature";
 import { Coverage, getStructureCoverageFragments } from "./tracks/structure-coverage";
-import { getMobiUniprotFragments as _getMobiUniprotFragments, MobiUniprot } from "./tracks/mobi";
-import {
-    Cv19Tracks,
-    getFunctionalMappingFragments as _getFunctionalMappingFragments,
-} from "./tracks/functional-mapping";
-import { getProteomicsFragments as _getProteomicsFragments, Proteomics } from "./tracks/proteomics";
-import { getPdbRedoFragments as _getPdbRedoFragments, PdbRedo } from "./tracks/pdb-redo";
-import {
-    getEpitomesFragments as _getEpitomesFragments,
-    IedbAnnotationsResponse,
-} from "./tracks/epitomes";
+import { getMobiUniprotFragments, MobiUniprot } from "./tracks/mobi";
+import { Cv19Tracks, getFunctionalMappingFragments } from "./tracks/functional-mapping";
+import { getProteomicsFragments, Proteomics } from "./tracks/proteomics";
+import { getPdbRedoFragments, PdbRedo } from "./tracks/pdb-redo";
+import { getEpitomesFragments, IedbAnnotationsResponse } from "./tracks/epitomes";
 import { getProtein, UniprotResponse } from "./uniprot";
 import { getExperiment, PdbExperiment } from "./ebi-pdbe-api";
 import { getTracksFromFragments } from "../../../domain/entities/Fragment2";
-import {
-    getPfamDomainFragments as _getPfamDomainFragments,
-    PfamAnnotations,
-} from "./tracks/pfam-domain";
-import {
-    getSmartDomainFragments as _getSmartDomainFragments,
-    SmartAnnotations,
-} from "./tracks/smart-domain";
-import {
-    getInterproDomainFragments as _getInterproDomainFragments,
-    InterproAnnotations,
-} from "./tracks/interpro-domain";
-import {
-    ElmdbUniprot,
-    getElmdbUniprotFragments as _getElmdbUniprotFragments,
-} from "./tracks/elmdb";
+import { getPfamDomainFragments, PfamAnnotations } from "./tracks/pfam-domain";
+import { getSmartDomainFragments, SmartAnnotations } from "./tracks/smart-domain";
+import { getInterproDomainFragments, InterproAnnotations } from "./tracks/interpro-domain";
+import { ElmdbUniprot, getElmdbUniprotFragments } from "./tracks/elmdb";
 import { getJSON, getValidatedJSON, getXML, RequestError } from "../../request-utils";
-import { DbPtmAnnotations, getDbPtmFragments as _getDbPtmFragments } from "./tracks/db-ptm";
-import {
-    getMolprobityFragments as _getMolprobityFragments,
-    MolprobityResponse,
-} from "./molprobity";
-import {
-    AntigenicResponse,
-    getAntigenicFragments as _getAntigenicFragments,
-} from "./tracks/antigenic";
+import { DbPtmAnnotations, getDbPtmFragments } from "./tracks/db-ptm";
+import { getMolprobityFragments, MolprobityResponse } from "./molprobity";
+import { AntigenicResponse, getAntigenicFragments } from "./tracks/antigenic";
 import { Variants } from "../../../domain/entities/Variant";
 import { emdbsFromPdbUrl, getEmdbsFromMapping, PdbEmdbMapping } from "../mapping";
 import { MutagenesisResponse } from "./tracks/mutagenesis";
@@ -70,13 +40,13 @@ import {
     getEmValidations,
     PdbEmdbEmValidations,
     RankResponse,
-    rankResponseC,
+    rankResponseC
 } from "../../PdbEmdbEmValidations";
 import {
     getPdbLigand,
     PdbEntryResponse,
     pdbEntryResponseC,
-    PdbLigandsResponse,
+    PdbLigandsResponse
 } from "../../PdbLigands";
 import { getPublicationsCodec, EntryPublications, getPublications } from "../../PdbPublications";
 
