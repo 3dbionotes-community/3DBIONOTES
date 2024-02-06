@@ -45,21 +45,23 @@ export class AnnotationsExportApiRepository implements AnnotationsExportReposito
             [`pdb-redo-${pdbId}`, `${bioUrl}/api/annotations/PDB-REDO/${pdbId}`],
             [`molprobity-${pdbId}`, `${bioUrl}/compute/molprobity/${pdbId}`],
             [`ligands-${pdbId}`, `${bioUrlDev}/bws/api/pdbentry/${pdbId}/ligands/`],
-            ...(proteinId ? [[`uniprotkb-${proteinId}`, `${routes.uniprot}/uniprotkb/${proteinId}`],
-            [`proteins-features-${proteinId}`, `${ebiProteinsApiUrl}/features/${proteinId}`],
-            [`proteins-variation-${proteinId}`, `${ebiProteinsApiUrl}/variation/${proteinId}`],
-            [`proteins-proteomics-${proteinId}`, `${ebiProteinsApiUrl}/proteomics/${proteinId}`],
-            [`proteins-antigenic-${proteinId}`, `${ebiProteinsApiUrl}/antigen/${proteinId}`],
-            [`cv19-annotations-${proteinId}`, `${bioUrl}/cv19-annotations/${proteinId}-annotations.json`],
-            [`mobi-uniprot-${proteinId}`, `${bioUrl}/api/annotations/mobi/Uniprot/${proteinId}`],
-            [`phosphosite-uniprot-${proteinId}`, `${bioUrl}/api/annotations/Phosphosite/Uniprot/${proteinId}`],
-            [`dbptm-uniprot-${proteinId}`, `${bioUrl}/api/annotations/dbptm/Uniprot/${proteinId}`],
-            [`pfam-uniprot-${proteinId}`, `${bioUrl}/api/annotations/Pfam/Uniprot/${proteinId}`],
-            [`smart-uniprot-${proteinId}`, `${bioUrl}/api/annotations/SMART/Uniprot/${proteinId}`],
-            [`interpro-uniprot-${proteinId}`, `${bioUrl}/api/annotations/interpro/Uniprot/${proteinId}`],
-            [`iedb-uniprot-${proteinId}`, `${bioUrl}/api/annotations/IEDB/Uniprot/${proteinId}`],
-            [`elmdb-uniprot-${proteinId}`, `${bioUrl}/api/annotations/elmdb/Uniprot/${proteinId}`],
-            [`mutagenesis-uniprot-${proteinId}`, `${bioUrl}/api/annotations/biomuta/Uniprot/${proteinId}`]] : [])
+            ...(proteinId ? [
+                [`uniprotkb-${proteinId}`, `${routes.uniprot}/uniprotkb/${proteinId}`],
+                [`proteins-features-${proteinId}`, `${ebiProteinsApiUrl}/features/${proteinId}`],
+                [`proteins-variation-${proteinId}`, `${ebiProteinsApiUrl}/variation/${proteinId}`],
+                [`proteins-proteomics-${proteinId}`, `${ebiProteinsApiUrl}/proteomics/${proteinId}`],
+                [`proteins-antigenic-${proteinId}`, `${ebiProteinsApiUrl}/antigen/${proteinId}`],
+                [`cv19-annotations-${proteinId}`, `${bioUrl}/cv19-annotations/${proteinId}-annotations.json`],
+                [`mobi-uniprot-${proteinId}`, `${bioUrl}/api/annotations/mobi/Uniprot/${proteinId}`],
+                [`phosphosite-uniprot-${proteinId}`, `${bioUrl}/api/annotations/Phosphosite/Uniprot/${proteinId}`],
+                [`dbptm-uniprot-${proteinId}`, `${bioUrl}/api/annotations/dbptm/Uniprot/${proteinId}`],
+                [`pfam-uniprot-${proteinId}`, `${bioUrl}/api/annotations/Pfam/Uniprot/${proteinId}`],
+                [`smart-uniprot-${proteinId}`, `${bioUrl}/api/annotations/SMART/Uniprot/${proteinId}`],
+                [`interpro-uniprot-${proteinId}`, `${bioUrl}/api/annotations/interpro/Uniprot/${proteinId}`],
+                [`iedb-uniprot-${proteinId}`, `${bioUrl}/api/annotations/IEDB/Uniprot/${proteinId}`],
+                [`elmdb-uniprot-${proteinId}`, `${bioUrl}/api/annotations/elmdb/Uniprot/${proteinId}`],
+                [`mutagenesis-uniprot-${proteinId}`, `${bioUrl}/api/annotations/biomuta/Uniprot/${proteinId}`]
+            ] : [])
         ] as const).map(([filename, url]) => [filename, getJSON(url)]);
 
         //prettier-ignore

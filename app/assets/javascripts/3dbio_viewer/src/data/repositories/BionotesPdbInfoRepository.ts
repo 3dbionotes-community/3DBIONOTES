@@ -6,7 +6,7 @@ import { ChainId, Protein, ProteinId } from "../../domain/entities/Protein";
 import { PdbInfoRepository } from "../../domain/repositories/PdbInfoRepository";
 import { routes } from "../../routes";
 import { Future } from "../../utils/future";
-import { getFromUrl } from "../request-utils";
+import { RequestError, getFromUrl } from "../request-utils";
 import { emdbsFromPdbUrl, getEmdbsFromMapping, PdbEmdbMapping } from "./mapping";
 import i18n from "../../domain/utils/i18n";
 
@@ -16,8 +16,8 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
         const fallbackMappingUrl = `${routes.ebi}/pdbe/api/pdb/entry/polymer_coverage/${pdbId}/`;
         const emdbMapping = `${emdbsFromPdbUrl}/${pdbId}`;
         const data$ = {
-            uniprotMapping: getFromUrl<UniprotFromPdbMapping>(proteinMappingUrl).flatMapError(() => throwError<UniprotFromPdbMapping>("serviceUnavailable")),
-            fallbackMapping: getFromUrl<ChainsFromPolymer>(fallbackMappingUrl).flatMapError(() => throwError<ChainsFromPolymer>("noData")),
+            uniprotMapping: getFromUrl<UniprotFromPdbMapping>(proteinMappingUrl).flatMapError((err) => buildError<UniprotFromPdbMapping>("serviceUnavailable", err)),
+            fallbackMapping: getFromUrl<ChainsFromPolymer>(fallbackMappingUrl).flatMapError((err) => buildError<ChainsFromPolymer>("noData", err)),
             emdbMapping: getFromUrl<PdbEmdbMapping>(emdbMapping),
         };
 
@@ -27,13 +27,13 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
             const fallback = fallbackMapping[pdbId.toLowerCase()];
 
             if (!proteinsMapping) {
-                console.error(`Uniprot mapping not found for ${pdbId}`);
-                return throwError("noData");
+                const err = `Uniprot mapping not found for ${pdbId}`;
+                return buildError("noData", { message: err });
             }
 
             if (!fallback) {
-                console.error(`No fallback chains found for ${pdbId}`);
-                return throwError("noData");
+                const err = `No fallback chains found for ${pdbId}`;
+                return buildError("noData", { message: err });
             }
 
             const emdbIds = getEmdbsFromMapping(emdbMapping, pdbId);
@@ -87,11 +87,12 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
 
 type ErrorType = "serviceUnavailable" | "noData";
 
-function throwError<T>(type: ErrorType): FutureData<T> {
+function buildError<T>(type: ErrorType, err: RequestError): FutureData<T> {
+    console.error(err.message);
     switch (type) {
         case "serviceUnavailable": return Future.error({
             message: i18n.t(
-                "We apologize. Some of the services we relay on, are temporarily unavailable. Our team is working to resolve the issue, and we appreciate your patience. Please try again later."
+                "We apologize. Some of the services we rely on are temporarily unavailable. Our team is working to resolve the issue, and we appreciate your patience. Please try again later."
             ),
         });
         case "noData": return Future.error({
@@ -100,7 +101,7 @@ function throwError<T>(type: ErrorType): FutureData<T> {
     }
 }
 
-type UniprotFromPdbMapping = Record<PdbId, Record<ProteinId, ChainId[]> | never[]>;
+type UniprotFromPdbMapping = Record<PdbId, Record<ProteinId, ChainId[]> | unknown[]>;
 
 type PolymerMolecules = {
     chains: { struct_asym_id: string }[];
