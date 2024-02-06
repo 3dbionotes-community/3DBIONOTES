@@ -13,7 +13,7 @@ export interface PdbInfo {
         name: string;
         shortName: string;
         chainId: ChainId;
-        protein: Maybe<Protein>;
+        protein: Protein;
     }>;
     ligands: Ligand[];
 }
@@ -44,20 +44,6 @@ export function buildPdbInfo(options: BuildPdbInfoOptions): PdbInfo {
         })
         .sortBy(obj => obj.chainId)
         .value();
-
-    if (_.isEmpty(chains) && _.isEmpty(options.proteins))
-        return {
-            ...options,
-            chains: [
-                {
-                    id: "A",
-                    name: "A",
-                    shortName: "A",
-                    chainId: "A",
-                    protein: undefined,
-                },
-            ],
-        };
 
     return { ...options, chains };
 }

@@ -42,7 +42,7 @@ export const ToolsButton: React.FC<ToolsButtonProps> = props => {
                     return updateLoader(
                         "exportAnnotations",
                         compositionRoot.exportAllAnnotations
-                            .execute({ proteinId: protein?.id, pdbId: id, chainId, emdbs })
+                            .execute({ proteinId: protein.id, pdbId: id, chainId, emdbs })
                             .toPromise()
                     );
             }

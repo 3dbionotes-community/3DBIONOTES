@@ -81,7 +81,7 @@ function getItems(pdb: Pdb) {
     const resolution = pdb.experiment?.resolution;
 
     const items: Item[] = _.compact([
-        pdb.protein ? { name: i18n.t("Organism"), value: pdb.protein.organism } : undefined,
+        { name: i18n.t("Organism"), value: pdb.protein.organism },
         {
             name: i18n.t("Biological function"),
             isDisabled: true,

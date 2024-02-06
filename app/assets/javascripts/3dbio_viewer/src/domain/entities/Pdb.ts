@@ -15,7 +15,7 @@ export interface Pdb {
     title: Maybe<string>;
     experiment: Maybe<Experiment>;
     emdbs: Emdb[];
-    protein: Maybe<Protein>;
+    protein: Protein;
     chainId: string;
     sequence: string;
     length: number;
@@ -108,12 +108,10 @@ export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
             }));
         }
         case "uniprot": {
-            if (!pdb.protein) return [];
             const proteinId = pdb.protein.id.toUpperCase();
             return [{ name: proteinId, url: `https://www.uniprot.org/uniprot/${proteinId}` }];
         }
         case "geneBank": {
-            if (!pdb.protein) return [];
             return pdb.protein.genBank
                 ? pdb.protein.genBank?.map(id => ({
                       name: id ?? "-",

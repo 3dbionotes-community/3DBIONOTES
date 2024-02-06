@@ -51,17 +51,17 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
 
     const geneName = React.useMemo(
         () =>
-            pdb.protein?.gen
-                ? i18n.t(" encoded by the gene {{geneName}}", { geneName: pdb.protein?.gen })
+            pdb.protein.gen
+                ? i18n.t(" encoded by the gene {{geneName}}", { geneName: pdb.protein.gen })
                 : undefined,
         [pdb.protein]
     );
 
     const geneBankEntry = React.useMemo(
         () =>
-            !_.isEmpty(pdb.protein?.genBank)
+            !_.isEmpty(pdb.protein.genBank)
                 ? i18n.t(" (GeneBank {{geneBankEntry}})", {
-                      geneBankEntry: pdb.protein?.genBank?.join(", "),
+                      geneBankEntry: pdb.protein.genBank?.join(", "),
                   })
                 : undefined,
         [pdb.protein]
@@ -71,11 +71,11 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         () => ({
             poorQualityRegionMax: _.first(pdb.emdbs)?.emv?.stats?.quartile75,
             poorQualityRegionMin: _.first(pdb.emdbs)?.emv?.stats?.quartile25,
-            proteinName: pdb.protein?.name,
+            proteinName: pdb.protein.name,
             ligandsAndSmallMoleculesCount,
             resolution: _.first(pdb.emdbs)?.emv?.stats?.resolutionMedian,
             chain: pdb.chainId,
-            chainWithProtein: `${pdb.chainId}${pdb.protein?.name ? " - " + pdb.protein.name : ""}`,
+            chainWithProtein: `${pdb.chainId}${pdb.protein.name ? " - " + pdb.protein.name : ""}`,
             uniprotId: getEntityLinks(pdb, "uniprot")
                 .map(link => link.name)
                 .join(", "),

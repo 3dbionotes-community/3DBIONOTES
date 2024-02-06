@@ -67,7 +67,6 @@ export interface InfoAlignmentFromNetwork {
 }
 
 export function getInfoAlignmentFromPdb(pdb: Pdb): Maybe<InfoAlignment> {
-    if (!pdb.protein) return undefined;
     if (pdb.proteinNetwork) {
         return {
             origin: "interactome3d",
