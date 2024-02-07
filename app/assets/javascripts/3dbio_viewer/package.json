@@ -1,6 +1,6 @@
 {
     "name": "3dbio-viewer",
-    "version": "0.1.0",
+    "version": "3.9.3",
     "private": true,
     "dependencies": {
         "@3dbionotes/pdbe-molstar": "3.1.0-est-1",
