@@ -107,7 +107,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const [prevSelectionRef, setPrevSelection] = useReference<Selection>();
 
     debugVariable({ pdbePlugin });
-    const chains = options.pdbInfo?.chains;
+    const chains = React.useMemo(() => options.pdbInfo?.chains ?? [], [options.pdbInfo?.chains]);
 
     const [uploadDataToken, extension] =
         newSelection.type === "uploadData" ? [newSelection.token, newSelection.extension] : [];
@@ -134,6 +134,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
             if (!element) return;
+            if (_.isEmpty(chains)) return;
             const currentSelection = prevSelectionRef.current;
             const pluginAlreadyRendered = Boolean(pdbePlugin);
             const ligandChanged =
@@ -149,8 +150,26 @@ function usePdbePlugin(options: MolecularStructureProps) {
 
             // To subscribe to the load event: plugin.events.loadComplete.subscribe(loaded => { ... });
             if (pluginAlreadyRendered) {
+                //When ligand has changed
                 molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
                 await updateLoader("updateVisualPlugin", plugin.visual.update(initParams));
+                if (newSelection.ligandId === undefined && newSelection.type === "free") {
+                    const plainSelection = {
+                        ...emptySelection,
+                        main: { pdb: newSelection.main.pdb, emdb: undefined },
+                    };
+                    await updateLoader(
+                        "updateVisualPlugin",
+                        applySelectionChangesToPlugin(
+                            plugin,
+                            molstarState,
+                            chains,
+                            plainSelection,
+                            newSelection,
+                            updateLoader
+                        )
+                    );
+                }
             } else if (!mainPdb && emdbId)
                 updateLoader(
                     "getRelatedPdbModel",
@@ -241,6 +260,7 @@ function usePdbePlugin(options: MolecularStructureProps) {
             updateLoader,
             extension,
             uploadDataToken,
+            chains,
         ]
     );
 
