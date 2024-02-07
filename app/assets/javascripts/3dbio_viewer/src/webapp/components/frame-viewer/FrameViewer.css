@@ -9,3 +9,7 @@
 .frame-viewer iframe body {
     margin: 0;
 }
+
+.protvistaCol1 {
+    box-sizing: border-box;
+}

@@ -12,6 +12,7 @@ import { Variants } from "./Variant";
 
 export interface Pdb {
     id: Maybe<PdbId>;
+    title: Maybe<string>;
     experiment: Maybe<Experiment>;
     emdbs: Emdb[];
     protein: Protein;

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { useState } from "react";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { getEntityLinks, Pdb } from "../../domain/entities/Pdb";
@@ -5,9 +6,8 @@ import { recordOfStyles } from "../../utils/ts-utils";
 import { Selection } from "../view-models/Selection";
 import { Links } from "./Link";
 import { ViewerTooltip } from "./viewer-tooltip/ViewerTooltip";
-import i18n from "../utils/i18n";
-import _ from "lodash";
 import { Anchor } from "./Anchor";
+import i18n from "../utils/i18n";
 
 export interface BasicInfoProps {
     pdb: Pdb;
@@ -27,8 +27,15 @@ export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
 
     return (
         <ul>
+            {pdb.title && (
+                <li>
+                    <span>
+                        <strong>{pdb.title}</strong>
+                    </span>
+                </li>
+            )}
             {items
-                .filter(item => !item.isDisabled)
+                .filter(item => !item.isDisabled && Boolean(item.value))
                 .map(item => (
                     <Child key={item.name} name={item.name} value={item.value} help={item.help} />
                 ))}
@@ -74,12 +81,6 @@ function getItems(pdb: Pdb) {
     const resolution = pdb.experiment?.resolution;
 
     const items: Item[] = _.compact([
-        { name: i18n.t("Protein Name"), value: pdb.protein.name },
-        { name: i18n.t("Gene Name"), value: pdb.protein.gen },
-        {
-            name: i18n.t("Gene Bank ID"),
-            value: pdb.protein.genBank ? <Links links={getEntityLinks(pdb, "geneBank")} /> : "-",
-        },
         { name: i18n.t("Organism"), value: pdb.protein.organism },
         {
             name: i18n.t("Biological function"),
@@ -91,16 +92,8 @@ function getItems(pdb: Pdb) {
         },
         { name: i18n.t("Obtaining method"), value: pdb.experiment?.method },
         {
-            name: i18n.t("Uniprot ID"),
-            value: <Links links={getEntityLinks(pdb, "uniprot")} />,
-        },
-        {
             name: i18n.t("PDB ID"),
-            value: <Links links={getEntityLinks(pdb, "pdb")} />,
-        },
-        {
-            name: i18n.t("Chain"),
-            value: pdb.chainId,
+            value: pdb.id && <Links links={getEntityLinks(pdb, "pdb")} />,
         },
         !_.isEmpty(pdb.emdbs) && {
             name: i18n.t("EMDB ID"),

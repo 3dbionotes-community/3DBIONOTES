@@ -140,22 +140,40 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     }
 }
 
+function getStructureQueryLink(
+    pdb: Data.Pdb | null,
+    emdb: Data.Emdb | null,
+    validations: Data.RefModel[]
+) {
+    const pdbUrlId = pdb && pdb.dbId.toLowerCase();
+    const emdbUrlId = emdb && "+" + emdb.dbId.toUpperCase();
+    const validationUrlIds =
+        pdbUrlId && "|" + validations.map(v => getValidationQueryLink(pdbUrlId, v)).join("+");
+
+    return `/${pdbUrlId || ""}${emdbUrlId || ""}${validationUrlIds || ""}`;
+}
+
 function getStructures(): Structure[] {
     const structures: Covid19Info["structures"] = _.flatten(data.Structures).map(
         (structure): Structure => ({
             ..._.omit(structure, ["ligand", "organism", "entities"]),
             title: structure.title,
             id: getStructureId(structure),
-            pdb: structure.pdb ? getPdb(structure.pdb) : undefined,
-            emdb: structure.emdb ? getEmdb(structure.emdb) : undefined,
+            pdb: structure.pdb ? getPdb(structure.pdb, structure.emdb) : undefined,
+            emdb: structure.emdb ? getEmdb(structure.emdb, structure.pdb) : undefined,
             entities: getEntitiesForStructure(structure),
             organisms: getOrganismsForStructure(data, structure),
             ligands: structure.pdb === null ? [] : getLigands(data.Ligands, structure.pdb.ligands),
             details: structure.pdb ? getDetails(structure.pdb) : undefined,
             validations: {
-                pdb: structure.pdb === null ? [] : getPdbValidations(structure.pdb),
+                pdb: structure.pdb === null ? [] : getPdbValidations(structure.pdb, structure.emdb),
                 emdb: [],
             },
+            queryLink: getStructureQueryLink(
+                structure.pdb,
+                structure.emdb,
+                structure.pdb?.refModels ?? []
+            ),
         })
     );
 
@@ -257,7 +275,7 @@ function getId<T extends { id: string }>(obj: T): string {
     return obj.id;
 }
 
-function getPdb(pdb: Data.Pdb): Pdb {
+function getPdb(pdb: Data.Pdb, emdb: Data.Emdb | null): Pdb {
     //simulate nmr
     const start = 12;
     const end = 127;
@@ -273,7 +291,7 @@ function getPdb(pdb: Data.Pdb): Pdb {
         method: pdb.method,
         ligands: pdb.ligands,
         keywords: pdb.keywords,
-        queryLink: pdb.queryLink,
+        queryLink: `/${pdb.dbId.toLowerCase()}${emdb ? "+!" + emdb.dbId.toUpperCase() : ""}`,
         imageUrl:
             pdb.imageLink ||
             `https://www.ebi.ac.uk/pdbe/static/entry/${pdb.dbId}_deposited_chain_front_image-200x200.png`,
@@ -285,10 +303,10 @@ function getPdb(pdb: Data.Pdb): Pdb {
     return pdbE;
 }
 
-function getEmdb<T extends Data.Emdb>(emdb: T): Emdb {
+function getEmdb(emdb: Data.Emdb, pdb: Data.Pdb | null): Emdb {
     const emdbE: Emdb = {
         id: emdb.dbId,
-        queryLink: emdb.queryLink,
+        queryLink: `/${pdb ? "!" + pdb.dbId.toLowerCase() : ""}+${emdb.dbId.toUpperCase()}`,
         emMethod: emdb.emMethod,
         imageUrl:
             emdb.imageLink ||
@@ -312,7 +330,29 @@ function getDetails(pdb: Data.Pdb): Maybe<Details> {
     };
 }
 
-function getPdbValidations(pdb: Data.Pdb): PdbValidation[] {
+function getValidationQueryLink(pdbId: string, validation: Data.RefModel) {
+    switch (validation.source) {
+        case "PDB-REDO":
+            return pdbId + "-pdbRedo";
+        case "CSTF":
+            return pdbId + "-cstf";
+        case "CERES":
+            return pdbId + "-ceres";
+        default:
+            console.error(`Validation not supported: "${validation.source}"`);
+            return undefined;
+    }
+}
+
+function getPdbValidations(pdb: Data.Pdb, emdb: Data.Emdb | null): PdbValidation[] {
+    const pdbId = pdb.dbId.toLowerCase();
+    const emdbId = emdb && emdb.dbId.toUpperCase();
+    const getQueryLink = (validation: Data.RefModel) => {
+        return `/${pdbId}${emdbId ? "+" + emdbId : ""}|${getValidationQueryLink(
+            pdbId,
+            validation
+        )}`;
+    };
     return pdb.refModels
         ? _.compact(
               pdb.refModels?.map((validation): PdbValidation | undefined => {
@@ -320,16 +360,19 @@ function getPdbValidations(pdb: Data.Pdb): PdbValidation[] {
                       case "PDB-REDO":
                           return {
                               ...validation,
+                              queryLink: getQueryLink(validation),
                               badgeColor: "w3-orange",
                           };
                       case "CSTF":
                           return {
                               ...validation,
+                              queryLink: getQueryLink(validation),
                               badgeColor: "w3-cyan",
                           };
                       case "CERES":
                           return {
                               ...validation,
+                              queryLink: undefined,
                               badgeColor: "w3-blue",
                           };
                       default:

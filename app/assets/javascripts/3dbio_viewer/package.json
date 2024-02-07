@@ -1,12 +1,12 @@
 {
     "name": "3dbio-viewer",
-    "version": "0.1.0",
+    "version": "3.9.3",
     "private": true,
     "dependencies": {
-        "@3dbionotes/pdbe-molstar": "3.1.0-beta.2",
+        "@3dbionotes/pdbe-molstar": "3.1.0-est-1",
         "@3dbionotes/protvista-pdb": "2.0.1-estv1",
         "@material-ui/core": "^4.11.2",
-        "@material-ui/data-grid": "^4.0.0-alpha.23",
+        "@material-ui/data-grid": "4.0.0-alpha.35",
         "@material-ui/icons": "^4.11.2",
         "@material-ui/lab": "^4.0.0-alpha.61",
         "@types/d3": "4.13.0",

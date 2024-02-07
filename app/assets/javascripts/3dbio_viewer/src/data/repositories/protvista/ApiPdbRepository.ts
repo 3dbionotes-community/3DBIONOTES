@@ -63,6 +63,7 @@ interface Data {
     pdbPublications: PdbPublication[];
     ebiVariation: EbiVariation;
     coverage: Coverage;
+    pdbSummary: PdbSummary;
     mobiUniprot: MobiUniprot;
     phosphositeUniprot: PhosphositeUniprot;
     dbPtm: DbPtmAnnotations;
@@ -160,8 +161,12 @@ export class ApiPdbRepository implements PdbRepository {
             ligands.map(ligand => getPdbLigand({ ligand, ontologyTerms, ontologies, organisms }))
         );
 
+        const pdbTitle =
+            options.pdbId && data.pdbSummary && _.first(data.pdbSummary[options.pdbId])?.title;
+
         return {
             id: options.pdbId,
+            title: pdbTitle,
             emdbs: emdbs || [],
             protein,
             sequence,
@@ -244,6 +249,7 @@ function getData(options: Options): FutureData<Partial<Data>> {
         pdbAnnotations: onF(pdbId, pdbId => getJSON(`${pdbAnnotUrl}/all/${pdbId}/${chainId}/?format=json`)),
         pdbPublications,
         coverage: onF(pdbId, pdbId => getJSON(`${bioUrl}/api/alignments/Coverage/${pdbId}${chainId}`)),
+        pdbSummary: onF(pdbId, pdbId => getJSON(`${ebiBaseUrl}/pdbe/api/pdb/entry/summary/${pdbId}`)),
         ebiVariation: getJSON(`${ebiProteinsApiUrl}/variation/${proteinId}`),
         mobiUniprot: getJSON(`${bioUrl}/api/annotations/mobi/Uniprot/${proteinId}`),
         phosphositeUniprot: getJSON(`${bioUrl}/api/annotations/Phosphosite/Uniprot/${proteinId}`),
@@ -264,4 +270,10 @@ function getData(options: Options): FutureData<Partial<Data>> {
     };
 
     return Future.joinObj(data$);
+}
+
+interface PdbSummary {
+    [key: string]: {
+        title: string;
+    }[];
 }

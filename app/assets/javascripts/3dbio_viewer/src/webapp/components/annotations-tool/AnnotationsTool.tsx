@@ -206,21 +206,16 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                         />
 
                         <label htmlFor="color">{i18n.t("Color")}</label>
-                        <small>
-                            {i18n.t(
-                                "You can put a color name (ie. red) or color hex value (ie. #ffffff)"
-                            )}{" "}
-                        </small>
 
                         <input
                             aria-label={i18n.t("Color")}
                             id="color"
-                            type="text"
+                            type="color"
                             value={annotationForm.color}
                             onChange={e =>
                                 setAnnotationForm({ ...annotationForm, color: e.target.value })
                             }
-                            className="form-control-viewer"
+                            className="form-control-viewer form-control-color"
                         />
 
                         <label htmlFor="index">{i18n.t("Index")}</label>
@@ -243,7 +238,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
 
                         <label htmlFor="shape">{i18n.t("Shape")}</label>
                         <select
-                            className="form-control"
+                            className="form-control-viewer"
                             value={annotationForm.shape}
                             onChange={e =>
                                 setAnnotationForm({
@@ -265,7 +260,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             aria-label={i18n.t("Starting value")}
                             id="start"
                             type="number"
-                            value={annotationForm.start}
+                            value={annotationForm.start === 0 ? "" : annotationForm.start}
                             onChange={e =>
                                 setAnnotationForm({
                                     ...annotationForm,
@@ -280,7 +275,7 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
                             aria-label={i18n.t("Ending value")}
                             id="end"
                             type="number"
-                            value={annotationForm.end}
+                            value={annotationForm.end === 0 ? "" : annotationForm.end}
                             onChange={e =>
                                 setAnnotationForm({
                                     ...annotationForm,
@@ -331,14 +326,19 @@ export const AnnotationsTool: React.FC<AnnotationsToolProps> = React.memo(props 
 
 const Form: React.FC<{ isDisabled: boolean }> = props => {
     const { isDisabled, children } = props;
+
     return (
-        <form className="annotationForm">
+        <form className="annotationForm" onSubmit={preventSubmit}>
             <fieldset style={{ border: "none" }} disabled={isDisabled}>
                 {children}
             </fieldset>
         </form>
     );
 };
+
+function preventSubmit(ev: React.FormEvent<HTMLFormElement>) {
+    ev.preventDefault();
+}
 
 const dialogStyles = recordOfStyles({
     actionButtons: {

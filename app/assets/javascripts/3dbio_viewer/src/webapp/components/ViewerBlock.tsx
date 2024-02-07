@@ -16,20 +16,22 @@ export interface ViewerBlockModel {
     title: string;
     description: string;
     help: string;
+    isSubtitle: boolean;
 }
 
 export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
     const { block, namespace, children, onDownload } = props;
-    const { title, description, help } = block;
+    const { title, description, help, isSubtitle } = block;
     const [showHelpTooltip, setShowHelpTooltip] = useState(false);
     const [showDownloadTooltip, setShowDownloadTooltip] = useState(false);
     const stringNamespace = _.mapValues(namespace, value => (value ?? "?").toString());
     const interpolatedDescription = _.template(description)(stringNamespace);
+    const interpolatedTitle = _.template(title)(stringNamespace);
 
     return (
-        <div className={css.section} id={block.id}>
+        <div style={isSubtitle ? styles.subtitleBlock : styles.titleBlock} id={block.id}>
             <div className={css.title}>
-                {title}
+                <span style={isSubtitle ? styles.subtitle : styles.title}>{interpolatedTitle}</span>
                 <div className={css["block-actions"]}>
                     {help && (
                         <TooltipIconButton
@@ -51,9 +53,7 @@ export const ViewerBlock: React.FC<BlockProps> = React.memo(props => {
                     )}
                 </div>
             </div>
-
-            <div className="contents">{interpolatedDescription}</div>
-
+            {description !== "" && <div className={css.contents}>{interpolatedDescription}</div>}
             {children}
         </div>
     );
@@ -79,6 +79,19 @@ const TooltipIconButton: React.FC<TooltipIconButtonProps> = props => {
         </ViewerTooltip>
     );
 };
+
+const styles = recordOfStyles({
+    title: { fontSize: "1.5rem" },
+    subtitle: { fontSize: "1.125rem", letterSpacing: 0.1 },
+    titleBlock: {
+        margin: "1.7em 0 0",
+        padding: "0 1.5rem",
+    },
+    subtitleBlock: {
+        margin: "1.5em 0 0",
+        padding: "0 1.5rem",
+    },
+});
 
 export const ebiStyles = recordOfStyles({
     icon: { fontSize: 11 },

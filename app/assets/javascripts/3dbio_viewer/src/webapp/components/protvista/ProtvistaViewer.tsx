@@ -83,6 +83,7 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
             ligandsAndSmallMoleculesCount,
             resolution: _.first(pdb.emdbs)?.emv?.stats?.resolutionMedian,
             chain: pdb.chainId,
+            chainWithProtein: `${pdb.chainId}${pdb.protein.name ? " - " + pdb.protein.name : ""}`,
             uniprotId: getEntityLinks(pdb, "uniprot")
                 .map(link => link.name)
                 .join(", "),
@@ -155,12 +156,18 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
         );
     }, [compositionRoot.exportAnnotations, block, pdb.tracks, pdb.chainId]);
 
+    const modifiedBlock = //shouldn't also the block itself be hidden?
+        block.id === "mapValidation" &&
+        (!_.first(pdb.emdbs)?.emv?.stats || (selection.type == "free" && !selection.main.emdb))
+            ? { ...block, description: "" }
+            : block;
+
     return (
         <ViewerBlock
             key={block.id}
-            block={block}
+            block={modifiedBlock}
             namespace={namespace}
-            onDownload={block.component === undefined ? downloadTracks : undefined}
+            onDownload={!_.isEmpty(block.tracks) ? downloadTracks : undefined}
         >
             {CustomComponent ? (
                 <CustomComponent
@@ -194,5 +201,5 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
 });
 
 const styles = {
-    container: { padding: "1em 0 2em" },
+    container: { padding: "0 0 2em" },
 };

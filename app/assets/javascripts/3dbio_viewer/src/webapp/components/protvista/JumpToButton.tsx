@@ -13,7 +13,10 @@ export interface JumpToButtonProps {
 
 export const JumpToButton: React.FC<JumpToButtonProps> = React.memo(({ blocks, expanded }) => {
     const items: DropdownProps["items"] = React.useMemo(() => {
-        return blocks.map(block => ({ id: block.id, text: block.title }));
+        return blocks.map(block => ({
+            id: block.id,
+            text: block.title.replaceAll(/\s*\$\{.*\}/g, ""),
+        }));
     }, [blocks]);
 
     return (
