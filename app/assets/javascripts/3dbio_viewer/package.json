@@ -107,7 +107,7 @@
         },
         "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
         "transformIgnorePatterns": [
-            "/node_modules/(?!d2-ui-components)"
+            "/node_modules/(?!d2-ui-components|molstar)"
         ],
         "moduleNameMapper": {
             "\\.(css|scss)$": "<rootDir>/config/styleMock.js",

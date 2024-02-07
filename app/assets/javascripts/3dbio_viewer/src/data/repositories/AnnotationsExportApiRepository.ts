@@ -10,6 +10,8 @@ import { Future } from "../../utils/future";
 import { routes } from "../../routes";
 import { getJSON } from "../request-utils";
 
+declare const Blob: any;
+
 export interface AnnotationsFile {
     blob: Blob;
     filename: string;
