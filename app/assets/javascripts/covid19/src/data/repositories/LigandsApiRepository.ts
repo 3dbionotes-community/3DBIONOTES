@@ -7,7 +7,6 @@ import { Future } from "../utils/future";
 import { getValidatedJSON } from "../utils/request-utils";
 import { IDROptions } from "../../domain/usecases/GetLigandImageDataResourcesUseCase";
 import { FutureData } from "../../domain/entities/FutureData";
-import { Maybe } from "../utils/ts-utils";
 import i18n from "../../utils/i18n";
 
 export class LigandsApiRepository implements LigandsRepository {
@@ -15,7 +14,7 @@ export class LigandsApiRepository implements LigandsRepository {
         inChI: string,
         pdbId: string,
         idrOptions: IDROptions
-    ): FutureData<Maybe<LigandImageData>> {
+    ): FutureData<LigandImageData> {
         const { bionotesApi } = routes;
         const { ontologies, ontologyTerms, organisms } = idrOptions;
         const pdbEntryLigands$ = getValidatedJSON<PdbEntryResponse>(
@@ -26,13 +25,19 @@ export class LigandsApiRepository implements LigandsRepository {
                 return pdbEntryRes?.results.find(r => r.IUPACInChIkey === inChI);
             })
             .flatMap(
-                (ligand): FutureData<Maybe<LigandImageData>> =>
-                    ligand
-                        ? Future.success(
-                              getPdbLigand({ ligand, ontologies, ontologyTerms, organisms })
-                                  .imageDataResource
-                          )
-                        : Future.error(err("Error from API: No ligands found"))
+                (ligand): FutureData<LigandImageData> => {
+                    if (!ligand)
+                        return Future.error(
+                            err(i18n.t("Error from API: No ligands found.", { nsSeparator: false }))
+                        );
+                    const idr = getPdbLigand({ ligand, ontologies, ontologyTerms, organisms })
+                        .imageDataResource;
+                    if (!idr)
+                        return Future.error(
+                            err(i18n.t("IDR might be present, but we were unable to retrieve it."))
+                        );
+                    return Future.success(idr);
+                }
             );
 
         return pdbEntryLigands$;
