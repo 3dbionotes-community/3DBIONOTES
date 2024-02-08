@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
 import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
@@ -10,14 +11,12 @@ import {
     loaderErrors,
 } from "./usePdbPlugin";
 import { debugVariable, isDebugMode } from "../../../utils/debug";
-import { Chain } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
 import { LoaderKey, loaderKeys } from "../RootViewerContents";
 import { useAppContext } from "../AppContext";
 import { routes } from "../../../routes";
 import { MolstarState, MolstarStateActions } from "./MolstarState";
 import i18n from "../../utils/i18n";
-import _ from "lodash";
 
 type Options = {
     prevSelectionRef: React.MutableRefObject<Selection | undefined>;
