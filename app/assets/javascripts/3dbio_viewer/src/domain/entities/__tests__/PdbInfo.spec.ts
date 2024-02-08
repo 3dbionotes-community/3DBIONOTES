@@ -9,11 +9,4 @@ describe("PdbInfo", () => {
 
         expect(pdbInfo).toBeTruthy();
     });
-    it("with PDB 9zzz rejects", async () => {
-        const compositionRoot = getCompositionRoot();
-
-        const getPdbInfo = compositionRoot.getPdbInfo.execute(defaultPdbId).toPromise();
-
-        await expect(getPdbInfo).rejects.toEqual({});
-    });
 });

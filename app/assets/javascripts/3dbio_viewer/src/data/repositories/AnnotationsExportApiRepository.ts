@@ -10,6 +10,7 @@ import { Future } from "../../utils/future";
 import { routes } from "../../routes";
 import { getJSON } from "../request-utils";
 
+//Use of "any", due to TS not recognizing Blob as a cross-blob type
 declare const Blob: any;
 
 export interface AnnotationsFile {
