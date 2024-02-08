@@ -11,8 +11,7 @@ export interface PdbInfo {
     chains: Chain[];
     ligands: Ligand[];
 }
-
-export type Chain = {
+type Chain = {
     id: string;
     name: string;
     shortName: string;
