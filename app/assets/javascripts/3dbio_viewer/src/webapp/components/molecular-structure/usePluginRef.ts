@@ -30,7 +30,6 @@ type Options = {
     molstarState: React.MutableRefObject<MolstarState>;
     setPdbePlugin: React.Dispatch<React.SetStateAction<PDBeMolstarPlugin | undefined>>;
     setPluginLoad: React.Dispatch<React.SetStateAction<Date | undefined>>;
-    chains: Chain[];
 };
 
 export function usePluginRef(options: Options) {
@@ -46,13 +45,11 @@ export function usePluginRef(options: Options) {
         extension,
         molstarState,
         setPdbePlugin,
-        chains,
     } = options;
 
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
             if (!element) return;
-            if (_.isEmpty(chains)) return;
             const currentSelection = prevSelectionRef.current;
             const pluginAlreadyRendered = Boolean(pdbePlugin);
             const ligandChanged =
@@ -218,7 +215,6 @@ export function usePluginRef(options: Options) {
             molstarState,
             setPdbePlugin,
             setPluginLoad,
-            chains,
         ]
     );
 

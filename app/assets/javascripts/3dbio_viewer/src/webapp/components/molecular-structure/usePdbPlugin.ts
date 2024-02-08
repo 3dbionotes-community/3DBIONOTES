@@ -95,7 +95,6 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         molstarState,
         setPdbePlugin,
         setPluginLoad,
-        chains,
     });
 
     debugVariable({ molstarState });
