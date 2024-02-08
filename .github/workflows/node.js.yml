@@ -16,6 +16,7 @@ jobs:
           cd app/assets/javascripts/3dbio_viewer
           yarn install
           yarn build
+          yarn test
     - name: Install and build (covid19)
       run: |
           cd app/assets/javascripts/covid19
