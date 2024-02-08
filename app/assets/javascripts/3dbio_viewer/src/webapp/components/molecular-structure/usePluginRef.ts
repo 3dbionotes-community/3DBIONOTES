@@ -2,14 +2,22 @@ import React from "react";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
 import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
 import { AllowedExtension, getMainItem, Selection, setMainItem } from "../../view-models/Selection";
-import { checkModelUrl, checkUploadedModelUrl, getLigandView, loaderErrors } from "./usePdbPlugin";
+import {
+    applySelectionChangesToPlugin,
+    checkModelUrl,
+    checkUploadedModelUrl,
+    getLigandView,
+    loaderErrors,
+} from "./usePdbPlugin";
 import { debugVariable, isDebugMode } from "../../../utils/debug";
+import { Chain } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
 import { LoaderKey, loaderKeys } from "../RootViewerContents";
 import { useAppContext } from "../AppContext";
 import { routes } from "../../../routes";
 import { MolstarState, MolstarStateActions } from "./MolstarState";
 import i18n from "../../utils/i18n";
+import _ from "lodash";
 
 type Options = {
     prevSelectionRef: React.MutableRefObject<Selection | undefined>;
@@ -22,6 +30,7 @@ type Options = {
     molstarState: React.MutableRefObject<MolstarState>;
     setPdbePlugin: React.Dispatch<React.SetStateAction<PDBeMolstarPlugin | undefined>>;
     setPluginLoad: React.Dispatch<React.SetStateAction<Date | undefined>>;
+    chains: Chain[];
 };
 
 export function usePluginRef(options: Options) {
@@ -37,11 +46,13 @@ export function usePluginRef(options: Options) {
         extension,
         molstarState,
         setPdbePlugin,
+        chains,
     } = options;
 
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
             if (!element) return;
+            if (_.isEmpty(chains)) return;
             const currentSelection = prevSelectionRef.current;
             const pluginAlreadyRendered = Boolean(pdbePlugin);
             const ligandChanged =
@@ -170,8 +181,20 @@ export function usePluginRef(options: Options) {
             }
 
             if (pluginAlreadyRendered) {
+                //When ligand has changed
                 molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
-                updateLoader(loaderKeys.updateVisualPlugin, plugin.visual.update(initParams));
+                await updateLoader("updateVisualPlugin", plugin.visual.update(initParams));
+                if (newSelection.ligandId === undefined && newSelection.type === "free") {
+                    await updateLoader(
+                        "updateVisualPlugin",
+                        applySelectionChangesToPlugin(
+                            plugin,
+                            molstarState,
+                            newSelection,
+                            updateLoader
+                        )
+                    );
+                }
             } else if (!mainPdb && emdbId) getPdbFromEmdb(emdbId);
             else {
                 subscribeLoadComplete();
@@ -195,6 +218,7 @@ export function usePluginRef(options: Options) {
             molstarState,
             setPdbePlugin,
             setPluginLoad,
+            chains,
         ]
     );
 

@@ -75,7 +75,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
     const pdbePlugin = pdbePlugin0 && pluginLoad ? pdbePlugin0 : undefined;
     const chainId = newSelection.chainId;
     const ligandId = newSelection.ligandId;
-    const chains = options.pdbInfo?.chains;
+    const chains = React.useMemo(() => options.pdbInfo?.chains ?? [], [options.pdbInfo?.chains]);
 
     // Keep a reference containing the previous value of selection. We need this value to diff
     // the new state against the old state and perform imperative operations (add/remove/update)
@@ -95,6 +95,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         molstarState,
         setPdbePlugin,
         setPluginLoad,
+        chains,
     });
 
     debugVariable({ molstarState });
@@ -326,7 +327,7 @@ function setVisibility(plugin: PDBeMolstarPlugin, item: DbItem) {
     return plugin.visual.setVisibility(selector, item.visible || false);
 }
 
-async function applySelectionChangesToPlugin(
+export async function applySelectionChangesToPlugin(
     plugin: PDBeMolstarPlugin,
     molstarState: MolstarStateRef,
     newSelection: Selection,

@@ -8,15 +8,17 @@ import { UploadData } from "./UploadData";
 export interface PdbInfo {
     id: Maybe<string>;
     emdbs: Emdb[];
-    chains: Array<{
-        id: string;
-        name: string;
-        shortName: string;
-        chainId: ChainId;
-        protein: Maybe<Protein>;
-    }>;
+    chains: Chain[];
     ligands: Ligand[];
 }
+
+export type Chain = {
+    id: string;
+    name: string;
+    shortName: string;
+    chainId: ChainId;
+    protein: Maybe<Protein>;
+};
 
 interface BuildPdbInfoOptions extends PdbInfo {
     proteins: Protein[];

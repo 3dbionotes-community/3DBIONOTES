@@ -1,5 +1,5 @@
-import React from "react";
 import _ from "lodash";
+import React from "react";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
 import { Selection } from "../../view-models/Selection";
 import { Ligand } from "../../../domain/entities/Ligand";
@@ -7,9 +7,9 @@ import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
 import { ProteinNetwork } from "../../../domain/entities/ProteinNetwork";
 import { LoaderKey } from "../RootViewerContents";
+import { usePdbePlugin } from "./usePdbPlugin";
 import "./molstar.css";
 import "./molstar-light.css";
-import { usePdbePlugin } from "./usePdbPlugin";
 
 declare global {
     interface Window {

@@ -18,7 +18,7 @@ export const ProtvistaPdb: React.FC<ProtvistaPdbProps> = React.memo(props => {
     const elementRef = React.useRef<ProtvistaTrackElement>(null);
 
     const pdbView = React.useMemo(() => {
-        const pdbView = getPdbView(pdb, { block, showAllTracks });
+        const pdbView = getPdbView(pdb, { block, showAllTracks, chainId: pdb.chainId });
         if (block.id === "mapValidation") {
             const stats = _.first(pdb.emdbs)?.emv?.stats;
             //if only structure coverage is selected and there is no stats
