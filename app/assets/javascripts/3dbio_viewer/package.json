@@ -69,14 +69,15 @@
     "scripts": {
         "start": "react-scripts start",
         "build-inline": "react-scripts build",
+        "test": "react-scripts test",
+        "test:nowatch": "react-scripts test --watchAll=false",
         "eject": "react-scripts eject",
         "link-dev": "yarn link @3dbionotes/pdbe-molstar && yarn link @3dbionotes/protvista-pdb",
         "unlink-dev": "yarn unlink @3dbionotes/pdbe-molstar && yarn unlink @3dbionotes/protvista-pdb && yarn install -f",
         "build": "INLINE_RUNTIME_CHUNK=false react-scripts build && yarn create-build-symlinks",
         "create-build-symlinks": "ts-node -O '{\"module\":\"commonjs\"}' src/scripts/create-build-symlinks.ts",
         "lint": "eslint . --ext .ts,.tsx",
-        "prettify": "prettier \"./src/**/*.{js,jsx,json,css,ts,tsx}\" --write",
-        "test": "PORT=3001 && jest --testURL http://localhost:$PORT"
+        "prettify": "prettier \"./src/**/*.{js,jsx,json,css,ts,tsx}\" --write"
     },
     "eslintConfig": {
         "extends": [
@@ -105,21 +106,12 @@
         "transform": {
             "^.+\\.[tj]sx{0,1}?$": "ts-jest"
         },
-        "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
         "transformIgnorePatterns": [
             "/node_modules/(?!d2-ui-components|molstar)"
         ],
         "moduleNameMapper": {
             "\\.(css|scss)$": "<rootDir>/config/styleMock.js",
             "\\.(jpg|jpeg|png|svg)$": "<rootDir>/config/fileMock.js"
-        },
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "jsx",
-            "json",
-            "node"
-        ]
+        }
     }
 }
