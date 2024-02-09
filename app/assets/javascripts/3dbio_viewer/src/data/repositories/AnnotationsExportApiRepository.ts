@@ -11,6 +11,9 @@ import { routes } from "../../routes";
 import { getJSON } from "../request-utils";
 import { Maybe } from "../../utils/ts-utils";
 
+//Use of "any", due to TS not recognizing Blob as a cross-blob type
+declare const Blob: any;
+
 export interface AnnotationsFile {
     blob: Blob;
     filename: string;
