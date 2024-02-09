@@ -3,8 +3,8 @@
     "version": "3.9.3",
     "private": true,
     "dependencies": {
-        "@3dbionotes/pdbe-molstar": "3.1.0-est-2-beta.2",
-        "@3dbionotes/protvista-pdb": "2.0.1-estv1",
+        "@3dbionotes/pdbe-molstar": "3.1.0-est-2-beta.3",
+        "@3dbionotes/protvista-pdb": "2.0.1-est-1-beta.1",
         "@material-ui/core": "^4.11.2",
         "@material-ui/data-grid": "4.0.0-alpha.35",
         "@material-ui/icons": "^4.11.2",

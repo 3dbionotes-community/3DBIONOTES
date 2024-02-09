@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@3dbionotes/pdbe-molstar@3.1.0-est-1":
-  version "3.1.0-est-1"
-  resolved "https://registry.yarnpkg.com/@3dbionotes/pdbe-molstar/-/pdbe-molstar-3.1.0-est-1.tgz#319a699881bdfba30be28e478ebd00a169269d82"
-  integrity sha512-9O0nN3xARZHQnnHrAbYtVrVz88p/lVQnH8XobIpjohelz9bmA8AncbQkNqK+TLlhAopXrj+NJ79cfSjtlowSBg==
+"@3dbionotes/pdbe-molstar@3.1.0-est-2-beta.3":
+  version "3.1.0-est-2-beta.3"
+  resolved "https://registry.yarnpkg.com/@3dbionotes/pdbe-molstar/-/pdbe-molstar-3.1.0-est-2-beta.3.tgz#0bd3613af1c345d4b6e90a80a3a238fd0dd1aba0"
+  integrity sha512-q0qtAvT/SC8MFvyfwciN1jaew/ny18DekKcqwI+gnbz+uWFiyboha4xV1jZn8eapLICzZV/tXxbGUaSZ55NlTg==
   dependencies:
     d3-axis "^3.0.0"
     d3-brush "^3.0.0"
@@ -15,10 +15,10 @@
     lodash "^4.17.21"
     molstar "3.15.0"
 
-"@3dbionotes/protvista-pdb@2.0.1-estv1":
-  version "2.0.1-estv1"
-  resolved "https://registry.yarnpkg.com/@3dbionotes/protvista-pdb/-/protvista-pdb-2.0.1-estv1.tgz#dcd443200bd9c343bdf98dbbb678282d189acaeb"
-  integrity sha512-kQPMjMfzUfWmSkzn7i79VNglNgxRg/vsKy5WVJEQ+9UMCTgo2Ecbxwd3SZr3qjZ+8EKCJ2IR+hhpVU0RmZzsfQ==
+"@3dbionotes/protvista-pdb@2.0.1-est-1-beta.1":
+  version "2.0.1-est-1-beta.1"
+  resolved "https://registry.yarnpkg.com/@3dbionotes/protvista-pdb/-/protvista-pdb-2.0.1-est-1-beta.1.tgz#9c4c6180fbcb1c072f78d98fda41b29528e67ea9"
+  integrity sha512-lPAqICTlkGZmyv+iRFwwFQQnsz4iPU/9ZOA6DzdwRE9Fm/Gb5JnxnEkT16t30WRQO6umTiouSl/xRxCnwkKTMQ==
   dependencies:
     lodash-es "^4.17.11"
     protvista-filter "2.0.0"
