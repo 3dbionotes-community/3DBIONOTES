@@ -71,7 +71,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const [toolbarExpanded, { set: setToolbarExpanded }] = useBooleanState(true);
     const [viewerSelectorExpanded, { set: setViewerSelectorExpanded }] = useBooleanState(true);
     const { innerWidth, resizableBoxProps } = useResizableBox();
-    const { scrolled, goToTop, ref } = useGoToTop<HTMLDivElement>();
+    const { scrolled: _scrolled, goToTop: _goToTop, ref } = useGoToTop<HTMLDivElement>();
 
     const uploadData = getUploadData(externalData);
 
@@ -250,7 +250,7 @@ function redrawWindow() {
     window.dispatchEvent(new Event("resize"));
 }
 
-const StyledFab = styled(Fab)`
+const _StyledFab = styled(Fab)`
     position: fixed;
     bottom: 2em;
     right: 2em;
