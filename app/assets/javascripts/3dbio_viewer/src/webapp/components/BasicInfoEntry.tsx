@@ -38,7 +38,7 @@ export const BasicInfoEntry: React.FC<BlockComponentProps> = React.memo(props =>
     );
 
     React.useEffect(() => {
-        if (_.isEmpty(items) && setVisible) setVisible(false);
+        if (_.isEmpty(items)) setVisible(false);
     }, [items, setVisible]);
 
     const valueItem = (item: Item, idx: number) =>
@@ -85,10 +85,10 @@ export const BasicInfoEntry: React.FC<BlockComponentProps> = React.memo(props =>
     return (
         <ul>
             {items.map((item, idx) => (
-                <>
+                <React.Fragment key={idx}>
                     {valueItem(item, idx)}
                     {linksItem(item, idx)}
-                </>
+                </React.Fragment>
             ))}
         </ul>
     );

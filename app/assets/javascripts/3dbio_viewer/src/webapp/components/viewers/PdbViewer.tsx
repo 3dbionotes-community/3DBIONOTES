@@ -3,7 +3,7 @@ import { ProtvistaViewer } from "../protvista/ProtvistaViewer";
 import { JumpToButton } from "../protvista/JumpToButton";
 import { ProfilesButton } from "../protvista/ProfilesButton";
 import { ToolsButton } from "../protvista/ToolsButton";
-import { blockDefs } from "../protvista/protvista-blocks";
+import { getBlockDefs } from "../protvista/protvista-blocks";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { ViewerState } from "../../view-models/ViewerState";
 import { Annotations } from "../../../domain/entities/Annotation";
@@ -13,8 +13,8 @@ import { TrainingApp } from "../../training-app";
 import { modules } from "../../training-app/training-modules";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { BlockDef, BlockVisibility } from "../protvista/Protvista.types";
-import styles from "./Viewers.module.css";
 import { LoaderKey } from "../RootViewerContents";
+import styles from "./Viewers.module.css";
 
 export interface PdbViewerProps {
     pdb: Pdb;
@@ -30,7 +30,7 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
     const { selection, profile, setProfile, setSelection } = viewerState;
 
     const [visibleBlocks, setVisibleBlocks] = React.useState<BlockVisibility[]>(
-        blockDefs.map(blockDef => ({ block: blockDef, visible: true }))
+        getBlockDefs(pdb.protein).map(blockDef => ({ block: blockDef, visible: true }))
     );
 
     const setBlockVisibility = React.useCallback(

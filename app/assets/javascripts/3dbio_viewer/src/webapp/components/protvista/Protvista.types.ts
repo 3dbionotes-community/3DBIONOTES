@@ -1,5 +1,5 @@
-import React from "react";
 import _ from "lodash";
+import React from "react";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { TrackDefinition } from "../../../domain/entities/TrackDefinition";
 import { PdbView } from "../../view-models/PdbView";
@@ -19,7 +19,7 @@ export interface BlockComponentProps {
     selection: Selection;
     setSelection: (newSelection: Selection) => void;
     block: BlockDef;
-    setVisible?: (visible: boolean) => void;
+    setVisible: (visible: boolean) => void;
 }
 
 export type TrackDef = TrackDefinition;

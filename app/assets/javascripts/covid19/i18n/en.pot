@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2023-04-03T01:34:38.763Z\n"
-"PO-Revision-Date: 2023-04-03T01:34:38.763Z\n"
+"POT-Creation-Date: 2024-02-08T11:48:47.351Z\n"
+"PO-Revision-Date: 2024-02-08T11:48:47.351Z\n"
 
 msgid "No ontologies found."
 msgstr ""
@@ -15,6 +15,12 @@ msgid "No ontology terms found."
 msgstr ""
 
 msgid "No organisms found."
+msgstr ""
+
+msgid "Error from API: No ligands found."
+msgstr ""
+
+msgid "IDR might be present, but we were unable to retrieve it."
 msgstr ""
 
 msgid "Antibodies"
@@ -286,6 +292,9 @@ msgid "Keywords"
 msgstr ""
 
 msgid "Show validations"
+msgstr ""
+
+msgid "No {{field}} found"
 msgstr ""
 
 msgid " and {{overflow}} more..."
