@@ -79,7 +79,7 @@ export const IDRViewerBlock: React.FC<BlockComponentProps> = React.memo(
         }, []);
 
         React.useEffect(() => {
-            if (_.isEmpty(idrs) && setVisible) setVisible(false);
+            if (_.isEmpty(idrs)) setVisible(false);
         }, [setVisible, block, idrs]);
 
         return (

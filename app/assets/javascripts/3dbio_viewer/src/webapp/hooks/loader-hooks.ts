@@ -61,8 +61,8 @@ export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) 
     return { pdbInfoLoader: pdbInfoWithLigandsLoader, setLigands };
 }
 
-export function useMultipleLoaders<K extends string>(initialState?: Record<K, Loader>) {
-    const [loaders, setLoaders] = React.useState<Record<string, Loader>>(initialState ?? {});
+export function useMultipleLoaders<K extends string>(initialState: MultipleLoader<K>) {
+    const [loaders, setLoaders] = React.useState<MultipleLoader<K>>(initialState);
 
     const setLoader = React.useCallback(
         (key: K, loader: Loader) =>
@@ -73,21 +73,29 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
         []
     );
 
+    const resetLoaders = React.useCallback(
+        (state: MultipleLoader<K>) => setLoaders(state),
+        []
+    );
+
     const updateLoaderStatus = React.useCallback(
         (key: K, status: Loader["status"], newMessage?: string) =>
             setLoaders(loaders => {
-                const message = newMessage ?? loaders[key]?.message;
-                const priority = loaders[key]?.priority;
+                const prevStatus = loaders[key]?.status;
+                if (prevStatus === status) return loaders;
 
-                return message && priority
+                const message = newMessage ?? loaders[key]?.message;
+                const priority = loaders[key]?.priority ?? 0;
+
+                return message
                     ? {
-                          ...loaders,
-                          [key]: {
-                              message,
-                              status,
-                              priority,
-                          },
-                      }
+                        ...loaders,
+                        [key]: {
+                            message,
+                            status,
+                            priority,
+                        },
+                    }
                     : loaders;
             }),
         []
@@ -103,7 +111,7 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
                     return data;
                 })
                 .catch(err => {
-                    console.debug(`Loader "${key}" error while loading.`);
+                    console.error(`Loader "${key}": error while loading.`);
                     updateLoaderStatus(key, "error", err);
                     return Promise.reject(err);
                 });
@@ -112,12 +120,12 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
     );
 
     const loading = React.useMemo(
-        () => _.values(loaders).some(({ status }) => status === "loading"),
+        () => _.values<Loader>(loaders).some(loader => loader.status === "loading"),
         [loaders]
     );
 
     const errorThrown = React.useMemo(
-        () => _.values(loaders).some(({ status }) => status === "error"),
+        () => _.values<Loader>(loaders).some(loader => loader.status === "error"),
         [loaders]
     );
 
@@ -125,13 +133,22 @@ export function useMultipleLoaders<K extends string>(initialState?: Record<K, Lo
         () =>
             _(loaders)
                 .values()
-                .filter(({ status }) => status === "loading" || status === "error")
-                .orderBy(({ priority, status }) => (status === "error" ? 10 : priority), "desc")
+                .filter(({ status }) => status === "loading")
+                .orderBy(({ priority }) => priority, "desc")
                 .first()?.message ?? i18n.t("Loading..."),
         [loaders]
     );
 
-    return { loading, errorThrown, title, setLoader, updateLoaderStatus, updateOnResolve };
+    return {
+        loading,
+        errorThrown,
+        title,
+        setLoader,
+        updateLoaderStatus,
+        updateOnResolve,
+        loaders,
+        resetLoaders,
+    };
 }
 
 export type LoaderStatus = "pending" | "loading" | "loaded" | "error";
@@ -141,3 +158,5 @@ interface Loader {
     message: string;
     priority: number; //the higher the number, the higher the priority
 }
+
+type MultipleLoader<K extends string> = Record<K, Loader>;

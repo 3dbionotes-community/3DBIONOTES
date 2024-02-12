@@ -1,23 +1,20 @@
 import React from "react";
 import { Backdrop, CircularProgress, makeStyles } from "@material-ui/core";
-import { Cancel as CancelIcon } from "@material-ui/icons";
 import styled from "styled-components";
-import { isDev as _isDev } from "../../../routes";
 
 interface LoaderProps {
     open: boolean;
     title?: string;
-    errorThrown?: boolean;
 }
 
 export const LoaderMask: React.FC<LoaderProps> = React.memo(props => {
     const classes = useStyles();
-    const { open, title, errorThrown } = props;
+    const { open, title } = props;
 
     return (
         <Backdrop className={classes.backdrop} open={open}>
             <Container>
-                {errorThrown ? <CancelIcon fontSize="large" color="error" /> : <CircularProgress />}
+                <CircularProgress />
                 {title && <p className={classes.title}>{title}</p>}
             </Container>
         </Backdrop>

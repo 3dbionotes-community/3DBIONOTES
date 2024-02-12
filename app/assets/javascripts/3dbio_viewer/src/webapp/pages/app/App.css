@@ -39,6 +39,7 @@ header {
 #viewer {
     display: flex;
     height: 100vh;
+    background-color: #fff;
 }
 
 #viewer.prod {
@@ -141,4 +142,26 @@ header {
 
 .react-resizable-handle-s {
     bottom: 0;
+}
+
+.pdb-info-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2.5em;
+    border-radius: 2em;
+    font-size: 1em;
+    padding: 1.5em;
+    border: 3px solid #607d8b;
+    background-color: #a2becb;
+}
+
+.pdb-info-error p {
+    margin: 1em 0 0;
+    text-align: center;
+}
+
+.pdb-info-error i.icon {
+    font-size: 2rem;
+    color: #123546;
 }
