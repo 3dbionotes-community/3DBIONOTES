@@ -37,6 +37,7 @@
 .search {
     display: flex;
     align-items: center;
+    margin-right: 1.5em;
 }
 
 .MuiDialogTitle-root {
@@ -73,7 +74,7 @@
     outline: none;
     border: solid 3px #607d8b;
     border-radius: 10px;
-    padding: 12px 34px 12px 12px;
+    padding: 0.5em 34px 0.5em 0.5em;
     font-size: 1.2rem;
 }
 
@@ -81,13 +82,13 @@
     font-size: 1.8rem;
     color: #575757;
     margin-left: -38px;
-    margin-right: 18px;
 }
 
 .item .id {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: 1 1 auto;
 }
 
 .item .id .tooltip {

@@ -15,6 +15,7 @@ import { CellProps } from "../Columns";
 import { Thumbnail } from "../Thumbnail";
 import { BadgeLink } from "../badge/BadgeLink";
 import { Badge } from "../badge/Badge";
+import { urlPrefix } from "./TitleCell";
 import i18n from "../../../../utils/i18n";
 
 export const PdbCell: React.FC<CellProps> = React.memo(props => {
@@ -69,7 +70,7 @@ const PdbCell2: React.FC<{
 
     return (
         <div>
-            {pdb ? <Thumbnail type="pdb" value={pdb} tooltip={propertiesTooltip} /> : null}
+            {pdb ? <Thumbnail value={pdb} tooltip={propertiesTooltip} /> : null}
 
             {!_.isEmpty(pdbValidations) ? (
                 pdbValidations.length === 1 && pdbValidations[0] ? (
@@ -78,7 +79,7 @@ const PdbCell2: React.FC<{
                         validationSources={validationSources}
                     />
                 ) : (
-                    <Grid container justify="center">
+                    <Grid container justifyContent="center">
                         <ClickAwayListener onClickAway={handleTooltipClose}>
                             <HtmlTooltip
                                 onClose={handleTooltipClose}
@@ -177,25 +178,22 @@ const Validation: React.FC<ValidationProps> = React.memo(props => {
                     <>
                         <BadgeLink
                             style={styles.grow}
-                            key={pdbValidation.method + "-external"}
                             url={pdbValidation.externalLink}
                             text={text}
                             icon="external"
                             backgroundColor={pdbValidation.badgeColor}
                         />
                         <BadgeLink
-                            key={pdbValidation.method + "-viewer"}
-                            url={pdbValidation.queryLink}
+                            url={urlPrefix + pdbValidation.queryLink}
                             icon="viewer"
                             backgroundColor={pdbValidation.badgeColor}
                         />
                     </>
                 ) : (
                     <BadgeLink
-                        key={pdbValidation.method + "-external"}
                         url={
                             pdbValidation.queryLink
-                                ? pdbValidation.queryLink
+                                ? urlPrefix + pdbValidation.queryLink
                                 : pdbValidation.externalLink
                         }
                         text={text}

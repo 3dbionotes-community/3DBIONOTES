@@ -1,15 +1,16 @@
 import _ from "lodash";
 import React from "react";
 import { renderToString } from "react-dom/server";
-
 import { Color } from "../../domain/entities/Color";
-import { getCustomTracksFromPdb, Pdb } from "../../domain/entities/Pdb";
+import { Pdb } from "../../domain/entities/Pdb";
 import { Shape } from "../../domain/entities/Shape";
 import { hasFragments, Subtrack, Track } from "../../domain/entities/Track";
 import { Variant, Variants } from "../../domain/entities/Variant";
 import { GenericTooltip } from "../components/protvista/GenericTooltip";
 import { BlockDef } from "../components/protvista/Protvista.types";
 import { Tooltip } from "../components/protvista/Tooltip";
+import { trackDefinitions } from "../../domain/definitions/tracks";
+import { getBlockTracks } from "../components/protvista/Protvista.helpers";
 
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
 
@@ -18,6 +19,7 @@ export interface PdbView {
     displaySequence: boolean;
     displayConservation: boolean;
     displayVariants: boolean;
+    chainId?: string;
     offset?: number;
     legends?: {
         alignment: "left" | "right" | "center";
@@ -41,6 +43,7 @@ export interface VariantView extends Variant {
 }
 
 export interface TrackView {
+    id: string;
     label: string;
     help: string;
     labelType?: "text" | "html";
@@ -70,17 +73,12 @@ export interface FragmentView {
 
 export function getPdbView(
     pdb: Pdb,
-    options: { block: BlockDef; showAllTracks?: boolean }
+    options: { block: BlockDef; showAllTracks?: boolean; chainId?: string }
 ): PdbView {
-    const { block, showAllTracks = false } = options;
-    const pdbTracksById = _.keyBy(pdb.tracks, t => t.id);
-
-    const data = showAllTracks
-        ? pdb.tracks
-        : _.compact(block.tracks.map(trackDef => pdbTracksById[trackDef.id]));
+    const { block, showAllTracks = false, chainId } = options;
+    const data = showAllTracks ? pdb.tracks : getBlockTracks(pdb.tracks, block);
 
     const tracks = _(data)
-        .concat(getCustomTracksFromPdb(block, pdb))
         .map((pdbTrack): TrackView | undefined => {
             const subtracks = getSubtracks(pdb, pdbTrack);
             if (_.isEmpty(subtracks)) return undefined;
@@ -95,7 +93,9 @@ export function getPdbView(
         .compact()
         .value();
 
-    const variants = getVariants(pdb);
+    const variants = _(block.tracks).some(track => track === trackDefinitions.variants)
+        ? getVariants(pdb)
+        : undefined;
 
     return {
         ...pdb,
@@ -106,6 +106,7 @@ export function getPdbView(
         displayVariants: Boolean(variants),
         tracks,
         variants,
+        chainId,
     };
 }
 

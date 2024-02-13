@@ -6,3 +6,7 @@ export function debugVariable(record: Record<string, any>): void {
         Object.assign(window, { [name]: obj });
     });
 }
+
+export function isDebugMode(): boolean {
+    return window.localStorage.getItem("isDev") === "true";
+}

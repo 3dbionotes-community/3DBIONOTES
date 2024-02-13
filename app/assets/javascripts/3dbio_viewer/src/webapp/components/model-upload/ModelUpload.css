@@ -1,9 +1,12 @@
-a {
+a,
+.anchor {
     color: #268bbe;
     text-decoration: none;
     background-color: transparent;
+    cursor: pointer;
 }
-a:hover {
+a:hover,
+.anchor:hover {
     text-decoration: underline;
 }
 label {
@@ -11,9 +14,9 @@ label {
     margin-bottom: 0.5rem;
     font-weight: bold;
 }
-.form-control {
+.form-control-viewer {
     display: block;
-    width: 50%;
+    width: 100%;
     margin-top: 0.5rem;
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
@@ -27,7 +30,7 @@ label {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.form-control:focus {
+.form-control-viewer:focus {
     color: #495057;
     background-color: #fff;
     border-color: #80bdff;

@@ -8,22 +8,24 @@ import { UploadData } from "./UploadData";
 export interface PdbInfo {
     id: Maybe<string>;
     emdbs: Emdb[];
-    chains: Array<{
-        id: string;
-        name: string;
-        shortName: string;
-        chainId: ChainId;
-        protein: Protein;
-    }>;
+    chains: Chain[];
     ligands: Ligand[];
 }
+type Chain = {
+    id: string;
+    name: string;
+    shortName: string;
+    chainId: ChainId;
+    protein: Maybe<Protein>;
+};
 
-interface BuildPdbInfoOptions extends Omit<PdbInfo, "chains"> {
+interface BuildPdbInfoOptions extends PdbInfo {
     proteins: Protein[];
-    proteinsMapping: Record<ProteinId, ChainId[]>;
+    proteinsMapping: Maybe<Record<ProteinId, ChainId[]>>;
 }
 
 export function buildPdbInfo(options: BuildPdbInfoOptions): PdbInfo {
+    if (!options.proteinsMapping && _.isEmpty(options.proteins)) return options;
     const proteinById = _.keyBy(options.proteins, protein => protein.id);
     const chains = _(options.proteinsMapping)
         .toPairs()
@@ -32,7 +34,7 @@ export function buildPdbInfo(options: BuildPdbInfoOptions): PdbInfo {
             if (!protein) return [];
 
             return chainIds.map(chainId => {
-                const shortName = _([chainId, protein.gene]).compact().join(" - ");
+                const shortName = _([chainId, protein.gen]).compact().join(" - ");
                 return {
                     id: [proteinId, chainId].join("-"),
                     shortName,

@@ -1,14 +1,24 @@
-import React from "react";
 import _ from "lodash";
+import React from "react";
+import styled from "styled-components";
+import { Fab } from "@material-ui/core";
+import { ResizableBox, ResizableBoxProps, ResizeCallbackData } from "react-resizable";
 import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
 import { ViewerSelector } from "./viewer-selector/ViewerSelector";
 import { ViewerState } from "../view-models/ViewerState";
-import { usePdbInfo } from "../hooks/loader-hooks";
+import { useMultipleLoaders, usePdbInfo } from "../hooks/loader-hooks";
 import { useAppContext } from "./AppContext";
 import { UploadData } from "../../domain/entities/UploadData";
 import { setFromError } from "../utils/error";
 import { ProteinNetwork } from "../../domain/entities/ProteinNetwork";
+import { debugFlags } from "../pages/app/debugFlags";
+import { usePdbLoader } from "../hooks/use-pdb";
+import { useBooleanState } from "../hooks/use-boolean";
+import { LoaderMask } from "./loader-mask/LoaderMask";
+import { isDev } from "../../routes";
+import { getMainItem } from "../view-models/Selection";
+import i18n from "../utils/i18n";
 
 export interface RootViewerContentsProps {
     viewerState: ViewerState;
@@ -19,19 +29,72 @@ type ExternalData =
     | { type: "uploadData"; data: UploadData }
     | { type: "network"; data: ProteinNetwork };
 
+export type LoaderKey = keyof typeof loaderMessages;
+
+const loaderMessages = {
+    //already ordered by priority
+    getRelatedPdbModel: [i18n.t("Getting PDB related model..."), 0],
+    initPlugin: [i18n.t("Starting 3D Viewer..."), 1], //already loading PDB
+    updateVisualPlugin: [i18n.t("Updating selection..."), 2],
+    pdbLoader: [i18n.t("Loading PDB Data..."), 3],
+    uploadedModel: [i18n.t("Loading uploaded model..."), 2],
+    loadModel: [i18n.t("Loading model..."), 4], //PDB, EMDB, PDB-REDO, CSTF, CERES
+    exportAnnotations: [i18n.t("Retrieving all annotations..."), 5],
+} as const;
+
+export const loaderKeys: {
+    [P in LoaderKey]: LoaderKey;
+} = _.mapValues(loaderMessages, (_v, k) => k as LoaderKey);
+
+const loadersInitialState = _.mapValues(loaderMessages, ([message, priority]) => ({
+    message,
+    priority,
+    status: "pending" as const,
+}));
+
 export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(props => {
     const { viewerState } = props;
-    const { compositionRoot } = useAppContext();
     const { selection, setSelection } = viewerState;
-    const [error, setError] = React.useState<string>();
+    const { compositionRoot } = useAppContext();
 
+    const {
+        loading,
+        title,
+        updateLoaderStatus,
+        updateOnResolve: updateLoader,
+        loaders,
+        resetLoaders,
+    } = useMultipleLoaders<LoaderKey>(loadersInitialState);
+
+    const [error, setError] = React.useState<string>();
     const [externalData, setExternalData] = React.useState<ExternalData>({ type: "none" });
+    const [toolbarExpanded, { set: setToolbarExpanded }] = useBooleanState(true);
+    const [viewerSelectorExpanded, { set: setViewerSelectorExpanded }] = useBooleanState(true);
+    const { innerWidth, resizableBoxProps } = useResizableBox();
+    const { scrolled: _scrolled, goToTop: _goToTop, ref } = useGoToTop<HTMLDivElement>();
+
     const uploadData = getUploadData(externalData);
-    const { pdbInfo, setLigands } = usePdbInfo(selection, uploadData);
+
+    const { pdbInfoLoader, setLigands } = usePdbInfo(selection, uploadData);
+    const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfoLoader);
+    const pdbInfo = pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined;
 
     const uploadDataToken = selection.type === "uploadData" ? selection.token : undefined;
     const networkToken = selection.type === "network" ? selection.token : undefined;
     const proteinNetwork = externalData.type === "network" ? externalData.data : undefined;
+
+    const criticalLoaders = React.useMemo(
+        () => [loaders.uploadedModel, loaders.initPlugin, loaders.getRelatedPdbModel],
+        [loaders.uploadedModel, loaders.initPlugin, loaders.getRelatedPdbModel]
+    );
+
+    const toggleToolbarExpanded = React.useCallback(
+        (_e: React.SyntheticEvent, data: ResizeCallbackData) => {
+            setToolbarExpanded(data.size.width >= 475);
+            setViewerSelectorExpanded(innerWidth - data.size.width >= 750);
+        },
+        [setToolbarExpanded, setViewerSelectorExpanded, innerWidth]
+    );
 
     React.useEffect(() => {
         if (uploadDataToken) {
@@ -49,38 +112,75 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
         }
     }, [uploadDataToken, networkToken, compositionRoot]);
 
+    const pdbId = React.useMemo(() => getMainItem(selection, "pdb"), [selection]);
+
+    React.useEffect(() => {
+        const init = loaders.initPlugin;
+        if (init.status !== "loaded") return;
+        resetLoaders({ ...loadersInitialState, initPlugin: init });
+    }, [pdbId, resetLoaders, loaders.initPlugin]);
+
+    React.useEffect(() => {
+        const critical = criticalLoaders.find(loader => loader.status === "error");
+        if (critical) setPdbLoader({ type: "error", message: critical.message });
+    }, [criticalLoaders, setPdbLoader]);
+
+    React.useEffect(() => {
+        updateLoaderStatus("pdbLoader", pdbLoader.type);
+    }, [pdbLoader.type, updateLoaderStatus]);
+
     return (
-        <div id="viewer">
-            {error && <div style={{ color: "red" }}></div>}
+        <>
+            <LoaderMask open={loading} title={title} />
+            <div id="viewer" className={!isDev ? "prod" : undefined}>
+                {!debugFlags.showOnlyValidations && (
+                    <div id="left">
+                        {error && <div style={{ color: "red" }}>{error}</div>}
+                        <ViewerSelector
+                            pdbInfo={pdbInfo}
+                            selection={selection}
+                            onSelectionChange={setSelection}
+                            uploadData={uploadData}
+                            expanded={viewerSelectorExpanded}
+                        />
+                        <MolecularStructure
+                            pdbInfo={pdbInfo}
+                            selection={selection}
+                            onSelectionChange={setSelection}
+                            onLigandsLoaded={setLigands}
+                            proteinNetwork={proteinNetwork}
+                            updateLoader={updateLoader}
+                            loaderBusy={loading}
+                        />
+                    </div>
+                )}
 
-            <ViewerSelector
-                pdbInfo={pdbInfo}
-                selection={selection}
-                onSelectionChange={setSelection}
-                uploadData={uploadData}
-            />
-
-            <div id="left">
-                <MolecularStructure
-                    pdbInfo={pdbInfo}
-                    selection={selection}
-                    onSelectionChange={setSelection}
-                    onLigandsLoaded={setLigands}
-                    proteinNetwork={proteinNetwork}
-                />
+                <ResizableBox
+                    axis="x"
+                    onResize={toggleToolbarExpanded}
+                    onResizeStop={redrawWindow}
+                    {...resizableBoxProps}
+                >
+                    <div id="right" ref={ref}>
+                        <Viewers
+                            viewerState={viewerState}
+                            pdbInfo={pdbInfo}
+                            uploadData={uploadData}
+                            proteinNetwork={proteinNetwork}
+                            pdbLoader={pdbLoader}
+                            setPdbLoader={setPdbLoader}
+                            toolbarExpanded={toolbarExpanded}
+                            updateLoader={updateLoader}
+                        />
+                    </div>
+                </ResizableBox>
             </div>
-
-            <div id="right">
-                {
-                    <Viewers
-                        viewerState={viewerState}
-                        pdbInfo={pdbInfo}
-                        uploadData={uploadData}
-                        proteinNetwork={proteinNetwork}
-                    />
-                }
-            </div>
-        </div>
+            {/* {scrolled && (
+                <StyledFab onClick={goToTop}>
+                    <KeyboardArrowUpIcon fontSize="large" />
+                </StyledFab>
+            )} */}
+        </>
     );
 });
 
@@ -91,3 +191,74 @@ function getUploadData(externalData: ExternalData) {
         ? externalData.data.uploadData
         : undefined;
 }
+
+function useResizableBox() {
+    const [innerWidth, setInnerWidth] = React.useState(window.innerWidth);
+
+    const resizableBoxProps = React.useMemo<
+        Required<
+            Pick<ResizableBoxProps, "width" | "minConstraints" | "maxConstraints" | "resizeHandles">
+        >
+    >(
+        () => ({
+            width: innerWidth * 0.5,
+            minConstraints: [400, 0],
+            maxConstraints: [innerWidth - 600, 0],
+            resizeHandles: ["w"],
+        }),
+        [innerWidth]
+    );
+
+    React.useLayoutEffect(() => {
+        function updateInnerWidth() {
+            setInnerWidth(window.innerWidth);
+        }
+        window.addEventListener("resize", updateInnerWidth);
+        return () => window.removeEventListener("resize", updateInnerWidth);
+    }, []);
+
+    return { innerWidth, resizableBoxProps };
+}
+
+function useGoToTop<K extends HTMLElement>() {
+    const [scrolled, setScrolled] = React.useState(false);
+    const ref = React.useRef<K>(null);
+
+    const goToTop = React.useCallback(() => {
+        if (!ref.current) return;
+        ref.current.scrollTop = 0;
+    }, [ref]);
+
+    const el = ref.current; //suggested by eslint
+    React.useEffect(() => {
+        if (!el) return;
+        function scrollFunction() {
+            if (ref.current) setScrolled(ref.current.scrollTop > 20);
+        }
+        if (el) {
+            el.addEventListener("scroll", scrollFunction);
+        }
+        return () => {
+            if (el) el.removeEventListener("scroll", scrollFunction);
+        };
+    }, [el]);
+
+    return { scrolled, goToTop, ref };
+}
+
+function redrawWindow() {
+    window.dispatchEvent(new Event("resize"));
+}
+
+const _StyledFab = styled(Fab)`
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    background-color: #123546;
+    &:hover {
+        background-color: #123546;
+    }
+    &.MuiFab-root .MuiSvgIcon-root {
+        fill: #fff;
+    }
+`;

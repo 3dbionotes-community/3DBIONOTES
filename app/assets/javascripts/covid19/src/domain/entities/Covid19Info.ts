@@ -16,6 +16,7 @@ export interface Structure {
     ligands: Ligand[];
     details: Maybe<Details>;
     validations: Validations;
+    queryLink: Url;
 }
 
 export interface Organism {

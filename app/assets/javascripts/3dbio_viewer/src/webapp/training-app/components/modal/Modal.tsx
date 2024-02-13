@@ -69,6 +69,7 @@ const ModalWrapper = styled.div<{ center?: boolean }>`
     left: 0;
     text-align: ${props => (props.center ? "center" : "unset")};
     user-select: none;
+    z-index: 999999;
 `;
 
 export const ModalBody = styled.div`

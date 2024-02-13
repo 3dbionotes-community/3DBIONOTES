@@ -11,6 +11,10 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import { LoaderMask } from "../loader-mask/LoaderMask";
 import { StructureMappingUpload } from "./StructureMappingUpload";
 import { ErrorMessage } from "../error-message/ErrorMessage";
+import { StyledButton } from "../../training-app/components/action-button/ActionButton";
+import { recordOfStyles } from "../../../utils/ts-utils";
+import { AllowedExtension, getAllowedFileExtension } from "../../view-models/Selection";
+import { Anchor } from "../Anchor";
 
 export interface ModelUploadProps {
     title: string;
@@ -30,6 +34,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     const [jobTitle, setJobTitle] = useState<string>("");
     const [error, setError] = useState<string>();
     const [atomicStructure, setAtomicStructure] = useState<AtomicStructure>();
+    const [fileExtension, setFileExtension] = useState<AllowedExtension>("cif");
     const structureFileRef = useRef<DropzoneRef>(null);
     const annotationFileRef = useRef<DropzoneRef>(null);
 
@@ -38,6 +43,7 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
         const structureFile = getFile(structureFileRef);
 
         if (structureFile) {
+            setFileExtension(getAllowedFileExtension(structureFile.name));
             const uploadParams = {
                 jobTitle,
                 structureFile,
@@ -62,6 +68,15 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
     }, [compositionRoot, jobTitle, openUploadConfirmation]);
 
     const submit = useCallbackEffect(submitCb);
+
+    const downloadExample = React.useCallback<React.MouseEventHandler<HTMLAnchorElement>>(
+        ev => {
+            ev.stopPropagation();
+            ev.preventDefault();
+            return compositionRoot.downloadAnnotationsExample.execute();
+        },
+        [compositionRoot]
+    );
 
     return (
         <>
@@ -88,33 +103,31 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
                         onChange={e => setJobTitle(e.target.value)}
                         id="jobTitle"
                         type="text"
-                        className="form-control"
+                        className="form-control-viewer"
                     />
 
                     <label className="fileFormat">
                         {i18n.t("Structure file in")}
-                        <a
-                            href="http://www.wwpdb.org/documentation/file-format"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            {" "}
-                            PDB{" "}
-                        </a>
+                        <Anchor href="http://www.wwpdb.org/documentation/file-format"> PDB </Anchor>
                         {i18n.t("or")}
-                        <a href="http://mmcif.wwpdb.org/" target="_blank" rel="noreferrer">
-                            {" "}
-                            mmCIF{" "}
-                        </a>{" "}
+                        <Anchor href="http://mmcif.wwpdb.org/"> mmCIF </Anchor>{" "}
                         {i18n.t("format (*)")}
                     </label>
                     <Dropzone
                         ref={structureFileRef}
                         onDrop={() => setError("")}
-                        accept=".pdb,.cif"
+                        accept=".pdb,.cif,.ent"
                     ></Dropzone>
 
-                    <label className="fileFormat">{i18n.t("Upload your annotations")}</label>
+                    <label className="fileFormat">
+                        <span>
+                            {i18n.t("Upload your annotations file in JSON format")} (
+                            <a href="#" onClick={downloadExample}>
+                                {i18n.t("example")}
+                            </a>
+                            )
+                        </span>
+                    </label>
                     <Dropzone
                         ref={annotationFileRef}
                         onDrop={() => setError("")}
@@ -123,9 +136,17 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
 
                     {error && <ErrorMessage message={error} />}
 
-                    <button className="uploadSubmit" onClick={submit}>
-                        {i18n.t("Submit")}
-                    </button>
+                    <div style={dialogStyles.actionButtons}>
+                        <StyledButton
+                            className="uploadSubmit"
+                            type="submit"
+                            onClick={submit}
+                            style={dialogStyles.submitButton}
+                        >
+                            {i18n.t("Submit")}
+                        </StyledButton>
+                    </div>
+
                     {open && (
                         <LoaderMask open={open} title={i18n.t("Uploading Atomic Structure...")} />
                     )}
@@ -135,10 +156,23 @@ export const ModelUpload: React.FC<ModelUploadProps> = React.memo(props => {
             {isUploadConfirmationOpen && atomicStructure ? (
                 <StructureMappingUpload
                     atomicStructure={atomicStructure}
+                    jobTitle={jobTitle}
                     onClose={closeUploadConfirmation}
                     onLoaded={onLoaded}
+                    fileExtension={fileExtension}
                 />
             ) : null}
         </>
     );
+});
+
+const dialogStyles = recordOfStyles({
+    actionButtons: {
+        textAlign: "right",
+    },
+    submitButton: {
+        marginTop: "1.5em",
+        marginBottom: 0,
+        fontSize: "1em",
+    },
 });

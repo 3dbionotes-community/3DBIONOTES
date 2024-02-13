@@ -1,40 +1,30 @@
-import { Fab } from "@material-ui/core";
 import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
 import React from "react";
 import styled from "styled-components";
+import i18n from "../../../utils/i18n";
 
 export interface ActionButtonProps {
     onClick: () => void;
+    expanded: boolean;
 }
 
-export const ActionButton: React.FC<ActionButtonProps> = ({ onClick }) => {
+export const ActionButton: React.FC<ActionButtonProps> = ({ onClick, expanded }) => {
     return (
-        <StyledFab variant="extended" size="large" color="primary" onClick={onClick}>
-            <EmojiObjectsIcon />
-            <p>{"Tutorial"}</p>
-        </StyledFab>
+        <StyledButton onClick={onClick}>
+            <EmojiObjectsIcon fontSize="small" />
+            {expanded && i18n.t("Tutorial")}
+        </StyledButton>
     );
 };
 
-const StyledFab = styled(Fab)`
-    position: fixed;
-    margin: 6px;
-    bottom: 20px;
-    right: 40px;
+export const StyledButton = styled.button`
     display: inline-flex;
-    cursor: pointer;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    column-gap: 4px; /*not em intentionally*/
     align-items: center;
-    padding: 0px 20px;
-    color: #fff;
-    background-color: #133546;
-    border-color: #133546;
-    border-radius: 100px;
 
-    :hover {
-        background-color: #607d8b;
-    }
-
-    svg {
-        margin-right: 6px;
+    .MuiSvgIcon-fontSizeSmall {
+        font-size: 1.25em;
     }
 `;

@@ -6,37 +6,54 @@ import { PdbOptions } from "../../domain/repositories/PdbRepository";
 import { Maybe } from "../../utils/ts-utils";
 import { useAppContext } from "../components/AppContext";
 import { LoaderState, useLoader } from "../components/Loader";
-import { getChainId, getMainPdbId, Selection } from "../view-models/Selection";
+import { getChainId, getMainItem, Selection } from "../view-models/Selection";
+import i18n from "../utils/i18n";
 
 export function usePdbLoader(
     selection: Selection,
-    pdbInfo: Maybe<PdbInfo>
+    pdbInfoLoader: LoaderState<PdbInfo>
 ): [LoaderState<Pdb>, React.Dispatch<React.SetStateAction<LoaderState<Pdb>>>] {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
+    const pdbInfo = pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined;
 
-    const pdbId = getMainPdbId(selection);
+    const pdbId = getMainItem(selection, "pdb");
     const chainId = getChainId(selection);
     const chains = pdbInfo?.chains;
+
     const pdbOptions: PdbOptions | undefined = React.useMemo(() => {
+        if (!pdbId) return;
         return getPdbOptions(pdbId, chainId, chains);
     }, [pdbId, chainId, chains]);
 
-    React.useEffect(() => {
-        if (!pdbOptions) return;
-        setLoader({ type: "loading" });
+    const pdbInfoLoaderMessage = pdbInfoLoader.type === "error" ? pdbInfoLoader.message : undefined;
 
+    React.useEffect(() => setLoader({ type: "loading" }), [pdbId, setLoader]);
+
+    React.useEffect(() => {
+        if (pdbInfoLoader.type === "error" && pdbInfoLoaderMessage)
+            setLoader({ type: "error", message: pdbInfoLoaderMessage });
+        if (pdbInfoLoader.type === "loaded" && !pdbOptions)
+            setLoader({
+                type: "error",
+                message: i18n.t(
+                    "No chains found for this PDB. Therefore we are unable to retrieve any data."
+                ),
+                //This shouldn't be happening and btw EMDB can be present, so is very possible to have something at least to show...
+            });
+        if (!pdbOptions) return;
         return compositionRoot.getPdb.execute(pdbOptions).run(
             pdb => setLoader({ type: "loaded", data: pdb }),
             error => setLoader({ type: "error", message: error.message })
         );
-    }, [compositionRoot, setLoader, pdbOptions]);
+    }, [compositionRoot, setLoader, pdbOptions, pdbInfoLoader.type, pdbInfoLoaderMessage]);
+    //Do not add pdbInfoLoader as dependency as .ligands will update. Making the loading screen show again (╥_╥)
 
     return [loader, setLoader];
 }
 
 export function getPdbOptions(
-    pdbId: Maybe<PdbId>,
+    pdbId: PdbId,
     chainId: Maybe<string>,
     chains: Maybe<PdbInfo["chains"]>
 ): Maybe<PdbOptions> {
@@ -45,9 +62,9 @@ export function getPdbOptions(
     const defaultChain = chains[0];
     const chain = chainId
         ? _(chains)
-              .keyBy(chain => chain.chainId)
-              .get(chainId, defaultChain)
+            .keyBy(chain => chain.chainId)
+            .get(chainId, defaultChain)
         : defaultChain;
 
-    return chain ? { pdbId, proteinId: chain.protein.id, chainId: chain.chainId } : undefined;
+    return chain ? { pdbId, proteinId: chain.protein?.id, chainId: chain.chainId } : undefined;
 }

@@ -5,7 +5,8 @@ import { Orf1a, Orf1b, Remaining, Nucleoprotein } from "./Proteins";
 import { ProteomePath, ProtDetails } from "./ProteomePath";
 import { Container, Layer, SVG } from "./styled";
 
-const viewerPath = "/?queryId=";
+// const viewerPath = "/?queryId="; //development-old-viewer
+const viewerPath = "/ws/viewer/#/";
 
 export interface VisibleGen {
     orf1a?: boolean;

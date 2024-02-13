@@ -1,51 +1,51 @@
 //= require jquery
-(function (i, s, o, g, r, a, m) {
-    i["GoogleAnalyticsObject"] = r;
-    (i[r] =
-        i[r] ||
+(function (window, document, element, src, name, a, m) {
+    window["GoogleAnalytics4Object"] = name;
+    (window[name] =
+        window[name] ||
         function () {
-            (i[r].q = i[r].q || []).push(arguments);
-        }),
-        (i[r].l = 1 * new Date());
-    (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+            (window.dataLayer = window.dataLayer || []).push(arguments);
+        })("js", new Date());
+    (a = document.createElement(element)),
+        (m = document.getElementsByTagName(element)[0]);
     a.async = 1;
-    a.src = g;
+    a.src = src;
     m.parentNode.insertBefore(a, m);
 })(
     window,
     document,
     "script",
-    "https://www.google-analytics.com/analytics.js",
-    "ga"
+    "https://www.googletagmanager.com/gtag/js?id=G-1WTRK5CB7C", // GA4 KEY CHANGE ALSO
+    "gtag"
 );
-ga("create", "UA-93698320-4", "auto"); //UA-93698320-4 for development UA-93698320-1 for production
-ga("send", "pageview");
+gtag("config", "G-1WTRK5CB7C"); // RINCHEN: G-1WTRK5CB7C / 3DBIONOTES: G-BRPGRQ278S
 
 var $j = jQuery.noConflict();
 
 $j(document).ready(function () {
     $j(".btn-contact").bind("click", () => {
-        ga("send", {
-            hitType: "event",
-            eventCategory: "home_page",
-            eventAction: "contact",
-            transport: "beacon",
+        gtag("event", "clicked_contact", {
+            location_hash: window.location.hash,
+            location_pathname: window.location.pathname,
+            location_href: window.location.href,
         });
     });
     $j(".cta-covid").bind("click", () => {
-        ga("send", {
-            hitType: "event",
-            eventCategory: "call_to_action",
-            eventAction: "view_page",
-            eventLabel: "/covid19",
+        gtag("event", "clicked_cta", {
+            action: "go_to",
+            location_hash: window.location.hash,
+            location_pathname: window.location.pathname,
+            location_href: window.location.href,
+            href: "/covid19",
         });
     });
     $j(".cta-example").bind("click", () => {
-        ga("send", {
-            hitType: "event",
-            eventCategory: "call_to_action",
-            eventAction: "view_example",
-            eventLabel: $j(".cta-example").data("id"),
+        gtag("event", "clicked_cta", {
+            action: "view_example",
+            location_hash: window.location.hash,
+            location_pathname: window.location.pathname,
+            location_href: window.location.href,
+            href: $j(".cta-example").data("id"),
         });
     });
 
@@ -53,12 +53,10 @@ $j(document).ready(function () {
     if (form)
         form.addEventListener("submit", function (event) {
             event.preventDefault();
-            ga("send", {
-                hitType: "event",
-                eventCategory: "home_page",
-                eventAction: "search",
-                eventLabel: $j("#input-search").val(),
-                transport: "beacon",
+            gtag("event", "search", {
+                on: "home_page",
+                query: $j("#input-search").val(),
+                location: window.location.hash,
             });
             form.submit();
         });
@@ -87,4 +85,37 @@ $j(document).ready(function () {
         $j("#queryId").html("P01111\nP01112\nP01116");
         $j("#has_structure_flag_flag").prop("checked", true);
     });
+    
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var cookieArray = decodedCookie.split(';');
+        for (var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i].trim();
+            if (cookie.indexOf(name) === 0) {
+                return cookie.substring(name.length, cookie.length);
+            }
+        }
+        return "";
+    }
+
+    function hideCookiePolicyBanner() {
+        $j("#cookiesConsent").hide();
+    }
+    if (Boolean(getCookie("cookie_consent")) && JSON.parse(getCookie("cookie_consent"))) {
+        hideCookiePolicyBanner();
+    }
+
+    $j("#agreeCookies").click(function () {
+        setCookie("cookie_consent", JSON.stringify(true), 90);
+        hideCookiePolicyBanner();
+    });
+
 });

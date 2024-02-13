@@ -1,10 +1,15 @@
-.frame-viewer .title {
-    margin-left: 10px;
-    margin-top: 20px;
-    color: #123546;
+.frame-viewer {
+    margin: 0;
 }
 
 .frame-viewer iframe {
     border: none;
-    padding: 15px 5px;
+}
+
+.frame-viewer iframe body {
+    margin: 0;
+}
+
+.protvistaCol1 {
+    box-sizing: border-box;
 }

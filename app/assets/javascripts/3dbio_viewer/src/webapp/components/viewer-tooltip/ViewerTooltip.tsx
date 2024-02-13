@@ -1,10 +1,11 @@
 import React from "react";
-import { Tooltip, ClickAwayListener, Fade } from "@material-ui/core";
+import { ClickAwayListener, Fade } from "@material-ui/core";
+import { SmallHtmlTooltip } from "../HtmlTooltip";
 
 interface ViewerTooltipProps {
-    title: string;
+    title: NonNullable<React.ReactNode>;
     showTooltip: boolean;
-    setShowTooltip: (value: React.SetStateAction<boolean>) => void;
+    setShowTooltip: (value: boolean) => void;
     children: React.ReactElement;
 }
 
@@ -18,7 +19,7 @@ export const ViewerTooltip: React.FC<ViewerTooltipProps> = ({
     const handleOpen = () => setShowTooltip(true);
     return (
         <ClickAwayListener onClickAway={handleClose}>
-            <Tooltip
+            <SmallHtmlTooltip
                 title={title}
                 placement="right-end"
                 interactive
@@ -29,7 +30,7 @@ export const ViewerTooltip: React.FC<ViewerTooltipProps> = ({
                 onClose={handleClose}
             >
                 {children}
-            </Tooltip>
+            </SmallHtmlTooltip>
         </ClickAwayListener>
     );
 };

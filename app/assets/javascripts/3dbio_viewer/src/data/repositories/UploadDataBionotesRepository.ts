@@ -24,7 +24,7 @@ interface RecoverData {
 
 export class UploadDataBionotesRepository implements UploadDataRepository {
     get(token: string): FutureData<UploadData> {
-        const basePath = `${routes.bionotesDev}/upload/${token}`;
+        const basePath = `${routes.bionotesStaging}/upload/${token}`;
         const data$ = {
             recoverData: getJSONOrError<RecoverData>(`${basePath}/recover_data.json`),
             annotations: getValidatedJSON(`${basePath}/external_annotations.json`, bioAnnotationsC),

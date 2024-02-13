@@ -1,10 +1,13 @@
+import _ from "lodash";
 import React, { useState } from "react";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { getEntityLinks, Pdb } from "../../domain/entities/Pdb";
 import { recordOfStyles } from "../../utils/ts-utils";
-import i18n from "../utils/i18n";
 import { Selection } from "../view-models/Selection";
 import { Links } from "./Link";
 import { ViewerTooltip } from "./viewer-tooltip/ViewerTooltip";
+import { Anchor } from "./Anchor";
+import i18n from "../utils/i18n";
 
 export interface BasicInfoProps {
     pdb: Pdb;
@@ -15,7 +18,7 @@ interface Item {
     name: string;
     value: React.ReactNode;
     isDisabled?: boolean;
-    help?: string;
+    help?: React.ReactNode;
 }
 
 export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
@@ -23,24 +26,27 @@ export const BasicInfoViewer: React.FC<BasicInfoProps> = React.memo(props => {
     const items: Item[] = getItems(pdb);
 
     return (
-        <Parent>
+        <ul>
+            {pdb.title && (
+                <li>
+                    <span>
+                        <strong>{pdb.title}</strong>
+                    </span>
+                </li>
+            )}
             {items
-                .filter(item => !item.isDisabled)
+                .filter(item => !item.isDisabled && Boolean(item.value))
                 .map(item => (
                     <Child key={item.name} name={item.name} value={item.value} help={item.help} />
                 ))}
-        </Parent>
+        </ul>
     );
 });
-
-const Parent: React.FC = ({ children }) => {
-    return <ul style={styles.ul}>{children}</ul>;
-};
 
 interface ChildProps {
     name: string;
     value: React.ReactNode;
-    help?: string;
+    help?: React.ReactNode;
 }
 
 const Child: React.FC<ChildProps> = props => {
@@ -49,7 +55,9 @@ const Child: React.FC<ChildProps> = props => {
 
     return (
         <li>
-            {name}: {value ?? "-"}
+            <span>
+                {name}: {value ?? "-"}
+            </span>
             {help && (
                 <ViewerTooltip
                     title={help}
@@ -57,7 +65,7 @@ const Child: React.FC<ChildProps> = props => {
                     setShowTooltip={setShowTooltip}
                 >
                     <span style={styles.help} onClick={() => setShowTooltip(!showTooltip)}>
-                        [?]
+                        <InfoOutlinedIcon fontSize={"small"} color="action" />
                     </span>
                 </ViewerTooltip>
             )}
@@ -66,17 +74,14 @@ const Child: React.FC<ChildProps> = props => {
 };
 
 const styles = recordOfStyles({
-    ul: { listStyleType: "none" },
-    help: { marginLeft: 10 },
+    help: { marginLeft: "0.375em", verticalAlign: "text-top", display: "inline-block", height: 20 },
 });
 
 function getItems(pdb: Pdb) {
     const resolution = pdb.experiment?.resolution;
 
-    const items: Item[] = [
-        { name: i18n.t("Protein Name"), value: pdb.protein.name },
-        { name: i18n.t("Gene Name"), value: pdb.protein.gene },
-        { name: i18n.t("Organism"), value: pdb.protein.organism },
+    const items: Item[] = _.compact([
+        pdb.organism && { name: i18n.t("Organism"), value: pdb.organism },
         {
             name: i18n.t("Biological function"),
             isDisabled: true,
@@ -87,30 +92,29 @@ function getItems(pdb: Pdb) {
         },
         { name: i18n.t("Obtaining method"), value: pdb.experiment?.method },
         {
-            name: i18n.t("Uniprot ID"),
-            value: <Links links={getEntityLinks(pdb, "uniprot")} />,
-        },
-        {
             name: i18n.t("PDB ID"),
-            value: <Links links={getEntityLinks(pdb, "pdb")} />,
+            value: pdb.id && <Links links={getEntityLinks(pdb, "pdb")} />,
         },
-        {
-            name: i18n.t("Chain"),
-            value: pdb.chainId,
-        },
-        {
+        !_.isEmpty(pdb.emdbs) && {
             name: i18n.t("EMDB ID"),
             value: <Links links={getEntityLinks(pdb, "emdb")} emptyValue="-" />,
-            help: i18n.t("Do you want to load the associated map with this protein structure?"),
         },
         {
             name: i18n.t("Resolution"),
             value: resolution ? `${resolution.toString()} Å` : undefined,
-            help: i18n.t(
-                "This determines the possible use given to the structure of the protein (Å). Depending on the global resolution range and the local resolution of the relevant sites, we can introduce the possible uses depending on the tables that are usually used (ex. https://science.sciencemag.org/content/294/5540/93)"
+            help: (
+                <span>
+                    {i18n.t(
+                        "This determines the possible use given to the structure of the protein (Å). Depending on the global resolution range and the local resolution of the relevant sites, we can introduce the possible uses depending on the tables that are usually used (ex. "
+                    )}
+                    <Anchor href="https://science.sciencemag.org/content/294/5540/93">
+                        https://science.sciencemag.org/content/294/5540/93
+                    </Anchor>
+                    {")"}
+                </span>
             ),
         },
-    ];
+    ]);
 
     return items;
 }

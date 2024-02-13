@@ -1,7 +1,7 @@
 import React from "react";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { routes } from "../../../routes";
-import { Maybe, recordOfStyles } from "../../../utils/ts-utils";
+import { Maybe } from "../../../utils/ts-utils";
 import { FrameViewer, postToIFrame } from "../frame-viewer/FrameViewer";
 import { TrackDef } from "../protvista/Protvista.types";
 import { FeaturesButton } from "./FeaturesButton";
@@ -19,7 +19,7 @@ interface PPiViewerProps {
 
 export const PPIViewer: React.FC<PPiViewerProps> = props => {
     const { pdb, trackDef } = props;
-    const title = `${trackDef.name}: ${trackDef.description || "-"}`;
+    const title = `${trackDef.name}`;
     const iframeRef = React.useRef<HTMLIFrameElement>(null);
     const infoAlignment = useInfoAlignment(pdb);
     const loadFeatures = useLoadFeaturesAction(iframeRef);
@@ -28,19 +28,13 @@ export const PPIViewer: React.FC<PPiViewerProps> = props => {
     if (!infoAlignment) return null;
 
     return (
-        <FrameViewer name={iframeName} ref={iframeRef} title={title}>
-            <div style={styles.featuresButton}>
-                <FeaturesButton onClick={loadFeatures} />
-            </div>
+        <FrameViewer name={iframeName} ref={iframeRef} title={title} trackDef={trackDef}>
+            <FeaturesButton onClick={loadFeatures} />
         </FrameViewer>
     );
 };
 
 const iframeName = "ppi";
-
-const styles = recordOfStyles({
-    featuresButton: { float: "right" },
-});
 
 /* Post data to PPI iframe to render contents.
 
@@ -50,7 +44,7 @@ const styles = recordOfStyles({
 */
 function useIframeDataPost(pdb: Pdb) {
     React.useEffect(() => {
-        const src = routes.bionotesDev + "/ppiIFrame";
+        const src = routes.bionotesStaging + "/ppiIFrame";
         const params = pdb.proteinNetwork
             ? { ppi_network: pdb.proteinNetwork.networkGraph }
             : pdb.id

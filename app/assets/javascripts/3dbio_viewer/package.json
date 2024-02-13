@@ -1,29 +1,34 @@
 {
     "name": "3dbio-viewer",
-    "version": "0.1.0",
+    "version": "3.10.0",
     "private": true,
     "dependencies": {
-        "@3dbionotes/pdbe-molstar": "1.2.1-beta.1",
-        "@3dbionotes/protvista-pdb": "2.0.1-beta.9",
+        "@3dbionotes/pdbe-molstar": "3.1.0-est-2",
+        "@3dbionotes/protvista-pdb": "2.0.1-est-2",
         "@material-ui/core": "^4.11.2",
-        "@material-ui/data-grid": "^4.0.0-alpha.23",
+        "@material-ui/data-grid": "4.0.0-alpha.35",
         "@material-ui/icons": "^4.11.2",
+        "@material-ui/lab": "^4.0.0-alpha.61",
+        "@types/d3": "4.13.0",
         "axios": "^0.21.1",
         "classnames": "^2.2.6",
         "d2-ui-components": "^2.4.0",
         "data-loader": "^3.0.0",
         "fluture": "^13.0.1",
+        "jszip": "^3.10.1",
         "purify-ts": "^1.1.0",
         "query-string": "^7.1.1",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
         "react-draggable": "4.4.3",
         "react-dropzone": "^11.3.1",
-        "react-ga": "^3.3.0",
         "react-image-fallback": "^8.0.0",
+        "react-infinite-scroll-component": "^6.1.0",
         "react-markdown": "5.0.2",
+        "react-resizable": "^3.0.5",
         "react-router-dom": "^5.2.0",
         "react-scripts": "4.0.1",
+        "rxjs": "6.5.4",
         "styled-components": "^5.2.1",
         "underscore": "^1.12.0",
         "web-vitals": "^0.2.4",
@@ -32,6 +37,7 @@
     "devDependencies": {
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
+        "@testing-library/react-hooks": "^8.0.1",
         "@testing-library/user-event": "^12.1.10",
         "@types/axios": "^0.14.0",
         "@types/classnames": "^2.2.11",
@@ -42,6 +48,7 @@
         "@types/react": "17.0.2",
         "@types/react-dom": "17.0.2",
         "@types/react-image-fallback": "^8.0.1",
+        "@types/react-resizable": "^3.0.4",
         "@types/react-router-dom": "^5.1.7",
         "@types/styled-components": "5.1.4",
         "@types/xml2js": "^0.4.8",
@@ -55,12 +62,15 @@
         "https-proxy-agent": "^5.0.0",
         "lnf": "^1.3.10",
         "prettier": "^2.2.1",
+        "ts-jest": "^26.5.6",
         "ts-node": "10.4.0",
         "typescript": "4.5.4"
     },
     "scripts": {
         "start": "react-scripts start",
         "build-inline": "react-scripts build",
+        "test": "react-scripts test",
+        "test:nowatch": "react-scripts test --watchAll=false",
         "eject": "react-scripts eject",
         "link-dev": "yarn link @3dbionotes/pdbe-molstar && yarn link @3dbionotes/protvista-pdb",
         "unlink-dev": "yarn unlink @3dbionotes/pdbe-molstar && yarn unlink @3dbionotes/protvista-pdb && yarn install -f",
@@ -91,5 +101,17 @@
         "includePaths": [
             "./node_modules"
         ]
+    },
+    "jest": {
+        "transform": {
+            "^.+\\.[tj]sx{0,1}?$": "ts-jest"
+        },
+        "transformIgnorePatterns": [
+            "/node_modules/(?!d2-ui-components|molstar)"
+        ],
+        "moduleNameMapper": {
+            "\\.(css|scss)$": "<rootDir>/config/styleMock.js",
+            "\\.(jpg|jpeg|png|svg)$": "<rootDir>/config/fileMock.js"
+        }
     }
 }

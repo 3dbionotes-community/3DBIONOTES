@@ -1,27 +1,60 @@
 import _ from "lodash";
-import { FutureData } from "../../domain/entities/FutureData";
+import { FutureData, Error } from "../../domain/entities/FutureData";
 import { PdbId } from "../../domain/entities/Pdb";
 import { buildPdbInfo, PdbInfo } from "../../domain/entities/PdbInfo";
 import { ChainId, Protein, ProteinId } from "../../domain/entities/Protein";
 import { PdbInfoRepository } from "../../domain/repositories/PdbInfoRepository";
 import { routes } from "../../routes";
 import { Future } from "../../utils/future";
-import { getFromUrl } from "../request-utils";
+import { RequestError, getFromUrl } from "../request-utils";
 import { emdbsFromPdbUrl, getEmdbsFromMapping, PdbEmdbMapping } from "./mapping";
+import i18n from "../../domain/utils/i18n";
 
 export class BionotesPdbInfoRepository implements PdbInfoRepository {
     get(pdbId: PdbId): FutureData<PdbInfo> {
         const proteinMappingUrl = `${routes.bionotes}/api/mappings/PDB/Uniprot/${pdbId}`;
+        const fallbackMappingUrl = `${routes.ebi}/pdbe/api/pdb/entry/polymer_coverage/${pdbId}/`;
         const emdbMapping = `${emdbsFromPdbUrl}/${pdbId}`;
         const data$ = {
-            uniprotMapping: getFromUrl<UniprotFromPdbMapping>(proteinMappingUrl),
+            uniprotMapping: getFromUrl<UniprotFromPdbMapping>(proteinMappingUrl).flatMapError((err) => buildError<UniprotFromPdbMapping>("serviceUnavailable", err)),
+            fallbackMapping: getFromUrl<ChainsFromPolymer>(fallbackMappingUrl).flatMapError((err) => buildError<ChainsFromPolymer>("noData", err)),
             emdbMapping: getFromUrl<PdbEmdbMapping>(emdbMapping),
         };
 
         return Future.joinObj(data$).flatMap(data => {
-            const { uniprotMapping, emdbMapping } = data;
-            const proteinsMapping = uniprotMapping[pdbId.toLowerCase()] || {};
+            const { uniprotMapping, emdbMapping, fallbackMapping } = data;
+            const proteinsMapping = uniprotMapping[pdbId.toLowerCase()];
+            const fallback = fallbackMapping[pdbId.toLowerCase()];
+
+            if (!proteinsMapping) {
+                const err = `Uniprot mapping not found for ${pdbId}`;
+                return buildError("noData", { message: err });
+            }
+
+            if (!fallback) {
+                const err = `No fallback chains found for ${pdbId}`;
+                return buildError("noData", { message: err });
+            }
+
             const emdbIds = getEmdbsFromMapping(emdbMapping, pdbId);
+
+            if (proteinsMapping instanceof Array) {
+                return Future.success<PdbInfo, Error>(buildPdbInfo({
+                    id: pdbId,
+                    emdbs: emdbIds.map(emdbId => ({ id: emdbId })),
+                    ligands: [],
+                    proteins: [],
+                    proteinsMapping: undefined,
+                    chains: fallback.molecules.flatMap(({ chains }) => chains).map(chain => ({
+                        id: chain.struct_asym_id,
+                        shortName: chain.struct_asym_id,
+                        name: chain.struct_asym_id,
+                        chainId: chain.struct_asym_id,
+                        protein: undefined
+                    }))
+                }));
+            }
+
             const proteins = _(proteinsMapping).keys().join(",");
             const proteinsInfoUrl = `${routes.bionotes}/api/lengths/UniprotMulti/${proteins}`;
             const proteinsInfo$ = proteins
@@ -33,8 +66,8 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
                     .toPairs()
                     .map(
                         ([proteinId, proteinInfo]): Protein => {
-                            const [_length, name, gene, organism] = proteinInfo;
-                            return { id: proteinId, name, gene, organism };
+                            const [_length, name, gen, organism] = proteinInfo;
+                            return { id: proteinId, name, gen, organism };
                         }
                     )
                     .value();
@@ -43,6 +76,7 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
                     id: pdbId,
                     emdbs: emdbIds.map(emdbId => ({ id: emdbId })),
                     ligands: [],
+                    chains: [],
                     proteins,
                     proteinsMapping,
                 });
@@ -51,7 +85,29 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
     }
 }
 
-type UniprotFromPdbMapping = Record<PdbId, Record<ProteinId, ChainId[]>>;
+type ErrorType = "serviceUnavailable" | "noData";
+
+function buildError<T>(type: ErrorType, err: RequestError): FutureData<T> {
+    console.error(err.message);
+    switch (type) {
+        case "serviceUnavailable": return Future.error({
+            message: i18n.t(
+                "We apologize. Some of the services we rely on are temporarily unavailable. Our team is working to resolve the issue, and we appreciate your patience. Please try again later."
+            ),
+        });
+        case "noData": return Future.error({
+            message: i18n.t(`No data found for this PDB. But you can try and visualize another PDB. If you believe this is incorrect, please contact us using the "Send Feedback" button below.`),
+        })
+    }
+}
+
+type UniprotFromPdbMapping = Record<PdbId, Record<ProteinId, ChainId[]> | unknown[]>;
+
+type PolymerMolecules = {
+    chains: { struct_asym_id: string }[];
+}[]
+
+type ChainsFromPolymer = Record<PdbId, { molecules: PolymerMolecules }>;
 
 type ProteinsInfo = Record<PdbId, ProteinInfo>;
 

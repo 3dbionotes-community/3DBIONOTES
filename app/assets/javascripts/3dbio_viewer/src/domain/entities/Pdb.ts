@@ -1,9 +1,9 @@
 import _ from "lodash";
 import { Maybe } from "../../utils/ts-utils";
-import { BlockDef } from "../../webapp/components/protvista/Protvista.types";
 import { Annotations, getTracksFromAnnotations } from "./Annotation";
 import { Color } from "./Color";
 import { Experiment } from "./Experiment";
+import { LigandImageData } from "./LigandImageData";
 import { Link } from "./Link";
 import { Protein } from "./Protein";
 import { ProteinNetwork } from "./ProteinNetwork";
@@ -12,9 +12,10 @@ import { Variants } from "./Variant";
 
 export interface Pdb {
     id: Maybe<PdbId>;
+    title: Maybe<string>;
     experiment: Maybe<Experiment>;
     emdbs: Emdb[];
-    protein: Protein;
+    protein: Maybe<Protein>;
     chainId: string;
     sequence: string;
     length: number;
@@ -30,17 +31,69 @@ export interface Pdb {
     file: Maybe<string>;
     path: Maybe<string>;
     customAnnotations: Maybe<Annotations>;
+    ligands: Maybe<PdbLigand[]>;
+    publications: PdbPublication[];
+    organism: Maybe<string>;
+}
+
+export interface PdbLigand {
+    name: string;
+    inChI: string; //IUPACInChIkey
+    imageDataResource?: LigandImageData;
 }
 
 export type PdbId = string;
 
 export interface Emdb {
     id: EmdbId;
+    emv?: EMValidations;
 }
 
 export type EmdbId = string;
 
-type PdbEntity = "pdb" | "emdb" | "uniprot";
+export interface StatsValidation {
+    unit: "Angstrom";
+    rank: number;
+    resolutionMedian: number;
+    quartile25: number;
+    quartile75: number;
+    warnings?: string[];
+    errors?: string[];
+}
+
+export interface EMValidations {
+    stats: Maybe<StatsValidation>;
+    // deepres: {};
+    // monores: {};
+    // blocres: {};
+    // mapq: {};
+    // fscq: {};
+    // daq: {};
+}
+
+export interface PdbPublication {
+    title: string;
+    type: string;
+    doi?: string;
+    doiUrl?: string;
+    pubmedId?: string;
+    pubmedUrl?: string;
+    relatedEntries: PdbId[];
+    journalInfo: {
+        pdbAbbreviation?: string;
+        isoAbbreviation?: string;
+        pages?: string;
+        volume?: string;
+        issue?: string;
+        year?: number;
+    };
+    abstract: {
+        unassigned?: string;
+    };
+    authors: string[];
+}
+
+type PdbEntity = "pdb" | "emdb";
 
 export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
     switch (entity) {
@@ -55,10 +108,6 @@ export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
                 url: `https://www.ebi.ac.uk/pdbe/entry/emdb/${emdb.id}`,
             }));
         }
-        case "uniprot": {
-            const proteinId = pdb.protein.id.toUpperCase();
-            return [{ name: proteinId, url: `https://www.uniprot.org/uniprot/${proteinId}` }];
-        }
     }
 }
 
@@ -71,12 +120,4 @@ export function addCustomAnnotationsToPdb(pdb: Pdb, annotations: Annotations): P
 export function addProteinNetworkToPdb(pdb: Pdb, proteinNetwork: Maybe<ProteinNetwork>): Pdb {
     const customAnnotations = proteinNetwork?.uploadData.annotations;
     return { ...pdb, proteinNetwork, customAnnotations };
-}
-
-export function pdbHasCustomTracks(block: BlockDef, pdb: Pdb): boolean {
-    return block.hasUploadedTracks ? pdb.tracks.some(track => track.isCustom) : false;
-}
-
-export function getCustomTracksFromPdb(block: BlockDef, pdb: Pdb): Track[] {
-    return block.hasUploadedTracks ? pdb.tracks.filter(track => track.isCustom) : [];
 }

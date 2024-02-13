@@ -12,13 +12,14 @@ import { sendAnalytics } from "../../utils/analytics";
 import { useAppContext } from "../AppContext";
 import { useCallbackEffect } from "../../hooks/use-callback-effect";
 import { speciesList } from "../../../domain/entities/Species";
-import { isElementOfUnion } from "../../../utils/ts-utils";
+import { isElementOfUnion, recordOfStyles } from "../../../utils/ts-utils";
 import {
     BuildProgress,
     BuildNetworkResult,
     NetworkDefinition,
 } from "../../../domain/repositories/NetworkRepository";
 import { LinearProgressWithLabel } from "../ProgressBarWithValue";
+import { StyledButton } from "../../training-app/components/action-button/ActionButton";
 
 interface NetworkForm {
     species: string;
@@ -73,7 +74,7 @@ const NetworkForm: React.FC<NetworkFormProps> = React.memo(props => {
                     annotationsFile,
                 };
 
-                sendAnalytics({ type: "event", category: "viewer", action: "upload" });
+                sendAnalytics("upload", { type: "network", on: "viewer" });
 
                 return compositionRoot.buildNetwork
                     .execute({ network, onProgress })
@@ -132,16 +133,30 @@ const NetworkForm: React.FC<NetworkFormProps> = React.memo(props => {
 
             {state.type === "uploading" && <LinearProgressWithLabel value={state.progressValue} />}
 
-            <button
-                className="submit-button"
-                type="submit"
-                onClick={addNetwork}
-                disabled={state.type === "uploading"}
-            >
-                {i18n.t("Submit")}
-            </button>
+            <div style={dialogStyles.actionButtons}>
+                <StyledButton
+                    className="submit-button"
+                    type="submit"
+                    onClick={addNetwork}
+                    disabled={state.type === "uploading"}
+                    style={dialogStyles.submitButton}
+                >
+                    {i18n.t("Submit")}
+                </StyledButton>
+            </div>
         </div>
     );
+});
+
+const dialogStyles = recordOfStyles({
+    actionButtons: {
+        textAlign: "right",
+    },
+    submitButton: {
+        marginTop: "1.25em",
+        marginBottom: 0,
+        fontSize: "1em",
+    },
 });
 
 export default NetworkForm;

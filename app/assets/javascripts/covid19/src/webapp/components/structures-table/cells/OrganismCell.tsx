@@ -6,7 +6,7 @@ import i18n from "../../../../utils/i18n";
 import { Wrapper } from "./Wrapper";
 
 export const OrganismCell: React.FC<CellProps> = React.memo(props => {
-    const { row, onClickDetails, moreDetails } = props;
+    const { row, onClickDetails, moreDetails = true } = props;
 
     const organisms = React.useMemo(() => {
         return _(row.organisms)

@@ -2,12 +2,13 @@ import React from "react";
 import { CellProps } from "../Columns";
 import { BadgeLink } from "../badge/BadgeLink";
 
-export const urlPrefix = "/?queryId=";
+// export const urlPrefix = "/?queryId="; //development-old-viewer
+
+export const urlPrefix = "/ws/viewer/#"; //development
 
 export const TitleCell: React.FC<CellProps> = React.memo(props => {
     const structure = props.row;
-    const queryLinkToUse =
-        urlPrefix + (structure.emdb?.id.toUpperCase() || structure.pdb?.id.toLowerCase());
+    const queryLinkToUse = urlPrefix + structure.queryLink;
 
     return (
         <>

@@ -19,11 +19,8 @@ export const PopperMenu: React.FC<PropperMenuProps> = props => {
             transition
             disablePortal
         >
-            {({ TransitionProps, placement }) => (
-                <Grow
-                    {...TransitionProps}
-                    style={placement === "bottom" ? growStyles.bottom : growStyles.other}
-                >
+            {({ TransitionProps }) => (
+                <Grow {...TransitionProps} style={growStyles.bottom}>
                     <Paper className="wrapper">
                         <ClickAwayListener onClickAway={close}>
                             <MenuList autoFocusItem={isOpen} className="menu-list">
