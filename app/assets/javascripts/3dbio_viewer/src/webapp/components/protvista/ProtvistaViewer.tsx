@@ -96,16 +96,16 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
 
     const action = React.useCallback(
         (protvistaAction: ProtvistaAction) => {
-            if (protvistaAction.type === "showDialog") {
+            if (protvistaAction.type === "showDialog" && protein) {
                 showNMRDialog();
                 setNMRTarget({
                     start: protvistaAction.start,
                     end: protvistaAction.end,
-                    uniprotId: pdb.protein.id,
+                    uniprotId: protein.id,
                 });
             }
         },
-        [pdb.protein.id, setNMRTarget, showNMRDialog]
+        [protein, setNMRTarget, showNMRDialog]
     );
 
     const renderBlocks = React.useMemo(
