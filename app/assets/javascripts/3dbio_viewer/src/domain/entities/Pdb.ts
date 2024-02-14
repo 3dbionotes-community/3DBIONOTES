@@ -15,7 +15,7 @@ export interface Pdb {
     title: Maybe<string>;
     experiment: Maybe<Experiment>;
     emdbs: Emdb[];
-    protein: Protein;
+    protein: Maybe<Protein>;
     chainId: string;
     sequence: string;
     length: number;
@@ -33,6 +33,7 @@ export interface Pdb {
     customAnnotations: Maybe<Annotations>;
     ligands: Maybe<PdbLigand[]>;
     publications: PdbPublication[];
+    organism: Maybe<string>;
 }
 
 export interface PdbLigand {
@@ -95,7 +96,7 @@ export interface PdbPublication {
     authors: string[];
 }
 
-type PdbEntity = "pdb" | "emdb" | "uniprot" | "geneBank";
+type PdbEntity = "pdb" | "emdb";
 
 export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
     switch (entity) {
@@ -109,18 +110,6 @@ export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
                 name: emdb.id,
                 url: `https://www.ebi.ac.uk/pdbe/entry/emdb/${emdb.id}`,
             }));
-        }
-        case "uniprot": {
-            const proteinId = pdb.protein.id.toUpperCase();
-            return [{ name: proteinId, url: `https://www.uniprot.org/uniprot/${proteinId}` }];
-        }
-        case "geneBank": {
-            return pdb.protein.genBank
-                ? pdb.protein.genBank?.map(id => ({
-                      name: id ?? "-",
-                      url: `https://www.ncbi.nlm.nih.gov/gene/${id}`,
-                  }))
-                : [];
         }
     }
 }

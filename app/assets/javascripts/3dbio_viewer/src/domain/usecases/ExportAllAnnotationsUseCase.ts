@@ -5,7 +5,7 @@ import { AnnotationsExportRepository } from "../repositories/AnnotationsExportRe
 import i18n from "../utils/i18n";
 
 export class ExportAllAnnotationsUseCase {
-    constructor(private annotationsExportRepository: AnnotationsExportRepository) {}
+    constructor(private annotationsExportRepository: AnnotationsExportRepository) { }
 
     execute(options: {
         proteinId: Maybe<string>;
@@ -13,11 +13,10 @@ export class ExportAllAnnotationsUseCase {
         chainId: string;
         emdbs: Emdb[];
     }): Future<string, void> {
-        const { proteinId, pdbId } = options;
-        if (!proteinId || !pdbId)
-            return Future.error(
-                i18n.t("Unable to download annotations without Uniprot ID / PDB ID.")
-            );
+        const { pdbId } = options;
+        if (!pdbId) return Future.error(
+            i18n.t("Unable to download annotations without PDB ID.")
+        );
 
         return this.annotationsExportRepository
             .exportAllAnnotations(options)

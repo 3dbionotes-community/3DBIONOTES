@@ -11,10 +11,13 @@ function AppRouter() {
             <Route path="/network/:token" render={() => <RootViewer from="network" />} />
             <Route path="/:selection" render={() => <RootViewer from="selector" />} />
             <Route path="/">
-                <Redirect to="/6zow+EMD-11328" />
+                <Redirect to={`/${defaultPdbId}+${defaultEmdbId}`} />
             </Route>
         </Switch>
     );
 }
+
+export const defaultPdbId = "6zow";
+export const defaultEmdbId = "EMD-11328";
 
 export default React.memo(AppRouter);

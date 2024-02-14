@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React from "react";
-import { Pdb, getEntityLinks } from "../../../domain/entities/Pdb";
+import { Protein, getProteinEntityLinks } from "../../../domain/entities/Protein";
+import { Pdb } from "../../../domain/entities/Pdb";
 import { Selection } from "../../view-models/Selection";
 import { BlockProps, ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
@@ -13,6 +14,7 @@ import { useAppContext } from "../AppContext";
 import { ProtvistaAction, getBlockTracks } from "./Protvista.helpers";
 import { NMRDialog } from "../nmr/NMRDialog";
 import { useBooleanState } from "../../hooks/use-boolean";
+import { Maybe } from "../../../utils/ts-utils";
 import i18n from "../../utils/i18n";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
@@ -27,10 +29,12 @@ export interface ProtvistaViewerProps {
     setBlockVisibility: (block: BlockDef, visible: boolean) => void;
 }
 
-const trackComponentMapping: Partial<Record<string, React.FC<TrackComponentProps>>> = {
+const trackComponentMapping: (
+    protein: Maybe<Protein>
+) => Partial<Record<string, React.FC<TrackComponentProps>>> = protein => ({
     "ppi-viewer": PPIViewer,
-    "gene-viewer": GeneViewer,
-};
+    "gene-viewer": protein && (props => GeneViewer({ ...props, protein })),
+});
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks, pdbInfo, setBlockVisibility, setSelection } = props;
@@ -39,6 +43,8 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const [openNMRDialog, { enable: showNMRDialog, disable: closeNMRDialog }] = useBooleanState(
         false
     );
+
+    const protein = pdb.protein;
 
     const setBlockVisible = React.useCallback(
         (block: BlockDef) => (visible: boolean) => setBlockVisibility(block, visible),
@@ -57,39 +63,35 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         [selectedChain, pdbInfo]
     );
 
-    const geneName = React.useMemo(
-        () =>
-            pdb.protein.gen
-                ? i18n.t(" encoded by the gene {{geneName}}", { geneName: pdb.protein.gen })
-                : undefined,
-        [pdb.protein]
-    );
+    const geneName = React.useMemo(() => {
+        if (!protein || !protein.gen) return;
+        return i18n.t(" encoded by the gene {{geneName}}", { geneName: protein.gen });
+    }, [protein]);
 
-    const geneBankEntry = React.useMemo(
-        () =>
-            !_.isEmpty(pdb.protein.genBank)
-                ? i18n.t(" (GeneBank {{geneBankEntry}})", {
-                      geneBankEntry: pdb.protein.genBank?.join(", "),
-                  })
-                : undefined,
-        [pdb.protein]
-    );
+    const geneBankEntry = React.useMemo(() => {
+        if (!protein || _.isEmpty(protein.genBank)) return;
+        return i18n.t(" (GeneBank {{geneBankEntry}})", {
+            geneBankEntry: protein.genBank?.join(", "),
+        });
+    }, [protein]);
 
     const namespace = React.useMemo(
         () => ({
             poorQualityRegionMax: _.first(pdb.emdbs)?.emv?.stats?.quartile75,
             poorQualityRegionMin: _.first(pdb.emdbs)?.emv?.stats?.quartile25,
-            proteinName: pdb.protein.name,
+            proteinName: protein?.name,
             ligandsAndSmallMoleculesCount,
             resolution: _.first(pdb.emdbs)?.emv?.stats?.resolutionMedian,
             chain: pdb.chainId,
-            chainWithProtein: `${pdb.chainId}${pdb.protein.name ? " - " + pdb.protein.name : ""}`,
-            uniprotId: getEntityLinks(pdb, "uniprot")
-                .map(link => link.name)
-                .join(", "),
+            chainWithProtein: `${pdb.chainId}${protein?.name ? " - " + protein.name : ""}`,
+            uniprotId:
+                protein &&
+                getProteinEntityLinks(protein, "uniprot")
+                    .map(link => link.name)
+                    .join(", "),
             genePhrase: geneName ? geneName + (geneBankEntry ?? "") : "",
         }),
-        [pdb, geneName, geneBankEntry, ligandsAndSmallMoleculesCount]
+        [pdb, geneName, geneBankEntry, ligandsAndSmallMoleculesCount, protein]
     );
 
     const action = React.useCallback(
@@ -148,6 +150,8 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
     const { compositionRoot } = useAppContext();
     const CustomComponent = block.component;
 
+    const trackComponents = React.useMemo(() => trackComponentMapping(pdb.protein), [pdb.protein]);
+
     const downloadTracks = React.useCallback(() => {
         return compositionRoot.exportAnnotations.execute(
             block.id,
@@ -178,11 +182,16 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
                     setSelection={setSelection}
                 />
             ) : (
-                <ProtvistaPdb pdb={pdb} block={block} onAction={protvistaAction} />
+                <ProtvistaPdb
+                    pdb={pdb}
+                    block={block}
+                    setVisible={setVisible(block)}
+                    onAction={protvistaAction}
+                />
             )}
 
             {block.tracks.map((trackDef, idx) => {
-                const CustomTrackComponent = trackComponentMapping[trackDef.id];
+                const CustomTrackComponent = trackComponents[trackDef.id];
                 return (
                     CustomTrackComponent && (
                         <CustomTrackComponent
@@ -192,6 +201,7 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
                             pdb={pdb}
                             selection={selection}
                             setSelection={setSelection}
+                            setVisible={setVisible(block)}
                         />
                     )
                 );

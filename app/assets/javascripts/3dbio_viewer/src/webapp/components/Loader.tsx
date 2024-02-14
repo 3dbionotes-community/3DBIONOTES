@@ -18,11 +18,12 @@ export function Loader<Data>(props: LoaderProps<Data>) {
 
     return (
         <div>
-            {state.type === "error" ? <div style={styles.section}>{state.message}</div> : null}
+            {state.type === "error" && (
+                <div className="pdb-info-error">
+                    <i className="icon icon-common icon-exclamation-triangle"></i>
+                    <p>{state.message}</p>
+                </div>
+            )}
         </div>
     );
 }
-
-const styles = {
-    section: { padding: 20 },
-};
