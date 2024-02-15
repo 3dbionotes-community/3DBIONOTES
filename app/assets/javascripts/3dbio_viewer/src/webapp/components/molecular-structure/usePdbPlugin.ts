@@ -52,6 +52,7 @@ export const loaderErrors = {
     unexpectedUploadError: (url: string) =>
         i18n.t(`Unkown error while loading the model URL: ${url}`),
     modelNotFound: (pdbId: string) => i18n.t(`${pdbId} was not found`),
+    serviceUnavailable: (pdbId: string) => i18n.t(`Unable to load ${pdbId}. Service unavailable`),
     pdbRequest: (url: string, status: number) =>
         i18n.t(`Error loading PDB model: url=${url} - ${status}`),
     request: (url: string, status: number) => i18n.t(`Error loading model: url=${url} - ${status}`),
@@ -136,18 +137,20 @@ export function usePdbePlugin(options: MolecularStructureProps) {
                 newSelection.type === "free"
                     ? Promise.all(
                           newSelection.refinedModels.map(
-                              async m =>
-                                  await checkModelUrl(getRefinedModelId(m), m.type).then(loaded => {
-                                      if (loaded) return m;
-                                      else {
-                                          pdbePlugin.canvas.showToast({
-                                              title: i18n.t("Error"),
-                                              message: loaderErrors.modelNotFound(m.id),
-                                              key: errorsKeys.modelNotFound,
-                                          });
-                                          return undefined;
+                              async model =>
+                                  await checkModelUrl(getRefinedModelId(model), model.type).then(
+                                      res => {
+                                          if (res.loaded) return model;
+                                          else {
+                                              pdbePlugin.canvas.showToast({
+                                                  title: i18n.t("Error"),
+                                                  message: getErrorByStatus(model.id, res.status),
+                                                  key: errorKeyByStatus(res.status),
+                                              });
+                                              return undefined;
+                                          }
                                       }
-                                  })
+                                  )
                           )
                       ).then(models => _.compact(models))
                     : Promise.resolve([]);
@@ -241,8 +244,8 @@ export function usePdbePlugin(options: MolecularStructureProps) {
             loaderKeys.uploadedModel,
             new Promise<void>((resolve, reject) => {
                 checkUploadedModelUrl(uploadUrl)
-                    .then(result => {
-                        if (result) {
+                    .then(res => {
+                        if (res.loaded) {
                             pdbePlugin.events.loadComplete.subscribe({
                                 next: loaded => {
                                     console.debug("molstar.events.loadComplete", loaded);
@@ -353,8 +356,8 @@ export async function applySelectionChangesToPlugin(
             const item = items[i];
             if (item) {
                 const id: string = getRefinedModelId(item);
-                await checkModelUrl(id, item.type).then(async loaded => {
-                    if (loaded) {
+                await checkModelUrl(id, item.type).then(async res => {
+                    if (res.loaded) {
                         const url = urls[item.type](id);
                         const loadParams: LoadParams = {
                             url,
@@ -373,8 +376,8 @@ export async function applySelectionChangesToPlugin(
                     } else
                         plugin.canvas.showToast({
                             title: i18n.t("Error"),
-                            message: loaderErrors.modelNotFound(id),
-                            key: errorsKeys.modelNotFound,
+                            message: getErrorByStatus(id, res.status),
+                            key: errorKeyByStatus(res.status),
                         });
                 });
             }
@@ -425,8 +428,8 @@ export async function applySelectionChangesToPlugin(
         const item = pdbs[i];
         if (item) {
             const pdbId = item.id;
-            await checkModelUrl(pdbId, "pdb").then(async loaded => {
-                if (loaded) {
+            await checkModelUrl(pdbId, "pdb").then(async res => {
+                if (res.loaded) {
                     const url = urls.pdb(pdbId);
                     const loadParams: LoadParams = {
                         url,
@@ -445,12 +448,12 @@ export async function applySelectionChangesToPlugin(
                     setVisibility(plugin, item);
                     updateItems(item);
                 } else if (getMainItem(newSelection, "pdb") === pdbId)
-                    updateLoader("loadModel", Promise.reject(loaderErrors.modelNotFound(pdbId)));
-                if (!loaded)
+                    updateLoader("loadModel", Promise.reject(getErrorByStatus(pdbId, res.status)));
+                if (!res.loaded)
                     plugin.canvas.showToast({
                         title: i18n.t("Error"),
-                        message: loaderErrors.modelNotFound(pdbId),
-                        key: errorsKeys.modelNotFound,
+                        message: getErrorByStatus(pdbId, res.status),
+                        key: errorKeyByStatus(res.status),
                     });
             });
         }
@@ -460,8 +463,8 @@ export async function applySelectionChangesToPlugin(
         const item = emdbs[i];
         if (item) {
             const emdbId = item.id;
-            await checkModelUrl(emdbId, "emdb").then(async loaded => {
-                if (loaded) {
+            await checkModelUrl(emdbId, "emdb").then(async res => {
+                if (res.loaded) {
                     await updateLoader(
                         "loadModel",
                         loadEmdb(plugin, urls.emdb(item.id)),
@@ -475,8 +478,8 @@ export async function applySelectionChangesToPlugin(
                 } else
                     plugin.canvas.showToast({
                         title: i18n.t("Error"),
-                        message: loaderErrors.modelNotFound(emdbId),
-                        key: errorsKeys.modelNotFound,
+                        message: getErrorByStatus(emdbId, res.status),
+                        key: errorKeyByStatus(res.status),
                     });
             });
         }
@@ -545,29 +548,61 @@ function getId<T extends { id: string }>(obj: T): string {
     return obj.id;
 }
 
-export async function checkModelUrl(id: Maybe<string>, modelType: Type): Promise<boolean> {
-    if (!id) return false;
+export async function checkModelUrl(id: Maybe<string>, modelType: Type): Promise<Response> {
+    if (!id) return { loaded: true, status: 404 };
 
     const url = urls[modelType](id);
     //method HEAD makes 404 be 200 anyways
-    const res = await fetch(url, { method: "GET", cache: "force-cache" }); //we are only caching if url exist
-
-    if (res.ok && res.status != 404 && res.status != 500) {
-        return true;
-    } else {
-        const msg = loaderErrors.pdbRequest(url, res.status);
-        console.error(msg);
-        return false;
-    }
+    return await fetch(url, { method: "GET", cache: "force-cache" })
+        .then(res => {
+            console.debug("Checking model: " + id, res.status);
+            return res.ok
+                ? { loaded: true, status: res.status }
+                : { loaded: false, status: res.status };
+        })
+        .catch(res => {
+            const msg = loaderErrors.pdbRequest(url, res.status);
+            console.error(msg);
+            return { loaded: false, status: res.status };
+        }); //we are only caching if url exist
 }
 
-export async function checkUploadedModelUrl(url: string): Promise<boolean> {
+export async function checkUploadedModelUrl(url: string): Promise<Response> {
     return fetch(url, { method: "HEAD", cache: "force-cache" }).then(res => {
-        if (res.ok && res.status != 404 && res.status != 500) return true;
+        if (res.ok && res.status != 404 && res.status != 500 && res.status != 503)
+            return { loaded: true, status: res.status };
         else {
             const msg = loaderErrors.request(url, res.status);
             console.error(msg);
-            return false;
+            return { loaded: false, status: res.status };
         }
     });
 }
+
+export function getErrorByStatus(id: string, status: number) {
+    switch (status) {
+        case 404:
+            return loaderErrors.modelNotFound(id);
+        case 500:
+            return loaderErrors.serviceUnavailable(id);
+        case 503:
+            return loaderErrors.serviceUnavailable(id);
+        default:
+            return loaderErrors.modelNotFound(id);
+    }
+}
+
+function errorKeyByStatus(status: number) {
+    switch (status) {
+        case 404:
+            return errorsKeys.modelNotFound;
+        case 500:
+            return errorsKeys.serviceUnavailable;
+        case 503:
+            return errorsKeys.serviceUnavailable;
+        default:
+            return errorsKeys.modelNotFound;
+    }
+}
+
+type Response = { loaded: boolean; status: number };

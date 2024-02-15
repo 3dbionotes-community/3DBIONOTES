@@ -7,6 +7,7 @@ import {
     applySelectionChangesToPlugin,
     checkModelUrl,
     checkUploadedModelUrl,
+    getErrorByStatus,
     getLigandView,
     loaderErrors,
 } from "./usePdbPlugin";
@@ -164,14 +165,14 @@ export function usePluginRef(options: Options) {
 
             function loadFromPdb(pdbId: string, element: HTMLDivElement) {
                 checkModelUrl(pdbId, "pdb")
-                    .then(loaded => {
-                        if (loaded) {
+                    .then(res => {
+                        if (res.loaded) {
                             plugin.render(element, initParams);
                             molstarState.current = MolstarStateActions.fromInitParams(
                                 initParams,
                                 newSelection
                             );
-                        } else loadVoidMolstar(loaderErrors.modelNotFound(pdbId));
+                        } else loadVoidMolstar(getErrorByStatus(pdbId, res.status));
                     })
                     .catch(err => loadVoidMolstar(err));
             }
