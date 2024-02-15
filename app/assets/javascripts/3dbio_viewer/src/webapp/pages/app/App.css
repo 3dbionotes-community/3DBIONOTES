@@ -185,3 +185,7 @@ header {
     color: #913131;
     margin-bottom: 0;
 }
+
+.rangeForm .inputs input {
+    width: 70px;
+}
