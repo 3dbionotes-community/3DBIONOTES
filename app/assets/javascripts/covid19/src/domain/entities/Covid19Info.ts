@@ -37,6 +37,7 @@ export interface Entity {
     isSybody: boolean;
     start: number | null;
     end: number | null;
+    target: string | null;
 }
 
 export interface Ligand {
@@ -218,6 +219,7 @@ export interface BasicNSPTarget {
     uniprotId: string;
     start: number;
     end: number;
+    name: string;
 }
 
 export interface NSPTarget extends BasicNSPTarget {

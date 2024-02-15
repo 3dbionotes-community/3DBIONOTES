@@ -16,12 +16,12 @@ export class EntitiesApiRepository implements EntitiesRepository {
         target: BasicNSPTarget,
         pagination: NMRPagination
     ): FutureData<{ target: NSPTarget; pagination: NMRPagination }> {
-        const { uniprotId, start, end } = target;
+        const { uniprotId, start: _start, end: _end, name } = target; //don't want to remove start & end
         const { bionotesApi } = routes;
         const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
-            `${bionotesApi}/nmr/${uniprotId}?start=${start}&end=${end}&limit=${
-                pagination.pageSize
-            }&page=${pagination.page + 1}`,
+            `${bionotesApi}/nmr/${uniprotId}/?target=${name}&limit=${pagination.pageSize}&page=${
+                pagination.page + 1
+            }`,
             paginationCodec(nmrFragmentCodec)
         ).flatMap(p =>
             getNMRTarget(uniprotId, getResults(p)).map(target => ({
@@ -36,19 +36,19 @@ export class EntitiesApiRepository implements EntitiesRepository {
     }
 
     getNMRTarget(target: BasicNSPTarget): FutureData<NSPTarget> {
-        const { uniprotId, start, end } = target;
+        const { uniprotId, start: _start, end: _end, name } = target;
         const { bionotesApi } = routes;
         const chunkSize = 50;
         const targetChunk$ = (page: number) =>
             getValidatedJSON<Pagination<NMRScreeningFragment>>(
-                `${bionotesApi}/nmr/${uniprotId}?start=${start}&end=${end}&limit=${chunkSize}&page=${
+                `${bionotesApi}/nmr/${uniprotId}/?target=${name}&limit=${chunkSize}&page=${
                     page + 1
                 }`,
                 paginationCodec(nmrFragmentCodec)
             ).flatMap(pagination => getNMRTarget(uniprotId, getResults(pagination)));
 
         const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
-            `${bionotesApi}/nmr/${uniprotId}?start=${start}&end=${end}&limit=1`,
+            `${bionotesApi}/nmr/${uniprotId}/?target=${name}&limit=1`,
             paginationCodec(nmrFragmentCodec)
         )
             .flatMap(pagination => {

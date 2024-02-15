@@ -100,9 +100,9 @@ function useNMRPagination(basicTarget: BasicNSPTarget, setNMROptions: SetNMROpti
         (onClick: OnClickNMR, hideLoading: () => void) => {
             return compositionRoot.entities.getPartialNMR
                 .execute(basicTarget, { page, pageSize, count })
-                .tap(() => hideLoading())
                 .run(
                     ({ target, pagination }) => {
+                        hideLoading();
                         setCount(pagination.count);
                         return onClick(
                             {
@@ -113,14 +113,16 @@ function useNMRPagination(basicTarget: BasicNSPTarget, setNMROptions: SetNMROpti
                                     setPageSize,
                                 },
                             },
-                            `NMR Target entity. Uniprot: ${basicTarget.uniprotId}. Start: ${basicTarget.start}. End: ${basicTarget.end}`
+                            `NMR Target entity. Uniprot: ${basicTarget.uniprotId}. Target: ${basicTarget.name}`
                         );
                     },
-                    err =>
-                        onClick(
+                    err => {
+                        hideLoading();
+                        return onClick(
                             { error: err.message },
-                            `ERROR NMR Target. Uniprot: ${basicTarget.uniprotId}. Start: ${basicTarget.start}. End: ${basicTarget.end}`
-                        )
+                            `ERROR NMR Target. Uniprot: ${basicTarget.uniprotId}. Target: ${basicTarget.name}`
+                        );
+                    }
                 );
         },
         [page, pageSize, count, compositionRoot, setPage, setPageSize, basicTarget]

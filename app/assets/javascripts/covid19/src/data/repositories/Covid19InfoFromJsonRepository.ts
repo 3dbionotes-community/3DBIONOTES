@@ -161,7 +161,7 @@ function getStructures(): Structure[] {
             id: getStructureId(structure),
             pdb: structure.pdb ? getPdb(structure.pdb, structure.emdb) : undefined,
             emdb: structure.emdb ? getEmdb(structure.emdb, structure.pdb) : undefined,
-            entities: getEntitiesForStructure(structure),
+            entities: getEntitiesForStructure(structure.pdb?.entities ?? []),
             organisms: getOrganismsForStructure(data, structure),
             ligands: structure.pdb === null ? [] : getLigands(data.Ligands, structure.pdb.ligands),
             details: structure.pdb ? getDetails(structure.pdb) : undefined,
@@ -256,15 +256,13 @@ function getLigands(
         .value();
 }
 
-function getEntitiesForStructure(structure: Data.Structure): Entity[] {
-    //simulate nmr
-    const start = 12;
-    const end = 127;
+function getEntitiesForStructure(entities: Data.Entity[]): Entity[] {
     return _(
-        structure.pdb?.entities.map(entity => ({
+        entities.map(entity => ({
             ...entity,
-            start: entity.uniprotAcc === "P0DTD1" ? start : null,
-            end: entity.uniprotAcc === "P0DTD1" ? end : null,
+            start: entity.seq_align_begin ?? null,
+            end: entity.seq_align_end ?? null,
+            target: entity.xRef?.find(ref => ref.xDB === "NMR")?.xDB_code ?? null,
         }))
     )
         .compact()
@@ -276,16 +274,6 @@ function getId<T extends { id: string }>(obj: T): string {
 }
 
 function getPdb(pdb: Data.Pdb, emdb: Data.Emdb | null): Pdb {
-    //simulate nmr
-    const start = 12;
-    const end = 127;
-
-    const entities = pdb.entities.map(entity => ({
-        id: pdb.dbId,
-        start: entity.uniprotAcc === "P0DTD1" ? start : null,
-        end: entity.uniprotAcc === "P0DTD1" ? end : null,
-        ...entity,
-    }));
     const pdbE: Pdb = {
         id: pdb.dbId,
         method: pdb.method,
@@ -298,7 +286,7 @@ function getPdb(pdb: Data.Pdb, emdb: Data.Emdb | null): Pdb {
         externalLinks: pdb.externalLink.includes("www.ebi")
             ? [{ url: pdb.externalLink, text: "EBI" }]
             : [],
-        entities,
+        entities: getEntitiesForStructure(pdb.entities),
     };
     return pdbE;
 }

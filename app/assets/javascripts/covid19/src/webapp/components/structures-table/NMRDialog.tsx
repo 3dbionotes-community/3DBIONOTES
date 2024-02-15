@@ -57,11 +57,15 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
             onClose={onClose}
             title={title}
             fullWidth={true}
-            maxWidth="xl"
+            maxWidth={error ? "xs" : "xl"}
             scroll="paper"
         >
             {loading && <StyledLinearProgress />}
-            {error && <Typography>{error}</Typography>}
+            {error && (
+                <Typography>
+                    <div style={{ margin: 16 }}>{error}</div>
+                </Typography>
+            )}
             {target && pagination && setPagination && saveTarget && (
                 <>
                     {/* {pagination.pageSize >= 25 && (
