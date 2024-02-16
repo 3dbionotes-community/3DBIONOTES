@@ -1,7 +1,7 @@
 {
     "name": "covid19",
     "description": "3dbionotes COVID-19",
-    "version": "3.10.0",
+    "version": "3.10.1",
     "homepage": ".",
     "dependencies": {
         "@dhis2/d2-i18n": "1.0.6",
