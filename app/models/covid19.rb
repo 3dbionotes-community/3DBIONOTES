@@ -11,7 +11,7 @@ class Covid19
         name: "7MSW + EMD-23970",
         description: "NSP2: Although its function is still unknown, NSP2 has been involved in several viral processes. Its highly-conserved Zn2+ binding site suggests that nsp2 binds RNA. It also seems to interact with host infected cell endosomes through cytoskeletal elements and with modulators of translation. ",
         image_url: "images/entries/7msw.png",
-        query_url: "/ws/viewer/#/EMD-23970"
+        query_url: "/ws/viewer/#/7msw+EMD-23970"
       },
       {
         name: "7TI9",
@@ -59,7 +59,7 @@ class Covid19
         name: "7C2K + EMD-30275",
         description: "NSP7: As cofactor of NSP12, NSP7 contributes to accomodate the template-product RNA, together with NSP8, in the RNA-dependent RNA polymerase (RdRp) catalytic complex.",
         image_url: "images/entries/7c2k.png",
-        query_url: "/ws/viewer/#/EMD-30275"
+        query_url: "/ws/viewer/#/7c2k+EMD-30275"
       },
       {
         name: "6WXD",
@@ -101,13 +101,13 @@ class Covid19
         name: "6VSB + EMD-21375",
         description: "Spike: Decorating surface glycoprotein that protrudes from the viral outer membrane. Several conformational changes allow its interaction with the host receptor ACE2 and membrane fusion, thus initiating the infection.",
         image_url: "images/entries/6vsb.png",
-        query_url: "/ws/viewer/#/EMD-21375"
+        query_url: "/ws/viewer/#/6vsb+EMD-21375"
       },
       {
         name: "6XDC + EMD-22136",
         description: "ORF3: As a viroporin, ORF3 forms cellular dimeric nonselective Ca2+ permeable cation channels that become active by oligomerizing into tetramers or higher-order oligomers. This channel activity in cells could be relevant to promote viral maturation through inhibition of autophagy and disruption of lysosomes.",
         image_url: "images/entries/6xcd.png",
-        query_url: "/ws/viewer/#/EMD-22136"
+        query_url: "/ws/viewer/#/6xdc+EMD-22136"
       },
       {
         name: "7NTK",
@@ -149,7 +149,7 @@ class Covid19
         name: "7KDT + EMD-22829",
         description: "ORF9b: The gene encoding this small protein overlaps the N gene. ORF9b protein interacts and blocks the substrate binding site of the host Tom70, import receptor of the translocase from the mitochondrial outer membrane (TOM) complex, involved in the activation of the mitochondrial antiviral signaling leading to apoptosis upon viral infection. In addition, ORF9b may modulate interferon and apoptosis signaling avoiding the interaction between Tom70 and Hsp70 and Hsp90 chaperones.",
         image_url: "images/entries/7kdt.png",
-        query_url: "/ws/viewer/#/EMD-22829"
+        query_url: "/ws/viewer/#/7kdt+EMD-22829"
       },
     ]
   end
