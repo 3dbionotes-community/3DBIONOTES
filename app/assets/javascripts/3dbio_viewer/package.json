@@ -10,7 +10,7 @@
         "@material-ui/icons": "^4.11.2",
         "@material-ui/lab": "^4.0.0-alpha.61",
         "@types/d3": "4.13.0",
-        "axios": "^0.21.1",
+        "axios": "^0.28.0",
         "classnames": "^2.2.6",
         "d2-ui-components": "^2.4.0",
         "data-loader": "^3.0.0",
