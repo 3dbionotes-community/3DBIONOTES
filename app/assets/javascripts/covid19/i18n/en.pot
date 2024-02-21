@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-02-08T11:48:47.351Z\n"
-"PO-Revision-Date: 2024-02-08T11:48:47.351Z\n"
+"POT-Creation-Date: 2024-02-21T20:53:56.916Z\n"
+"PO-Revision-Date: 2024-02-21T20:53:56.916Z\n"
 
 msgid "No ontologies found."
 msgstr ""
@@ -15,6 +15,12 @@ msgid "No ontology terms found."
 msgstr ""
 
 msgid "No organisms found."
+msgstr ""
+
+msgid "NMR Error: no target found"
+msgstr ""
+
+msgid "NMR Unexpected Error: no start / no end on fragments. Unable to get target."
 msgstr ""
 
 msgid "Error from API: No ligands found."
