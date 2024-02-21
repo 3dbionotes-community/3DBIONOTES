@@ -15,10 +15,10 @@
     lodash "^4.17.21"
     molstar "3.15.0"
 
-"@3dbionotes/protvista-pdb@2.0.1-est-2":
-  version "2.0.1-est-2"
-  resolved "https://registry.yarnpkg.com/@3dbionotes/protvista-pdb/-/protvista-pdb-2.0.1-est-2.tgz#96560a0d82e00739cb16463f4b0ccc1d83779484"
-  integrity sha512-ZwxvPIyA1Mx+HlJOyUWfaDIrDOzLw8+jUhwPCRoEanMKrtzUTN3oSxd/fP/Kup25b78uTxHFtFQuzSE9CcNjDw==
+"@3dbionotes/protvista-pdb@2.0.1-est-2-beta.1":
+  version "2.0.1-est-2-beta.1"
+  resolved "https://registry.yarnpkg.com/@3dbionotes/protvista-pdb/-/protvista-pdb-2.0.1-est-2-beta.1.tgz#9db59040a702a4b9bd5b4283e4d6ae1d63cd26ad"
+  integrity sha512-EuW6xY0ZlhKhUqievJPSmBqXPeE+LHK8oGku78yE5RGgCePaHYnBff0X1PL/lvhRBU968bxiZls2z1HOyKU8mQ==
   dependencies:
     lodash-es "^4.17.11"
     protvista-filter "2.0.0"
