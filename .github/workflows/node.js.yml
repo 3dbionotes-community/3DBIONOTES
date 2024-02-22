@@ -13,7 +13,7 @@ jobs:
         node-version: '16.14.0'
     - name: Check versions
       run: |
-          main_version=$(grep '^# 3DBIONOTES-WS v[0-9.]+' README.md | sed 's/^# 3DBIONOTES-WS v([0-9.]+)$/\1/')
+          main_version=$(grep -E '^# 3DBIONOTES-WS v[0-9.]+' README.md | sed -E 's/^# 3DBIONOTES-WS v([0-9.]+)$/\1/')
           viewer_protvista_version=$(cat app/views/webserver/viewer.html.haml | grep -Eo 'protvista-pdb-[0-9.]+-est-[0-9]+(-beta.[0-9]+){0,1}' | awk '{print $1}')
           viewer_pdbe_molstar_version=$(cat app/views/webserver/viewer.html.haml | grep -Eo 'pdbe-molstar-plugin-[0-9.]+-est-[0-9]+(-beta.[0-9]+){0,1}' | awk '{print $1}')
           cd app/assets/javascripts/covid19
