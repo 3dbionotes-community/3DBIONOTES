@@ -1,4 +1,4 @@
-# 3DBIONOTES-WS v3.10.0
+# 3DBIONOTES-WS v3.10.2
 
 ## Integrating molecular biology
 
