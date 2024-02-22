@@ -11,11 +11,71 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '16.14.0'
+    - name: Check versions
+      run: |
+          main_version=$(grep '^# 3DBIONOTES-WS v[0-9.]+' README.md | sed 's/^# 3DBIONOTES-WS v([0-9.]+)$/\1/')
+          viewer_protvista_version=$(cat app/views/webserver/viewer.html.haml | grep -Eo 'protvista-pdb-[0-9.]+-est-[0-9]+(-beta.[0-9]+){0,1}' | awk '{print $1}')
+          viewer_pdbe_molstar_version=$(cat app/views/webserver/viewer.html.haml | grep -Eo 'pdbe-molstar-plugin-[0-9.]+-est-[0-9]+(-beta.[0-9]+){0,1}' | awk '{print $1}')
+          cd app/assets/javascripts/covid19
+          bio_covid19_version=$(cat package.json | jq -r '.version')
+          cd ../3dbio_viewer
+          bio_viewer_version=$(cat package.json | jq -r '.version')
+          protvista_version=$(cat package.json | jq -r '.dependencies["@3dbionotes/protvista-pdb"]')
+          pdbe_molstar_version=$(cat package.json | jq -r '.dependencies["@3dbionotes/pdbe-molstar"]')
+          index_protvista_version=$(cat public/index.html | grep -Eo 'protvista-pdb-[0-9.]+-est-[0-9]+(-beta.[0-9]+){0,1}' | awk '{print $1}')
+          index_pdbe_molstar_version=$(cat public/index.html | grep -Eo 'pdbe-molstar-plugin-[0-9.]+-est-[0-9]+(-beta.[0-9]+){0,1}' | awk '{print $1}')
+          if [ "$bio_viewer_version" != "$bio_covid19_version" ] ||
+            [ "$main_version" != "$bio_covid19_version" ]; then
+            echo "3dbio_viewer version doesn't match with covid19 version"
+            echo "3dbio_viewer: $bio_viewer_version"
+            echo "covid19: $bio_covid19_version"
+            echo "README.md version: $main_version"
+            exit 1
+          fi
+
+          if [ "$viewer_protvista_version" != "$index_protvista_version" ] ||
+            [ "$viewer_pdbe_molstar_version" != "$index_pdbe_molstar_version" ] ||
+            [ "$(echo "$index_protvista_version" | sed 's/protvista-pdb-//')" != "$protvista_version" ] ||
+            [ "$(echo "$index_pdbe_molstar_version" | sed 's/pdbe-molstar-plugin-//')" != "$pdbe_molstar_version" ]; then
+            echo "Versions don't match:"
+            echo "Viewer and index protvista: $viewer_protvista_version, $index_protvista_version"
+            echo "Viewer and index pdbe-molstar: $viewer_pdbe_molstar_version, $index_pdbe_molstar_version"
+            echo "3dbio_viewer dependency and index protvista: $protvista_version, $(echo "$index_protvista_version" | sed 's/protvista-pdb-//')"
+            echo "3dbio_viewer dependency and index pdbe-molstar: $pdbe_molstar_version, $(echo "$index_pdbe_molstar_version" | sed 's/pdbe-molstar-plugin-//'), "
+            exit 1
+          fi
+
+          echo "3dbio_viewer versions match"
+          echo "README.md version: $main_version"
+          echo "3DBIONOTES version: $bio_viewer_version"
+          echo "protvista-pdb version: $protvista_version"
+          echo "pdbe-molstar version: $pdbe_molstar_version"
     - name: Install and build (3dbio_viewer)
       run: |
           cd app/assets/javascripts/3dbio_viewer
           yarn install
           yarn build
+    - name: Check build dependency versions (3dbioviewer)
+          cd app/assets/javascripts/3dbio_viewer
+          index_protvista_version=$(cat public/index.html | grep -Eo 'protvista-pdb-[0-9.]+-est-[0-9]+(-beta.[0-9]+){0,1}' | awk '{print $1}')
+          index_pdbe_molstar_version=$(cat public/index.html | grep -Eo 'pdbe-molstar-plugin-[0-9.]+-est-[0-9]+(-beta.[0-9]+){0,1}' | awk '{print $1}')
+          build_pdbe_molstar_file="build/pdbe-molstar/$index_pdbe_molstar_version.js"
+          if [ -f "$build_pdbe_molstar_file" ]; then
+            echo "Build file $build_pdbe_molstar_file exists."
+          else
+            echo "Build file $build_pdbe_molstar_file does not exist."
+            exit 1
+          fi
+
+          build_protvista_file="build/protvista-pdb/$index_protvista_version.js"
+          if [ -f "$build_protvista_file" ]; then
+            echo "Build file $build_protvista_file exists."
+          else
+            echo "Build file $build_protvista_file does not exist."
+            exit 1
+          fi
+    - name: Run tests (3dbio_viewer)
+          cd app/assets/javascripts/3dbio_viewer
           yarn test:nowatch
     - name: Install and build (covid19)
       run: |
