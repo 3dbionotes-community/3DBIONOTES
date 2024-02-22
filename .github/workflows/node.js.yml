@@ -56,6 +56,7 @@ jobs:
           yarn install
           yarn build
     - name: Check build dependency versions (3dbioviewer)
+      run: |
           cd app/assets/javascripts/3dbio_viewer
           index_protvista_version=$(cat public/index.html | grep -Eo 'protvista-pdb-[0-9.]+-est-[0-9]+(-beta.[0-9]+){0,1}' | awk '{print $1}')
           index_pdbe_molstar_version=$(cat public/index.html | grep -Eo 'pdbe-molstar-plugin-[0-9.]+-est-[0-9]+(-beta.[0-9]+){0,1}' | awk '{print $1}')
@@ -75,6 +76,7 @@ jobs:
             exit 1
           fi
     - name: Run tests (3dbio_viewer)
+      run: |
           cd app/assets/javascripts/3dbio_viewer
           yarn test:nowatch
     - name: Install and build (covid19)
