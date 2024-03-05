@@ -298,7 +298,7 @@ export function getTranslations() {
             cstf: i18n.t("CSTF"),
             ceres: i18n.t("CERES"),
             idr: i18n.t("IDR"),
-            nmr: i18n.t("NMR"),
+            nmr: i18n.t("CV19-NMR-C"),
         } as Record<FilterKey, string>,
     };
 }
