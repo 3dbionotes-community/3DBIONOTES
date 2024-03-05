@@ -4,7 +4,6 @@ import { Ligand } from "./Ligand";
 import { Emdb } from "./Pdb";
 import { ChainId, Protein } from "./Protein";
 import { UploadData } from "./UploadData";
-import { UniprotMapping } from "../../data/repositories/BionotesPdbInfoRepository";
 
 export interface PdbInfo {
     id: Maybe<string>;
