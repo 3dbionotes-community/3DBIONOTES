@@ -8,6 +8,7 @@ import { routes } from "../../routes";
 import { Future } from "../../utils/future";
 import { RequestError, getFromUrl } from "../request-utils";
 import { emdbsFromPdbUrl, getEmdbsFromMapping, PdbEmdbMapping } from "./mapping";
+import { Maybe } from "../../utils/ts-utils";
 import i18n from "../../domain/utils/i18n";
 
 export class BionotesPdbInfoRepository implements PdbInfoRepository {
@@ -16,9 +17,9 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
         const fallbackMappingUrl = `${routes.ebi}/pdbe/api/pdb/entry/polymer_coverage/${pdbId}/`;
         const emdbMapping = `${emdbsFromPdbUrl}/${pdbId}`;
         const data$ = {
-            uniprotMapping: getFromUrl<UniprotFromPdbMapping>(proteinMappingUrl).flatMapError(err =>
-                buildError<UniprotFromPdbMapping>("serviceUnavailable", err)
-            ),
+            uniprotMapping: getFromUrl<Maybe<UniprotFromPdbMapping>>(
+                proteinMappingUrl
+            ).flatMapError(_err => Future.success<Maybe<UniprotFromPdbMapping>, Error>(undefined)),
             fallbackMapping: getFromUrl<ChainsFromPolymer>(fallbackMappingUrl).flatMapError(err =>
                 buildError<ChainsFromPolymer>("noData", err)
             ),
@@ -27,22 +28,17 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
 
         return Future.joinObj(data$).flatMap(data => {
             const { uniprotMapping, emdbMapping, fallbackMapping } = data;
-            const proteinsMapping = uniprotMapping[pdbId.toLowerCase()]?.UniProt;
+            const proteinsMapping = uniprotMapping && uniprotMapping[pdbId.toLowerCase()]?.UniProt;
             const fallback = fallbackMapping[pdbId.toLowerCase()];
 
-            if (!proteinsMapping) {
+            if (!proteinsMapping && !fallback) {
                 const err = `Uniprot mapping not found for ${pdbId}`;
-                return buildError("noData", { message: err });
-            }
-
-            if (!fallback) {
-                const err = `No fallback chains found for ${pdbId}`;
                 return buildError("noData", { message: err });
             }
 
             const emdbIds = getEmdbsFromMapping(emdbMapping, pdbId);
 
-            if (isEmptyObject(proteinsMapping))
+            if (!proteinsMapping && fallback)
                 return Future.success<PdbInfo, Error>(
                     buildPdbInfo({
                         id: pdbId,
@@ -119,23 +115,16 @@ function buildError<T>(type: ErrorType, err: RequestError): FutureData<T> {
     }
 }
 
-function isEmptyObject(obj: object): obj is EmptyObject {
-    return Object.keys(obj).length === 0;
-}
-
-type EmptyObject = Record<string, never>;
-
 export type UniprotMapping = Record<
     ProteinId,
     { mappings: { chain_id: ChainId; struct_asym_id: ChainId }[] }
 >;
 
-type UniprotFromPdbMapping = Record<
-    PdbId,
-    {
-        UniProt: UniprotMapping | EmptyObject;
-    }
->;
+type Uniprot = {
+    UniProt: UniprotMapping;
+};
+
+type UniprotFromPdbMapping = Record<PdbId, Uniprot>;
 
 type PolymerMolecules = {
     chains: { struct_asym_id: string }[];
