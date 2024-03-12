@@ -2,6 +2,7 @@ import _ from "lodash";
 import i18n from "../../utils/i18n";
 
 export interface Covid19Info {
+    count: number;
     structures: Structure[];
     validationSources: ValidationSource[];
 }

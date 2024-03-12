@@ -26,20 +26,24 @@ import { SearchOptions as MiniSearchSearchOptions } from "minisearch";
 import { cache } from "../../utils/cache";
 import { data } from "../covid19-data";
 import * as Data from "../Covid19Data.types";
+import { Future } from "../utils/future";
+import { FutureData } from "../../domain/entities/FutureData";
 
 export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
     info: Covid19Info;
     searchOptions: MiniSearchSearchOptions = { combineWith: "AND" };
 
     constructor() {
+        const structures = getStructures();
         this.info = {
-            structures: getStructures(),
+            count: structures.length,
+            structures,
             validationSources: getValidationSources(),
         };
     }
 
-    get(): Covid19Info {
-        return this.info;
+    get(): FutureData<Covid19Info> {
+        return Future.success(this.info);
     }
 
     search(options: SearchOptions): Covid19Info {

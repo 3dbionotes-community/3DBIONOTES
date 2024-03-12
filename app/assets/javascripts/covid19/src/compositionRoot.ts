@@ -10,9 +10,11 @@ import { LigandsApiRepository } from "./data/repositories/LigandsApiRepository";
 import { GetLigandImageDataResourcesUseCase } from "./domain/usecases/GetLigandImageDataResourcesUseCase";
 import { BionotesOntologyRepository } from "./data/repositories/BioOntologyRepository";
 import { BionotesOrganismRepository } from "./data/repositories/BionotesOrganismRepository";
+import { Covid19InfoApiRepository } from "./data/repositories/Covid19InfoApiRepository";
 
 export function getCompositionRoot() {
-    const covid19InfoRepository = new Covid19InfoFromJsonRepository();
+    const covid19InfoJsonRepository = new Covid19InfoFromJsonRepository();
+    const covid19InfoApiRepository = new Covid19InfoApiRepository();
     const dataGridRepository = new BrowserDataGridRepository();
     const cacheRepository = new LocalStorageCacheRepository();
     const ligandsRepository = new LigandsApiRepository();
@@ -20,12 +22,12 @@ export function getCompositionRoot() {
     const organismRepository = new BionotesOrganismRepository();
 
     return {
-        getCovid19Info: new GetCovid19InfoUseCase(covid19InfoRepository),
-        getAutoSuggestions: new GetAutoSuggestionsUseCase(covid19InfoRepository),
-        searchCovid19Info: new SearchCovid19InfoUseCase(covid19InfoRepository),
+        getCovid19Info: new GetCovid19InfoUseCase(covid19InfoApiRepository),
+        getAutoSuggestions: new GetAutoSuggestionsUseCase(covid19InfoJsonRepository),
+        searchCovid19Info: new SearchCovid19InfoUseCase(covid19InfoJsonRepository),
         exportStructures: new ExportStructuresUseCase(dataGridRepository),
         addDynamicInfo: new AddDynamicInfoToCovid19InfoUseCase(
-            covid19InfoRepository,
+            covid19InfoJsonRepository,
             cacheRepository
         ),
         ligands: {

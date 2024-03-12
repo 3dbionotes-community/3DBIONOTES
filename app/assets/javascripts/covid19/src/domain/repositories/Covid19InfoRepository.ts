@@ -1,7 +1,8 @@
 import { Covid19Info, Covid19Filter } from "../entities/Covid19Info";
+import { FutureData } from "../entities/FutureData";
 
 export interface Covid19InfoRepository {
-    get(): Covid19Info;
+    get(): FutureData<Covid19Info>;
     search(options: SearchOptions): Covid19Info;
     autoSuggestions(search: string): string[];
 }

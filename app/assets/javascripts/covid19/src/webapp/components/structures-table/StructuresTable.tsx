@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps, GridSortModel } from "@material-ui/data-grid";
-import { updateStructures } from "../../../domain/entities/Covid19Info";
+import { Covid19Info, updateStructures } from "../../../domain/entities/Covid19Info";
 import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
 import { Covid19Filter, Id } from "../../../domain/entities/Covid19Info";
 import { Toolbar, ToolbarProps } from "./Toolbar";
@@ -96,7 +96,16 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         [setRenderedRowsFromState, updateScrollBarFromStateChange]
     );
 
-    const [data, setData] = React.useState(() => compositionRoot.getCovid19Info.execute());
+    const [data, setData] = React.useState<Covid19Info>({
+        count: 0,
+        structures: [],
+        validationSources: [],
+    });
+
+    React.useEffect(() => compositionRoot.getCovid19Info.execute().run(setData, console.error), [
+        compositionRoot,
+    ]);
+
     window.app = { data };
 
     React.useEffect(() => {
