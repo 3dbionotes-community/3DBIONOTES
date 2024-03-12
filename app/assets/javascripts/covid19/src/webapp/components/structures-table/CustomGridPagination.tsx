@@ -1,9 +1,10 @@
 import React from "react";
 import TablePagination from "@material-ui/core/TablePagination";
 import { DataGrid } from "../../../domain/entities/DataGrid";
+import { Maybe } from "../../../data/utils/ts-utils";
 
 export interface CustomGridPaginationProps {
-    dataGrid: DataGrid;
+    dataGrid: Maybe<DataGrid>;
     page: number;
     pageSize: number | undefined;
     pageSizes: number[];
@@ -34,7 +35,7 @@ export const CustomGridPagination: React.FC<CustomGridPaginationProps> = React.m
             <TablePagination
                 component="div" /* Default component is td, but we the parent component is not a table */
                 style={styles.table}
-                count={dataGrid?.structures?.length}
+                count={dataGrid?.count ?? 0}
                 page={page}
                 onPageChange={handleChangePage}
                 rowsPerPageOptions={pageSizes}

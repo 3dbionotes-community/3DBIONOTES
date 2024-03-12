@@ -102,9 +102,11 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         validationSources: [],
     });
 
-    React.useEffect(() => compositionRoot.getCovid19Info.execute().run(setData, console.error), [
-        compositionRoot,
-    ]);
+    React.useEffect(
+        () =>
+            compositionRoot.getCovid19Info.execute({ page, pageSize }).run(setData, console.error),
+        [compositionRoot, page, pageSize]
+    );
 
     window.app = { data };
 
@@ -133,8 +135,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     );
 
     const dataGrid = React.useMemo<DataGridE>(() => {
-        return { columns: columns.base, structures };
-    }, [columns, structures]);
+        return { columns: columns.base, structures, count: data.count };
+    }, [columns, structures, data.count]);
 
     const componentsProps = React.useMemo<
         { toolbar: ToolbarProps; pagination: CustomGridPaginationProps } | undefined
@@ -213,6 +215,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 disableColumnMenu={true}
                 rowsPerPageOptions={pageSizes}
                 pagination={true}
+                paginationMode="server"
                 pageSize={pageSize}
                 onPageChange={setPageFromParams}
                 onPageSizeChange={setPageSizeFromParams}

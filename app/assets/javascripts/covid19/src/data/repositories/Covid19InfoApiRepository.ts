@@ -10,6 +10,7 @@ import {
 } from "../../domain/entities/Covid19Info";
 import {
     Covid19InfoRepository,
+    GetOptions,
     SearchOptions,
 } from "../../domain/repositories/Covid19InfoRepository";
 import { data } from "../covid19-data";
@@ -19,21 +20,20 @@ import { FutureData } from "../../domain/entities/FutureData";
 import { Future } from "../utils/future";
 
 export class Covid19InfoApiRepository implements Covid19InfoRepository {
-    info: FutureData<Covid19Info>;
-
-    constructor() {
-        this.info = Future.joinObj({
-            pdbEntries: getPdbEntries(),
+    get(options: GetOptions): FutureData<Covid19Info> {
+        const covidInfo$ = Future.joinObj({
+            pdbEntries: getPdbEntries({
+                page: options.page ?? 0,
+                pageSize: options.pageSize ?? 10,
+            }),
             validationSources: getValidationSources(),
         }).map(({ pdbEntries, validationSources }) => ({
             count: pdbEntries.count,
             structures: pdbEntries.structures,
             validationSources,
         }));
-    }
 
-    get(): FutureData<Covid19Info> {
-        return this.info;
+        return covidInfo$;
     }
 
     search(_options: SearchOptions): Covid19Info {
@@ -59,10 +59,15 @@ function getValidationSources(): FutureData<ValidationSource[]> {
     );
 }
 
-function getPdbEntries(): FutureData<{ count: number; structures: Structure[] }> {
+function getPdbEntries(options: {
+    page: number;
+    pageSize: number;
+}): FutureData<{ count: number; structures: Structure[] }> {
     const { bionotesApi: _bionotesApi } = routes;
+    const { page, pageSize } = options;
+
     const pagination$ = getJSONData<Pagination<PdbEntry>>(
-        `http://server:8000/api/pdbentry/?limit=10`
+        `http://server:8000/api/pdbentry/?limit=${pageSize}&page=${page + 1}` //django starts from 1
     );
 
     return pagination$.map(({ count, results: pdbEntries }) => ({
