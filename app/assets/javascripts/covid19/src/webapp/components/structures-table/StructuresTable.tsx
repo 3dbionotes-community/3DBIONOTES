@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import { makeStyles } from "@material-ui/core";
+import { CircularProgress, LinearProgress, makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps, GridSortModel } from "@material-ui/data-grid";
 import { Covid19Info, updateStructures } from "../../../domain/entities/Covid19Info";
 import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
@@ -14,6 +14,8 @@ import { sendAnalytics } from "../../../utils/analytics";
 import { IDRDialog } from "./IDRDialog";
 import { useInfoDialog } from "../../hooks/useInfoDialog";
 import { CustomGridPagination, CustomGridPaginationProps } from "./CustomGridPagination";
+import styled from "styled-components";
+import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
 
 export interface StructuresTableProps {
     search: string;
@@ -31,9 +33,11 @@ const defaultSort: GridSortModel = [{ field: "emdb", sort: "desc" }];
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
     const { search, setSearch: setSearch0, highlighted, setHighlight } = props;
     const { compositionRoot } = useAppContext();
+    const [loading, setLoading] = React.useState(true);
     const [page, setPage] = React.useState(0);
-    const [pageSize, setPageSize] = React.useState(pageSizes[0]);
+    const [pageSize, setPageSize] = React.useState(pageSizes[4]);
     const classes = useStyles();
+    const snackbar = useSnackbar();
 
     const {
         info: detailsInfo,
@@ -102,11 +106,16 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         validationSources: [],
     });
 
-    React.useEffect(
-        () =>
-            compositionRoot.getCovid19Info.execute({ page, pageSize }).run(setData, console.error),
-        [compositionRoot, page, pageSize]
-    );
+    React.useEffect(() => {
+        setLoading(true);
+        return compositionRoot.getCovid19Info
+            .execute({ page, pageSize })
+            .bitap(() => setLoading(false))
+            .run(setData, err => {
+                console.error(err.message);
+                snackbar.error(err.message);
+            });
+    }, [compositionRoot, page, pageSize, snackbar]);
 
     window.app = { data };
 
@@ -196,11 +205,14 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     }, []);
 
     const setPageSizeFromParams = React.useCallback<GridProp<"onPageSizeChange">>(params => {
+        if (params.pageSize > 25)
+            snackbar.info("Please note that large page sizes may take a while to load");
         return setPageSize(params.pageSize);
     }, []);
 
     return (
         <div className={classes.wrapper}>
+            {loading && <StyledLinearProgress position="top" />}
             <DataGrid
                 page={page}
                 onStateChange={onStateChange}
@@ -222,6 +234,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 components={components}
                 componentsProps={componentsProps}
             />
+            {loading && <StyledLinearProgress position="bottom" />}
             {detailsInfo && (
                 <DetailsDialog
                     open={isDetailsOpen}
@@ -247,9 +260,15 @@ const useStyles = makeStyles({
             whiteSpace: "normal",
             display: "flex", // "flex": center vertically. "block" otherwise
         },
+        "&.MuiDataGrid-root": {
+            borderTop: "none",
+            borderRadius: "0 0 4px 4px",
+        },
         "&.MuiDataGrid-root .MuiDataGrid-cellWithRenderer": {},
     },
-    wrapper: {},
+    wrapper: {
+        position: "relative",
+    },
 });
 
 const pageSizes = [10, 25, 50, 75, 100];
@@ -289,3 +308,24 @@ function useRenderedRows() {
 
     return [renderedRowIds, setRenderedRowsFromState] as const;
 }
+
+const StyledLinearProgress = styled(LinearProgress)<{ position: "top" | "bottom" }>`
+    &.MuiLinearProgress-root {
+        position: absolute;
+        ${props => props.position}: 0;
+        width: 100%;
+    }
+    &.MuiLinearProgress-colorPrimary {
+        background-color: #c6ece8;
+    }
+    & .MuiLinearProgress-barColorPrimary {
+        background-color: #009688;
+    }
+`;
+
+const StyledCircularProgress = styled(CircularProgress)`
+    position: absolute;
+    &.MuiCircularProgress-colorPrimary {
+        color: #009688;
+    }
+`;
