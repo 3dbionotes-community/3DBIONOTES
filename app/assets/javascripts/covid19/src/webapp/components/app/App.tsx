@@ -1,4 +1,5 @@
 import React from "react";
+import { SnackbarProvider } from "@eyeseetea/d2-ui-components/snackbar";
 import { getCompositionRoot } from "../../../compositionRoot";
 import { Covid19Info } from "../../../domain/entities/Covid19Info";
 import { AppContext } from "../../contexts/app-context";
@@ -19,7 +20,9 @@ export const App: React.FC<AppProps> = React.memo(() => {
 
     return (
         <AppContext.Provider value={appContext}>
-            <Root />
+            <SnackbarProvider>
+                <Root />
+            </SnackbarProvider>
         </AppContext.Provider>
     );
 });
