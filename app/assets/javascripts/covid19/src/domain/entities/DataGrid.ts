@@ -1,7 +1,6 @@
 import { Structure } from "./Covid19Info";
 
 export interface DataGrid {
-    count: number;
     columns: Columns;
     structures: Structure[];
 }

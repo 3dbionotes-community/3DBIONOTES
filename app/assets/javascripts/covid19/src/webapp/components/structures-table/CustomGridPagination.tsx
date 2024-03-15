@@ -1,33 +1,40 @@
 import React from "react";
 import TablePagination from "@material-ui/core/TablePagination";
-import { DataGrid } from "../../../domain/entities/DataGrid";
-import { Maybe } from "../../../data/utils/ts-utils";
+import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
+import { useBooleanState } from "../../hooks/useBoolean";
 
 export interface CustomGridPaginationProps {
-    dataGrid: Maybe<DataGrid>;
+    count: number;
     page: number;
     pageSize: number | undefined;
     pageSizes: number[];
-    setPage: (param: number) => void;
-    setPageSize: (param: number) => void;
+    isLoading: boolean;
+    setPageSize: (pageSize: number) => void;
+    setPage: (newPage: number) => void;
 }
 
 export const CustomGridPagination: React.FC<CustomGridPaginationProps> = React.memo(props => {
-    const { dataGrid, page, pageSize, pageSizes, setPage, setPageSize } = props;
+    const { count, page, pageSize, pageSizes, setPage, setPageSize, isLoading } = props;
+    const [showInfo, { disable }] = useBooleanState(true);
+    const snackbar = useSnackbar();
 
-    const handleChangePage = React.useCallback(
+    const onPageChange = React.useCallback(
         (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
             setPage(newPage);
         },
         [setPage]
     );
 
-    const handleChangeRowsPerPage = React.useCallback(
+    const onPageSizeChange = React.useCallback(
         (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-            setPageSize(parseInt(event.target.value, 10));
-            setPage(0);
+            const pageSize = parseInt(event.target.value, 10);
+            if (pageSize > 25 && showInfo) {
+                snackbar.info("Please note that larger page size may take longer to load.");
+                disable();
+            }
+            setPageSize(pageSize);
         },
-        [setPageSize, setPage]
+        [setPageSize, snackbar, showInfo, disable]
     );
 
     return (
@@ -35,17 +42,20 @@ export const CustomGridPagination: React.FC<CustomGridPaginationProps> = React.m
             <TablePagination
                 component="div" /* Default component is td, but we the parent component is not a table */
                 style={styles.table}
-                count={dataGrid?.count ?? 0}
+                count={count}
                 page={page}
-                onPageChange={handleChangePage}
+                onPageChange={onPageChange}
                 rowsPerPageOptions={pageSizes}
                 rowsPerPage={pageSize || 10}
-                onRowsPerPageChange={handleChangeRowsPerPage}
+                onRowsPerPageChange={onPageSizeChange}
+                backIconButtonProps={{ disabled: isLoading }}
+                nextIconButtonProps={{ disabled: isLoading }}
+                SelectProps={{ disabled: isLoading }}
             />
         </React.Fragment>
     );
 });
 
 const styles = {
-    table: { float: "right" as const, borderBottom: "none" as const, padding: 0 },
+    table: { borderBottom: "none" as const, padding: 0 },
 };

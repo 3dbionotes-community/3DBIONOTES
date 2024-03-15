@@ -1,6 +1,7 @@
-import React from "react";
 import _ from "lodash";
-import { CircularProgress, LinearProgress, makeStyles } from "@material-ui/core";
+import React from "react";
+import styled from "styled-components";
+import { LinearProgress, makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps, GridSortModel } from "@material-ui/data-grid";
 import { Covid19Info, updateStructures } from "../../../domain/entities/Covid19Info";
 import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
@@ -13,9 +14,11 @@ import { DetailsDialog } from "./DetailsDialog";
 import { sendAnalytics } from "../../../utils/analytics";
 import { IDRDialog } from "./IDRDialog";
 import { useInfoDialog } from "../../hooks/useInfoDialog";
-import { CustomGridPagination, CustomGridPaginationProps } from "./CustomGridPagination";
-import styled from "styled-components";
+import { CustomGridPaginationProps } from "./CustomGridPagination";
 import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
+import { useBooleanState } from "../../hooks/useBoolean";
+import { Footer } from "./Footer";
+import i18n from "../../../utils/i18n";
 
 export interface StructuresTableProps {
     search: string;
@@ -33,9 +36,14 @@ const defaultSort: GridSortModel = [{ field: "emdb", sort: "desc" }];
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
     const { search, setSearch: setSearch0, highlighted, setHighlight } = props;
     const { compositionRoot } = useAppContext();
-    const [loading, setLoading] = React.useState(true);
+    const [isLoading, { enable: showLoading, disable: hideLoading }] = useBooleanState(true);
+    const [
+        slowLoading,
+        { enable: enableSlowLoading, disable: disableSlowLoading },
+    ] = useBooleanState(false);
     const [page, setPage] = React.useState(0);
-    const [pageSize, setPageSize] = React.useState(pageSizes[4]);
+    const [pageSize, setPageSize] = React.useState(pageSizes[0] ?? 10);
+    const cancelLoadDataRef = React.useRef<SelfCancellable>(() => {});
     const classes = useStyles();
     const snackbar = useSnackbar();
 
@@ -66,24 +74,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         [closeDetails, showIDRDialog]
     );
 
-    const setFilterState = React.useCallback((value: React.SetStateAction<Covid19Filter>) => {
-        setPage(0);
-        setFilterState0(value);
-    }, []);
-
-    const setSearch = React.useCallback(
-        (value: string) => {
-            setPage(0);
-            sendAnalytics("search", {
-                on: "covid_table",
-                query: value,
-            });
-            setSearch0(value);
-            setSortModel(value ? noSort : defaultSort);
-        },
-        [setSearch0]
-    );
-
     const {
         gridApi,
         virtualScrollbarProps,
@@ -106,16 +96,85 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         validationSources: [],
     });
 
-    React.useEffect(() => {
-        setLoading(true);
-        return compositionRoot.getCovid19Info
-            .execute({ page, pageSize })
-            .bitap(() => setLoading(false))
-            .run(setData, err => {
-                console.error(err.message);
-                snackbar.error(err.message);
+    const stopLoading = React.useCallback(() => {
+        hideLoading();
+        disableSlowLoading();
+    }, [hideLoading, disableSlowLoading]);
+
+    const getData = React.useCallback(
+        (page: number, pageSize: number, onSuccess?: () => void) => {
+            showLoading();
+            if (pageSize > 25) enableSlowLoading();
+            const cancelGetData = compositionRoot.getCovid19Info
+                .execute({ page, pageSize })
+                .bitap(() => stopLoading())
+                .run(
+                    data => {
+                        setData(data);
+                        onSuccess && onSuccess();
+                        cancelLoadDataRef.current = () => {};
+                    },
+                    err => {
+                        console.error(err.message);
+                        snackbar.error(err.message);
+                    }
+                );
+
+            const cancelData = (self = false) => {
+                if (!self) {
+                    stopLoading();
+                    snackbar.info(i18n.t("Request has been cancelled"), { autoHideDuration: 2000 });
+                }
+                cancelGetData();
+            };
+
+            cancelLoadDataRef.current = cancelData;
+
+            return cancelData;
+        },
+        [compositionRoot, stopLoading, enableSlowLoading, showLoading, snackbar]
+    );
+
+    const changePage = React.useCallback(
+        (newPage: number) => {
+            if (cancelLoadDataRef.current) {
+                cancelLoadDataRef.current(true);
+            }
+            getData(newPage, pageSize, () => setPage(newPage));
+        },
+        [setPage, pageSize, getData]
+    );
+
+    const changePageSize = React.useCallback(
+        (pageSize: number) => {
+            getData(0, pageSize, () => {
+                setPageSize(pageSize);
+                setPage(0);
             });
-    }, [compositionRoot, page, pageSize, snackbar]);
+        },
+        [setPage, getData]
+    );
+
+    const setFilterState = React.useCallback(
+        (value: React.SetStateAction<Covid19Filter>) => {
+            changePage(0);
+            setFilterState0(value);
+        },
+        [changePage]
+    );
+
+    const setSearch = React.useCallback(
+        (value: string) => {
+            changePage(0);
+            sendAnalytics("search", {
+                on: "covid_table",
+                query: value,
+            });
+            setSearch0(value);
+            setSortModel(value ? noSort : defaultSort);
+        },
+        [setSearch0, changePage]
+    );
 
     window.app = { data };
 
@@ -138,17 +197,14 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         });
     }, [data, openDetailsDialog, openIDRDialog]);
 
-    const components = React.useMemo(
-        () => ({ Toolbar: Toolbar, Pagination: CustomGridPagination }),
-        []
-    );
+    const components = React.useMemo(() => ({ Toolbar: Toolbar, Footer: Footer }), []);
 
     const dataGrid = React.useMemo<DataGridE>(() => {
-        return { columns: columns.base, structures, count: data.count };
-    }, [columns, structures, data.count]);
+        return { columns: columns.base, structures };
+    }, [columns, structures]);
 
     const componentsProps = React.useMemo<
-        { toolbar: ToolbarProps; pagination: CustomGridPaginationProps } | undefined
+        { toolbar: ToolbarProps; footer: CustomGridPaginationProps } | undefined
     >(() => {
         return gridApi
             ? {
@@ -165,17 +221,23 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                       page,
                       pageSize,
                       pageSizes,
-                      setPage,
-                      setPageSize,
+                      setPage: changePage,
+                      setPageSize: changePageSize,
+                      isLoading,
+                      slowLoading,
+                      count: data.count,
+                      cancelRequest: () => cancelLoadDataRef.current && cancelLoadDataRef.current(), //wrapper
                       validationSources: data.validationSources,
                   },
-                  pagination: {
+                  footer: {
                       dataGrid,
                       page,
                       pageSize,
                       pageSizes,
-                      setPage,
-                      setPageSize,
+                      setPage: changePage,
+                      setPageSize: changePageSize,
+                      isLoading,
+                      count: data.count,
                   },
               }
             : undefined;
@@ -191,28 +253,24 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         virtualScrollbarProps,
         page,
         pageSize,
-        setPage,
-        setPageSize,
         data.validationSources,
+        isLoading,
+        slowLoading,
+        changePage,
+        changePageSize,
+        data.count,
     ]);
 
-    const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(_modelParams => {
-        setPage(0);
-    }, []);
-
-    const setPageFromParams = React.useCallback<GridProp<"onPageChange">>(params => {
-        return setPage(params.page);
-    }, []);
-
-    const setPageSizeFromParams = React.useCallback<GridProp<"onPageSizeChange">>(params => {
-        if (params.pageSize > 25)
-            snackbar.info("Please note that large page sizes may take a while to load");
-        return setPageSize(params.pageSize);
-    }, []);
+    const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(
+        _modelParams => {
+            //to be also the initial request
+            changePage(0);
+        },
+        [changePage]
+    );
 
     return (
         <div className={classes.wrapper}>
-            {loading && <StyledLinearProgress position="top" />}
             <DataGrid
                 page={page}
                 onStateChange={onStateChange}
@@ -228,13 +286,12 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 rowsPerPageOptions={pageSizes}
                 pagination={true}
                 paginationMode="server"
+                sortingMode="server"
                 pageSize={pageSize}
-                onPageChange={setPageFromParams}
-                onPageSizeChange={setPageSizeFromParams}
                 components={components}
                 componentsProps={componentsProps}
             />
-            {loading && <StyledLinearProgress position="bottom" />}
+            {isLoading && <StyledLinearProgress position="bottom" />}
             {detailsInfo && (
                 <DetailsDialog
                     open={isDetailsOpen}
@@ -253,6 +310,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 });
 
 type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
+export type SelfCancellable = (self?: boolean) => void;
 
 const useStyles = makeStyles({
     root: {
@@ -320,12 +378,5 @@ const StyledLinearProgress = styled(LinearProgress)<{ position: "top" | "bottom"
     }
     & .MuiLinearProgress-barColorPrimary {
         background-color: #009688;
-    }
-`;
-
-const StyledCircularProgress = styled(CircularProgress)`
-    position: absolute;
-    &.MuiCircularProgress-colorPrimary {
-        color: #009688;
     }
 `;
