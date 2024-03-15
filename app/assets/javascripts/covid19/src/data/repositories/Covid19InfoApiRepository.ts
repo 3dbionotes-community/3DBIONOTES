@@ -107,7 +107,7 @@ function buildStructure(pdbEntry: PdbEntry): Structure {
     return {
         id: pdbEntry.dbId,
         title: pdbEntry.title,
-        entities,
+        entities: _.uniqBy(entities, "name"),
         pdb: {
             id: pdbEntry.dbId,
             method: pdbEntry.method,
@@ -134,8 +134,8 @@ function buildStructure(pdbEntry: PdbEntry): Structure {
             externalLinks: [{ url: emdb.externalLink, text: "EBI" }],
             resolution: emdb.resolution,
         },
-        organisms,
-        ligands,
+        organisms: _.uniqBy(organisms, "id"),
+        ligands: _.uniqBy(ligands, "id"),
         details: getDetails(pdbEntry.details),
         validations: { pdb: getPdbValidations(pdbEntry, emdb ?? null), emdb: [] },
         queryLink: pdbEntry.queryLink,
