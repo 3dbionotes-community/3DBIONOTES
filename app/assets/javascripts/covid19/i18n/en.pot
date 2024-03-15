@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-02-08T11:48:47.351Z\n"
-"PO-Revision-Date: 2024-02-08T11:48:47.351Z\n"
+"POT-Creation-Date: 2024-03-15T04:08:49.872Z\n"
+"PO-Revision-Date: 2024-03-15T04:08:49.872Z\n"
 
 msgid "No ontologies found."
 msgstr ""
@@ -110,6 +110,15 @@ msgstr ""
 msgid "No {{name}} found"
 msgstr ""
 
+msgid "Page"
+msgstr ""
+
+msgid "of {{pageCount}}."
+msgstr ""
+
+msgid "Go to page"
+msgstr ""
+
 msgid "Ligand IDR"
 msgstr ""
 
@@ -135,6 +144,9 @@ msgid "Ontology"
 msgstr ""
 
 msgid "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
+msgstr ""
+
+msgid "Request has been cancelled"
 msgstr ""
 
 msgid ""
@@ -205,6 +217,12 @@ msgid ""
 "        servers in which the structure/map or the bound ligands\n"
 "        are included. Long lists contain also a VIEW MORE button\n"
 "        to check the whole list."
+msgstr ""
+
+msgid "Cancel request"
+msgstr ""
+
+msgid "Loading request..."
 msgstr ""
 
 msgid "Examples"
