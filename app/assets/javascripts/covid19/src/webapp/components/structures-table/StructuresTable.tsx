@@ -17,6 +17,7 @@ import { useInfoDialog } from "../../hooks/useInfoDialog";
 import { CustomGridPaginationProps } from "./CustomGridPagination";
 import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
 import { useBooleanState } from "../../hooks/useBoolean";
+import { Skeleton } from "./Skeleton";
 import { Footer } from "./Footer";
 import i18n from "../../../utils/i18n";
 
@@ -27,16 +28,11 @@ export interface StructuresTableProps {
     setHighlight: (value: boolean) => void;
 }
 
-export const rowHeight = 220;
-
-const noSort: GridSortModel = [];
-
-const defaultSort: GridSortModel = [{ field: "emdb", sort: "desc" }];
-
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
     const { search, setSearch: setSearch0, highlighted, setHighlight } = props;
     const { compositionRoot } = useAppContext();
     const [isLoading, { enable: showLoading, disable: hideLoading }] = useBooleanState(true);
+    const [showSkeleton, { disable: hideSkeleton }] = useBooleanState(true);
     const [
         slowLoading,
         { enable: enableSlowLoading, disable: disableSlowLoading },
@@ -97,9 +93,10 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     });
 
     const stopLoading = React.useCallback(() => {
+        hideSkeleton();
         hideLoading();
         disableSlowLoading();
-    }, [hideLoading, disableSlowLoading]);
+    }, [hideLoading, disableSlowLoading, hideSkeleton]);
 
     const getData = React.useCallback(
         (page: number, pageSize: number, onSuccess?: () => void) => {
@@ -197,14 +194,21 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         });
     }, [data, openDetailsDialog, openIDRDialog]);
 
-    const components = React.useMemo(() => ({ Toolbar: Toolbar, Footer: Footer }), []);
+    const components = React.useMemo(
+        () => ({ Toolbar: Toolbar, Footer: Footer, LoadingOverlay: Skeleton }),
+        []
+    );
 
     const dataGrid = React.useMemo<DataGridE>(() => {
         return { columns: columns.base, structures };
     }, [columns, structures]);
 
     const componentsProps = React.useMemo<
-        { toolbar: ToolbarProps; footer: CustomGridPaginationProps } | undefined
+        | {
+              toolbar: ToolbarProps;
+              footer: CustomGridPaginationProps;
+          }
+        | undefined
     >(() => {
         return gridApi
             ? {
@@ -287,7 +291,10 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 pagination={true}
                 paginationMode="server"
                 sortingMode="server"
+                filterMode="server"
                 pageSize={pageSize}
+                loading={showSkeleton}
+                headerHeight={headerHeight}
                 components={components}
                 componentsProps={componentsProps}
             />
@@ -312,6 +319,10 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
 export type SelfCancellable = (self?: boolean) => void;
 
+const noSort: GridSortModel = [];
+
+const defaultSort: GridSortModel = [{ field: "emdb", sort: "desc" }];
+
 const useStyles = makeStyles({
     root: {
         "&.MuiDataGrid-root .MuiDataGrid-cell": {
@@ -330,6 +341,9 @@ const useStyles = makeStyles({
 });
 
 const pageSizes = [10, 25, 50, 75, 100];
+
+export const rowHeight = 220;
+export const headerHeight = 56;
 
 const sortingOrder = ["asc" as const, "desc" as const];
 
