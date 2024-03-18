@@ -121,7 +121,7 @@ function buildStructure(pdbEntry: PdbEntry): Structure {
         imageLink: l.imageLink,
         externalLink: l.externalLink,
         inChI: l.IUPACInChIkey,
-        hasIDR: (l.imageData?.length ?? 0) > 0,
+        hasIDR: l.well.length > 0,
     }));
 
     return {
@@ -310,7 +310,8 @@ export interface Ligand {
     IUPACInChI: string;
     isomericSMILES: string;
     canonicalSMILES: string;
-    imageData?: ImageData[];
+    // imageData?: ImageData[];
+    well: string[];
 }
 
 export interface ImageData {
