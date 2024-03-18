@@ -1,10 +1,5 @@
 import React from "react";
-import {
-    GridColDef,
-    GridCellValue,
-    GridSortCellParams,
-    GridStateApi,
-} from "@material-ui/data-grid";
+import { GridColDef } from "@material-ui/data-grid";
 import _ from "lodash";
 import i18n from "../../../utils/i18n";
 import {
@@ -79,15 +74,15 @@ export const columnsBase: Columns = [
     column("pdb", {
         headerName: i18n.t("PDB"),
         width: columnsWidths.pdb,
+        sortable: true,
         renderCell: PdbCell,
-        sortComparator: compareIds,
         renderString: row => row.pdb?.id,
     }),
     column("emdb", {
         headerName: i18n.t("EMDB"),
         width: columnsWidths.emdb,
+        sortable: true,
         renderCell: EmdbCell,
-        sortComparator: compareIds,
         renderString: row => row.emdb?.id,
     }),
     column("entities", {
@@ -191,31 +186,6 @@ export function getColumns(
     );
 
     return { definition, base: columnsBase };
-}
-
-type Ref = { id?: string };
-
-/* Compare IDs keeping always empty values to the end (it only supports single column sorting) */
-function compareIds(
-    cell1: GridCellValue | undefined,
-    cell2: GridCellValue | undefined,
-    cellParams1: GridSortCellParams
-): number {
-    const id1 = (cell1 as Ref)?.id;
-    const id2 = (cell2 as Ref)?.id;
-
-    const isAsc = (cellParams1.api as GridStateApi).state.sorting.sortModel[0]?.sort === "asc";
-    const emptyCmpValue = isAsc ? -1 : +1;
-
-    if (id1 && id2) {
-        return id1 === id2 ? 0 : id1 > id2 ? +1 : -1;
-    } else if (id1 && !id2) {
-        return emptyCmpValue;
-    } else if (!id1 && id2) {
-        return -emptyCmpValue;
-    } else {
-        return 0;
-    }
 }
 
 export const styles = {

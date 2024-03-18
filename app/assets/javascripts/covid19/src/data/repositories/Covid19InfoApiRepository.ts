@@ -12,6 +12,7 @@ import {
     Covid19InfoRepository,
     GetOptions,
     SearchOptions,
+    SortingFields,
 } from "../../domain/repositories/Covid19InfoRepository";
 import { data } from "../covid19-data";
 import { routes } from "../../routes";
@@ -26,6 +27,7 @@ export class Covid19InfoApiRepository implements Covid19InfoRepository {
                 page: options.page ?? 0,
                 pageSize: options.pageSize ?? 10,
                 filter: options.filter,
+                sort: options.sort,
             }),
             validationSources: getPdbRefModelSources(),
         }).map(({ pdbEntries, validationSources }) => ({
@@ -59,11 +61,18 @@ function getPdbRefModelSources(): FutureData<ValidationSource[]> {
     );
 }
 
+const sortingFields: Record<SortingFields, string> = {
+    pdb: "dbId",
+    title: "title",
+    releaseDate: "relDate",
+    emdb: "emdb__dbId",
+};
+
 function getPdbEntries(
     options: Required<GetOptions>
 ): FutureData<{ count: number; structures: Structure[] }> {
     const { bionotesApi: _bionotesApi } = routes;
-    const { page, pageSize, filter: f } = options;
+    const { page, pageSize, filter: f, sort } = options;
 
     const filterParams = {
         is_antibody: f.antibodies,
@@ -80,6 +89,7 @@ function getPdbEntries(
             {
                 limit: pageSize,
                 page: page + 1,
+                ordering: `${sort.order === "asc" ? "" : "-"}${sortingFields[sort.field]}`,
                 ..._.pickBy(filterParams, v => Boolean(v)),
             },
             v => v?.toString()

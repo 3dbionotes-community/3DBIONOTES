@@ -7,10 +7,16 @@ export interface Covid19InfoRepository {
     autoSuggestions(search: string): string[];
 }
 
+export type SortingFields = "pdb" | "emdb" | "title" | "releaseDate";
+
 export interface GetOptions {
     page?: number;
     pageSize?: number;
     filter: Partial<Record<FilterKey, boolean>>;
+    sort: {
+        field: SortingFields;
+        order: "asc" | "desc";
+    };
 }
 
 export interface SearchOptions {

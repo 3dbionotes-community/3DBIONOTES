@@ -3,9 +3,9 @@ import React from "react";
 import styled from "styled-components";
 import { LinearProgress, makeStyles } from "@material-ui/core";
 import { DataGrid, DataGridProps, GridSortModel } from "@material-ui/data-grid";
-import { Covid19Info, updateStructures } from "../../../domain/entities/Covid19Info";
+import { Covid19Info } from "../../../domain/entities/Covid19Info";
 import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
-import { Covid19Filter, Id } from "../../../domain/entities/Covid19Info";
+import { Covid19Filter } from "../../../domain/entities/Covid19Info";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
 import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
@@ -51,7 +51,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const { info: idrOptions, useDialogState: idrDialogState } = useInfoDialog<IDROptions>();
     const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
 
-    const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
+    const [sortModel, setSortModel] = React.useState<GridSortModel>(noSort);
     const [filterState, setFilterState] = React.useState(initialFilterState);
 
     const openDetailsDialog = React.useCallback(
@@ -76,14 +76,11 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         updateScrollBarFromStateChange,
     } = useVirtualScrollbarForDataGrid();
 
-    const [renderedRowIds, setRenderedRowsFromState] = useRenderedRows();
-
     const onStateChange = React.useCallback<NonNullable<DataGridProps["onStateChange"]>>(
         params => {
-            setRenderedRowsFromState(params);
             updateScrollBarFromStateChange(params);
         },
-        [setRenderedRowsFromState, updateScrollBarFromStateChange]
+        [updateScrollBarFromStateChange]
     );
 
     const [data, setData] = React.useState<Covid19Info>({
@@ -102,8 +99,17 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         (page: number, pageSize: number, onSuccess?: () => void) => {
             showLoading();
             if (pageSize > 25) enableSlowLoading();
+
+            const sort =
+                sortModel[0] && sortFieldSupported(sortModel[0].field) && sortModel[0].sort
+                    ? {
+                          field: sortModel[0].field,
+                          order: sortModel[0].sort,
+                      }
+                    : ({ field: "releaseDate", order: "desc" } as const);
+
             const cancelGetData = compositionRoot.getCovid19Info
-                .execute({ page, pageSize, filter: filterState })
+                .execute({ page, pageSize, filter: filterState, sort })
                 .bitap(() => stopLoading())
                 .run(
                     data => {
@@ -114,6 +120,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                     err => {
                         console.error(err.message);
                         snackbar.error(err.message);
+                        cancelLoadDataRef.current = () => {};
                     }
                 );
 
@@ -129,7 +136,15 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
             return cancelData;
         },
-        [compositionRoot, stopLoading, enableSlowLoading, showLoading, snackbar, filterState]
+        [
+            compositionRoot,
+            stopLoading,
+            enableSlowLoading,
+            showLoading,
+            snackbar,
+            filterState,
+            sortModel,
+        ]
     );
 
     const changePage = React.useCallback(
@@ -163,21 +178,13 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 query: value,
             });
             setSearch0(value);
-            setSortModel(value ? noSort : defaultSort);
+            setSortModel(sort => (value ? noSort : sort));
         },
         [setSearch0, changePage]
     );
 
     window.app = { data };
-
-    React.useEffect(() => {
-        compositionRoot.addDynamicInfo.execute(data, { ids: renderedRowIds }).then(structures => {
-            setData(data => updateStructures(data, structures));
-        });
-    }, [compositionRoot, data, renderedRowIds]);
-
     const filteredData = data;
-
     const { structures } = filteredData;
 
     const columns = React.useMemo(() => {
@@ -258,13 +265,9 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         data.count,
     ]);
 
-    const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(
-        _modelParams => {
-            //to be also the initial request
-            changePage(0);
-        },
-        [changePage]
-    );
+    const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(modelParams => {
+        setSortModel(modelParams.sortModel);
+    }, []);
 
     const onFilterStateChange = () => {
         changePage(0);
@@ -275,6 +278,9 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     return (
         <div className={classes.wrapper}>
             <DataGrid
+                paginationMode="server"
+                sortingMode="server"
+                filterMode="server"
                 page={page}
                 onStateChange={onStateChange}
                 sortModel={sortModel}
@@ -288,9 +294,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 disableColumnMenu={true}
                 rowsPerPageOptions={pageSizes}
                 pagination={true}
-                paginationMode="server"
-                sortingMode="server"
-                filterMode="server"
                 pageSize={pageSize}
                 loading={showSkeleton}
                 headerHeight={headerHeight}
@@ -320,8 +323,6 @@ export type SelfCancellable = (self?: boolean) => void;
 
 const noSort: GridSortModel = [];
 
-const defaultSort: GridSortModel = [{ field: "emdb", sort: "desc" }];
-
 const useStyles = makeStyles({
     root: {
         "&.MuiDataGrid-root .MuiDataGrid-cell": {
@@ -344,7 +345,7 @@ const pageSizes = [10, 25, 50, 75, 100];
 export const rowHeight = 220;
 export const headerHeight = 56;
 
-const sortingOrder = ["asc" as const, "desc" as const];
+const sortingOrder = ["asc" as const, "desc" as const, null];
 
 const initialFilterState: Covid19Filter = {
     antibodies: false,
@@ -356,28 +357,8 @@ const initialFilterState: Covid19Filter = {
     idr: false,
 };
 
-function useRenderedRows() {
-    const [renderedRowIds, setRenderedRowIds] = React.useState<Id[]>([]);
-
-    const setRenderedRowsFromState = React.useCallback<NonNullable<DataGridProps["onStateChange"]>>(
-        gridParams => {
-            const { api } = gridParams;
-            const { page, pageSize } = gridParams.state.pagination;
-            const sortedIds = api.getSortedRowIds() as Id[];
-            const visibleIds = Array.from(api.getVisibleRowModels().keys()) as string[];
-
-            const ids = _(sortedIds)
-                .intersection(visibleIds)
-                .drop(page * pageSize)
-                .take(pageSize)
-                .value();
-
-            setRenderedRowIds(prevIds => (_.isEqual(prevIds, ids) ? prevIds : ids));
-        },
-        []
-    );
-
-    return [renderedRowIds, setRenderedRowsFromState] as const;
+function sortFieldSupported(field: string): field is "pdb" | "title" | "emdb" | "releaseDate" {
+    return ["pdb", "title", "emdb", "releaseDate"].includes(field);
 }
 
 const StyledLinearProgress = styled(LinearProgress)<{ position: "top" | "bottom" }>`
