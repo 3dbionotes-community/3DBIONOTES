@@ -1,4 +1,4 @@
-import { Covid19Info, Covid19Filter } from "../entities/Covid19Info";
+import { Covid19Info, Covid19Filter, FilterKey } from "../entities/Covid19Info";
 import { FutureData } from "../entities/FutureData";
 
 export interface Covid19InfoRepository {
@@ -10,6 +10,7 @@ export interface Covid19InfoRepository {
 export interface GetOptions {
     page?: number;
     pageSize?: number;
+    filter: Partial<Record<FilterKey, boolean>>;
 }
 
 export interface SearchOptions {

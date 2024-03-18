@@ -52,7 +52,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
 
     const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
-    const [filterState, setFilterState0] = React.useState(initialFilterState);
+    const [filterState, setFilterState] = React.useState(initialFilterState);
 
     const openDetailsDialog = React.useCallback(
         (options: DetailsDialogOptions, gaLabel: string) => {
@@ -103,7 +103,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
             showLoading();
             if (pageSize > 25) enableSlowLoading();
             const cancelGetData = compositionRoot.getCovid19Info
-                .execute({ page, pageSize })
+                .execute({ page, pageSize, filter: filterState })
                 .bitap(() => stopLoading())
                 .run(
                     data => {
@@ -129,7 +129,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
             return cancelData;
         },
-        [compositionRoot, stopLoading, enableSlowLoading, showLoading, snackbar]
+        [compositionRoot, stopLoading, enableSlowLoading, showLoading, snackbar, filterState]
     );
 
     const changePage = React.useCallback(
@@ -144,20 +144,15 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
     const changePageSize = React.useCallback(
         (pageSize: number) => {
+            if (cancelLoadDataRef.current) {
+                cancelLoadDataRef.current(true);
+            }
             getData(0, pageSize, () => {
                 setPageSize(pageSize);
                 setPage(0);
             });
         },
         [setPage, getData]
-    );
-
-    const setFilterState = React.useCallback(
-        (value: React.SetStateAction<Covid19Filter>) => {
-            changePage(0);
-            setFilterState0(value);
-        },
-        [changePage]
     );
 
     const setSearch = React.useCallback(
@@ -181,9 +176,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         });
     }, [compositionRoot, data, renderedRowIds]);
 
-    const filteredData = React.useMemo(() => {
-        return compositionRoot.searchCovid19Info.execute({ data, search, filter: filterState });
-    }, [compositionRoot, data, search, filterState]);
+    const filteredData = data;
 
     const { structures } = filteredData;
 
@@ -272,6 +265,12 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         },
         [changePage]
     );
+
+    const onFilterStateChange = () => {
+        changePage(0);
+    };
+
+    React.useEffect(onFilterStateChange, [filterState, changePage]);
 
     return (
         <div className={classes.wrapper}>

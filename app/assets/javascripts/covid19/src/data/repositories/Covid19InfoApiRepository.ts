@@ -25,8 +25,9 @@ export class Covid19InfoApiRepository implements Covid19InfoRepository {
             pdbEntries: getPdbEntries({
                 page: options.page ?? 0,
                 pageSize: options.pageSize ?? 10,
+                filter: options.filter,
             }),
-            validationSources: getValidationSources(),
+            validationSources: getPdbRefModelSources(),
         }).map(({ pdbEntries, validationSources }) => ({
             count: pdbEntries.count,
             structures: pdbEntries.structures,
@@ -45,8 +46,7 @@ export class Covid19InfoApiRepository implements Covid19InfoRepository {
     }
 }
 
-//to be removed
-function getValidationSources(): FutureData<ValidationSource[]> {
+function getPdbRefModelSources(): FutureData<ValidationSource[]> {
     return Future.success(
         data.RefModelSources.map(
             (source): ValidationSource => ({
@@ -59,15 +59,35 @@ function getValidationSources(): FutureData<ValidationSource[]> {
     );
 }
 
-function getPdbEntries(options: {
-    page: number;
-    pageSize: number;
-}): FutureData<{ count: number; structures: Structure[] }> {
+function getPdbEntries(
+    options: Required<GetOptions>
+): FutureData<{ count: number; structures: Structure[] }> {
     const { bionotesApi: _bionotesApi } = routes;
-    const { page, pageSize } = options;
+    const { page, pageSize, filter: f } = options;
+
+    const filterParams = {
+        is_antibody: f.antibodies,
+        is_nanobody: f.nanobodies,
+        is_sybody: f.sybodies,
+        is_pdb_redo: f.pdbRedo,
+        is_cstf: f.cstf,
+        is_ceres: f.ceres,
+        is_idr: f.idr,
+    };
+
+    const params = new URLSearchParams(
+        _.mapValues(
+            {
+                limit: pageSize,
+                page: page + 1,
+                ..._.pickBy(filterParams, v => Boolean(v)),
+            },
+            v => v?.toString()
+        )
+    );
 
     const pagination$ = getJSONData<Pagination<PdbEntry>>(
-        `http://server:8000/api/pdbentry/?limit=${pageSize}&page=${page + 1}` //django starts from 1
+        `http://server:8000/api/pdbentry/?${params.toString()}` //django starts from 1
     );
 
     return pagination$.map(({ count, results: pdbEntries }) => ({
