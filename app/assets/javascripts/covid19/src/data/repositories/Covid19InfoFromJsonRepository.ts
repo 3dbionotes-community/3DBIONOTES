@@ -104,14 +104,6 @@ function getStructures(): Structure[] {
     return _.uniqBy(structures, getId);
 }
 
-function extractExactMatches(search: string) {
-    const matches = search.match(/"[^"]+"/g)?.map(match => match.slice(1, -1)) ?? [];
-    return {
-        search: search.replace('"', ""),
-        matches,
-    };
-}
-
 function getValidationSources(): ValidationSource[] {
     return data.RefModelSources.map(
         (source): ValidationSource => ({
