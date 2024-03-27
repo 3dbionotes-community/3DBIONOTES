@@ -11,7 +11,7 @@ import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
 import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
 import { useAppContext } from "../../contexts/app-context";
 import { DetailsDialog } from "./DetailsDialog";
-import { sendAnalytics } from "../../../utils/analytics";
+import { sendAnalytics as _sendAnalytics } from "../../../utils/analytics";
 import { IDRDialog } from "./IDRDialog";
 import { useInfoDialog } from "../../hooks/useInfoDialog";
 import { CustomGridPaginationProps } from "./CustomGridPagination";
@@ -109,7 +109,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                     : ({ field: "releaseDate", order: "desc" } as const);
 
             const cancelGetData = compositionRoot.getCovid19Info
-                .execute({ page, pageSize, filter: filterState, sort })
+                .execute({ page, pageSize, filter: filterState, sort, query: search })
                 .bitap(() => stopLoading())
                 .run(
                     data => {
@@ -144,6 +144,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
             snackbar,
             filterState,
             sortModel,
+            search,
         ]
     );
 
@@ -172,15 +173,15 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
     const setSearch = React.useCallback(
         (value: string) => {
-            changePage(0);
-            sendAnalytics("search", {
-                on: "covid_table",
-                query: value,
-            });
+            // ANALYTICS TO BE REBUILD
+            // sendAnalytics("search", {
+            //     on: "covid_table",
+            //     query: value,
+            // });
             setSearch0(value);
             setSortModel(sort => (value ? noSort : sort));
         },
-        [setSearch0, changePage]
+        [setSearch0]
     );
 
     window.app = { data };

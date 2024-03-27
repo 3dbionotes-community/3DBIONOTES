@@ -219,30 +219,6 @@ export type FilterKey = typeof filterKeys[number];
 
 export type Covid19Filter = Record<FilterKey, boolean>;
 
-export function filterEntities(entities: Entity[], filterState: Covid19Filter): Entity[] {
-    return entities.filter(
-        entity =>
-            entity.isAntibody === filterState.antibodies &&
-            entity.isNanobody === filterState.nanobodies &&
-            entity.isSybody === filterState.sybodies
-    );
-}
-
-export function filterLigands(ligands: Ligand[]): Ligand[] {
-    return ligands.filter(ligand => ligand.hasIDR);
-}
-
-export function filterPdbValidations(
-    PdbValidations: PdbValidation[],
-    filterState: Covid19Filter
-): boolean {
-    return (
-        (!filterState.pdbRedo || _.some(PdbValidations, v => v?.source === "PDB-REDO")) &&
-        (!filterState.cstf || _.some(PdbValidations, v => v?.source === "CSTF")) &&
-        (!filterState.ceres || _.some(PdbValidations, v => v?.source === "CERES"))
-    );
-}
-
 export function getTranslations() {
     return {
         filterKeys: {

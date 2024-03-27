@@ -3,7 +3,6 @@ import { BrowserDataGridRepository } from "./data/repositories/BrowserDataGridRe
 import { ExportStructuresUseCase } from "./domain/usecases/ExportStructuresUseCase";
 import { GetCovid19InfoUseCase } from "./domain/usecases/GetCovid19InfoUseCase";
 import { GetAutoSuggestionsUseCase } from "./domain/usecases/GetAutoSuggestionsUseCase";
-import { SearchCovid19InfoUseCase } from "./domain/usecases/SearchCovid19InfoUseCase";
 import { LocalStorageCacheRepository } from "./data/repositories/LocalStorageCacheRepository";
 import { LigandsApiRepository } from "./data/repositories/LigandsApiRepository";
 import { GetLigandImageDataResourcesUseCase } from "./domain/usecases/GetLigandImageDataResourcesUseCase";
@@ -12,7 +11,9 @@ import { BionotesOrganismRepository } from "./data/repositories/BionotesOrganism
 import { Covid19InfoApiRepository } from "./data/repositories/Covid19InfoApiRepository";
 
 export function getCompositionRoot() {
-    const covid19InfoJsonRepository = new Covid19InfoFromJsonRepository();
+    /* just leaving for reference but intended to remove
+    whenever all logic moves to ws */
+    const _covid19InfoJsonRepository = new Covid19InfoFromJsonRepository();
     const covid19InfoApiRepository = new Covid19InfoApiRepository();
     const dataGridRepository = new BrowserDataGridRepository();
     const _cacheRepository = new LocalStorageCacheRepository();
@@ -22,8 +23,7 @@ export function getCompositionRoot() {
 
     return {
         getCovid19Info: new GetCovid19InfoUseCase(covid19InfoApiRepository),
-        getAutoSuggestions: new GetAutoSuggestionsUseCase(covid19InfoJsonRepository),
-        searchCovid19Info: new SearchCovid19InfoUseCase(covid19InfoJsonRepository),
+        getAutoSuggestions: new GetAutoSuggestionsUseCase(covid19InfoApiRepository),
         exportStructures: new ExportStructuresUseCase(dataGridRepository),
         ligands: {
             getIDR: new GetLigandImageDataResourcesUseCase(

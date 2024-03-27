@@ -1,27 +1,20 @@
 import _ from "lodash";
-import MiniSearch, { Options, SearchResult } from "minisearch";
+import MiniSearch, { Options } from "minisearch";
 import {
     Covid19Info,
     Details,
     Emdb,
     Entity,
-    Covid19Filter,
-    filterEntities,
     Maybe,
     Ligand,
     Organism,
     Pdb,
     Structure,
     PdbValidation,
-    filterPdbValidations,
     ValidationSource,
     ValidationMethod,
-    filterLigands,
 } from "../../domain/entities/Covid19Info";
-import {
-    Covid19InfoRepository,
-    SearchOptions,
-} from "../../domain/repositories/Covid19InfoRepository";
+import { Covid19InfoRepository } from "../../domain/repositories/Covid19InfoRepository";
 import { SearchOptions as MiniSearchSearchOptions } from "minisearch";
 import { cache } from "../../utils/cache";
 import { data } from "../covid19-data";
@@ -46,81 +39,12 @@ export class Covid19InfoFromJsonRepository implements Covid19InfoRepository {
         return Future.success(this.info);
     }
 
-    search(options: SearchOptions): Covid19Info {
-        const { data, search = "", filter: filterState } = options;
-        const { structures } = data;
-        const isTextFilterEnabled = Boolean(search.trim());
-
-        const exactMatch = extractExactMatches(search);
-
-        const structuresFilteredByText = isTextFilterEnabled
-            ? this.searchByText(structures, exactMatch.search, exactMatch.matches)
-            : structures;
-
-        const structuresFilteredByTextAndBody = filterState
-            ? this.filter(structuresFilteredByText, filterState)
-            : structuresFilteredByText;
-        return { ...data, structures: structuresFilteredByTextAndBody };
-    }
-
-    autoSuggestions(search: string): string[] {
+    autoSuggestions(search: string): FutureData<string[]> {
         const miniSearch = this.getMiniSearch();
         const structuresByText = miniSearch
             .autoSuggest(search, this.searchOptions)
             .map(result => result.suggestion);
-        return structuresByText;
-    }
-
-    private filter(structures: Structure[], filterState: Covid19Filter): Structure[] {
-        const isEntitiesStateEnabled =
-            filterState.antibodies || filterState.nanobodies || filterState.sybodies;
-        const isPdbValidationsFilterEnabled =
-            filterState.pdbRedo || filterState.cstf || filterState.ceres;
-        const isIDREnabled = filterState.idr;
-
-        if (!isEntitiesStateEnabled && !isPdbValidationsFilterEnabled && !isIDREnabled)
-            return structures;
-        const structuresWithValidations = isPdbValidationsFilterEnabled
-            ? structures.filter(structure =>
-                  !_.isEmpty(structure.validations.pdb)
-                      ? filterPdbValidations(structure.validations.pdb, filterState)
-                      : false
-              )
-            : structures;
-        const structuresWithEntities = isEntitiesStateEnabled
-            ? structuresWithValidations.filter(
-                  structure => !_.isEmpty(filterEntities(structure.entities, filterState))
-              )
-            : structuresWithValidations;
-        const structuresWithIDR = isIDREnabled
-            ? structuresWithEntities.filter(
-                  structure => !_.isEmpty(filterLigands(structure.ligands))
-              )
-            : structuresWithEntities;
-        return structuresWithIDR;
-    }
-
-    private searchByText(
-        structures: Structure[],
-        search: string,
-        matches: string[] = []
-    ): Structure[] {
-        const miniSearch = this.getMiniSearch();
-        const searchOptions = !_.isEmpty(matches)
-            ? {
-                  ...this.searchOptions,
-                  filter: (result: SearchResult) =>
-                      _.isEmpty(
-                          _.difference(
-                              matches.map(m => m.toLowerCase()),
-                              result.terms.map(m => m.toLowerCase())
-                          )
-                      ),
-              }
-            : this.searchOptions;
-        const results = miniSearch.search(search, searchOptions);
-        const matchingIds = results.map(getId);
-        return _(structures).keyBy(getId).at(matchingIds).compact().value();
+        return Future.success(structuresByText);
     }
 
     @cache()

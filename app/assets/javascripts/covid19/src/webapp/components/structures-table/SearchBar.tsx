@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import { TextField, InputAdornment, Chip, CircularProgress } from "@material-ui/core";
+import { TextField, InputAdornment, Chip } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
@@ -30,16 +30,20 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const { compositionRoot } = useAppContext();
     const { value, setValue, highlighted, setHighlight, filterState, setFilterState } = props;
     const [open, setOpen] = React.useState(false);
-    const [stateValue, setValueDebounced] = useDebouncedSetter(value, setValue, { delay: 500 });
+    const [stateValue, setStateValue] = React.useState(value);
+    const [textValue, setTextValueDebounced] = useDebouncedSetter(stateValue, setStateValue, {
+        delay: 300,
+    });
     const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState(searchExamples);
-    const [loading, setLoading] = React.useState(false);
     const selectedFilterNames = filterKeys.filter(key => filterState[key]);
 
     React.useEffect(() => {
-        setLoading(true);
-        const autoSuggestions = compositionRoot.getAutoSuggestions.execute(stateValue);
-        setAutoSuggestionOptions(stateValue === "" ? searchExamples : autoSuggestions);
-        setLoading(false);
+        if (stateValue === "") setAutoSuggestionOptions(searchExamples);
+        else if (stateValue.length < 2) setAutoSuggestionOptions([]);
+        else
+            compositionRoot.getAutoSuggestions
+                .execute(stateValue)
+                .run(suggestions => setAutoSuggestionOptions(suggestions), console.error);
     }, [stateValue, compositionRoot.getAutoSuggestions]);
 
     const removeChip = React.useCallback(
@@ -77,7 +81,6 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                 <StyledAutocomplete<string>
                     id="covid19-searchbar-autocomplete"
                     options={autoSuggestionOptions}
-                    loading={loading}
                     open={open}
                     fullWidth={true}
                     onOpen={() => setOpen(true)}
@@ -86,8 +89,8 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                     getOptionSelected={(option, value) =>
                         option.toUpperCase() === value.toUpperCase()
                     }
-                    inputValue={stateValue}
-                    onInputChange={(_event, newInputValue) => setValueDebounced(newInputValue)}
+                    inputValue={textValue}
+                    onInputChange={(_event, newInputValue) => setTextValueDebounced(newInputValue)}
                     renderOption={(option, { inputValue }) => {
                         const matches = match(option, inputValue);
                         const parts = parse(option, matches);
@@ -96,7 +99,10 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                                 {parts.map((part, index) => (
                                     <span
                                         key={index}
-                                        style={{ fontWeight: part.highlight ? 700 : 400 }}
+                                        style={{
+                                            fontWeight:
+                                                part.highlight || inputValue.length < 2 ? 400 : 700,
+                                        }}
                                     >
                                         {part.text}
                                     </span>
@@ -108,9 +114,9 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                         <StyledTextField
                             {...params}
                             variant="outlined"
-                            value={stateValue}
+                            value={textValue}
                             onFocus={removeHighlight}
-                            onChange={ev => setValueDebounced(ev.target.value)}
+                            onChange={ev => setTextValueDebounced(ev.target.value)}
                             placeholder={i18n.t(
                                 "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
                             )}
@@ -118,9 +124,6 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                                 ...params.InputProps,
                                 endAdornment: (
                                     <React.Fragment>
-                                        {loading ? (
-                                            <CircularProgress color="inherit" size={20} />
-                                        ) : null}
                                         <InputAdornment position="end">
                                             <SearchIcon />
                                         </InputAdornment>
