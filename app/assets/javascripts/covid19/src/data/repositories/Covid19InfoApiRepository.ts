@@ -75,7 +75,7 @@ const sortingFields: Record<SortingFields, string> = {
     pdb: "dbId",
     title: "title",
     releaseDate: "relDate",
-    emdb: "emdb__dbId",
+    emdb: "emdbs__dbId",
 };
 
 function getPdbEntries(
@@ -118,7 +118,9 @@ function getPdbEntries(
 }
 
 function buildStructure(pdbEntry: PdbEntry): Structure {
-    const { emdb } = pdbEntry;
+    const { emdbs } = pdbEntry;
+
+    const emdb = _.first(emdbs);
 
     const entities = pdbEntry.entities.map(e => ({
         ...e,
@@ -145,6 +147,11 @@ function buildStructure(pdbEntry: PdbEntry): Structure {
         hasIDR: l.well.length > 0,
     }));
 
+    const queryLink = `/${pdbEntry.dbId.toLowerCase()}${emdb ? emdb.dbId.toUpperCase() : ""}`;
+    const pdbQueryLink = `/${pdbEntry.dbId.toLowerCase()}${
+        emdb ? "+!" + emdb.dbId.toUpperCase() : ""
+    }`;
+
     return {
         id: pdbEntry.dbId,
         title: pdbEntry.title,
@@ -154,12 +161,8 @@ function buildStructure(pdbEntry: PdbEntry): Structure {
             method: pdbEntry.method,
             ligands: pdbEntry.ligands.map(ligand => ligand.IUPACInChIkey),
             keywords: pdbEntry.keywords,
-            queryLink: `/${pdbEntry.dbId.toLowerCase()}${
-                emdb ? "+!" + emdb.dbId.toUpperCase() : ""
-            }`,
-            imageUrl:
-                pdbEntry.imageLink ||
-                `https://www.ebi.ac.uk/pdbe/static/entry/${pdbEntry.dbId}_deposited_chain_front_image-200x200.png`,
+            queryLink: pdbQueryLink,
+            imageUrl: pdbEntry.imageLink,
             externalLinks: [{ url: pdbEntry.externalLink, text: "EBI" }],
             entities,
         },
@@ -179,7 +182,7 @@ function buildStructure(pdbEntry: PdbEntry): Structure {
         ligands: _.uniqBy(ligands, "id"),
         details: getDetails(pdbEntry.details),
         validations: { pdb: getPdbValidations(pdbEntry, emdb ?? null), emdb: [] },
-        queryLink: pdbEntry.queryLink,
+        queryLink: queryLink,
     };
 }
 
@@ -258,7 +261,7 @@ type Pagination<T extends object> = {
 export interface PdbEntry {
     dbId: string;
     title: string;
-    emdb?: Emdb;
+    emdbs: Emdb[];
     method: string;
     keywords: string;
     refModels: RefModel[];
@@ -268,7 +271,6 @@ export interface PdbEntry {
     details: Detail[];
     imageLink: string;
     externalLink: string;
-    queryLink: string;
 }
 
 export interface Emdb {
