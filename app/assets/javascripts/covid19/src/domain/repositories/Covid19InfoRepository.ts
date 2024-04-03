@@ -9,9 +9,9 @@ export interface Covid19InfoRepository {
 export type SortingFields = "pdb" | "emdb" | "title" | "releaseDate";
 
 export interface GetOptions {
-    page?: number;
-    pageSize?: number;
-    filter: Partial<Covid19Filter>;
+    page: number;
+    pageSize: number;
+    filter: Covid19Filter;
     sort: {
         field: SortingFields;
         order: "asc" | "desc";

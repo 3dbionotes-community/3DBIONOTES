@@ -41,15 +41,15 @@ export class Future<E, D> {
         });
     }
 
-    bitap(effectFn: () => void): Future<E, D> {
+    bitap(dataEffectFn: (data: D) => void, errorEffectFn: (error: E) => void): Future<E, D> {
         return this.bimap(
             data => {
-                effectFn();
+                dataEffectFn(data);
                 return data;
             },
-            error => {
-                effectFn();
-                return error;
+            err => {
+                errorEffectFn(err);
+                return err;
             }
         );
     }

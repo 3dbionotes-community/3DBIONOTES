@@ -2,6 +2,7 @@ import React from "react";
 import TablePagination from "@material-ui/core/TablePagination";
 import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
 import { useBooleanState } from "../../hooks/useBoolean";
+import { makeStyles } from "@material-ui/styles";
 
 export interface CustomGridPaginationProps {
     count: number;
@@ -17,8 +18,9 @@ export const CustomGridPagination: React.FC<CustomGridPaginationProps> = React.m
     const { count, page, pageSize, pageSizes, setPage, setPageSize, isLoading } = props;
     const [showInfo, { disable }] = useBooleanState(true);
     const snackbar = useSnackbar();
+    const classes = useStyles();
 
-    const onPageChange = React.useCallback(
+    const setPageFromEvent = React.useCallback(
         (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
             setPage(newPage);
         },
@@ -41,10 +43,10 @@ export const CustomGridPagination: React.FC<CustomGridPaginationProps> = React.m
         <React.Fragment>
             <TablePagination
                 component="div" /* Default component is td, but we the parent component is not a table */
-                style={styles.table}
+                className={classes.table}
                 count={count}
                 page={page}
-                onPageChange={onPageChange}
+                onPageChange={setPageFromEvent}
                 rowsPerPageOptions={pageSizes}
                 rowsPerPage={pageSize || 10}
                 onRowsPerPageChange={onPageSizeChange}
@@ -56,6 +58,6 @@ export const CustomGridPagination: React.FC<CustomGridPaginationProps> = React.m
     );
 });
 
-const styles = {
-    table: { borderBottom: "none" as const, padding: 0 },
-};
+const useStyles = makeStyles({
+    table: { borderBottom: "none", padding: 0 },
+});

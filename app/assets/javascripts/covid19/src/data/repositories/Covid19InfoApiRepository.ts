@@ -22,13 +22,7 @@ import { Future } from "../utils/future";
 export class Covid19InfoApiRepository implements Covid19InfoRepository {
     get(options: GetOptions): FutureData<Covid19Info> {
         const covidInfo$ = Future.joinObj({
-            pdbEntries: getPdbEntries({
-                page: options.page ?? 0,
-                pageSize: options.pageSize ?? 10,
-                filter: options.filter,
-                sort: options.sort,
-                query: options.query ?? "",
-            }),
+            pdbEntries: getPdbEntries(options),
             validationSources: getPdbRefModelSources(),
         }).map(({ pdbEntries, validationSources }) => ({
             count: pdbEntries.count,
@@ -50,7 +44,7 @@ export class Covid19InfoApiRepository implements Covid19InfoRepository {
             _(results)
                 .map(v => v.trim())
                 .uniq()
-                .sort((a, b) => (a === search ? -1 : b === search ? 1 : 0))
+                .sortBy(v => v !== search)
                 .value()
         );
 
@@ -79,7 +73,7 @@ const sortingFields: Record<SortingFields, string> = {
 };
 
 function getPdbEntries(
-    options: Required<GetOptions>
+    options: GetOptions
 ): FutureData<{ count: number; structures: Structure[] }> {
     const { bionotesApi: _bionotesApi } = routes;
     const { page, pageSize, filter: f, sort, query } = options;
@@ -92,7 +86,7 @@ function getPdbEntries(
         is_cstf: f.cstf,
         is_ceres: f.ceres,
         is_idr: f.idr,
-        q: query,
+        q: query ?? "",
     };
 
     const params = new URLSearchParams(
@@ -140,7 +134,7 @@ function buildStructure(pdbEntry: PdbEntry): Structure {
     const ligands = pdbEntry.ligands.map(l => ({
         id: l.dbId,
         name: l.name,
-        details: l.name, //huh¿ (database issue btw)
+        details: l.name, //on database, details and name are the same...
         imageLink: l.imageLink,
         externalLink: l.externalLink,
         inChI: l.IUPACInChIkey,
@@ -203,45 +197,41 @@ function getValidationQueryLink(pdbId: string, validation: RefModel) {
 function getPdbValidations(pdb: PdbEntry, emdb: Emdb | null): PdbValidation[] {
     const pdbId = pdb.dbId.toLowerCase();
     const emdbId = emdb && emdb.dbId.toUpperCase();
-    const getQueryLink = (validation: RefModel) => {
-        return `/${pdbId}${emdbId ? "+" + emdbId : ""}|${getValidationQueryLink(
-            pdbId,
-            validation
-        )}`;
+
+    const pdbValidation = (validation: RefModel): PdbValidation | undefined => {
+        const validationQuery = getValidationQueryLink(pdbId, validation);
+        const queryLink = `/${pdbId}${emdbId ? "+" + emdbId : ""}|${validationQuery}`;
+
+        switch (validation.source) {
+            case "PDB-REDO":
+                return {
+                    ...validation,
+                    queryLink,
+                    badgeColor: "w3-orange",
+                };
+            case "CSTF":
+                return {
+                    ...validation,
+                    queryLink,
+                    badgeColor: "w3-cyan",
+                };
+            case "CERES":
+                return {
+                    ...validation,
+                    queryLink: undefined,
+                    badgeColor: "w3-blue",
+                };
+            default:
+                console.error(`Validation not supported: "${validation.source}"`);
+                return undefined;
+        }
     };
-    return pdb.refModels
-        ? _.compact(
-              pdb.refModels?.map((validation): PdbValidation | undefined => {
-                  switch (validation.source) {
-                      case "PDB-REDO":
-                          return {
-                              ...validation,
-                              queryLink: getQueryLink(validation),
-                              badgeColor: "w3-orange",
-                          };
-                      case "CSTF":
-                          return {
-                              ...validation,
-                              queryLink: getQueryLink(validation),
-                              badgeColor: "w3-cyan",
-                          };
-                      case "CERES":
-                          return {
-                              ...validation,
-                              queryLink: undefined,
-                              badgeColor: "w3-blue",
-                          };
-                      default:
-                          console.error(`Validation not supported: "${validation.source}"`);
-                          return undefined;
-                  }
-              })
-          )
-        : [];
+
+    return _.compact(pdb.refModels.map(pdbValidation));
 }
 
 function getDetails(details: Detail[]): Maybe<Details> {
-    const detail = details?.[0];
+    const detail = _.first(details);
     if (!detail) return;
 
     return {
@@ -258,7 +248,7 @@ type Pagination<T extends object> = {
     results: T[];
 };
 
-export interface PdbEntry {
+interface PdbEntry {
     dbId: string;
     title: string;
     emdbs: Emdb[];
@@ -273,7 +263,7 @@ export interface PdbEntry {
     externalLink: string;
 }
 
-export interface Emdb {
+interface Emdb {
     dbId: string;
     title: string;
     emMethod: string;
@@ -284,12 +274,10 @@ export interface Emdb {
     externalLink: string;
 }
 
-export type SourceName = PdbSourceName | "IDR";
-export type PdbSourceName = "PDB-REDO" | "CSTF" | "CERES";
-export type MethodName = PdbMethodName | "IDR";
-export type PdbMethodName = "PDB-Redo" | "Isolde" | "Refmac" | "PHENIX";
+type PdbSourceName = "PDB-REDO" | "CSTF" | "CERES";
+type PdbMethodName = "PDB-Redo" | "Isolde" | "Refmac" | "PHENIX";
 
-export interface RefModel {
+interface RefModel {
     source: PdbSourceName;
     method: PdbMethodName;
     filename: string;
@@ -297,7 +285,7 @@ export interface RefModel {
     details: string;
 }
 
-export interface Entity {
+interface Entity {
     uniprotAcc?: UniprotAcc;
     organism?: Organism;
     name: string;
@@ -308,20 +296,20 @@ export interface Entity {
     isSybody: boolean;
 }
 
-export interface UniprotAcc {
+interface UniprotAcc {
     dbId: string;
     name: string;
     externalLink: string;
 }
 
-export interface Organism {
+interface Organism {
     ncbi_taxonomy_id: string;
     scientific_name: string;
     common_name: string;
     externalLink: string;
 }
 
-export interface Ligand {
+interface Ligand {
     IUPACInChIkey: string;
     dbId: string;
     name: string;
@@ -333,125 +321,22 @@ export interface Ligand {
     IUPACInChI: string;
     isomericSMILES: string;
     canonicalSMILES: string;
-    // imageData?: ImageData[];
     well: string[];
 }
 
-export interface ImageData {
-    dataSource: string;
-    name: string;
-    description: string;
-    externalLink: string;
-    assays: Assay[];
-}
-
-export interface Assay {
-    dbId: string;
-    name: string;
-    description: string;
-    assayTypes: string[];
-    organisms: string[];
-    externalLink: string;
-    releaseDate: string;
-    publications: Publication[];
-    dataDoi: string;
-    BIAId: string;
-    screenCount: number;
-    screens: Screen[];
-    additionalAnalyses: any[];
-}
-
-export interface Publication {
-    title: string;
-    journal_abbrev: string;
-    issn: string;
-    issue: string;
-    volume: string;
-    page_first: string;
-    page_last: string;
-    year: string;
-    doi: string;
-    pubMedId: string;
-    PMCId: string;
-    abstract: string;
-    authors: Author[];
-}
-
-export interface Author {
-    name: string;
-    email: string;
-    address: string;
-    orcid: string;
-    role: string;
-}
-
-export interface Screen {
-    dbId: string;
-    name: string;
-    description: string;
-    screenTypes: string[];
-    technologyTypes: string[];
-    imagingMethods: string[];
-    sampleType: string;
-    dataDoi: string;
-    plateCount: any;
-    plates: Plate[];
-}
-
-export interface Plate {
-    dbId: string;
-    name: string;
-    wells: Well[];
-    controlWells: ControlWell[];
-}
-
-export interface Well {
-    dbId: string;
-    name: string;
-    externalLink: string;
-    imagesIds: string;
-    imageThumbailLink: string;
-    cellLine: string;
-    controlType: string;
-    qualityControl: string;
-    micromolarConcentration: number;
-    percentageInhibition: number;
-    hitOver75Activity: string;
-    numberCells: number;
-    phenotypeAnnotationLevel: string;
-    channels: string;
-}
-
-export interface ControlWell {
-    dbId: string;
-    name: string;
-    externalLink: string;
-    imagesIds: string;
-    imageThumbailLink: string;
-    cellLine: string;
-    controlType: string;
-    qualityControl: string;
-    micromolarConcentration: any;
-    percentageInhibition: number;
-    hitOver75Activity: string;
-    numberCells: number;
-    phenotypeAnnotationLevel: string;
-    channels: string;
-}
-
-export interface Detail {
+interface Detail {
     sample: Sample;
     refdoc: Refdoc[];
 }
 
-export interface Sample {
+interface Sample {
     name: string;
     exprSystem: string;
     assembly: string;
     genes: any[];
 }
 
-export interface Refdoc {
+interface Refdoc {
     pmID: string;
     title: string;
     journal: string;

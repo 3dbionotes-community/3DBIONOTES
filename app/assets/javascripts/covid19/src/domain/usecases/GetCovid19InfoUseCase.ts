@@ -1,6 +1,8 @@
 import _ from "lodash";
 import { Covid19InfoRepository, GetOptions } from "../repositories/Covid19InfoRepository";
 import { StorageProvider } from "./common/StorageProvider";
+import { FutureData } from "../entities/FutureData";
+import { Covid19Info } from "../entities/Covid19Info";
 
 export class GetCovid19InfoUseCase {
     constructor(
@@ -13,7 +15,7 @@ export class GetCovid19InfoUseCase {
         //and also reset all keys as covid19Info_0_10_0_0_0_0_0_0_0_0_0_releaseDate_desc and covid19Info_query
     }
 
-    execute(options: GetOptions) {
+    execute(options: GetOptions): FutureData<Covid19Info> {
         //EARLY PROPOSAL
 
         //if options (and deep props) are exactly as in specificUseCases.firstPages by pageSize as key, get from cacheProvider.get1stPages

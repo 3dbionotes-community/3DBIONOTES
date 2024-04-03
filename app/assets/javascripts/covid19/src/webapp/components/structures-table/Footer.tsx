@@ -11,17 +11,16 @@ export const Footer: React.FC<CustomGridPaginationProps> = React.memo(props => {
 
     const [inputPage, setInputPage] = React.useState<Maybe<number>>((page ?? 0) + 1);
 
+    const interpolation = {
+        pageCount: Math.ceil(count / (pageSize ?? 10)),
+    };
+
+    const disabled = isLoading || !inputPage || inputPage === page + 1;
+
     const inputProps: InputBaseComponentProps = React.useMemo(
         () => ({
             min: 1,
             max: Math.ceil(count / (pageSize ?? 10)),
-        }),
-        [count, pageSize]
-    );
-
-    const interpolation = React.useMemo(
-        () => ({
-            pageCount: Math.ceil(count / (pageSize ?? 10)),
         }),
         [count, pageSize]
     );
@@ -36,12 +35,6 @@ export const Footer: React.FC<CustomGridPaginationProps> = React.memo(props => {
         },
         [inputProps.max]
     );
-
-    const disabled = React.useMemo(() => isLoading || !inputPage || inputPage === page + 1, [
-        inputPage,
-        isLoading,
-        page,
-    ]);
 
     const goToPage = React.useCallback(() => {
         if (!disabled && inputPage) handlePageChange(inputPage - 1);

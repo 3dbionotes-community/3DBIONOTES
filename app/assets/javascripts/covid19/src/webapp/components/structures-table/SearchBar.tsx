@@ -38,12 +38,15 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     }, [value]);
 
     React.useEffect(() => {
-        if (searchValue === "") setAutoSuggestionOptions(searchExamples);
-        else if (searchValue.length < 2) setAutoSuggestionOptions([]);
-        else
+        if (searchValue === "") {
+            setAutoSuggestionOptions(searchExamples);
+        } else if (searchValue.length < 2) {
+            setAutoSuggestionOptions([]);
+        } else {
             compositionRoot.getAutoSuggestions
                 .execute(searchValue)
                 .run(suggestions => setAutoSuggestionOptions(suggestions), console.error);
+        }
     }, [searchValue, compositionRoot.getAutoSuggestions]);
 
     const removeChip = React.useCallback(

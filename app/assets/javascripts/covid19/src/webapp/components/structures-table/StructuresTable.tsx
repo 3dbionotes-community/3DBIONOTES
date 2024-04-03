@@ -110,7 +110,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
             const cancelGetData = compositionRoot.getCovid19Info
                 .execute({ page, pageSize, filter: filterState, sort, query: search })
-                .bitap(() => stopLoading())
+                .bitap(stopLoading, stopLoading)
                 .run(
                     data => {
                         setData(data);
