@@ -2,7 +2,8 @@ import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 import { LinearProgress, makeStyles } from "@material-ui/core";
-import { DataGrid, DataGridProps } from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
+import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
 import { Covid19Info } from "../../../domain/entities/Covid19Info";
 import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
 import { Toolbar, ToolbarProps } from "./Toolbar";
@@ -17,6 +18,7 @@ import { CustomGridPaginationProps } from "./CustomGridPagination";
 import { Skeleton } from "./Skeleton";
 import { Footer } from "./Footer";
 import { pageSizes, useStructuresTable } from "./useStructuresTable";
+import { useBooleanState } from "../../hooks/useBoolean";
 import i18n from "../../../utils/i18n";
 
 export interface StructuresTableProps {
@@ -30,6 +32,12 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const { search, highlighted, setHighlight } = props;
     const { compositionRoot } = useAppContext();
     const classes = useStyles();
+    const snackbar = useSnackbar();
+
+    const { main, skeleton, cancellable, stop: stopLoading } = useUILoaders();
+    const { loading: isLoading, show: showLoading } = main;
+    const { loading: isSkeletonLoading } = skeleton;
+    const { loading: isCancellable, show: enableCancellable } = cancellable;
 
     const {
         page,
@@ -39,19 +47,10 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         sortModel,
         filterState,
         setFilterState,
-        isLoading,
-        showLoading,
-        hideLoading,
-        showSkeleton,
-        hideSkeleton,
-        slowLoading,
-        enableSlowLoading,
-        disableSlowLoading,
         cancelLoadDataRef,
-        snackbar,
         setSearch,
         resetPageAndSorting,
-    } = useStructuresTable(props);
+    } = useStructuresTable({ ...props, noticer: snackbar });
 
     const { details, idr } = useStructuresTableDialogs();
     const {
@@ -68,12 +67,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         updateScrollBarFromStateChange,
     } = useVirtualScrollbarForDataGrid();
 
-    const onStateChange = React.useCallback<NonNullable<DataGridProps["onStateChange"]>>(
-        params => {
-            updateScrollBarFromStateChange(params);
-        },
-        [updateScrollBarFromStateChange]
-    );
+    const onStateChange = updateScrollBarFromStateChange;
 
     const [data, setData] = React.useState<Covid19Info>({
         count: 0,
@@ -81,16 +75,10 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         validationSources: [],
     });
 
-    const stopLoading = React.useCallback(() => {
-        hideSkeleton();
-        hideLoading();
-        disableSlowLoading();
-    }, [hideLoading, disableSlowLoading, hideSkeleton]);
-
     const getData = React.useCallback(
         (page: number, pageSize: number, onSuccess?: () => void) => {
             showLoading();
-            if (pageSize > 25) enableSlowLoading();
+            if (pageSize > 25) enableCancellable();
 
             const sort =
                 sortModel[0] && sortFieldSupported(sortModel[0].field) && sortModel[0].sort
@@ -131,7 +119,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         [
             compositionRoot,
             stopLoading,
-            enableSlowLoading,
+            enableCancellable,
             showLoading,
             snackbar,
             filterState,
@@ -208,7 +196,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                       setPage: changePage,
                       setPageSize: changePageSize,
                       isLoading,
-                      slowLoading,
+                      slowLoading: isCancellable,
                       count: data.count,
                       cancelRequest: () => cancelLoadDataRef.current && cancelLoadDataRef.current(), //wrapper
                       validationSources: data.validationSources,
@@ -239,7 +227,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         pageSize,
         data.validationSources,
         isLoading,
-        slowLoading,
+        isCancellable,
         changePage,
         changePageSize,
         data.count,
@@ -271,7 +259,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 rowsPerPageOptions={pageSizes}
                 pagination={true}
                 pageSize={pageSize}
-                loading={showSkeleton}
+                loading={isSkeletonLoading}
                 headerHeight={headerHeight}
                 components={components}
                 componentsProps={componentsProps}
@@ -333,6 +321,36 @@ function useStructuresTableDialogs() {
             close: closeIDR,
             data: idrOptions,
         },
+    };
+}
+
+function useUILoaders() {
+    const [isLoading, { enable: showLoading, disable: hideLoading }] = useBooleanState(true);
+    const [isSkeletonLoading, { disable: hideSkeleton }] = useBooleanState(true);
+    const [
+        isCancellable,
+        { enable: enableCancellable, disable: disableCancellable },
+    ] = useBooleanState(false);
+
+    const stopLoading = React.useCallback(() => {
+        hideSkeleton();
+        hideLoading();
+        disableCancellable();
+    }, [hideLoading, disableCancellable, hideSkeleton]);
+
+    return {
+        main: {
+            loading: isLoading,
+            show: showLoading,
+        },
+        skeleton: {
+            loading: isSkeletonLoading,
+        },
+        cancellable: {
+            loading: isCancellable,
+            show: enableCancellable,
+        },
+        stop: stopLoading,
     };
 }
 

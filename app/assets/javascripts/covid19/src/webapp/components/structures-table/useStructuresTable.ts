@@ -1,16 +1,13 @@
-import React from "react";
-import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
+import React, { ReactNode } from "react";
 import { DataGridProps, GridSortModel } from "@material-ui/data-grid";
 import { StructuresTableProps } from "./StructuresTable";
 import { useAppContext } from "../../contexts/app-context";
-import { useBooleanState } from "../../hooks/useBoolean";
 import { Covid19Filter } from "../../../domain/entities/Covid19Info";
 
-export function useStructuresTable(props: StructuresTableProps) {
-    const { search, setSearch: setSearch0, highlighted, setHighlight } = props;
+export function useStructuresTable(props: StructuresTableProps & { noticer: NoticeState }) {
+    const { search, setSearch: setSearch0, highlighted, setHighlight, noticer } = props;
 
     const { compositionRoot } = useAppContext();
-    const snackbar = useSnackbar();
 
     //paging
     const [page, setPage] = React.useState(0);
@@ -19,14 +16,6 @@ export function useStructuresTable(props: StructuresTableProps) {
     //sort filter
     const [sortModel, setSortModel] = React.useState<GridSortModel>(noSort);
     const [filterState, setFilterState] = React.useState(initialFilterState);
-
-    //loading indicators
-    const [isLoading, { enable: showLoading, disable: hideLoading }] = useBooleanState(true);
-    const [showSkeleton, { disable: hideSkeleton }] = useBooleanState(true);
-    const [
-        slowLoading,
-        { enable: enableSlowLoading, disable: disableSlowLoading },
-    ] = useBooleanState(false);
 
     //cancel get request
     const cancelLoadDataRef = React.useRef<SelfCancellable>(() => {});
@@ -57,16 +46,7 @@ export function useStructuresTable(props: StructuresTableProps) {
         sortModel,
         filterState,
         setFilterState,
-        isLoading,
-        showLoading,
-        hideLoading,
-        showSkeleton,
-        hideSkeleton,
-        slowLoading,
-        enableSlowLoading,
-        disableSlowLoading,
         cancelLoadDataRef,
-        snackbar,
         setSearch,
         resetPageAndSorting,
     };
@@ -87,3 +67,17 @@ export const initialFilterState: Covid19Filter = {
 
 type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
 export type SelfCancellable = (self?: boolean) => void;
+
+type NoticeLevel = "success" | "info" | "warning" | "error";
+type Message = ReactNode;
+
+export interface NotifyUserOptions {
+    isOpen: boolean;
+    message?: Message;
+    variant?: NoticeLevel;
+    autoHideDuration?: number | null;
+}
+
+type NoticeState = {
+    [level in NoticeLevel]: (message: Message, options?: Partial<NotifyUserOptions>) => void;
+};
