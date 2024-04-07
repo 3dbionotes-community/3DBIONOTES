@@ -13,7 +13,7 @@ import { SearchBar } from "./SearchBar";
 import { CustomCheckboxFilter } from "./CustomCheckboxFilter";
 import { SearchExampleButton } from "./SearchExampleButton";
 import { HtmlTooltip } from "./HtmlTooltip";
-import { SelfCancellable } from "./StructuresTable";
+import { SelfCancellable } from "./useStructuresTable";
 import i18n from "../../../utils/i18n";
 import "./Toolbar.css";
 

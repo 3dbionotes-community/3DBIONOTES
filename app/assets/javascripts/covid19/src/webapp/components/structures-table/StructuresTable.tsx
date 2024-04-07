@@ -2,10 +2,9 @@ import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 import { LinearProgress, makeStyles } from "@material-ui/core";
-import { DataGrid, DataGridProps, GridSortModel } from "@material-ui/data-grid";
+import { DataGrid, DataGridProps } from "@material-ui/data-grid";
 import { Covid19Info } from "../../../domain/entities/Covid19Info";
 import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
-import { Covid19Filter } from "../../../domain/entities/Covid19Info";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
 import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
@@ -15,10 +14,9 @@ import { sendAnalytics as _sendAnalytics } from "../../../utils/analytics";
 import { IDRDialog } from "./IDRDialog";
 import { useInfoDialog } from "../../hooks/useInfoDialog";
 import { CustomGridPaginationProps } from "./CustomGridPagination";
-import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
-import { useBooleanState } from "../../hooks/useBoolean";
 import { Skeleton } from "./Skeleton";
 import { Footer } from "./Footer";
+import { pageSizes, useStructuresTable } from "./useStructuresTable";
 import i18n from "../../../utils/i18n";
 
 export interface StructuresTableProps {
@@ -29,19 +27,32 @@ export interface StructuresTableProps {
 }
 
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
-    const { search, setSearch: setSearch0, highlighted, setHighlight } = props;
+    const { search, highlighted, setHighlight } = props;
     const { compositionRoot } = useAppContext();
-    const [isLoading, { enable: showLoading, disable: hideLoading }] = useBooleanState(true);
-    const [showSkeleton, { disable: hideSkeleton }] = useBooleanState(true);
-    const [
+
+    const {
+        page,
+        setPage,
+        pageSize,
+        setPageSize,
+        sortModel,
+        filterState,
+        setFilterState,
+        isLoading,
+        showLoading,
+        hideLoading,
+        showSkeleton,
+        hideSkeleton,
         slowLoading,
-        { enable: enableSlowLoading, disable: disableSlowLoading },
-    ] = useBooleanState(false);
-    const [page, setPage] = React.useState(0);
-    const [pageSize, setPageSize] = React.useState(pageSizes[0] ?? 10);
-    const cancelLoadDataRef = React.useRef<SelfCancellable>(() => {});
+        enableSlowLoading,
+        disableSlowLoading,
+        cancelLoadDataRef,
+        snackbar,
+        setSearch,
+        resetPageAndSorting,
+    } = useStructuresTable(props);
+
     const classes = useStyles();
-    const snackbar = useSnackbar();
 
     const {
         info: detailsInfo,
@@ -50,9 +61,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const [isDetailsOpen, closeDetails, showDetailsDialog] = detailsDialogState;
     const { info: idrOptions, useDialogState: idrDialogState } = useInfoDialog<IDROptions>();
     const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
-
-    const [sortModel, setSortModel] = React.useState<GridSortModel>(noSort);
-    const [filterState, setFilterState] = React.useState(initialFilterState);
 
     const openDetailsDialog = React.useCallback(
         (options: DetailsDialogOptions, gaLabel: string) => {
@@ -171,19 +179,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         [setPage, getData]
     );
 
-    const setSearch = React.useCallback(
-        (value: string) => {
-            // ANALYTICS TO BE REBUILD
-            // sendAnalytics("search", {
-            //     on: "covid_table",
-            //     query: value,
-            // });
-            setSearch0(value);
-            setSortModel(sort => (value ? noSort : sort));
-        },
-        [setSearch0]
-    );
-
     window.app = { data };
     const filteredData = data;
     const { structures } = filteredData;
@@ -266,10 +261,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         data.count,
     ]);
 
-    const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(modelParams => {
-        setSortModel(modelParams.sortModel);
-    }, []);
-
     const onFilterStateChange = () => {
         changePage(0);
     };
@@ -319,11 +310,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     );
 });
 
-type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
-export type SelfCancellable = (self?: boolean) => void;
-
-const noSort: GridSortModel = [];
-
 const useStyles = makeStyles({
     root: {
         "&.MuiDataGrid-root .MuiDataGrid-cell": {
@@ -341,22 +327,10 @@ const useStyles = makeStyles({
     },
 });
 
-const pageSizes = [10, 25, 50, 75, 100];
-
 export const rowHeight = 220;
 export const headerHeight = 56;
 
 const sortingOrder = ["asc" as const, "desc" as const, null];
-
-const initialFilterState: Covid19Filter = {
-    antibodies: false,
-    nanobodies: false,
-    sybodies: false,
-    pdbRedo: false,
-    cstf: false,
-    ceres: false,
-    idr: false,
-};
 
 function sortFieldSupported(field: string): field is "pdb" | "title" | "emdb" | "releaseDate" {
     return ["pdb", "title", "emdb", "releaseDate"].includes(field);
