@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { LinearProgress, makeStyles } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
-import { Covid19Info } from "../../../domain/entities/Covid19Info";
 import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
@@ -40,6 +39,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const { loading: isCancellable, show: enableCancellable } = cancellable;
 
     const {
+        data,
+        setData,
         page,
         setPage,
         pageSize,
@@ -68,12 +69,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     } = useVirtualScrollbarForDataGrid();
 
     const onStateChange = updateScrollBarFromStateChange;
-
-    const [data, setData] = React.useState<Covid19Info>({
-        count: 0,
-        structures: [],
-        validationSources: [],
-    });
 
     const getData = React.useCallback(
         (page: number, pageSize: number, onSuccess?: () => void) => {

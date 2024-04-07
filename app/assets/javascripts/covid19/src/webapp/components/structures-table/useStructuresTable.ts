@@ -2,12 +2,19 @@ import React, { ReactNode } from "react";
 import { DataGridProps, GridSortModel } from "@material-ui/data-grid";
 import { StructuresTableProps } from "./StructuresTable";
 import { useAppContext } from "../../contexts/app-context";
-import { Covid19Filter } from "../../../domain/entities/Covid19Info";
+import { Covid19Filter, Covid19Info } from "../../../domain/entities/Covid19Info";
 
 export function useStructuresTable(props: StructuresTableProps & { noticer: NoticeState }) {
     const { search, setSearch: setSearch0, highlighted, setHighlight, noticer } = props;
 
     const { compositionRoot } = useAppContext();
+
+    //data
+    const [data, setData] = React.useState<Covid19Info>({
+        count: 0,
+        structures: [],
+        validationSources: [],
+    });
 
     //paging
     const [page, setPage] = React.useState(0);
@@ -39,6 +46,8 @@ export function useStructuresTable(props: StructuresTableProps & { noticer: Noti
 
     return {
         compositionRoot,
+        data,
+        setData,
         page,
         setPage,
         pageSize,
