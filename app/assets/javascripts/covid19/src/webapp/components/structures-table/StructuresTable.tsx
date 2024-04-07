@@ -29,6 +29,7 @@ export interface StructuresTableProps {
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
     const { search, highlighted, setHighlight } = props;
     const { compositionRoot } = useAppContext();
+    const classes = useStyles();
 
     const {
         page,
@@ -52,31 +53,14 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         resetPageAndSorting,
     } = useStructuresTable(props);
 
-    const classes = useStyles();
-
+    const { details, idr } = useStructuresTableDialogs();
     const {
-        info: detailsInfo,
-        useDialogState: detailsDialogState,
-    } = useInfoDialog<DetailsDialogOptions>();
-    const [isDetailsOpen, closeDetails, showDetailsDialog] = detailsDialogState;
-    const { info: idrOptions, useDialogState: idrDialogState } = useInfoDialog<IDROptions>();
-    const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
-
-    const openDetailsDialog = React.useCallback(
-        (options: DetailsDialogOptions, gaLabel: string) => {
-            closeIDR();
-            showDetailsDialog(options, gaLabel);
-        },
-        [closeIDR, showDetailsDialog]
-    );
-
-    const openIDRDialog = React.useCallback(
-        (options: IDROptions, gaLabel: string) => {
-            closeDetails();
-            showIDRDialog(options, gaLabel);
-        },
-        [closeDetails, showIDRDialog]
-    );
+        isOpen: isDetailsOpen,
+        open: openDetailsDialog,
+        close: closeDetails,
+        data: detailsInfo,
+    } = details;
+    const { isOpen: isIDROpen, open: openIDRDialog, close: closeIDR, data: idrOptions } = idr;
 
     const {
         gridApi,
@@ -309,6 +293,48 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         </div>
     );
 });
+
+function useStructuresTableDialogs() {
+    const {
+        info: detailsInfo,
+        useDialogState: detailsDialogState,
+    } = useInfoDialog<DetailsDialogOptions>();
+    const [isDetailsOpen, closeDetails, showDetailsDialog] = detailsDialogState;
+
+    const { info: idrOptions, useDialogState: idrDialogState } = useInfoDialog<IDROptions>();
+    const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
+
+    const openDetailsDialog = React.useCallback(
+        (options: DetailsDialogOptions, gaLabel: string) => {
+            closeIDR();
+            showDetailsDialog(options, gaLabel);
+        },
+        [closeIDR, showDetailsDialog]
+    );
+
+    const openIDRDialog = React.useCallback(
+        (options: IDROptions, gaLabel: string) => {
+            closeDetails();
+            showIDRDialog(options, gaLabel);
+        },
+        [closeDetails, showIDRDialog]
+    );
+
+    return {
+        details: {
+            isOpen: isDetailsOpen,
+            open: openDetailsDialog,
+            close: closeDetails,
+            data: detailsInfo,
+        },
+        idr: {
+            isOpen: isIDROpen,
+            open: openIDRDialog,
+            close: closeIDR,
+            data: idrOptions,
+        },
+    };
+}
 
 const useStyles = makeStyles({
     root: {

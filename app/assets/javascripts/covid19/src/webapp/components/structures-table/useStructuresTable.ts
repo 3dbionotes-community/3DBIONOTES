@@ -1,14 +1,16 @@
 import React from "react";
+import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
+import { DataGridProps, GridSortModel } from "@material-ui/data-grid";
 import { StructuresTableProps } from "./StructuresTable";
 import { useAppContext } from "../../contexts/app-context";
 import { useBooleanState } from "../../hooks/useBoolean";
-import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
-import { DataGridProps, GridSortModel } from "@material-ui/data-grid";
 import { Covid19Filter } from "../../../domain/entities/Covid19Info";
 
 export function useStructuresTable(props: StructuresTableProps) {
     const { search, setSearch: setSearch0, highlighted, setHighlight } = props;
+
     const { compositionRoot } = useAppContext();
+    const snackbar = useSnackbar();
 
     //paging
     const [page, setPage] = React.useState(0);
@@ -28,9 +30,6 @@ export function useStructuresTable(props: StructuresTableProps) {
 
     //cancel get request
     const cancelLoadDataRef = React.useRef<SelfCancellable>(() => {});
-
-    //snackbar
-    const snackbar = useSnackbar();
 
     const setSearch = React.useCallback(
         (value: string) => {
