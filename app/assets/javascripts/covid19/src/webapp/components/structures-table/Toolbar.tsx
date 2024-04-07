@@ -276,7 +276,7 @@ export const styles = {
         cursor: "pointer",
     },
     exampleRow: { display: "flex" as const, alignItems: "center", marginRight: "auto" },
-    examplesText: { margin: 0 },
+    examplesText: { margin: "0 0.5em" },
     searchBar: { display: "flex", flexGrow: 1 },
     stop: { position: "absolute" as const },
     slowLoading: { display: "flex", alignItems: "center" },
