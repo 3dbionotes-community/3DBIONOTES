@@ -44,7 +44,6 @@ export class Covid19InfoApiRepository implements Covid19InfoRepository {
             _(results)
                 .map(v => v.trim())
                 .uniq()
-                .sortBy(v => v !== search)
                 .value()
         );
 

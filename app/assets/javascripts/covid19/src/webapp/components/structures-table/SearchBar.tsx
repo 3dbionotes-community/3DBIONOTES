@@ -15,6 +15,7 @@ import {
 } from "../../../domain/entities/Covid19Info";
 import { useAppContext } from "../../contexts/app-context";
 import { searchExamples } from "./Toolbar";
+import { useBooleanState } from "../../hooks/useBoolean";
 
 export interface SearchBarProps {
     value: string;
@@ -28,7 +29,7 @@ export interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const { compositionRoot } = useAppContext();
     const { value, setValue, highlighted, setHighlight, filterState, setFilterState } = props;
-    const [open, setOpen] = React.useState(false);
+    const [open, { enable: showAutocomplete, disable: hideAutocomplete }] = useBooleanState(false);
     const [searchValue, setSearchValue] = React.useState(value);
     const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState(searchExamples);
     const selectedFilterNames = filterKeys.filter(key => filterState[key]);
@@ -38,11 +39,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     }, [value]);
 
     React.useEffect(() => {
-        if (searchValue === "") {
-            setAutoSuggestionOptions(searchExamples);
-        } else if (searchValue.length < 2) {
-            setAutoSuggestionOptions([]);
-        } else {
+        if (searchValue.length > 2) {
             compositionRoot.getAutoSuggestions
                 .execute(searchValue)
                 .run(suggestions => setAutoSuggestionOptions(suggestions), console.error);
@@ -68,6 +65,49 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
 
     const removeHighlight = React.useCallback(() => setHighlight(false), [setHighlight]);
 
+    const suggestions = React.useMemo(() => {
+        if (searchValue === "") return searchExamples;
+        else
+            return _([searchValue, ...autoSuggestionOptions])
+                .uniq()
+                .sortBy(s => s !== searchValue)
+                .value();
+    }, [autoSuggestionOptions, searchValue]);
+
+    const renderInput = React.useCallback(
+        params => (
+            <StyledTextField
+                {...params}
+                variant="outlined"
+                value={searchValue}
+                onFocus={removeHighlight}
+                onChange={ev => setSearchValue(ev.target.value)}
+                onKeyPress={e => {
+                    if (e.key === "Enter") {
+                        setValue(searchValue);
+                    }
+                }}
+                placeholder={i18n.t("Search protein/organism/PDB ID/EMDB ID/UniProt ID")}
+                InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                        <React.Fragment>
+                            <InputAdornment
+                                position="end"
+                                style={styles.searchButton}
+                                onClick={() => setValue(searchValue)}
+                            >
+                                <SearchIcon />
+                            </InputAdornment>
+                        </React.Fragment>
+                    ),
+                    type: "search",
+                }}
+            />
+        ),
+        [removeHighlight, searchValue, setValue]
+    );
+
     return (
         <React.Fragment>
             <div style={searchBarStyles}>
@@ -83,8 +123,8 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                 </div>
                 <StyledAutocomplete<string>
                     id="covid19-searchbar-autocomplete"
-                    options={autoSuggestionOptions}
-                    open={open}
+                    options={suggestions}
+                    open={open && (searchValue.length > 2 || searchValue === "")}
                     fullWidth={true}
                     autoComplete={true}
                     selectOnFocus={true}
@@ -92,46 +132,15 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                     clearOnBlur={false}
                     clearOnEscape={true}
                     openOnFocus={true}
-                    onOpen={() => setOpen(true)}
-                    onClose={() => setOpen(false)}
+                    onOpen={showAutocomplete}
+                    onClose={hideAutocomplete}
                     inputValue={searchValue}
                     onChange={(_event, option, reason) =>
                         reason === "select-option" && option && setValue(option)
                     }
                     onInputChange={(_event, newInputValue) => setSearchValue(newInputValue)}
                     renderOption={renderOption}
-                    renderInput={params => (
-                        <StyledTextField
-                            {...params}
-                            variant="outlined"
-                            value={searchValue}
-                            onFocus={removeHighlight}
-                            onChange={ev => setSearchValue(ev.target.value)}
-                            onKeyPress={e => {
-                                if (e.key === "Enter") {
-                                    setValue(searchValue);
-                                }
-                            }}
-                            placeholder={i18n.t(
-                                "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
-                            )}
-                            InputProps={{
-                                ...params.InputProps,
-                                endAdornment: (
-                                    <React.Fragment>
-                                        <InputAdornment
-                                            position="end"
-                                            style={styles.searchButton}
-                                            onClick={() => setValue(searchValue)}
-                                        >
-                                            <SearchIcon />
-                                        </InputAdornment>
-                                    </React.Fragment>
-                                ),
-                                type: "search",
-                            }}
-                        />
-                    )}
+                    renderInput={renderInput}
                 />
             </div>
         </React.Fragment>
