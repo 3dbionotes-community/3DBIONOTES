@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-15T12:56:16.506Z\n"
-"PO-Revision-Date: 2024-03-15T12:56:16.506Z\n"
+"POT-Creation-Date: 2024-04-07T23:24:17.326Z\n"
+"PO-Revision-Date: 2024-04-07T23:24:17.326Z\n"
 
 msgid "No ontologies found."
 msgstr ""
@@ -144,9 +144,6 @@ msgid "Ontology"
 msgstr ""
 
 msgid "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
-msgstr ""
-
-msgid "Request has been cancelled"
 msgstr ""
 
 msgid ""
@@ -313,6 +310,9 @@ msgid "Show validations"
 msgstr ""
 
 msgid "No {{field}} found"
+msgstr ""
+
+msgid "Request has been cancelled"
 msgstr ""
 
 msgid " and {{overflow}} more..."
