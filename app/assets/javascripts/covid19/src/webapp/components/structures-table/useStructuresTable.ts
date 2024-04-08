@@ -16,8 +16,6 @@ export function useStructuresTable(props: Props) {
     const {
         search,
         setSearch: setSearch0,
-        highlighted,
-        setHighlight,
         notice,
         showLoading,
         stopLoading,
@@ -42,7 +40,7 @@ export function useStructuresTable(props: Props) {
     const [filterState, setFilterState] = React.useState(initialFilterState);
 
     //cancel get request
-    const cancelLoadDataRef = React.useRef<SelfCancellable>(() => {});
+    const cancelLoadDataRef: React.MutableRefObject<SelfCancellable> = React.useRef(() => {});
 
     const setSearch = React.useCallback(
         (value: string) => {
@@ -145,7 +143,7 @@ export function useStructuresTable(props: Props) {
         sortModel,
         filterState,
         setFilterState,
-        cancelLoadDataRef,
+        cancelRequest: cancelLoadDataRef,
         setSearch,
         resetPageAndSorting,
         changePage,

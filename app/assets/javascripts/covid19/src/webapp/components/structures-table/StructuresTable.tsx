@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { LinearProgress, makeStyles } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
+import { Covid19Info } from "../../../domain/entities/Covid19Info";
 import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
@@ -50,49 +51,24 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         sortModel,
         filterState,
         setFilterState,
-        cancelLoadDataRef,
+        cancelRequest,
         setSearch,
         resetPageAndSorting,
         changePage,
         changePageSize,
     } = useStructuresTable(structuresTableProps);
 
-    const { details, idr } = useStructuresTableDialogs();
-    const {
-        isOpen: isDetailsOpen,
-        open: openDetailsDialog,
-        close: closeDetails,
-        data: detailsInfo,
-    } = details;
-    const { isOpen: isIDROpen, open: openIDRDialog, close: closeIDR, data: idrOptions } = idr;
+    const { structures } = data;
+
+    const { detailsDialog, idrDialog, columns, components, dataGrid } = useStructuresTableUI(data);
+    const { isOpen: isDetailsOpen, close: closeDetails, data: detailsInfo } = detailsDialog;
+    const { isOpen: isIDROpen, open: openIDRDialog, close: closeIDR, data: idrOptions } = idrDialog;
 
     const {
         gridApi,
         virtualScrollbarProps,
         updateScrollBarFromStateChange,
     } = useVirtualScrollbarForDataGrid();
-
-    const onStateChange = updateScrollBarFromStateChange;
-
-    window.app = { data };
-    const filteredData = data;
-    const { structures } = filteredData;
-
-    const columns = React.useMemo(() => {
-        return getColumns(data, {
-            onClickDetails: openDetailsDialog,
-            onClickIDR: openIDRDialog,
-        });
-    }, [data, openDetailsDialog, openIDRDialog]);
-
-    const components = React.useMemo(
-        () => ({ Toolbar: Toolbar, Footer: Footer, LoadingOverlay: Skeleton }),
-        []
-    );
-
-    const dataGrid = React.useMemo<DataGridE>(() => {
-        return { columns: columns.base, structures };
-    }, [columns, structures]);
 
     const componentsProps = React.useMemo<
         | {
@@ -121,7 +97,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                       isLoading,
                       slowLoading: isCancellable,
                       count: data.count,
-                      cancelRequest: () => cancelLoadDataRef.current && cancelLoadDataRef.current(), //wrapper
+                      cancelRequest: () => cancelRequest.current && cancelRequest.current(), //wrapper
                       validationSources: data.validationSources,
                   },
                   footer: {
@@ -154,6 +130,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         changePage,
         changePageSize,
         data.count,
+        cancelRequest,
     ]);
 
     const onFilterStateChange = () => {
@@ -169,7 +146,7 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                 sortingMode="server"
                 filterMode="server"
                 page={page}
-                onStateChange={onStateChange}
+                onStateChange={updateScrollBarFromStateChange}
                 sortModel={sortModel}
                 onSortModelChange={resetPageAndSorting}
                 className={classes.root}
@@ -205,7 +182,10 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     );
 });
 
-function useStructuresTableDialogs() {
+function useStructuresTableUI(data: Covid19Info) {
+    const { structures } = data;
+    window.app = { data };
+
     const {
         info: detailsInfo,
         useDialogState: detailsDialogState,
@@ -231,19 +211,38 @@ function useStructuresTableDialogs() {
         [closeDetails, showIDRDialog]
     );
 
+    const columns = React.useMemo(() => {
+        return getColumns(data, {
+            onClickDetails: openDetailsDialog,
+            onClickIDR: openIDRDialog,
+        });
+    }, [data, openDetailsDialog, openIDRDialog]);
+
+    const components = React.useMemo(
+        () => ({ Toolbar: Toolbar, Footer: Footer, LoadingOverlay: Skeleton }),
+        []
+    );
+
+    const dataGrid = React.useMemo<DataGridE>(() => {
+        return { columns: columns.base, structures };
+    }, [columns, structures]);
+
     return {
-        details: {
+        detailsDialog: {
             isOpen: isDetailsOpen,
             open: openDetailsDialog,
             close: closeDetails,
             data: detailsInfo,
         },
-        idr: {
+        idrDialog: {
             isOpen: isIDROpen,
             open: openIDRDialog,
             close: closeIDR,
             data: idrOptions,
         },
+        columns,
+        components,
+        dataGrid,
     };
 }
 
