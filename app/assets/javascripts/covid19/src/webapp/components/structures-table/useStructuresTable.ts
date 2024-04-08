@@ -63,12 +63,13 @@ export function useStructuresTable(props: Props) {
         (page: number, pageSize: number, onSuccess?: () => void) => {
             showLoading();
             if (pageSize > 25) enableCancellable();
+            const sortOption = sortModel[0];
 
             const sort =
-                sortModel[0] && sortFieldSupported(sortModel[0].field) && sortModel[0].sort
+                sortOption && sortFieldSupported(sortOption.field) && sortOption.sort
                     ? {
-                          field: sortModel[0].field,
-                          order: sortModel[0].sort,
+                          field: sortOption.field,
+                          order: sortOption.sort,
                       }
                     : ({ field: "releaseDate", order: "desc" } as const);
 
