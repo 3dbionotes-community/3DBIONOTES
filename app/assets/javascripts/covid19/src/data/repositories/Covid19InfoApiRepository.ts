@@ -34,12 +34,14 @@ export class Covid19InfoApiRepository implements Covid19InfoRepository {
     }
 
     autoSuggestions(search: string): FutureData<string[]> {
+        const { bionotesApi } = routes;
+
         const params = new URLSearchParams({
             q: search,
         });
 
         const suggestions$ = getJSONData<{ results: string[] }>(
-            `http://server:8000/api/complete/search?${params.toString()}` //django starts from 1
+            `${bionotesApi}/api/complete/search?${params.toString()}` //django starts from 1
         ).map(({ results }) =>
             _(results)
                 .map(v => v.trim())
@@ -74,7 +76,7 @@ const sortingFields: Record<SortingFields, string> = {
 function getPdbEntries(
     options: GetOptions
 ): FutureData<{ count: number; structures: Structure[] }> {
-    const { bionotesApi: _bionotesApi } = routes;
+    const { bionotesApi } = routes;
     const { page, pageSize, filter: f, sort, query } = options;
 
     const filterParams = {
@@ -101,7 +103,7 @@ function getPdbEntries(
     );
 
     const pagination$ = getJSONData<Pagination<PdbEntry>>(
-        `http://server:8000/api/pdbentry/?${params.toString()}`
+        `${bionotesApi}/api/pdbentry/?${params.toString()}`
     );
 
     return pagination$.map(({ count, results: pdbEntries }) => ({
