@@ -68,7 +68,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const suggestions = React.useMemo(() => {
         if (searchValue === "") return searchExamples;
         else
-            return _([searchValue, ...autoSuggestionOptions])
+            return _([searchValue.toLowerCase(), ...autoSuggestionOptions])
                 .uniq()
                 .sortBy(s => s !== searchValue)
                 .value();
@@ -86,6 +86,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                 value={searchValue}
                 onFocus={removeHighlight}
                 onChange={ev => setSearchValue(ev.target.value)}
+                onBlur={resetValueIfEmpty}
                 onKeyPress={e => {
                     if (e.key === "Enter") {
                         setValue(searchValue);
@@ -109,7 +110,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                 }}
             />
         ),
-        [removeHighlight, searchValue, setValue]
+        [removeHighlight, searchValue, setValue, resetValueIfEmpty]
     );
 
     return (
@@ -130,6 +131,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                     options={suggestions}
                     open={open && (searchValue.length > 2 || searchValue === "")}
                     fullWidth={true}
+                    freeSolo={undefined} // weird...
                     autoComplete={true}
                     selectOnFocus={true}
                     autoSelect={true}
@@ -142,8 +144,10 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                     onChange={(_event, option, reason) =>
                         reason === "select-option" && option && setValue(option)
                     }
-                    onInputChange={(_event, newInputValue) => setSearchValue(newInputValue)}
-                    onBlur={resetValueIfEmpty}
+                    onInputChange={(event, newInputValue) => {
+                        /* Fix bug: if event is null or type blur, somehow, newInputValue randomly picks one of the search examples */
+                        if (event !== null && event.type !== "blur") setSearchValue(newInputValue);
+                    }}
                     renderOption={renderOption}
                     renderInput={renderInput}
                 />
