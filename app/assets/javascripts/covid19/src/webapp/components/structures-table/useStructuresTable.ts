@@ -4,6 +4,7 @@ import { StructuresTableProps } from "./StructuresTable";
 import { useAppContext } from "../../contexts/app-context";
 import { Covid19Filter, Covid19Info } from "../../../domain/entities/Covid19Info";
 import i18n from "../../../utils/i18n";
+import { isElementOfUnion } from "../../../data/utils/ts-utils";
 
 type Props = StructuresTableProps & {
     notice: NoticeState;
@@ -66,7 +67,7 @@ export function useStructuresTable(props: Props) {
             const sortOption = sortModel[0];
 
             const sort =
-                sortOption && sortFieldSupported(sortOption.field) && sortOption.sort
+                sortOption && isElementOfUnion(sortOption.field, sortingFields) && sortOption.sort
                     ? {
                           field: sortOption.field,
                           order: sortOption.sort,
@@ -171,9 +172,7 @@ export const initialFilterState: Covid19Filter = {
     idr: false,
 };
 
-function sortFieldSupported(field: string): field is "pdb" | "title" | "emdb" | "releaseDate" {
-    return ["pdb", "title", "emdb", "releaseDate"].includes(field);
-}
+const sortingFields = ["pdb", "title", "emdb", "releaseDate"] as const;
 
 type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
 export type SelfCancellable = (self?: boolean) => void;
