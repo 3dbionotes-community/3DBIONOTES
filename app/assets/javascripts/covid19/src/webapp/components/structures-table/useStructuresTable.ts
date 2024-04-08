@@ -49,7 +49,7 @@ export function useStructuresTable(props: Props) {
             //     on: "covid_table",
             //     query: value,
             // });
-            setSearch0(value);
+            setSearch0(value.toLowerCase());
             setSortModel(sort => (value ? noSort : sort));
         },
         [setSearch0]
@@ -134,6 +134,12 @@ export function useStructuresTable(props: Props) {
         },
         [setPage, getData]
     );
+
+    const resetPage = () => {
+        changePage(0);
+    };
+
+    React.useEffect(resetPage, [filterState, changePage]);
 
     return {
         compositionRoot,

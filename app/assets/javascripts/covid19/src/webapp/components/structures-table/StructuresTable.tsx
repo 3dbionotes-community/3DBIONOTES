@@ -2,12 +2,12 @@ import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 import { LinearProgress, makeStyles } from "@material-ui/core";
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid, GridApi } from "@material-ui/data-grid";
 import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
-import { Covid19Info } from "../../../domain/entities/Covid19Info";
+import { Covid19Filter, Covid19Info } from "../../../domain/entities/Covid19Info";
 import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
 import { Toolbar, ToolbarProps } from "./Toolbar";
-import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
+import { VirtualScrollbarProps, useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
 import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
 import { DetailsDialog } from "./DetailsDialog";
 import { sendAnalytics as _sendAnalytics } from "../../../utils/analytics";
@@ -16,8 +16,9 @@ import { useInfoDialog } from "../../hooks/useInfoDialog";
 import { CustomGridPaginationProps } from "./CustomGridPagination";
 import { Skeleton } from "./Skeleton";
 import { Footer } from "./Footer";
-import { pageSizes, useStructuresTable } from "./useStructuresTable";
+import { SelfCancellable, pageSizes, useStructuresTable } from "./useStructuresTable";
 import { useBooleanState } from "../../hooks/useBoolean";
+import { Maybe } from "../../../data/utils/ts-utils";
 
 export interface StructuresTableProps {
     search: string;
@@ -60,15 +61,163 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
 
     const { structures } = data;
 
-    const { detailsDialog, idrDialog, columns, components, dataGrid } = useStructuresTableUI(data);
-    const { isOpen: isDetailsOpen, close: closeDetails, data: detailsInfo } = detailsDialog;
-    const { isOpen: isIDROpen, open: openIDRDialog, close: closeIDR, data: idrOptions } = idrDialog;
-
     const {
         gridApi,
         virtualScrollbarProps,
         updateScrollBarFromStateChange,
     } = useVirtualScrollbarForDataGrid();
+
+    const structuresTableUIProps = {
+        data,
+        gridApi,
+        virtualScrollbarProps,
+        search,
+        setSearch,
+        highlighted,
+        setHighlight,
+        filterState,
+        setFilterState,
+        page,
+        pageSize,
+        changePage,
+        changePageSize,
+        isLoading,
+        isCancellable,
+        cancelRequest,
+    };
+
+    const { detailsDialog, idrDialog, columns, components, componentsProps } = useStructuresTableUI(
+        structuresTableUIProps
+    );
+
+    const { isOpen: isDetailsOpen, close: closeDetails, data: detailsInfo } = detailsDialog;
+    const { isOpen: isIDROpen, open: openIDRDialog, close: closeIDR, data: idrOptions } = idrDialog;
+
+    return (
+        <div className={classes.wrapper}>
+            <DataGrid
+                paginationMode="server"
+                sortingMode="server"
+                filterMode="server"
+                page={page}
+                onStateChange={updateScrollBarFromStateChange}
+                sortModel={sortModel}
+                onSortModelChange={resetPageAndSorting}
+                className={classes.root}
+                rowHeight={rowHeight}
+                sortingOrder={sortingOrder}
+                rows={structures}
+                autoHeight
+                columns={columns.definition}
+                disableColumnMenu={true}
+                rowsPerPageOptions={pageSizes}
+                pagination={true}
+                pageSize={pageSize}
+                loading={isSkeletonLoading}
+                headerHeight={headerHeight}
+                components={components}
+                componentsProps={componentsProps}
+            />
+            {isLoading && <StyledLinearProgress position="bottom" />}
+            {detailsInfo && (
+                <DetailsDialog
+                    open={isDetailsOpen}
+                    onClose={closeDetails}
+                    expandedAccordion={detailsInfo.field}
+                    row={detailsInfo.row}
+                    data={data}
+                    onClickIDR={openIDRDialog}
+                />
+            )}
+            {idrOptions && (
+                <IDRDialog open={isIDROpen} onClose={closeIDR} idrOptions={idrOptions} />
+            )}
+        </div>
+    );
+});
+
+type StructuresTableUIProps = {
+    data: Covid19Info;
+    gridApi: Maybe<GridApi>;
+    virtualScrollbarProps: VirtualScrollbarProps;
+    search: string;
+    setSearch: (value: string) => void;
+    highlighted: boolean;
+    setHighlight: (value: boolean) => void;
+    filterState: Covid19Filter;
+    setFilterState: React.Dispatch<React.SetStateAction<Covid19Filter>>;
+    page: number;
+    pageSize: number;
+    changePage: (newPage: number) => void;
+    changePageSize: (pageSize: number) => void;
+    isLoading: boolean;
+    isCancellable: boolean;
+    cancelRequest: React.MutableRefObject<SelfCancellable>;
+};
+
+function useStructuresTableUI(props: StructuresTableUIProps) {
+    const {
+        data,
+        gridApi,
+        virtualScrollbarProps,
+        search,
+        setSearch,
+        highlighted,
+        setHighlight,
+        filterState,
+        setFilterState,
+        page,
+        pageSize,
+        changePage,
+        changePageSize,
+        isLoading,
+        isCancellable,
+        cancelRequest,
+    } = props;
+
+    const { structures } = data;
+    window.app = { data };
+
+    const {
+        info: detailsInfo,
+        useDialogState: detailsDialogState,
+    } = useInfoDialog<DetailsDialogOptions>();
+    const [isDetailsOpen, closeDetails, showDetailsDialog] = detailsDialogState;
+
+    const { info: idrOptions, useDialogState: idrDialogState } = useInfoDialog<IDROptions>();
+    const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
+
+    const openDetailsDialog = React.useCallback(
+        (options: DetailsDialogOptions, gaLabel: string) => {
+            closeIDR();
+            showDetailsDialog(options, gaLabel);
+        },
+        [closeIDR, showDetailsDialog]
+    );
+
+    const openIDRDialog = React.useCallback(
+        (options: IDROptions, gaLabel: string) => {
+            closeDetails();
+            showIDRDialog(options, gaLabel);
+        },
+        [closeDetails, showIDRDialog]
+    );
+
+    const columns = React.useMemo(() => {
+        return getColumns(data, {
+            onClickDetails: openDetailsDialog,
+            onClickIDR: openIDRDialog,
+        });
+    }, [data, openDetailsDialog, openIDRDialog]);
+
+    const components = React.useMemo(
+        () => ({ Toolbar: Toolbar, Footer: Footer, LoadingOverlay: Skeleton }),
+        []
+    );
+
+    const dataGrid = React.useMemo<DataGridE>(() => {
+        return { columns: columns.base, structures };
+    }, [columns, structures]);
 
     const componentsProps = React.useMemo<
         | {
@@ -133,100 +282,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         cancelRequest,
     ]);
 
-    const onFilterStateChange = () => {
-        changePage(0);
-    };
-
-    React.useEffect(onFilterStateChange, [filterState, changePage]);
-
-    return (
-        <div className={classes.wrapper}>
-            <DataGrid
-                paginationMode="server"
-                sortingMode="server"
-                filterMode="server"
-                page={page}
-                onStateChange={updateScrollBarFromStateChange}
-                sortModel={sortModel}
-                onSortModelChange={resetPageAndSorting}
-                className={classes.root}
-                rowHeight={rowHeight}
-                sortingOrder={sortingOrder}
-                rows={structures}
-                autoHeight
-                columns={columns.definition}
-                disableColumnMenu={true}
-                rowsPerPageOptions={pageSizes}
-                pagination={true}
-                pageSize={pageSize}
-                loading={isSkeletonLoading}
-                headerHeight={headerHeight}
-                components={components}
-                componentsProps={componentsProps}
-            />
-            {isLoading && <StyledLinearProgress position="bottom" />}
-            {detailsInfo && (
-                <DetailsDialog
-                    open={isDetailsOpen}
-                    onClose={closeDetails}
-                    expandedAccordion={detailsInfo.field}
-                    row={detailsInfo.row}
-                    data={data}
-                    onClickIDR={openIDRDialog}
-                />
-            )}
-            {idrOptions && (
-                <IDRDialog open={isIDROpen} onClose={closeIDR} idrOptions={idrOptions} />
-            )}
-        </div>
-    );
-});
-
-function useStructuresTableUI(data: Covid19Info) {
-    const { structures } = data;
-    window.app = { data };
-
-    const {
-        info: detailsInfo,
-        useDialogState: detailsDialogState,
-    } = useInfoDialog<DetailsDialogOptions>();
-    const [isDetailsOpen, closeDetails, showDetailsDialog] = detailsDialogState;
-
-    const { info: idrOptions, useDialogState: idrDialogState } = useInfoDialog<IDROptions>();
-    const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
-
-    const openDetailsDialog = React.useCallback(
-        (options: DetailsDialogOptions, gaLabel: string) => {
-            closeIDR();
-            showDetailsDialog(options, gaLabel);
-        },
-        [closeIDR, showDetailsDialog]
-    );
-
-    const openIDRDialog = React.useCallback(
-        (options: IDROptions, gaLabel: string) => {
-            closeDetails();
-            showIDRDialog(options, gaLabel);
-        },
-        [closeDetails, showIDRDialog]
-    );
-
-    const columns = React.useMemo(() => {
-        return getColumns(data, {
-            onClickDetails: openDetailsDialog,
-            onClickIDR: openIDRDialog,
-        });
-    }, [data, openDetailsDialog, openIDRDialog]);
-
-    const components = React.useMemo(
-        () => ({ Toolbar: Toolbar, Footer: Footer, LoadingOverlay: Skeleton }),
-        []
-    );
-
-    const dataGrid = React.useMemo<DataGridE>(() => {
-        return { columns: columns.base, structures };
-    }, [columns, structures]);
-
     return {
         detailsDialog: {
             isOpen: isDetailsOpen,
@@ -242,7 +297,7 @@ function useStructuresTableUI(data: Covid19Info) {
         },
         columns,
         components,
-        dataGrid,
+        componentsProps,
     };
 }
 
