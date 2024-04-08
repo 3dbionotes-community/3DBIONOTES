@@ -46,16 +46,15 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const {
         data,
         page,
-        setPage,
         pageSize,
-        setPageSize,
         sortModel,
         filterState,
         setFilterState,
         cancelLoadDataRef,
         setSearch,
         resetPageAndSorting,
-        getData,
+        changePage,
+        changePageSize,
     } = useStructuresTable(structuresTableProps);
 
     const { details, idr } = useStructuresTableDialogs();
@@ -74,29 +73,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     } = useVirtualScrollbarForDataGrid();
 
     const onStateChange = updateScrollBarFromStateChange;
-
-    const changePage = React.useCallback(
-        (newPage: number) => {
-            if (cancelLoadDataRef.current) {
-                cancelLoadDataRef.current(true);
-            }
-            getData(newPage, pageSize, () => setPage(newPage));
-        },
-        [setPage, pageSize, getData]
-    );
-
-    const changePageSize = React.useCallback(
-        (pageSize: number) => {
-            if (cancelLoadDataRef.current) {
-                cancelLoadDataRef.current(true);
-            }
-            getData(0, pageSize, () => {
-                setPageSize(pageSize);
-                setPage(0);
-            });
-        },
-        [setPage, getData]
-    );
 
     window.app = { data };
     const filteredData = data;
