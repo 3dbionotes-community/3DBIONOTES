@@ -74,6 +74,10 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                 .value();
     }, [autoSuggestionOptions, searchValue]);
 
+    const resetValueIfEmpty = React.useCallback(() => {
+        if (searchValue === "") setSearchValue(value);
+    }, [searchValue, value]);
+
     const renderInput = React.useCallback(
         params => (
             <StyledTextField
@@ -139,6 +143,7 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                         reason === "select-option" && option && setValue(option)
                     }
                     onInputChange={(_event, newInputValue) => setSearchValue(newInputValue)}
+                    onBlur={resetValueIfEmpty}
                     renderOption={renderOption}
                     renderInput={renderInput}
                 />
