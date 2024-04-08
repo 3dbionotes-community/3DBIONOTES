@@ -8,7 +8,6 @@ import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
 import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
-import { useAppContext } from "../../contexts/app-context";
 import { DetailsDialog } from "./DetailsDialog";
 import { sendAnalytics as _sendAnalytics } from "../../../utils/analytics";
 import { IDRDialog } from "./IDRDialog";
@@ -18,7 +17,6 @@ import { Skeleton } from "./Skeleton";
 import { Footer } from "./Footer";
 import { pageSizes, useStructuresTable } from "./useStructuresTable";
 import { useBooleanState } from "../../hooks/useBoolean";
-import i18n from "../../../utils/i18n";
 
 export interface StructuresTableProps {
     search: string;
@@ -29,7 +27,6 @@ export interface StructuresTableProps {
 
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
     const { search, highlighted, setHighlight } = props;
-    const { compositionRoot } = useAppContext();
     const classes = useStyles();
     const snackbar = useSnackbar();
 
@@ -38,9 +35,16 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     const { loading: isSkeletonLoading } = skeleton;
     const { loading: isCancellable, show: enableCancellable } = cancellable;
 
+    const structuresTableProps = {
+        ...props,
+        notice: snackbar,
+        showLoading,
+        enableCancellable,
+        stopLoading,
+    };
+
     const {
         data,
-        setData,
         page,
         setPage,
         pageSize,
@@ -51,7 +55,8 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         cancelLoadDataRef,
         setSearch,
         resetPageAndSorting,
-    } = useStructuresTable({ ...props, noticer: snackbar });
+        getData,
+    } = useStructuresTable(structuresTableProps);
 
     const { details, idr } = useStructuresTableDialogs();
     const {
@@ -69,59 +74,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     } = useVirtualScrollbarForDataGrid();
 
     const onStateChange = updateScrollBarFromStateChange;
-
-    const getData = React.useCallback(
-        (page: number, pageSize: number, onSuccess?: () => void) => {
-            showLoading();
-            if (pageSize > 25) enableCancellable();
-
-            const sort =
-                sortModel[0] && sortFieldSupported(sortModel[0].field) && sortModel[0].sort
-                    ? {
-                          field: sortModel[0].field,
-                          order: sortModel[0].sort,
-                      }
-                    : ({ field: "releaseDate", order: "desc" } as const);
-
-            const cancelGetData = compositionRoot.getCovid19Info
-                .execute({ page, pageSize, filter: filterState, sort, query: search })
-                .bitap(stopLoading, stopLoading)
-                .run(
-                    data => {
-                        setData(data);
-                        onSuccess && onSuccess();
-                        cancelLoadDataRef.current = () => {};
-                    },
-                    err => {
-                        console.error(err.message);
-                        snackbar.error(err.message);
-                        cancelLoadDataRef.current = () => {};
-                    }
-                );
-
-            const cancelData = (self = false) => {
-                if (!self) {
-                    stopLoading();
-                    snackbar.info(i18n.t("Request has been cancelled"), { autoHideDuration: 2000 });
-                }
-                cancelGetData();
-            };
-
-            cancelLoadDataRef.current = cancelData;
-
-            return cancelData;
-        },
-        [
-            compositionRoot,
-            stopLoading,
-            enableCancellable,
-            showLoading,
-            snackbar,
-            filterState,
-            sortModel,
-            search,
-        ]
-    );
 
     const changePage = React.useCallback(
         (newPage: number) => {
@@ -370,10 +322,6 @@ export const rowHeight = 220;
 export const headerHeight = 56;
 
 const sortingOrder = ["asc" as const, "desc" as const, null];
-
-function sortFieldSupported(field: string): field is "pdb" | "title" | "emdb" | "releaseDate" {
-    return ["pdb", "title", "emdb", "releaseDate"].includes(field);
-}
 
 const StyledLinearProgress = styled(LinearProgress)<{ position: "top" | "bottom" }>`
     &.MuiLinearProgress-root {

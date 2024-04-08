@@ -3,9 +3,26 @@ import { DataGridProps, GridSortModel } from "@material-ui/data-grid";
 import { StructuresTableProps } from "./StructuresTable";
 import { useAppContext } from "../../contexts/app-context";
 import { Covid19Filter, Covid19Info } from "../../../domain/entities/Covid19Info";
+import i18n from "../../../utils/i18n";
 
-export function useStructuresTable(props: StructuresTableProps & { noticer: NoticeState }) {
-    const { search, setSearch: setSearch0, highlighted, setHighlight, noticer } = props;
+type Props = StructuresTableProps & {
+    notice: NoticeState;
+    showLoading: () => void;
+    stopLoading: () => void;
+    enableCancellable: () => void;
+};
+
+export function useStructuresTable(props: Props) {
+    const {
+        search,
+        setSearch: setSearch0,
+        highlighted,
+        setHighlight,
+        notice,
+        showLoading,
+        stopLoading,
+        enableCancellable,
+    } = props;
 
     const { compositionRoot } = useAppContext();
 
@@ -44,10 +61,62 @@ export function useStructuresTable(props: StructuresTableProps & { noticer: Noti
         setSortModel(modelParams.sortModel);
     }, []);
 
+    const getData = React.useCallback(
+        (page: number, pageSize: number, onSuccess?: () => void) => {
+            showLoading();
+            if (pageSize > 25) enableCancellable();
+
+            const sort =
+                sortModel[0] && sortFieldSupported(sortModel[0].field) && sortModel[0].sort
+                    ? {
+                          field: sortModel[0].field,
+                          order: sortModel[0].sort,
+                      }
+                    : ({ field: "releaseDate", order: "desc" } as const);
+
+            const cancelGetData = compositionRoot.getCovid19Info
+                .execute({ page, pageSize, filter: filterState, sort, query: search })
+                .bitap(stopLoading, stopLoading)
+                .run(
+                    data => {
+                        setData(data);
+                        onSuccess && onSuccess();
+                        cancelLoadDataRef.current = () => {};
+                    },
+                    err => {
+                        console.error(err.message);
+                        notice.error(err.message);
+                        cancelLoadDataRef.current = () => {};
+                    }
+                );
+
+            const cancelData = (self = false) => {
+                if (!self) {
+                    stopLoading();
+                    notice.info(i18n.t("Request has been cancelled"), { autoHideDuration: 2000 });
+                }
+                cancelGetData();
+            };
+
+            cancelLoadDataRef.current = cancelData;
+
+            return cancelData;
+        },
+        [
+            compositionRoot,
+            stopLoading,
+            enableCancellable,
+            showLoading,
+            notice,
+            filterState,
+            sortModel,
+            search,
+        ]
+    );
+
     return {
         compositionRoot,
         data,
-        setData,
         page,
         setPage,
         pageSize,
@@ -58,6 +127,7 @@ export function useStructuresTable(props: StructuresTableProps & { noticer: Noti
         cancelLoadDataRef,
         setSearch,
         resetPageAndSorting,
+        getData,
     };
 }
 
@@ -73,6 +143,10 @@ export const initialFilterState: Covid19Filter = {
     ceres: false,
     idr: false,
 };
+
+function sortFieldSupported(field: string): field is "pdb" | "title" | "emdb" | "releaseDate" {
+    return ["pdb", "title", "emdb", "releaseDate"].includes(field);
+}
 
 type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
 export type SelfCancellable = (self?: boolean) => void;
