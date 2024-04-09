@@ -34,17 +34,11 @@ export class Future<E, D> {
         });
     }
 
-    tap(dataEffectFn: (data: D) => void, errorEffectFn: (error: E) => void): Future<E, D> {
-        return this.bimap(
-            data => {
-                dataEffectFn(data);
-                return data;
-            },
-            err => {
-                errorEffectFn(err);
-                return err;
-            }
-        );
+    tap(effectFn: (data: D) => void): Future<E, D> {
+        return this.map(data => {
+            effectFn(data);
+            return data;
+        });
     }
 
     /* Static methods */
