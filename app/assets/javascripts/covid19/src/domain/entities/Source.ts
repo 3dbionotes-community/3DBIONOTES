@@ -1,26 +1,14 @@
-type Reference<Name extends string> = {
-    name: Name;
+type Reference = {
+    name: string;
     description: string;
     externalLink: string;
 };
 
-type Method = Reference<MethodName>;
+type Method = Reference;
 
-export interface Source extends Reference<SourceName> {
+export type Source = Reference & {
+    name: SourceName;
     methods: Method[];
-}
+};
 
-type SourceName =
-    | "CERES"
-    | "CSTF"
-    | "PDB-REDO"
-    | "The Image Data Resource (IDR)" /* to update in BWS to just IDR and NMR*/
-    | "The COVID19-NMR Consortium";
-
-type MethodName =
-    | "Isolde"
-    | "PHENIX"
-    | "PDB-Redo"
-    | "Refmac"
-    | "NMR-based fragment screening"
-    | "High-Content Screening Assay";
+type SourceName = "CERES" | "CSTF" | "PDB-REDO" | "IDR" | "NMR";
