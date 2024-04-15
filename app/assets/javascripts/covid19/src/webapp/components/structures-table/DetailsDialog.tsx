@@ -44,7 +44,7 @@ export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
         <Dialog open={open} onClose={onClose} title={row.title}>
             <Container>
                 <ImgContainer>
-                    <PdbCell data={data} row={row} validationSources={data.validationSources} />
+                    <PdbCell data={data} row={row} />
                     <EmdbCell data={data} row={row} />
                 </ImgContainer>
 
@@ -56,7 +56,6 @@ export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
                             moreDetails={false}
                             onClickNMR={onClickNMR}
                             setNMROptions={setNMROptions}
-                            validationSources={data.validationSources}
                         />
                     </ModifiedAccordion>
                     <ModifiedAccordion expanded={expandedAccordion} field="ligands" row={row}>
@@ -65,7 +64,6 @@ export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
                             row={row}
                             moreDetails={false}
                             onClickIDR={onClickIDR}
-                            validationSources={data.validationSources}
                         />
                     </ModifiedAccordion>
                     <ModifiedAccordion expanded={expandedAccordion} field="organisms" row={row}>

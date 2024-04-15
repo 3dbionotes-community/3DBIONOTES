@@ -7,13 +7,7 @@ import {
 } from "@material-ui/data-grid";
 import _ from "lodash";
 import i18n from "../../../utils/i18n";
-import {
-    Covid19Info,
-    Ligand,
-    NSPTarget,
-    Structure,
-    ValidationSource,
-} from "../../../domain/entities/Covid19Info";
+import { Covid19Info, Ligand, NSPTarget, Structure } from "../../../domain/entities/Covid19Info";
 import { TitleCell } from "./cells/TitleCell";
 import { DetailsCell } from "./cells/DetailsCell";
 import { PdbCell } from "./cells/PdbCell";
@@ -60,7 +54,6 @@ export interface CellProps {
     data: Covid19Info;
     row: Row;
     moreDetails?: boolean;
-    validationSources?: ValidationSource[];
     onClickDetails?: OnClickDetails;
 }
 
@@ -195,7 +188,6 @@ export function getColumns(
                                 onClickIDR={options.onClickIDR}
                                 onClickNMR={options.onClickNMR}
                                 setNMROptions={options.setNMROptions}
-                                validationSources={data.validationSources}
                             />
                         </div>
                     );

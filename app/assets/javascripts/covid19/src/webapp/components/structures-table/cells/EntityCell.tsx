@@ -13,6 +13,7 @@ import {
 } from "../../../../domain/entities/Covid19Info";
 import { SetNMROptions } from "../StructuresTable";
 import i18n from "../../../../utils/i18n";
+import { useAppContext } from "../../../contexts/app-context";
 
 export interface EntitiyCellProps extends CellProps {
     onClickNMR?: OnClickNMR;
@@ -20,14 +21,8 @@ export interface EntitiyCellProps extends CellProps {
 }
 
 export const EntityCell: React.FC<EntitiyCellProps> = React.memo(props => {
-    const {
-        row,
-        onClickDetails,
-        onClickNMR,
-        moreDetails,
-        validationSources,
-        setNMROptions,
-    } = props;
+    const { row, onClickDetails, onClickNMR, moreDetails, setNMROptions } = props;
+    const { sources: validationSources } = useAppContext();
 
     const nmrValidationSource = React.useMemo(
         () => getValidationSource(validationSources ?? [], "NMR"),
