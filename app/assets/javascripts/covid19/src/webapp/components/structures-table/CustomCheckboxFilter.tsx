@@ -14,15 +14,16 @@ import {
 } from "../../../domain/entities/Covid19Info";
 import { HtmlTooltip } from "./HtmlTooltip";
 import i18n from "../../../utils/i18n";
+import { useAppContext } from "../../contexts/app-context";
 
 export interface CustomCheckboxFilterProps {
     setFilterState: (value: React.SetStateAction<Covid19Filter>) => void;
-    validationSources: ValidationSource[];
     filterState: Covid19Filter;
 }
 
 export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.memo(props => {
-    const { filterState, setFilterState, validationSources } = props;
+    const { filterState, setFilterState } = props;
+    const { sources: validationSources } = useAppContext();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const isOpen = Boolean(anchorEl);
     const openMenu = React.useCallback(event => setAnchorEl(event.currentTarget), []);

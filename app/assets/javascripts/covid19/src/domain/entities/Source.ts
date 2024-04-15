@@ -1,3 +1,5 @@
+/* Transition from JSON to API, co-existing with ValidationSource[] for now */
+
 type Reference = {
     name: string;
     description: string;

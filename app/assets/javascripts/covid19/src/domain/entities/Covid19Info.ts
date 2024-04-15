@@ -121,43 +121,28 @@ export interface ValidationSource {
 }
 
 export interface ValidationMethod {
-    name: MethodName;
+    name: string;
     description: string;
     externalLink: string;
 }
 
-export interface Validation {
+interface Validation {
     externalLink?: Url;
     queryLink?: Url;
     badgeColor: W3Color;
 }
 
 export interface PdbValidation extends Validation {
-    source: PdbSourceName;
-    method: PdbMethodName;
-}
-
-export interface EmdbValidation extends Validation {
-    source: EmdbSourceName;
-    method: EmdbMethodName;
+    source: SourceName;
+    method: string;
 }
 
 export interface Validations {
     pdb: PdbValidation[];
-    emdb: EmdbValidation[];
+    emdb: never[];
 }
 
-export type SourceName = PdbSourceName | EmdbSourceName | "IDR" | "NMR";
-
-export type MethodName = PdbMethodName | EmdbMethodName | "IDR" | "NMR";
-
-export type PdbSourceName = "PDB-REDO" | "CSTF" | "CERES";
-
-export type PdbMethodName = "PDB-Redo" | "Isolde" | "Refmac" | "PHENIX";
-
-export type EmdbSourceName = "";
-
-export type EmdbMethodName = "DeepRes" | "MonoRes" | "BlocRes" | "Map-Q" | "FSC-Q";
+export type SourceName = "PDB-REDO" | "CSTF" | "CERES" | "IDR" | "NMR";
 
 export interface Pdb extends DbItem {
     keywords: string;

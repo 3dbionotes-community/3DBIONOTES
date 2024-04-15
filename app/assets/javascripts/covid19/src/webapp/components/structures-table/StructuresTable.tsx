@@ -167,7 +167,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                       pageSizes,
                       setPage,
                       setPageSize,
-                      validationSources: data.validationSources,
                   },
                   pagination: {
                       dataGrid,
@@ -193,7 +192,6 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         pageSize,
         setPage,
         setPageSize,
-        data.validationSources,
     ]);
 
     const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(_modelParams => {

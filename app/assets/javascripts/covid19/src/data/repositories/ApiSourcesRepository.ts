@@ -35,7 +35,7 @@ export class ApiSourcesRepository implements SourcesRepository {
             // BWS should be grouped in only one endpoint for all sources, and grouping even methods
             const nmrSource: Source = {
                 name: "NMR",
-                description: "NMR-based fragment screening",
+                description: "The COVID19-NMR Consortium",
                 externalLink: "https://covid19-nmr.de/",
                 methods: nmr,
             };
