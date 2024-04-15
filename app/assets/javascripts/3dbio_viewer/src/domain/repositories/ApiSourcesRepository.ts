@@ -11,7 +11,7 @@ export class ApiSourcesRepository implements SourcesRepository {
         const { bionotesStaging: api } = routes;
 
         const nmr$ = getValidatedJSON<Pagination<NmrMethod>>(
-            `${api}/nmr/source/`,
+            `${api}/bws/api/nmr/source/`,
             paginationCodec(nmrMethodCodec)
         ).map(getResults);
 

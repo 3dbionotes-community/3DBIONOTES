@@ -8,6 +8,7 @@ import {
     DialogTitle,
     IconButton,
     LinearProgress,
+    Paper,
     Portal,
     Table,
     TableBody,
@@ -25,6 +26,8 @@ import { useBooleanState } from "../../hooks/use-boolean";
 import { LoaderMask } from "../loader-mask/LoaderMask";
 import { Cancel } from "../../../utils/future";
 import { NMRPagination } from "../../../domain/repositories/NMRRepository";
+import { getSource } from "../../../domain/entities/Source";
+import { NonBulletListItem as ListItem } from "../idr/IDRViewerBlock";
 import i18n from "../../utils/i18n";
 
 interface NMRDialogProps {
@@ -40,9 +43,12 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
         target,
         saveTarget,
         pagination: [pagination, setPagination],
+        nmrSource,
     } = useNMR(basicTarget);
     const [isSaving, savingActions] = useBooleanState();
     const [isLoading, loadingActions] = useBooleanState();
+
+    const nmrMethod = nmrSource?.methods[0];
 
     const save = React.useCallback(
         () => saveTarget({ show: savingActions.open, hide: savingActions.close }),
@@ -50,13 +56,44 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
     );
 
     const title = React.useMemo(
-        () => `${i18n.t("Ligand interaction NMR")}: ${target?.name ?? ""}`,
+        () => `${i18n.t("NMR-based fragment screening on")}: ${target?.name ?? ""}`,
         [target]
     );
 
     React.useEffect(() => {
         getNMR({ show: loadingActions.open, hide: loadingActions.close });
     }, [getNMR, loadingActions]);
+
+    const nmrReference = nmrMethod && (
+        <List>
+            <ListItem name={"Description"} value={nmrMethod.description} />
+            <ListItem name={"Evidence"}>
+                <span>
+                    <a href={nmrMethod.externalLink} target="_blank" rel="noreferrer noopener">
+                        {nmrMethod.externalLink}
+                    </a>
+                </span>
+            </ListItem>
+            <ListItem name={"Source"} value={nmrSource.description} />
+        </List>
+    );
+
+    const fragmentsList = target ? (
+        <Content elevation={3}>
+            {isLoading && pagination.pageSize >= 25 && <StyledLinearProgress />}
+            <DialogContent target={target} pagination={pagination} />
+            <Toolbar
+                pagination={pagination}
+                setPagination={setPagination}
+                save={save}
+                isSaving={isSaving}
+                hideSaving={savingActions.close}
+            />
+            <div style={styles.bottomProgress}>{isLoading && <StyledLinearProgress />}</div>
+        </Content>
+    ) : (
+        <Typography>{i18n.t("Unable to retrieve NMR")}</Typography>
+    );
 
     return (
         <>
@@ -74,24 +111,8 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
                         <CloseIcon />
                     </IconButton>
                 </DialogTitle>
-
-                {target ? (
-                    <>
-                        {isLoading && pagination.count > 0 && <StyledLinearProgress />}
-                        <DialogContent target={target} pagination={pagination} />
-                        <Toolbar
-                            pagination={pagination}
-                            setPagination={setPagination}
-                            save={save}
-                            isSaving={isSaving}
-                            hideSaving={savingActions.close}
-                        />
-                    </>
-                ) : (
-                    <>
-                        <Typography>{i18n.t("Unable to retrieve NMR")}</Typography>
-                    </>
-                )}
+                {nmrReference}
+                {fragmentsList}
             </Dialog>
             <Portal>
                 <LoaderMask
@@ -236,7 +257,7 @@ function useNMR(basicTarget: BasicNMRFragmentTarget) {
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(25);
     const [count, setCount] = React.useState(0);
-    const { compositionRoot } = useAppContext();
+    const { compositionRoot, sources } = useAppContext();
     const [target, setTarget] = React.useState<NMRFragmentTarget>();
 
     React.useEffect(() => {
@@ -276,6 +297,7 @@ function useNMR(basicTarget: BasicNMRFragmentTarget) {
             { page, pageSize, count } as NMRPagination,
             { setPage, setPageSize, setCount } as SetNMRPagination,
         ] as const,
+        nmrSource: getSource(sources, "NMR"),
     };
 }
 
@@ -284,7 +306,7 @@ const styles = {
         display: "flex",
         justifyContent: "space-between",
         paddingLeft: "1em",
-        margin: "0.25em 0",
+        margin: "0.5em 0 0.25em",
     },
     exportButton: {
         display: "flex",
@@ -337,4 +359,15 @@ const StyledCircularProgress = styled(CircularProgress)`
     &.MuiCircularProgress-colorPrimary {
         color: #009688;
     }
+`;
+
+const List = styled.ul`
+    list-style: none;
+    margin: 1.5rem 2rem 0;
+    padding: 0;
+    box-sizing: border-box;
+`;
+
+const Content = styled(Paper)`
+    margin: 1.5rem 2rem;
 `;

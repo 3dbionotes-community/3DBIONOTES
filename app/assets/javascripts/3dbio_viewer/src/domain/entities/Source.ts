@@ -15,6 +15,6 @@ export type Source = Reference & {
 
 type SourceName = "CERES" | "CSTF" | "PDB-REDO" | "IDR" | "NMR";
 
-export function getValidationSource(sources: Source[], source: SourceName): Maybe<Source> {
+export function getSource(sources: Source[], source: SourceName): Maybe<Source> {
     return sources.find(s => s.name === source);
 }
