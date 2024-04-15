@@ -24,6 +24,8 @@ import { ExportAnnotationsUseCase } from "./domain/usecases/ExportAnnotationsUse
 import { GetPartialNMRTargetUseCase } from "./domain/usecases/GetPartialNMRTargetUseCase";
 import { SaveNMRTargetUseCase } from "./domain/usecases/SaveNMRTargetUseCase";
 import { NMRApiRepository } from "./data/repositories/NMRApiRepository";
+import { GetSourcesUseCase } from "./domain/usecases/GetSourcesUseCase";
+import { ApiSourcesRepository } from "./domain/repositories/ApiSourcesRepository";
 
 export function getCompositionRoot() {
     const pdbRepository = new ApiPdbRepository();
@@ -37,8 +39,10 @@ export function getCompositionRoot() {
     const organismRepository = new BionotesOrganismRepository();
     const annotationsExportRepository = new AnnotationsExportApiRepository();
     const nmrRepository = new NMRApiRepository();
+    const sourcesRepository = new ApiSourcesRepository();
 
     return {
+        getSources: new GetSourcesUseCase(sourcesRepository),
         getPdb: new GetPdbUseCase(pdbRepository, ontologyRepository, organismRepository),
         getPdbInfo: new GetPdbInfoUseCase(pdbInfoRepository),
         searchDbModels: new SearchDbModelsUseCase(dbModelRepository),
