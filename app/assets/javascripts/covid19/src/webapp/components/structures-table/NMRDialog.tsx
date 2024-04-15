@@ -13,16 +13,18 @@ import {
     Typography,
     LinearProgress,
     CircularProgress,
+    Paper,
 } from "@material-ui/core";
 import { GetApp, Stop as StopIcon } from "@material-ui/icons";
 import { Dialog } from "./Dialog";
 import { NMROptions, SetNMRPagination } from "./Columns";
-import { NSPTarget } from "../../../domain/entities/Covid19Info";
+import { NSPTarget, getValidationSource } from "../../../domain/entities/Covid19Info";
 import { NMRPagination } from "../../../domain/repositories/EntitiesRepository";
 import { useBooleanState } from "../../hooks/useBoolean";
 import { useAppContext } from "../../contexts/app-context";
-import { Cancel } from "fluture";
+import { NoBulletListItem as ListItem } from "./IDRDialog";
 import i18n from "../../../utils/i18n";
+import { Cancel } from "../../../data/utils/future";
 
 export interface NMRDialogProps {
     onClose(): void;
@@ -33,11 +35,14 @@ export interface NMRDialogProps {
 export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
     const { onClose, open } = props;
     const { target, error, pagination, setPagination, loading } = props.nmrOptions;
-    const { compositionRoot } = useAppContext();
+    const { compositionRoot, sources } = useAppContext();
     const [isExporting, { enable: showExporting, disable: hideExporting }] = useBooleanState(false);
 
+    const nmrSource = React.useMemo(() => getValidationSource(sources, "NMR"), [sources]);
+    const nmrMethod = nmrSource?.methods[0];
+
     const title = React.useMemo(
-        () => `${i18n.t("Ligand interaction NMR")}: ${target?.name ?? ""}`,
+        () => `${i18n.t("NMR-based fragment screening on")}: ${target?.name ?? ""}`,
         [target]
     );
 
@@ -51,6 +56,35 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
         }
     }, [target, compositionRoot, hideExporting, showExporting]);
 
+    const nmrReference = nmrSource && nmrMethod && (
+        <List>
+            <ListItem name={"Description"} value={nmrMethod.description} />
+            <ListItem name={"Evidence"}>
+                <span>
+                    <a href={nmrMethod.externalLink} target="_blank" rel="noreferrer noopener">
+                        {nmrMethod.externalLink}
+                    </a>
+                </span>
+            </ListItem>
+            <ListItem name={"Source"} value={nmrSource.description} />
+        </List>
+    );
+
+    const fragmentsTable = target && pagination && setPagination && saveTarget && (
+        <Content elevation={3}>
+            {loading && pagination.pageSize >= 25 && <StyledLinearProgress />}
+            <DialogContent target={target} pagination={pagination} />
+            <Toolbar
+                pagination={pagination}
+                setPagination={setPagination}
+                saveTarget={saveTarget}
+                isExporting={isExporting}
+                hideExporting={hideExporting}
+            />
+            <div style={styles.bottomProgress}>{loading && <StyledLinearProgress />}</div>
+        </Content>
+    );
+
     return (
         <StyledDialog
             open={open}
@@ -60,38 +94,13 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
             maxWidth={error ? "xs" : "xl"}
             scroll="paper"
         >
-            {loading && <StyledLinearProgress />}
             {error && (
                 <Typography>
                     <div style={{ margin: 16 }}>{error}</div>
                 </Typography>
             )}
-            {target && pagination && setPagination && saveTarget && (
-                <>
-                    {/* {pagination.pageSize >= 25 && (
-                        <Toolbar
-                            pagination={pagination}
-                            setPagination={setPagination}
-                            saveTarget={saveTarget}
-                            isExporting={isExporting}
-                            hideExporting={hideExporting}
-                        />
-                    )} */}
-                    <DialogContent target={target} pagination={pagination} />
-                    {/* {pagination.pageSize >= 25 && (
-                        <div style={styles.bottomProgress}>
-                            {loading && <StyledLinearProgress />}
-                        </div>
-                    )} */}
-                    <Toolbar
-                        pagination={pagination}
-                        setPagination={setPagination}
-                        saveTarget={saveTarget}
-                        isExporting={isExporting}
-                        hideExporting={hideExporting}
-                    />
-                </>
-            )}
+            {nmrReference}
+            {fragmentsTable}
         </StyledDialog>
     );
 });
@@ -228,7 +237,7 @@ const styles = {
         display: "flex",
         justifyContent: "space-between",
         paddingLeft: "1em",
-        margin: "0.25em 0",
+        margin: "0.5em 0 0.25em",
     },
     exportButton: {
         display: "flex",
@@ -281,4 +290,15 @@ const StyledCircularProgress = styled(CircularProgress)`
     &.MuiCircularProgress-colorPrimary {
         color: #009688;
     }
+`;
+
+const List = styled.ul`
+    list-style: none;
+    margin: 1.5rem 2rem;
+    padding: 0;
+    box-sizing: border-box;
+`;
+
+const Content = styled(Paper)`
+    margin: 1.5rem 2rem;
 `;

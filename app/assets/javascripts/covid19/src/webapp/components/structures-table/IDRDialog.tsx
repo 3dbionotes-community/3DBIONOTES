@@ -122,7 +122,9 @@ const ListItem: React.FC<ListItemProps> = React.memo(props => {
     );
 });
 
-const AssayFC: React.FC<AssayFCProps> = React.memo(({ assay, dataSource }) => (
+export const NoBulletListItem = ListItem;
+
+export const AssayFC: React.FC<AssayFCProps> = React.memo(({ assay, dataSource }) => (
     <>
         <ListItem name={"ID"} value={assay.id} />
         <ListItem name={"Type"}>{assay.type.reduce(reduceOntologyType, [])}</ListItem>
