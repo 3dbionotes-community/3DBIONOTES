@@ -5,29 +5,39 @@ import { Fragment, getFragmentToolsLink } from "../../../domain/entities/Fragmen
 import { Fragment2, getConflict } from "../../../domain/entities/Fragment2";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { Subtrack } from "../../../domain/entities/Track";
-import i18n from "../../utils/i18n";
 import { renderJoin } from "../../utils/react";
 import { Link } from "../Link";
 import { Protein } from "../../../domain/entities/Protein";
+import { getSource, Source as SourceEntity } from "../../../domain/entities/Source";
+import i18n from "../../utils/i18n";
+import styled from "styled-components";
 
 interface TooltipProps {
     pdb: Pdb;
     subtrack: Subtrack;
     fragment: FragmentP;
+    sources: SourceEntity[];
 }
 
 type FragmentP = Fragment | Fragment2;
 
 export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
-    const { pdb, subtrack, fragment } = props;
+    //cannot use sources from AppContext as context is not initalized
+    const { pdb, subtrack, fragment, sources } = props;
     const { description, alignmentScore } = fragment;
+
+    //no react.memo as is finally rendered to string
+    const nmrSource = getSource(sources, "NMR");
     const score = alignmentScore ? alignmentScore + " %" : undefined;
     const isNMR = subtrack.accession === "nmr";
 
     return (
         <TooltipTable>
             <TooltipRow title={i18n.t("Feature ID")} value={fragment.id} className="description" />
-            <TooltipRow title={i18n.t("Description")} value={description} />
+            <TooltipRow
+                title={isNMR ? i18n.t("Target") : i18n.t("Description")}
+                value={description}
+            />
             <TooltipRow title={i18n.t("Alignment score")} value={score} className="description" />
             <TooltipRow title={i18n.t("Conflict")} value={getConflict(pdb.sequence, fragment)} />
             <Source subtrack={subtrack} />
@@ -35,7 +45,9 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
             <CrossReferences fragment={fragment} />
             {pdb.protein && <Tools protein={pdb.protein} subtrack={subtrack} fragment={fragment} />}
             <Legend fragment={fragment} />
-            {isNMR && <NMR start={fragment.start} end={fragment.end} />}
+            {isNMR && nmrSource && (
+                <NMR start={fragment.start} end={fragment.end} nmrSource={nmrSource} />
+            )}
         </TooltipTable>
     );
 });
@@ -51,16 +63,36 @@ const styles = {
     },
 };
 
-const NMR: React.FC<{ start: number; end: number }> = props => {
+const NMR: React.FC<{ start: number; end: number; nmrSource: SourceEntity }> = props => {
+    const { nmrSource } = props;
+    const nmrMethod = nmrSource?.methods[0];
+
+    if (!nmrMethod) return null;
+
     return (
-        <tr>
-            <td>{i18n.t("CV19-NMR-Consortium")}</td>
-            <td>
-                <button data-start={props.start} data-end={props.end}>
-                    {i18n.t("Library of tested ligands")}
-                </button>
-            </td>
-        </tr>
+        <>
+            <TooltipRow
+                title={i18n.t("Description")}
+                value={nmrMethod.description}
+                className="description"
+            />
+            <TooltipRow title={i18n.t("Evidence")} object={nmrMethod}>
+                {nmrMethod => <Link name={nmrMethod.externalLink} url={nmrMethod.externalLink} />}
+            </TooltipRow>
+            <TooltipRow
+                title={i18n.t("Source")}
+                value={nmrSource.description}
+                className="description"
+            />
+            <tr>
+                <td>{i18n.t("Tools")}</td>
+                <td>
+                    <ButtonLink className="anchor" data-start={props.start} data-end={props.end}>
+                        {i18n.t("Library of tested ligands")}
+                    </ButtonLink>
+                </td>
+            </tr>
+        </>
     );
 };
 
@@ -186,3 +218,9 @@ const ReferencesRows: React.FC<{ title?: string; sources: Reference[] }> = props
         </React.Fragment>
     );
 };
+
+const ButtonLink = styled.button`
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+`;

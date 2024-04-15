@@ -490,6 +490,7 @@ export const subtracks = recordOf<SubtrackDefinition>()({
             "List of binding/not-binding fragments from an NMR screening study in which a well-defined fragment library was used to identify hits against SCoV2 proteins."
         ),
         color: "#673ab7",
+        isBlast: false,
     },
 
     // Functional mapping ligands
