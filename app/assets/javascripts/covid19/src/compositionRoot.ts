@@ -13,8 +13,11 @@ import { BionotesOrganismRepository } from "./data/repositories/BionotesOrganism
 import { EntitiesApiRepository } from "./data/repositories/EntitiesApiRepository";
 import { GetPartialNMRTargetUseCase } from "./domain/usecases/GetPartialNMRTargetUseCase";
 import { SaveNMRTargetUseCase } from "./domain/usecases/SaveNMRTargetUseCase";
+import { GetSourcesUseCase } from "./domain/usecases/GetSourcesUseCase";
+import { ApiSourcesRepository } from "./data/repositories/ApiSourcesRepository";
 
 export function getCompositionRoot() {
+    const sourcesRepository = new ApiSourcesRepository();
     const covid19InfoRepository = new Covid19InfoFromJsonRepository();
     const dataGridRepository = new BrowserDataGridRepository();
     const cacheRepository = new LocalStorageCacheRepository();
@@ -24,6 +27,7 @@ export function getCompositionRoot() {
     const entitiesRepository = new EntitiesApiRepository();
 
     return {
+        getSources: new GetSourcesUseCase(sourcesRepository),
         getCovid19Info: new GetCovid19InfoUseCase(covid19InfoRepository),
         getAutoSuggestions: new GetAutoSuggestionsUseCase(covid19InfoRepository),
         searchCovid19Info: new SearchCovid19InfoUseCase(covid19InfoRepository),
