@@ -8,6 +8,5 @@ export function getNMRSubtrack(target: NMRTarget[]): Fragments {
         start: t.start,
         end: t.end,
         description: t.entity,
-        color: "#f00",
     }));
 }

@@ -181,7 +181,7 @@ export const trackDefinitions = {
     }),
     nmr: definition({
         id: "nmr" as const,
-        name: i18n.t("Functional mapping ligands"),
+        name: i18n.t("Ligand interaction"),
         subtracks: [subtracks.nmr],
     }),
     functionalMappingLigands: definition({
