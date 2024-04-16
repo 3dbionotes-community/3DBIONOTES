@@ -14,10 +14,10 @@ import { EntitiesApiRepository } from "./data/repositories/EntitiesApiRepository
 import { GetPartialNMRTargetUseCase } from "./domain/usecases/GetPartialNMRTargetUseCase";
 import { SaveNMRTargetUseCase } from "./domain/usecases/SaveNMRTargetUseCase";
 import { GetSourcesUseCase } from "./domain/usecases/GetSourcesUseCase";
-import { ApiSourcesRepository } from "./data/repositories/ApiSourcesRepository";
+import { SourcesApiRepository } from "./data/repositories/SourcesApiRepository";
 
 export function getCompositionRoot() {
-    const sourcesRepository = new ApiSourcesRepository();
+    const sourcesRepository = new SourcesApiRepository();
     const covid19InfoRepository = new Covid19InfoFromJsonRepository();
     const dataGridRepository = new BrowserDataGridRepository();
     const cacheRepository = new LocalStorageCacheRepository();

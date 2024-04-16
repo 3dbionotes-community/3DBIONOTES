@@ -3,10 +3,10 @@ import { FutureData } from "../../domain/entities/FutureData";
 import { Source } from "../../domain/entities/Source";
 import { SourcesRepository } from "../../domain/repositories/SourcesRepository";
 import { routes } from "../../routes";
-import { getValidatedJSON } from "../../data/request-utils";
-import { Pagination, getResults, paginationCodec } from "../../data/codec-utils";
+import { getValidatedJSON } from "../request-utils";
+import { Pagination, getResults, paginationCodec } from "../codec-utils";
 
-export class ApiSourcesRepository implements SourcesRepository {
+export class SourcesApiRepository implements SourcesRepository {
     get(): FutureData<Source[]> {
         const { bionotesStaging: api } = routes;
 

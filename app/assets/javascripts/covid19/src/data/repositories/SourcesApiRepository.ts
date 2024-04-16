@@ -7,7 +7,7 @@ import { Pagination, getResults, paginationCodec } from "../codec-utils";
 import { Future } from "../utils/future";
 import { getValidatedJSON } from "../utils/request-utils";
 
-export class ApiSourcesRepository implements SourcesRepository {
+export class SourcesApiRepository implements SourcesRepository {
     get(): FutureData<Source[]> {
         const { bionotesApi } = routes;
 
