@@ -1,33 +1,84 @@
 import React from "react";
 import _ from "lodash";
+import { InfoOutlined as InfoOutlinedIcon } from "@material-ui/icons";
 import { Reference } from "../../../domain/entities/Evidence";
 import { Fragment, getFragmentToolsLink } from "../../../domain/entities/Fragment";
-import { Fragment2, getConflict } from "../../../domain/entities/Fragment2";
+import { Fragment2, Interval, getConflict } from "../../../domain/entities/Fragment2";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { Subtrack } from "../../../domain/entities/Track";
-import i18n from "../../utils/i18n";
 import { renderJoin } from "../../utils/react";
 import { Link } from "../Link";
 import { Protein } from "../../../domain/entities/Protein";
+import { trackDefinitions } from "../../../domain/definitions/tracks";
+import i18n from "../../utils/i18n";
 
 interface TooltipProps {
     pdb: Pdb;
     subtrack: Subtrack;
     fragment: FragmentP;
+    alignment: Interval[];
 }
 
 type FragmentP = Fragment | Fragment2;
 
 export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
-    const { pdb, subtrack, fragment } = props;
+    const { pdb, subtrack, fragment, alignment } = props;
     const { description, alignmentScore } = fragment;
-    const score = alignmentScore ? alignmentScore + " %" : undefined;
+    const score = alignmentScore ? alignmentScore + " %" : undefined; // aligmentScore is never being set on code
+    const isStructureCoverage = subtrack.accession === trackDefinitions.structureCoverage.id;
+
+    // Intervals inside intervals (Spanish): https://chat.openai.com/share/eb5816e2-d5c5-455c-bf6e-9e08e8850470
+    const isCovered =
+        isStructureCoverage ||
+        alignment.some(
+            interval => fragment.start >= interval.start && fragment.end <= interval.end
+        );
+
+    const isPartiallyCovered = alignment.some(
+        interval => fragment.start <= interval.end && fragment.end >= interval.start
+    );
+
+    const isNotCovered = alignment.every(
+        interval => fragment.start > interval.end || fragment.end < interval.start
+    );
 
     return (
         <TooltipTable>
-            <TooltipRow title={i18n.t("Feature ID")} value={fragment.id} className="description" />
+            {isNotCovered && (
+                <TooltipRow
+                    title={i18n.t("Aligment")}
+                    value={i18n.t("Not on PDB")}
+                    className="error"
+                    object={{ title: i18n.t("") }} // More descriptive text to be changed by JR
+                >
+                    {info => (
+                        <InfoOutlinedIcon
+                            fontSize="small"
+                            component={InfoIcon}
+                            title={info.title}
+                        />
+                    )}
+                </TooltipRow>
+            )}
+            {isPartiallyCovered && !isCovered && (
+                <TooltipRow
+                    title={i18n.t("Aligment")}
+                    value={i18n.t("Partially on PDB")}
+                    className="warning"
+                    object={{ title: i18n.t("") }} // More descriptive text to be changed by JR
+                >
+                    {info => (
+                        <InfoOutlinedIcon
+                            fontSize="small"
+                            component={InfoIcon}
+                            title={info.title}
+                        />
+                    )}
+                </TooltipRow>
+            )}
+            <TooltipRow title={i18n.t("Feature ID")} value={fragment.id} />
             <TooltipRow title={i18n.t("Description")} value={description} />
-            <TooltipRow title={i18n.t("Alignment score")} value={score} className="description" />
+            <TooltipRow title={i18n.t("Alignment score")} value={score} />
             <TooltipRow title={i18n.t("Conflict")} value={getConflict(pdb.sequence, fragment)} />
             <Source subtrack={subtrack} />
             <Evidences fragment={fragment} />
@@ -171,3 +222,10 @@ const ReferencesRows: React.FC<{ title?: string; sources: Reference[] }> = props
         </React.Fragment>
     );
 };
+
+const InfoIcon: React.FC<{ title: string }> = props => (
+    <svg {...props}>
+        <title>{props.title}</title>
+        {props.children}
+    </svg>
+);
