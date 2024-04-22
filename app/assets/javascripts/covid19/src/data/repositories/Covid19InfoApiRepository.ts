@@ -135,7 +135,6 @@ function buildStructure(pdbEntry: PdbEntry): Structure {
     const ligands = pdbEntry.ligands.map(l => ({
         id: l.dbId,
         name: l.name,
-        details: l.name, //on database, details and name are the same...
         imageLink: l.imageLink,
         externalLink: l.externalLink,
         inChI: l.IUPACInChIkey,

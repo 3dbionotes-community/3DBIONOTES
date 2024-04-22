@@ -41,7 +41,6 @@ export interface Entity {
 export interface Ligand {
     id: Id;
     name: string;
-    details: string;
     imageLink: Url;
     externalLink: Url;
     inChI: string; //IUPACInChIkey
