@@ -20,6 +20,12 @@ Linting:
 $ yarn lint
 ```
 
+Backend host (you can use `localhost:8080` for development if you are deploying the backend on your local machine):
+
+```
+REACT_APP_BWS_HOST=https://3dbionotes.cnb.csic.es/
+```
+
 ## Tests
 
 Run unit tests:
