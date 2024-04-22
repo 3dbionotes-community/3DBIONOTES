@@ -41,7 +41,7 @@ export class Covid19InfoApiRepository implements Covid19InfoRepository {
         });
 
         const suggestions$ = getJSONData<{ results: string[] }>(
-            `${bionotesApi}/api/complete/search?${params.toString()}` //django starts from 1
+            `${bionotesApi}/complete/search?${params.toString()}`
         ).map(({ results }) =>
             _(results)
                 .map(v => v.trim())
@@ -103,7 +103,7 @@ function getPdbEntries(
     );
 
     const pagination$ = getJSONData<Pagination<PdbEntry>>(
-        `${bionotesApi}/api/pdbentry/?${params.toString()}`
+        `${bionotesApi}/pdbentry/?${params.toString()}`
     );
 
     return pagination$.map(({ count, results: pdbEntries }) => ({
