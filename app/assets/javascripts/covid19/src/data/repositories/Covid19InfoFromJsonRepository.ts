@@ -308,7 +308,7 @@ function extractField(structure: Structure, field: Field): string {
         case "organisms":
             return getFields(structure.organisms, ["id", "name", "commonName"]);
         case "ligands":
-            return getFields(structure.ligands, ["id", "name", "details"]);
+            return getFields(structure.ligands, ["id", "name"]);
         case "details": {
             if (!structure.details) return "";
             const { sample, refdoc } = structure.details;
