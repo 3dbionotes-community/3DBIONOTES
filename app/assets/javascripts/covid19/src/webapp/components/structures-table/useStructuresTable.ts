@@ -34,7 +34,7 @@ export function useStructuresTable(props: Props) {
 
     //paging
     const [page, setPage] = React.useState(0);
-    const [pageSize, setPageSize] = React.useState(pageSizes[0] ?? 10);
+    const pageSize = React.useRef(pageSizes[0] ?? 10);
 
     //sort filter
     const [sortModel, setSortModel] = React.useState<GridSortModel>(noSort);
@@ -119,18 +119,18 @@ export function useStructuresTable(props: Props) {
             if (cancelLoadDataRef.current) {
                 cancelLoadDataRef.current(true);
             }
-            getData(newPage, pageSize, () => setPage(newPage));
+            getData(newPage, pageSize.current, () => setPage(newPage));
         },
-        [setPage, pageSize, getData]
+        [setPage, getData]
     );
 
     const changePageSize = React.useCallback(
-        (pageSize: number) => {
+        (size: number) => {
             if (cancelLoadDataRef.current) {
                 cancelLoadDataRef.current(true);
             }
-            getData(0, pageSize, () => {
-                setPageSize(pageSize);
+            getData(0, size, () => {
+                pageSize.current = size;
                 setPage(0);
             });
         },
@@ -147,7 +147,7 @@ export function useStructuresTable(props: Props) {
         compositionRoot,
         data,
         page,
-        pageSize,
+        pageSize: pageSize.current,
         sortModel,
         filterState,
         setFilterState,
