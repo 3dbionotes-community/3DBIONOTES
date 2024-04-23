@@ -66,12 +66,14 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const removeHighlight = React.useCallback(() => setHighlight(false), [setHighlight]);
 
     const suggestions = React.useMemo(() => {
-        if (searchValue === "") return searchExamples;
-        else
+        if (searchValue === "") {
+            return searchExamples;
+        } else {
             return _([searchValue.toLowerCase(), ...autoSuggestionOptions])
                 .uniq()
                 .sortBy(s => s !== searchValue)
                 .value();
+        }
     }, [autoSuggestionOptions, searchValue]);
 
     const resetValueIfEmpty = React.useCallback(() => {
