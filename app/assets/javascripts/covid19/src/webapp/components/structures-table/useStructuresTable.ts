@@ -137,11 +137,11 @@ export function useStructuresTable(props: Props) {
         [setPage, getData]
     );
 
-    const resetPage = () => {
+    const resetPage = React.useCallback(() => {
         changePage(0);
-    };
+    }, [changePage]);
 
-    React.useEffect(resetPage, [filterState, changePage]);
+    React.useEffect(resetPage, [filterState, resetPage]);
 
     return {
         compositionRoot,
