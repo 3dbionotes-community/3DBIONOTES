@@ -41,6 +41,16 @@ export const CustomGridPagination: React.FC<CustomGridPaginationProps> = React.m
         [setPageSize, snackbar, showInfo, hideInfo]
     );
 
+    const tableProps = React.useMemo(
+        () => ({
+            backIconButtonProps: { disabled: isLoading || page === 0 },
+            nextIconButtonProps: { disabled: isLoading || page === maxPage - 1 },
+            SelectProps: { disabled: isLoading },
+            rowsPerPage: pageSize || 10,
+        }),
+        [isLoading, maxPage, page, pageSize]
+    );
+
     return (
         <React.Fragment>
             <TablePagination
@@ -50,11 +60,8 @@ export const CustomGridPagination: React.FC<CustomGridPaginationProps> = React.m
                 page={page}
                 onPageChange={setPageFromEvent}
                 rowsPerPageOptions={pageSizes}
-                rowsPerPage={pageSize || 10}
                 onRowsPerPageChange={changePageSize}
-                backIconButtonProps={{ disabled: isLoading || page === 0 }}
-                nextIconButtonProps={{ disabled: isLoading || page === maxPage - 1 }}
-                SelectProps={{ disabled: isLoading }}
+                {...tableProps}
             />
         </React.Fragment>
     );
