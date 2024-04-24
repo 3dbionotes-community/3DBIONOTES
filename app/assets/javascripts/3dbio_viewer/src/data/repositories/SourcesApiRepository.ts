@@ -1,16 +1,16 @@
-import { Codec, GetType, string } from "purify-ts";
+import { Codec, string } from "purify-ts";
 import { FutureData } from "../../domain/entities/FutureData";
 import { Source } from "../../domain/entities/Source";
 import { SourcesRepository } from "../../domain/repositories/SourcesRepository";
 import { routes } from "../../routes";
 import { getValidatedJSON } from "../request-utils";
-import { Pagination, getResults, paginationCodec } from "../codec-utils";
+import { getResults, paginationCodec } from "../codec-utils";
 
 export class SourcesApiRepository implements SourcesRepository {
     get(): FutureData<Source[]> {
         const { bionotesStaging: api } = routes;
 
-        const nmr$ = getValidatedJSON<Pagination<NmrMethod>>(
+        const nmr$ = getValidatedJSON(
             `${api}/bws/api/nmr/source/`,
             paginationCodec(nmrMethodCodec)
         ).map(getResults);
@@ -35,5 +35,3 @@ const nmrMethodCodec = Codec.interface({
     description: string,
     externalLink: string,
 });
-
-type NmrMethod = GetType<typeof nmrMethodCodec>;

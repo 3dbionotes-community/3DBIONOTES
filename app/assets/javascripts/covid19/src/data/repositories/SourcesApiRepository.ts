@@ -1,9 +1,9 @@
-import { Codec, GetType, exactly, string } from "purify-ts";
+import { Codec, exactly, string } from "purify-ts";
 import { FutureData } from "../../domain/entities/FutureData";
 import { Source } from "../../domain/entities/Source";
 import { SourcesRepository } from "../../domain/repositories/SourcesRepository";
 import { routes } from "../../routes";
-import { Pagination, getResults, paginationCodec } from "../codec-utils";
+import { getResults, paginationCodec } from "../codec-utils";
 import { Future } from "../utils/future";
 import { getValidatedJSON } from "../utils/request-utils";
 
@@ -11,17 +11,17 @@ export class SourcesApiRepository implements SourcesRepository {
     get(): FutureData<Source[]> {
         const { bionotesApi } = routes;
 
-        const refinedModelSources$ = getValidatedJSON<Pagination<ModelSource>>(
+        const refinedModelSources$ = getValidatedJSON(
             `${bionotesApi}/refinedModelSources/`,
             paginationCodec(modelSourcesCodec)
         ).map(getResults);
 
-        const refinedModelMethods$ = getValidatedJSON<Pagination<ModelMethod>>(
+        const refinedModelMethods$ = getValidatedJSON(
             `${bionotesApi}/refinedModelMethods/`,
             paginationCodec(modelMethodsCodec)
         ).map(getResults);
 
-        const nmr$ = getValidatedJSON<Pagination<NmrMethod>>(
+        const nmr$ = getValidatedJSON(
             `${bionotesApi}/nmr/source/`,
             paginationCodec(nmrMethodCodec)
         ).map(getResults);
@@ -70,10 +70,6 @@ const nmrMethodCodec = Codec.interface({
     description: string,
     externalLink: string,
 });
-
-type ModelSource = GetType<typeof modelSourcesCodec>;
-type ModelMethod = GetType<typeof modelMethodsCodec>;
-type NmrMethod = GetType<typeof nmrMethodCodec>;
 
 const idrSource: Source = {
     name: "IDR",
