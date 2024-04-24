@@ -170,6 +170,8 @@ export function getNMRTarget(
                 inChI: ligandentity.IUPACInChIkey,
                 smiles: ligandentity.canonicalSMILES,
                 pubchemId: ligandentity.pubChemCompoundId,
+                formula: ligandentity.formula,
+                imageDataResource: undefined,
             },
             start,
             end,

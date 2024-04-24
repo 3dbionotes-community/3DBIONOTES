@@ -39,10 +39,10 @@ export interface Pdb {
 export interface PdbLigand {
     name: string;
     inChI: string; //IUPACInChIkey
-    imageDataResource?: LigandImageData;
-    smiles?: string;
-    formula?: string;
-    pubchemId?: string;
+    imageDataResource: Maybe<LigandImageData>;
+    smiles: Maybe<string>;
+    formula: Maybe<string>;
+    pubchemId: Maybe<string>;
 }
 
 export type PdbId = string;

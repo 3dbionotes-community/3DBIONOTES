@@ -260,6 +260,9 @@ export function getPdbLigand(pdbLigandOptions: PdbLigandsOptions): PdbLigand {
         name: ligand.name,
         inChI: ligand.IUPACInChIkey,
         imageDataResource: idr,
+        smiles: ligand.canonicalSMILES,
+        formula: ligand.formula,
+        pubchemId: ligand.pubChemCompoundId,
     };
 }
 

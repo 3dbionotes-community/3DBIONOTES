@@ -53,9 +53,9 @@ export interface Ligand {
 export interface NMRLigand {
     name: string;
     inChI: string; //IUPACInChIkey
-    smiles?: string;
-    formula?: string;
-    pubchemId?: string;
+    smiles: Maybe<string>;
+    formula: Maybe<string>;
+    pubchemId: Maybe<string>;
 }
 
 export interface LigandInstance {
