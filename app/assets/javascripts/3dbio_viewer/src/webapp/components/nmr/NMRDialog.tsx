@@ -137,35 +137,14 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
         save,
         hideSaving,
     } = props;
-    const [saving, setSaving] = React.useState<Cancel>();
 
-    const handleChangePage = React.useCallback(
-        (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-            setPage(newPage);
-        },
-        [setPage]
-    );
-
-    const handleChangeRowsPerPage = React.useCallback(
-        (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-            setPageSize(parseInt(event.target.value, 10));
-            setPage(1);
-        },
-        [setPage, setPageSize]
-    );
-
-    const onClick = React.useCallback(() => {
-        if (isSaving) return;
-        const cancel = save();
-        setSaving(_saving => cancel);
-    }, [isSaving, save]);
-
-    const stopSaving = React.useCallback(() => {
-        if (saving) {
-            saving();
-            hideSaving();
-        }
-    }, [saving, hideSaving]);
+    const { handleChangePage, handleChangeRowsPerPage, onClick, stopSaving } = useToolbar({
+        setPage,
+        setPageSize,
+        save,
+        isSaving,
+        hideSaving,
+    });
 
     return (
         <div style={styles.toolbar}>
@@ -318,6 +297,47 @@ function useNMR(basicTarget: BasicNMRFragmentTarget) {
         ] as const,
         nmrSource: getSource(sources, "NMR"),
     };
+}
+
+function useToolbar(props: {
+    setPage: React.Dispatch<React.SetStateAction<number>>;
+    setPageSize: React.Dispatch<React.SetStateAction<number>>;
+    save: () => Cancel | undefined;
+    isSaving: boolean;
+    hideSaving: () => void;
+}) {
+    const { setPage, setPageSize, save, isSaving, hideSaving } = props;
+    const [saving, setSaving] = React.useState<Cancel>();
+
+    const handleChangePage = React.useCallback(
+        (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+            setPage(newPage);
+        },
+        [setPage]
+    );
+
+    const handleChangeRowsPerPage = React.useCallback(
+        (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            setPageSize(parseInt(event.target.value, 10));
+            setPage(1);
+        },
+        [setPage, setPageSize]
+    );
+
+    const onClick = React.useCallback(() => {
+        if (isSaving) return;
+        const cancel = save();
+        setSaving(_saving => cancel);
+    }, [isSaving, save]);
+
+    const stopSaving = React.useCallback(() => {
+        if (saving) {
+            saving();
+            hideSaving();
+        }
+    }, [saving, hideSaving]);
+
+    return { handleChangePage, handleChangeRowsPerPage, onClick, stopSaving };
 }
 
 const styles = {

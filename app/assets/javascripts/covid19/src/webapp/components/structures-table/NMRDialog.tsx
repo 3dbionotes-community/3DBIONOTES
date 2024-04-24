@@ -128,33 +128,14 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
         saveTarget,
         hideExporting,
     } = props;
-    const [saving, setSaving] = React.useState<Cancel>();
 
-    const handleChangePage = React.useCallback(
-        (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-            setPage(newPage);
-        },
-        [setPage]
-    );
-
-    const handleChangeRowsPerPage = React.useCallback(
-        (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-            setPageSize(parseInt(event.target.value, 10));
-            setPage(1);
-        },
-        [setPage, setPageSize]
-    );
-
-    const onClick = React.useCallback(() => {
-        if (isExporting) return;
-        const cancel = saveTarget();
-        setSaving(_saving => cancel);
-    }, [isExporting, saveTarget]);
-
-    const stopSaving = React.useCallback(() => {
-        saving && saving();
-        hideExporting();
-    }, [hideExporting, saving]);
+    const { handleChangePage, handleChangeRowsPerPage, onClick, stopSaving } = useToolbar({
+        setPage,
+        setPageSize,
+        saveTarget,
+        isExporting,
+        hideExporting,
+    });
 
     return (
         <div style={styles.toolbar}>
@@ -244,6 +225,45 @@ const DialogContent: React.FC<DialogContentProps> = React.memo(({ target, pagina
         </TableContainer>
     );
 });
+
+function useToolbar(props: {
+    setPage: (page: number) => void;
+    setPageSize: (pageSize: number) => void;
+    saveTarget: () => Cancel | undefined;
+    isExporting: boolean;
+    hideExporting: () => void;
+}) {
+    const { setPage, setPageSize, saveTarget, isExporting, hideExporting } = props;
+    const [saving, setSaving] = React.useState<Cancel>();
+
+    const handleChangePage = React.useCallback(
+        (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+            setPage(newPage);
+        },
+        [setPage]
+    );
+
+    const handleChangeRowsPerPage = React.useCallback(
+        (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            setPageSize(parseInt(event.target.value, 10));
+            setPage(1);
+        },
+        [setPage, setPageSize]
+    );
+
+    const onClick = React.useCallback(() => {
+        if (isExporting) return;
+        const cancel = saveTarget();
+        setSaving(_saving => cancel);
+    }, [isExporting, saveTarget]);
+
+    const stopSaving = React.useCallback(() => {
+        saving && saving();
+        hideExporting();
+    }, [hideExporting, saving]);
+
+    return { handleChangePage, handleChangeRowsPerPage, onClick, stopSaving };
+}
 
 const styles = {
     toolbar: {
