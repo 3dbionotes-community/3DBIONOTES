@@ -6,7 +6,7 @@ import { FutureData } from "../../domain/entities/FutureData";
 import { NMRPagination, NMRRepository } from "../../domain/repositories/NMRRepository";
 import { nmrFragmentCodec, NMRScreeningFragment } from "../NMRScreening";
 import { getResults, Pagination, paginationCodec } from "../codec-utils";
-import { getValidatedJSON } from "../request-utils";
+import { RequestError, getValidatedJSON } from "../request-utils";
 import { BasicNMRFragmentTarget, NMRFragmentTarget } from "../../domain/entities/Protein";
 import { Future } from "../../utils/future";
 import i18n from "../../domain/utils/i18n";
@@ -55,6 +55,12 @@ export class NMRApiRepository implements NMRRepository {
                 const pages = Math.ceil((pagination?.count ?? 0) / chunkSize);
                 return Future.sequential(_.times(pages).map(page => targetChunk$(page)));
             })
+            .flatMap(
+                (targets): Future<RequestError, NMRFragmentTarget[]> =>
+                    _.isEmpty(targets)
+                        ? Future.error({ message: "No targets" })
+                        : Future.success(targets)
+            )
             .map(targets =>
                 targets.reduce((acc, v) => ({
                     ...acc,
