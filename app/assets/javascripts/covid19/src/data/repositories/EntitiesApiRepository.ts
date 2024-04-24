@@ -1,11 +1,11 @@
 import _, { pick } from "lodash";
 import { routes } from "../../routes";
-import { getValidatedJSON } from "../utils/request-utils";
+import { RequestError, getValidatedJSON } from "../utils/request-utils";
 import { FutureData } from "../../domain/entities/FutureData";
 import { BasicNSPTarget, NSPTarget } from "../../domain/entities/Covid19Info";
 import { NMRPagination, EntitiesRepository } from "../../domain/repositories/EntitiesRepository";
 import { nmrFragmentCodec, NMRScreeningFragment } from "../NMRScreening";
-import { getResults, Pagination, paginationCodec } from "../codec-utils";
+import { getResults, paginationCodec } from "../codec-utils";
 import { Future } from "../utils/future";
 import { lookup } from "mime-types";
 import FileSaver from "file-saver";
@@ -18,7 +18,7 @@ export class EntitiesApiRepository implements EntitiesRepository {
     ): FutureData<{ target: NSPTarget; pagination: NMRPagination }> {
         const { uniprotId, start: _start, end: _end, name } = target; //don't want to remove start & end
         const { bionotesApi } = routes;
-        const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
+        const nmrTarget$ = getValidatedJSON(
             `${bionotesApi}/nmr/${uniprotId}/?target=${name}&limit=${pagination.pageSize}&page=${
                 pagination.page + 1
             }`,
@@ -40,14 +40,14 @@ export class EntitiesApiRepository implements EntitiesRepository {
         const { bionotesApi } = routes;
         const chunkSize = 50;
         const targetChunk$ = (page: number) =>
-            getValidatedJSON<Pagination<NMRScreeningFragment>>(
+            getValidatedJSON(
                 `${bionotesApi}/nmr/${uniprotId}/?target=${name}&limit=${chunkSize}&page=${
                     page + 1
                 }`,
                 paginationCodec(nmrFragmentCodec)
             ).flatMap(pagination => getNMRTarget(uniprotId, getResults(pagination)));
 
-        const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
+        const nmrTarget$ = getValidatedJSON(
             `${bionotesApi}/nmr/${uniprotId}/?target=${name}&limit=1`,
             paginationCodec(nmrFragmentCodec)
         )
@@ -55,6 +55,12 @@ export class EntitiesApiRepository implements EntitiesRepository {
                 const pages = Math.ceil((pagination?.count ?? 0) / chunkSize);
                 return Future.sequential(_.times(pages).map(page => targetChunk$(page)));
             })
+            .flatMap(
+                (targets): Future<RequestError, NSPTarget[]> =>
+                    _.isEmpty(targets)
+                        ? Future.error({ message: "No targets" })
+                        : Future.success(targets)
+            )
             .map(targets =>
                 targets.reduce((acc, v) => ({
                     ...acc,
