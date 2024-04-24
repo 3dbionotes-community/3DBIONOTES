@@ -189,27 +189,7 @@ const DialogContent: React.FC<DialogContentProps> = React.memo(({ target, pagina
         </TableCell>
     ));
 
-    const Items = _.sortBy(target.fragments, f => !f.binding).map((fragment, idx) => {
-        const {
-            binding,
-            ligand: { name: ligandName, smiles, inChI, formula, pubchemId },
-        } = fragment;
-
-        return (
-            <StyledTableRow key={idx} binding={binding}>
-                <TableCell>{pagination.pageSize * pagination.page + idx + 1}</TableCell>
-                <TableCell>{ligandName}</TableCell>
-                <TableCell align="left">{smiles}</TableCell>
-                <TableCell align="left">{inChI}</TableCell>
-                <TableCell align="left">{formula}</TableCell>
-                <TableCell align="left">{pubchemId}</TableCell>
-                <TableCell align="left">{target.name}</TableCell>
-                <TableCell align="left">
-                    {binding ? i18n.t("Binding") : i18n.t("Not binding")}
-                </TableCell>
-            </StyledTableRow>
-        );
-    });
+    const fragments = React.useMemo(() => _.sortBy(target.fragments, f => !f.binding), [target]);
 
     return (
         <TableContainer>
@@ -220,9 +200,60 @@ const DialogContent: React.FC<DialogContentProps> = React.memo(({ target, pagina
                         {Headers}
                     </StyledHeadTableRow>
                 </TableHead>
-                <TableBody>{Items}</TableBody>
+                <TableBody>
+                    {fragments.map((fragment, idx) => {
+                        const {
+                            binding,
+                            ligand: { name: ligandName, smiles, inChI, formula, pubchemId },
+                        } = fragment;
+
+                        return (
+                            <ItemRow
+                                key={idx}
+                                idx={idx}
+                                binding={binding}
+                                name={ligandName}
+                                smiles={smiles}
+                                inChI={inChI}
+                                formula={formula}
+                                pubchemId={pubchemId}
+                                target={target}
+                                pagination={pagination}
+                            />
+                        );
+                    })}
+                </TableBody>
             </Table>
         </TableContainer>
+    );
+});
+
+interface ItemRowProps extends DialogContentProps {
+    idx: number;
+    binding: boolean;
+    name: string;
+    smiles: string;
+    inChI: string;
+    formula: string;
+    pubchemId: string;
+}
+
+const ItemRow: React.FC<ItemRowProps> = React.memo(props => {
+    const { binding, name, smiles, inChI, formula, pubchemId, target, pagination, idx } = props;
+
+    return (
+        <StyledTableRow binding={binding}>
+            <TableCell>{pagination.pageSize * pagination.page + idx + 1}</TableCell>
+            <TableCell>{name}</TableCell>
+            <TableCell align="left">{smiles}</TableCell>
+            <TableCell align="left">{inChI}</TableCell>
+            <TableCell align="left">{formula}</TableCell>
+            <TableCell align="left">{pubchemId}</TableCell>
+            <TableCell align="left">{target.name}</TableCell>
+            <TableCell align="left">
+                {binding ? i18n.t("Binding") : i18n.t("Not binding")}
+            </TableCell>
+        </StyledTableRow>
     );
 });
 
