@@ -7,9 +7,14 @@ import { NMRPagination, NMRRepository } from "../../domain/repositories/NMRRepos
 import { nmrFragmentCodec, NMRScreeningFragment } from "../NMRScreening";
 import { getResults, Pagination, paginationCodec } from "../codec-utils";
 import { RequestError, getValidatedJSON } from "../request-utils";
-import { BasicNMRFragmentTarget, NMRFragmentTarget } from "../../domain/entities/Protein";
+import {
+    BasicNMRFragmentTarget,
+    NMRFragment,
+    NMRFragmentTarget,
+} from "../../domain/entities/Protein";
 import { Future } from "../../utils/future";
 import i18n from "../../domain/utils/i18n";
+import { PdbLigand } from "../../domain/entities/Pdb";
 
 export class NMRApiRepository implements NMRRepository {
     getPartialNMRTarget(
@@ -74,9 +79,23 @@ export class NMRApiRepository implements NMRRepository {
     }
 
     saveNMRTarget(target: NMRFragmentTarget) {
-        const targetKeys = ["name", "uniprotId", "start", "end", "fragments"];
-        const fragmentKeys = ["name", "ligand", "binding"];
-        const ligandKeys = ["formula", "inChI", "name", "pubchemId", "smiles"];
+        const targetKeys: Array<keyof NMRFragmentTarget> = [
+            "name",
+            "uniprotId",
+            "start",
+            "end",
+            "fragments",
+        ];
+
+        const fragmentKeys: Array<keyof NMRFragment> = ["name", "ligand", "binding"];
+
+        const ligandKeys: Array<keyof PdbLigand> = [
+            "formula",
+            "inChI",
+            "name",
+            "pubchemId",
+            "smiles",
+        ];
 
         const fragments = target.fragments.map(f => {
             const fragment = {
