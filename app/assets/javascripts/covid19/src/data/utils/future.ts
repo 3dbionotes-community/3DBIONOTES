@@ -41,19 +41,6 @@ export class Future<E, D> {
         });
     }
 
-    bitap(dataEffectFn: (data: D) => void, errorEffectFn: (error: E) => void): Future<E, D> {
-        return this.bimap(
-            data => {
-                dataEffectFn(data);
-                return data;
-            },
-            err => {
-                errorEffectFn(err);
-                return err;
-            }
-        );
-    }
-
     /* Static methods */
 
     static fromComputation<E, D>(computation: Computation<E, D>): Future<E, D> {

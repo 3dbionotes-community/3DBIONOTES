@@ -76,17 +76,18 @@ export function useStructuresTable(props: Props) {
 
             const cancelGetData = compositionRoot.getCovid19Info
                 .execute({ page, pageSize, filter: filterState, sort, query: search })
-                .bitap(stopLoading, stopLoading)
                 .run(
                     data => {
                         setData(data);
                         onSuccess && onSuccess();
                         cancelLoadDataRef.current = () => {};
+                        stopLoading();
                     },
                     err => {
                         console.error(err.message);
                         notice.error(err.message);
                         cancelLoadDataRef.current = () => {};
+                        stopLoading();
                     }
                 );
 
