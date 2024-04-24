@@ -172,25 +172,7 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
 
     return (
         <div style={styles.toolbar}>
-            <div style={styles.exportButton}>
-                <Button
-                    variant="outlined"
-                    disabled={isSaving}
-                    color="inherit"
-                    startIcon={<GetAppIcon />}
-                    size="small"
-                    onClick={onClick}
-                    style={{ opacity: isSaving ? 0.5 : 1 }}
-                >
-                    {i18n.t("Export all fragments")}
-                </Button>
-                {isSaving && (
-                    <div style={styles.exportStopButton} onClick={stopSaving}>
-                        <StyledCircularProgress size={20} />
-                        <StopIcon color="inherit" style={styles.stop} />
-                    </div>
-                )}
-            </div>
+            <ExportButton isProcessing={isSaving} onClick={onClick} stop={stopSaving} />
             <TablePagination
                 component="div"
                 count={pagination.count}
@@ -202,6 +184,35 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
         </div>
     );
 });
+
+interface ExportButtonProps {
+    isProcessing: boolean;
+    onClick: () => void;
+    stop: () => void;
+}
+
+const ExportButton: React.FC<ExportButtonProps> = React.memo(({ isProcessing, onClick, stop }) => (
+    <div style={styles.exportButton}>
+        <Button
+            variant="outlined"
+            disabled={isProcessing}
+            color="inherit"
+            startIcon={<GetAppIcon />}
+            size="small"
+            onClick={onClick}
+            style={{ opacity: isProcessing ? 0.5 : 1 }}
+        >
+            {i18n.t("Export all fragments")}
+        </Button>
+
+        {isProcessing && (
+            <div style={styles.exportStopButton} onClick={stop}>
+                <StyledCircularProgress size={20} />
+                <StopIcon color="inherit" style={styles.stop} />
+            </div>
+        )}
+    </div>
+));
 
 interface DialogContentProps {
     target: NMRFragmentTarget;

@@ -23,8 +23,8 @@ import { NMRPagination } from "../../../domain/repositories/EntitiesRepository";
 import { useBooleanState } from "../../hooks/useBoolean";
 import { useAppContext } from "../../contexts/app-context";
 import { NoBulletListItem as ListItem } from "./IDRDialog";
-import i18n from "../../../utils/i18n";
 import { Cancel } from "../../../data/utils/future";
+import i18n from "../../../utils/i18n";
 
 export interface NMRDialogProps {
     onClose(): void;
@@ -156,25 +156,7 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
 
     return (
         <div style={styles.toolbar}>
-            <div style={styles.exportButton}>
-                <Button
-                    variant="outlined"
-                    disabled={isExporting}
-                    color="inherit"
-                    startIcon={<GetApp />}
-                    size="small"
-                    onClick={onClick}
-                    style={{ opacity: isExporting ? 0.5 : 1 }}
-                >
-                    {i18n.t("Export all fragments")}
-                </Button>
-                {isExporting && (
-                    <div style={styles.exportStopButton} onClick={stopSaving}>
-                        <StyledCircularProgress size={20} />
-                        <StopIcon color="inherit" style={styles.stop} />
-                    </div>
-                )}
-            </div>
+            <ExportButton isProcessing={isExporting} onClick={onClick} stop={stopSaving} />
             <TablePagination
                 component="div"
                 count={pagination.count}
@@ -186,6 +168,35 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
         </div>
     );
 });
+
+interface ExportButtonProps {
+    isProcessing: boolean;
+    onClick: () => void;
+    stop: () => void;
+}
+
+const ExportButton: React.FC<ExportButtonProps> = React.memo(({ isProcessing, onClick, stop }) => (
+    <div style={styles.exportButton}>
+        <Button
+            variant="outlined"
+            disabled={isProcessing}
+            color="inherit"
+            startIcon={<GetApp />}
+            size="small"
+            onClick={onClick}
+            style={{ opacity: isProcessing ? 0.5 : 1 }}
+        >
+            {i18n.t("Export all fragments")}
+        </Button>
+
+        {isProcessing && (
+            <div style={styles.exportStopButton} onClick={stop}>
+                <StyledCircularProgress size={20} />
+                <StopIcon color="inherit" style={styles.stop} />
+            </div>
+        )}
+    </div>
+));
 
 const DialogContent: React.FC<DialogContentProps> = React.memo(({ target, pagination }) => {
     const headers = ["Name", "SMILES", "InchiKey", "Formula", "PubChem_ID", "Target", "Result"];
