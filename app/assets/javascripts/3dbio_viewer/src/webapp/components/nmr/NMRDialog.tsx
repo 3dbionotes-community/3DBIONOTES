@@ -18,6 +18,7 @@ import {
     TablePagination,
     TableRow,
     Typography,
+    makeStyles,
 } from "@material-ui/core";
 import { BasicNMRFragmentTarget, NMRFragmentTarget } from "../../../domain/entities/Protein";
 import { Close as CloseIcon, GetApp as GetAppIcon, Stop as StopIcon } from "@material-ui/icons";
@@ -47,6 +48,8 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
     } = useNMR(basicTarget);
     const [isSaving, savingActions] = useBooleanState();
     const [isLoading, loadingActions] = useBooleanState();
+
+    const classes = useStyles();
 
     const nmrMethod = nmrSource?.methods[0];
 
@@ -86,7 +89,7 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
                 isSaving={isSaving}
                 hideSaving={savingActions.close}
             />
-            <div style={styles.bottomProgress}>{isLoading && <StyledLinearProgress />}</div>
+            <div className={classes.bottomProgress}>{isLoading && <StyledLinearProgress />}</div>
         </Content>
     ) : (
         <Typography>{i18n.t("Unable to retrieve NMR")}</Typography>
@@ -146,8 +149,10 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
         hideSaving,
     });
 
+    const classes = useStyles();
+
     return (
-        <div style={styles.toolbar}>
+        <div className={classes.toolbar}>
             <ExportButton isProcessing={isSaving} onClick={onClick} stop={stopSaving} />
             <TablePagination
                 component="div"
@@ -167,28 +172,32 @@ interface ExportButtonProps {
     stop: () => void;
 }
 
-const ExportButton: React.FC<ExportButtonProps> = React.memo(({ isProcessing, onClick, stop }) => (
-    <div style={styles.exportButton}>
-        <Button
-            variant="outlined"
-            disabled={isProcessing}
-            color="inherit"
-            startIcon={<GetAppIcon />}
-            size="small"
-            onClick={onClick}
-            style={{ opacity: isProcessing ? 0.5 : 1 }}
-        >
-            {i18n.t("Export all fragments")}
-        </Button>
+const ExportButton: React.FC<ExportButtonProps> = React.memo(({ isProcessing, onClick, stop }) => {
+    const classes = useStyles();
 
-        {isProcessing && (
-            <div style={styles.exportStopButton} onClick={stop}>
-                <StyledCircularProgress size={20} />
-                <StopIcon color="inherit" style={styles.stop} />
-            </div>
-        )}
-    </div>
-));
+    return (
+        <div className={classes.exportButton}>
+            <Button
+                variant="outlined"
+                disabled={isProcessing}
+                color="inherit"
+                startIcon={<GetAppIcon />}
+                size="small"
+                onClick={onClick}
+                style={{ opacity: isProcessing ? 0.5 : 1 }}
+            >
+                {i18n.t("Export all fragments")}
+            </Button>
+
+            {isProcessing && (
+                <div className={classes.exportStopButton} onClick={stop}>
+                    <StyledCircularProgress size={20} />
+                    <StopIcon color="inherit" className={classes.stop} />
+                </div>
+            )}
+        </div>
+    );
+});
 
 interface DialogContentProps {
     target: NMRFragmentTarget;
@@ -371,7 +380,7 @@ function useToolbar(props: {
     return { handleChangePage, handleChangeRowsPerPage, onClick, stopSaving };
 }
 
-const styles = {
+const useStyles = makeStyles({
     toolbar: {
         display: "flex",
         justifyContent: "space-between",
@@ -395,7 +404,7 @@ const styles = {
     },
     stop: { position: "absolute", fontSize: "14px" },
     bottomProgress: { height: "4px" },
-} as const;
+});
 
 interface SetNMRPagination {
     setPage: React.Dispatch<React.SetStateAction<number>>;

@@ -14,6 +14,7 @@ import {
     LinearProgress,
     CircularProgress,
     Paper,
+    makeStyles,
 } from "@material-ui/core";
 import { GetApp, Stop as StopIcon } from "@material-ui/icons";
 import { Dialog } from "./Dialog";
@@ -37,6 +38,8 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
     const { target, error, pagination, setPagination, loading } = props.nmrOptions;
     const { compositionRoot, sources } = useAppContext();
     const [isExporting, { enable: showExporting, disable: hideExporting }] = useBooleanState(false);
+
+    const classes = useStyles();
 
     const nmrSource = React.useMemo(() => getValidationSource(sources, "NMR"), [sources]);
     const nmrMethod = nmrSource?.methods[0];
@@ -83,7 +86,7 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
                 isExporting={isExporting}
                 hideExporting={hideExporting}
             />
-            <div style={styles.bottomProgress}>{loading && <StyledLinearProgress />}</div>
+            <div className={classes.bottomProgress}>{loading && <StyledLinearProgress />}</div>
         </Content>
     );
 
@@ -137,8 +140,10 @@ const Toolbar: React.FC<ToolbarProps> = React.memo(props => {
         hideExporting,
     });
 
+    const classes = useStyles();
+
     return (
-        <div style={styles.toolbar}>
+        <div className={classes.toolbar}>
             <ExportButton isProcessing={isExporting} onClick={onClick} stop={stopSaving} />
             <TablePagination
                 component="div"
@@ -158,28 +163,32 @@ interface ExportButtonProps {
     stop: () => void;
 }
 
-const ExportButton: React.FC<ExportButtonProps> = React.memo(({ isProcessing, onClick, stop }) => (
-    <div style={styles.exportButton}>
-        <Button
-            variant="outlined"
-            disabled={isProcessing}
-            color="inherit"
-            startIcon={<GetApp />}
-            size="small"
-            onClick={onClick}
-            style={{ opacity: isProcessing ? 0.5 : 1 }}
-        >
-            {i18n.t("Export all fragments")}
-        </Button>
+const ExportButton: React.FC<ExportButtonProps> = React.memo(({ isProcessing, onClick, stop }) => {
+    const classes = useStyles();
 
-        {isProcessing && (
-            <div style={styles.exportStopButton} onClick={stop}>
-                <StyledCircularProgress size={20} />
-                <StopIcon color="inherit" style={styles.stop} />
-            </div>
-        )}
-    </div>
-));
+    return (
+        <div className={classes.exportButton}>
+            <Button
+                variant="outlined"
+                disabled={isProcessing}
+                color="inherit"
+                startIcon={<GetApp />}
+                size="small"
+                onClick={onClick}
+                style={{ opacity: isProcessing ? 0.5 : 1 }}
+            >
+                {i18n.t("Export all fragments")}
+            </Button>
+
+            {isProcessing && (
+                <div className={classes.exportStopButton} onClick={stop}>
+                    <StyledCircularProgress size={20} />
+                    <StopIcon color="inherit" className={classes.stop} />
+                </div>
+            )}
+        </div>
+    );
+});
 
 const DialogContent: React.FC<DialogContentProps> = React.memo(({ target, pagination }) => {
     const headers = ["Name", "SMILES", "InchiKey", "Formula", "PubChem_ID", "Target", "Result"];
@@ -296,7 +305,7 @@ function useToolbar(props: {
     return { handleChangePage, handleChangeRowsPerPage, onClick, stopSaving };
 }
 
-const styles = {
+const useStyles = makeStyles({
     toolbar: {
         display: "flex",
         justifyContent: "space-between",
@@ -320,7 +329,7 @@ const styles = {
     },
     stop: { position: "absolute", fontSize: "14px" },
     bottomProgress: { height: "4px" },
-} as const;
+});
 
 const StyledHeadTableRow = styled(TableRow)`
     background: #fff;
