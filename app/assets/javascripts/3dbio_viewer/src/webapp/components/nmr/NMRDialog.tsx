@@ -323,8 +323,8 @@ function useNMR(basicTarget: BasicNMRFragmentTarget) {
         target,
         saveTarget,
         pagination: [
-            { page, pageSize, count } as NMRPagination,
-            { setPage, setPageSize, setCount } as SetNMRPagination,
+            { page, pageSize, count },
+            { setPage, setPageSize, setCount },
         ] as const,
         nmrSource: getSource(sources, "NMR"),
     };
