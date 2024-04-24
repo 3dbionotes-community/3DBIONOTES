@@ -94,7 +94,7 @@ function getPdbEntries(
         _.mapValues(
             {
                 limit: pageSize,
-                page: page + 1, //django starts from 1
+                page: page,
                 ordering: `${sort.order === "asc" ? "" : "-"}${sortingFields[sort.field]}`,
                 ..._.pickBy(filterParams, v => Boolean(v)),
             },

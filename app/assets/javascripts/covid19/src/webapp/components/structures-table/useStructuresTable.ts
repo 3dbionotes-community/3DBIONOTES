@@ -33,7 +33,7 @@ export function useStructuresTable(props: Props) {
     });
 
     //paging
-    const [page, setPage] = React.useState(0);
+    const [page, setPage] = React.useState(1);
     const pageSize = React.useRef(pageSizes[0] ?? 10);
 
     //sort filter
@@ -130,16 +130,16 @@ export function useStructuresTable(props: Props) {
             if (cancelLoadDataRef.current) {
                 cancelLoadDataRef.current(true);
             }
-            getData(0, size, () => {
+            getData(1, size, () => {
                 pageSize.current = size;
-                setPage(0);
+                setPage(1);
             });
         },
         [setPage, getData]
     );
 
     const resetPage = React.useCallback(() => {
-        changePage(0);
+        changePage(1);
     }, [changePage]);
 
     React.useEffect(resetPage, [filterState, resetPage]);

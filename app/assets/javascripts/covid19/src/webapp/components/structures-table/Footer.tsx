@@ -9,13 +9,13 @@ import styled from "styled-components";
 export const Footer: React.FC<CustomGridPaginationProps> = React.memo(props => {
     const { count, pageSize, page, setPage: handlePageChange, isLoading } = props;
 
-    const [inputPage, setInputPage] = React.useState<Maybe<number>>((page ?? 0) + 1);
+    const [inputPage, setInputPage] = React.useState<Maybe<number>>(1);
 
     const interpolation = {
         pageCount: Math.ceil(count / (pageSize ?? 10)),
     };
 
-    const disabled = isLoading || !inputPage || inputPage === page + 1;
+    const disabled = isLoading || !inputPage || inputPage === page;
 
     const inputProps: InputBaseComponentProps = React.useMemo(
         () => ({
@@ -37,7 +37,7 @@ export const Footer: React.FC<CustomGridPaginationProps> = React.memo(props => {
     );
 
     const goToPage = React.useCallback(() => {
-        if (!disabled && inputPage) handlePageChange(inputPage - 1);
+        if (!disabled && inputPage) handlePageChange(inputPage);
     }, [disabled, handlePageChange, inputPage]);
 
     const onKeyPress = React.useCallback(
@@ -48,11 +48,11 @@ export const Footer: React.FC<CustomGridPaginationProps> = React.memo(props => {
     );
 
     const onInputBlur = React.useCallback(() => {
-        if (inputPage === undefined) setInputPage((page ?? 0) + 1);
+        if (inputPage === undefined) setInputPage(page);
     }, [inputPage, page]);
 
     React.useEffect(() => {
-        setInputPage((page ?? 0) + 1);
+        setInputPage(page);
     }, [page]);
 
     return (

@@ -24,7 +24,7 @@ export const CustomGridPagination: React.FC<CustomGridPaginationProps> = React.m
 
     const setPageFromEvent = React.useCallback(
         (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-            setPage(newPage);
+            setPage(newPage + 1);
         },
         [setPage]
     );
@@ -43,8 +43,8 @@ export const CustomGridPagination: React.FC<CustomGridPaginationProps> = React.m
 
     const tableProps = React.useMemo(
         () => ({
-            backIconButtonProps: { disabled: isLoading || page === 0 },
-            nextIconButtonProps: { disabled: isLoading || page === maxPage - 1 },
+            backIconButtonProps: { disabled: isLoading || page === 1 },
+            nextIconButtonProps: { disabled: isLoading || page === maxPage },
             SelectProps: { disabled: isLoading },
             rowsPerPage: pageSize || 10,
         }),
@@ -57,7 +57,7 @@ export const CustomGridPagination: React.FC<CustomGridPaginationProps> = React.m
                 component="div" /* Default component is td, but we the parent component is not a table */
                 className={classes.table}
                 count={count}
-                page={page}
+                page={page - 1}
                 onPageChange={setPageFromEvent}
                 rowsPerPageOptions={pageSizes}
                 onRowsPerPageChange={changePageSize}
