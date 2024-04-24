@@ -41,10 +41,7 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
     const nmrSource = React.useMemo(() => getValidationSource(sources, "NMR"), [sources]);
     const nmrMethod = nmrSource?.methods[0];
 
-    const title = React.useMemo(
-        () => `${i18n.t("NMR-based fragment screening on")}: ${target?.name ?? ""}`,
-        [target]
-    );
+    const title = `${i18n.t("NMR-based fragment screening on")}: ${target?.name ?? ""}`;
 
     const saveTarget = React.useCallback(() => {
         if (target) {
