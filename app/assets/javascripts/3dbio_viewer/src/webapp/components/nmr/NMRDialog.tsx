@@ -280,11 +280,17 @@ function useNMR(basicTarget: BasicNMRFragmentTarget) {
             loading.show();
             return compositionRoot.getPartialNMR
                 .execute(basicTarget, { page, pageSize, count })
-                .tap(() => loading.hide())
-                .run(({ target, pagination }) => {
-                    setCount(pagination.count);
-                    setTarget(target);
-                }, console.error);
+                .run(
+                    ({ target, pagination }) => {
+                        setCount(pagination.count);
+                        setTarget(target);
+                        loading.hide();
+                    },
+                    err => {
+                        console.error(err);
+                        loading.hide();
+                    }
+                );
         },
         [compositionRoot, count, pageSize, page, basicTarget]
     );
@@ -292,10 +298,15 @@ function useNMR(basicTarget: BasicNMRFragmentTarget) {
     const saveTarget = React.useCallback(
         (loading: { show: () => void; hide: () => void }) => {
             loading.show();
-            return compositionRoot.saveNMR
-                .execute(basicTarget)
-                .tap(() => loading.hide())
-                .run(() => {}, console.error);
+            return compositionRoot.saveNMR.execute(basicTarget).run(
+                () => {
+                    loading.hide();
+                },
+                err => {
+                    console.error(err);
+                    loading.hide();
+                }
+            );
         },
         [compositionRoot, basicTarget]
     );

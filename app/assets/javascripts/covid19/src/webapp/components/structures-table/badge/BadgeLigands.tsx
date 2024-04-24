@@ -28,21 +28,22 @@ export const BadgeLigands: React.FC<BadgeLigandsProps> = React.memo(props => {
             e.preventDefault();
             if (onClick) {
                 showLoading();
-                compositionRoot.ligands.getIDR
-                    .execute(ligand.inChI, pdbId)
-                    .tap(() => hideLoading())
-                    .run(
-                        idr =>
-                            onClick(
-                                { ligand, pdbId, idr },
-                                `IDR Ligand. PDB: ${pdbId}. Ligand: ${ligand.id}. Ligand name: ${ligand.name}`
-                            ),
-                        err =>
-                            onClick(
-                                { ligand, pdbId, error: err.message },
-                                `ERROR IDR Ligand. ID: ${ligand.id}`
-                            )
-                    );
+                compositionRoot.ligands.getIDR.execute(ligand.inChI, pdbId).run(
+                    idr => {
+                        hideLoading();
+                        onClick(
+                            { ligand, pdbId, idr },
+                            `IDR Ligand. PDB: ${pdbId}. Ligand: ${ligand.id}. Ligand name: ${ligand.name}`
+                        );
+                    },
+                    err => {
+                        hideLoading();
+                        onClick(
+                            { ligand, pdbId, error: err.message },
+                            `ERROR IDR Ligand. ID: ${ligand.id}`
+                        );
+                    }
+                );
             }
         },
         [onClick, ligand, compositionRoot, pdbId, hideLoading, showLoading]
