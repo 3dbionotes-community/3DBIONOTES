@@ -106,12 +106,12 @@ export class NMRApiRepository implements NMRRepository {
             return pick(fragment, fragmentKeys);
         });
 
-        const t = {
+        const targetWithPickedProps = {
             ...target,
             fragments,
         };
 
-        const content = pick(t, targetKeys);
+        const content = pick(targetWithPickedProps, targetKeys);
         const contents = JSON.stringify(content, null, 4);
 
         return this.save({
