@@ -11,9 +11,9 @@ import {
     ValidationSource,
     getValidationSource,
 } from "../../../../domain/entities/Covid19Info";
+import { useAppContext } from "../../../contexts/app-context";
 import { SetNMROptions } from "../StructuresTable";
 import i18n from "../../../../utils/i18n";
-import { useAppContext } from "../../../contexts/app-context";
 
 export interface EntitiyCellProps extends CellProps {
     onClickNMR?: OnClickNMR;
@@ -45,17 +45,18 @@ export const EntityCell: React.FC<EntitiyCellProps> = React.memo(props => {
                     <Link key={idx} tooltip={entity.tooltip} text={entity.name} />
                     {entity.nmr && entity.sourceTooltip && entity.uniprotAcc && (
                         <HtmlTooltip title={entity.sourceTooltip}>
-                            <span>
-                                <BadgeEntities
-                                    moreDetails={moreDetails}
-                                    onClick={onClickNMR}
-                                    target={{
-                                        uniprotId: entity.uniprotAcc,
-                                        ...entity.nmr,
-                                    }}
-                                    setNMROptions={setNMROptions}
-                                />
-                            </span>
+                            <>
+                                {entity.nmr.map((target, idx) => (
+                                    <span key={idx}>
+                                        <BadgeEntities
+                                            moreDetails={moreDetails}
+                                            onClick={onClickNMR}
+                                            target={target}
+                                            setNMROptions={setNMROptions}
+                                        />
+                                    </span>
+                                ))}
+                            </>
                         </HtmlTooltip>
                     )}
                 </>
@@ -85,10 +86,7 @@ function mapEntity(entity: Entity, nmrValidationSource: Maybe<ValidationSource>)
     const nanobody = entity.isNanobody && <div>{i18n.t("Entity is nanobody")}</div>;
     const sybody = entity.isSybody && <div>{i18n.t("Entity is sybody")}</div>;
 
-    const nmr =
-        entity.target && entity.start && entity.end
-            ? { start: entity.start, end: entity.end, name: entity.target }
-            : undefined;
+    const nmr = entity.targets;
 
     const tooltip = !_.isEmpty(
         _.compact([uniprot, altNames, organism, details, antibody, nanobody, sybody])

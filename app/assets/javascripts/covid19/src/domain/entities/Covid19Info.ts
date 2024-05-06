@@ -36,9 +36,7 @@ export interface Entity {
     isAntibody: boolean;
     isNanobody: boolean;
     isSybody: boolean;
-    start: number | null;
-    end: number | null;
-    target: string | null;
+    targets: BasicNSPTarget[];
 }
 
 export interface Ligand {

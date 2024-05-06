@@ -121,6 +121,19 @@ function buildStructure(pdbEntry: PdbEntry): Structure {
         ...e,
         uniprotAcc: e.uniprotAcc?.dbId ?? null,
         organism: e.organism?.ncbi_taxonomy_id ?? null,
+        targets:
+            e.uniprotAcc?.uniprotentities.flatMap(t => {
+                if (!e.uniprotAcc) return [];
+
+                return [
+                    {
+                        start: t.start,
+                        end: t.end,
+                        name: t.targetName,
+                        uniprotId: e.uniprotAcc.dbId,
+                    },
+                ];
+            }) || [],
     }));
 
     const organisms = pdbEntry.entities
@@ -285,6 +298,12 @@ interface RefModel {
     details: string;
 }
 
+interface NMRTarget {
+    start: number;
+    end: number;
+    targetName: string;
+}
+
 interface Entity {
     uniprotAcc?: UniprotAcc;
     organism?: Organism;
@@ -300,6 +319,7 @@ interface UniprotAcc {
     dbId: string;
     name: string;
     externalLink: string;
+    uniprotentities: NMRTarget[];
 }
 
 interface Organism {

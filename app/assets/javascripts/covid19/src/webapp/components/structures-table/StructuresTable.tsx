@@ -396,6 +396,8 @@ const useStyles = makeStyles({
     },
 });
 
+export type SetNMROptions = React.Dispatch<React.SetStateAction<NMROptions | undefined>>;
+
 export const rowHeight = 220;
 export const headerHeight = 56;
 
