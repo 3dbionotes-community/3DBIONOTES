@@ -1,13 +1,12 @@
 import React from "react";
 import _ from "lodash";
-import { TextField, InputAdornment, Chip, CircularProgress } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import { TextField, InputAdornment, Chip } from "@material-ui/core";
+import Autocomplete, { AutocompleteRenderOptionState } from "@material-ui/lab/Autocomplete";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
 import styled from "styled-components";
 import { Close as CloseIcon, Search as SearchIcon } from "@material-ui/icons";
 import i18n from "../../../utils/i18n";
-import { useDebouncedSetter } from "../../hooks/useDebounce";
 import {
     Covid19Filter,
     FilterKey,
@@ -16,6 +15,7 @@ import {
 } from "../../../domain/entities/Covid19Info";
 import { useAppContext } from "../../contexts/app-context";
 import { searchExamples } from "./Toolbar";
+import { useBooleanState } from "../../hooks/useBoolean";
 
 export interface SearchBarProps {
     value: string;
@@ -29,18 +29,22 @@ export interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
     const { compositionRoot } = useAppContext();
     const { value, setValue, highlighted, setHighlight, filterState, setFilterState } = props;
-    const [open, setOpen] = React.useState(false);
-    const [stateValue, setValueDebounced] = useDebouncedSetter(value, setValue, { delay: 500 });
+    const [open, { enable: showAutocomplete, disable: hideAutocomplete }] = useBooleanState(false);
+    const [searchValue, setSearchValue] = React.useState(value);
     const [autoSuggestionOptions, setAutoSuggestionOptions] = React.useState(searchExamples);
-    const [loading, setLoading] = React.useState(false);
     const selectedFilterNames = filterKeys.filter(key => filterState[key]);
 
     React.useEffect(() => {
-        setLoading(true);
-        const autoSuggestions = compositionRoot.getAutoSuggestions.execute(stateValue);
-        setAutoSuggestionOptions(stateValue === "" ? searchExamples : autoSuggestions);
-        setLoading(false);
-    }, [stateValue, compositionRoot.getAutoSuggestions]);
+        setSearchValue(value);
+    }, [value]);
+
+    React.useEffect(() => {
+        if (searchValue.length > 2) {
+            compositionRoot.getAutoSuggestions
+                .execute(searchValue)
+                .run(suggestions => setAutoSuggestionOptions(suggestions), console.error);
+        }
+    }, [searchValue, compositionRoot.getAutoSuggestions]);
 
     const removeChip = React.useCallback(
         (chipToDelete: FilterKey) => {
@@ -61,6 +65,56 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
 
     const removeHighlight = React.useCallback(() => setHighlight(false), [setHighlight]);
 
+    const suggestions = React.useMemo(() => {
+        if (searchValue === "") {
+            return searchExamples;
+        } else {
+            return _([searchValue.toLowerCase(), ...autoSuggestionOptions])
+                .uniq()
+                .sortBy(s => s !== searchValue)
+                .value();
+        }
+    }, [autoSuggestionOptions, searchValue]);
+
+    const resetValueIfEmpty = React.useCallback(() => {
+        if (searchValue === "") setSearchValue(value);
+    }, [searchValue, value]);
+
+    const renderInput = React.useCallback(
+        params => (
+            <StyledTextField
+                {...params}
+                variant="outlined"
+                value={searchValue}
+                onFocus={removeHighlight}
+                onChange={ev => setSearchValue(ev.target.value)}
+                onBlur={resetValueIfEmpty}
+                onKeyPress={e => {
+                    if (e.key === "Enter") {
+                        setValue(searchValue);
+                    }
+                }}
+                placeholder={i18n.t("Search protein/organism/PDB ID/EMDB ID/UniProt ID")}
+                InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                        <React.Fragment>
+                            <InputAdornment
+                                position="end"
+                                style={styles.searchButton}
+                                onClick={() => setValue(searchValue)}
+                            >
+                                <SearchIcon />
+                            </InputAdornment>
+                        </React.Fragment>
+                    ),
+                    type: "search",
+                }}
+            />
+        ),
+        [removeHighlight, searchValue, setValue, resetValueIfEmpty]
+    );
+
     return (
         <React.Fragment>
             <div style={searchBarStyles}>
@@ -76,65 +130,52 @@ export const SearchBar: React.FC<SearchBarProps> = React.memo(props => {
                 </div>
                 <StyledAutocomplete<string>
                     id="covid19-searchbar-autocomplete"
-                    options={autoSuggestionOptions}
-                    loading={loading}
-                    open={open}
+                    options={suggestions}
+                    open={open && (searchValue.length > 2 || searchValue === "")}
                     fullWidth={true}
-                    onOpen={() => setOpen(true)}
-                    onClose={() => setOpen(false)}
+                    freeSolo={undefined} // weird...
+                    autoComplete={true}
+                    selectOnFocus={true}
+                    autoSelect={true}
                     clearOnBlur={false}
-                    getOptionSelected={(option, value) =>
-                        option.toUpperCase() === value.toUpperCase()
+                    clearOnEscape={true}
+                    openOnFocus={true}
+                    onOpen={showAutocomplete}
+                    onClose={hideAutocomplete}
+                    inputValue={searchValue}
+                    onChange={(_event, option, reason) =>
+                        reason === "select-option" && option && setValue(option)
                     }
-                    inputValue={stateValue}
-                    onInputChange={(_event, newInputValue) => setValueDebounced(newInputValue)}
-                    renderOption={(option, { inputValue }) => {
-                        const matches = match(option, inputValue);
-                        const parts = parse(option, matches);
-                        return (
-                            <div>
-                                {parts.map((part, index) => (
-                                    <span
-                                        key={index}
-                                        style={{ fontWeight: part.highlight ? 700 : 400 }}
-                                    >
-                                        {part.text}
-                                    </span>
-                                ))}
-                            </div>
-                        );
+                    onInputChange={(event, newInputValue) => {
+                        /* Fix bug: if event is null or type blur, somehow, newInputValue randomly picks one of the search examples */
+                        if (event !== null && event.type !== "blur") setSearchValue(newInputValue);
                     }}
-                    renderInput={params => (
-                        <StyledTextField
-                            {...params}
-                            variant="outlined"
-                            value={stateValue}
-                            onFocus={removeHighlight}
-                            onChange={ev => setValueDebounced(ev.target.value)}
-                            placeholder={i18n.t(
-                                "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
-                            )}
-                            InputProps={{
-                                ...params.InputProps,
-                                endAdornment: (
-                                    <React.Fragment>
-                                        {loading ? (
-                                            <CircularProgress color="inherit" size={20} />
-                                        ) : null}
-                                        <InputAdornment position="end">
-                                            <SearchIcon />
-                                        </InputAdornment>
-                                    </React.Fragment>
-                                ),
-                                type: "search",
-                            }}
-                        />
-                    )}
+                    renderOption={renderOption}
+                    renderInput={renderInput}
                 />
             </div>
         </React.Fragment>
     );
 });
+
+function renderOption(option: string, { inputValue }: AutocompleteRenderOptionState) {
+    const matches = match(option, inputValue);
+    const parts = parse(option, matches);
+    return (
+        <div>
+            {parts.map((part, index) => (
+                <span
+                    key={index}
+                    style={{
+                        fontWeight: part.highlight || inputValue.length < 2 ? 400 : 700,
+                    }}
+                >
+                    {part.text}
+                </span>
+            ))}
+        </div>
+    );
+}
 
 const StyledAutocomplete = styled(Autocomplete)`
     &.MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon
@@ -180,5 +221,8 @@ const styles = {
         alignItems: "center",
         listStyle: "none",
         margin: 0,
+    },
+    searchButton: {
+        cursor: "pointer",
     },
 };

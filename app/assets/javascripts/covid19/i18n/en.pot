@@ -119,6 +119,15 @@ msgstr ""
 msgid "No {{name}} found"
 msgstr ""
 
+msgid "Page"
+msgstr ""
+
+msgid "of {{pageCount}}"
+msgstr ""
+
+msgid "Go to page"
+msgstr ""
+
 msgid "Ligand IDR"
 msgstr ""
 
@@ -231,6 +240,12 @@ msgid ""
 "        to check the whole list."
 msgstr ""
 
+msgid "Cancel request"
+msgstr ""
+
+msgid "Loading request..."
+msgstr ""
+
 msgid "Examples"
 msgstr ""
 
@@ -328,6 +343,9 @@ msgid "Show validations"
 msgstr ""
 
 msgid "No {{field}} found"
+msgstr ""
+
+msgid "Request has been cancelled"
 msgstr ""
 
 msgid " and {{overflow}} more..."

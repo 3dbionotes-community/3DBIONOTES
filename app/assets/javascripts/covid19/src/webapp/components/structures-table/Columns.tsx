@@ -1,10 +1,5 @@
 import React from "react";
-import {
-    GridColDef,
-    GridCellValue,
-    GridSortCellParams,
-    GridStateApi,
-} from "@material-ui/data-grid";
+import { GridColDef } from "@material-ui/data-grid";
 import _ from "lodash";
 import i18n from "../../../utils/i18n";
 import { Covid19Info, Ligand, NSPTarget, Structure } from "../../../domain/entities/Covid19Info";
@@ -69,47 +64,54 @@ function column<F extends Field>(field: F, options: Omit<ColumnAttrs<F>, "field"
     return { ...options, field, hide: false, headerAlign: "center" };
 }
 
+export const columnsWidths = {
+    title: 220,
+    pdb: 150,
+    emdb: 120,
+    related: 180,
+};
+
 export type Columns = ColumnAttrs<Field>[];
 
 export const columnsBase: Columns = [
     column("title", {
         headerName: i18n.t("Title"),
         sortable: true,
-        width: 220,
+        width: columnsWidths.title,
         renderCell: TitleCell,
         renderString: row => row.title,
     }),
     column("pdb", {
         headerName: i18n.t("PDB"),
-        width: 150,
+        width: columnsWidths.pdb,
+        sortable: true,
         renderCell: PdbCell,
-        sortComparator: compareIds,
         renderString: row => row.pdb?.id,
     }),
     column("emdb", {
         headerName: i18n.t("EMDB"),
-        width: 120,
+        width: columnsWidths.emdb,
+        sortable: true,
         renderCell: EmdbCell,
-        sortComparator: compareIds,
         renderString: row => row.emdb?.id,
     }),
     column("entities", {
         headerName: i18n.t("Entities"),
-        width: 180,
+        width: columnsWidths.related,
         sortable: false,
         renderCell: EntityCell,
         renderString: row => row.entities.map(entity => entity.name).join(", "),
     }),
     column("ligands", {
         headerName: i18n.t("Ligands"),
-        width: 180,
+        width: columnsWidths.related,
         sortable: false,
         renderCell: LigandsCell,
         renderString: row => row.ligands.map(ligand => ligand.name).join(", "),
     }),
     column("organisms", {
         headerName: i18n.t("Organisms"),
-        width: 180,
+        width: columnsWidths.related,
         sortable: false,
         renderCell: OrganismCell,
         renderString: row =>
@@ -126,7 +128,7 @@ export const columnsBase: Columns = [
     column("details", {
         headerName: i18n.t("Details"),
         hide: false,
-        width: 200,
+        flex: 1,
         sortable: false,
         renderCell: DetailsCell,
         renderString: row => {
@@ -197,31 +199,6 @@ export function getColumns(
     );
 
     return { definition, base: columnsBase };
-}
-
-type Ref = { id?: string };
-
-/* Compare IDs keeping always empty values to the end (it only supports single column sorting) */
-function compareIds(
-    cell1: GridCellValue | undefined,
-    cell2: GridCellValue | undefined,
-    cellParams1: GridSortCellParams
-): number {
-    const id1 = (cell1 as Ref)?.id;
-    const id2 = (cell2 as Ref)?.id;
-
-    const isAsc = (cellParams1.api as GridStateApi).state.sorting.sortModel[0]?.sort === "asc";
-    const emptyCmpValue = isAsc ? -1 : +1;
-
-    if (id1 && id2) {
-        return id1 === id2 ? 0 : id1 > id2 ? +1 : -1;
-    } else if (id1 && !id2) {
-        return emptyCmpValue;
-    } else if (!id1 && id2) {
-        return -emptyCmpValue;
-    } else {
-        return 0;
-    }
 }
 
 export const styles = {

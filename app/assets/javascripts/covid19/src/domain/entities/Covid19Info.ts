@@ -2,6 +2,7 @@ import _ from "lodash";
 import i18n from "../../utils/i18n";
 
 export interface Covid19Info {
+    count: number;
     structures: Structure[];
     validationSources: ValidationSource[];
 }
@@ -43,7 +44,6 @@ export interface Entity {
 export interface Ligand {
     id: Id;
     name: string;
-    details: string;
     imageLink: Url;
     externalLink: Url;
     inChI: string; //IUPACInChIkey
@@ -234,44 +234,6 @@ export const filterKeys = [
 export type FilterKey = typeof filterKeys[number];
 
 export type Covid19Filter = Record<FilterKey, boolean>;
-
-export function filterEntities(entities: Entity[], filterState: Covid19Filter): Entity[] {
-    return entities.filter(
-        entity =>
-            entity.isAntibody === filterState.antibodies &&
-            entity.isNanobody === filterState.nanobodies &&
-            entity.isSybody === filterState.sybodies
-    );
-}
-
-export function filterNMR(entities: Entity[]): Entity[] {
-    return entities.filter(entity => entity.start && entity.end);
-}
-
-export function filterLigands(ligands: Ligand[]): Ligand[] {
-    return ligands.filter(ligand => ligand.hasIDR);
-}
-
-export function filterPdbValidations(
-    PdbValidations: PdbValidation[],
-    filterState: Covid19Filter
-): boolean {
-    return (
-        (!filterState.pdbRedo || _.some(PdbValidations, v => v?.source === "PDB-REDO")) &&
-        (!filterState.cstf || _.some(PdbValidations, v => v?.source === "CSTF")) &&
-        (!filterState.ceres || _.some(PdbValidations, v => v?.source === "CERES"))
-    );
-}
-
-export function updateStructures(data: Covid19Info, structures: Structure[]): Covid19Info {
-    if (_.isEmpty(structures)) return data;
-    const structuresById = _.keyBy(structures, structure => structure.id);
-    const structures2 = data.structures.map(structure => structuresById[structure.id] || structure);
-    const hasChanges = _(data.structures)
-        .zip(structures2)
-        .some(([s1, s2]) => s1 !== s2);
-    return hasChanges ? { ...data, structures: structures2 } : data;
-}
 
 export function getTranslations() {
     return {

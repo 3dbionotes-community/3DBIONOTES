@@ -1,13 +1,20 @@
 import { Covid19Info, Covid19Filter } from "../entities/Covid19Info";
+import { FutureData } from "../entities/FutureData";
 
 export interface Covid19InfoRepository {
-    get(): Covid19Info;
-    search(options: SearchOptions): Covid19Info;
-    autoSuggestions(search: string): string[];
+    get(options: GetOptions): FutureData<Covid19Info>;
+    autoSuggestions(search: string): FutureData<string[]>;
 }
 
-export interface SearchOptions {
-    data: Covid19Info;
-    search?: string;
-    filter?: Covid19Filter;
+export type SortingFields = "pdb" | "emdb" | "title" | "releaseDate";
+
+export interface GetOptions {
+    page: number;
+    pageSize: number;
+    filter: Covid19Filter;
+    sort: {
+        field: SortingFields;
+        order: "asc" | "desc";
+    };
+    query?: string;
 }

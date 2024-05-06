@@ -1,11 +1,11 @@
 import _ from "lodash";
 import React from "react";
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import { Stop as StopIcon, HelpOutline as HelpOutlineIcon } from "@material-ui/icons";
 import styled from "styled-components";
 import { GridApi, GridToolbarColumnsButton, GridToolbarContainer } from "@material-ui/data-grid";
-import { Typography } from "@material-ui/core";
+import { CircularProgress, Typography } from "@material-ui/core";
 import { DataGrid } from "../../../domain/entities/DataGrid";
-import { Covid19Filter } from "../../../domain/entities/Covid19Info";
+import { Covid19Filter, ValidationSource } from "../../../domain/entities/Covid19Info";
 import { VirtualScroll, VirtualScrollbarProps } from "../VirtualScrollbar";
 import { CustomGridToolbarExport } from "./CustomGridToolbarExport";
 import { CustomGridPagination } from "./CustomGridPagination";
@@ -13,6 +13,7 @@ import { SearchBar } from "./SearchBar";
 import { CustomCheckboxFilter } from "./CustomCheckboxFilter";
 import { SearchExampleButton } from "./SearchExampleButton";
 import { HtmlTooltip } from "./HtmlTooltip";
+import { SelfCancellable } from "./useStructuresTable";
 import i18n from "../../../utils/i18n";
 import "./Toolbar.css";
 
@@ -37,10 +38,15 @@ export interface ToolbarProps {
     dataGrid: DataGrid;
     virtualScrollbarProps: VirtualScrollbarProps;
     page: number;
-    pageSize: number | undefined;
+    pageSize: number;
     pageSizes: number[];
     setPage: (param: number) => void;
     setPageSize: (param: number) => void;
+    validationSources: ValidationSource[];
+    isLoading: boolean;
+    slowLoading: boolean;
+    cancelRequest: SelfCancellable;
+    count: number;
 }
 
 // Toolbar is called with empty object on initialization
@@ -141,6 +147,10 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
         pageSizes,
         setPage,
         setPageSize,
+        count,
+        isLoading,
+        slowLoading,
+        cancelRequest,
     } = props;
 
     return (
@@ -181,6 +191,26 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                                 <HelpOutlineIcon />
                             </span>
                         </HtmlTooltip>
+                        {isLoading && (
+                            <LoadingContainer
+                                cancellable={slowLoading}
+                                title={
+                                    slowLoading
+                                        ? i18n.t("Cancel request")
+                                        : i18n.t("Loading request...")
+                                }
+                            >
+                                <StyledCircularProgress size="36px" />
+                                {slowLoading && (
+                                    <StopIcon
+                                        color="inherit"
+                                        style={styles.stop}
+                                        fontSize="small"
+                                        onClick={() => cancelRequest()}
+                                    />
+                                )}
+                            </LoadingContainer>
+                        )}
                     </div>
                     <GridToolbarActions>
                         <CustomGridToolbarExport dataGrid={dataGrid} gridApi={gridApi} />
@@ -200,7 +230,8 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                         ))}
                     </div>
                     <CustomGridPagination
-                        dataGrid={dataGrid}
+                        count={count}
+                        isLoading={isLoading}
                         page={page}
                         pageSize={pageSize}
                         pageSizes={pageSizes}
@@ -243,8 +274,10 @@ export const styles = {
         cursor: "pointer",
     },
     exampleRow: { display: "flex" as const, alignItems: "center", marginRight: "auto" },
-    examplesText: { margin: 0 },
+    examplesText: { margin: "0 0.5em" },
     searchBar: { display: "flex", flexGrow: 1 },
+    stop: { position: "absolute" as const },
+    slowLoading: { display: "flex", alignItems: "center" },
 };
 
 function isNonEmptyObject<T extends object>(obj: T | {}): obj is T {
@@ -283,5 +316,23 @@ export const StyledTypography = styled(Typography)`
         word-wrap: break-word;
         font-family: "Roboto", "Helvetica", "Arial", sans-serif;
         font-weight: 500;
+    }
+`;
+
+const LoadingContainer = styled.div<{ cancellable: boolean }>`
+    display: flex;
+    width: 36px;
+    margin: 0 10px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #009688;
+    cursor: ${props => (props.cancellable ? "pointer" : "default")};
+`;
+
+const StyledCircularProgress = styled(CircularProgress)`
+    position: absolute;
+    &.MuiCircularProgress-colorPrimary {
+        color: #009688;
     }
 `;

@@ -5,10 +5,11 @@ import { axiosRequest, defaultBuilder, RequestResult } from "../utils/future-axi
 import { Future } from "../utils/future";
 import { Maybe } from "../utils/ts-utils";
 import { FutureData } from "../../domain/entities/FutureData";
+import i18n from "../../utils/i18n";
 
 export type RequestError = { message: string };
 
-const timeout = 20e3;
+const timeout = 75e3;
 
 export function getFromUrl<Data>(url: string): Future<RequestError, Data> {
     return request<Data>({ method: "GET", url, timeout }).map(res => res.data);
@@ -20,6 +21,7 @@ export function getTextFromUrl(url: string): Future<RequestError, string> {
         url,
         timeout,
         responseType: "text",
+        timeoutErrorMessage: i18n.t("Request timed out: " + timeout / 1000 + " seconds"),
         transformResponse: [data => data],
     }).map(res => res.data);
 }

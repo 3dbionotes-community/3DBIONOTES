@@ -32,12 +32,6 @@ export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
                             {i18n.t("Name")}: {ligand.name}
                         </div>
 
-                        {ligand.details !== ligand.name && (
-                            <div>
-                                {i18n.t("Details")}: {ligand.details}
-                            </div>
-                        )}
-
                         {ligand.imageLink && (
                             <img alt={ligand.id} src={ligand.imageLink} style={styles.image} />
                         )}
