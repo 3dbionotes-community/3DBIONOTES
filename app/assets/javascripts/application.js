@@ -9,3 +9,10 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
+
+import Rails from "@rails/ujs"
+import $ from 'jquery'
+import Popper from 'popper.js'
+import 'bootstrap'
+
+Rails.start()

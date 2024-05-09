@@ -1,5 +1,11 @@
-//= require jquery
-var $j = jQuery.noConflict();
+import Rails from "@rails/ujs"
+import $ from 'jquery'
+import Popper from 'popper.js'
+import 'bootstrap'
+
+Rails.start()
+
+var $j = $.noConflict();
 var ft;
 var start_flag=true;
 

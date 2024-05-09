@@ -1,8 +1,11 @@
-//= require jquery
-//= require jquery_ujs
-//= require turbolinks
+import Rails from "@rails/ujs"
+import $ from 'jquery'
+import Popper from 'popper.js'
+import 'bootstrap'
 
-var $j = jQuery.noConflict();
+Rails.start()
+
+var $j = $.noConflict();
 var instance;
 
 $j(document).ready(function(){
