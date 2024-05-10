@@ -3,8 +3,6 @@ ruby '3.3.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '7.1.3.2'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0.6'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '4.2.0'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
