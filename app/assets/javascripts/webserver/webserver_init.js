@@ -1,10 +1,3 @@
-import Rails from "@rails/ujs"
-import jQuery from 'jquery'
-import Popper from 'popper.js'
-import 'bootstrap'
-
-Rails.start()
-
 (function (window, document, element, src, name, a, m) {
     window["GoogleAnalytics4Object"] = name;
     (window[name] =

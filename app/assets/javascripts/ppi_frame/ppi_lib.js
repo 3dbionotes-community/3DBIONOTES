@@ -1,10 +1,3 @@
-import Rails from "@rails/ujs"
-import $j from 'jquery'
-import Popper from 'popper.js'
-import 'bootstrap'
-
-Rails.start()
-
 function display_active_data(node){
   var ch = node.cyTarget.id();
   var ch_ = ch;
