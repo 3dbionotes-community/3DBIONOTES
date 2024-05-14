@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: to analyze which routes are no longer needed
+
 Rails.application.routes.draw do
   get '/' => 'main#home'
   post '/' => 'main#home'
