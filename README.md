@@ -19,9 +19,9 @@ Use rvm or rbenv to select the Ruby version specified in Gemfile and then run:
 
 ```
 $ git submodule update --recursive --init
-$ rvm install ruby-2.4.1
-$ gem install bundler:2.2.15
-$ sudo apt install libgsl-dev libmysqlclient-dev # Debian/Ubuntu
+$ rvm install ruby-3.3.1
+$ gem install bundler:2.5.10
+$ sudo apt install libmysqlclient-dev # Debian/Ubuntu
 $ bundle install
 $ cp config/database.example.yml config/database.yml
 $ cp config/secrets.example.yml config/secrets.yml
@@ -36,7 +36,7 @@ Use rvm or rbenv to select the Ruby version specified in Gemfile and then run:
 
 ```
 $ git submodule update --recursive --init
-$ rvm install ruby-2.4.1
+$ rvm install ruby-3.3.1
 $ gem install bundler:2.2.15
 $ brew install gsl mysql
 $ gem install bundler:2.0.0.pre.3
