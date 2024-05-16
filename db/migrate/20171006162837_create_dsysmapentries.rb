@@ -1,4 +1,4 @@
-class CreateDsysmapentries < ActiveRecord::Migration
+class CreateDsysmapentries < ActiveRecord::Migration[7.1]
   def change
     create_table :dsysmapentries do |t|
       t.string :proteinId

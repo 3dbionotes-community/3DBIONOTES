@@ -1,4 +1,4 @@
-class AddInteractome3DIndex < ActiveRecord::Migration
+class AddInteractome3DIndex < ActiveRecord::Migration[7.1]
   def change
     add_index :interactome3d_interactions, :accA
     add_index :interactome3d_interactions, :accB

@@ -1,4 +1,4 @@
-class CreateBiopythonInterfaces < ActiveRecord::Migration
+class CreateBiopythonInterfaces < ActiveRecord::Migration[7.1]
   def change
     create_table :biopython_interfaces do |t|
       t.string :pdbId

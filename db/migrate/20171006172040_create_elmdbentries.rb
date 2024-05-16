@@ -1,4 +1,4 @@
-class CreateElmdbentries < ActiveRecord::Migration
+class CreateElmdbentries < ActiveRecord::Migration[7.1]
   def change
     create_table :elmdbentries do |t|
       t.string :proteinId

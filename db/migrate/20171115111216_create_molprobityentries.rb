@@ -1,4 +1,4 @@
-class CreateMolprobityentries < ActiveRecord::Migration
+class CreateMolprobityentries < ActiveRecord::Migration[7.1]
   def change
     create_table :molprobityentries do |t|
       t.string :pdbId
