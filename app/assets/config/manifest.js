@@ -1,0 +1,12 @@
+//= link_tree ../images
+//= link_tree ../stylesheets
+//= link webserver/webserver_style.css
+//= link webserver/webserver_lib.js
+//= link webserver/webserver_init.js
+//= link webserver/ekko-lightbox.min.js
+//= link webserver/lightbox.js
+//= link webserver/carousel.js
+//= link webserver/collapse.js
+//= link webserver/imagemapResizer.js
+//= link covid19.js
+//= link webserver/main.css

@@ -16,6 +16,13 @@ gem 'config'
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'rubystats'
+gem 'sprockets-rails', '3.4.2'
+gem 'jquery-rails', '4.6.0'
+gem 'bootstrap', '5.3.3'
+gem 'bootstrap-sass', '~> 3.4.1'
+gem 'sassc-rails', '>= 2.1.0'
+gem 'twitter-bootstrap-rails'
+gem 'font-awesome-sass'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

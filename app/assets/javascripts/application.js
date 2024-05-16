@@ -1,8 +1,6 @@
-// Changed from 'sprockets' to 'webpack'
-import * as scss from "../stylesheets/application.scss";
+//= require jquery
+//= require jquery_ujs
 
-import $ from 'jquery'
-import {} from 'jquery-ujs'
-import 'bootstrap'
+//= require bootstrap.min
 
-window.$j = $;
+$ = jQuery;
