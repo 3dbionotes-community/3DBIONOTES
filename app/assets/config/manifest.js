@@ -10,3 +10,6 @@
 //= link webserver/imagemapResizer.js
 //= link covid19.js
 //= link webserver/main.css
+//= link covid19/build/app/2.chunk
+//= link covid19/build/app/main.chunk.js
+//= link covid19/build/app/runtime-main.js
