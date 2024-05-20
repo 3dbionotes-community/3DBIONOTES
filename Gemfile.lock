@@ -80,12 +80,10 @@ GEM
     base64 (0.2.0)
     bigdecimal (3.1.8)
     bio (1.4.3)
-    bootstrap (5.3.3)
+    bootstrap (4.6.2)
       autoprefixer-rails (>= 9.1.0)
-      popper_js (>= 2.11.8, < 3)
-    bootstrap-sass (3.4.1)
-      autoprefixer-rails (>= 5.2.1)
-      sassc (>= 2.0.0)
+      popper_js (>= 1.16.1, < 2)
+      sassc-rails (>= 2.0.0)
     builder (3.2.4)
     byebug (11.1.3)
     commonjs (0.2.7)
@@ -172,7 +170,7 @@ GEM
     passenger (5.1.12)
       rack
       rake (>= 0.8.1)
-    popper_js (2.11.8)
+    popper_js (1.16.1)
     racc (1.7.3)
     rack (2.2.9)
     rack-cors (2.0.2)
@@ -247,6 +245,8 @@ GEM
       railties (>= 5.0, < 8.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uglifier (4.2.0)
+      execjs (>= 0.3.0, < 3)
     webrick (1.8.1)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -263,8 +263,7 @@ PLATFORMS
 
 DEPENDENCIES
   bio (= 1.4.3)
-  bootstrap (= 5.3.3)
-  bootstrap-sass (~> 3.4.1)
+  bootstrap (~> 4.6.2)
   byebug
   config
   daemons
@@ -284,6 +283,7 @@ DEPENDENCIES
   sprockets-rails (= 3.4.2)
   sqlite3 (= 1.4.2)
   twitter-bootstrap-rails
+  uglifier
 
 RUBY VERSION
    ruby 3.3.1p55
