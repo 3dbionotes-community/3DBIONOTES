@@ -28,11 +28,6 @@
 //= link sequence_frame/sequence_init.js
 //= link sequence_frame/sequence_inter.js
 
-//= link jsmol/jquery/jquery.js
-//= link jsmol/js/JSmoljQueryExt.js
-//= link jsmol/JSmol.min.js
-//= link jsmol/JSmol.GLmol.min.js
-
 //= link jsmol_viewer/chimeraClass.js
 //= link jsmol_viewer/JSmolClass.js
 //= link jsmol_viewer/bionotes_jsmol.js
