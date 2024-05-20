@@ -1,4 +1,4 @@
-class CreateDbptmentries < ActiveRecord::Migration
+class CreateDbptmentries < ActiveRecord::Migration[7.1]
   def change
     create_table :dbptmentries do |t|
       t.string :proteinId

@@ -1,4 +1,4 @@
-class CreateBiomutaentries < ActiveRecord::Migration
+class CreateBiomutaentries < ActiveRecord::Migration[7.1]
   def change
     create_table :biomutaentries do |t|
       t.string :proteinId

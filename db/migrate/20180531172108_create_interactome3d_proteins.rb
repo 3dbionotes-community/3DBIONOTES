@@ -1,4 +1,4 @@
-class CreateInteractome3dProteins < ActiveRecord::Migration
+class CreateInteractome3dProteins < ActiveRecord::Migration[7.1]
   def change
     create_table :interactome3d_proteins do |t|
       t.string :acc

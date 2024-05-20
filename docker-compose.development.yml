@@ -1,0 +1,31 @@
+name: '3dbionotes-ruby'
+services:
+  db:
+    image: mysql:8.0
+    container_name: db
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWD}
+    volumes:
+      - dbdata:/var/lib/mysql
+    expose:
+      - "3306"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+  
+  web:
+    container_name: web-ruby
+    tty: true
+    command: bash -c "bundle exec rake db:migrate RAILS_ENV=development && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    depends_on:
+      - db
+
+volumes:
+  dbdata: null

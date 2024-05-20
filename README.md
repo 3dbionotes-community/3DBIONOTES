@@ -52,6 +52,25 @@ $ bundle exec rake db:migrate RAILS_ENV=development
 $ bundle exec rails server
 ```
 
+### Setup docker-compose
+
+1. Create .env file from .env.sample
+2. Start docker containers with following command
+
+```
+docker-compose -f docker-compose.yml -f docker-compose.development.yml up -d
+```
+
+Re-build container:
+```
+docker-compose -f docker-compose.yml -f docker-compose.development.yml up -d --build
+```
+
+Stop all containers:
+```
+docker-compose -f docker-compose.yml -f docker-compose.development.yml down
+```
+
 ### Setup Viewer
 
 If you want to set up the React protein viewer as well, open up a separate terminal tab (while the Ruby app is running!) and run:

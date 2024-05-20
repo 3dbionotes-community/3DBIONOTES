@@ -1,4 +1,4 @@
-class CreateEnsemblvariantentries < ActiveRecord::Migration
+class CreateEnsemblvariantentries < ActiveRecord::Migration[7.1]
   def change
     create_table :ensemblvariantentries do |t|
       t.string :geneId

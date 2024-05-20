@@ -1,4 +1,4 @@
-class CreateBiopythonInteractome3ds < ActiveRecord::Migration
+class CreateBiopythonInteractome3ds < ActiveRecord::Migration[7.1]
   def change
     create_table :biopython_interactome3ds do |t|
       t.string :pdbId

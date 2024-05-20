@@ -1,4 +1,4 @@
-class CreateInteractome3dData < ActiveRecord::Migration
+class CreateInteractome3dData < ActiveRecord::Migration[7.1]
   def change
     create_table :interactome3d_data do |t|
       t.string :pdbId

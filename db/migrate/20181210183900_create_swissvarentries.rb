@@ -1,4 +1,4 @@
-class CreateSwissvarentries < ActiveRecord::Migration
+class CreateSwissvarentries < ActiveRecord::Migration[7.1]
   def change
     create_table :swissvarentries do |t|
       t.string :proteinId
