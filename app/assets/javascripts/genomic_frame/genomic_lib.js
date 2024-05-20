@@ -1,4 +1,5 @@
-var $j = $.noConflict();
+//= require jquery
+var $j = jQuery.noConflict();
 var ft;
 var start_flag=true;
 
