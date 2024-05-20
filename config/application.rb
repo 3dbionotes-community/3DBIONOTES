@@ -20,11 +20,7 @@ module Bionotes
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    # config/application.rb
-
     config.load_defaults 7.0
-    config.hosts << "server:3000"
     config.action_dispatch.default_headers = {
       'X-Frame-Options' => 'ALLOWALL'
     }
