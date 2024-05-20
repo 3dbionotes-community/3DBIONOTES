@@ -1,6 +1,4 @@
 //= require jquery
 //= require jquery_ujs
-
-//= require bootstrap.min
-
-$ = jQuery;
+//= require popper
+//= require bootstrap
