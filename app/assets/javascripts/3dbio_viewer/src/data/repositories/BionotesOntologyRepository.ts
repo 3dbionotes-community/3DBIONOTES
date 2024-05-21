@@ -16,7 +16,7 @@ import {
 export class BionotesOntologyRepository implements OntologyRepository {
     getOntologies(): FutureData<Ontology[]> {
         return getValidatedJSON<OntologiesResponse>(
-            `${bioUrlDev}/bws/api/ontologies/`,
+            `${bioUrl}/bws/api/ontologies/`,
             ontologiesResponseC
         ).flatMap(ontology =>
             ontology
@@ -27,7 +27,7 @@ export class BionotesOntologyRepository implements OntologyRepository {
 
     getOntologyTerms(): FutureData<OntologyTerm[]> {
         return getValidatedJSON<OntologyTermsResponse>(
-            `${bioUrlDev}/bws/api/ontologies/terms/`,
+            `${bioUrl}/bws/api/ontologies/terms/`,
             ontologyTermsResponseC
         ).flatMap(ontologyTerms =>
             ontologyTerms
@@ -39,4 +39,4 @@ export class BionotesOntologyRepository implements OntologyRepository {
     }
 }
 
-const { bionotes: _bioUrl, bionotesStaging: bioUrlDev } = routes;
+const { bionotes: bioUrl } = routes;
