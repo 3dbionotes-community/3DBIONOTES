@@ -8,13 +8,15 @@ import { Wrapper } from "./Wrapper";
 import { getValidationSource } from "../../../../domain/entities/Covid19Info";
 import { HtmlTooltip } from "../HtmlTooltip";
 import i18n from "../../../../utils/i18n";
+import { useAppContext } from "../../../contexts/app-context";
 
 export interface LigandsCellProps extends CellProps {
     onClickIDR?: OnClickIDR;
 }
 
 export const LigandsCell: React.FC<LigandsCellProps> = React.memo(props => {
-    const { row, onClickDetails, onClickIDR, moreDetails = true, validationSources } = props;
+    const { row, onClickDetails, onClickIDR, moreDetails = true } = props;
+    const { sources: validationSources } = useAppContext();
 
     const ligands = React.useMemo(() => {
         return row.ligands.map(ligand => {

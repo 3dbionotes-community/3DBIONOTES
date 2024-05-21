@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-04-07T23:24:17.326Z\n"
-"PO-Revision-Date: 2024-04-07T23:24:17.326Z\n"
+"POT-Creation-Date: 2024-05-06T09:35:53.618Z\n"
+"PO-Revision-Date: 2024-05-06T09:35:53.618Z\n"
 
 msgid "No ontologies found."
 msgstr ""
@@ -15,6 +15,12 @@ msgid "No ontology terms found."
 msgstr ""
 
 msgid "No organisms found."
+msgstr ""
+
+msgid "NMR Error: no target found"
+msgstr ""
+
+msgid "NMR Unexpected Error: no start / no end on fragments. Unable to get target."
 msgstr ""
 
 msgid "Error from API: No ligands found."
@@ -42,6 +48,9 @@ msgid "CERES"
 msgstr ""
 
 msgid "IDR"
+msgstr ""
+
+msgid "CV19-NMR-C"
 msgstr ""
 
 msgid "COVID-19 Structural Hub"
@@ -143,6 +152,21 @@ msgstr ""
 msgid "Ontology"
 msgstr ""
 
+msgid "NMR-based fragment screening on"
+msgstr ""
+
+msgid "Export all fragments"
+msgstr ""
+
+msgid "Ligand interaction"
+msgstr ""
+
+msgid "Binding"
+msgstr ""
+
+msgid "Not binding"
+msgstr ""
+
 msgid "Search protein/organism/PDB ID/EMDB ID/UniProt ID"
 msgstr ""
 
@@ -226,6 +250,15 @@ msgid "Examples"
 msgstr ""
 
 msgid "View more"
+msgstr ""
+
+msgid "C19-NMR"
+msgstr ""
+
+msgid "Loading NMR..."
+msgstr ""
+
+msgid "Loading IDR..."
 msgstr ""
 
 msgid "Sample"

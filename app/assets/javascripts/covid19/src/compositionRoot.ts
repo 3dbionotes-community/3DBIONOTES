@@ -7,15 +7,23 @@ import { GetLigandImageDataResourcesUseCase } from "./domain/usecases/GetLigandI
 import { BionotesOntologyRepository } from "./data/repositories/BioOntologyRepository";
 import { BionotesOrganismRepository } from "./data/repositories/BionotesOrganismRepository";
 import { Covid19InfoApiRepository } from "./data/repositories/Covid19InfoApiRepository";
+import { EntitiesApiRepository } from "./data/repositories/EntitiesApiRepository";
+import { GetPartialNMRTargetUseCase } from "./domain/usecases/GetPartialNMRTargetUseCase";
+import { SaveNMRTargetUseCase } from "./domain/usecases/SaveNMRTargetUseCase";
+import { GetSourcesUseCase } from "./domain/usecases/GetSourcesUseCase";
+import { SourcesApiRepository } from "./data/repositories/SourcesApiRepository";
 
 export function getCompositionRoot() {
+    const sourcesRepository = new SourcesApiRepository();
     const covid19InfoApiRepository = new Covid19InfoApiRepository();
     const dataGridRepository = new BrowserDataGridRepository();
     const ligandsRepository = new LigandsApiRepository();
     const ontologyRepository = new BionotesOntologyRepository();
     const organismRepository = new BionotesOrganismRepository();
+    const entitiesRepository = new EntitiesApiRepository();
 
     return {
+        getSources: new GetSourcesUseCase(sourcesRepository),
         getCovid19Info: new GetCovid19InfoUseCase(covid19InfoApiRepository),
         getAutoSuggestions: new GetAutoSuggestionsUseCase(covid19InfoApiRepository),
         exportStructures: new ExportStructuresUseCase(dataGridRepository),
@@ -25,6 +33,10 @@ export function getCompositionRoot() {
                 ontologyRepository,
                 organismRepository
             ),
+        },
+        entities: {
+            getPartialNMR: new GetPartialNMRTargetUseCase(entitiesRepository),
+            saveNMR: new SaveNMRTargetUseCase(entitiesRepository),
         },
     };
 }

@@ -1,11 +1,14 @@
 import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
-import { LinearProgress, makeStyles } from "@material-ui/core";
-import { DataGrid, GridApi } from "@material-ui/data-grid";
+import { makeStyles } from "@material-ui/core";
+import { DataGrid } from "@material-ui/data-grid";
+import { getColumns, IDROptions, DetailsDialogOptions, NMROptions } from "./Columns";
+import { Covid19Filter } from "../../../domain/entities/Covid19Info";
+import { LinearProgress } from "@material-ui/core";
+import { GridApi } from "@material-ui/data-grid";
 import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
-import { Covid19Filter, Covid19Info } from "../../../domain/entities/Covid19Info";
-import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
+import { Covid19Info } from "../../../domain/entities/Covid19Info";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { VirtualScrollbarProps, useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
 import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
@@ -14,6 +17,7 @@ import { sendAnalytics as _sendAnalytics } from "../../../utils/analytics";
 import { IDRDialog } from "./IDRDialog";
 import { useInfoDialog } from "../../hooks/useInfoDialog";
 import { CustomGridPaginationProps } from "./CustomGridPagination";
+import { NMRDialog } from "./NMRDialog";
 import { Skeleton } from "./Skeleton";
 import { Footer } from "./Footer";
 import { SelfCancellable, pageSizes, useStructuresTable } from "./useStructuresTable";
@@ -86,12 +90,24 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         cancelRequest,
     };
 
-    const { detailsDialog, idrDialog, columns, components, componentsProps } = useStructuresTableUI(
-        structuresTableUIProps
-    );
+    const {
+        detailsDialog,
+        idrDialog,
+        nmrDialog,
+        columns,
+        components,
+        componentsProps,
+    } = useStructuresTableUI(structuresTableUIProps);
 
     const { isOpen: isDetailsOpen, close: closeDetails, data: detailsInfo } = detailsDialog;
     const { isOpen: isIDROpen, open: openIDRDialog, close: closeIDR, data: idrOptions } = idrDialog;
+    const {
+        isOpen: isNMROpen,
+        open: openNMRDialog,
+        close: closeNMR,
+        data: nmrOptions,
+        setData: setNMROptions,
+    } = nmrDialog;
 
     return (
         <div className={classes.wrapper}>
@@ -127,10 +143,15 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                     row={detailsInfo.row}
                     data={data}
                     onClickIDR={openIDRDialog}
+                    onClickNMR={openNMRDialog}
+                    setNMROptions={setNMROptions}
                 />
             )}
             {idrOptions && (
                 <IDRDialog open={isIDROpen} onClose={closeIDR} idrOptions={idrOptions} />
+            )}
+            {nmrOptions && (
+                <NMRDialog open={isNMROpen} onClose={closeNMR} nmrOptions={nmrOptions} />
             )}
         </div>
     );
@@ -187,28 +208,48 @@ function useStructuresTableUI(props: StructuresTableUIProps) {
     const { info: idrOptions, useDialogState: idrDialogState } = useInfoDialog<IDROptions>();
     const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
 
+    const {
+        info: nmrOptions,
+        setInfo: setNMROptions,
+        useDialogState: nmrDialogState,
+    } = useInfoDialog<NMROptions>();
+    const [isNMROpen, closeNMR, showNMRDialog] = nmrDialogState;
+
     const openDetailsDialog = React.useCallback(
         (options: DetailsDialogOptions, gaLabel: string) => {
             closeIDR();
+            closeNMR();
             showDetailsDialog(options, gaLabel);
         },
-        [closeIDR, showDetailsDialog]
+        [closeIDR, showDetailsDialog, closeNMR]
     );
 
     const openIDRDialog = React.useCallback(
         (options: IDROptions, gaLabel: string) => {
             closeDetails();
+            closeNMR();
             showIDRDialog(options, gaLabel);
         },
-        [closeDetails, showIDRDialog]
+        [closeDetails, showIDRDialog, closeNMR]
+    );
+
+    const openNMRDialog = React.useCallback(
+        (options: NMROptions, gaLabel: string) => {
+            closeDetails();
+            closeIDR();
+            showNMRDialog(options, gaLabel);
+        },
+        [closeDetails, closeIDR, showNMRDialog]
     );
 
     const columns = React.useMemo(() => {
         return getColumns(data, {
             onClickDetails: openDetailsDialog,
             onClickIDR: openIDRDialog,
+            onClickNMR: openNMRDialog,
+            setNMROptions: setNMROptions,
         });
-    }, [data, openDetailsDialog, openIDRDialog]);
+    }, [data, openDetailsDialog, openIDRDialog, openNMRDialog, setNMROptions]);
 
     const components = React.useMemo(
         () => ({ Toolbar: Toolbar, Footer: Footer, LoadingOverlay: Skeleton }),
@@ -295,6 +336,13 @@ function useStructuresTableUI(props: StructuresTableUIProps) {
             close: closeIDR,
             data: idrOptions,
         },
+        nmrDialog: {
+            isOpen: isNMROpen,
+            open: openNMRDialog,
+            close: closeNMR,
+            data: nmrOptions,
+            setData: setNMROptions,
+        },
         columns,
         components,
         componentsProps,
@@ -347,6 +395,8 @@ const useStyles = makeStyles({
         position: "relative",
     },
 });
+
+export type SetNMROptions = React.Dispatch<React.SetStateAction<NMROptions | undefined>>;
 
 export const rowHeight = 220;
 export const headerHeight = 56;

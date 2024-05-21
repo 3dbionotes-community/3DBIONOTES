@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { CompositionRoot } from "../../compositionRoot";
-import { Config } from "../../domain/entities/config";
+import { Source } from "../../domain/entities/Source";
 
 export interface AppContextState {
     compositionRoot: CompositionRoot;
-    config: Config;
+    sources: Source[];
 }
 
 export const AppContext = React.createContext<AppContextState | null>(null);

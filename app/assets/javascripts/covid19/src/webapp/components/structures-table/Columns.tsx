@@ -2,22 +2,20 @@ import React from "react";
 import { GridColDef } from "@material-ui/data-grid";
 import _ from "lodash";
 import i18n from "../../../utils/i18n";
-import {
-    Covid19Info,
-    Ligand,
-    Structure,
-    ValidationSource,
-} from "../../../domain/entities/Covid19Info";
+import { Covid19Info, Ligand, NSPTarget, Structure } from "../../../domain/entities/Covid19Info";
 import { TitleCell } from "./cells/TitleCell";
 import { DetailsCell } from "./cells/DetailsCell";
 import { PdbCell } from "./cells/PdbCell";
 import { EmdbCell } from "./cells/EmdbCell";
-import { EntityCell } from "./cells/EntityCell";
+import { EntitiyCellProps, EntityCell } from "./cells/EntityCell";
 import { LigandsCell, LigandsCellProps } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
 import { LigandImageData } from "../../../domain/entities/LigandImageData";
 import { OnClickDetails } from "./badge/BadgeDetails";
 import { OnClickIDR } from "./badge/BadgeLigands";
+import { OnClickNMR } from "./badge/BadgeEntities";
+import { NMRPagination } from "../../../domain/repositories/EntitiesRepository";
+import { SetNMROptions } from "./StructuresTable";
 
 type Row = Structure;
 export type Field = keyof Row;
@@ -29,6 +27,19 @@ export interface IDROptions {
     error?: string;
 }
 
+export interface NMROptions {
+    target?: NSPTarget;
+    pagination?: NMRPagination;
+    setPagination?: SetNMRPagination;
+    error?: string;
+    loading?: boolean;
+}
+
+export interface SetNMRPagination {
+    setPage: (page: number) => void;
+    setPageSize: (pageSize: number) => void;
+}
+
 export interface DetailsDialogOptions {
     row: Structure;
     field: Field;
@@ -38,7 +49,6 @@ export interface CellProps {
     data: Covid19Info;
     row: Row;
     moreDetails?: boolean;
-    validationSources?: ValidationSource[];
     onClickDetails?: OnClickDetails;
 }
 
@@ -46,7 +56,7 @@ export interface ColumnAttrs<F extends Field>
     extends Omit<GridColDef, "headerName" | "field" | "renderCell"> {
     headerName: string;
     field: F;
-    renderCell: React.FC<CellProps> | React.FC<LigandsCellProps>;
+    renderCell: React.FC<CellProps> | React.FC<LigandsCellProps> | React.FC<EntitiyCellProps>;
     renderString(row: Row): string | undefined;
 }
 
@@ -159,6 +169,8 @@ export function getColumns(
     options: {
         onClickDetails: OnClickDetails;
         onClickIDR: OnClickIDR;
+        onClickNMR: OnClickNMR;
+        setNMROptions: SetNMROptions;
     }
 ): { definition: GridColDef[]; base: Columns } {
     const definition = columnsBase.map(
@@ -176,7 +188,8 @@ export function getColumns(
                                 data={data}
                                 onClickDetails={options.onClickDetails}
                                 onClickIDR={options.onClickIDR}
-                                validationSources={data.validationSources}
+                                onClickNMR={options.onClickNMR}
+                                setNMROptions={options.setNMROptions}
                             />
                         </div>
                     );
