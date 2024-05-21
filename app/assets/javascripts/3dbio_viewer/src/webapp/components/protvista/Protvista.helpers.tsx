@@ -11,7 +11,13 @@ interface AddAction {
     trackId: string;
 }
 
-export type ProtvistaAction = AddAction;
+interface ShowNMRDialog {
+    type: "showDialog";
+    start: number;
+    end: number;
+}
+
+export type ProtvistaAction = AddAction | ShowNMRDialog;
 
 interface Options {
     onAction?(action: ProtvistaAction): void;
@@ -41,7 +47,11 @@ interface ProtvistaPdbActionEvent {
 }
 
 function isProtvistaPdbActionEvent(ev: any): ev is ProtvistaPdbActionEvent {
-    return ev.detail && ev.detail.type === "add" && ev.detail.trackId;
+    return (
+        ev.detail &&
+        ((ev.detail.type === "add" && ev.detail.trackId) ||
+            (ev.detail.type === "showDialog" && ev.detail.start && ev.detail.end))
+    );
 }
 
 export function getVisibleBlocks(

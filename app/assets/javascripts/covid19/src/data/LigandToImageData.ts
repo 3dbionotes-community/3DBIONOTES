@@ -4,9 +4,9 @@ import {
     Codec,
     exactly,
     GetType,
+    nullable,
     nullType,
     number,
-    oneOf,
     optional,
     string,
 } from "purify-ts";
@@ -22,18 +22,14 @@ import {
 } from "../domain/entities/LigandImageData";
 import { Ontology, OntologyTerm as BioOntologyTerm } from "../domain/entities/Ontology";
 
-function maybeNull<Data>(type: Codec<Data>) {
-    return oneOf([type, nullType]);
-}
-
 const additionalAnalysisC = Codec.interface({
     name: string,
     relation: exactly("'<'", "'>'", "'='"),
     value: number,
     description: string,
-    units: maybeNull(string),
-    pvalue: maybeNull(number),
-    dataComment: maybeNull(string),
+    units: nullable(string),
+    pvalue: nullable(number),
+    dataComment: nullable(string),
 });
 
 const wellC = Codec.interface({
@@ -45,7 +41,7 @@ const wellC = Codec.interface({
     cellLine: string,
     controlType: optional(string),
     qualityControl: string,
-    micromolarConcentration: maybeNull(number),
+    micromolarConcentration: nullable(number),
     percentageInhibition: number,
     hitOver75Activity: string,
     numberCells: number,
@@ -121,18 +117,22 @@ const imageDataC = Codec.interface({
     assays: array(assayC),
 });
 
-export const pdbLigandC = Codec.interface({
+export const commonLigand = {
     IUPACInChIkey: string,
-    dbId: string,
-    pubChemCompoundId: string,
     name: string,
     formula: string,
     formula_weight: number,
     imageLink: string,
     externalLink: string,
+    pubChemCompoundId: string,
     IUPACInChI: string,
     isomericSMILES: string,
     canonicalSMILES: string,
+};
+
+export const pdbLigandC = Codec.interface({
+    ...commonLigand,
+    dbId: string,
     imageData: optional(array(imageDataC)), //it shouldn't be an array...
 });
 
@@ -140,8 +140,8 @@ export const pdbLigandsC = array(pdbLigandC);
 
 export const pdbEntryResponseC = Codec.interface({
     count: number,
-    next: maybeNull(string),
-    previous: maybeNull(string),
+    next: nullable(string),
+    previous: nullable(string),
     results: pdbLigandsC,
 });
 

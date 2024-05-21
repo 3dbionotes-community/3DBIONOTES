@@ -147,7 +147,6 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
         pageSizes,
         setPage,
         setPageSize,
-        validationSources,
         count,
         isLoading,
         slowLoading,
@@ -170,7 +169,6 @@ export const Toolbar: React.FC<ToolbarProps | {}> = props => {
                         <CustomCheckboxFilter
                             filterState={filterState}
                             setFilterState={setFilterState}
-                            validationSources={validationSources}
                         />
                         <HtmlTooltip
                             title={

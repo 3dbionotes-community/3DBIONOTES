@@ -169,7 +169,7 @@ The local resolution values are between \${poorQualityRegionMin} (percentile 25)
 
         For this protein, we found \${ligandsAndSmallMoleculesCount} different ligands or small molecules.`),
             help: "",
-            tracks: [tracks.structureCoverage, tracks.ligands],
+            tracks: [tracks.structureCoverage, tracks.nmr],
             profiles: [profiles.drugDesign, profiles.biomedicine],
             isSubtitle: true,
         },

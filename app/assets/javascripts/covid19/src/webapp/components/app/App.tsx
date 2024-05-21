@@ -2,7 +2,7 @@ import React from "react";
 import { SnackbarProvider } from "@eyeseetea/d2-ui-components/snackbar";
 import { getCompositionRoot } from "../../../compositionRoot";
 import { Covid19Info } from "../../../domain/entities/Covid19Info";
-import { AppContext } from "../../contexts/app-context";
+import { AppContext, AppContextState } from "../../contexts/app-context";
 import { Root } from "./Root";
 import "./App.css";
 
@@ -12,11 +12,19 @@ declare global {
     }
 }
 
-interface AppProps {}
+const compositionRoot = getCompositionRoot();
 
-export const App: React.FC<AppProps> = React.memo(() => {
-    const compositionRoot = getCompositionRoot();
-    const appContext = { compositionRoot, config: {} };
+export const App = React.memo(() => {
+    const [appContext, setAppContext] = React.useState<AppContextState>({
+        compositionRoot,
+        sources: [],
+    });
+
+    React.useEffect(() => {
+        compositionRoot.getSources
+            .execute()
+            .run(sources => setAppContext({ compositionRoot, sources }), console.error);
+    }, []);
 
     return (
         <AppContext.Provider value={appContext}>

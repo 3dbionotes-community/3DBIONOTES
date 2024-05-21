@@ -124,10 +124,7 @@ const SVGBar: React.FC<SVGBarProps> = React.memo(({ stats }) => {
                         </svg>
                     </div>
                     <HtmlTooltip
-                        PopperProps={{
-                            disablePortal: true,
-                            anchorEl: anchorEl,
-                        }}
+                        PopperProps={{ anchorEl }}
                         onClose={hideTooltip}
                         open={open}
                         disableFocusListener
