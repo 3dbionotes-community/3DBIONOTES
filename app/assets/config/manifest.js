@@ -46,7 +46,6 @@
 //= link annotations_viewer/analyse_data.js
 //= link annotations_viewer/extendProtVista.bundle.js
 //= link annotations_viewer/extend_data.js
-//= link annotations_viewer/extend_style.css
 //= link annotations_viewer/uniprot_viewer_main.css
 //= link annotations_viewer/features_analysis.css
 
@@ -77,16 +76,16 @@
 
 //= link webserver/main.css
 //= link webserver/ekko-lightbox.css
-//= link webserver/proteome.css
-//= link webserver/carousel.css
 //= link webserver/imagemapResizer.js
 //= link webserver/carousel.js
-//= link webserver/popover.js
 //= link webserver/collapse.js
 //= link webserver/ekko-lightbox.min.js
 //= link webserver/lightbox.js
 //= link covid19.js
 
 //= link webserver/viewer.css
-//= link_tree ../3dbio_viewer/build
-//= link_tree ../covid19/build
+//= link application.css
+//= link application.js
+
+//= link_tree ../javascripts/3dbio_viewer/build
+//= link_tree ../javascripts/covid19/build
