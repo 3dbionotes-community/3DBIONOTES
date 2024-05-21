@@ -1,4 +1,4 @@
-class CreateInterproentries < ActiveRecord::Migration
+class CreateInterproentries < ActiveRecord::Migration[7.1]
   def change
     create_table :interproentries do |t|
       t.string :proteinId

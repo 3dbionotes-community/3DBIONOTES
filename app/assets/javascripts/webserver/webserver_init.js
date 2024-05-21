@@ -1,3 +1,4 @@
+//= require jquery
 (function (window, document, element, src, name, a, m) {
     window["GoogleAnalytics4Object"] = name;
     (window[name] =

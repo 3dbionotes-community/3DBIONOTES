@@ -1,3 +1,5 @@
+//= require jquery
+
 function display_active_data(node){
   var ch = node.cyTarget.id();
   var ch_ = ch;

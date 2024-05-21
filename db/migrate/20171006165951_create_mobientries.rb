@@ -1,4 +1,4 @@
-class CreateMobientries < ActiveRecord::Migration
+class CreateMobientries < ActiveRecord::Migration[7.1]
   def change
     create_table :mobientries do |t|
       t.string :proteinId

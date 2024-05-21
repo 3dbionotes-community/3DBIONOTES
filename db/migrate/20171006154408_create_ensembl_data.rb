@@ -1,4 +1,4 @@
-class CreateEnsemblData < ActiveRecord::Migration
+class CreateEnsemblData < ActiveRecord::Migration[7.1]
   def change
     create_table :ensembl_data do |t|
       t.string :geneId

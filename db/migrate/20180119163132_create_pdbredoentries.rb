@@ -1,4 +1,4 @@
-class CreatePdbredoentries < ActiveRecord::Migration
+class CreatePdbredoentries < ActiveRecord::Migration[7.1]
   def change
     create_table :pdbredoentries do |t|
       t.string :pdbId

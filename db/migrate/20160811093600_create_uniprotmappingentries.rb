@@ -1,4 +1,4 @@
-class CreateUniprotmappingentries < ActiveRecord::Migration
+class CreateUniprotmappingentries < ActiveRecord::Migration[7.1]
   def change
     create_table :uniprotmappingentries do |t|
       t.string :proteinId

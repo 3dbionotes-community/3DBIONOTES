@@ -1,4 +1,7 @@
-var $j = $.noConflict();
+//= require jquery
+//= require jquery_ujs
+
+var $j = jQuery.noConflict();
 var instance;
 
 $j(document).ready(function(){
