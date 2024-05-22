@@ -1,19 +1,28 @@
-import React from "react";
 import _ from "lodash";
+import React from "react";
+import styled from "styled-components";
 import { makeStyles } from "@material-ui/core";
-import { DataGrid, DataGridProps, GridSortModel } from "@material-ui/data-grid";
-import { updateStructures } from "../../../domain/entities/Covid19Info";
-import { getColumns, IDROptions, DetailsDialogOptions } from "./Columns";
-import { Covid19Filter, Id } from "../../../domain/entities/Covid19Info";
+import { DataGrid } from "@material-ui/data-grid";
+import { getColumns, IDROptions, DetailsDialogOptions, NMROptions } from "./Columns";
+import { Covid19Filter } from "../../../domain/entities/Covid19Info";
+import { LinearProgress } from "@material-ui/core";
+import { GridApi } from "@material-ui/data-grid";
+import { useSnackbar } from "@eyeseetea/d2-ui-components/snackbar";
+import { Covid19Info } from "../../../domain/entities/Covid19Info";
 import { Toolbar, ToolbarProps } from "./Toolbar";
-import { useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
+import { VirtualScrollbarProps, useVirtualScrollbarForDataGrid } from "../VirtualScrollbar";
 import { DataGrid as DataGridE } from "../../../domain/entities/DataGrid";
-import { useAppContext } from "../../contexts/app-context";
 import { DetailsDialog } from "./DetailsDialog";
-import { sendAnalytics } from "../../../utils/analytics";
+import { sendAnalytics as _sendAnalytics } from "../../../utils/analytics";
 import { IDRDialog } from "./IDRDialog";
 import { useInfoDialog } from "../../hooks/useInfoDialog";
-import { CustomGridPagination, CustomGridPaginationProps } from "./CustomGridPagination";
+import { CustomGridPaginationProps } from "./CustomGridPagination";
+import { NMRDialog } from "./NMRDialog";
+import { Skeleton } from "./Skeleton";
+import { Footer } from "./Footer";
+import { SelfCancellable, pageSizes, useStructuresTable } from "./useStructuresTable";
+import { useBooleanState } from "../../hooks/useBoolean";
+import { Maybe } from "../../../data/utils/ts-utils";
 
 export interface StructuresTableProps {
     search: string;
@@ -22,63 +31,39 @@ export interface StructuresTableProps {
     setHighlight: (value: boolean) => void;
 }
 
-export const rowHeight = 220;
-
-const noSort: GridSortModel = [];
-
-const defaultSort: GridSortModel = [{ field: "emdb", sort: "desc" }];
-
 export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props => {
-    const { search, setSearch: setSearch0, highlighted, setHighlight } = props;
-    const { compositionRoot } = useAppContext();
-    const [page, setPage] = React.useState(0);
-    const [pageSize, setPageSize] = React.useState(pageSizes[0]);
+    const { search, highlighted, setHighlight } = props;
     const classes = useStyles();
+    const snackbar = useSnackbar();
+
+    const { main, skeleton, cancellable, stop: stopLoading } = useUILoaders();
+    const { loading: isLoading, show: showLoading } = main;
+    const { loading: isSkeletonLoading } = skeleton;
+    const { loading: isCancellable, show: enableCancellable } = cancellable;
+
+    const structuresTableProps = {
+        ...props,
+        notice: snackbar,
+        showLoading,
+        enableCancellable,
+        stopLoading,
+    };
 
     const {
-        info: detailsInfo,
-        useDialogState: detailsDialogState,
-    } = useInfoDialog<DetailsDialogOptions>();
-    const [isDetailsOpen, closeDetails, showDetailsDialog] = detailsDialogState;
-    const { info: idrOptions, useDialogState: idrDialogState } = useInfoDialog<IDROptions>();
-    const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
+        data,
+        page,
+        pageSize,
+        sortModel,
+        filterState,
+        setFilterState,
+        cancelRequest,
+        setSearch,
+        resetPageAndSorting,
+        changePage,
+        changePageSize,
+    } = useStructuresTable(structuresTableProps);
 
-    const [sortModel, setSortModel] = React.useState<GridSortModel>(defaultSort);
-    const [filterState, setFilterState0] = React.useState(initialFilterState);
-
-    const openDetailsDialog = React.useCallback(
-        (options: DetailsDialogOptions, gaLabel: string) => {
-            closeIDR();
-            showDetailsDialog(options, gaLabel);
-        },
-        [closeIDR, showDetailsDialog]
-    );
-
-    const openIDRDialog = React.useCallback(
-        (options: IDROptions, gaLabel: string) => {
-            closeDetails();
-            showIDRDialog(options, gaLabel);
-        },
-        [closeDetails, showIDRDialog]
-    );
-
-    const setFilterState = React.useCallback((value: React.SetStateAction<Covid19Filter>) => {
-        setPage(0);
-        setFilterState0(value);
-    }, []);
-
-    const setSearch = React.useCallback(
-        (value: string) => {
-            setPage(0);
-            sendAnalytics("search", {
-                on: "covid_table",
-                query: value,
-            });
-            setSearch0(value);
-            setSortModel(value ? noSort : defaultSort);
-        },
-        [setSearch0]
-    );
+    const { structures } = data;
 
     const {
         gridApi,
@@ -86,40 +71,188 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         updateScrollBarFromStateChange,
     } = useVirtualScrollbarForDataGrid();
 
-    const [renderedRowIds, setRenderedRowsFromState] = useRenderedRows();
+    const structuresTableUIProps = {
+        data,
+        gridApi,
+        virtualScrollbarProps,
+        search,
+        setSearch,
+        highlighted,
+        setHighlight,
+        filterState,
+        setFilterState,
+        page,
+        pageSize,
+        changePage,
+        changePageSize,
+        isLoading,
+        isCancellable,
+        cancelRequest,
+    };
 
-    const onStateChange = React.useCallback<NonNullable<DataGridProps["onStateChange"]>>(
-        params => {
-            setRenderedRowsFromState(params);
-            updateScrollBarFromStateChange(params);
-        },
-        [setRenderedRowsFromState, updateScrollBarFromStateChange]
+    const {
+        detailsDialog,
+        idrDialog,
+        nmrDialog,
+        columns,
+        components,
+        componentsProps,
+    } = useStructuresTableUI(structuresTableUIProps);
+
+    const { isOpen: isDetailsOpen, close: closeDetails, data: detailsInfo } = detailsDialog;
+    const { isOpen: isIDROpen, open: openIDRDialog, close: closeIDR, data: idrOptions } = idrDialog;
+    const {
+        isOpen: isNMROpen,
+        open: openNMRDialog,
+        close: closeNMR,
+        data: nmrOptions,
+        setData: setNMROptions,
+    } = nmrDialog;
+
+    return (
+        <div className={classes.wrapper}>
+            <DataGrid
+                paginationMode="server"
+                sortingMode="server"
+                filterMode="server"
+                page={page}
+                onStateChange={updateScrollBarFromStateChange}
+                sortModel={sortModel}
+                onSortModelChange={resetPageAndSorting}
+                className={classes.root}
+                rowHeight={rowHeight}
+                sortingOrder={sortingOrder}
+                rows={structures}
+                autoHeight
+                columns={columns.definition}
+                disableColumnMenu={true}
+                rowsPerPageOptions={pageSizes}
+                pagination={true}
+                pageSize={pageSize}
+                loading={isSkeletonLoading}
+                headerHeight={headerHeight}
+                components={components}
+                componentsProps={componentsProps}
+            />
+            {isLoading && <StyledLinearProgress position="bottom" />}
+            {detailsInfo && (
+                <DetailsDialog
+                    open={isDetailsOpen}
+                    onClose={closeDetails}
+                    expandedAccordion={detailsInfo.field}
+                    row={detailsInfo.row}
+                    data={data}
+                    onClickIDR={openIDRDialog}
+                    onClickNMR={openNMRDialog}
+                    setNMROptions={setNMROptions}
+                />
+            )}
+            {idrOptions && (
+                <IDRDialog open={isIDROpen} onClose={closeIDR} idrOptions={idrOptions} />
+            )}
+            {nmrOptions && (
+                <NMRDialog open={isNMROpen} onClose={closeNMR} nmrOptions={nmrOptions} />
+            )}
+        </div>
     );
+});
 
-    const [data, setData] = React.useState(() => compositionRoot.getCovid19Info.execute());
+type StructuresTableUIProps = {
+    data: Covid19Info;
+    gridApi: Maybe<GridApi>;
+    virtualScrollbarProps: VirtualScrollbarProps;
+    search: string;
+    setSearch: (value: string) => void;
+    highlighted: boolean;
+    setHighlight: (value: boolean) => void;
+    filterState: Covid19Filter;
+    setFilterState: React.Dispatch<React.SetStateAction<Covid19Filter>>;
+    page: number;
+    pageSize: number;
+    changePage: (newPage: number) => void;
+    changePageSize: (pageSize: number) => void;
+    isLoading: boolean;
+    isCancellable: boolean;
+    cancelRequest: React.MutableRefObject<SelfCancellable>;
+};
+
+function useStructuresTableUI(props: StructuresTableUIProps) {
+    const {
+        data,
+        gridApi,
+        virtualScrollbarProps,
+        search,
+        setSearch,
+        highlighted,
+        setHighlight,
+        filterState,
+        setFilterState,
+        page,
+        pageSize,
+        changePage,
+        changePageSize,
+        isLoading,
+        isCancellable,
+        cancelRequest,
+    } = props;
+
+    const { structures } = data;
     window.app = { data };
 
-    React.useEffect(() => {
-        compositionRoot.addDynamicInfo.execute(data, { ids: renderedRowIds }).then(structures => {
-            setData(data => updateStructures(data, structures));
-        });
-    }, [compositionRoot, data, renderedRowIds]);
+    const {
+        info: detailsInfo,
+        useDialogState: detailsDialogState,
+    } = useInfoDialog<DetailsDialogOptions>();
+    const [isDetailsOpen, closeDetails, showDetailsDialog] = detailsDialogState;
 
-    const filteredData = React.useMemo(() => {
-        return compositionRoot.searchCovid19Info.execute({ data, search, filter: filterState });
-    }, [compositionRoot, data, search, filterState]);
+    const { info: idrOptions, useDialogState: idrDialogState } = useInfoDialog<IDROptions>();
+    const [isIDROpen, closeIDR, showIDRDialog] = idrDialogState;
 
-    const { structures } = filteredData;
+    const {
+        info: nmrOptions,
+        setInfo: setNMROptions,
+        useDialogState: nmrDialogState,
+    } = useInfoDialog<NMROptions>();
+    const [isNMROpen, closeNMR, showNMRDialog] = nmrDialogState;
+
+    const openDetailsDialog = React.useCallback(
+        (options: DetailsDialogOptions, gaLabel: string) => {
+            closeIDR();
+            closeNMR();
+            showDetailsDialog(options, gaLabel);
+        },
+        [closeIDR, showDetailsDialog, closeNMR]
+    );
+
+    const openIDRDialog = React.useCallback(
+        (options: IDROptions, gaLabel: string) => {
+            closeDetails();
+            closeNMR();
+            showIDRDialog(options, gaLabel);
+        },
+        [closeDetails, showIDRDialog, closeNMR]
+    );
+
+    const openNMRDialog = React.useCallback(
+        (options: NMROptions, gaLabel: string) => {
+            closeDetails();
+            closeIDR();
+            showNMRDialog(options, gaLabel);
+        },
+        [closeDetails, closeIDR, showNMRDialog]
+    );
 
     const columns = React.useMemo(() => {
         return getColumns(data, {
             onClickDetails: openDetailsDialog,
             onClickIDR: openIDRDialog,
+            onClickNMR: openNMRDialog,
+            setNMROptions: setNMROptions,
         });
-    }, [data, openDetailsDialog, openIDRDialog]);
+    }, [data, openDetailsDialog, openIDRDialog, openNMRDialog, setNMROptions]);
 
     const components = React.useMemo(
-        () => ({ Toolbar: Toolbar, Pagination: CustomGridPagination }),
+        () => ({ Toolbar: Toolbar, Footer: Footer, LoadingOverlay: Skeleton }),
         []
     );
 
@@ -128,7 +261,11 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
     }, [columns, structures]);
 
     const componentsProps = React.useMemo<
-        { toolbar: ToolbarProps; pagination: CustomGridPaginationProps } | undefined
+        | {
+              toolbar: ToolbarProps;
+              footer: CustomGridPaginationProps;
+          }
+        | undefined
     >(() => {
         return gridApi
             ? {
@@ -145,17 +282,23 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
                       page,
                       pageSize,
                       pageSizes,
-                      setPage,
-                      setPageSize,
+                      setPage: changePage,
+                      setPageSize: changePageSize,
+                      isLoading,
+                      slowLoading: isCancellable,
+                      count: data.count,
+                      cancelRequest: () => cancelRequest.current && cancelRequest.current(), //wrapper
                       validationSources: data.validationSources,
                   },
-                  pagination: {
+                  footer: {
                       dataGrid,
                       page,
                       pageSize,
                       pageSizes,
-                      setPage,
-                      setPageSize,
+                      setPage: changePage,
+                      setPageSize: changePageSize,
+                      isLoading,
+                      count: data.count,
                   },
               }
             : undefined;
@@ -171,63 +314,70 @@ export const StructuresTable: React.FC<StructuresTableProps> = React.memo(props 
         virtualScrollbarProps,
         page,
         pageSize,
-        setPage,
-        setPageSize,
         data.validationSources,
+        isLoading,
+        isCancellable,
+        changePage,
+        changePageSize,
+        data.count,
+        cancelRequest,
     ]);
 
-    const resetPageAndSorting = React.useCallback<GridProp<"onSortModelChange">>(_modelParams => {
-        setPage(0);
-    }, []);
+    return {
+        detailsDialog: {
+            isOpen: isDetailsOpen,
+            open: openDetailsDialog,
+            close: closeDetails,
+            data: detailsInfo,
+        },
+        idrDialog: {
+            isOpen: isIDROpen,
+            open: openIDRDialog,
+            close: closeIDR,
+            data: idrOptions,
+        },
+        nmrDialog: {
+            isOpen: isNMROpen,
+            open: openNMRDialog,
+            close: closeNMR,
+            data: nmrOptions,
+            setData: setNMROptions,
+        },
+        columns,
+        components,
+        componentsProps,
+    };
+}
 
-    const setPageFromParams = React.useCallback<GridProp<"onPageChange">>(params => {
-        return setPage(params.page);
-    }, []);
+function useUILoaders() {
+    const [isLoading, { enable: showLoading, disable: hideLoading }] = useBooleanState(true);
+    const [isSkeletonLoading, { disable: hideSkeleton }] = useBooleanState(true);
+    const [
+        isCancellable,
+        { enable: enableCancellable, disable: disableCancellable },
+    ] = useBooleanState(false);
 
-    const setPageSizeFromParams = React.useCallback<GridProp<"onPageSizeChange">>(params => {
-        return setPageSize(params.pageSize);
-    }, []);
+    const stopLoading = React.useCallback(() => {
+        hideSkeleton();
+        hideLoading();
+        disableCancellable();
+    }, [hideLoading, disableCancellable, hideSkeleton]);
 
-    return (
-        <div className={classes.wrapper}>
-            <DataGrid
-                page={page}
-                onStateChange={onStateChange}
-                sortModel={sortModel}
-                onSortModelChange={resetPageAndSorting}
-                className={classes.root}
-                rowHeight={rowHeight}
-                sortingOrder={sortingOrder}
-                rows={structures}
-                autoHeight
-                columns={columns.definition}
-                disableColumnMenu={true}
-                rowsPerPageOptions={pageSizes}
-                pagination={true}
-                pageSize={pageSize}
-                onPageChange={setPageFromParams}
-                onPageSizeChange={setPageSizeFromParams}
-                components={components}
-                componentsProps={componentsProps}
-            />
-            {detailsInfo && (
-                <DetailsDialog
-                    open={isDetailsOpen}
-                    onClose={closeDetails}
-                    expandedAccordion={detailsInfo.field}
-                    row={detailsInfo.row}
-                    data={data}
-                    onClickIDR={openIDRDialog}
-                />
-            )}
-            {idrOptions && (
-                <IDRDialog open={isIDROpen} onClose={closeIDR} idrOptions={idrOptions} />
-            )}
-        </div>
-    );
-});
-
-type GridProp<Prop extends keyof DataGridProps> = NonNullable<DataGridProps[Prop]>;
+    return {
+        main: {
+            loading: isLoading,
+            show: showLoading,
+        },
+        skeleton: {
+            loading: isSkeletonLoading,
+        },
+        cancellable: {
+            loading: isCancellable,
+            show: enableCancellable,
+        },
+        stop: stopLoading,
+    };
+}
 
 const useStyles = makeStyles({
     root: {
@@ -235,45 +385,34 @@ const useStyles = makeStyles({
             whiteSpace: "normal",
             display: "flex", // "flex": center vertically. "block" otherwise
         },
+        "&.MuiDataGrid-root": {
+            borderTop: "none",
+            borderRadius: "0 0 4px 4px",
+        },
         "&.MuiDataGrid-root .MuiDataGrid-cellWithRenderer": {},
     },
-    wrapper: {},
+    wrapper: {
+        position: "relative",
+    },
 });
 
-const pageSizes = [10, 25, 50, 75, 100];
+export type SetNMROptions = React.Dispatch<React.SetStateAction<NMROptions | undefined>>;
 
-const sortingOrder = ["asc" as const, "desc" as const];
+export const rowHeight = 220;
+export const headerHeight = 56;
 
-const initialFilterState: Covid19Filter = {
-    antibodies: false,
-    nanobodies: false,
-    sybodies: false,
-    pdbRedo: false,
-    cstf: false,
-    ceres: false,
-    idr: false,
-};
+const sortingOrder = ["asc" as const, "desc" as const, null];
 
-function useRenderedRows() {
-    const [renderedRowIds, setRenderedRowIds] = React.useState<Id[]>([]);
-
-    const setRenderedRowsFromState = React.useCallback<NonNullable<DataGridProps["onStateChange"]>>(
-        gridParams => {
-            const { api } = gridParams;
-            const { page, pageSize } = gridParams.state.pagination;
-            const sortedIds = api.getSortedRowIds() as Id[];
-            const visibleIds = Array.from(api.getVisibleRowModels().keys()) as string[];
-
-            const ids = _(sortedIds)
-                .intersection(visibleIds)
-                .drop(page * pageSize)
-                .take(pageSize)
-                .value();
-
-            setRenderedRowIds(prevIds => (_.isEqual(prevIds, ids) ? prevIds : ids));
-        },
-        []
-    );
-
-    return [renderedRowIds, setRenderedRowsFromState] as const;
-}
+const StyledLinearProgress = styled(LinearProgress)<{ position: "top" | "bottom" }>`
+    &.MuiLinearProgress-root {
+        position: absolute;
+        ${props => props.position}: 0;
+        width: 100%;
+    }
+    &.MuiLinearProgress-colorPrimary {
+        background-color: #c6ece8;
+    }
+    & .MuiLinearProgress-barColorPrimary {
+        background-color: #009688;
+    }
+`;

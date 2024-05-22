@@ -482,6 +482,17 @@ export const subtracks = recordOf<SubtrackDefinition>()({
         description: i18n.t(""),
     },
 
+    nmr: {
+        id: "nmr" as const,
+        name: i18n.t("NMR-based fragment screening"),
+        source: "https://onlinelibrary.wiley.com/doi/10.1002/anie.202205858",
+        description: i18n.t(
+            "List of binding/not-binding fragments from an NMR screening study in which a well-defined fragment library was used to identify hits against SCoV2 proteins."
+        ),
+        color: "#673ab7",
+        isBlast: false,
+    },
+
     // Functional mapping ligands
     functionalMappingLigands: {
         id: "functional-mapping-ligands" as const,

@@ -3,7 +3,7 @@
     .container-fluid
       #Logo.d-flex.align-items-center
         %a.navbar-brand{:href => ws_path}
-          %img{:height => "72", :src => "/assets/3DBionotesLogo-small.jpg", :style => "height: auto;width: 260px;"}/
+          = image_tag "3DBionotesLogo-small.jpg", {:height => "72", :style => "height: auto;width: 260px;"}
         %button.navbar-toggler{"data-target" => "#navcol-1", "data-toggle" => "collapse"}
           %span.sr-only Toggle navigation
           %span.navbar-toggler-icon

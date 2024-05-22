@@ -17,6 +17,14 @@ gem 'config'
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'rubystats'
+gem 'sprockets-rails', '3.4.2'
+
+# Bootstrap related gems (https://github.com/twbs/bootstrap-rubygem/tree/4.6-stable)
+gem 'bootstrap', '~> 4.6.2'
+gem 'jquery-rails', '4.6.0'
+gem 'sassc-rails', '>= 2.1.0' # Required for bootstrap, but deprecated
+
+gem 'uglifier'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
