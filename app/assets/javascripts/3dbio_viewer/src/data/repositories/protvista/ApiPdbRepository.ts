@@ -47,11 +47,15 @@ import {
     pdbEntryResponseC,
     PdbLigandsResponse,
 } from "../../PdbLigands";
+import { getResults, Pagination, paginationCodec } from "../../codec-utils";
 import { getPublicationsCodec, EntryPublications, getPublications } from "../../PdbPublications";
+import { getNMRSubtrack } from "./tracks/nmr";
+import { NMRTarget, nmrTargetCodec } from "../../NMRTarget";
 
 interface Data {
     uniprot: UniprotResponse;
     pdbEmdbsEmValidations: PdbEmdbEmValidations[];
+    nmrTargets: NMRTarget[];
     features: Features;
     cv19Tracks: Cv19Tracks;
     pdbAnnotations: PdbAnnotations;
@@ -124,6 +128,7 @@ export class ApiPdbRepository implements PdbRepository {
             pdbRedoFragments: on(data.pdbRedo, pdbRedo => getPdbRedoFragments(pdbRedo, chainId)),
             epitomesFragments: on(data.iedb, getEpitomesFragments),
             molprobityFragments: on(data.molprobity, molprobity => getMolprobityFragments(molprobity, chainId)),
+            nmrFragments: on(data.nmrTargets, nmr => getNMRSubtrack(nmr)),
         };
 
         const fragmentsList = { ...proteinFragments, ...fragments };
@@ -222,10 +227,18 @@ function getData(options: PdbOptions): FutureData<Partial<Data>> {
         pdbEntryResponseC
     ).map(pdbEntryResponse => pdbEntryResponse?.results)
 
+    const nmrTargets = onF(proteinId, proteinId =>
+        getValidatedJSON<Pagination<NMRTarget>>(
+            `${bioUrlDev}/bws/api/nmr/targets/${proteinId}/`,
+            paginationCodec(nmrTargetCodec)
+        ).map(pagination => getResults(pagination))
+    );
+
     // Move URLS to each track module?
     //prettier-ignore
     const data$: DataRequests = {
         uniprot: onF(proteinId, proteinId => getXML(`${routes.uniprot}/uniprotkb/${proteinId}.xml`)),
+        nmrTargets,
         pdbEmdbsEmValidations,
         features: onF(proteinId, proteinId => getJSON(`${ebiProteinsApiUrl}/features/${proteinId}`)),
         cv19Tracks: onF(proteinId, proteinId => getJSON(`${bioUrl}/cv19_annotations/${proteinId}_annotations.json`)),

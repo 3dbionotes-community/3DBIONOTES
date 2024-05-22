@@ -4,12 +4,13 @@ import { W3Color } from "../../../../domain/entities/Covid19Info";
 interface BadgeProps {
     color?: W3Color;
     backgroundColor?: W3Color;
+    disabled?: boolean;
 }
 
 export const Badge = styled.span<BadgeProps>`
     display: inline-flex;
     justify-content: center;
-    cursor: pointer;
+    cursor: ${props => (props.disabled ? "default" : "pointer")};
     padding: 6px 12px;
     flex-grow: 1;
     font-size: 10.5px;
@@ -18,7 +19,11 @@ export const Badge = styled.span<BadgeProps>`
     white-space: normal;
     color: ${props => (props.color ? colors[props.color] : "#fff")};
     background-color: ${props =>
-        props.backgroundColor ? colors[props.backgroundColor] : "#607d8b"};
+        props.disabled
+            ? "#ccc"
+            : props.backgroundColor
+            ? colors[props.backgroundColor]
+            : "#607d8b"};
     font-weight: 700;
     line-height: 1;
     text-align: center;

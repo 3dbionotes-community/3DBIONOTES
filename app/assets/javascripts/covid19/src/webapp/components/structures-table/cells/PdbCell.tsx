@@ -17,24 +17,20 @@ import { BadgeLink } from "../badge/BadgeLink";
 import { Badge } from "../badge/Badge";
 import { urlPrefix } from "./TitleCell";
 import i18n from "../../../../utils/i18n";
+import { useAppContext } from "../../../contexts/app-context";
 
 export const PdbCell: React.FC<CellProps> = React.memo(props => {
     const { pdb } = props.row;
-    return pdb ? (
-        <PdbCell2
-            structure={props.row}
-            pdb={pdb}
-            validationSources={props.validationSources ?? []}
-        />
-    ) : null;
+    return pdb ? <PdbCell2 structure={props.row} pdb={pdb} /> : null;
 });
 
 const PdbCell2: React.FC<{
     structure: Structure;
     pdb: Pdb;
-    validationSources: ValidationSource[];
 }> = React.memo(props => {
-    const { pdb, structure, validationSources } = props;
+    const { pdb, structure } = props;
+    const { sources: validationSources } = useAppContext();
+
     const [open, setOpen] = React.useState(false);
     const pdbValidations = structure.validations.pdb;
 
