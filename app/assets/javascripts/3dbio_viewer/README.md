@@ -21,6 +21,13 @@ $ RAILS_ENV=production bundle exec rake assets:precompile
 $ PORT=3001 yarn start
 ```
 
+You can use `localhost:8000` for development if you are deploying the BWS backend on your local machine and `localhost:3000` for the Ruby on Rails service.
+
+```
+REACT_APP_BWS=https://3dbionotes.cnb.csic.es
+REACT_APP_3DBIO=https://3dbionotes.cnb.csic.es
+```
+
 If you need to make change in protvista-pdb or pdbe-molstar, run:
 
 ```shell

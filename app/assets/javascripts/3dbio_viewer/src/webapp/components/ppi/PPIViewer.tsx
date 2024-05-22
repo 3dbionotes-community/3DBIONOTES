@@ -44,7 +44,7 @@ const iframeName = "ppi";
 */
 function useIframeDataPost(pdb: Pdb) {
     React.useEffect(() => {
-        const src = routes.bionotesStaging + "/ppiIFrame";
+        const src = routes.bionotes + "/ppiIFrame";
         const params = pdb.proteinNetwork
             ? { ppi_network: pdb.proteinNetwork.networkGraph }
             : pdb.id

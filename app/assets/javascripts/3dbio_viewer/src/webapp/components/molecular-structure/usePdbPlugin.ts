@@ -238,7 +238,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         if (!extension) return;
         pdbePlugin.visual.remove({});
         const supportedExtension = extension === "ent" ? "pdb" : extension;
-        const uploadUrl = `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.${supportedExtension}`;
+        const uploadUrl = `${routes.bionotes}/upload/${uploadDataToken}/structure_file.${supportedExtension}`;
 
         updateLoader(
             loaderKeys.uploadedModel,
