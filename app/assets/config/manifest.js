@@ -28,26 +28,10 @@
 //= link sequence_frame/sequence_init.js
 //= link sequence_frame/sequence_inter.js
 
-//= link jsmol_viewer/chimeraClass.js
-//= link jsmol_viewer/JSmolClass.js
-//= link jsmol_viewer/bionotes_jsmol.js
-
-//= link jsmol_frame/jsmol_style.css
-//= link jsmol_frame/jsmol_lib.js
-//= link jsmol_frame/jsmol_init.js
-//= link jsmol_frame/jsmol_inter.js
-
 //= link annotations_frame/annotations_lib.js
 //= link annotations_frame/annotations_init.js
 //= link annotations_frame/annotations_inter.js
 //= link annotations_frame/annotations_style.css
-//= link annotations_viewer/protvista.js
-//= link annotations_viewer/featuresAnalysis.bundle.js
-//= link annotations_viewer/analyse_data.js
-//= link annotations_viewer/extendProtVista.bundle.js
-//= link annotations_viewer/extend_data.js
-//= link annotations_viewer/uniprot_viewer_main.css
-//= link annotations_viewer/features_analysis.css
 
 //= link genomic_viewer/genefeaturesviewer.js
 //= link genomic_viewer/genomic_viewer_main.css
@@ -56,16 +40,6 @@
 //= link genomic_frame/genomic_lib.js
 //= link genomic_frame/genomic_init.js
 //= link genomic_frame/genomic_inter.js
-
-//= link ppi_frame/ppi_style.css
-//= link ppi_frame/cytoscape.min.js
-//= link ppi_frame/rhill-voronoi-core.js
-//= link ppi_frame/foograph.js
-//= link ppi_frame/ppi_lib.js
-//= link ppi_frame/ppi_init.js
-//= link ppi_frame/ppi_inter.js
-//= link ppi_frame/graph_class.js
-//= link interface_viewer/interface_viewer.bundle.js
 
 //= link webserver/webserver_style.css
 //= link webserver/w3.css

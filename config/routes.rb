@@ -3,6 +3,8 @@
 # TODO: to analyze which routes are no longer needed
 
 Rails.application.routes.draw do
+
+  # TO BE REMOVED
   get '/' => 'main#home'
   post '/' => 'main#home'
   get '/pdb_redo/:pdbId' => 'main#pdb_redo'
@@ -19,6 +21,8 @@ Rails.application.routes.draw do
   get '/programmatic/autofetch' => 'post_request#fetch'
   get '/programmatic/get/:id' => 'post_request#browse'
   get '/chain_mapping' => 'main#chain_mapping'
+  # END
+
   get '/devel' => 'devel#home'
   get '/webserver' => 'webserver#home'
   get '/ws' => 'webserver#home'
@@ -31,9 +35,13 @@ Rails.application.routes.draw do
   get '/ws/help' => 'webserver#help'
   get '/ws/home' => 'webserver#home'
   get '/ws/api' => 'webserver#api'
+
+  # TO BE REMOVED
   get '/annotationsIFrame' => 'frames_annotations#annotationsIFrame'
   get '/imported_annotationsIFrame' => 'frames_annotations#imported_annotationsIFrame'
   get '/analysisIFrame' => 'frames_annotations#analysisIFrame'
+  # END
+
   get '/genomicIFrame' => 'frames_genomic#genomicIFrame'
   get '/sequenceIFrame' => 'frames_sequence#sequenceIFrame'
 

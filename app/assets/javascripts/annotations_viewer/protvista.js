@@ -1,1 +1,0 @@
-myProtVista/build/protvista.js
