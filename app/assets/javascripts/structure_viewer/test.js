@@ -1,1 +1,0 @@
-require("./viewer_class");
