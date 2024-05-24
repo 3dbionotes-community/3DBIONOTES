@@ -22,9 +22,9 @@ export class NMRApiRepository implements NMRRepository {
         pagination: NMRPagination
     ): FutureData<{ target: NMRFragmentTarget; pagination: NMRPagination }> {
         const { uniprotId, start, end } = target;
-        const { bionotesStaging } = routes;
+        const { bionotes } = routes;
         const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
-            `${bionotesStaging}/bws/api/nmr/${uniprotId}?start=${start}&end=${end}&limit=${
+            `${bionotes}/bws/api/nmr/${uniprotId}?start=${start}&end=${end}&limit=${
                 pagination.pageSize
             }&page=${pagination.page + 1}`,
             paginationCodec(nmrFragmentCodec)
@@ -42,18 +42,18 @@ export class NMRApiRepository implements NMRRepository {
 
     getNMRTarget(target: BasicNMRFragmentTarget): FutureData<NMRFragmentTarget> {
         const { uniprotId, start, end } = target;
-        const { bionotesStaging } = routes;
+        const { bionotes } = routes;
         const chunkSize = 50;
         const targetChunk$ = (page: number) =>
             getValidatedJSON<Pagination<NMRScreeningFragment>>(
-                `${bionotesStaging}/bws/api/nmr/${uniprotId}?start=${start}&end=${end}&limit=${chunkSize}&page=${
+                `${bionotes}/bws/api/nmr/${uniprotId}?start=${start}&end=${end}&limit=${chunkSize}&page=${
                     page + 1
                 }`,
                 paginationCodec(nmrFragmentCodec)
             ).flatMap(pagination => getNMRTarget(uniprotId, getResults(pagination)));
 
         const nmrTarget$ = getValidatedJSON<Pagination<NMRScreeningFragment>>(
-            `${bionotesStaging}/bws/api/nmr/${uniprotId}?start=${start}&end=${end}&limit=1`,
+            `${bionotes}/bws/api/nmr/${uniprotId}?start=${start}&end=${end}&limit=1`,
             paginationCodec(nmrFragmentCodec)
         )
             .flatMap(pagination => {
