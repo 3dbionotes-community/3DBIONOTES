@@ -8,7 +8,7 @@ import { getResults, paginationCodec } from "../codec-utils";
 
 export class SourcesApiRepository implements SourcesRepository {
     get(): FutureData<Source[]> {
-        const { bionotesStaging: api } = routes;
+        const { bionotes: api } = routes;
 
         const nmr$ = getValidatedJSON(
             `${api}/bws/api/nmr/source/`,
