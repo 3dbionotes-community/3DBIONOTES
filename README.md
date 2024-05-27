@@ -18,7 +18,6 @@
 Use rvm or rbenv to select the Ruby version specified in Gemfile and then run:
 
 ```
-$ git submodule update --recursive --init
 $ rvm install ruby-3.3.1
 $ gem install bundler:2.5.10
 $ sudo apt install libmysqlclient-dev # Debian/Ubuntu
@@ -35,10 +34,9 @@ Before you start your setup, make sure you have homebrew, ruby, rvm and python2 
 Use rvm or rbenv to select the Ruby version specified in Gemfile and then run:
 
 ```
-$ git submodule update --recursive --init
 $ rvm install ruby-3.3.1
 $ gem install bundler:2.2.15
-$ brew install gsl mysql
+$ brew install mysql
 $ gem install bundler:2.0.0.pre.3
 ```
 
