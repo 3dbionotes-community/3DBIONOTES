@@ -54,6 +54,7 @@ jobs:
       run: |
           cd app/assets/javascripts/3dbio_viewer
           yarn install
+          yarn localize
           yarn build
     - name: Check build dependency versions (3dbioviewer)
       run: |
