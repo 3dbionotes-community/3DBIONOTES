@@ -363,6 +363,5 @@ interface Refdoc {
     doi: string;
     pmidLink: string;
     pubDate: string;
-    abstract: string;
     authors: any[];
 }

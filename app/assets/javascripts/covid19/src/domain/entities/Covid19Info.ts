@@ -173,7 +173,6 @@ export interface RefDoc {
     id: Id;
     title: string;
     authors: string[];
-    abstract?: string;
     journal: string;
     pubDate: string;
     idLink?: Url;

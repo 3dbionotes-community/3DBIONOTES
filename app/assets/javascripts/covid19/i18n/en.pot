@@ -297,9 +297,6 @@ msgstr ""
 msgid "Journal"
 msgstr ""
 
-msgid "Abstract"
-msgstr ""
-
 msgid "Date"
 msgstr ""
 

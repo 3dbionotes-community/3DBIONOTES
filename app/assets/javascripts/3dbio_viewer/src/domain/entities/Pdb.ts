@@ -90,9 +90,7 @@ export interface PdbPublication {
         issue?: string;
         year?: number;
     };
-    abstract: {
-        unassigned?: string;
-    };
+    abstract?: string;
     authors: string[];
 }
 

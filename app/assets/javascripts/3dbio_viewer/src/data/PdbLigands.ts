@@ -93,7 +93,6 @@ const publicationC = Codec.interface({
     doi: string,
     pubMedId: string,
     PMCId: string,
-    abstract: string,
     authors: array(authorC),
 });
 

@@ -102,8 +102,7 @@ const ListItem: React.FC<ListItemProps> = React.memo(props => {
 
 const RefDocLi: React.FC<RefDocLiProps> = React.memo(props => {
     const { refDoc, moreDetails = true } = props;
-    const abstractMaxLength = 190;
-    const abstract = refDoc.abstract ?? "";
+
     return (
         <Li>
             <strong>{i18n.t("Publication")}:</strong>
@@ -124,19 +123,6 @@ const RefDocLi: React.FC<RefDocLiProps> = React.memo(props => {
                 </HtmlTooltip>
 
                 <ListItem name={i18n.t("Journal")} value={refDoc.journal} />
-
-                {!moreDetails && abstract.length < abstractMaxLength && abstract.length !== 0 && (
-                    <ListItem name={i18n.t("Abstract")} value={refDoc.abstract} />
-                )}
-
-                {!moreDetails && abstract.length > abstractMaxLength && abstract.length !== 0 && (
-                    <HtmlTooltip title={<>{refDoc.abstract}</>}>
-                        <Li>
-                            <strong>{`${i18n.t("Abstract")}:`}</strong>
-                            {` ${refDoc.abstract?.substring(0, abstractMaxLength) + "..."}`}
-                        </Li>
-                    </HtmlTooltip>
-                )}
 
                 <ListItem name={i18n.t("Date")} value={refDoc.pubDate} />
 

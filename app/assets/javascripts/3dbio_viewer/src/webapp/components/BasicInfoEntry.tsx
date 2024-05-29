@@ -97,7 +97,7 @@ export const BasicInfoEntry: React.FC<BlockComponentProps> = React.memo(props =>
 function getItems(publication: PdbPublication) {
     const items: Item[] = _.compact([
         { name: i18n.t("Title"), value: escapeHTML(publication.title) },
-        { name: i18n.t("Abstract"), value: escapeHTML(publication.abstract.unassigned) },
+        { name: i18n.t("Abstract"), value: escapeHTML(publication.abstract) },
         { name: i18n.t("Authors"), value: publication.authors.join(", ") },
         {
             name: i18n.t("Journal"),
