@@ -124,7 +124,7 @@ export const commonLigand = {
     imageLink: string,
     externalLink: string,
     pubChemCompoundId: string,
-    IUPACInChI: string,
+    IUPACInChI: optional(string),
     isomericSMILES: string,
     canonicalSMILES: string,
 };

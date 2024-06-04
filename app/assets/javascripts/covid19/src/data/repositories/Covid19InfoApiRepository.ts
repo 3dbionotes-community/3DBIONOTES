@@ -87,6 +87,7 @@ function getPdbEntries(
         is_cstf: f.cstf,
         is_ceres: f.ceres,
         is_idr: f.idr,
+        is_nmr: f.nmr,
         q: query ?? "",
     };
 
@@ -338,7 +339,7 @@ interface Ligand {
     imageLink: string;
     externalLink: string;
     pubChemCompoundId: string;
-    IUPACInChI: string;
+    IUPACInChI: Maybe<string>;
     isomericSMILES: string;
     canonicalSMILES: string;
     well: string[];
