@@ -4,7 +4,7 @@ ruby '3.3.1'
 gem 'rails', '7.1.3.2'
 
 #gem 'mysql2', '0.4.10'
-gem 'mysql2', '0.5'
+gem 'mysql2', '0.5.6'
 gem 'sqlite3', '1.4.2'
 
 gem 'haml'
