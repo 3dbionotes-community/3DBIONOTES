@@ -9,7 +9,6 @@ body {
     "Segoe UI Symbol";
   font-size: 0.9375rem;
   color: #212529;
-  margin-bottom: 250px;
 }
 
 header {
@@ -31,10 +30,6 @@ header {
 
 #mainFooter {
   border-top: 5px solid #132832 !important;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 250px;
 }
 
 #welcome {
@@ -630,7 +625,7 @@ a i.margin {
 }
 
 .footer-dark {
-  padding: 50px 0;
+  padding: 3em 0 1em;
   color: #f0f9ff;
   background-color: #282d32;
 }

@@ -12,8 +12,10 @@
             %br/
             %a{:href => "https://drive.google.com/file/d/1mpHVIoblHdUw4zyu7jxdi-PDCQzB6C9Y/view?usp=sharing", :target => "_blank"} Terms of Use
           %p
-            %a{href: "https://twitter.com/3D_Bionotes", class: "twitter-follow-button", target: "_blank"}
-            %a{href: "https://twitter.com/covidstructhub", class: "twitter-follow-button", target: "_blank"}
+            - if @twitter_buttons.include?(:both) || @twitter_buttons.include?(:bionotes)
+              %a{href: "https://twitter.com/3D_Bionotes", class: "twitter-follow-button", target: "_blank"} Follow @3D_Bionotes
+            - if @twitter_buttons.include?(:both) || @twitter_buttons.include?(:covidstructhub)
+              %a{href: "https://twitter.com/covidstructhub", class: "twitter-follow-button", target: "_blank"} Follow @covidstructhub
           .footerLinks
             %p
               %a{:href => "http://biocomputingunit.es"}> Biocomputing Unit
