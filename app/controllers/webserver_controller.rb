@@ -10,9 +10,6 @@ class WebserverController < ApplicationController
     @viewerType = 'ngl'
   end
 
-  def covid19
-  end
-
   def viewer
     @twitter_buttons = [:bionotes]
     render layout: 'webserver'
@@ -20,6 +17,14 @@ class WebserverController < ApplicationController
 
   def covid19
     @twitter_buttons = [:covidstructhub]
+  end
+
+  def help
+    @twitter_buttons = [:both]
+  end
+
+  def api
+    @twitter_buttons = [:both]
   end
 
 end
