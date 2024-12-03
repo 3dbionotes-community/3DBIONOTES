@@ -29,9 +29,16 @@ export const PdbViewer: React.FC<PdbViewerProps> = React.memo(props => {
     const { pdb, viewerState, onAddAnnotations, pdbInfo, toolbarExpanded, updateLoader } = props;
     const { selection, profile, setProfile, setSelection } = viewerState;
 
-    const [visibleBlocks, setVisibleBlocks] = React.useState<BlockVisibility[]>(
-        getBlockDefs(pdb.protein).map(blockDef => ({ block: blockDef, visible: true }))
+    const defs = React.useMemo(
+        () => getBlockDefs(pdb.protein).map(blockDef => ({ block: blockDef, visible: true })),
+        [pdb.protein]
     );
+
+    const [visibleBlocks, setVisibleBlocks] = React.useState<BlockVisibility[]>(defs);
+
+    React.useEffect(() => {
+        setVisibleBlocks(defs);
+    }, [defs, pdb.protein]);
 
     const setBlockVisibility = React.useCallback(
         (block: BlockDef, visible: boolean) =>

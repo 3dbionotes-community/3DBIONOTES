@@ -514,7 +514,7 @@ async function highlight(
         await plugin.visual.select({
             data: [
                 {
-                    struct_asym_id: chain.chainId,
+                    auth_asym_id: chain.chainId,
                     color: "#0000ff",
                     focus,
                 },

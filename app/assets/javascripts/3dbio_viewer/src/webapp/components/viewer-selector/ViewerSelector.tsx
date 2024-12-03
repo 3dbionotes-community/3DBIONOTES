@@ -151,7 +151,7 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
     );
 
     const items: DropdownProps["items"] = React.useMemo(
-        () => pdbInfo?.chains.map(chain => ({ id: chain.chainId, text: chain.name })),
+        () => pdbInfo?.chains.map(chain => ({ id: chain.id, text: chain.name })),
         [pdbInfo]
     );
 

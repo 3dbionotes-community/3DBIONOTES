@@ -99,7 +99,7 @@ export class ApiPdbRepository implements PdbRepository {
         const { ontologies, ontologyTerms, organisms } = idrOptions;
 
         debugVariable({ apiData: data });
-        const { proteinId, pdbId, chainId } = options;
+        const { proteinId, pdbId, chainId, structAsymId } = options;
 
         const variants = proteinId
             ? getVariants(data.ebiVariation, data.mutagenesis, data.genomicVariantsCNCB, proteinId)
@@ -197,6 +197,7 @@ export class ApiPdbRepository implements PdbRepository {
             sequence,
             organism: protein?.organism ?? fallbackOrganism,
             chainId: chainId,
+            structAsymId: structAsymId,
             length: getTotalFeaturesLength(tracks),
             tracks,
             variants: pdbVariants,

@@ -63,8 +63,9 @@ export function getLigands(pdbePlugin: PDBeMolstarPlugin, newSelection: Selectio
                 const type = Props.residue.group_PDB(location);
                 const authSeqId = Props.residue.auth_seq_id(location);
                 const chainId = Props.chain.auth_asym_id(location);
+                const structAsymId = Props.chain.label_asym_id(location);
 
-                return { type, compIds, authSeqId, chainId };
+                return { type, compIds, authSeqId, chainId, structAsymId };
             })
         );
         return locationsForCell;
@@ -165,10 +166,22 @@ export function getCurrentItems(plugin: PDBeMolstarPlugin) {
                 const label = node.cell.obj?.label;
                 const { isHidden } = node.cell.state;
 
-                const pdbId: [string | undefined, Type] = [label?.match(/^(\d[\d\w]{3})$/)?.[1], "pdb"];
-                const emdbId: [string | undefined, Type] = [label?.match(/\/em\/([\w-]+)\//)?.[1], "emdb"];
-                const pdbRedo: [string | undefined, Type] = [label?.match(/^(\d[\d\w]{3}-pdbRedo)$/)?.[1], "pdbRedo"];
-                const cstf: [string | undefined, Type] = [label?.match(/^(\d[\d\w]{3}-cstf)$/)?.[1], "cstf"];
+                const pdbId: [string | undefined, Type] = [
+                    label?.match(/^(\d[\d\w]{3})$/)?.[1],
+                    "pdb",
+                ];
+                const emdbId: [string | undefined, Type] = [
+                    label?.match(/\/em\/([\w-]+)\//)?.[1],
+                    "emdb",
+                ];
+                const pdbRedo: [string | undefined, Type] = [
+                    label?.match(/^(\d[\d\w]{3}-pdbRedo)$/)?.[1],
+                    "pdbRedo",
+                ];
+                const cstf: [string | undefined, Type] = [
+                    label?.match(/^(\d[\d\w]{3}-cstf)$/)?.[1],
+                    "cstf",
+                ];
 
                 return _.compact(
                     [pdbId, emdbId, pdbRedo, cstf].map(([id, type]) =>
