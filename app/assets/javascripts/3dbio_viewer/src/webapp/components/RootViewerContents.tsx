@@ -40,6 +40,7 @@ const loaderMessages = {
     uploadedModel: [i18n.t("Loading uploaded model..."), 2],
     loadModel: [i18n.t("Loading model..."), 4], //PDB, EMDB, PDB-REDO, CSTF, CERES
     exportAnnotations: [i18n.t("Retrieving all annotations..."), 5],
+    readingSequence: [i18n.t("Reading sequence..."), 6],
 } as const;
 
 export const loaderKeys: {

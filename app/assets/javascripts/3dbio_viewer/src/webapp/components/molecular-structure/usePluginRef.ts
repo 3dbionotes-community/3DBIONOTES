@@ -114,6 +114,22 @@ export function usePluginRef(options: Options) {
                 updateLoader(loaderKeys.initPlugin, loadComplete);
             }
 
+            function subscribeSequenceComplete() {
+                const sequenceComplete = new Promise<void>((resolve, reject) => {
+                    plugin.events.sequenceComplete.subscribe({
+                        next: sequence => {
+                            console.debug("molstar.events.sequenceComplete", sequence);
+                        },
+                        error: err => {
+                            console.error(err);
+                            reject(err);
+                        },
+                    });
+                });
+
+                updateLoader(loaderKeys.readingSequence, sequenceComplete);
+            }
+
             async function loadFromUploadData(element: HTMLDivElement) {
                 if (!uploadDataToken) {
                     loadVoidMolstar(loaderErrors.tokenNotFound);
@@ -194,6 +210,7 @@ export function usePluginRef(options: Options) {
                 }
             } else if (!mainPdb && emdbId) getPdbFromEmdb(emdbId);
             else {
+                subscribeSequenceComplete();
                 subscribeLoadComplete();
                 const pdbId = initParams.moleculeId;
                 if (pdbId) loadFromPdb(pdbId, element);
