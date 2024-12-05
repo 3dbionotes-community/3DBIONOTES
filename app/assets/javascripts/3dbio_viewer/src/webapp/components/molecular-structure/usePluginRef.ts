@@ -54,6 +54,8 @@ export function usePluginRef(options: Options) {
             const pluginAlreadyRendered = Boolean(pdbePlugin);
             const ligandChanged =
                 currentSelection && currentSelection.ligandId !== newSelection.ligandId;
+            const chainChanged =
+                currentSelection && currentSelection.chainId !== newSelection.chainId;
 
             if (!ligandChanged && pluginAlreadyRendered) return;
 
@@ -114,21 +116,21 @@ export function usePluginRef(options: Options) {
                 updateLoader(loaderKeys.initPlugin, loadComplete);
             }
 
-            function subscribeSequenceComplete() {
-                const sequenceComplete = new Promise<void>((resolve, reject) => {
-                    plugin.events.sequenceComplete.subscribe({
-                        next: sequence => {
-                            console.debug("molstar.events.sequenceComplete", sequence);
-                        },
-                        error: err => {
-                            console.error(err);
-                            reject(err);
-                        },
-                    });
-                });
+            // function subscribeSequenceComplete() {
+            //     const sequenceComplete = new Promise<void>((resolve, reject) => {
+            //         plugin.events.sequenceComplete.subscribe({
+            //             next: sequence => {
+            //                 console.debug("molstar.events.sequenceComplete", sequence);
+            //             },
+            //             error: err => {
+            //                 console.error(err);
+            //                 reject(err);
+            //             },
+            //         });
+            //     });
 
-                updateLoader(loaderKeys.readingSequence, sequenceComplete);
-            }
+            //     updateLoader(loaderKeys.readingSequence, sequenceComplete);
+            // }
 
             async function loadFromUploadData(element: HTMLDivElement) {
                 if (!uploadDataToken) {
@@ -193,6 +195,10 @@ export function usePluginRef(options: Options) {
                     .catch(err => loadVoidMolstar(err));
             }
 
+            if (chainChanged && pluginAlreadyRendered && newSelection.chainId) {
+                plugin.visual.updateSequence(newSelection.chainId);
+            }
+
             if (pluginAlreadyRendered) {
                 //When ligand has changed
                 molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
@@ -210,7 +216,7 @@ export function usePluginRef(options: Options) {
                 }
             } else if (!mainPdb && emdbId) getPdbFromEmdb(emdbId);
             else {
-                subscribeSequenceComplete();
+                // subscribeSequenceComplete();
                 subscribeLoadComplete();
                 const pdbId = initParams.moleculeId;
                 if (pdbId) loadFromPdb(pdbId, element);
