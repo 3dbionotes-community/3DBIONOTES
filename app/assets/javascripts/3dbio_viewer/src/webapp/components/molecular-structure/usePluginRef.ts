@@ -57,7 +57,7 @@ export function usePluginRef(options: Options) {
             const chainChanged =
                 currentSelection && currentSelection.chainId !== newSelection.chainId;
 
-            if (!ligandChanged && pluginAlreadyRendered) return;
+            if (!ligandChanged && !chainChanged && pluginAlreadyRendered) return;
 
             const plugin = pdbePlugin || new window.PDBeMolstarPlugin();
             const initParams = getPdbePluginInitParams(plugin, newSelection);
@@ -196,10 +196,10 @@ export function usePluginRef(options: Options) {
             }
 
             if (chainChanged && pluginAlreadyRendered && newSelection.chainId) {
+                console.debug("UPDATE SEQUENCE", newSelection.chainId);
+                debugger;
                 plugin.visual.updateSequence(newSelection.chainId);
-            }
-
-            if (pluginAlreadyRendered) {
+            } else if (pluginAlreadyRendered) {
                 //When ligand has changed
                 molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
                 await updateLoader("updateVisualPlugin", plugin.visual.update(initParams));
@@ -269,6 +269,9 @@ function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selec
         assemblyId: "1", // For assembly type? Check model type-
         ligandView,
         mapSettings: {},
+        onChainChanged: chainId => {
+            console.debug("CHAIN CHANGED 1", chainId);
+        },
     };
 }
 
@@ -289,5 +292,8 @@ function getVoidInitParams(): InitParams {
         assemblyId: "1", // For assembly type? Check model type-
         ligandView: undefined,
         mapSettings: {},
+        onChainChanged: chainId => {
+            console.debug("CHAIN CHANGED 2", chainId);
+        },
     };
 }
