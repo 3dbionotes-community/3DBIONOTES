@@ -116,21 +116,22 @@ export function usePluginRef(options: Options) {
                 updateLoader(loaderKeys.initPlugin, loadComplete);
             }
 
-            // function subscribeSequenceComplete() {
-            //     const sequenceComplete = new Promise<void>((resolve, reject) => {
-            //         plugin.events.sequenceComplete.subscribe({
-            //             next: sequence => {
-            //                 console.debug("molstar.events.sequenceComplete", sequence);
-            //             },
-            //             error: err => {
-            //                 console.error(err);
-            //                 reject(err);
-            //             },
-            //         });
-            //     });
+            function subscribeSequenceComplete() {
+                const sequenceComplete = new Promise<void>((resolve, reject) => {
+                    plugin.events.sequenceComplete.subscribe({
+                        next: sequence => {
+                            console.debug("molstar.events.sequenceComplete", sequence);
+                            resolve();
+                        },
+                        error: err => {
+                            console.error(err);
+                            reject(err);
+                        },
+                    });
+                });
 
-            //     updateLoader(loaderKeys.readingSequence, sequenceComplete);
-            // }
+                updateLoader(loaderKeys.readingSequence, sequenceComplete);
+            }
 
             async function loadFromUploadData(element: HTMLDivElement) {
                 if (!uploadDataToken) {
@@ -196,9 +197,7 @@ export function usePluginRef(options: Options) {
             }
 
             if (chainChanged && pluginAlreadyRendered && newSelection.chainId) {
-                console.debug("UPDATE SEQUENCE", newSelection.chainId);
-                debugger;
-                plugin.visual.updateSequence(newSelection.chainId);
+                plugin.visual.updateChain(newSelection.chainId);
             } else if (pluginAlreadyRendered) {
                 //When ligand has changed
                 molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
@@ -216,7 +215,7 @@ export function usePluginRef(options: Options) {
                 }
             } else if (!mainPdb && emdbId) getPdbFromEmdb(emdbId);
             else {
-                // subscribeSequenceComplete();
+                subscribeSequenceComplete();
                 subscribeLoadComplete();
                 const pdbId = initParams.moleculeId;
                 if (pdbId) loadFromPdb(pdbId, element);
@@ -269,7 +268,7 @@ function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selec
         assemblyId: "1", // For assembly type? Check model type-
         ligandView,
         mapSettings: {},
-        onChainChanged: chainId => {
+        onChainUpdate: chainId => {
             console.debug("CHAIN CHANGED 1", chainId);
         },
     };
@@ -292,7 +291,7 @@ function getVoidInitParams(): InitParams {
         assemblyId: "1", // For assembly type? Check model type-
         ligandView: undefined,
         mapSettings: {},
-        onChainChanged: chainId => {
+        onChainUpdate: chainId => {
             console.debug("CHAIN CHANGED 2", chainId);
         },
     };

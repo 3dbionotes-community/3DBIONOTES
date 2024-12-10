@@ -31,8 +31,9 @@ type ExternalData =
 
 export type LoaderKey = keyof typeof loaderMessages;
 
+//already ordered by priority
 const loaderMessages = {
-    //already ordered by priority
+    readingSequence: [i18n.t("Reading sequence..."), 0],
     getRelatedPdbModel: [i18n.t("Getting PDB related model..."), 0],
     initPlugin: [i18n.t("Starting 3D Viewer..."), 1], //already loading PDB
     updateVisualPlugin: [i18n.t("Updating selection..."), 2],
@@ -40,7 +41,6 @@ const loaderMessages = {
     uploadedModel: [i18n.t("Loading uploaded model..."), 2],
     loadModel: [i18n.t("Loading model..."), 4], //PDB, EMDB, PDB-REDO, CSTF, CERES
     exportAnnotations: [i18n.t("Retrieving all annotations..."), 5],
-    readingSequence: [i18n.t("Reading sequence..."), 6],
 } as const;
 
 export const loaderKeys: {
