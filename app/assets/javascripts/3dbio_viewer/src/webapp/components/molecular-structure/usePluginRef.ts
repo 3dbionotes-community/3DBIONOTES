@@ -2,7 +2,13 @@ import _ from "lodash";
 import React from "react";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
 import { InitParams } from "@3dbionotes/pdbe-molstar/lib/spec";
-import { AllowedExtension, getMainItem, Selection, setMainItem } from "../../view-models/Selection";
+import {
+    AllowedExtension,
+    getMainItem,
+    Selection,
+    setMainItem,
+    setSelectionChain,
+} from "../../view-models/Selection";
 import {
     applySelectionChangesToPlugin,
     checkModelUrl,
@@ -47,6 +53,23 @@ export function usePluginRef(options: Options) {
         setPdbePlugin,
     } = options;
 
+    const setChain = React.useCallback(
+        (chainId: string) => {
+            if (newSelection.chainId === chainId) {
+                console.debug("Chain already set", chainId);
+                return;
+            }
+
+            console.debug("Set chain through molstar", chainId);
+            setSelection(setSelectionChain(newSelection, chainId));
+        },
+        [setSelection, newSelection]
+    );
+
+    React.useEffect(() => {
+        if (pdbePlugin) pdbePlugin.visual.updateDependency.onChainUpdate(setChain);
+    }, [pdbePlugin, setChain]);
+
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
             if (!element) return;
@@ -60,14 +83,14 @@ export function usePluginRef(options: Options) {
             if (!ligandChanged && !chainChanged && pluginAlreadyRendered) return;
 
             const plugin = pdbePlugin || new window.PDBeMolstarPlugin();
-            const initParams = getPdbePluginInitParams(plugin, newSelection);
+            const initParams = getPdbePluginInitParams(newSelection, setChain);
             debugVariable({ pdbeMolstarPlugin: plugin });
             const mainPdb = getMainItem(newSelection, "pdb");
             const emdbId = getMainItem(newSelection, "emdb");
 
             function loadVoidMolstar(message: string) {
                 if (!element) return;
-                plugin.render(element, getVoidInitParams()).then(() =>
+                plugin.render(element, getVoidInitParams(setChain)).then(() =>
                     plugin.canvas.showToast({
                         title: i18n.t("Error"),
                         message,
@@ -226,17 +249,18 @@ export function usePluginRef(options: Options) {
             setPdbePlugin(plugin);
         },
         [
+            prevSelectionRef,
             pdbePlugin,
             newSelection,
-            prevSelectionRef,
-            compositionRoot,
-            setSelection,
-            updateLoader,
-            extension,
-            uploadDataToken,
-            molstarState,
+            setChain,
             setPdbePlugin,
+            updateLoader,
+            compositionRoot.getRelatedModels,
+            setSelection,
             setPluginLoad,
+            uploadDataToken,
+            extension,
+            molstarState,
         ]
     );
 
@@ -248,7 +272,10 @@ const colors = {
     white: { r: 255, g: 255, b: 255 },
 };
 
-function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selection): InitParams {
+function getPdbePluginInitParams(
+    newSelection: Selection,
+    onChainUpdate: (chainId: string) => void
+): InitParams {
     const pdbId = getMainItem(newSelection, "pdb");
     const ligandView = getLigandView(newSelection);
 
@@ -268,13 +295,11 @@ function getPdbePluginInitParams(_plugin: PDBeMolstarPlugin, newSelection: Selec
         assemblyId: "1", // For assembly type? Check model type-
         ligandView,
         mapSettings: {},
-        onChainUpdate: chainId => {
-            console.debug("CHAIN CHANGED 1", chainId);
-        },
+        onChainUpdate: onChainUpdate,
     };
 }
 
-function getVoidInitParams(): InitParams {
+function getVoidInitParams(onChainUpdate: (chainId: string) => void): InitParams {
     return {
         moleculeId: undefined,
         pdbeUrl: "https://www.ebi.ac.uk/pdbe/",
@@ -291,8 +316,6 @@ function getVoidInitParams(): InitParams {
         assemblyId: "1", // For assembly type? Check model type-
         ligandView: undefined,
         mapSettings: {},
-        onChainUpdate: chainId => {
-            console.debug("CHAIN CHANGED 2", chainId);
-        },
+        onChainUpdate: onChainUpdate,
     };
 }
