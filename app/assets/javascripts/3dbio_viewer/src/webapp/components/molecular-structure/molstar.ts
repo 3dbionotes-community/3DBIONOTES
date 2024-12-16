@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { StructureProperties as Props } from "molstar/lib/mol-model/structure";
+import { StructureProperties as Props, Unit } from "molstar/lib/mol-model/structure";
 import { StateTransform } from "molstar/lib/mol-state/transform";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
 import { PluginContext } from "molstar/lib/mol-plugin/context";
@@ -47,23 +47,26 @@ export function getLigands(pdbePlugin: PDBeMolstarPlugin, newSelection: Selectio
         .compact()
         .value();
 
-    const locations = cellsWithinPdb.flatMap(cell => {
-        // TODO: don't use any
+    const locations = cellsWithinPdb.flatMap((cell: StateObjectCell) => {
         const units = cell.obj?.data?.units || [];
         const structure = cell.obj?.data;
-        const locationsForCell = _.flatMap(units, (unit: any) =>
-            _.flatMap(Array.from(unit.elements), (element: any) => {
+        const locationsForCell = _.flatMap(units, (unit: Unit) =>
+            _.flatMap(Array.from(unit.elements), element => {
                 const location = {
                     kind: "element-location" as const,
                     structure,
                     unit,
                     element,
                 };
+
                 const compIds = Props.residue.microheterogeneityCompIds(location);
                 const type = Props.residue.group_PDB(location);
                 const authSeqId = Props.residue.auth_seq_id(location);
                 const chainId = Props.chain.auth_asym_id(location);
                 const structAsymId = Props.chain.label_asym_id(location);
+
+                // Debug ligands without previous filtering
+                // const _ligand = [compIds[0], authSeqId].join("-");
 
                 return { type, compIds, authSeqId, chainId, structAsymId };
             })
@@ -86,7 +89,11 @@ export function getLigands(pdbePlugin: PDBeMolstarPlugin, newSelection: Selectio
                 const symbol = referenceObj.symbol;
                 const chainId = referenceObj.location.chainId;
                 const position = referenceObj.location.authSeqId;
-                return buildLigand({ chainId, component: symbol, position });
+                return buildLigand({
+                    chainId,
+                    component: symbol,
+                    position,
+                });
             }
         )
         .orderBy([obj => obj.component, obj => obj.component, obj => obj.position])

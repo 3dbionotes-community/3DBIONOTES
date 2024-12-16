@@ -53,6 +53,7 @@ export function usePluginRef(options: Options) {
         setPdbePlugin,
     } = options;
 
+    // Set chain through molstar
     const setChain = React.useCallback(
         (chainId: string) => {
             if (newSelection.chainId === chainId) {
@@ -126,6 +127,13 @@ export function usePluginRef(options: Options) {
                                 setPluginLoad(new Date());
                                 // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
                                 window.dispatchEvent(new Event("resize"));
+
+                                // When viewer is already rendered, update the ligand in molstar sequence if present
+                                if (newSelection.ligandId && newSelection.chainId)
+                                    plugin.visual.updateLigand({
+                                        ligandId: newSelection.ligandId,
+                                        chainId: newSelection.chainId,
+                                    });
                                 resolve();
                             } else reject(loaderErrors.pdbNotLoaded);
                         },
@@ -225,7 +233,13 @@ export function usePluginRef(options: Options) {
                 //When ligand has changed
                 molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
                 await updateLoader("updateVisualPlugin", plugin.visual.update(initParams));
+                if (newSelection.ligandId && newSelection.chainId)
+                    plugin.visual.updateLigand({
+                        ligandId: newSelection.ligandId,
+                        chainId: newSelection.chainId,
+                    });
                 if (newSelection.ligandId === undefined && newSelection.type === "free") {
+                    // Out of the ligand view or pdb is different for example
                     await updateLoader(
                         "updateVisualPlugin",
                         applySelectionChangesToPlugin(
