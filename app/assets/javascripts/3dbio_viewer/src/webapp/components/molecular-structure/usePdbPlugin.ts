@@ -34,7 +34,7 @@ import i18n from "../../utils/i18n";
 import "./molstar.css";
 import "./molstar-light.css";
 
-const urls: Record<Type, (id: string) => string> = {
+export const urls: Record<Type, (id: string) => string> = {
     pdb: (id: string) => `https://www.ebi.ac.uk/pdbe/model-server/v1/${id}/full?encoding=cif`,
     emdb: (id: string) => `https://maps.rcsb.org/em/${id}/cell?detail=3`,
     pdbRedo: (id: string) => `https://pdb-redo.eu/db/${id}/${id}_final.cif`,
@@ -103,11 +103,9 @@ export function usePdbePlugin(options: MolecularStructureProps) {
 
     function setLigandsFromMolstar() {
         if (!pluginLoad || !pdbePlugin) return;
-        if (!newSelection.ligandId) {
-            const ligands = getLigands(pdbePlugin, newSelection) || [];
-            debugVariable({ ligands: ligands.length });
-            onLigandsLoaded(ligands);
-        }
+        const ligands = getLigands(pdbePlugin, newSelection) || [];
+        debugVariable({ ligands: ligands.length });
+        onLigandsLoaded(ligands);
     }
 
     function applyHighlight() {
@@ -209,8 +207,9 @@ export function usePdbePlugin(options: MolecularStructureProps) {
 
         const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
         if (pdbId) {
-            compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(emdbId => {
-                updateSelection(currentSelection, setMainItem(newSelection, emdbId, "emdb"));
+            compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(pdbEmdbId => {
+                if (emdbId !== pdbEmdbId)
+                    updateSelection(currentSelection, setMainItem(newSelection, pdbEmdbId, "emdb"));
             }, console.error);
         } else if (emdbId && getMainItem(currentSelection, "pdb") === undefined) {
             compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
@@ -324,7 +323,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
     return { pluginRef, pdbePlugin };
 }
 
-function setVisibility(plugin: PDBeMolstarPlugin, item: DbItem) {
+export function setVisibility(plugin: PDBeMolstarPlugin, item: DbItem) {
     const selector = getItemSelector(item);
     return plugin.visual.setVisibility(selector, item.visible || false);
 }
