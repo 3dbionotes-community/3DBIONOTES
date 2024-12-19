@@ -26,7 +26,7 @@ import { useAppContext } from "../AppContext";
 import { routes } from "../../../routes";
 import { MolstarState, MolstarStateActions } from "./MolstarState";
 import i18n from "../../utils/i18n";
-import { loadEmdb, setEmdbOpacity } from "./molstar";
+import { getCurrentItems, loadEmdb, setEmdbOpacity } from "./molstar";
 
 type Options = {
     prevSelectionRef: React.MutableRefObject<Selection | undefined>;
@@ -281,7 +281,10 @@ export function usePluginRef(options: Options) {
 
                 if (newSelection.type === "free") {
                     if (newSelection.main.pdb) setVisibility(plugin, newSelection.main.pdb);
-                    if (newSelection.main.emdb) setVisibility(plugin, newSelection.main.emdb);
+                    if (newSelection.main.emdb) {
+                        setVisibility(plugin, newSelection.main.emdb);
+                        setEmdbOpacity({ plugin, id: newSelection.main.emdb.id, value: 0.5 });
+                    }
                 }
             }
 
@@ -335,11 +338,15 @@ export function usePluginRef(options: Options) {
                 //When ligand has changed
                 molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
                 await updateLoader("updateVisualPlugin", plugin.visual.update(initParams))
-                    .then(() =>
-                        emdbId && newSelection.ligandId === undefined
+                    .then(() => {
+                        const items = getCurrentItems(plugin);
+                        if (items.some(item => item.type === "emdb" && item.id === emdbId))
+                            return Promise.resolve();
+
+                        return emdbId && newSelection.ligandId === undefined
                             ? loadEmdbModel(emdbId, plugin)
-                            : Promise.resolve()
-                    )
+                            : Promise.resolve();
+                    })
                     .then(() => setVisibilityAfterLoad(initParams, plugin));
                 if (newSelection.ligandId && newSelection.chainId) {
                     console.debug("Updating ligand in molstar sequence", newSelection);
