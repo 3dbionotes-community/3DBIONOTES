@@ -42,6 +42,7 @@ export function usePdbLoader(
                 //This shouldn't be happening and btw EMDB can be present, so is very possible to have something at least to show...
             });
         if (!pdbOptions) return;
+        setLoader({ type: "loading" });
         return compositionRoot.getPdb.execute(pdbOptions).run(
             pdb => setLoader({ type: "loaded", data: pdb }),
             error => setLoader({ type: "error", message: error.message })
