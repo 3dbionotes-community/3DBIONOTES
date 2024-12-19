@@ -21,7 +21,7 @@ import {
 import { debugVariable } from "../../../utils/debug";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
-import { getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
+import { getCurrentItems, getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
 import { routes } from "../../../routes";
@@ -392,10 +392,13 @@ export async function applySelectionChangesToPlugin(
     const pdbRedo = added.filter(item => item.type === "pdbRedo");
     const cstf = added.filter(item => item.type === "cstf");
 
-    const mainPdb = oldItems()[0];
-    const mainEmdb = oldItems()[1];
+    const mainPdb = newItems.find(item => item.type === "pdb");
+    const mainEmdb = newItems.find(item => item.type === "emdb");
     if (mainPdb) setVisibility(plugin, mainPdb);
-    if (mainEmdb) setVisibility(plugin, mainEmdb);
+    if (mainEmdb) {
+        setVisibility(plugin, mainEmdb);
+        if (mainEmdb.visible) setEmdbOpacity({ plugin, id: mainEmdb.id, value: 0.5 });
+    }
 
     console.debug(
         "Update molstar:",
@@ -460,10 +463,13 @@ export async function applySelectionChangesToPlugin(
         }
     }
 
+    const items = getCurrentItems(plugin);
+
     for (let i = 0; i < emdbs.length; i++) {
         const item = emdbs[i];
         if (item) {
             const emdbId = item.id;
+            if (items.some(item => item.type === "emdb" && item.id === emdbId)) continue;
             await checkModelUrl(emdbId, "emdb").then(async res => {
                 if (res.loaded) {
                     await updateLoader(
