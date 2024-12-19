@@ -59,6 +59,11 @@ export function usePluginRef(options: Options) {
     // Set chain through molstar
     const setChain = React.useCallback(
         (chainId: string) => {
+            if (newSelection.ligandId !== undefined) {
+                console.debug("In ligand view. Not changing chain", newSelection.ligandId);
+                return;
+            }
+
             if (newSelection.chainId === chainId) {
                 console.debug("Chain already set", chainId);
                 return;
@@ -70,9 +75,17 @@ export function usePluginRef(options: Options) {
         [setSelection, newSelection]
     );
 
+    const getLigandViewState = React.useMemo(() => () => newSelection.ligandId !== undefined, [
+        newSelection.ligandId,
+    ]);
+
     React.useEffect(() => {
         if (pdbePlugin) pdbePlugin.visual.updateDependency.onChainUpdate(setChain);
     }, [pdbePlugin, setChain]);
+
+    React.useEffect(() => {
+        if (pdbePlugin) pdbePlugin.visual.updateDependency.isLigandView(getLigandViewState);
+    }, [getLigandViewState, pdbePlugin]);
 
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
@@ -87,14 +100,14 @@ export function usePluginRef(options: Options) {
             if (!ligandChanged && !chainChanged && pluginAlreadyRendered) return;
 
             const plugin = pdbePlugin || new window.PDBeMolstarPlugin();
-            const initParams = getPdbePluginInitParams(newSelection, setChain);
+            const initParams = getPdbePluginInitParams(newSelection, setChain, getLigandViewState);
             debugVariable({ pdbeMolstarPlugin: plugin });
             const mainPdb = getMainItem(newSelection, "pdb");
             const emdbId = getMainItem(newSelection, "emdb");
 
             function loadVoidMolstar(message: string) {
                 if (!element) return;
-                plugin.render(element, getVoidInitParams(setChain)).then(() =>
+                plugin.render(element, getVoidInitParams(setChain, getLigandViewState)).then(() =>
                     plugin.canvas.showToast({
                         title: i18n.t("Error"),
                         message,
@@ -263,6 +276,33 @@ export function usePluginRef(options: Options) {
                     .catch(err => loadVoidMolstar(err));
             }
 
+            function setVisibilityAfterLoad(initParams: InitParams, plugin: PDBeMolstarPlugin) {
+                molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
+
+                if (newSelection.type === "free") {
+                    if (newSelection.main.pdb) setVisibility(plugin, newSelection.main.pdb);
+                    if (newSelection.main.emdb) setVisibility(plugin, newSelection.main.emdb);
+                }
+            }
+
+            async function loadEmdbModel(emdbId: string, plugin: PDBeMolstarPlugin): Promise<void> {
+                await checkModelUrl(emdbId, "emdb").then(async res => {
+                    if (res.loaded) {
+                        await updateLoader(
+                            "loadModel",
+                            loadEmdb(plugin, urls.emdb(emdbId)),
+                            i18n.t("Loading EMDB...")
+                        );
+                        setEmdbOpacity({ plugin, id: emdbId, value: 0.5 });
+                    } else
+                        plugin.canvas.showToast({
+                            title: i18n.t("Error"),
+                            message: getErrorByStatus(emdbId, res.status),
+                            key: "init",
+                        });
+                });
+            }
+
             async function loadWithBothPdbEmdb(
                 pdbId: string,
                 emdbId: string,
@@ -274,35 +314,11 @@ export function usePluginRef(options: Options) {
                             return plugin
                                 .render(element, initParams)
                                 .then(() =>
-                                    checkModelUrl(emdbId, "emdb").then(async res => {
-                                        if (res.loaded) {
-                                            await updateLoader(
-                                                "loadModel",
-                                                loadEmdb(plugin, urls.emdb(emdbId)),
-                                                i18n.t("Loading EMDB...")
-                                            );
-                                            setEmdbOpacity({ plugin, id: emdbId, value: 0.5 });
-                                        } else
-                                            plugin.canvas.showToast({
-                                                title: i18n.t("Error"),
-                                                message: getErrorByStatus(emdbId, res.status),
-                                                key: "init",
-                                            });
-                                    })
+                                    newSelection.ligandId === undefined
+                                        ? loadEmdbModel(emdbId, plugin)
+                                        : Promise.resolve()
                                 )
-                                .then(() => {
-                                    molstarState.current = MolstarStateActions.fromInitParams(
-                                        initParams,
-                                        newSelection
-                                    );
-
-                                    if (newSelection.type === "free") {
-                                        if (newSelection.main.pdb)
-                                            setVisibility(plugin, newSelection.main.pdb);
-                                        if (newSelection.main.emdb)
-                                            setVisibility(plugin, newSelection.main.emdb);
-                                    }
-                                });
+                                .then(() => setVisibilityAfterLoad(initParams, plugin));
                         } else loadVoidMolstar(getErrorByStatus(pdbId, res.status));
                     })
                     .catch(err => loadVoidMolstar(err));
@@ -318,7 +334,13 @@ export function usePluginRef(options: Options) {
             } else if (pluginAlreadyRendered) {
                 //When ligand has changed
                 molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
-                await updateLoader("updateVisualPlugin", plugin.visual.update(initParams));
+                await updateLoader("updateVisualPlugin", plugin.visual.update(initParams))
+                    .then(() =>
+                        emdbId && newSelection.ligandId === undefined
+                            ? loadEmdbModel(emdbId, plugin)
+                            : Promise.resolve()
+                    )
+                    .then(() => setVisibilityAfterLoad(initParams, plugin));
                 if (newSelection.ligandId && newSelection.chainId) {
                     console.debug("Updating ligand in molstar sequence", newSelection);
                     plugin.visual.updateLigand({
@@ -356,6 +378,7 @@ export function usePluginRef(options: Options) {
             pdbePlugin,
             newSelection,
             setChain,
+            getLigandViewState,
             setPdbePlugin,
             updateLoader,
             compositionRoot.getRelatedModels,
@@ -377,7 +400,8 @@ const colors = {
 
 function getPdbePluginInitParams(
     newSelection: Selection,
-    onChainUpdate: (chainId: string) => void
+    onChainUpdate: (chainId: string) => void,
+    isLigandView: () => boolean
 ): InitParams {
     const pdbId = getMainItem(newSelection, "pdb");
     const emdbId = getMainItem(newSelection, "emdb");
@@ -401,10 +425,14 @@ function getPdbePluginInitParams(
         ligandView,
         mapSettings: {},
         onChainUpdate: onChainUpdate,
+        isLigandView: isLigandView,
     };
 }
 
-function getVoidInitParams(onChainUpdate: (chainId: string) => void): InitParams {
+function getVoidInitParams(
+    onChainUpdate: (chainId: string) => void,
+    isLigandView: () => boolean
+): InitParams {
     return {
         moleculeId: undefined,
         mapId: undefined,
@@ -423,5 +451,6 @@ function getVoidInitParams(onChainUpdate: (chainId: string) => void): InitParams
         ligandView: undefined,
         mapSettings: {},
         onChainUpdate: onChainUpdate,
+        isLigandView: isLigandView,
     };
 }

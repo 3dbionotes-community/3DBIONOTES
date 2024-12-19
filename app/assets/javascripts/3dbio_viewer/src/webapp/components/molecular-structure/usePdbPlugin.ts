@@ -393,7 +393,9 @@ export async function applySelectionChangesToPlugin(
     const cstf = added.filter(item => item.type === "cstf");
 
     const mainPdb = oldItems()[0];
+    const mainEmdb = oldItems()[1];
     if (mainPdb) setVisibility(plugin, mainPdb);
+    if (mainEmdb) setVisibility(plugin, mainEmdb);
 
     console.debug(
         "Update molstar:",
