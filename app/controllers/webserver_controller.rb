@@ -1,5 +1,5 @@
 class WebserverController < ApplicationController
-  before_filter :set_viewer
+  before_action :set_viewer
 
   def home
     @selected_entries = Covid19.selected_entries

@@ -14,15 +14,16 @@ import {
 } from "../../../domain/entities/Covid19Info";
 import { HtmlTooltip } from "./HtmlTooltip";
 import i18n from "../../../utils/i18n";
+import { useAppContext } from "../../contexts/app-context";
 
 export interface CustomCheckboxFilterProps {
     setFilterState: (value: React.SetStateAction<Covid19Filter>) => void;
-    validationSources: ValidationSource[];
     filterState: Covid19Filter;
 }
 
 export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.memo(props => {
-    const { filterState, setFilterState, validationSources } = props;
+    const { filterState, setFilterState } = props;
+    const { sources: validationSources } = useAppContext();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const isOpen = Boolean(anchorEl);
     const openMenu = React.useCallback(event => setAnchorEl(event.currentTarget), []);
@@ -67,6 +68,7 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
             cstf: getTooltip(getValidationSource(validationSources, "CSTF")),
             ceres: getTooltip(getValidationSource(validationSources, "CERES")),
             idr: getTooltip(getValidationSource(validationSources, "IDR")),
+            nmr: getTooltip(getValidationSource(validationSources, "NMR")),
         }),
         [validationSources, getTooltip]
     );
@@ -131,6 +133,12 @@ export const CustomCheckboxFilter: React.FC<CustomCheckboxFilterProps> = React.m
                         checked={filterState.idr}
                         setFilterState={setFilterState}
                         tooltip={filterTooltips.idr}
+                    />
+                    <FilterItem
+                        filterKey="nmr"
+                        checked={filterState.nmr}
+                        setFilterState={setFilterState}
+                        tooltip={filterTooltips.nmr}
                     />
                 </MenuList>
             </GridMenu>

@@ -10,7 +10,7 @@ import i18n from "../../domain/utils/i18n";
 export class BionotesOrganismRepository implements OrganismRepository {
     getOrganisms(): FutureData<Organism[]> {
         return getValidatedJSON<OrganismsResponse>(
-            `${bioUrlDev}/bws/api/organisms/`,
+            `${bioUrl}/bws/api/organisms/`,
             organismsResponseC
         ).flatMap(organisms =>
             organisms
@@ -20,4 +20,4 @@ export class BionotesOrganismRepository implements OrganismRepository {
     }
 }
 
-const { bionotes: _bioUrl, bionotesStaging: bioUrlDev } = routes;
+const { bionotes: bioUrl } = routes;

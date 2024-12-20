@@ -2,7 +2,7 @@ import _ from "lodash";
 import { Maybe } from "../../utils/ts-utils";
 import { Ligand } from "./Ligand";
 import { Emdb } from "./Pdb";
-import { ChainId, Protein, ProteinId } from "./Protein";
+import { ChainId, Protein } from "./Protein";
 import { UploadData } from "./UploadData";
 
 export interface PdbInfo {
@@ -19,9 +19,14 @@ type Chain = {
     protein: Maybe<Protein>;
 };
 
+type ChainIds = {
+    structAsymId: string;
+    chainId: string;
+};
+
 interface BuildPdbInfoOptions extends PdbInfo {
     proteins: Protein[];
-    proteinsMapping: Maybe<Record<ProteinId, ChainId[]>>;
+    proteinsMapping: Maybe<Record<string, ChainIds[]>>;
 }
 
 export function buildPdbInfo(options: BuildPdbInfoOptions): PdbInfo {
@@ -33,13 +38,13 @@ export function buildPdbInfo(options: BuildPdbInfoOptions): PdbInfo {
             const protein = proteinById[proteinId];
             if (!protein) return [];
 
-            return chainIds.map(chainId => {
-                const shortName = _([chainId, protein.gen]).compact().join(" - ");
+            return chainIds.map(({ structAsymId, chainId: _chainId }) => {
+                const shortName = _([structAsymId, protein.gen]).compact().join(" - ");
                 return {
-                    id: [proteinId, chainId].join("-"),
+                    id: [proteinId, structAsymId].join("-"),
                     shortName,
                     name: _([shortName, protein.name]).compact().join(", "),
-                    chainId,
+                    chainId: structAsymId,
                     protein,
                 };
             });

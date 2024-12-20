@@ -133,7 +133,7 @@ export function usePluginRef(options: Options) {
                 }
                 const supportedExtension = extension === "ent" ? "pdb" : extension;
                 const customData = {
-                    url: `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.${supportedExtension}`,
+                    url: `${routes.bionotes}/upload/${uploadDataToken}/structure_file.${supportedExtension}`,
                     format: extension === "cif" ? "mmcif" : "pdb",
                     binary: false,
                 };

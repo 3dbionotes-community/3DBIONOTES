@@ -12,24 +12,23 @@
     %meta{:content => "telephone=yes", :name => "format-detection"}/
     %meta{:content => "true", :name => "HandheldFriendly"}/
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
-    = stylesheet_link_tag('webserver/webserver_style.css')
-    = stylesheet_link_tag('application')
     = stylesheet_link_tag("https://fonts.googleapis.com/css?family=Lato:400,700,400italic&amp;display=swap")
-    = stylesheet_link_tag('webserver/main.css')
-    = stylesheet_link_tag('webserver/viewer.css')
-    = stylesheet_link_tag('webserver/ekko-lightbox.css')
-    = stylesheet_link_tag('/font-awesome/css/font-awesome.min.css')
+    = stylesheet_link_tag 'webserver/webserver_style.css'
+    = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'webserver/main.css'
+    = stylesheet_link_tag 'webserver/viewer.css'
+    = stylesheet_link_tag 'webserver/ekko-lightbox.css'
+    = stylesheet_link_tag '/font-awesome/css/font-awesome.min.css'
 
-    = javascript_include_tag('webserver/webserver_lib')
-    = javascript_include_tag('webserver/webserver_init')
-    = javascript_include_tag('application')
-    = javascript_include_tag('webserver/ekko-lightbox.min')
-    = javascript_include_tag('webserver/lightbox')
-    = javascript_include_tag('webserver/carousel')
-    = javascript_include_tag('webserver/popover')
-    = javascript_include_tag('webserver/collapse')
-    = javascript_include_tag('webserver/imagemapResizer')
-    = javascript_include_tag('covid19')
+    = javascript_include_tag 'application'
+    = javascript_include_tag 'webserver/webserver_lib'
+    = javascript_include_tag 'webserver/webserver_init'
+    = javascript_include_tag 'webserver/ekko-lightbox.min'
+    = javascript_include_tag 'webserver/lightbox'
+    = javascript_include_tag 'webserver/carousel'
+    = javascript_include_tag 'webserver/collapse'
+    = javascript_include_tag 'webserver/imagemapResizer'
+    = javascript_include_tag 'covid19'
   %body
     - if @layout_options && (layout_header = @layout_options[:header])
       = render partial: layout_header

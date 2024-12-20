@@ -47,11 +47,15 @@ import {
     pdbEntryResponseC,
     PdbLigandsResponse,
 } from "../../PdbLigands";
+import { getResults, Pagination, paginationCodec } from "../../codec-utils";
 import { getPublicationsCodec, EntryPublications, getPublications } from "../../PdbPublications";
+import { getNMRSubtrack } from "./tracks/nmr";
+import { NMRTarget, nmrTargetCodec } from "../../NMRTarget";
 
 interface Data {
     uniprot: UniprotResponse;
     pdbEmdbsEmValidations: PdbEmdbEmValidations[];
+    nmrTargets: NMRTarget[];
     features: Features;
     cv19Tracks: Cv19Tracks;
     pdbAnnotations: PdbAnnotations;
@@ -97,33 +101,57 @@ export class ApiPdbRepository implements PdbRepository {
         debugVariable({ apiData: data });
         const { proteinId, pdbId, chainId } = options;
 
-        const variants = proteinId ? getVariants(
-            data.ebiVariation,
-            data.mutagenesis,
-            data.genomicVariantsCNCB,
-            proteinId
-        ) : undefined;
+        const variants = proteinId
+            ? getVariants(data.ebiVariation, data.mutagenesis, data.genomicVariantsCNCB, proteinId)
+            : undefined;
 
-        const proteinFragments = proteinId ? {
-            featureFragments: on(data.features, features => getFeatureFragments(proteinId, features)),
-            pfamDomainFragments: on(data.pfamAnnotations, pfamAnnotations => getPfamDomainFragments(pfamAnnotations, proteinId)),
-            smartDomainFragments: on(data.smartAnnotations, smartAnnotations => getSmartDomainFragments(smartAnnotations, proteinId)),
-            interproFragments: on(data.interproAnnotations, interproAnnotations => getInterproDomainFragments(interproAnnotations, proteinId)),
-            elmdbFragments: on(data.elmdbUniprot, elmdbUniprot => getElmdbUniprotFragments(elmdbUniprot, proteinId)),
-            mobiFragments: on(data.mobiUniprot, mobiUniprot => getMobiUniprotFragments(mobiUniprot, proteinId)),
-            proteomicsFragments: on(data.proteomics, proteomics => getProteomicsFragments(proteomics, proteinId)),
-            phosphiteFragments: on(data.phosphositeUniprot, phosphositeUniprot => getPhosphiteFragments(phosphositeUniprot, proteinId)),
-            dbPtmFragments: on(data.dbPtm, dbPtm => getDbPtmFragments(dbPtm, proteinId)),
-            antigenFragments: on(data.antigenic, antigenic => getAntigenicFragments(antigenic, proteinId))
-        } : undefined;
+        const proteinFragments = proteinId
+            ? {
+                  featureFragments: on(data.features, features =>
+                      getFeatureFragments(proteinId, features)
+                  ),
+                  pfamDomainFragments: on(data.pfamAnnotations, pfamAnnotations =>
+                      getPfamDomainFragments(pfamAnnotations, proteinId)
+                  ),
+                  smartDomainFragments: on(data.smartAnnotations, smartAnnotations =>
+                      getSmartDomainFragments(smartAnnotations, proteinId)
+                  ),
+                  interproFragments: on(data.interproAnnotations, interproAnnotations =>
+                      getInterproDomainFragments(interproAnnotations, proteinId)
+                  ),
+                  elmdbFragments: on(data.elmdbUniprot, elmdbUniprot =>
+                      getElmdbUniprotFragments(elmdbUniprot, proteinId)
+                  ),
+                  mobiFragments: on(data.mobiUniprot, mobiUniprot =>
+                      getMobiUniprotFragments(mobiUniprot, proteinId)
+                  ),
+                  proteomicsFragments: on(data.proteomics, proteomics =>
+                      getProteomicsFragments(proteomics, proteinId)
+                  ),
+                  phosphiteFragments: on(data.phosphositeUniprot, phosphositeUniprot =>
+                      getPhosphiteFragments(phosphositeUniprot, proteinId)
+                  ),
+                  dbPtmFragments: on(data.dbPtm, dbPtm => getDbPtmFragments(dbPtm, proteinId)),
+                  antigenFragments: on(data.antigenic, antigenic =>
+                      getAntigenicFragments(antigenic, proteinId)
+                  ),
+              }
+            : undefined;
 
         const fragments = {
             functionalMappingFragments: on(data.cv19Tracks, getFunctionalMappingFragments),
-            structureCoverageFragments: on(data.coverage, coverage => getStructureCoverageFragments(coverage, chainId)),
-            emValidationFragments: on(data.pdbAnnotations, pdbAnnotations => getEmValidationFragments(pdbAnnotations, chainId)),
+            structureCoverageFragments: on(data.coverage, coverage =>
+                getStructureCoverageFragments(coverage, chainId)
+            ),
+            emValidationFragments: on(data.pdbAnnotations, pdbAnnotations =>
+                getEmValidationFragments(pdbAnnotations, chainId)
+            ),
             pdbRedoFragments: on(data.pdbRedo, pdbRedo => getPdbRedoFragments(pdbRedo, chainId)),
             epitomesFragments: on(data.iedb, getEpitomesFragments),
-            molprobityFragments: on(data.molprobity, molprobity => getMolprobityFragments(molprobity, chainId)),
+            molprobityFragments: on(data.molprobity, molprobity =>
+                getMolprobityFragments(molprobity, chainId)
+            ),
+            nmrFragments: on(data.nmrTargets, nmr => getNMRSubtrack(nmr)),
         };
 
         const fragmentsList = { ...proteinFragments, ...fragments };
@@ -133,7 +161,9 @@ export class ApiPdbRepository implements PdbRepository {
             getExperiment(pdbId, pdbExperiment)
         );
 
-        const fallbackOrganism = on(data.pdbMolecules, pdbMolecules => getFallbackOrganism(pdbId, pdbMolecules));
+        const fallbackOrganism = on(data.pdbMolecules, pdbMolecules =>
+            getFallbackOrganism(pdbId, pdbMolecules)
+        );
 
         const sequence = data.features ? data.features.sequence : "";
 
@@ -157,8 +187,7 @@ export class ApiPdbRepository implements PdbRepository {
             ligands.map(ligand => getPdbLigand({ ligand, ontologyTerms, ontologies, organisms }))
         );
 
-        const pdbTitle =
-            data.pdbSummary && _.first(data.pdbSummary[pdbId])?.title;
+        const pdbTitle = data.pdbSummary && _.first(data.pdbSummary[pdbId])?.title;
 
         return {
             id: pdbId,
@@ -184,48 +213,58 @@ export class ApiPdbRepository implements PdbRepository {
 
 function getData(options: PdbOptions): FutureData<Partial<Data>> {
     const { proteinId, pdbId, chainId } = options;
-    const { bionotes: bioUrl, bionotesStaging: bioUrlDev, ebi: ebiBaseUrl } = routes;
+    const { bionotes: bioUrl, ebi: ebiBaseUrl } = routes;
     const ebiProteinsApiUrl = `${ebiBaseUrl}/proteins/api`;
     const pdbAnnotUrl = `${bioUrl}/ws/lrs/pdbAnnotFromMap`;
 
-    const pdbEmdbsEmValidations = getJSON<PdbEmdbMapping>(`${emdbsFromPdbUrl}/${pdbId}`).flatMap(pdbEmdbMapping => {
-        const emdbs = pdbEmdbMapping ? getEmdbsFromMapping(pdbEmdbMapping, pdbId) : [];
-        const pdbEmdbsEmValidations = emdbs?.map(id => ({
-            id,
-            emv: Future.joinObj({
-                localResolution: getValidatedJSON<ConsensusResponse>(
-                    `${bioUrlDev}/bws/api/emv/${id}/localresolution/consensus/`,
-                    consensusResponseC
-                ).flatMap(consensus =>
-                    getValidatedJSON<RankResponse>(
-                        `${bioUrlDev}/bws/api/emv/${id}/localresolution/rank/`,
-                        rankResponseC
-                    ).map(rank => ({ consensus, rank }))
-                ),
-                // deepres, monores, blocres, mapq, fscq, daq:
-                // getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
-            }),
-        }));
+    const pdbEmdbsEmValidations = getJSON<PdbEmdbMapping>(`${emdbsFromPdbUrl}/${pdbId}`).flatMap(
+        pdbEmdbMapping => {
+            const emdbs = pdbEmdbMapping ? getEmdbsFromMapping(pdbEmdbMapping, pdbId) : [];
+            const pdbEmdbsEmValidations = emdbs?.map(id => ({
+                id,
+                emv: Future.joinObj({
+                    localResolution: getValidatedJSON<ConsensusResponse>(
+                        `${bioUrl}/bws/api/emv/${id}/localresolution/consensus/`,
+                        consensusResponseC
+                    ).flatMap(consensus =>
+                        getValidatedJSON<RankResponse>(
+                            `${bioUrl}/bws/api/emv/${id}/localresolution/rank/`,
+                            rankResponseC
+                        ).map(rank => ({ consensus, rank }))
+                    ),
+                    // deepres, monores, blocres, mapq, fscq, daq:
+                    // getValidatedJSON<StatsResponse>(`${bws}/api/emv/${id}/stats`, statsResponseC),
+                }),
+            }));
 
-        return Future.parallel(
-            pdbEmdbsEmValidations.map(emdb => emdb.emv.map(emv => ({ id: emdb.id, emv })))
-        );
-    });
+            return Future.parallel(
+                pdbEmdbsEmValidations.map(emdb => emdb.emv.map(emv => ({ id: emdb.id, emv })))
+            );
+        }
+    );
 
     const pdbPublications = getValidatedJSON<EntryPublications>(
         `${ebiBaseUrl}/pdbe/api/pdb/entry/publications/${pdbId}`,
         getPublicationsCodec(pdbId)
-    ).map(entryPublications => getPublications(entryPublications?.[pdbId] ?? []))
+    ).map(entryPublications => getPublications(entryPublications?.[pdbId] ?? []));
 
     const ligands = getValidatedJSON<PdbEntryResponse>(
-        `${bioUrlDev}/bws/api/pdbentry/${pdbId}/ligands/`,
+        `${bioUrl}/bws/api/pdbentry/${pdbId}/ligands/`,
         pdbEntryResponseC
-    ).map(pdbEntryResponse => pdbEntryResponse?.results)
+    ).map(pdbEntryResponse => pdbEntryResponse?.results);
+
+    const nmrTargets = onF(proteinId, proteinId =>
+        getValidatedJSON<Pagination<NMRTarget>>(
+            `${bioUrl}/bws/api/nmr/targets/${proteinId}/`,
+            paginationCodec(nmrTargetCodec)
+        ).map(pagination => getResults(pagination))
+    );
 
     // Move URLS to each track module?
     //prettier-ignore
     const data$: DataRequests = {
         uniprot: onF(proteinId, proteinId => getXML(`${routes.uniprot}/uniprotkb/${proteinId}.xml`)),
+        nmrTargets,
         pdbEmdbsEmValidations,
         features: onF(proteinId, proteinId => getJSON(`${ebiProteinsApiUrl}/features/${proteinId}`)),
         cv19Tracks: onF(proteinId, proteinId => getJSON(`${bioUrl}/cv19_annotations/${proteinId}_annotations.json`)),

@@ -1,61 +1,34 @@
 source 'https://rubygems.org'
-ruby '2.4.1'
+ruby '3.3.1'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.11.1'
-# Use sqlite3 as the database for Active Record
-#gem 'sqlite3'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0.6'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '4.2.0'
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'mini_racer', platforms: :ruby
+gem 'rails', '7.1.3.2'
 
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
-
-gem 'mysql2', '0.4.10'
-gem 'sqlite3', '~> 1.3.0'
+#gem 'mysql2', '0.4.10'
+gem 'mysql2', '0.5'
+gem 'sqlite3', '1.4.2'
 
 gem 'haml'
 gem 'json'
-gem 'bio'
+gem 'bio', '1.4.3' # Preserving 1.4.3 to not break potentially existing code
 gem 'nori'
-#gem 'digest'
-gem 'rename'
+
 gem 'rack-cors', :require => 'rack/cors'
 gem 'config'
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'rubystats'
-gem 'gsl'
-gem 'bootstrap', '~> 4.4.1'
-gem 'sprockets-rails', '~> 2.3.2'
+gem 'sprockets-rails', '3.4.2'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+# Bootstrap related gems (https://github.com/twbs/bootstrap-rubygem/tree/4.6-stable)
+gem 'bootstrap', '~> 4.6.2'
+gem 'jquery-rails', '4.6.0'
+gem 'sassc-rails', '>= 2.1.0' # Required for bootstrap, but deprecated
 
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+gem 'uglifier'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'

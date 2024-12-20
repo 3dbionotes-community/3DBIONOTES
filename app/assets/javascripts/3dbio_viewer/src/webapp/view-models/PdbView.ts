@@ -11,6 +11,7 @@ import { BlockDef } from "../components/protvista/Protvista.types";
 import { Tooltip } from "../components/protvista/Tooltip";
 import { trackDefinitions } from "../../domain/definitions/tracks";
 import { getBlockTracks } from "../components/protvista/Protvista.helpers";
+import { Source } from "../../domain/entities/Source";
 
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
 
@@ -73,14 +74,14 @@ export interface FragmentView {
 
 export function getPdbView(
     pdb: Pdb,
-    options: { block: BlockDef; showAllTracks?: boolean; chainId?: string }
+    options: { block: BlockDef; showAllTracks?: boolean; chainId?: string; sources: Source[] }
 ): PdbView {
-    const { block, showAllTracks = false, chainId } = options;
+    const { block, showAllTracks = false, chainId, sources } = options;
     const data = showAllTracks ? pdb.tracks : getBlockTracks(pdb.tracks, block);
 
     const tracks = _(data)
         .map((pdbTrack): TrackView | undefined => {
-            const subtracks = getSubtracks(pdb, pdbTrack);
+            const subtracks = getSubtracks(pdb, pdbTrack, sources);
             if (_.isEmpty(subtracks)) return undefined;
 
             return {
@@ -124,13 +125,13 @@ function getVariants(pdb: Pdb): VariantsView | undefined {
     };
 }
 
-function getSubtracks(pdb: Pdb, track: Track): TrackView["data"] {
+function getSubtracks(pdb: Pdb, track: Track, sources: Source[]): TrackView["data"] {
     return _.flatMap(track.subtracks, subtrack => {
-        return hasFragments(subtrack) ? [getSubtrack(pdb, subtrack)] : [];
+        return hasFragments(subtrack) ? [getSubtrack(pdb, subtrack, sources)] : [];
     });
 }
 
-function getSubtrack(pdb: Pdb, subtrack: Subtrack): SubtrackView {
+function getSubtrack(pdb: Pdb, subtrack: Subtrack, sources: Source[]): SubtrackView {
     const label = subtrack.subtype
         ? `[${subtrack.subtype.name}] ${subtrack.label}`
         : subtrack.label;
@@ -150,7 +151,7 @@ function getSubtrack(pdb: Pdb, subtrack: Subtrack): SubtrackView {
                 ...fragment,
                 color: fragment.color || "black",
                 tooltipContent: renderToString(
-                    React.createElement(Tooltip, { pdb, subtrack, fragment })
+                    React.createElement(Tooltip, { pdb, subtrack, fragment, sources })
                 ),
             })),
         })),
