@@ -1,4 +1,4 @@
-import { Codec, GetType, array, nullType, number, string } from "purify-ts";
+import { Codec, GetType, array, number, string } from "purify-ts";
 import { maybe } from "./PdbLigands";
 import { PdbPublication } from "../domain/entities/Pdb";
 import _ from "lodash";
