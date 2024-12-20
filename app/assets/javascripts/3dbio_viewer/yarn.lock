@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@3dbionotes/pdbe-molstar@3.1.0-est-2-beta.4":
-  version "3.1.0-est-2-beta.4"
-  resolved "https://registry.yarnpkg.com/@3dbionotes/pdbe-molstar/-/pdbe-molstar-3.1.0-est-2-beta.4.tgz#5b0759c3d426410a9efafbb70ba9e6483c9501c6"
-  integrity sha512-0DOuJI0aFh4ioKqC6E4ObEDBlUQcUT4LIyEHoUALucLpP0l9pe1LSMXnV6pRELfqV1OJKRIosi0az+WxmacRSQ==
+"@3dbionotes/pdbe-molstar@3.1.0-est-2-beta.5":
+  version "3.1.0-est-2-beta.5"
+  resolved "https://registry.yarnpkg.com/@3dbionotes/pdbe-molstar/-/pdbe-molstar-3.1.0-est-2-beta.5.tgz#7b9a0c6d6a148bace6f89e6a4d8c0a1dfc2ecafa"
+  integrity sha512-DdskZBdetv7wuBk3EOPT3oCK6/oUApqNzrFSm14/Z3L2jPo9NlKNZ99jiQlrNec7qGikOFaeHPsYDRy0XTzBkA==
   dependencies:
     d3-axis "^3.0.0"
     d3-brush "^3.0.0"
