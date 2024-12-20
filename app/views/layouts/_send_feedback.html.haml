@@ -1,56 +1,56 @@
-%script{src: "https://code.jquery.com/jquery-3.6.0.min.js"}
-%button#zammad-feedback-form Send feedback
-%script#zammad_form_script{src: "https://eosc-helpdesk.eosc-portal.eu/assets/form/form.js"}
-:javascript
-  $(function() {
-    $('#zammad-feedback-form').ZammadForm({
-  agreementMessage:'  Accept  <a target="_blank" href="https://eosc-helpdesk.scc.kit.edu/privacy-policy">Data Privacy Policy</a> & <a target="_blank" href="https://drive.google.com/file/d/1mpHVIoblHdUw4zyu7jxdi-PDCQzB6C9Y/view">Acceptable Use Policy</a>',
-  messageTitle: "Welcome to our feedback section. Please share any issues you've encountered or suggestions you have for our website. Your input helps us continually improve. Thank you for your time and contribution!",
-  showTitle: true,
-  messageSubmit: 'Submit',
-  messageThankYou: 'Thank you for your inquiry (#%s)! We\'ll contact you as soon as possible.',
-  modal: true,
-  targetGroupID: 55,
-  attributes: [
-      {
-        display: 'Name',
-        name: 'name',
-        tag: 'input',
-        type: 'text',
-        id: 'zammad-form-name',
-        required: true,
-        placeholder: 'Your Name',
-        defaultValue: '',
-      },
-      {
-        display: 'Email',
-        name: 'email',
-        tag: 'input',
-        type: 'email',
-        id: 'zammad-form-email',
-        required: true,
-        placeholder: 'Your Email',
-        defaultValue: '',
-      },
-      {
-        display: 'Subject',
-        name: 'title',
-        tag: 'input',
-        id: 'zammad-form-subject',
-        required: false,
-        placeholder: 'My subject',
-        defaultValue: '',
-      },
-      {
-        display: 'Message',
-        name: 'body',
-        tag: 'textarea',
-        id: 'zammad-form-body',
-        required: true,
-        placeholder: 'Your Message...',
-        defaultValue: '',
-        rows: 7,
-      }
-    ]
-    });
-  });
+-# %script{src: "https://code.jquery.com/jquery-3.6.0.min.js"}
+-# %button#zammad-feedback-form Send feedback
+-# %script#zammad_form_script{src: "https://eosc-helpdesk.eosc-portal.eu/assets/form/form.js"}
+-# :javascript
+-#   $(function() {
+-#     $('#zammad-feedback-form').ZammadForm({
+-#   agreementMessage:'  Accept  <a target="_blank" href="https://eosc-helpdesk.scc.kit.edu/privacy-policy">Data Privacy Policy</a> & <a target="_blank" href="https://drive.google.com/file/d/1mpHVIoblHdUw4zyu7jxdi-PDCQzB6C9Y/view">Acceptable Use Policy</a>',
+-#   messageTitle: "Welcome to our feedback section. Please share any issues you've encountered or suggestions you have for our website. Your input helps us continually improve. Thank you for your time and contribution!",
+-#   showTitle: true,
+-#   messageSubmit: 'Submit',
+-#   messageThankYou: 'Thank you for your inquiry (#%s)! We\'ll contact you as soon as possible.',
+-#   modal: true,
+-#   targetGroupID: 55,
+-#   attributes: [
+-#       {
+-#         display: 'Name',
+-#         name: 'name',
+-#         tag: 'input',
+-#         type: 'text',
+-#         id: 'zammad-form-name',
+-#         required: true,
+-#         placeholder: 'Your Name',
+-#         defaultValue: '',
+-#       },
+-#       {
+-#         display: 'Email',
+-#         name: 'email',
+-#         tag: 'input',
+-#         type: 'email',
+-#         id: 'zammad-form-email',
+-#         required: true,
+-#         placeholder: 'Your Email',
+-#         defaultValue: '',
+-#       },
+-#       {
+-#         display: 'Subject',
+-#         name: 'title',
+-#         tag: 'input',
+-#         id: 'zammad-form-subject',
+-#         required: false,
+-#         placeholder: 'My subject',
+-#         defaultValue: '',
+-#       },
+-#       {
+-#         display: 'Message',
+-#         name: 'body',
+-#         tag: 'textarea',
+-#         id: 'zammad-form-body',
+-#         required: true,
+-#         placeholder: 'Your Message...',
+-#         defaultValue: '',
+-#         rows: 7,
+-#       }
+-#     ]
+-#     });
+-#   });

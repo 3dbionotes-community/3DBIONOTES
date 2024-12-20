@@ -18,3 +18,14 @@ development:
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWD'] %>
   host: <%= ENV['DB_HOST'] %>
+
+production:
+  <<: *default
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 8
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWD'] %>
+  host: <%= ENV['DB_HOST'] %>

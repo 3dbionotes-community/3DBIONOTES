@@ -3,17 +3,28 @@ class WebserverController < ApplicationController
 
   def home
     @selected_entries = Covid19.selected_entries
+    @twitter_buttons = [:both]
   end
 
   def set_viewer
     @viewerType = 'ngl'
   end
 
-  def covid19
-  end
-
   def viewer
-    @skip_footer = true
+    @twitter_buttons = [:bionotes]
     render layout: 'webserver'
   end
+
+  def covid19
+    @twitter_buttons = [:covidstructhub]
+  end
+
+  def help
+    @twitter_buttons = [:both]
+  end
+
+  def api
+    @twitter_buttons = [:both]
+  end
+
 end

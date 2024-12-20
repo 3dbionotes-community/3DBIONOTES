@@ -60,6 +60,3 @@
 //= link webserver/viewer.css
 //= link application.css
 //= link application.js
-
-//= link_tree ../javascripts/3dbio_viewer/build
-//= link_tree ../javascripts/covid19/build

@@ -109,7 +109,6 @@ export interface RefDoc {
     pmID: string;
     title: string;
     authors: string[];
-    abstract?: string;
     journal: string;
     pubDate: string;
     pmidLink?: Url;
