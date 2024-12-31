@@ -93,7 +93,6 @@ const publicationC = Codec.interface({
     doi: string,
     pubMedId: string,
     PMCId: string,
-    abstract: string,
     authors: array(authorC),
 });
 
@@ -121,18 +120,22 @@ const imageDataC = Codec.interface({
     assays: array(assayC),
 });
 
-export const pdbLigandC = Codec.interface({
+export const commonLigand = {
     IUPACInChIkey: string,
-    dbId: string,
-    pubChemCompoundId: string,
     name: string,
     formula: string,
     formula_weight: number,
     imageLink: string,
     externalLink: string,
-    IUPACInChI: string,
+    pubChemCompoundId: string,
+    IUPACInChI: optional(string),
     isomericSMILES: string,
     canonicalSMILES: string,
+};
+
+export const pdbLigandC = Codec.interface({
+    ...commonLigand,
+    dbId: string,
     imageData: optional(array(imageDataC)), //it shouldn't be an array...
 });
 
@@ -256,6 +259,9 @@ export function getPdbLigand(pdbLigandOptions: PdbLigandsOptions): PdbLigand {
         name: ligand.name,
         inChI: ligand.IUPACInChIkey,
         imageDataResource: idr,
+        smiles: ligand.canonicalSMILES,
+        formula: ligand.formula,
+        pubchemId: ligand.pubChemCompoundId,
     };
 }
 

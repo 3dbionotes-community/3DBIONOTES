@@ -1,4 +1,4 @@
-class CreatePhosphoentries < ActiveRecord::Migration
+class CreatePhosphoentries < ActiveRecord::Migration[7.1]
   def change
     create_table :phosphoentries do |t|
       t.string :proteinId

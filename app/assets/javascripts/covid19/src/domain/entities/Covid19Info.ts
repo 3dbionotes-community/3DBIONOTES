@@ -2,6 +2,7 @@ import _ from "lodash";
 import i18n from "../../utils/i18n";
 
 export interface Covid19Info {
+    count: number;
     structures: Structure[];
     validationSources: ValidationSource[];
 }
@@ -35,16 +36,24 @@ export interface Entity {
     isAntibody: boolean;
     isNanobody: boolean;
     isSybody: boolean;
+    targets: BasicNSPTarget[];
 }
 
 export interface Ligand {
     id: Id;
     name: string;
-    details: string;
     imageLink: Url;
     externalLink: Url;
     inChI: string; //IUPACInChIkey
     hasIDR: boolean;
+}
+
+export interface NMRLigand {
+    name: string;
+    inChI: string; //IUPACInChIkey
+    smiles: string;
+    formula: string;
+    pubchemId: string;
 }
 
 export interface LigandInstance {
@@ -110,43 +119,28 @@ export interface ValidationSource {
 }
 
 export interface ValidationMethod {
-    name: MethodName;
+    name: string;
     description: string;
     externalLink: string;
 }
 
-export interface Validation {
+interface Validation {
     externalLink?: Url;
     queryLink?: Url;
     badgeColor: W3Color;
 }
 
 export interface PdbValidation extends Validation {
-    source: PdbSourceName;
-    method: PdbMethodName;
-}
-
-export interface EmdbValidation extends Validation {
-    source: EmdbSourceName;
-    method: EmdbMethodName;
+    source: SourceName;
+    method: string;
 }
 
 export interface Validations {
     pdb: PdbValidation[];
-    emdb: EmdbValidation[];
+    emdb: never[];
 }
 
-export type SourceName = PdbSourceName | EmdbSourceName | "IDR";
-
-export type MethodName = PdbMethodName | EmdbMethodName | "IDR";
-
-export type PdbSourceName = "PDB-REDO" | "CSTF" | "CERES";
-
-export type PdbMethodName = "PDB-Redo" | "Isolde" | "Refmac" | "PHENIX";
-
-export type EmdbSourceName = "";
-
-export type EmdbMethodName = "DeepRes" | "MonoRes" | "BlocRes" | "Map-Q" | "FSC-Q";
+export type SourceName = "PDB-REDO" | "CSTF" | "CERES" | "IDR" | "NMR";
 
 export interface Pdb extends DbItem {
     keywords: string;
@@ -179,7 +173,6 @@ export interface RefDoc {
     id: Id;
     title: string;
     authors: string[];
-    abstract?: string;
     journal: string;
     pubDate: string;
     idLink?: Url;
@@ -204,6 +197,26 @@ export interface Details {
     refdoc?: RefDoc[];
 }
 
+export interface BasicNSPTarget {
+    uniprotId: string;
+    start: number;
+    end: number;
+    name: string;
+}
+
+export interface NSPTarget extends BasicNSPTarget {
+    name: string;
+    fragments: NMRFragment[];
+    bindingCount: number;
+    notBindingCount: number;
+}
+
+export interface NMRFragment {
+    name: string;
+    binding: boolean;
+    ligand: NMRLigand;
+}
+
 export const filterKeys = [
     "antibodies",
     "nanobodies",
@@ -212,45 +225,12 @@ export const filterKeys = [
     "cstf",
     "ceres",
     "idr",
+    "nmr",
 ] as const;
 
 export type FilterKey = typeof filterKeys[number];
 
 export type Covid19Filter = Record<FilterKey, boolean>;
-
-export function filterEntities(entities: Entity[], filterState: Covid19Filter): Entity[] {
-    return entities.filter(
-        entity =>
-            entity.isAntibody === filterState.antibodies &&
-            entity.isNanobody === filterState.nanobodies &&
-            entity.isSybody === filterState.sybodies
-    );
-}
-
-export function filterLigands(ligands: Ligand[]): Ligand[] {
-    return ligands.filter(ligand => ligand.hasIDR);
-}
-
-export function filterPdbValidations(
-    PdbValidations: PdbValidation[],
-    filterState: Covid19Filter
-): boolean {
-    return (
-        (!filterState.pdbRedo || _.some(PdbValidations, v => v?.source === "PDB-REDO")) &&
-        (!filterState.cstf || _.some(PdbValidations, v => v?.source === "CSTF")) &&
-        (!filterState.ceres || _.some(PdbValidations, v => v?.source === "CERES"))
-    );
-}
-
-export function updateStructures(data: Covid19Info, structures: Structure[]): Covid19Info {
-    if (_.isEmpty(structures)) return data;
-    const structuresById = _.keyBy(structures, structure => structure.id);
-    const structures2 = data.structures.map(structure => structuresById[structure.id] || structure);
-    const hasChanges = _(data.structures)
-        .zip(structures2)
-        .some(([s1, s2]) => s1 !== s2);
-    return hasChanges ? { ...data, structures: structures2 } : data;
-}
 
 export function getTranslations() {
     return {
@@ -262,6 +242,7 @@ export function getTranslations() {
             cstf: i18n.t("CSTF"),
             ceres: i18n.t("CERES"),
             idr: i18n.t("IDR"),
+            nmr: i18n.t("CV19-NMR-C"),
         } as Record<FilterKey, string>,
     };
 }

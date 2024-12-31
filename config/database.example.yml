@@ -1,14 +1,31 @@
 default: &default
-  adapter: sqlite3
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 8
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWD'] %>
+  host: <%= ENV['DB_HOST'] %>
 
 development:
   <<: *default
-  database: db/development.sqlite3
-
-test:
-  <<: *default
-  database: db/test.sqlite3
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 8
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWD'] %>
+  host: <%= ENV['DB_HOST'] %>
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 8
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWD'] %>
+  host: <%= ENV['DB_HOST'] %>

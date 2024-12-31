@@ -21,7 +21,7 @@ import {
 import { debugVariable } from "../../../utils/debug";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
-import { getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
+import { getCurrentItems, getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
 import { routes } from "../../../routes";
@@ -34,7 +34,7 @@ import i18n from "../../utils/i18n";
 import "./molstar.css";
 import "./molstar-light.css";
 
-const urls: Record<Type, (id: string) => string> = {
+export const urls: Record<Type, (id: string) => string> = {
     pdb: (id: string) => `https://www.ebi.ac.uk/pdbe/model-server/v1/${id}/full?encoding=cif`,
     emdb: (id: string) => `https://maps.rcsb.org/em/${id}/cell?detail=3`,
     pdbRedo: (id: string) => `https://pdb-redo.eu/db/${id}/${id}_final.cif`,
@@ -103,11 +103,9 @@ export function usePdbePlugin(options: MolecularStructureProps) {
 
     function setLigandsFromMolstar() {
         if (!pluginLoad || !pdbePlugin) return;
-        if (!newSelection.ligandId) {
-            const ligands = getLigands(pdbePlugin, newSelection) || [];
-            debugVariable({ ligands: ligands.length });
-            onLigandsLoaded(ligands);
-        }
+        const ligands = getLigands(pdbePlugin, newSelection) || [];
+        debugVariable({ ligands: ligands.length });
+        onLigandsLoaded(ligands);
     }
 
     function applyHighlight() {
@@ -209,8 +207,9 @@ export function usePdbePlugin(options: MolecularStructureProps) {
 
         const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
         if (pdbId) {
-            compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(emdbId => {
-                updateSelection(currentSelection, setMainItem(newSelection, emdbId, "emdb"));
+            compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(pdbEmdbId => {
+                if (emdbId !== pdbEmdbId)
+                    updateSelection(currentSelection, setMainItem(newSelection, pdbEmdbId, "emdb"));
             }, console.error);
         } else if (emdbId && getMainItem(currentSelection, "pdb") === undefined) {
             compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
@@ -238,7 +237,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         if (!extension) return;
         pdbePlugin.visual.remove({});
         const supportedExtension = extension === "ent" ? "pdb" : extension;
-        const uploadUrl = `${routes.bionotesStaging}/upload/${uploadDataToken}/structure_file.${supportedExtension}`;
+        const uploadUrl = `${routes.bionotes}/upload/${uploadDataToken}/structure_file.${supportedExtension}`;
 
         updateLoader(
             loaderKeys.uploadedModel,
@@ -324,7 +323,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
     return { pluginRef, pdbePlugin };
 }
 
-function setVisibility(plugin: PDBeMolstarPlugin, item: DbItem) {
+export function setVisibility(plugin: PDBeMolstarPlugin, item: DbItem) {
     const selector = getItemSelector(item);
     return plugin.visual.setVisibility(selector, item.visible || false);
 }
@@ -393,8 +392,13 @@ export async function applySelectionChangesToPlugin(
     const pdbRedo = added.filter(item => item.type === "pdbRedo");
     const cstf = added.filter(item => item.type === "cstf");
 
-    const mainPdb = oldItems()[0];
+    const mainPdb = newItems.find(item => item.type === "pdb");
+    const mainEmdb = newItems.find(item => item.type === "emdb");
     if (mainPdb) setVisibility(plugin, mainPdb);
+    if (mainEmdb) {
+        setVisibility(plugin, mainEmdb);
+        if (mainEmdb.visible) setEmdbOpacity({ plugin, id: mainEmdb.id, value: 0.5 });
+    }
 
     console.debug(
         "Update molstar:",
@@ -459,10 +463,13 @@ export async function applySelectionChangesToPlugin(
         }
     }
 
+    const items = getCurrentItems(plugin);
+
     for (let i = 0; i < emdbs.length; i++) {
         const item = emdbs[i];
         if (item) {
             const emdbId = item.id;
+            if (items.some(item => item.type === "emdb" && item.id === emdbId)) continue;
             await checkModelUrl(emdbId, "emdb").then(async res => {
                 if (res.loaded) {
                     await updateLoader(
@@ -514,7 +521,7 @@ async function highlight(
         await plugin.visual.select({
             data: [
                 {
-                    struct_asym_id: chain.chainId,
+                    auth_asym_id: chain.chainId,
                     color: "#0000ff",
                     focus,
                 },

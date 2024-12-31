@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { StructureProperties as Props } from "molstar/lib/mol-model/structure";
+import { StructureProperties as Props, Unit } from "molstar/lib/mol-model/structure";
 import { StateTransform } from "molstar/lib/mol-state/transform";
 import { PDBeMolstarPlugin } from "@3dbionotes/pdbe-molstar/lib";
 import { PluginContext } from "molstar/lib/mol-plugin/context";
@@ -47,24 +47,28 @@ export function getLigands(pdbePlugin: PDBeMolstarPlugin, newSelection: Selectio
         .compact()
         .value();
 
-    const locations = cellsWithinPdb.flatMap(cell => {
-        // TODO: don't use any
+    const locations = cellsWithinPdb.flatMap((cell: StateObjectCell) => {
         const units = cell.obj?.data?.units || [];
         const structure = cell.obj?.data;
-        const locationsForCell = _.flatMap(units, (unit: any) =>
-            _.flatMap(Array.from(unit.elements), (element: any) => {
+        const locationsForCell = _.flatMap(units, (unit: Unit) =>
+            _.flatMap(Array.from(unit.elements), element => {
                 const location = {
                     kind: "element-location" as const,
                     structure,
                     unit,
                     element,
                 };
+
                 const compIds = Props.residue.microheterogeneityCompIds(location);
                 const type = Props.residue.group_PDB(location);
                 const authSeqId = Props.residue.auth_seq_id(location);
                 const chainId = Props.chain.auth_asym_id(location);
+                const structAsymId = Props.chain.label_asym_id(location);
 
-                return { type, compIds, authSeqId, chainId };
+                // Debug ligands without previous filtering
+                // const _ligand = [compIds[0], authSeqId].join("-");
+
+                return { type, compIds, authSeqId, chainId, structAsymId };
             })
         );
         return locationsForCell;
@@ -85,7 +89,11 @@ export function getLigands(pdbePlugin: PDBeMolstarPlugin, newSelection: Selectio
                 const symbol = referenceObj.symbol;
                 const chainId = referenceObj.location.chainId;
                 const position = referenceObj.location.authSeqId;
-                return buildLigand({ chainId, component: symbol, position });
+                return buildLigand({
+                    chainId,
+                    component: symbol,
+                    position,
+                });
             }
         )
         .orderBy([obj => obj.component, obj => obj.component, obj => obj.position])
@@ -165,10 +173,22 @@ export function getCurrentItems(plugin: PDBeMolstarPlugin) {
                 const label = node.cell.obj?.label;
                 const { isHidden } = node.cell.state;
 
-                const pdbId: [string | undefined, Type] = [label?.match(/^(\d[\d\w]{3})$/)?.[1], "pdb"];
-                const emdbId: [string | undefined, Type] = [label?.match(/\/em\/([\w-]+)\//)?.[1], "emdb"];
-                const pdbRedo: [string | undefined, Type] = [label?.match(/^(\d[\d\w]{3}-pdbRedo)$/)?.[1], "pdbRedo"];
-                const cstf: [string | undefined, Type] = [label?.match(/^(\d[\d\w]{3}-cstf)$/)?.[1], "cstf"];
+                const pdbId: [string | undefined, Type] = [
+                    label?.match(/^(\d[\d\w]{3})$/)?.[1],
+                    "pdb",
+                ];
+                const emdbId: [string | undefined, Type] = [
+                    label?.match(/\/em\/([\w-]+)\//)?.[1],
+                    "emdb",
+                ];
+                const pdbRedo: [string | undefined, Type] = [
+                    label?.match(/^(\d[\d\w]{3}-pdbRedo)$/)?.[1],
+                    "pdbRedo",
+                ];
+                const cstf: [string | undefined, Type] = [
+                    label?.match(/^(\d[\d\w]{3}-cstf)$/)?.[1],
+                    "cstf",
+                ];
 
                 return _.compact(
                     [pdbId, emdbId, pdbRedo, cstf].map(([id, type]) =>

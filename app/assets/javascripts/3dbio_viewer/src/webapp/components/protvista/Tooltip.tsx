@@ -1,5 +1,6 @@
-import React from "react";
 import _ from "lodash";
+import React from "react";
+import styled from "styled-components";
 import { InfoOutlined as InfoOutlinedIcon } from "@material-ui/icons";
 import { Reference } from "../../../domain/entities/Evidence";
 import { Fragment, getFragmentToolsLink } from "../../../domain/entities/Fragment";
@@ -10,6 +11,7 @@ import { renderJoin } from "../../utils/react";
 import { Link } from "../Link";
 import { Protein } from "../../../domain/entities/Protein";
 import { trackDefinitions } from "../../../domain/definitions/tracks";
+import { getSource, Source as SourceEntity } from "../../../domain/entities/Source";
 import i18n from "../../utils/i18n";
 
 interface TooltipProps {
@@ -17,15 +19,21 @@ interface TooltipProps {
     subtrack: Subtrack;
     fragment: FragmentP;
     alignment: Interval[];
+    sources: SourceEntity[];
 }
 
 type FragmentP = Fragment | Fragment2;
 
 export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
-    const { pdb, subtrack, fragment, alignment } = props;
+    //cannot use sources from AppContext as context is not initalized
+    const { pdb, subtrack, fragment, alignment, sources } = props;
     const { description, alignmentScore } = fragment;
+
+    //no react.memo as is finally rendered to string
+    const nmrSource = getSource(sources, "NMR");
     const score = alignmentScore ? alignmentScore + " %" : undefined; // aligmentScore is never being set on code
     const isStructureCoverage = subtrack.accession === trackDefinitions.structureCoverage.id;
+    const isNMR = subtrack.accession === "nmr";
 
     // Intervals inside intervals (Spanish): https://chat.openai.com/share/eb5816e2-d5c5-455c-bf6e-9e08e8850470
     const isCovered =
@@ -76,15 +84,21 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
                     )}
                 </TooltipRow>
             )}
-            <TooltipRow title={i18n.t("Feature ID")} value={fragment.id} />
-            <TooltipRow title={i18n.t("Description")} value={description} />
-            <TooltipRow title={i18n.t("Alignment score")} value={score} />
+            <TooltipRow title={i18n.t("Feature ID")} value={fragment.id} className="description" />
+            <TooltipRow
+                title={isNMR ? i18n.t("Target") : i18n.t("Description")}
+                value={description}
+            />
+            <TooltipRow title={i18n.t("Alignment score")} value={score} className="description" />
             <TooltipRow title={i18n.t("Conflict")} value={getConflict(pdb.sequence, fragment)} />
             <Source subtrack={subtrack} />
             <Evidences fragment={fragment} />
             <CrossReferences fragment={fragment} />
             {pdb.protein && <Tools protein={pdb.protein} subtrack={subtrack} fragment={fragment} />}
             <Legend fragment={fragment} />
+            {isNMR && nmrSource && (
+                <NMR start={fragment.start} end={fragment.end} nmrSource={nmrSource} />
+            )}
         </TooltipTable>
     );
 });
@@ -98,6 +112,39 @@ const styles = {
         height: 10,
         marginRight: 5,
     },
+};
+
+const NMR: React.FC<{ start: number; end: number; nmrSource: SourceEntity }> = props => {
+    const { nmrSource } = props;
+    const nmrMethod = nmrSource?.methods[0];
+
+    if (!nmrMethod) return null;
+
+    return (
+        <>
+            <TooltipRow
+                title={i18n.t("Description")}
+                value={nmrMethod.description}
+                className="description"
+            />
+            <TooltipRow title={i18n.t("Evidence")} object={nmrMethod}>
+                {nmrMethod => <Link name={nmrMethod.externalLink} url={nmrMethod.externalLink} />}
+            </TooltipRow>
+            <TooltipRow
+                title={i18n.t("Source")}
+                value={nmrSource.description}
+                className="description"
+            />
+            <tr>
+                <td>{i18n.t("Tools")}</td>
+                <td>
+                    <ButtonLink className="anchor" data-start={props.start} data-end={props.end}>
+                        {i18n.t("Library of tested ligands")}
+                    </ButtonLink>
+                </td>
+            </tr>
+        </>
+    );
 };
 
 const TooltipTable: React.FC = props => {
@@ -229,3 +276,9 @@ const InfoIcon: React.FC<{ title: string }> = props => (
         {props.children}
     </svg>
 );
+
+const ButtonLink = styled.button`
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+`;

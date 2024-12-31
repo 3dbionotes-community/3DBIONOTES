@@ -22,6 +22,9 @@ export interface Entity {
     isAntibody: boolean;
     isNanobody: boolean;
     isSybody: boolean;
+    seq_align_begin: number | undefined;
+    seq_align_end: number | undefined;
+    xRef: { xDB: string; xDB_code: string }[] | undefined;
 }
 
 export interface Ligand {
@@ -106,7 +109,6 @@ export interface RefDoc {
     pmID: string;
     title: string;
     authors: string[];
-    abstract?: string;
     journal: string;
     pubDate: string;
     pmidLink?: Url;

@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@3dbionotes/pdbe-molstar@3.1.0-est-2":
-  version "3.1.0-est-2"
-  resolved "https://registry.yarnpkg.com/@3dbionotes/pdbe-molstar/-/pdbe-molstar-3.1.0-est-2.tgz#afa1bed64f01808e08b9a3ae8fc720a52a3a9224"
-  integrity sha512-8b6QHzc/thtp5dufS+VLqUBjuYYuFTG1lGd84g5xAohkjYxcH0sfgH9NFaUxJZS6FkKK4Z00WjbQpLSOigGhgQ==
+"@3dbionotes/pdbe-molstar@3.1.0-est-2-beta.5":
+  version "3.1.0-est-2-beta.5"
+  resolved "https://registry.yarnpkg.com/@3dbionotes/pdbe-molstar/-/pdbe-molstar-3.1.0-est-2-beta.5.tgz#7b9a0c6d6a148bace6f89e6a4d8c0a1dfc2ecafa"
+  integrity sha512-DdskZBdetv7wuBk3EOPT3oCK6/oUApqNzrFSm14/Z3L2jPo9NlKNZ99jiQlrNec7qGikOFaeHPsYDRy0XTzBkA==
   dependencies:
     d3-axis "^3.0.0"
     d3-brush "^3.0.0"
@@ -15,10 +15,10 @@
     lodash "^4.17.21"
     molstar "3.15.0"
 
-"@3dbionotes/protvista-pdb@2.0.1-est-2":
-  version "2.0.1-est-2"
-  resolved "https://registry.yarnpkg.com/@3dbionotes/protvista-pdb/-/protvista-pdb-2.0.1-est-2.tgz#96560a0d82e00739cb16463f4b0ccc1d83779484"
-  integrity sha512-ZwxvPIyA1Mx+HlJOyUWfaDIrDOzLw8+jUhwPCRoEanMKrtzUTN3oSxd/fP/Kup25b78uTxHFtFQuzSE9CcNjDw==
+"@3dbionotes/protvista-pdb@2.0.1-est-2-beta.2":
+  version "2.0.1-est-2-beta.2"
+  resolved "https://registry.yarnpkg.com/@3dbionotes/protvista-pdb/-/protvista-pdb-2.0.1-est-2-beta.2.tgz#83cbb6a6a56c1138de67c9263053ee7b73e48f89"
+  integrity sha512-3qCQWWIf1Rjpz1FEdcKzOi/CjcaZQc0VgPMYgxMpc2qZhuIcFQ8NRYIC4q1Zl5glui0nFM/DjMoTOCH2tXjx+A==
   dependencies:
     lodash-es "^4.17.11"
     protvista-filter "2.0.0"
@@ -2340,6 +2340,11 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
+"@types/file-saver@^2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@types/file-saver/-/file-saver-2.0.7.tgz#8dbb2f24bdc7486c54aa854eb414940bbd056f7d"
+  integrity sha512-dNKVfHd/jk0SkR/exKGj2ggkB45MAkzvWCaqLUUgkyjITkGNzH8H+yUwr+BLJUBjZOe9w8X3wgmXhZDRg1ED6A==
+
 "@types/geojson@*":
   version "7946.0.8"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.8.tgz#30744afdb385e2945e22f3b033f897f76b1f12ca"
@@ -2453,6 +2458,11 @@
   integrity sha512-SXPBMnFVQg1s00dlMCc/jCdvPqdE4mXaMMCeRlxLDmTAEoegHT53xKtkDnzDTOcmMHUfcjyf36/YYZ6SxRdnsw==
   dependencies:
     "@types/unist" "*"
+
+"@types/mime-types@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@types/mime-types/-/mime-types-2.1.4.tgz#93a1933e24fed4fb9e4adc5963a63efcbb3317a2"
+  integrity sha512-lfU4b34HOri+kAY5UheuFMWPDOI+OPceBSHZKp69gEyTL/mmJ4cnU6Y/rlme3UL3GyOn6Y42hyIEw0/q8sWx5w==
 
 "@types/mime@*":
   version "2.0.3"
@@ -4140,9 +4150,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001164:
-  version "1.0.30001581"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001581.tgz"
-  integrity sha512-whlTkwhqV2tUmP3oYhtNfaWGYHDdS3JYFQBKXxcUR9qqPWsRhFHhoISO2Xnl/g0xyKzht9mI1LZpiNWfMzHixQ==
+  version "1.0.30001690"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001690.tgz"
+  integrity sha512-5ExiE3qQN6oF8Clf8ifIDcMRCRE/dMGcETG/XGMD8/XiXm6HXQgQTh1yZYLXXpSOsEUlJm1Xr7kGULZTuGtP/w==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -6426,6 +6436,11 @@ file-loader@6.1.1:
   dependencies:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
+
+file-saver@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.5.tgz#d61cfe2ce059f414d899e9dd6d4107ee25670c38"
+  integrity sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==
 
 file-selector@^0.2.2:
   version "0.2.4"

@@ -1,4 +1,4 @@
-class CreatePdbData < ActiveRecord::Migration
+class CreatePdbData < ActiveRecord::Migration[7.1]
   def change
     create_table :pdb_data do |t|
       t.string :pdbId

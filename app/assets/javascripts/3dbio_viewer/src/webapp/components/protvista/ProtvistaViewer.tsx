@@ -11,11 +11,14 @@ import { GeneViewer } from "../gene-viewer/GeneViewer";
 import { PdbInfo } from "../../../domain/entities/PdbInfo";
 import { getSelectedChain } from "../viewer-selector/ViewerSelector";
 import { useAppContext } from "../AppContext";
-import { getBlockTracks } from "./Protvista.helpers";
+import { ProtvistaAction, getBlockTracks } from "./Protvista.helpers";
+import { NMRDialog } from "../nmr/NMRDialog";
+import { useBooleanState } from "../../hooks/use-boolean";
 import { Maybe } from "../../../utils/ts-utils";
 import i18n from "../../utils/i18n";
 import "./protvista-pdb.css";
 import "./ProtvistaViewer.css";
+import { BasicNMRFragmentTarget } from "../../../domain/entities/Protein";
 
 export interface ProtvistaViewerProps {
     pdb: Pdb;
@@ -35,6 +38,11 @@ const trackComponentMapping: (
 
 export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
     const { pdb, selection, blocks, pdbInfo, setBlockVisibility, setSelection } = props;
+
+    const [nmrTarget, setNMRTarget] = React.useState<BasicNMRFragmentTarget>();
+    const [openNMRDialog, { enable: showNMRDialog, disable: closeNMRDialog }] = useBooleanState(
+        false
+    );
 
     const protein = pdb.protein;
 
@@ -74,8 +82,10 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
             proteinName: protein?.name,
             ligandsAndSmallMoleculesCount,
             resolution: _.first(pdb.emdbs)?.emv?.stats?.resolutionMedian,
-            chain: pdb.chainId,
-            chainWithProtein: `${pdb.chainId}${protein?.name ? " - " + protein.name : ""}`,
+            chain: `${pdb.structAsymId} [auth ${pdb.chainId}]`,
+            chainWithProtein: `${pdb.structAsymId} [auth ${pdb.chainId}] ${
+                protein?.name ? " - " + protein.name : ""
+            }`,
             uniprotId:
                 protein &&
                 getProteinEntityLinks(protein, "uniprot")
@@ -84,6 +94,20 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
             genePhrase: geneName ? geneName + (geneBankEntry ?? "") : "",
         }),
         [pdb, geneName, geneBankEntry, ligandsAndSmallMoleculesCount, protein]
+    );
+
+    const action = React.useCallback(
+        (protvistaAction: ProtvistaAction) => {
+            if (protvistaAction.type === "showDialog" && protein) {
+                showNMRDialog();
+                setNMRTarget({
+                    start: protvistaAction.start,
+                    end: protvistaAction.end,
+                    uniprotId: protein.id,
+                });
+            }
+        },
+        [protein, setNMRTarget, showNMRDialog]
     );
 
     const renderBlocks = React.useMemo(
@@ -97,21 +121,34 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
                     selection={selection}
                     setSelection={setSelection}
                     setVisible={setBlockVisible}
+                    protvistaAction={action}
                 />
             )),
-        [namespace, pdb, selection, blocks, setBlockVisible, setSelection]
+        [namespace, pdb, selection, blocks, setBlockVisible, setSelection, action]
     );
 
-    return <div style={styles.container}>{renderBlocks}</div>;
+    return (
+        <div style={styles.container}>
+            {renderBlocks}
+            {nmrTarget && (
+                <NMRDialog
+                    basicTarget={nmrTarget}
+                    open={openNMRDialog}
+                    closeDialog={closeNMRDialog}
+                />
+            )}
+        </div>
+    );
 };
 
 interface ProtvistaBlockProps extends Omit<BlockComponentProps, "setVisible"> {
     namespace: BlockProps["namespace"];
     setVisible: (block: BlockDef) => (visible: boolean) => void;
+    protvistaAction?: (action: ProtvistaAction) => void;
 }
 
 const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
-    const { pdb, selection, setSelection, block, namespace, setVisible } = props;
+    const { pdb, selection, setSelection, block, namespace, setVisible, protvistaAction } = props;
     const { compositionRoot } = useAppContext();
     const CustomComponent = block.component;
 
@@ -147,7 +184,12 @@ const ProtvistaBlock: React.FC<ProtvistaBlockProps> = React.memo(props => {
                     setSelection={setSelection}
                 />
             ) : (
-                <ProtvistaPdb pdb={pdb} block={block} setVisible={setVisible(block)} />
+                <ProtvistaPdb
+                    pdb={pdb}
+                    block={block}
+                    setVisible={setVisible(block)}
+                    onAction={protvistaAction}
+                />
             )}
 
             {block.tracks.map((trackDef, idx) => {

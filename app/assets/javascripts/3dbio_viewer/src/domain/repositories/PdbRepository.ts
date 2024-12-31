@@ -12,4 +12,5 @@ export interface PdbOptions {
     proteinId: Maybe<ProteinId>;
     pdbId: PdbId;
     chainId: ChainId;
+    structAsymId: string;
 }

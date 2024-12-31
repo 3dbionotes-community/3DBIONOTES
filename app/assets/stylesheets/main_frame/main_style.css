@@ -633,7 +633,7 @@ div#controls{
 }
 
 /* Send feedback partial */
-#zammad-feedback-form {
+/*#zammad-feedback-form {
   -webkit-appearance: button;
   margin: 0;
   font-size: 15px;
@@ -735,4 +735,4 @@ div#controls{
   margin-bottom: 0;
   font-weight: 500;
   line-height: 1.2;
-}
+}*/

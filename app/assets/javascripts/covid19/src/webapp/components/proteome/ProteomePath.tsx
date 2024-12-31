@@ -20,7 +20,7 @@ export const ProteomePath: React.FC<ProteomePathProps> = React.memo(props => {
 
     const triggerSearch = React.useCallback(() => {
         setSearch(
-            details && details.gen === "Nucleoprotein" ? `${details.gen} ${name}` : `"${name}"`
+            details && details.gen === "Nucleoprotein" ? `${details.gen} ${name}` : `${name}`
         );
         setProteomeSelected(true);
         toggleProteome();

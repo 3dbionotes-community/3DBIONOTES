@@ -1,8 +1,0 @@
-[submodule "app/assets/javascripts/annotations_viewer/myProtVista"]
-	path = app/assets/javascripts/annotations_viewer/myProtVista
-	url = https://github.com/3dbionotes-community/myProtVista.git
-branch = develop
-[submodule "app/assets/javascripts/annotations_viewer/extendProtVista"]
-	path = app/assets/javascripts/annotations_viewer/extendProtVista
-	url = https://github.com/3dbionotes-community/extendProtVista.git
-branch = develop

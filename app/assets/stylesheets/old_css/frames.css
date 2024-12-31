@@ -1114,34 +1114,28 @@ div.blockContent #treeTools {
 
 a.btn {
   border:1px solid #07437a !important;
-  background-image: linear-gradient(top, rgb(82,141,204) 0%, rgb(7,73,135) 97%) !important;
-  background-image: -o-linear-gradient(top, rgb(82,141,204) 0%, rgb(7,73,135) 97%) !important;
-  background-image: -moz-linear-gradient(top, rgb(82,141,204) 0%, rgb(7,73,135) 97%) !important;
-  background-image: -webkit-linear-gradient(top, rgb(82,141,204) 0%, rgb(7,73,135) 97%) !important;
-  background-image: -ms-linear-gradient(top, rgb(82,141,204) 0%, rgb(7,73,135) 97%) !important;
+  background-image: -webkit-linear-gradient(to bottom, rgb(82,141,204) 0%, rgb(7,73,135) 97%) !important;
+  background-image: -moz-linear-gradient(to bottom, rgb(82,141,204) 0%, rgb(7,73,135) 97%) !important;
+  background-image: -o-linear-gradient(to bottom, rgb(82,141,204) 0%, rgb(7,73,135) 97%) !important;
+  background-image: linear-gradient(to bottom, rgb(82,141,204) 0%, rgb(7,73,135) 97%) !important;
 
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    color-stop(0, rgb(82,141,204)),
-    color-stop(0.97, rgb(7,73,135))
+  background-image: -webkit-linear-gradient(
+    to bottom,
+    rgb(82,141,204) 0%,
+    rgb(7,73,135) 97%
   ) !important;
 }
 
 a.btn:hover {
-  background-image: linear-gradient(top,         rgb(90,144,199) 0%, rgb(87,145,199) 97%);
-  background-image: -o-linear-gradient(top,      rgb(90,144,199) 0%, rgb(87,145,199) 97%);
-  background-image: -moz-linear-gradient(top,    rgb(90,144,199) 0%, rgb(87,145,199) 97%);
-  background-image: -webkit-linear-gradient(top, rgb(90,144,199) 0%, rgb(87,145,199) 97%);
-  background-image: -ms-linear-gradient(top,     rgb(90,144,199) 0%, rgb(87,145,199) 97%);
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    color-stop(0.04, rgb(90,144,199)),
-    color-stop(0.25, rgb(106,172,222)),
-    color-stop(0.5, rgb(87,145,199))
+  background-image: -webkit-linear-gradient(to bottom, rgb(90,144,199) 0%, rgb(87,145,199) 97%);
+  background-image: -moz-linear-gradient(to bottom, rgb(90,144,199) 0%, rgb(87,145,199) 97%);
+  background-image: -o-linear-gradient(to bottom, rgb(90,144,199) 0%, rgb(87,145,199) 97%);
+  background-image: linear-gradient(to bottom, rgb(90,144,199) 0%, rgb(87,145,199) 97%);
+  background-image: -webkit-linear-gradient(
+    to bottom,
+    rgb(90,144,199) 4%,
+    rgb(106,172,222) 25%,
+    rgb(87,145,199) 50%
   );
 }
 

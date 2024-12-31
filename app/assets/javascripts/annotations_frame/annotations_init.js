@@ -1,6 +1,5 @@
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 
 var $j = jQuery.noConflict();
 var instance;
