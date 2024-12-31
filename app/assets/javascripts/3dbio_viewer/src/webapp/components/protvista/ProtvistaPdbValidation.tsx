@@ -13,7 +13,7 @@ declare global {
 
 export const ProtvistaPdbValidation: React.FC<ProtvistaPdbProps> = React.memo(props => {
     const stats = _.first(props.pdb.emdbs)?.emv?.stats;
-    const _ref = useGrid(); /*temporal hidden*/
+    /* const _ref = useGrid(); /* temporal hidden */
 
     return (
         <>
