@@ -61,8 +61,9 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const {
         loading,
         title,
+        setLoader,
         updateLoaderStatus,
-        updateOnResolve: updateLoader,
+        updateOnResolve,
         loaders,
         resetLoaders,
     } = useMultipleLoaders<LoaderKey>(loadersInitialState);
@@ -76,7 +77,17 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     const uploadData = getUploadData(externalData);
 
-    const { pdbInfoLoader, setLigands } = usePdbInfo(selection, uploadData);
+    const canTakeAWhile = React.useCallback(
+        () =>
+            setLoader("pdbLoader", {
+                status: "loading",
+                message: i18n.t("Loading PDB Data...\nThis can take several minutes to load."),
+                priority: 10,
+            }),
+        [setLoader]
+    );
+
+    const { pdbInfoLoader, setLigands } = usePdbInfo(selection, uploadData, canTakeAWhile);
     const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfoLoader);
     const pdbInfo = pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined;
 
@@ -116,14 +127,25 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const pdbId = React.useMemo(() => getMainItem(selection, "pdb"), [selection]);
     const prevPdbId = React.useRef(pdbId);
 
+    const chainId = selection.chainId;
+    const prevChainId = React.useRef(chainId);
+
     React.useEffect(() => {
-        if (pdbId && pdbId !== prevPdbId.current)
-            resetLoaders(loadersInitialState);
+        if (pdbId && pdbId !== prevPdbId.current) resetLoaders(loadersInitialState);
     }, [pdbId, prevPdbId, resetLoaders]);
+
+    React.useEffect(() => {
+        if (chainId && chainId !== prevChainId.current)
+            setLoader("pdbLoader", loadersInitialState.pdbLoader);
+    }, [chainId, pdbId, prevPdbId, resetLoaders, setLoader]);
 
     React.useEffect(() => {
         prevPdbId.current = pdbId;
     }, [pdbId]);
+
+    React.useEffect(() => {
+        prevChainId.current = chainId;
+    }, [chainId]);
 
     React.useEffect(() => {
         const critical = criticalLoaders.find(loader => loader.status === "error");
@@ -154,7 +176,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             onSelectionChange={setSelection}
                             onLigandsLoaded={setLigands}
                             proteinNetwork={proteinNetwork}
-                            updateLoader={updateLoader}
+                            updateLoader={updateOnResolve}
                             loaderBusy={loading}
                         />
                     </div>
@@ -175,7 +197,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             pdbLoader={pdbLoader}
                             setPdbLoader={setPdbLoader}
                             toolbarExpanded={toolbarExpanded}
-                            updateLoader={updateLoader}
+                            updateLoader={updateOnResolve}
                         />
                     </div>
                 </ResizableBox>
@@ -193,8 +215,8 @@ function getUploadData(externalData: ExternalData) {
     return externalData.type === "uploadData"
         ? externalData.data
         : externalData.type === "network"
-            ? externalData.data.uploadData
-            : undefined;
+        ? externalData.data.uploadData
+        : undefined;
 }
 
 function useResizableBox() {

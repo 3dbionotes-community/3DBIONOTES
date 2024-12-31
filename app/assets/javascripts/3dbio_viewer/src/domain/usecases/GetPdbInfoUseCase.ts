@@ -6,7 +6,7 @@ import { PdbInfoRepository } from "../repositories/PdbInfoRepository";
 export class GetPdbInfoUseCase {
     constructor(private pdbInfoRepository: PdbInfoRepository) {}
 
-    execute(pdbId: PdbId): FutureData<PdbInfo> {
-        return this.pdbInfoRepository.get(pdbId);
+    execute(pdbId: PdbId, canTakeAWhile: () => void): FutureData<PdbInfo> {
+        return this.pdbInfoRepository.get(pdbId, canTakeAWhile);
     }
 }

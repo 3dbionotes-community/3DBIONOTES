@@ -12,7 +12,9 @@ import { Maybe } from "../../utils/ts-utils";
 import i18n from "../../domain/utils/i18n";
 
 export class BionotesPdbInfoRepository implements PdbInfoRepository {
-    get(pdbId: PdbId): FutureData<PdbInfo> {
+    firstInit: Record<PdbId, boolean> = {};
+
+    get(pdbId: PdbId, canTakeAWhile: () => void): FutureData<PdbInfo> {
         const proteinMappingUrl = `${routes.bionotes}/api/mappings/PDB/Uniprot/${pdbId}`;
         const fallbackProteinMappingUrl = `${routes.ebi}/pdbe/api/mappings/uniprot/${pdbId}`;
         const polymerCoverage = `${routes.ebi}/pdbe/api/pdb/entry/polymer_coverage/${pdbId}/`;
@@ -53,62 +55,82 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
             emdbMapping: emdbMapping$,
         };
 
-        return Future.joinObj(data$).flatMap(data => {
-            const { uniprotMapping, fallbackProteinMapping, emdbMapping, molecules } = data;
+        return Future.joinObj(data$)
+            .flatMap(data => {
+                const { uniprotMapping, fallbackProteinMapping, emdbMapping, molecules } = data;
 
-            const hasProteinRes = uniprotMapping || fallbackProteinMapping;
+                const hasProteinRes = uniprotMapping || fallbackProteinMapping;
 
-            if (!hasProteinRes) console.debug(`Uniprot mapping not found for ${pdbId}`);
+                if (!hasProteinRes) console.debug(`Uniprot mapping not found for ${pdbId}`);
 
-            const chains = molecules
-                .flatMap(({ chains }) => chains)
-                .map(chain => ({
-                    structAsymId: chain.struct_asym_id,
-                    chainId: chain.chain_id,
+                const chains = molecules
+                    .flatMap(({ chains }) => chains)
+                    .map(chain => ({
+                        structAsymId: chain.struct_asym_id,
+                        chainId: chain.chain_id,
+                    }));
+
+                const proteinsMappingChains =
+                    (hasProteinRes &&
+                        ((uniprotMapping &&
+                            this.bionotesProteinMapping(pdbId, uniprotMapping, chains)) ||
+                            (fallbackProteinMapping &&
+                                this.ebiProteinMapping(pdbId, fallbackProteinMapping, chains)))) ||
+                    chains;
+
+                const emdbs = getEmdbsFromMapping(emdbMapping, pdbId).map(emdbId => ({
+                    id: emdbId,
                 }));
 
-            const proteinsMappingChains =
-                (hasProteinRes &&
-                    ((uniprotMapping &&
-                        this.bionotesProteinMapping(pdbId, uniprotMapping, chains)) ||
-                        (fallbackProteinMapping &&
-                            this.ebiProteinMapping(pdbId, fallbackProteinMapping, chains)))) ||
-                chains;
+                const proteinsObj =
+                    (uniprotMapping && uniprotMapping[pdbId.toLowerCase()]) ??
+                    (fallbackProteinMapping &&
+                        fallbackProteinMapping[pdbId.toLowerCase()]?.UniProt);
 
-            const emdbs = getEmdbsFromMapping(emdbMapping, pdbId).map(emdbId => ({ id: emdbId }));
+                const proteinChunks = proteinsObj ? _(proteinsObj).keys().chunk(4).value() : [];
 
-            const proteinsObj =
-                (uniprotMapping && uniprotMapping[pdbId.toLowerCase()]) ??
-                (fallbackProteinMapping && fallbackProteinMapping[pdbId.toLowerCase()]?.UniProt);
+                if (proteinChunks.length > 1 && !this.firstInit[pdbId])
+                    setTimeout(canTakeAWhile, 2000);
 
-            const proteins = proteinsObj && _(proteinsObj).keys().join(",");
-            const proteinsInfoUrl = `${routes.bionotes}/api/lengths/UniprotMulti/${proteins ?? ""}`;
-            const proteinsInfo$ = proteinsObj
-                ? getFromUrl<ProteinsInfo>(proteinsInfoUrl)
-                : Future.success<ProteinsInfo, Error>({});
+                const proteinInfoRequests = proteinChunks.map(chunk => {
+                    const proteinsChunk = chunk.join(",");
+                    const proteinsInfoUrlChunk = `${routes.bionotes}/api/lengths/UniprotMulti/${proteinsChunk}`;
 
-            console.debug("Chains with proteins: ", proteinsMappingChains);
-
-            return proteinsInfo$.map(proteinsInfo => {
-                const proteins = _(proteinsInfo)
-                    .toPairs()
-                    .map(
-                        ([proteinId, proteinInfo]): Protein => {
-                            const [_length, name, gen, organism] = proteinInfo;
-                            return { id: proteinId, name, gen, organism };
-                        }
-                    )
-                    .value();
-
-                return buildPdbInfo({
-                    id: pdbId,
-                    emdbs: emdbs,
-                    ligands: [],
-                    proteins,
-                    chainsMappings: proteinsMappingChains,
+                    return getFromUrl<ProteinsInfo>(proteinsInfoUrlChunk);
                 });
+
+                const proteinsInfo$: FutureData<ProteinsInfo> = Future.parallel(
+                    proteinInfoRequests,
+                    {
+                        maxConcurrency: 2,
+                    }
+                ).map(responses => Object.assign({}, ...responses));
+
+                console.debug("Chains with proteins: ", proteinsMappingChains);
+
+                return proteinsInfo$.map(proteinsInfo => {
+                    const proteins = _(proteinsInfo)
+                        .toPairs()
+                        .map(
+                            ([proteinId, proteinInfo]): Protein => {
+                                const [_length, name, gen, organism] = proteinInfo;
+                                return { id: proteinId, name, gen, organism };
+                            }
+                        )
+                        .value();
+
+                    return buildPdbInfo({
+                        id: pdbId,
+                        emdbs: emdbs,
+                        ligands: [],
+                        proteins,
+                        chainsMappings: proteinsMappingChains,
+                    });
+                });
+            })
+            .tap(() => {
+                this.firstInit[pdbId] = true;
             });
-        });
     }
 
     private bionotesProteinMapping(

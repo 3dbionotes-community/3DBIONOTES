@@ -15,7 +15,15 @@ export const LoaderMask: React.FC<LoaderProps> = React.memo(props => {
         <Backdrop className={classes.backdrop} open={open}>
             <Container>
                 <CircularProgress />
-                {title && <p className={classes.title}>{title}</p>}
+                {title &&
+                    title.split("\n").map((s, idx) => (
+                        <p
+                            key={idx}
+                            className={idx === 0 ? classes.title : classes.subsequentParagraphs}
+                        >
+                            {s}
+                        </p>
+                    ))}
             </Container>
         </Backdrop>
     );
@@ -31,6 +39,12 @@ const useStyles = makeStyles(theme => ({
         fontWeight: "bold",
         fontSize: "1em",
         marginTop: "1em",
+        marginBottom: "0.5em",
+    },
+    subsequentParagraphs: {
+        fontWeight: "bold",
+        fontSize: "1em",
+        margin: "0 0 0.5em",
     },
 }));
 

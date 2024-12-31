@@ -37,18 +37,22 @@ export function useStateFromFuture<Value>(
     return loader;
 }
 
-export function usePdbInfo(selection: Selection, uploadData: Maybe<UploadData>) {
+export function usePdbInfo(
+    selection: Selection,
+    uploadData: Maybe<UploadData>,
+    canTakeAWhile: () => void
+) {
     const { compositionRoot } = useAppContext();
     const mainPdbId = getMainItem(selection, "pdb");
     const [ligands, setLigands] = React.useState<Ligand[]>();
 
     const getPdbInfo = React.useCallback((): Maybe<FutureData<PdbInfo>> => {
         if (mainPdbId) {
-            return compositionRoot.getPdbInfo.execute(mainPdbId);
+            return compositionRoot.getPdbInfo.execute(mainPdbId, canTakeAWhile);
         } else if (uploadData) {
             return Future.success(getPdbInfoFromUploadData(uploadData));
         }
-    }, [mainPdbId, compositionRoot, uploadData]);
+    }, [mainPdbId, compositionRoot, uploadData, canTakeAWhile]);
 
     const pdbInfoLoader = useStateFromFuture(getPdbInfo);
 
@@ -73,10 +77,7 @@ export function useMultipleLoaders<K extends string>(initialState: MultipleLoade
         []
     );
 
-    const resetLoaders = React.useCallback(
-        (state: MultipleLoader<K>) => setLoaders(state),
-        []
-    );
+    const resetLoaders = React.useCallback((state: MultipleLoader<K>) => setLoaders(state), []);
 
     const updateLoaderStatus = React.useCallback(
         (key: K, status: Loader["status"], newMessage?: string) =>
@@ -89,13 +90,13 @@ export function useMultipleLoaders<K extends string>(initialState: MultipleLoade
 
                 return message
                     ? {
-                        ...loaders,
-                        [key]: {
-                            message,
-                            status,
-                            priority,
-                        },
-                    }
+                          ...loaders,
+                          [key]: {
+                              message,
+                              status,
+                              priority,
+                          },
+                      }
                     : loaders;
             }),
         []
