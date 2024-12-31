@@ -82,7 +82,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 labelTooltip: subtrack.description,
                 shape: subtrack.shape || "rectangle",
                 source: subtrack.source,
-                isBlast: subtrack.isBlast ?? true,
+                isBlast: subtrack.isBlast,
                 locations: slots.map(fragments => ({ fragments })),
                 subtype: subtrack.subtype,
                 overlapping: false,

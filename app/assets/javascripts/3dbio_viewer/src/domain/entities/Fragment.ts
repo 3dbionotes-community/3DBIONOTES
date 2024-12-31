@@ -52,7 +52,7 @@ export function getFragmentToolsLink(options: {
 }
 
 export function isBlastFragment(subtrack: Subtrack, fragment: FragmentU): boolean {
-    return subtrack.isBlast !== false && fragment.end - fragment.start >= 3;
+    return Boolean(subtrack.isBlast) && fragment.end - fragment.start >= 3;
 }
 
 export function getBlastUrl(protein: string, subtrack: Subtrack, fragment: FragmentU): string {
