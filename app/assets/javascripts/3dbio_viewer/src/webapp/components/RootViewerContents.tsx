@@ -35,9 +35,9 @@ export type LoaderKey = keyof typeof loaderMessages;
 const loaderMessages = {
     readingSequence: [i18n.t("Reading sequence..."), 0],
     getRelatedPdbModel: [i18n.t("Getting PDB related model..."), 0],
-    initPlugin: [i18n.t("Starting 3D Viewer..."), 1], //already loading PDB
+    pdbLoader: [i18n.t("Loading PDB Data..."), 1],
     updateVisualPlugin: [i18n.t("Updating selection..."), 2],
-    pdbLoader: [i18n.t("Loading PDB Data..."), 3],
+    initPlugin: [i18n.t("Starting 3D Viewer..."), 3], //already loading PDB
     uploadedModel: [i18n.t("Loading uploaded model..."), 2],
     loadModel: [i18n.t("Loading model..."), 4], //PDB, EMDB, PDB-REDO, CSTF, CERES
     exportAnnotations: [i18n.t("Retrieving all annotations..."), 5],
@@ -114,12 +114,16 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     }, [uploadDataToken, networkToken, compositionRoot]);
 
     const pdbId = React.useMemo(() => getMainItem(selection, "pdb"), [selection]);
+    const prevPdbId = React.useRef(pdbId);
 
     React.useEffect(() => {
-        const init = loaders.initPlugin;
-        if (init.status !== "loaded") return;
-        resetLoaders({ ...loadersInitialState, initPlugin: init });
-    }, [pdbId, resetLoaders, loaders.initPlugin]);
+        if (pdbId && pdbId !== prevPdbId.current)
+            resetLoaders(loadersInitialState);
+    }, [pdbId, prevPdbId, resetLoaders]);
+
+    React.useEffect(() => {
+        prevPdbId.current = pdbId;
+    }, [pdbId]);
 
     React.useEffect(() => {
         const critical = criticalLoaders.find(loader => loader.status === "error");
@@ -189,8 +193,8 @@ function getUploadData(externalData: ExternalData) {
     return externalData.type === "uploadData"
         ? externalData.data
         : externalData.type === "network"
-        ? externalData.data.uploadData
-        : undefined;
+            ? externalData.data.uploadData
+            : undefined;
 }
 
 function useResizableBox() {
