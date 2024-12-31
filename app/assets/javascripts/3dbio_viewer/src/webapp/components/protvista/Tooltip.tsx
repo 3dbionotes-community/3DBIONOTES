@@ -35,7 +35,6 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
     const isStructureCoverage = subtrack.accession === trackDefinitions.structureCoverage.id;
     const isNMR = subtrack.accession === "nmr";
 
-    // Intervals inside intervals (Spanish): https://chat.openai.com/share/eb5816e2-d5c5-455c-bf6e-9e08e8850470
     const isCovered =
         isStructureCoverage ||
         alignment.some(
@@ -50,38 +49,34 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
         interval => fragment.start > interval.end || fragment.end < interval.start
     );
 
+    const coverage = isNotCovered
+        ? {
+            value: i18n.t("Not in Structure Coverage"),
+            className: "error",
+            title: i18n.t(
+                "This annotation is part of the full UniProt sequence but lies outside the region captured in the 3D structure (PDB) for this specific chain. It may correspond to a flexible, disordered, or missing part of the protein that was not resolved during structure determination."
+            ),
+        }
+        : isPartiallyCovered && !isCovered
+            ? {
+                value: i18n.t("Partially in Structure Coverage"),
+                className: "warning",
+                title: i18n.t(
+                    "This annotation is partially covered by the 3D structure (PDB) for this specific chain. The structure may capture part of this region, but additional functional or structural details extend beyond the resolved area."
+                ),
+            }
+            : undefined;
+
     return (
         <TooltipTable>
-            {isNotCovered && (
+            {coverage && (
                 <TooltipRow
-                    title={i18n.t("Aligment")}
-                    value={i18n.t("Not on PDB")}
-                    className="error"
-                    object={{ title: i18n.t("") }} // More descriptive text to be changed by JR
+                    title={i18n.t("Alignment")}
+                    value={coverage.value}
+                    className={coverage.className}
+                    object={{ title: coverage.title }}
                 >
-                    {info => (
-                        <InfoOutlinedIcon
-                            fontSize="small"
-                            component={InfoIcon}
-                            title={info.title}
-                        />
-                    )}
-                </TooltipRow>
-            )}
-            {isPartiallyCovered && !isCovered && (
-                <TooltipRow
-                    title={i18n.t("Aligment")}
-                    value={i18n.t("Partially on PDB")}
-                    className="warning"
-                    object={{ title: i18n.t("") }} // More descriptive text to be changed by JR
-                >
-                    {info => (
-                        <InfoOutlinedIcon
-                            fontSize="small"
-                            component={InfoIcon}
-                            title={info.title}
-                        />
-                    )}
+                    {info => <InfoOutlinedIcon fontSize="small" titleAccess={info.title} />}
                 </TooltipRow>
             )}
             <TooltipRow title={i18n.t("Feature ID")} value={fragment.id} className="description" />
@@ -102,17 +97,6 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
         </TooltipTable>
     );
 });
-
-const styles = {
-    tooltip: {
-        borderColor: "black",
-        display: "inline-flex",
-        width: 10,
-        borderWidth: 1,
-        height: 10,
-        marginRight: 5,
-    },
-};
 
 const NMR: React.FC<{ start: number; end: number; nmrSource: SourceEntity }> = props => {
     const { nmrSource } = props;
@@ -282,3 +266,14 @@ const ButtonLink = styled.button`
     padding: 0;
     font-weight: normal;
 `;
+
+const styles = {
+    tooltip: {
+        borderColor: "black",
+        display: "inline-flex",
+        width: 10,
+        borderWidth: 1,
+        height: 10,
+        marginRight: 5,
+    },
+};
