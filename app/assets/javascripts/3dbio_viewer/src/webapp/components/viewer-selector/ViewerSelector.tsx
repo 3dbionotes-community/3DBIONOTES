@@ -219,7 +219,7 @@ function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
         selected: selectedLigand?.shortId,
         deselectable: true,
         expanded,
-        disabled: _.isEmpty(items)
+        disabled: _.isEmpty(items),
     };
 }
 

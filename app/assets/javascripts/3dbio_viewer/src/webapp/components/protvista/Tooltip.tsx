@@ -51,21 +51,21 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
 
     const coverage = isNotCovered
         ? {
-            value: i18n.t("Not in Structure Coverage"),
-            className: "error",
-            title: i18n.t(
-                "This annotation is part of the full UniProt sequence but lies outside the region captured in the 3D structure (PDB) for this specific chain. It may correspond to a flexible, disordered, or missing part of the protein that was not resolved during structure determination."
-            ),
-        }
+              value: i18n.t("Not in Structure Coverage"),
+              className: "error",
+              title: i18n.t(
+                  "This annotation is part of the full UniProt sequence but lies outside the region captured in the 3D structure (PDB) for this specific chain. It may correspond to a flexible, disordered, or missing part of the protein that was not resolved during structure determination."
+              ),
+          }
         : isPartiallyCovered && !isCovered
-            ? {
-                value: i18n.t("Partially in Structure Coverage"),
-                className: "warning",
-                title: i18n.t(
-                    "This annotation is partially covered by the 3D structure (PDB) for this specific chain. The structure may capture part of this region, but additional functional or structural details extend beyond the resolved area."
-                ),
-            }
-            : undefined;
+        ? {
+              value: i18n.t("Partially in Structure Coverage"),
+              className: "warning",
+              title: i18n.t(
+                  "This annotation is partially covered by the 3D structure (PDB) for this specific chain. The structure may capture part of this region, but additional functional or structural details extend beyond the resolved area."
+              ),
+          }
+        : undefined;
 
     return (
         <TooltipTable>

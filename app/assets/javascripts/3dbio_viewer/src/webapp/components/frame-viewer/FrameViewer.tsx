@@ -122,9 +122,9 @@ const StyledWrapperAccordion = styled.div<StyledWrapperAccordionProps>`
     & .MuiCollapse-hidden {
         visibility: inherit;
         ${props =>
-        props.titleHeight
-            ? `height: ${props.titleHeight}px !important; min-height: ${props.titleHeight}px !important;`
-            : ""}
+            props.titleHeight
+                ? `height: ${props.titleHeight}px !important; min-height: ${props.titleHeight}px !important;`
+                : ""}
     }
 `;
 
@@ -217,9 +217,9 @@ const StyledAccordionSummary = styled(AccordionSummary)`
             all: unset;
             background-color: #ffffff;
             border: 1px solid #d6d6d6;
-            border-radius: .5em;
+            border-radius: 0.5em;
             color: #6d6d6d;
-            padding: .125em .5em;
+            padding: 0.125em 0.5em;
             margin-left: 1em;
             min-width: 14px;
             text-align: center;
