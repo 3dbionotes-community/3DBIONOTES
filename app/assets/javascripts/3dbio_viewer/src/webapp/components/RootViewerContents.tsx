@@ -77,17 +77,20 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     const uploadData = getUploadData(externalData);
 
-    const canTakeAWhile = React.useCallback(
-        () =>
+    const onProcessDelay = React.useCallback(
+        (reason: string) =>
             setLoader("pdbLoader", {
                 status: "loading",
-                message: i18n.t("Loading PDB Data...\nThis can take several minutes to load."),
+                message: i18n.t(
+                    "Loading PDB Data...\n{{reason}}\nThis can take several minutes to load.",
+                    { reason: reason }
+                ),
                 priority: 10,
             }),
         [setLoader]
     );
 
-    const { pdbInfoLoader, setLigands } = usePdbInfo(selection, uploadData, canTakeAWhile);
+    const { pdbInfoLoader, setLigands } = usePdbInfo(selection, uploadData, onProcessDelay);
     const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfoLoader);
     const pdbInfo = pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined;
 

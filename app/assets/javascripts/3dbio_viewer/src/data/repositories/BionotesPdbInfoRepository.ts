@@ -13,7 +13,7 @@ import i18n from "../../domain/utils/i18n";
 import { getSessionCache, setSessionCache } from "../session-cache";
 
 export class BionotesPdbInfoRepository implements PdbInfoRepository {
-    get(pdbId: PdbId, canTakeAWhile: () => void): FutureData<PdbInfo> {
+    get(pdbId: PdbId, onProcessDelay: (reason: string) => void): FutureData<PdbInfo> {
         const proteinMappingUrl = `${routes.bionotes}/api/mappings/PDB/Uniprot/${pdbId}`;
         const fallbackProteinMappingUrl = `${routes.ebi}/pdbe/api/mappings/uniprot/${pdbId}`;
         const polymerCoverage = `${routes.ebi}/pdbe/api/pdb/entry/polymer_coverage/${pdbId}/`;
@@ -54,81 +54,81 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
             emdbMapping: emdbMapping$,
         };
 
-        return Future.joinObj(data$)
-            .flatMap(data => {
-                const { uniprotMapping, fallbackProteinMapping, emdbMapping, molecules } = data;
+        return Future.joinObj(data$).flatMap(data => {
+            const { uniprotMapping, fallbackProteinMapping, emdbMapping, molecules } = data;
 
-                const hasProteinRes = uniprotMapping || fallbackProteinMapping;
+            const hasProteinRes = uniprotMapping || fallbackProteinMapping;
 
-                if (!hasProteinRes) console.debug(`Uniprot mapping not found for ${pdbId}`);
+            if (!hasProteinRes) console.debug(`Uniprot mapping not found for ${pdbId}`);
 
-                const chains = molecules
-                    .flatMap(({ chains }) => chains)
-                    .map(chain => ({
-                        structAsymId: chain.struct_asym_id,
-                        chainId: chain.chain_id,
-                    }));
-
-                const proteinsMappingChains =
-                    (hasProteinRes &&
-                        ((uniprotMapping &&
-                            this.bionotesProteinMapping(pdbId, uniprotMapping, chains)) ||
-                            (fallbackProteinMapping &&
-                                this.ebiProteinMapping(pdbId, fallbackProteinMapping, chains)))) ||
-                    chains;
-
-                const emdbs = getEmdbsFromMapping(emdbMapping, pdbId).map(emdbId => ({
-                    id: emdbId,
+            const chains = molecules
+                .flatMap(({ chains }) => chains)
+                .map(chain => ({
+                    structAsymId: chain.struct_asym_id,
+                    chainId: chain.chain_id,
                 }));
 
-                const proteinsObj =
-                    (uniprotMapping && uniprotMapping[pdbId.toLowerCase()]) ??
-                    (fallbackProteinMapping &&
-                        fallbackProteinMapping[pdbId.toLowerCase()]?.UniProt);
+            const proteinsMappingChains =
+                (hasProteinRes &&
+                    ((uniprotMapping &&
+                        this.bionotesProteinMapping(pdbId, uniprotMapping, chains)) ||
+                        (fallbackProteinMapping &&
+                            this.ebiProteinMapping(pdbId, fallbackProteinMapping, chains)))) ||
+                chains;
 
-                const proteinChunks = proteinsObj
-                    ? _(proteinsObj).keys().sort().chunk(4).value()
-                    : [];
+            const emdbs = getEmdbsFromMapping(emdbMapping, pdbId).map(emdbId => ({
+                id: emdbId,
+            }));
 
-                if (proteinChunks.length > 1 && !getSessionCache<{ proteinsInfo: boolean }>(pdbId)?.proteinsInfo)
-                    setTimeout(canTakeAWhile, 2000);
+            const proteinsObj =
+                (uniprotMapping && uniprotMapping[pdbId.toLowerCase()]) ??
+                (fallbackProteinMapping && fallbackProteinMapping[pdbId.toLowerCase()]?.UniProt);
 
-                const proteinInfoRequests = proteinChunks.map(chunk => {
-                    const proteinsChunk = chunk.join(",");
-                    const proteinsInfoUrlChunk = `${routes.bionotes}/api/lengths/UniprotMulti/${proteinsChunk}`;
+            const proteinChunks = proteinsObj ? _(proteinsObj).keys().sort().chunk(4).value() : [];
 
-                    return getFromUrl<ProteinsInfo>(proteinsInfoUrlChunk);
-                });
+            if (
+                proteinChunks.length > 1 &&
+                !getSessionCache<{ proteinsInfo: boolean }>(pdbId)?.proteinsInfo
+            )
+                setTimeout(onProcessDelay("Fetching information for multiple UniProt IDs"), 2000);
 
-                const proteinsInfo$: FutureData<ProteinsInfo> = Future.parallel(
-                    proteinInfoRequests,
-                    { maxConcurrency: 2, }
-                ).map(responses => Object.assign({}, ...responses)).tap(() => {
+            const proteinInfoRequests = proteinChunks.map(chunk => {
+                const proteinsChunk = chunk.join(",");
+                const proteinsInfoUrlChunk = `${routes.bionotes}/api/lengths/UniprotMulti/${proteinsChunk}`;
+
+                return getFromUrl<ProteinsInfo>(proteinsInfoUrlChunk);
+            });
+
+            const proteinsInfo$: FutureData<ProteinsInfo> = Future.parallel(proteinInfoRequests, {
+                maxConcurrency: 2,
+            })
+                .map(responses => Object.assign({}, ...responses))
+                .tap(() => {
                     setSessionCache(pdbId, { proteinsInfo: true });
                 });
 
-                console.debug("Chains with proteins: ", proteinsMappingChains);
+            console.debug("Chains with proteins: ", proteinsMappingChains);
 
-                return proteinsInfo$.map(proteinsInfo => {
-                    const proteins = _(proteinsInfo)
-                        .toPairs()
-                        .map(
-                            ([proteinId, proteinInfo]): Protein => {
-                                const [_length, name, gen, organism] = proteinInfo;
-                                return { id: proteinId, name, gen, organism };
-                            }
-                        )
-                        .value();
+            return proteinsInfo$.map(proteinsInfo => {
+                const proteins = _(proteinsInfo)
+                    .toPairs()
+                    .map(
+                        ([proteinId, proteinInfo]): Protein => {
+                            const [_length, name, gen, organism] = proteinInfo;
+                            return { id: proteinId, name, gen, organism };
+                        }
+                    )
+                    .value();
 
-                    return buildPdbInfo({
-                        id: pdbId,
-                        emdbs: emdbs,
-                        ligands: [],
-                        proteins,
-                        chainsMappings: proteinsMappingChains,
-                    });
+                return buildPdbInfo({
+                    id: pdbId,
+                    emdbs: emdbs,
+                    ligands: [],
+                    proteins,
+                    chainsMappings: proteinsMappingChains,
                 });
             });
+        });
     }
 
     private bionotesProteinMapping(

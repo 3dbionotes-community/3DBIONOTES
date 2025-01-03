@@ -40,7 +40,7 @@ export function useStateFromFuture<Value>(
 export function usePdbInfo(
     selection: Selection,
     uploadData: Maybe<UploadData>,
-    canTakeAWhile: () => void
+    onProcessDelay: (reason: string) => void
 ) {
     const { compositionRoot } = useAppContext();
     const mainPdbId = getMainItem(selection, "pdb");
@@ -48,11 +48,11 @@ export function usePdbInfo(
 
     const getPdbInfo = React.useCallback((): Maybe<FutureData<PdbInfo>> => {
         if (mainPdbId) {
-            return compositionRoot.getPdbInfo.execute(mainPdbId, canTakeAWhile);
+            return compositionRoot.getPdbInfo.execute(mainPdbId, onProcessDelay);
         } else if (uploadData) {
             return Future.success(getPdbInfoFromUploadData(uploadData));
         }
-    }, [mainPdbId, compositionRoot, uploadData, canTakeAWhile]);
+    }, [mainPdbId, compositionRoot, uploadData, onProcessDelay]);
 
     const pdbInfoLoader = useStateFromFuture(getPdbInfo);
 
