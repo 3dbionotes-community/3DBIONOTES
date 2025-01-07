@@ -13,7 +13,11 @@ export interface ProtvistaGroupedProps {}
 export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(() => {
     const viewerState = useViewerState({ type: "selector" });
     const { selection } = viewerState;
-    const { pdbInfoLoader } = usePdbInfo(selection, undefined, () => {});
+    const { pdbInfoLoader } = usePdbInfo({
+        selection,
+        uploadData: undefined,
+        onProcessDelay: () => {},
+    });
     const [loader, _setLoader] = usePdbLoader(selection, pdbInfoLoader);
     const block = testblock;
 

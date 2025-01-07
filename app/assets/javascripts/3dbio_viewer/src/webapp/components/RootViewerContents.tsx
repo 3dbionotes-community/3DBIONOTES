@@ -90,7 +90,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
         [setLoader]
     );
 
-    const { pdbInfoLoader, setLigands } = usePdbInfo(selection, uploadData, onProcessDelay);
+    const { pdbInfoLoader, setLigands } = usePdbInfo({ selection, uploadData, onProcessDelay });
     const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfoLoader);
     const pdbInfo = pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined;
 

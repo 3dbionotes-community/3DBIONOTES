@@ -37,11 +37,12 @@ export function useStateFromFuture<Value>(
     return loader;
 }
 
-export function usePdbInfo(
-    selection: Selection,
-    uploadData: Maybe<UploadData>,
-    onProcessDelay: (reason: string) => void
-) {
+export function usePdbInfo(args: {
+    selection: Selection;
+    uploadData: Maybe<UploadData>;
+    onProcessDelay: (reason: string) => void;
+}) {
+    const { selection, uploadData, onProcessDelay } = args;
     const { compositionRoot } = useAppContext();
     const mainPdbId = getMainItem(selection, "pdb");
     const [ligands, setLigands] = React.useState<Ligand[]>();
