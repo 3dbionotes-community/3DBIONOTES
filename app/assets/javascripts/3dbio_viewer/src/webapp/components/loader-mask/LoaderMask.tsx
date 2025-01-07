@@ -4,26 +4,24 @@ import styled from "styled-components";
 
 interface LoaderProps {
     open: boolean;
-    title?: string;
+    title: string;
 }
 
 export const LoaderMask: React.FC<LoaderProps> = React.memo(props => {
     const classes = useStyles();
     const { open, title } = props;
 
+    const pClassName = (idx: number) => (idx === 0 ? classes.title : classes.subsequentParagraphs);
+
     return (
         <Backdrop className={classes.backdrop} open={open}>
             <Container>
                 <CircularProgress />
-                {title &&
-                    title.split("\n").map((s, idx) => (
-                        <p
-                            key={idx}
-                            className={idx === 0 ? classes.title : classes.subsequentParagraphs}
-                        >
-                            {s}
-                        </p>
-                    ))}
+                {title.split("\n").map((line, idx) => (
+                    <p key={idx} className={pClassName(idx)}>
+                        {line}
+                    </p>
+                ))}
             </Container>
         </Backdrop>
     );
