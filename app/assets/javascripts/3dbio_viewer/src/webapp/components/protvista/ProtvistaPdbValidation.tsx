@@ -141,7 +141,7 @@ const SVGBar: React.FC<SVGBarProps> = React.memo(({ stats }) => {
     );
 });
 
-function useGrid() {
+function _useGrid() {
     const svgRef = React.useRef<SVGSVGElement>(null);
 
     React.useEffect(() => {

@@ -254,13 +254,6 @@ const ReferencesRows: React.FC<{ title?: string; sources: Reference[] }> = props
     );
 };
 
-const InfoIcon: React.FC<{ title: string }> = props => (
-    <svg {...props}>
-        <title>{props.title}</title>
-        {props.children}
-    </svg>
-);
-
 const ButtonLink = styled.button`
     margin: 0;
     padding: 0;
