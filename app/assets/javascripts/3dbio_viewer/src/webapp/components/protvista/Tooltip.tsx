@@ -45,8 +45,11 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
     const notCovered = isNotCovered(alignment, fragment);
 
     const coverage = [
-        { condition: notCovered, details: coverageDetails.notCovered },
-        { condition: partiallyCovered && !covered, details: coverageDetails.partiallyCovered },
+        { condition: notCovered, details: getCoverageDetails(i18n).notCovered },
+        {
+            condition: partiallyCovered && !covered,
+            details: getCoverageDetails(i18n).partiallyCovered,
+        },
     ].find(item => item.condition)?.details;
 
     return (
@@ -246,7 +249,9 @@ const ButtonLink = styled.button`
     font-weight: normal;
 `;
 
-const coverageDetails = {
+type I18N = typeof i18n;
+
+const getCoverageDetails = (i18n: I18N) => ({
     notCovered: {
         value: i18n.t("Not in Structure Coverage"),
         className: "error",
@@ -261,7 +266,7 @@ const coverageDetails = {
             "This annotation is partially covered by the 3D structure (PDB) for this specific chain. The structure may capture part of this region, but additional functional or structural details extend beyond the resolved area."
         ),
     },
-};
+});
 
 const styles = {
     tooltip: {
