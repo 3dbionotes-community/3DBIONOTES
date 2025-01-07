@@ -208,23 +208,9 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
         const proteins = mapping && mapping[pdbId.toLowerCase()];
         if (!proteins || Array.isArray(proteins)) return chains;
         else {
-            const proteinsMappingChains = _.map(proteins, (proteinChains, protein) =>
-                proteinChains.map(chainId => {
-                    const structAsymId = chains.find(c => c.chainId === chainId)?.structAsymId;
-                    if (!structAsymId) throw new Error("Mismatch between chains and proteins");
+            const proteinsMappingChains = _.flatMap(proteins, getBioChainsByProtein(chains));
 
-                    return {
-                        structAsymId: structAsymId,
-                        chainId: chainId,
-                        protein: protein,
-                    };
-                })
-            ).flat();
-
-            return _([...proteinsMappingChains, ...chains])
-                .uniqBy("structAsymId")
-                .sortBy("structAsymId")
-                .value();
+            return mergeAndSortChains(proteinsMappingChains, chains);
         }
     }
 
@@ -234,20 +220,43 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
         chains: ChainIds[]
     ): MappingChain[] {
         const proteins = mapping && mapping[pdbId.toLowerCase()]?.UniProt;
+        const proteinsMappingChains = _.flatMap(proteins, getEbiChainsByProtein);
 
-        const proteinsMappingChains = _.map(proteins, (uniprotRes, protein) =>
-            uniprotRes.mappings.map(({ struct_asym_id, chain_id }) => ({
-                structAsymId: struct_asym_id,
-                chainId: chain_id,
-                protein: protein,
-            }))
-        ).flat();
-
-        return _([...proteinsMappingChains, ...chains])
-            .uniqBy("structAsymId")
-            .sortBy("structAsymId")
-            .value();
+        return mergeAndSortChains(proteinsMappingChains, chains);
     }
+}
+
+function mergeAndSortChains(
+    proteinsMappingChains: MappingChain[],
+    chains: ChainIds[]
+): MappingChain[] {
+    return _(proteinsMappingChains)
+        .concat(chains)
+        .uniqBy(({ structAsymId }) => structAsymId)
+        .sortBy(({ structAsymId }) => structAsymId)
+        .value();
+}
+
+function getBioChainsByProtein(chains: ChainIds[]) {
+    return (proteinChains: string[], protein: string): MappingChain[] =>
+        proteinChains.map(chainId => {
+            const structAsymId = chains.find(c => c.chainId === chainId)?.structAsymId;
+            if (!structAsymId) throw new Error("Mismatch between chains and proteins");
+
+            return {
+                structAsymId: structAsymId,
+                chainId: chainId,
+                protein: protein,
+            };
+        });
+}
+
+function getEbiChainsByProtein(uniprotRes: EbiProteinMapping, protein: string): MappingChain[] {
+    return uniprotRes.mappings.map(({ struct_asym_id, chain_id }) => ({
+        structAsymId: struct_asym_id,
+        chainId: chain_id,
+        protein: protein,
+    }));
 }
 
 type ErrorType = "serviceUnavailable" | "noData";
@@ -270,10 +279,14 @@ function buildError<T>(type: ErrorType, err: RequestError): FutureData<T> {
     }
 }
 
-export type UniprotMapping = Record<
-    ProteinId,
-    { mappings: { chain_id: ChainId; struct_asym_id: ChainId }[] }
->;
+type EbiProteinMapping = {
+    mappings: {
+        chain_id: ChainId;
+        struct_asym_id: ChainId;
+    }[];
+};
+
+export type UniprotMapping = Record<ProteinId, EbiProteinMapping>;
 
 type Uniprot = {
     UniProt: UniprotMapping;
