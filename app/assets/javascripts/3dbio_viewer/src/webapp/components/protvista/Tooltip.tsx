@@ -10,8 +10,8 @@ import { Subtrack } from "../../../domain/entities/Track";
 import { renderJoin } from "../../utils/react";
 import { Link } from "../Link";
 import { Protein } from "../../../domain/entities/Protein";
-import { trackDefinitions } from "../../../domain/definitions/tracks";
 import { getSource, Source as SourceEntity } from "../../../domain/entities/Source";
+import { isCovered, isPartiallyCovered, isNotCovered } from "../../../domain/entities/Alignment";
 import i18n from "../../utils/i18n";
 
 interface TooltipProps {
@@ -32,40 +32,16 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
     //no react.memo as is finally rendered to string
     const nmrSource = getSource(sources, "NMR");
     const score = alignmentScore ? alignmentScore + " %" : undefined; // aligmentScore is never being set on code
-    const isStructureCoverage = subtrack.accession === trackDefinitions.structureCoverage.id;
     const isNMR = subtrack.accession === "nmr";
 
-    const isCovered =
-        isStructureCoverage ||
-        alignment.some(
-            interval => fragment.start >= interval.start && fragment.end <= interval.end
-        );
+    const covered = isCovered(alignment, fragment);
+    const partiallyCovered = isPartiallyCovered(alignment, fragment);
+    const notCovered = isNotCovered(alignment, fragment);
 
-    const isPartiallyCovered = alignment.some(
-        interval => fragment.start <= interval.end && fragment.end >= interval.start
-    );
-
-    const isNotCovered = alignment.every(
-        interval => fragment.start > interval.end || fragment.end < interval.start
-    );
-
-    const coverage = isNotCovered
-        ? {
-              value: i18n.t("Not in Structure Coverage"),
-              className: "error",
-              title: i18n.t(
-                  "This annotation is part of the full UniProt sequence but lies outside the region captured in the 3D structure (PDB) for this specific chain. It may correspond to a flexible, disordered, or missing part of the protein that was not resolved during structure determination."
-              ),
-          }
-        : isPartiallyCovered && !isCovered
-        ? {
-              value: i18n.t("Partially in Structure Coverage"),
-              className: "warning",
-              title: i18n.t(
-                  "This annotation is partially covered by the 3D structure (PDB) for this specific chain. The structure may capture part of this region, but additional functional or structural details extend beyond the resolved area."
-              ),
-          }
-        : undefined;
+    const coverage = [
+        { condition: notCovered, details: coverageDetails.notCovered },
+        { condition: partiallyCovered && !covered, details: coverageDetails.partiallyCovered },
+    ].find(item => item.condition)?.details;
 
     return (
         <TooltipTable>
@@ -79,11 +55,14 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
                     {info => <InfoOutlinedIcon fontSize="small" titleAccess={info.title} />}
                 </TooltipRow>
             )}
+
             <TooltipRow title={i18n.t("Feature ID")} value={fragment.id} className="description" />
+
             <TooltipRow
                 title={isNMR ? i18n.t("Target") : i18n.t("Description")}
                 value={description}
             />
+
             <TooltipRow title={i18n.t("Alignment score")} value={score} className="description" />
             <TooltipRow title={i18n.t("Conflict")} value={getConflict(pdb.sequence, fragment)} />
             <Source subtrack={subtrack} />
@@ -91,6 +70,7 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
             <CrossReferences fragment={fragment} />
             {pdb.protein && <Tools protein={pdb.protein} subtrack={subtrack} fragment={fragment} />}
             <Legend fragment={fragment} />
+
             {isNMR && nmrSource && (
                 <NMR start={fragment.start} end={fragment.end} nmrSource={nmrSource} />
             )}
@@ -259,6 +239,23 @@ const ButtonLink = styled.button`
     padding: 0;
     font-weight: normal;
 `;
+
+const coverageDetails = {
+    notCovered: {
+        value: i18n.t("Not in Structure Coverage"),
+        className: "error",
+        title: i18n.t(
+            "This annotation is part of the full UniProt sequence but lies outside the region captured in the 3D structure (PDB) for this specific chain. It may correspond to a flexible, disordered, or missing part of the protein that was not resolved during structure determination."
+        ),
+    },
+    partiallyCovered: {
+        value: i18n.t("Partially in Structure Coverage"),
+        className: "warning",
+        title: i18n.t(
+            "This annotation is partially covered by the 3D structure (PDB) for this specific chain. The structure may capture part of this region, but additional functional or structural details extend beyond the resolved area."
+        ),
+    },
+};
 
 const styles = {
     tooltip: {
