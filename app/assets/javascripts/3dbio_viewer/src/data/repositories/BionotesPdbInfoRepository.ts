@@ -3,17 +3,19 @@ import { FutureData } from "../../domain/entities/FutureData";
 import { PdbId } from "../../domain/entities/Pdb";
 import { buildPdbInfo, PdbInfo } from "../../domain/entities/PdbInfo";
 import { ChainId, Protein, ProteinId } from "../../domain/entities/Protein";
-import { PdbInfoRepository } from "../../domain/repositories/PdbInfoRepository";
+import { GetPdbInfoArgs, PdbInfoRepository } from "../../domain/repositories/PdbInfoRepository";
 import { routes } from "../../routes";
 import { Future } from "../../utils/future";
 import { RequestError, getFromUrl } from "../request-utils";
 import { emdbsFromPdbUrl, getEmdbsFromMapping, PdbEmdbMapping } from "./mapping";
 import { Maybe } from "../../utils/ts-utils";
-import i18n from "../../domain/utils/i18n";
 import { getSessionCache, setSessionCache } from "../session-cache";
+import i18n from "../../domain/utils/i18n";
 
 export class BionotesPdbInfoRepository implements PdbInfoRepository {
-    get(pdbId: PdbId, onProcessDelay: (reason: string) => void): FutureData<PdbInfo> {
+    get(agrs: GetPdbInfoArgs): FutureData<PdbInfo> {
+        const { pdbId, onProcessDelay } = agrs;
+
         const proteinMappingUrl = `${routes.bionotes}/api/mappings/PDB/Uniprot/${pdbId}`;
         const fallbackProteinMappingUrl = `${routes.ebi}/pdbe/api/mappings/uniprot/${pdbId}`;
         const polymerCoverage = `${routes.ebi}/pdbe/api/pdb/entry/polymer_coverage/${pdbId}/`;

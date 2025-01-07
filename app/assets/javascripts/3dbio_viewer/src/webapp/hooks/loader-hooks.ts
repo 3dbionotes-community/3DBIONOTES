@@ -49,7 +49,7 @@ export function usePdbInfo(args: {
 
     const getPdbInfo = React.useCallback((): Maybe<FutureData<PdbInfo>> => {
         if (mainPdbId) {
-            return compositionRoot.getPdbInfo.execute(mainPdbId, onProcessDelay);
+            return compositionRoot.getPdbInfo.execute({ pdbId: mainPdbId, onProcessDelay });
         } else if (uploadData) {
             return Future.success(getPdbInfoFromUploadData(uploadData));
         }
