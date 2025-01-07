@@ -4,14 +4,20 @@ import styled from "styled-components";
 import { InfoOutlined as InfoOutlinedIcon } from "@material-ui/icons";
 import { Reference } from "../../../domain/entities/Evidence";
 import { Fragment, getFragmentToolsLink } from "../../../domain/entities/Fragment";
-import { Fragment2, Interval, getConflict } from "../../../domain/entities/Fragment2";
+import {
+    Fragment2,
+    Interval,
+    getConflict,
+    isCovered,
+    isNotCovered,
+    isPartiallyCovered,
+} from "../../../domain/entities/Fragment2";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { Subtrack } from "../../../domain/entities/Track";
 import { renderJoin } from "../../utils/react";
 import { Link } from "../Link";
 import { Protein } from "../../../domain/entities/Protein";
 import { getSource, Source as SourceEntity } from "../../../domain/entities/Source";
-import { isCovered, isPartiallyCovered, isNotCovered } from "../../../domain/entities/Alignment";
 import i18n from "../../utils/i18n";
 
 interface TooltipProps {
