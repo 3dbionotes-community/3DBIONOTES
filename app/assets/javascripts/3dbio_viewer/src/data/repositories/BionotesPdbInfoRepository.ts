@@ -98,7 +98,7 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
         proteinsInfo$: FutureData<ProteinsInfo>;
         pdbId: string;
         emdbs: { id: string }[];
-        proteinsMappingChains: ChainIds[];
+        proteinsMappingChains: ChainIdMapping[];
     }): FutureData<PdbInfo> {
         const { proteinsInfo$, pdbId, emdbs, proteinsMappingChains } = args;
 
@@ -155,7 +155,7 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
     private getProteinChainsMappings(args: {
         uniprotMapping: Maybe<BioUniprotFromPdbMapping>;
         pdbId: string;
-        chains: ChainIds[];
+        chains: ChainIdMapping[];
         fallbackProteinMapping: Maybe<EbiUniprotFromPdbMapping>;
     }): MappingChain[] {
         const { uniprotMapping, pdbId, chains, fallbackProteinMapping } = args;
@@ -203,7 +203,7 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
     private bionotesProteinMapping(
         pdbId: string,
         mapping: BioUniprotFromPdbMapping,
-        chains: ChainIds[]
+        chains: ChainIdMapping[]
     ): MappingChain[] {
         const proteins = mapping && mapping[pdbId.toLowerCase()];
         if (!proteins || Array.isArray(proteins)) return chains;
@@ -217,7 +217,7 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
     private ebiProteinMapping(
         pdbId: string,
         mapping: EbiUniprotFromPdbMapping,
-        chains: ChainIds[]
+        chains: ChainIdMapping[]
     ): MappingChain[] {
         const proteins = mapping && mapping[pdbId.toLowerCase()]?.UniProt;
         const proteinsMappingChains = _.flatMap(proteins, getEbiChainsByProtein);
@@ -228,7 +228,7 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
 
 function mergeAndSortChains(
     proteinsMappingChains: MappingChain[],
-    chains: ChainIds[]
+    chains: ChainIdMapping[]
 ): MappingChain[] {
     return _(proteinsMappingChains)
         .concat(chains)
@@ -237,7 +237,7 @@ function mergeAndSortChains(
         .value();
 }
 
-function getBioChainsByProtein(chains: ChainIds[]) {
+function getBioChainsByProtein(chains: ChainIdMapping[]) {
     return (proteinChains: string[], protein: string): MappingChain[] =>
         proteinChains.map(chainId => {
             const structAsymId = chains.find(c => c.chainId === chainId)?.structAsymId;
@@ -307,12 +307,12 @@ type ProteinsInfo = Record<PdbId, ProteinInfo>;
 // [length, name, uniprotCode, organism]
 type ProteinInfo = [number, string, string, string];
 
-type ChainIds = {
+type ChainIdMapping = {
     structAsymId: string;
     chainId: string;
 };
 
-export type MappingChain = ChainIds & { protein?: string };
+export type MappingChain = ChainIdMapping & { protein?: string };
 
 type Data = {
     uniprotMapping: Maybe<BioUniprotFromPdbMapping>;

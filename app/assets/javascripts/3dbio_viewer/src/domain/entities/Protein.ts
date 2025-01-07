@@ -38,6 +38,7 @@ export interface NMRFragment {
 export type ProteinId = string;
 
 export type ChainId = string;
+export type StructAsymId = string;
 
 type ProteinEntity = "uniprot" | "geneBank";
 

@@ -77,8 +77,8 @@ export function getPdbInfoFromUploadData(uploadData: UploadData): PdbInfo {
                 id: chain.chain,
                 name: chain.name,
                 shortName: chain.name,
-                chainId: chain.chain, //THIS MUST BE AKNOLWEDGED
-                structAsymId: chain.chain, //THIS MUST BE AKNOLWEDGED
+                chainId: chain.chain, // TODO: THIS MUST BE ACKNOWLEDGED
+                structAsymId: chain.chain, // TODO: THIS MUST BE ACKNOWLEDGED
                 protein: {
                     id: chain.uniprot,
                     name: chain.uniprotTitle,

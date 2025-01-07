@@ -41,7 +41,7 @@ export function Dropdown<Id extends string = string>(
         leftIcon,
         expanded,
         deselectable,
-        disabled,
+        disabled = false,
     } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
