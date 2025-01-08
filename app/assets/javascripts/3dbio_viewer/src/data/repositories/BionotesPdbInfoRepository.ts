@@ -9,7 +9,7 @@ import { Future } from "../../utils/future";
 import { RequestError, getFromUrl } from "../request-utils";
 import { emdbsFromPdbUrl, getEmdbsFromMapping, PdbEmdbMapping } from "./mapping";
 import { Maybe } from "../../utils/ts-utils";
-import { getSessionCache, setSessionCache } from "../session-cache";
+import { getStorageCache, setStorageCache } from "../storage-cache";
 import i18n from "../../domain/utils/i18n";
 
 export class BionotesPdbInfoRepository implements PdbInfoRepository {
@@ -74,7 +74,7 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
         const { proteinNames, pdbId, onProcessDelay } = args;
 
         const proteinChunks = _.chunk(proteinNames, 4);
-        const isFirstFetch = !getSessionCache<{ proteinsInfo: boolean }>(pdbId)?.proteinsInfo;
+        const isFirstFetch = !getStorageCache<{ proteinsInfo: boolean }>(pdbId)?.proteinsInfo;
 
         if (proteinChunks.length > 1 && isFirstFetch)
             setTimeout(onProcessDelay("Fetching information for multiple UniProt IDs"), 2000);
@@ -132,7 +132,7 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
         })
             .map(responses => Object.assign({}, ...responses))
             .tap(() => {
-                setSessionCache(pdbId, { proteinsInfo: true });
+                setStorageCache(pdbId, { proteinsInfo: true });
             });
     }
 

@@ -6,7 +6,7 @@ import { parseFromCodec } from "../utils/codec";
 import { Future } from "../utils/future";
 import { axiosRequest, defaultBuilder, RequestResult } from "../utils/future-axios";
 import { Maybe } from "../utils/ts-utils";
-import { getSessionCache, hashUrl, setSessionCache } from "./session-cache";
+import { getStorageCache, hashUrl, setStorageCache } from "./storage-cache";
 
 export type RequestError = { message: string };
 
@@ -90,12 +90,12 @@ export function request<Data>(
         : "";
 
     const cacheKey = hashUrl(request.url + params);
-    const cachedResult = getSessionCache<RequestResult<Data>>(cacheKey);
+    const cachedResult = getStorageCache<RequestResult<Data>>(cacheKey);
     if (cachedResult) return Future.success(cachedResult);
 
     return axiosRequest<RequestError, Data>(defaultBuilder, request).map(result => {
         if (result.response.status >= 200 && result.response.status < 300) {
-            setSessionCache(cacheKey, result);
+            setStorageCache(cacheKey, result);
         }
         return result;
     });
