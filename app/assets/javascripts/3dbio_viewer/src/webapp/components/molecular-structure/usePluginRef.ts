@@ -75,7 +75,7 @@ export function usePluginRef(options: Options) {
         [setSelection, newSelection]
     );
 
-    const getLigandViewState = React.useMemo(() => () => newSelection.ligandId !== undefined, [
+    const getLigandViewState = React.useCallback(() => newSelection.ligandId !== undefined, [
         newSelection.ligandId,
     ]);
 
@@ -333,22 +333,27 @@ export function usePluginRef(options: Options) {
                 newSelection.chainId &&
                 !newSelection.ligandId
             ) {
+                // When chain has changed
                 plugin.visual.updateChain(newSelection.chainId);
             } else if (pluginAlreadyRendered) {
-                //When ligand has changed
+                //When something except the chain has changed
                 molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
+                // Update the plugin
                 await updateLoader("updateVisualPlugin", plugin.visual.update(initParams))
                     .then(() => {
+                        // Check if EMDB is already loaded
                         const items = getCurrentItems(plugin);
                         if (items.some(item => item.type === "emdb" && item.id === emdbId))
                             return Promise.resolve();
 
+                        // Load EMDB if not loaded, for example when exiting ligandView
                         return emdbId && newSelection.ligandId === undefined
                             ? loadEmdbModel(emdbId, plugin)
                             : Promise.resolve();
                     })
                     .then(() => setVisibilityAfterLoad(initParams, plugin));
                 if (newSelection.ligandId && newSelection.chainId) {
+                    // When ligand has changed
                     console.debug("Updating ligand in molstar sequence", newSelection);
                     plugin.visual.updateLigand({
                         ligandId: newSelection.ligandId,
@@ -356,7 +361,7 @@ export function usePluginRef(options: Options) {
                     });
                 }
                 if (newSelection.ligandId === undefined && newSelection.type === "free") {
-                    // Out of the ligand view or pdb is different for example
+                    // Exiting ligand view or pdb is different for example
                     await updateLoader(
                         "updateVisualPlugin",
                         applySelectionChangesToPlugin(
@@ -367,8 +372,11 @@ export function usePluginRef(options: Options) {
                         )
                     );
                 }
-            } else if (!mainPdb && emdbId) getPdbFromEmdb(emdbId);
-            else {
+            } else if (!mainPdb && emdbId) {
+                // Resolve PDB from EMDB
+                getPdbFromEmdb(emdbId);
+            } else {
+                // Load Molstar for the first time
                 subscribeSequenceComplete();
                 subscribeLoadComplete();
                 const pdbId = initParams.moleculeId;
