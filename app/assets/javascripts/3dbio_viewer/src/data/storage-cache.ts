@@ -40,17 +40,17 @@ export function setStorageCache<Data>(key: string, value: Data): void {
     localStorage.setItem(key, JSON.stringify(cacheEntry));
 }
 
+// To be called on index, when page loads
 export function storageGarbageCollector(): void {
-    const now = Date.now();
     const keysToRemove = Array.from({ length: localStorage.length })
         .map((_, i) => localStorage.key(i))
         .filter((key): key is string => key !== null)
         .filter(key => {
-            const cached = localStorage.getItem(key);
-            if (!cached) return false;
+            const item = localStorage.getItem(key);
+            if (!item) return false;
             try {
-                const { timestamp } = JSON.parse(cached) as { timestamp: number };
-                return now - timestamp > cacheExpiresMs;
+                const { timestamp } = JSON.parse(item) as { timestamp: number };
+                return Date.now() - timestamp > cacheExpiresMs;
             } catch (error) {
                 console.error("Error parsing storage cache during garbage collection:", error);
                 return true;
