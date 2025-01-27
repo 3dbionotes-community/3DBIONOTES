@@ -52,6 +52,12 @@ import { getPublicationsCodec, EntryPublications, getPublications } from "../../
 import { getNMRSubtrack } from "./tracks/nmr";
 import { NMRTarget, nmrTargetCodec } from "../../NMRTarget";
 
+declare global {
+    interface Window {
+        uniprotId?: string;
+    }
+}
+
 interface Data {
     uniprot: UniprotResponse;
     pdbEmdbsEmValidations: PdbEmdbEmValidations[];
@@ -188,6 +194,8 @@ export class ApiPdbRepository implements PdbRepository {
         );
 
         const pdbTitle = data.pdbSummary && _.first(data.pdbSummary[pdbId])?.title;
+
+        window.uniprotId = proteinId;
 
         return {
             id: pdbId,
