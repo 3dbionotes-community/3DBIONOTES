@@ -37,7 +37,15 @@ export function setStorageCache<Data>(key: string, value: Data): void {
         timestamp: Date.now(),
     };
 
-    localStorage.setItem(key, JSON.stringify(cacheEntry));
+    try {
+        localStorage.setItem(key, JSON.stringify(cacheEntry));
+    } catch (e) {
+        if (e instanceof DOMException && e.name === "QuotaExceededError") {
+            console.warn("LocalStorage quota exceeded. Consider clearing old cache entries.");
+        } else {
+            throw e;
+        }
+    }
 }
 
 // To be called on index, when page loads
