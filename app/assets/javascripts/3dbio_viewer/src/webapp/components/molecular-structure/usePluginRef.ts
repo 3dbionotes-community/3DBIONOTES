@@ -75,7 +75,7 @@ export function usePluginRef(options: Options) {
         [setSelection, newSelection]
     );
 
-    const getLigandViewState = React.useMemo(() => () => newSelection.ligandId !== undefined, [
+    const getLigandViewState = React.useCallback(() => newSelection.ligandId !== undefined, [
         newSelection.ligandId,
     ]);
 
@@ -116,8 +116,8 @@ export function usePluginRef(options: Options) {
                 );
             }
 
-            function getPdbFromEmdb(emdbId: string) {
-                updateLoader(
+            async function getPdbFromEmdb(emdbId: string) {
+                await updateLoader(
                     loaderKeys.getRelatedPdbModel,
                     new Promise<void>((resolve, reject) => {
                         compositionRoot.getRelatedModels
@@ -135,6 +135,7 @@ export function usePluginRef(options: Options) {
             }
 
             function subscribeLoadComplete() {
+                /* Load complete is dispatched almost in every scenario: render(), update(), load(), which also involves enter/exiting ligand view  */
                 const loadComplete = new Promise<void>((resolve, reject) => {
                     plugin.events.loadComplete.subscribe({
                         next: loaded => {
@@ -143,46 +144,11 @@ export function usePluginRef(options: Options) {
                                 setPluginLoad(new Date());
                                 // On FF, the canvas sometimes shows a black box. Resize the viewport to force a redraw
                                 window.dispatchEvent(new Event("resize"));
-
-                                const currentSelection = prevSelectionRef.current;
-
-                                if (currentSelection) {
-                                    // Not first init
-                                    if (currentSelection.chainId) {
-                                        // Change ligand
-                                        if (currentSelection.ligandId) {
-                                            console.debug("Updating ligand in molstar");
-                                            plugin.visual.updateLigand({
-                                                ligandId: currentSelection.ligandId,
-                                                chainId: currentSelection.chainId,
-                                            });
-                                        } else {
-                                            // Change chain
-                                            console.debug("Updating chain in molstar");
-                                            plugin.visual.updateChain(currentSelection.chainId);
-                                        }
-                                    }
-                                } else {
-                                    if (newSelection.chainId) {
-                                        // Change ligand for first init
-                                        if (newSelection.ligandId) {
-                                            console.debug(
-                                                "Updating ligand in molstar sequence for first init"
-                                            );
-                                            plugin.visual.updateLigand({
-                                                ligandId: newSelection.ligandId,
-                                                chainId: newSelection.chainId,
-                                            });
-                                        } else {
-                                            // Change chain for first init
-                                            console.debug(
-                                                "Updating chain in molstar sequence for first init"
-                                            );
-                                            plugin.visual.updateChain(newSelection.chainId);
-                                        }
-                                    }
-                                }
-
+                                updateSequenceViewAfterLoadComplete(
+                                    prevSelectionRef,
+                                    plugin,
+                                    newSelection
+                                );
                                 resolve();
                             } else reject(loaderErrors.pdbNotLoaded);
                         },
@@ -222,6 +188,7 @@ export function usePluginRef(options: Options) {
                     );
                     return;
                 }
+
                 if (!extension) {
                     loadVoidMolstar(loaderErrors.invalidExtension);
                     await updateLoader(
@@ -230,12 +197,14 @@ export function usePluginRef(options: Options) {
                     );
                     return;
                 }
+
                 const supportedExtension = extension === "ent" ? "pdb" : extension;
                 const customData = {
                     url: `${routes.bionotes}/upload/${uploadDataToken}/structure_file.${supportedExtension}`,
                     format: extension === "cif" ? "mmcif" : "pdb",
                     binary: false,
                 };
+
                 await checkUploadedModelUrl(customData.url)
                     .then(result => {
                         if (result) {
@@ -327,36 +296,38 @@ export function usePluginRef(options: Options) {
                     .catch(err => loadVoidMolstar(err));
             }
 
-            if (
-                chainChanged &&
-                pluginAlreadyRendered &&
-                newSelection.chainId &&
-                !newSelection.ligandId
-            ) {
-                plugin.visual.updateChain(newSelection.chainId);
-            } else if (pluginAlreadyRendered) {
-                //When ligand has changed
-                molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
-                await updateLoader("updateVisualPlugin", plugin.visual.update(initParams))
-                    .then(() => {
-                        const items = getCurrentItems(plugin);
-                        if (items.some(item => item.type === "emdb" && item.id === emdbId))
-                            return Promise.resolve();
+            async function initializePdbeMolstar(element: HTMLDivElement) {
+                subscribeSequenceComplete();
+                subscribeLoadComplete();
+                const pdbId = initParams.moleculeId;
+                if (pdbId && emdbId) await loadWithBothPdbEmdb(pdbId, emdbId, element);
+                else if (pdbId) await loadFromPdb(pdbId, element);
+                else if (newSelection.type === "uploadData") await loadFromUploadData(element);
+                else loadVoidMolstar(loaderErrors.undefinedPdb);
+            }
 
-                        return emdbId && newSelection.ligandId === undefined
-                            ? loadEmdbModel(emdbId, plugin)
-                            : Promise.resolve();
-                    })
+            function loadEmdbIfNotPresent(): Promise<void> {
+                // Check if EMDB is already loaded
+                const items = getCurrentItems(plugin);
+                if (items.some(item => item.type === "emdb" && item.id === emdbId))
+                    return Promise.resolve();
+
+                // Load EMDB if not loaded, for example when exiting ligandView
+                return emdbId && newSelection.ligandId === undefined
+                    ? loadEmdbModel(emdbId, plugin)
+                    : Promise.resolve();
+            }
+
+            async function mainModelChangedOrLigandView() {
+                molstarState.current = MolstarStateActions.fromInitParams(initParams, newSelection);
+
+                // Scenario: entering ligand view, exiting ligand view and realoading pdb and emdb, or pdb has changed.
+                await updateLoader("updateVisualPlugin", plugin.visual.update(initParams))
+                    .then(loadEmdbIfNotPresent)
                     .then(() => setVisibilityAfterLoad(initParams, plugin));
-                if (newSelection.ligandId && newSelection.chainId) {
-                    console.debug("Updating ligand in molstar sequence", newSelection);
-                    plugin.visual.updateLigand({
-                        ligandId: newSelection.ligandId,
-                        chainId: newSelection.chainId,
-                    });
-                }
-                if (newSelection.ligandId === undefined && newSelection.type === "free") {
-                    // Out of the ligand view or pdb is different for example
+
+                // Load extra appended models (if is not ligand view)
+                if (newSelection.ligandId === undefined && newSelection.type === "free")
                     await updateLoader(
                         "updateVisualPlugin",
                         applySelectionChangesToPlugin(
@@ -366,16 +337,21 @@ export function usePluginRef(options: Options) {
                             updateLoader
                         )
                     );
-                }
-            } else if (!mainPdb && emdbId) getPdbFromEmdb(emdbId);
-            else {
-                subscribeSequenceComplete();
-                subscribeLoadComplete();
-                const pdbId = initParams.moleculeId;
-                if (pdbId && emdbId) await loadWithBothPdbEmdb(pdbId, emdbId, element);
-                else if (pdbId) await loadFromPdb(pdbId, element);
-                else if (newSelection.type === "uploadData") await loadFromUploadData(element);
-                else loadVoidMolstar(loaderErrors.undefinedPdb);
+            }
+
+            function updateMolstarSequenceChain(chainId: string) {
+                console.debug("Updating chain in molstar sequence", newSelection);
+                plugin.visual.updateChain(chainId);
+            }
+
+            if (chainChanged && newSelection.chainId && !newSelection.ligandId) {
+                updateMolstarSequenceChain(newSelection.chainId);
+            } else if (pluginAlreadyRendered) {
+                await mainModelChangedOrLigandView();
+            } else if (!mainPdb && emdbId) {
+                await getPdbFromEmdb(emdbId);
+            } else {
+                await initializePdbeMolstar(element);
             }
 
             setPdbePlugin(plugin);
@@ -404,6 +380,43 @@ const colors = {
     black: { r: 0, g: 0, b: 0 },
     white: { r: 255, g: 255, b: 255 },
 };
+
+function updateSequenceViewAfterLoadComplete(
+    prevSelectionRef: React.MutableRefObject<Selection | undefined>,
+    plugin: PDBeMolstarPlugin,
+    newSelection: Selection
+) {
+    const currentSelection = prevSelectionRef.current;
+
+    updateSequenceView({
+        selection: currentSelection ?? newSelection,
+        plugin: plugin,
+        firstInit: !currentSelection,
+    });
+}
+
+function updateSequenceView(args: {
+    selection: Selection;
+    plugin: PDBeMolstarPlugin;
+    firstInit: boolean;
+}) {
+    const { selection, plugin, firstInit } = args;
+
+    const state = firstInit ? "on first init" : "on update";
+
+    if (selection.chainId) {
+        if (selection.ligandId) {
+            console.debug(`Updating ligand in molstar sequence view: ${state}`);
+            plugin.visual.updateLigand({
+                ligandId: selection.ligandId,
+                chainId: selection.chainId,
+            });
+        } else {
+            console.debug(`Updating chain in molstar sequence view: ${state}`);
+            plugin.visual.updateChain(selection.chainId);
+        }
+    }
+}
 
 function getPdbePluginInitParams(
     newSelection: Selection,

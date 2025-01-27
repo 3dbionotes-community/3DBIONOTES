@@ -148,7 +148,11 @@ function searchFor(
                 })
             );
 
-            return { items, total: res.hitCount };
+            const withoutDuplicates = _.uniqBy(items, ({ id }) => id); // Why note: Ebi is returning duplicated entries
+            const hitCountWithoutDuplicates =
+                res.hitCount - (items.length - withoutDuplicates.length);
+
+            return { items: withoutDuplicates, total: hitCountWithoutDuplicates };
         })
         .flatMapError(err => {
             console.error(err);
