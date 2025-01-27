@@ -54,7 +54,7 @@ import { NMRTarget, nmrTargetCodec } from "../../NMRTarget";
 
 declare global {
     interface Window {
-        uniprotId?: string;
+        proteinId?: string;
     }
 }
 
@@ -195,7 +195,7 @@ export class ApiPdbRepository implements PdbRepository {
 
         const pdbTitle = data.pdbSummary && _.first(data.pdbSummary[pdbId])?.title;
 
-        window.uniprotId = proteinId;
+        window.proteinId = proteinId;
 
         return {
             id: pdbId,
