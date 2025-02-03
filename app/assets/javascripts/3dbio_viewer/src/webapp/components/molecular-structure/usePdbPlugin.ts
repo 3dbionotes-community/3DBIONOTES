@@ -67,6 +67,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         onLigandsLoaded,
         updateLoader,
         loaderBusy,
+        proteinId,
     } = options;
     const { proteinNetwork } = options;
     const { compositionRoot } = useAppContext();
@@ -96,6 +97,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         molstarState,
         setPdbePlugin,
         setPluginLoad,
+        proteinId,
     });
 
     debugVariable({ molstarState });

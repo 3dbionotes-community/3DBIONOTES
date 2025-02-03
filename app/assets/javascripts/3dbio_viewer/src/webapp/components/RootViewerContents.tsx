@@ -98,6 +98,8 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const networkToken = selection.type === "network" ? selection.token : undefined;
     const proteinNetwork = externalData.type === "network" ? externalData.data : undefined;
 
+    const proteinId = pdbLoader.type === "loaded" ? pdbLoader.data.protein?.id : undefined;
+
     const criticalLoaders = React.useMemo(
         () => [loaders.uploadedModel, loaders.initPlugin, loaders.getRelatedPdbModel],
         [loaders.uploadedModel, loaders.initPlugin, loaders.getRelatedPdbModel]
@@ -181,6 +183,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             proteinNetwork={proteinNetwork}
                             updateLoader={updateOnResolve}
                             loaderBusy={loading}
+                            proteinId={proteinId}
                         />
                     </div>
                 )}

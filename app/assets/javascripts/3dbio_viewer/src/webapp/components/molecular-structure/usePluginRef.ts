@@ -39,6 +39,7 @@ type Options = {
     molstarState: React.MutableRefObject<MolstarState>;
     setPdbePlugin: React.Dispatch<React.SetStateAction<PDBeMolstarPlugin | undefined>>;
     setPluginLoad: React.Dispatch<React.SetStateAction<Date | undefined>>;
+    proteinId: Maybe<string>;
 };
 
 export function usePluginRef(options: Options) {
@@ -54,6 +55,7 @@ export function usePluginRef(options: Options) {
         extension,
         molstarState,
         setPdbePlugin,
+        proteinId,
     } = options;
 
     // Set chain through molstar
@@ -86,6 +88,10 @@ export function usePluginRef(options: Options) {
     React.useEffect(() => {
         if (pdbePlugin) pdbePlugin.visual.updateDependency.isLigandView(getLigandViewState);
     }, [getLigandViewState, pdbePlugin]);
+
+    React.useEffect(() => {
+        if (pdbePlugin) pdbePlugin.updateState.proteinId(proteinId);
+    }, [proteinId, pdbePlugin]);
 
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {

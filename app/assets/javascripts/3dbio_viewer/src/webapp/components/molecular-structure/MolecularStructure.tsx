@@ -25,6 +25,7 @@ export interface MolecularStructureProps {
     proteinNetwork: Maybe<ProteinNetwork>;
     loaderBusy: boolean;
     updateLoader: <T>(key: LoaderKey, promise: Promise<T>, message?: string) => Promise<T>;
+    proteinId: Maybe<string>;
 }
 
 export const MolecularStructure: React.FC<MolecularStructureProps> = props => {
