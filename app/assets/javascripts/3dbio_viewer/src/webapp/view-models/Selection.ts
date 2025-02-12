@@ -106,7 +106,7 @@ export function getChainId(selection: Selection): Maybe<string> {
 function splitPdbIdb(main: string): Array<Maybe<string>> {
     if (main.includes(mainSeparator)) {
         return main.split(mainSeparator, 2);
-    } else if (main.startsWith("EMD")) {
+    } else if (main.toUpperCase().startsWith("EMD")) {
         return [undefined, main];
     } else {
         return [main, undefined];
@@ -155,6 +155,8 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
         chainId: chainId,
         ligandId: ligandId,
     };
+
+    console.log(selection);
 
     return selection;
 }
