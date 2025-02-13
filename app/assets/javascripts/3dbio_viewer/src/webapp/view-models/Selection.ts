@@ -156,8 +156,6 @@ export function getSelectionFromString(items: Maybe<string>): Selection {
         ligandId: ligandId,
     };
 
-    console.log(selection);
-
     return selection;
 }
 
