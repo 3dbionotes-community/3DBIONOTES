@@ -43,12 +43,13 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
     const covered = isCovered(alignment, fragment);
     const partiallyCovered = isPartiallyCovered(alignment, fragment);
     const notCovered = isNotCovered(alignment, fragment);
+    const coverageDetails = getCoverageDetails();
 
     const coverage = [
-        { condition: notCovered, details: getCoverageDetails(i18n).notCovered },
+        { condition: notCovered, details: coverageDetails.notCovered },
         {
             condition: partiallyCovered && !covered,
-            details: getCoverageDetails(i18n).partiallyCovered,
+            details: coverageDetails.partiallyCovered,
         },
     ].find(item => item.condition)?.details;
 
@@ -249,9 +250,7 @@ const ButtonLink = styled.button`
     font-weight: normal;
 `;
 
-type I18N = typeof i18n;
-
-const getCoverageDetails = (i18n: I18N) => ({
+const getCoverageDetails = () => ({
     notCovered: {
         value: i18n.t("Not in Structure Coverage"),
         className: "error",

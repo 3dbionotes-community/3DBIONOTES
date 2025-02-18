@@ -35,10 +35,12 @@ export class BionotesPdbInfoRepository implements PdbInfoRepository {
 
         const chains = molecules
             .flatMap(({ chains }) => chains)
-            .map(chain => ({
-                structAsymId: chain.struct_asym_id,
-                chainId: chain.chain_id,
-            }));
+            .map(
+                (chain): ChainIdMapping => ({
+                    structAsymId: chain.struct_asym_id,
+                    chainId: chain.chain_id,
+                })
+            );
 
         const proteinsMappingChains = this.getProteinChainsMappings({
             uniprotMapping,
@@ -280,10 +282,10 @@ function buildError<T>(type: ErrorType, err: RequestError): FutureData<T> {
 }
 
 type EbiProteinMapping = {
-    mappings: {
+    mappings: Array<{
         chain_id: ChainId;
         struct_asym_id: ChainId;
-    }[];
+    }>;
 };
 
 export type UniprotMapping = Record<ProteinId, EbiProteinMapping>;
