@@ -27,4 +27,9 @@ export const StyledButton = styled.button`
     .MuiSvgIcon-fontSizeSmall {
         font-size: 1.25em;
     }
+
+    &:disabled {
+        background-color: #59717d;
+        cursor: not-allowed;
+    }
 `;

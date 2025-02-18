@@ -17,6 +17,7 @@ export interface Pdb {
     emdbs: Emdb[];
     protein: Maybe<Protein>;
     chainId: string;
+    structAsymId: string;
     sequence: string;
     length: number;
     // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track#data-array

@@ -1,7 +1,6 @@
 import React from "react";
 import { Backdrop, CircularProgress, makeStyles } from "@material-ui/core";
 import styled from "styled-components";
-import { isDev } from "../../../routes";
 
 interface LoaderProps {
     open: boolean;
