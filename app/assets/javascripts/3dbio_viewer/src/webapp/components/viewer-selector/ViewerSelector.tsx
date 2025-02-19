@@ -24,6 +24,7 @@ import { UploadData } from "../../../domain/entities/UploadData";
 import { Maybe } from "../../../utils/ts-utils";
 import "./ViewerSelector.css";
 import { ebiStyles } from "../ViewerBlock";
+import styled from "styled-components";
 
 interface ViewerSelectorProps {
     pdbInfo: PdbInfo | undefined;
@@ -102,12 +103,13 @@ export const ViewerSelector: React.FC<ViewerSelectorProps> = props => {
                 )}
 
                 <div className={"selectors" + (uploadData ? " invert" : "")}>
-                    <button
+                    <StyledButton
                         onClick={openSearchWithAnalytics}
                         title={i18n.t("Select or append a new model")}
+                        disabled={chainDropdownProps.disabled}
                     >
                         <Search />
-                    </button>
+                    </StyledButton>
                     <span>
                         <Dropdown {...chainDropdownProps} showExpandIcon />
                         <Dropdown {...ligandsDropdownProps} showExpandIcon />
@@ -151,7 +153,7 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
     );
 
     const items: DropdownProps["items"] = React.useMemo(
-        () => pdbInfo?.chains.map(chain => ({ id: chain.chainId, text: chain.name })),
+        () => pdbInfo?.chains.map(chain => ({ id: chain.id, text: chain.name })),
         [pdbInfo]
     );
 
@@ -165,11 +167,22 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
         <i className="icon icon-conceptual icon-structures" style={ebiStyles["icon-lg"]}></i>
     );
 
-    return { text, items, leftIcon, selected: selectedChain?.chainId, onClick: setChain, expanded };
+    return {
+        text,
+        items,
+        leftIcon,
+        selected: selectedChain?.chainId,
+        onClick: setChain,
+        expanded,
+        disabled: Boolean(selection.ligandId),
+    };
 }
 
-export function getSelectedChain(chains: PdbInfo["chains"] | undefined, chainId: Maybe<string>) {
-    return chains?.find(chain => chain.chainId === chainId) || chains?.[0];
+export function getSelectedChain(
+    chains: PdbInfo["chains"] | undefined,
+    selectedChain: Maybe<string>
+) {
+    return chains?.find(chain => chain.chainId === selectedChain);
 }
 
 function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
@@ -209,5 +222,13 @@ function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
         selected: selectedLigand?.shortId,
         deselectable: true,
         expanded,
+        disabled: _.isEmpty(items),
     };
 }
+
+const StyledButton = styled.button`
+    &:disabled {
+        background-color: #59717d;
+        cursor: not-allowed;
+    }
+`;

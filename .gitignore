@@ -4,6 +4,9 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+# Ignore env files
+.env
+
 # Ignore config config.
 .bundle/*
 !.bundle/config
@@ -66,10 +69,6 @@ Thumbs.db
 bak/
 .byebug_history
 public/assets/
-
-app/assets/javascripts/annotations_viewer/featureAnalysis/featuresAnalysis.bundle.js
-app/assets/javascripts/structure_viewer/viewer_class.bundle.js
-app/assets/javascripts/interface_viewer/interface_viewer.bundle.js
 
 # IDE Files
 .idea

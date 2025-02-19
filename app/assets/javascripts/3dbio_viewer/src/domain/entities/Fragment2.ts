@@ -82,7 +82,7 @@ export function getTracksFromFragments(fragments: Fragments): Track[] {
                 labelTooltip: subtrack.description,
                 shape: subtrack.shape || "rectangle",
                 source: subtrack.source,
-                isBlast: subtrack.isBlast ?? true,
+                isBlast: subtrack.isBlast,
                 locations: slots.map(fragments => ({ fragments })),
                 subtype: subtrack.subtype,
                 overlapping: false,
@@ -156,6 +156,24 @@ export function getConflict(sequence: string, fragment: Fragment | Fragment2): s
 export interface Interval {
     start: number;
     end: number;
+}
+
+type FragmentP = Fragment | Fragment2;
+
+export function isCovered(alignment: Interval[], fragment: FragmentP): boolean {
+    return alignment.some(
+        interval => fragment.start >= interval.start && fragment.end <= interval.end
+    );
+}
+
+export function isPartiallyCovered(alignment: Interval[], fragment: FragmentP): boolean {
+    return alignment.some(
+        interval => fragment.start <= interval.end && fragment.end >= interval.start
+    );
+}
+
+export function isNotCovered(alignment: Interval[], fragment: FragmentP): boolean {
+    return !isCovered(alignment, fragment) && !isPartiallyCovered(alignment, fragment);
 }
 
 export function getIntervalKey<T extends LooseInterval>(obj: T): string {

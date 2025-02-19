@@ -1,4 +1,4 @@
-class CreateInteractome3dInteractions < ActiveRecord::Migration
+class CreateInteractome3dInteractions < ActiveRecord::Migration[7.1]
   def change
     create_table :interactome3d_interactions do |t|
       t.string :accA

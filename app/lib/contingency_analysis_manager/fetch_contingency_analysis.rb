@@ -390,7 +390,8 @@ module ContingencyAnalysisManager
           #(1..n_seq-2).each do |i|
           #  v_y[i] = 0.5*v_y[i]+0.25*(v_y[i-1]+v_y[i+1])
           #end
-          c = GSL::Stats::correlation(GSL::Vector.alloc(v_x),GSL::Vector.alloc(v_y))
+          c=nil
+          # c = GSL::Stats::correlation(GSL::Vector.alloc(v_x),GSL::Vector.alloc(v_y))
           correlated_table[fi+":"+fj] = {corr:c, x:v_x, y:v_y} if(c>0)
 
         end

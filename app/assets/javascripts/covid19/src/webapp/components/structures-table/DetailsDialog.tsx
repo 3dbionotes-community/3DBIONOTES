@@ -5,6 +5,7 @@ import { Accordion, AccordionSummary, AccordionDetails, Typography } from "@mate
 import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 import { Covid19Info, Structure } from "../../../domain/entities/Covid19Info";
 import { OnClickIDR } from "./badge/BadgeLigands";
+import { OnClickNMR } from "./badge/BadgeEntities";
 import { Field } from "./Columns";
 import { PdbCell } from "./cells/PdbCell";
 import { EmdbCell } from "./cells/EmdbCell";
@@ -13,6 +14,7 @@ import { LigandsCell } from "./cells/LigandsCell";
 import { OrganismCell } from "./cells/OrganismCell";
 import { DetailsCell } from "./cells/DetailsCell";
 import { Dialog } from "./Dialog";
+import { SetNMROptions } from "./StructuresTable";
 import i18n from "../../../utils/i18n";
 
 export interface DetailsDialogProps {
@@ -22,22 +24,39 @@ export interface DetailsDialogProps {
     row: Structure;
     data: Covid19Info;
     onClickIDR: OnClickIDR;
+    onClickNMR: OnClickNMR;
+    setNMROptions: SetNMROptions;
 }
 
 export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
-    const { onClose, expandedAccordion, row, data, open, onClickIDR } = props;
+    const {
+        onClose,
+        expandedAccordion,
+        row,
+        data,
+        open,
+        onClickIDR,
+        onClickNMR,
+        setNMROptions,
+    } = props;
 
     return (
         <Dialog open={open} onClose={onClose} title={row.title}>
             <Container>
                 <ImgContainer>
-                    <PdbCell data={data} row={row} validationSources={data.validationSources} />
+                    <PdbCell data={data} row={row} />
                     <EmdbCell data={data} row={row} />
                 </ImgContainer>
 
                 <div>
                     <ModifiedAccordion expanded={expandedAccordion} field="entities" row={row}>
-                        <EntityCell data={data} row={row} moreDetails={false} />
+                        <EntityCell
+                            data={data}
+                            row={row}
+                            moreDetails={false}
+                            onClickNMR={onClickNMR}
+                            setNMROptions={setNMROptions}
+                        />
                     </ModifiedAccordion>
                     <ModifiedAccordion expanded={expandedAccordion} field="ligands" row={row}>
                         <LigandsCell
@@ -45,7 +64,6 @@ export const DetailsDialog: React.FC<DetailsDialogProps> = React.memo(props => {
                             row={row}
                             moreDetails={false}
                             onClickIDR={onClickIDR}
-                            validationSources={data.validationSources}
                         />
                     </ModifiedAccordion>
                     <ModifiedAccordion expanded={expandedAccordion} field="organisms" row={row}>

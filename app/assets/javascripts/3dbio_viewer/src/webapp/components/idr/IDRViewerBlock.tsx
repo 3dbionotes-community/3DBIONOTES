@@ -202,6 +202,8 @@ const ListItem: React.FC<ListItemProps> = React.memo(props => {
     );
 });
 
+export const NonBulletListItem = ListItem;
+
 interface AssayFCProps {
     assay: Assay;
     dataSource: { label: string; href: string };

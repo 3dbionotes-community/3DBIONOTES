@@ -18,13 +18,14 @@ export type MolstarState = PdbState | LigandState;
 export class MolstarStateActions {
     static fromInitParams(initParams: InitParams, newSelection: Selection): MolstarState {
         const pdbItem = newSelection.type === "free" ? newSelection.main.pdb : undefined;
+        const emdbItem = newSelection.type === "free" ? newSelection.main.emdb : undefined;
 
         return initParams.ligandView
             ? { type: "ligand" }
             : {
                   type: "pdb",
                   chainId: newSelection.chainId,
-                  items: _.compact([pdbItem]),
+                  items: _.compact([pdbItem, emdbItem]),
               };
     }
 

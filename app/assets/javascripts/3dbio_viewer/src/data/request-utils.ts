@@ -6,10 +6,11 @@ import { parseFromCodec } from "../utils/codec";
 import { Future } from "../utils/future";
 import { axiosRequest, defaultBuilder, RequestResult } from "../utils/future-axios";
 import { Maybe } from "../utils/ts-utils";
+import { getStorageCache, hashUrl, setStorageCache } from "./storage-cache";
 
 export type RequestError = { message: string };
 
-const timeout = 20e3;
+const timeout = 30e3;
 
 export function getFromUrl<Data>(url: string): Future<RequestError, Data> {
     return request<Data>({ method: "GET", url, timeout }).map(res => res.data);
@@ -80,5 +81,22 @@ function xmlToJs<Data>(xml: string): Future<RequestError, Data> {
 export function request<Data>(
     request: AxiosRequestConfig
 ): Future<RequestError, RequestResult<Data>> {
-    return axiosRequest(defaultBuilder, request);
+    if (!request.url) {
+        return axiosRequest(defaultBuilder, request);
+    }
+
+    const params = request.params
+        ? JSON.stringify(request.params, Object.keys(request.params).sort())
+        : "";
+
+    const cacheKey = hashUrl(request.url + params);
+    const cachedResult = getStorageCache<RequestResult<Data>>(cacheKey);
+    if (cachedResult) return Future.success(cachedResult);
+
+    return axiosRequest<RequestError, Data>(defaultBuilder, request).map(result => {
+        if (result.response.status >= 200 && result.response.status < 300) {
+            setStorageCache(cacheKey, result);
+        }
+        return result;
+    });
 }

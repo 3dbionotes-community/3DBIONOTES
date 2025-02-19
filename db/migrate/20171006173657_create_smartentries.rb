@@ -1,4 +1,4 @@
-class CreateSmartentries < ActiveRecord::Migration
+class CreateSmartentries < ActiveRecord::Migration[7.1]
   def change
     create_table :smartentries do |t|
       t.string :proteinId

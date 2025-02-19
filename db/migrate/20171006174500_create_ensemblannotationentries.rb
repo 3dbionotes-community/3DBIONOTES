@@ -1,4 +1,4 @@
-class CreateEnsemblannotationentries < ActiveRecord::Migration
+class CreateEnsemblannotationentries < ActiveRecord::Migration[7.1]
   def change
     create_table :ensemblannotationentries do |t|
       t.string :geneId

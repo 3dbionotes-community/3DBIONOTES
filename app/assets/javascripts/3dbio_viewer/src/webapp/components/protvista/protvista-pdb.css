@@ -105,6 +105,14 @@ protvista-tooltip .description {
     color: rgb(192, 192, 192);
 }
 
+protvista-tooltip tr.error td {
+    color: #8b0000;
+}
+
+protvista-tooltip tr.warning td {
+    color: #f57f17;
+}
+
 .protvistaToolbar {
     text-align: center;
 }
@@ -124,4 +132,10 @@ protvista-tooltip .tooltip-close:hover {
 
 protvista-tooltip {
     max-width: 500px;
+}
+
+protvista-tooltip svg.MuiSvgIcon-fontSizeSmall {
+    font-size: 0.9rem;
+    vertical-align: text-top;
+    margin-left: 0.25rem;
 }

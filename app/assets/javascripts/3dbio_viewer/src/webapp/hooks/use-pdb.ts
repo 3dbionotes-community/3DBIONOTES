@@ -42,6 +42,7 @@ export function usePdbLoader(
                 //This shouldn't be happening and btw EMDB can be present, so is very possible to have something at least to show...
             });
         if (!pdbOptions) return;
+        setLoader({ type: "loading" });
         return compositionRoot.getPdb.execute(pdbOptions).run(
             pdb => setLoader({ type: "loaded", data: pdb }),
             error => setLoader({ type: "error", message: error.message })
@@ -62,9 +63,16 @@ export function getPdbOptions(
     const defaultChain = chains[0];
     const chain = chainId
         ? _(chains)
-            .keyBy(chain => chain.chainId)
-            .get(chainId, defaultChain)
+              .keyBy(chain => chain.chainId)
+              .get(chainId, defaultChain)
         : defaultChain;
 
-    return chain ? { pdbId, proteinId: chain.protein?.id, chainId: chain.chainId } : undefined;
+    return chain
+        ? {
+              pdbId,
+              proteinId: chain.protein?.id,
+              chainId: chain.chainId,
+              structAsymId: chain.structAsymId,
+          }
+        : undefined;
 }

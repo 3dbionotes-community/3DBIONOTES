@@ -17,6 +17,7 @@ export interface Pdb {
     emdbs: Emdb[];
     protein: Maybe<Protein>;
     chainId: string;
+    structAsymId: string;
     sequence: string;
     length: number;
     // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track#data-array
@@ -39,7 +40,10 @@ export interface Pdb {
 export interface PdbLigand {
     name: string;
     inChI: string; //IUPACInChIkey
-    imageDataResource?: LigandImageData;
+    imageDataResource: Maybe<LigandImageData>;
+    smiles: string;
+    formula: string;
+    pubchemId: string;
 }
 
 export type PdbId = string;
@@ -87,9 +91,7 @@ export interface PdbPublication {
         issue?: string;
         year?: number;
     };
-    abstract: {
-        unassigned?: string;
-    };
+    abstract?: string;
     authors: string[];
 }
 

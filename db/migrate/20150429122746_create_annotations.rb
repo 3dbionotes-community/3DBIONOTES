@@ -1,4 +1,4 @@
-class CreateAnnotations < ActiveRecord::Migration
+class CreateAnnotations < ActiveRecord::Migration[7.1]
   def change
     create_table :annotations do |t|
       t.string :proteinId

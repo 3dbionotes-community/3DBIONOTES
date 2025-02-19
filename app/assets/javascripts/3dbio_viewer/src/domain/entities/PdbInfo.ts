@@ -2,8 +2,9 @@ import _ from "lodash";
 import { Maybe } from "../../utils/ts-utils";
 import { Ligand } from "./Ligand";
 import { Emdb } from "./Pdb";
-import { ChainId, Protein, ProteinId } from "./Protein";
+import { ChainId, Protein } from "./Protein";
 import { UploadData } from "./UploadData";
+import { MappingChain } from "../../data/repositories/BionotesPdbInfoRepository";
 
 export interface PdbInfo {
     id: Maybe<string>;
@@ -11,40 +12,54 @@ export interface PdbInfo {
     chains: Chain[];
     ligands: Ligand[];
 }
+
 type Chain = {
     id: string;
     name: string;
     shortName: string;
     chainId: ChainId;
+    structAsymId: string;
     protein: Maybe<Protein>;
 };
 
-interface BuildPdbInfoOptions extends PdbInfo {
+interface BuildPdbInfoOptions {
+    id: Maybe<string>;
+    emdbs: Emdb[];
+    ligands: Ligand[];
     proteins: Protein[];
-    proteinsMapping: Maybe<Record<ProteinId, ChainId[]>>;
+    chainsMappings: MappingChain[];
 }
 
 export function buildPdbInfo(options: BuildPdbInfoOptions): PdbInfo {
-    if (!options.proteinsMapping && _.isEmpty(options.proteins)) return options;
-    const proteinById = _.keyBy(options.proteins, protein => protein.id);
-    const chains = _(options.proteinsMapping)
-        .toPairs()
-        .flatMap(([proteinId, chainIds]) => {
-            const protein = proteinById[proteinId];
-            if (!protein) return [];
+    const chains = _(options.chainsMappings)
+        .map(({ protein: proteinId, structAsymId, chainId }) => {
+            const protein = options.proteins.find(({ id }) => proteinId === id);
 
-            return chainIds.map(chainId => {
-                const shortName = _([chainId, protein.gen]).compact().join(" - ");
+            if (!protein)
                 return {
-                    id: [proteinId, chainId].join("-"),
-                    shortName,
-                    name: _([shortName, protein.name]).compact().join(", "),
-                    chainId,
-                    protein,
+                    id: chainId,
+                    shortName: structAsymId,
+                    name: `${structAsymId} [auth ${chainId}]`,
+                    chainId: chainId,
+                    structAsymId: structAsymId,
+                    protein: undefined,
                 };
-            });
+
+            const name = `${structAsymId} [auth ${chainId}]`;
+            const shortName = _([structAsymId, protein.gen]).compact().join(" - ");
+
+            return {
+                id: chainId,
+                shortName,
+                name: _([_([name, protein.gen]).compact().join(" - "), protein.name])
+                    .compact()
+                    .join(", "),
+                chainId: chainId,
+                structAsymId: structAsymId,
+                protein,
+            };
         })
-        .sortBy(obj => obj.chainId)
+        .sortBy(obj => obj.structAsymId)
         .value();
 
     return { ...options, chains };
@@ -63,7 +78,8 @@ export function getPdbInfoFromUploadData(uploadData: UploadData): PdbInfo {
                 id: chain.chain,
                 name: chain.name,
                 shortName: chain.name,
-                chainId: chain.chain,
+                chainId: chain.chain, // TODO: THIS MUST BE ACKNOWLEDGED
+                structAsymId: chain.chain, // TODO: THIS MUST BE ACKNOWLEDGED
                 protein: {
                     id: chain.uniprot,
                     name: chain.uniprotTitle,
@@ -74,4 +90,9 @@ export function getPdbInfoFromUploadData(uploadData: UploadData): PdbInfo {
         }),
         ligands: [],
     };
+}
+
+// Default chain: the first one with uniprot, or the first one if none has uniprot
+export function getDefaultChain(chains: Chain[]): Maybe<Chain> {
+    return chains.find(chain => chain.protein) || chains[0];
 }

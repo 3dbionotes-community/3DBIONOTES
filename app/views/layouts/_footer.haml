@@ -11,6 +11,11 @@
             %strong An ELIXIR Recommended Interoperability Resource
             %br/
             %a{:href => "https://drive.google.com/file/d/1mpHVIoblHdUw4zyu7jxdi-PDCQzB6C9Y/view?usp=sharing", :target => "_blank"} Terms of Use
+          %p
+            - if @twitter_buttons.include?(:both) || @twitter_buttons.include?(:bionotes)
+              %a{href: "https://twitter.com/3D_Bionotes", class: "twitter-follow-button", target: "_blank"} Follow @3D_Bionotes
+            - if @twitter_buttons.include?(:both) || @twitter_buttons.include?(:covidstructhub)
+              %a{href: "https://twitter.com/covidstructhub", class: "twitter-follow-button", target: "_blank"} Follow @covidstructhub
           .footerLinks
             %p
               %a{:href => "http://biocomputingunit.es"}> Biocomputing Unit
@@ -25,3 +30,21 @@
       Terms of Use
     \.
   %button#agreeCookies.btn.btn-info I agree
+
+:javascript
+  window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+  }(document, "script", "twitter-wjs"));

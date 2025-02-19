@@ -1,6 +1,7 @@
-import { Codec, GetType, array, nullType, number, string } from "purify-ts";
+import { Codec, GetType, array, number, string } from "purify-ts";
 import { maybe } from "./PdbLigands";
 import { PdbPublication } from "../domain/entities/Pdb";
+import _ from "lodash";
 
 export const publicationsCodec = array(
     //using so many "maybe" from examples: 7O7Z, 6ABA, 7SUB
@@ -21,11 +22,11 @@ export const publicationsCodec = array(
             year: maybe(number),
         }),
         abstract: Codec.interface({
-            background: nullType,
-            objective: nullType,
-            methods: nullType,
-            results: nullType,
-            conclusions: nullType,
+            background: maybe(string),
+            objective: maybe(string),
+            methods: maybe(string),
+            results: maybe(string),
+            conclusions: maybe(string),
             unassigned: maybe(string),
         }),
         author_list: array(
@@ -62,6 +63,15 @@ export function getPublications(publications: PublicationsCodec): PdbPublication
             abstract,
             author_list,
         }) => {
+            const description = _.compact([
+                abstract.background,
+                abstract.conclusions,
+                abstract.methods,
+                abstract.objective,
+                abstract.results,
+                abstract.unassigned,
+            ]).join(" "); //possibly "" if all are null
+
             return {
                 title,
                 type,
@@ -78,9 +88,7 @@ export function getPublications(publications: PublicationsCodec): PdbPublication
                     issue: journal_info.issue ?? undefined,
                     year: journal_info.year ?? undefined,
                 },
-                abstract: {
-                    unassigned: abstract.unassigned ?? undefined,
-                },
+                abstract: description || undefined,
                 authors: author_list.map(author => author.full_name),
             };
         }

@@ -20,6 +20,7 @@ export interface DropdownProps<Id extends string = string> {
     rightIcon?: React.ReactNode;
     deselectable?: boolean;
     expanded?: boolean;
+    disabled?: boolean;
 }
 
 export interface DropdownItemModel<Id extends string> {
@@ -40,6 +41,7 @@ export function Dropdown<Id extends string = string>(
         leftIcon,
         expanded,
         deselectable,
+        disabled = false,
     } = props;
     const [isMenuOpen, { enable: openMenu, disable: closeMenu }] = useBooleanState(false);
     const buttonRef = React.useRef(null);
@@ -67,14 +69,13 @@ export function Dropdown<Id extends string = string>(
         if (selected !== undefined) return items?.find(item => item.id === selected)?.text;
     }, [text, items, selected, expanded]);
 
-    if (!items || _.isEmpty(items)) return null;
-
     return (
         <React.Fragment>
             <StyledButton
                 ref={buttonRef}
                 onClick={openMenu}
                 className={isMenuOpen ? "open" : undefined}
+                disabled={disabled}
             >
                 {leftIcon}
                 {selected && deselectable && (
@@ -88,17 +89,18 @@ export function Dropdown<Id extends string = string>(
             </StyledButton>
 
             <PopperMenu isOpen={isMenuOpen} close={closeMenu} buttonRef={buttonRef}>
-                {items.map(item => (
-                    <DropdownItem<Id>
-                        key={item.id}
-                        onClick={runOnClickAndCloseMenu}
-                        item={item}
-                        isSelected={item.id === selected}
-                        showSelection={showSelection}
-                    >
-                        {item.text}
-                    </DropdownItem>
-                ))}
+                {items &&
+                    items.map(item => (
+                        <DropdownItem<Id>
+                            key={item.id}
+                            onClick={runOnClickAndCloseMenu}
+                            item={item}
+                            isSelected={item.id === selected}
+                            showSelection={showSelection}
+                        >
+                            {item.text}
+                        </DropdownItem>
+                    ))}
             </PopperMenu>
         </React.Fragment>
     );

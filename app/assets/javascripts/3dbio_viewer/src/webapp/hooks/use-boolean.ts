@@ -14,7 +14,7 @@ interface UseBooleanActions {
 }
 
 export function useBooleanState(initialValue?: boolean): UseBooleanReturn {
-    const [value, setValue] = React.useState(initialValue || false);
+    const [value, setValue] = React.useState(initialValue ?? false);
 
     const actions = React.useMemo(() => {
         return {

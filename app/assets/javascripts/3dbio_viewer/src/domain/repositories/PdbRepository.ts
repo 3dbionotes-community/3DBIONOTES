@@ -1,7 +1,7 @@
 import { Maybe } from "../../utils/ts-utils";
 import { FutureData } from "../entities/FutureData";
 import { Pdb, PdbId } from "../entities/Pdb";
-import { ProteinId, ChainId } from "../entities/Protein";
+import { ProteinId, ChainId, StructAsymId } from "../entities/Protein";
 import { IDROptions } from "../usecases/GetPdbUseCase";
 
 export interface PdbRepository {
@@ -12,4 +12,5 @@ export interface PdbOptions {
     proteinId: Maybe<ProteinId>;
     pdbId: PdbId;
     chainId: ChainId;
+    structAsymId: StructAsymId;
 }

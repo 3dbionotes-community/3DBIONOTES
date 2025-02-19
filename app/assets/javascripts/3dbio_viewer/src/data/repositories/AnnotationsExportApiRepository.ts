@@ -36,7 +36,7 @@ export class AnnotationsExportApiRepository implements AnnotationsExportReposito
         emdbs: Emdb[];
     }): FutureData<void> {
         const { proteinId, pdbId, chainId, emdbs } = props;
-        const { bionotes: bioUrl, bionotesStaging: bioUrlDev, ebi: ebiBaseUrl } = routes;
+        const { bionotes: bioUrl, ebi: ebiBaseUrl } = routes;
         const ebiProteinsApiUrl = `${ebiBaseUrl}/proteins/api`;
 
         //prettier-ignore
@@ -47,7 +47,7 @@ export class AnnotationsExportApiRepository implements AnnotationsExportReposito
             [`coverage-${pdbId}-${chainId}`, `${bioUrl}/api/alignments/Coverage/${pdbId}${chainId}`],
             [`pdb-redo-${pdbId}`, `${bioUrl}/api/annotations/PDB-REDO/${pdbId}`],
             [`molprobity-${pdbId}`, `${bioUrl}/compute/molprobity/${pdbId}`],
-            [`ligands-${pdbId}`, `${bioUrlDev}/bws/api/pdbentry/${pdbId}/ligands/`],
+            [`ligands-${pdbId}`, `${bioUrl}/bws/api/pdbentry/${pdbId}/ligands/`],
             ...(proteinId ? [
                 [`uniprotkb-${proteinId}`, `${routes.uniprot}/uniprotkb/${proteinId}`],
                 [`proteins-features-${proteinId}`, `${ebiProteinsApiUrl}/features/${proteinId}`],
@@ -69,8 +69,8 @@ export class AnnotationsExportApiRepository implements AnnotationsExportReposito
 
         //prettier-ignore
         const emvNameUrls = emdbs?.map(({ id }) => ([
-            [`emv-${id}-localresolution-consensus`, `${bioUrlDev}/bws/api/emv/${id}/localresolution/consensus/`],
-            [`emv-${id}-localresolution-rank`, `${bioUrlDev}/bws/api/emv/${id}/localresolution/rank/`],
+            [`emv-${id}-localresolution-consensus`, `${bioUrl}/bws/api/emv/${id}/localresolution/consensus/`],
+            [`emv-${id}-localresolution-rank`, `${bioUrl}/bws/api/emv/${id}/localresolution/rank/`],
         ] as const)).flat().map(([filename, url]) => [filename, getJSON(url)]);
 
         //prettier-ignore

@@ -1,4 +1,4 @@
-# 3DBIONOTES-WS v3.10.2
+# 3DBIONOTES-WS v3.11.0
 
 ## Integrating molecular biology
 
@@ -18,10 +18,9 @@
 Use rvm or rbenv to select the Ruby version specified in Gemfile and then run:
 
 ```
-$ git submodule update --recursive --init
-$ rvm install ruby-2.4.1
-$ gem install bundler:2.2.15
-$ sudo apt install libgsl-dev libmysqlclient-dev # Debian/Ubuntu
+$ rvm install ruby-3.3.1
+$ gem install bundler:2.5.10
+$ sudo apt install libmysqlclient-dev # Debian/Ubuntu
 $ bundle install
 $ cp config/database.example.yml config/database.yml
 $ cp config/secrets.example.yml config/secrets.yml
@@ -35,10 +34,9 @@ Before you start your setup, make sure you have homebrew, ruby, rvm and python2 
 Use rvm or rbenv to select the Ruby version specified in Gemfile and then run:
 
 ```
-$ git submodule update --recursive --init
-$ rvm install ruby-2.4.1
+$ rvm install ruby-3.3.1
 $ gem install bundler:2.2.15
-$ brew install gsl mysql
+$ brew install mysql
 $ gem install bundler:2.0.0.pre.3
 ```
 
@@ -50,6 +48,28 @@ $ cp config/database.example.yml config/database.yml
 $ cp config/secrets.example.yml config/secrets.yml
 $ bundle exec rake db:migrate RAILS_ENV=development
 $ bundle exec rails server
+```
+
+### Setup docker-compose
+
+1. Create .env file from .env.sample
+2. Start docker containers with following command
+
+```
+docker-compose -f docker-compose.yml -f docker-compose.development.yml up -d
+```
+
+Re-build container:
+
+```
+docker-compose --env-file .env -f docker-compose.yml -f docker-compose.development.yml up -d --build
+docker compose --env-file .env -f docker-compose.yml -f docker-compose.development-2.yml up --build # External database: /tank/services/dev/BNTS/databases
+```
+
+Stop all containers:
+
+```
+docker-compose -f docker-compose.yml -f docker-compose.development.yml down
 ```
 
 ### Setup Viewer
@@ -116,6 +136,20 @@ To perform an app restart after a change, just run:
 $ touch tmp/restart.txt
 ```
 
+## Deploy
+
+Depending on the environment some changes should be made in these files:
+
+-   config/environments/development.rb (config hostnames)
+-   config/settings.yml (base url)
+-   app/assets/javascripts/webserver/webserver_init.js (ga4 code)
+
+Alternatively, for the `webserver_init.js` file, a script could be executed:
+
+```
+$ bash scripts/deploy/set_ga_code.sh --environment [development|production]
+```
+
 ## Delayed Jobs
 
 The network sections run a set of jobs in the background on the server. To work properly, a delayed job daemon needs to be running on the server:
@@ -123,62 +157,6 @@ The network sections run a set of jobs in the background on the server. To work 
 ```
 $ RAILS_ENV=production bin/delayed_job -n 6 restart
 ```
-
-## Sub-modules
-
-The application contains two git sub-modules:
-
--   myProtVista
-
-    -   Repository: https://github.com/3dbionotes-community/myProtVista
-    -   Path: app/assets/javascripts/annotations_viewer/myProtVista
-    -   Installation dependencies: node version 8
-    -   How to install:
-        ```
-        $ npm install
-        $ npm run build
-        ```
-
--   extendProtVista
-    -   Repository: https://github.com/3dbionotes-community/extendProtVista
-    -   Path: app/assets/javascripts/annotations_viewer/extendProtVista
-    -   Installation dependencies: node version 8
-    -   How to install:
-        ```
-        $ npm install
-        $ npm run build
-        ```
-
-Some extra modules are also part of the application:
-
--   featureAnalysis
-
-    -   Path: app/assets/javascripts/annotations_viewer/featureAnalysis
-    -   Installation dependencies: node version 8
-    -   How to install:
-        ```
-        $ npm install
-        $ npm run build
-        ```
-
--   structure_viewer
-
-    -   Path: app/assets/javascripts/structure_viewer
-    -   Installation dependencies: node version 8
-    -   How to install:
-        ```
-        $ npm install
-        $ npm run build
-        ```
-
--   interface_viewer
-    -   Path: app/assets/javascripts/interface_viewer
-    -   Installation dependencies: node version 8
-    -   How to install:
-        ```
-        $ npm install
-        $ npm run build
-        ```
 
 ## Other dependencies
 
