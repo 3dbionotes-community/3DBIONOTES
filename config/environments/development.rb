@@ -1,7 +1,12 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.hosts << "server:3000"
+  # config.hosts << "localhost:3000"
+  config.hosts << "campins.cnb.csic.es:8018"
+  config.hosts << "3dbionotes.cnb.csic.es"
+  # config.hosts << "rinchen-dos.cnb.csic.es:28118"
+  # config.hosts << "rinchen-dos.cnb.csic.es:28028"
+  # config.hosts << "rinchen-dos.cnb.csic.es"
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
