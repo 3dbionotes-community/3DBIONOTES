@@ -363,7 +363,7 @@ class MainController < ApplicationController
                  "file" => @file }, rand)
     end
 
-    if File.exists?(LocalPath + "/" + rand + "/external_annotations.json")
+    if File.exist?(LocalPath + "/" + rand + "/external_annotations.json")
       @external_annotations = JSON.parse(File.read(LocalPath + "/" + rand + "/external_annotations.json").gsub(/\n/, "")).to_json
     else
       @external_annotations = nil
