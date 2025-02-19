@@ -23,10 +23,10 @@ export class MolstarStateActions {
         return initParams.ligandView
             ? { type: "ligand" }
             : {
-                type: "pdb",
-                chainId: newSelection.chainId,
-                items: _.compact([pdbItem, emdbItem]),
-            };
+                  type: "pdb",
+                  chainId: newSelection.chainId,
+                  items: _.compact([pdbItem, emdbItem]),
+              };
     }
 
     static updateItems(state: MolstarState, items: DbItem[]): MolstarState {

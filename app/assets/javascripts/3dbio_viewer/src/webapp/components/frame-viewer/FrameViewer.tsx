@@ -155,7 +155,7 @@ const StyledAccordionSummary = styled(AccordionSummary)`
 
     &.MuiAccordionSummary-root {
         border-top: 0.5px solid #fff;
-        background: #f7f7f7;
+        background: #f0f0f0;
         min-height: 45px;
         display: flex;
         align-items: flex-start;
@@ -200,24 +200,29 @@ const StyledAccordionSummary = styled(AccordionSummary)`
     }
 
     .viewer-subtrack {
-        width: 60%;
+        width: 100%%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         background-color: #f7f7f7;
-        padding: 0.5em 1.2em 0.5em 1.8em;
+        padding: 0.5em 1em;
         border-bottom: 1px solid #e2e2e2;
         line-height: 22px;
+        min-height: 45px;
         cursor: pointer;
         position: relative;
-        /*word-break: break-all;*/
+        box-sizing: border-box;
 
         .subtrack-help {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: 0.5em;
-            background-color: rgba(0, 0, 0, 0);
-            color: #848a86;
-            border: solid 1px #848a86;
-            cursor: pointer;
+            all: unset;
+            background-color: #ffffff;
+            border: 1px solid #d6d6d6;
+            border-radius: 0.5em;
+            color: #6d6d6d;
+            padding: 0.125em 0.5em;
+            margin-left: 1em;
+            min-width: 14px;
+            text-align: center;
         }
     }
 

@@ -27,7 +27,7 @@ class RunMolprobityController < ApplicationController
 
     if data.nil?
       out = {'status'=>'running', 'id'=>suffix}
-      if not File.exists?(directory)
+      if not File.exist?(directory)
         if suffix =~ /^\d{1}\w{3}$/ and suffix !~ /^\d{4}$/ then
           system( LocalScripts+"/python3_run_molprobity "+suffix+" &" )
         elsif suffix =~ /interactome3d:/ then
@@ -38,7 +38,7 @@ class RunMolprobityController < ApplicationController
           system( LocalScripts+"/run_molprobity "+suffix+" local >"+directory+"/stdout &>"+directory+"/stderr &")
         end
       else
-        if File.exists?(directory+'/done') then
+        if File.exist?(directory+'/done') then
           out['status'] = 'complete'
           out['rama'] = get_rama(directory,pdbData)
           out['omega'] = get_omega(directory,pdbData)
@@ -50,7 +50,7 @@ class RunMolprobityController < ApplicationController
             Molprobityentry.create(pdbId: i3d_pdb, data: out.to_json)
             FileUtils.rm_rf( LocalMolProobity_tmp+'/'+i3d_pdb )
           end
-        elsif File.exists?(directory+'/stderr') then
+        elsif File.exist?(directory+'/stderr') then
           err = File.read(directory+'/stderr')
           out = {'status'=>'error', 'error'=>err}if(err.length > 0)
         end

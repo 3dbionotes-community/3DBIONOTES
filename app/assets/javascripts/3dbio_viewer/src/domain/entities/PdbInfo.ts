@@ -12,6 +12,7 @@ export interface PdbInfo {
     chains: Chain[];
     ligands: Ligand[];
 }
+
 type Chain = {
     id: string;
     name: string;
@@ -77,8 +78,8 @@ export function getPdbInfoFromUploadData(uploadData: UploadData): PdbInfo {
                 id: chain.chain,
                 name: chain.name,
                 shortName: chain.name,
-                chainId: chain.chain, //THIS MUST BE AKNOLWEDGED
-                structAsymId: chain.chain, //THIS MUST BE AKNOLWEDGED
+                chainId: chain.chain, // TODO: THIS MUST BE ACKNOWLEDGED
+                structAsymId: chain.chain, // TODO: THIS MUST BE ACKNOWLEDGED
                 protein: {
                     id: chain.uniprot,
                     name: chain.uniprotTitle,
@@ -89,4 +90,9 @@ export function getPdbInfoFromUploadData(uploadData: UploadData): PdbInfo {
         }),
         ligands: [],
     };
+}
+
+// Default chain: the first one with uniprot, or the first one if none has uniprot
+export function getDefaultChain(chains: Chain[]): Maybe<Chain> {
+    return chains.find(chain => chain.protein) || chains[0];
 }

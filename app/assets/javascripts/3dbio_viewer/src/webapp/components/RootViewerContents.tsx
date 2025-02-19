@@ -35,9 +35,9 @@ export type LoaderKey = keyof typeof loaderMessages;
 const loaderMessages = {
     readingSequence: [i18n.t("Reading sequence..."), 0],
     getRelatedPdbModel: [i18n.t("Getting PDB related model..."), 0],
-    initPlugin: [i18n.t("Starting 3D Viewer..."), 1], //already loading PDB
+    pdbLoader: [i18n.t("Loading PDB Data..."), 1],
     updateVisualPlugin: [i18n.t("Updating selection..."), 2],
-    pdbLoader: [i18n.t("Loading PDB Data..."), 3],
+    initPlugin: [i18n.t("Starting 3D Viewer..."), 3], //already loading PDB
     uploadedModel: [i18n.t("Loading uploaded model..."), 2],
     loadModel: [i18n.t("Loading model..."), 4], //PDB, EMDB, PDB-REDO, CSTF, CERES
     exportAnnotations: [i18n.t("Retrieving all annotations..."), 5],
@@ -61,8 +61,9 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     const {
         loading,
         title,
+        setLoader,
         updateLoaderStatus,
-        updateOnResolve: updateLoader,
+        updateOnResolve,
         loaders,
         resetLoaders,
     } = useMultipleLoaders<LoaderKey>(loadersInitialState);
@@ -76,13 +77,28 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     const uploadData = getUploadData(externalData);
 
-    const { pdbInfoLoader, setLigands } = usePdbInfo(selection, uploadData);
+    const onProcessDelay = React.useCallback(
+        (reason: string) =>
+            setLoader("pdbLoader", {
+                status: "loading",
+                message: i18n.t(
+                    "Loading PDB Data...\n{{reason}}\nThis can take several minutes to load.",
+                    { reason: reason }
+                ),
+                priority: 10,
+            }),
+        [setLoader]
+    );
+
+    const { pdbInfoLoader, setLigands } = usePdbInfo({ selection, uploadData, onProcessDelay });
     const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfoLoader);
     const pdbInfo = pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined;
 
     const uploadDataToken = selection.type === "uploadData" ? selection.token : undefined;
     const networkToken = selection.type === "network" ? selection.token : undefined;
     const proteinNetwork = externalData.type === "network" ? externalData.data : undefined;
+
+    const proteinId = pdbLoader.type === "loaded" ? pdbLoader.data.protein?.id : undefined;
 
     const criticalLoaders = React.useMemo(
         () => [loaders.uploadedModel, loaders.initPlugin, loaders.getRelatedPdbModel],
@@ -114,12 +130,27 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
     }, [uploadDataToken, networkToken, compositionRoot]);
 
     const pdbId = React.useMemo(() => getMainItem(selection, "pdb"), [selection]);
+    const prevPdbId = React.useRef(pdbId);
+
+    const chainId = selection.chainId;
+    const prevChainId = React.useRef(chainId);
 
     React.useEffect(() => {
-        const init = loaders.initPlugin;
-        if (init.status !== "loaded") return;
-        resetLoaders({ ...loadersInitialState, initPlugin: init });
-    }, [pdbId, resetLoaders, loaders.initPlugin]);
+        if (pdbId && pdbId !== prevPdbId.current) resetLoaders(loadersInitialState);
+    }, [pdbId, prevPdbId, resetLoaders]);
+
+    React.useEffect(() => {
+        if (chainId && chainId !== prevChainId.current)
+            setLoader("pdbLoader", loadersInitialState.pdbLoader);
+    }, [chainId, pdbId, prevPdbId, resetLoaders, setLoader]);
+
+    React.useEffect(() => {
+        prevPdbId.current = pdbId;
+    }, [pdbId]);
+
+    React.useEffect(() => {
+        prevChainId.current = chainId;
+    }, [chainId]);
 
     React.useEffect(() => {
         const critical = criticalLoaders.find(loader => loader.status === "error");
@@ -150,8 +181,9 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             onSelectionChange={setSelection}
                             onLigandsLoaded={setLigands}
                             proteinNetwork={proteinNetwork}
-                            updateLoader={updateLoader}
+                            updateLoader={updateOnResolve}
                             loaderBusy={loading}
+                            proteinId={proteinId}
                         />
                     </div>
                 )}
@@ -171,7 +203,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             pdbLoader={pdbLoader}
                             setPdbLoader={setPdbLoader}
                             toolbarExpanded={toolbarExpanded}
-                            updateLoader={updateLoader}
+                            updateLoader={updateOnResolve}
                         />
                     </div>
                 </ResizableBox>

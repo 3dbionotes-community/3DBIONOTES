@@ -178,8 +178,11 @@ function useChainDropdown(options: ViewerSelectorProps): DropdownProps {
     };
 }
 
-export function getSelectedChain(chains: PdbInfo["chains"] | undefined, chainId: Maybe<string>) {
-    return chains?.find(chain => chain.chainId === chainId) || chains?.[0];
+export function getSelectedChain(
+    chains: PdbInfo["chains"] | undefined,
+    selectedChain: Maybe<string>
+) {
+    return chains?.find(chain => chain.chainId === selectedChain);
 }
 
 function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
@@ -219,7 +222,7 @@ function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {
         selected: selectedLigand?.shortId,
         deselectable: true,
         expanded,
-        disabled: _.isEmpty(items)
+        disabled: _.isEmpty(items),
     };
 }
 

@@ -16,7 +16,7 @@ module AlignmentsManager
           pdbId = pdbId_ch[0,4]#pdbId_ch.chop()
           ch = pdbId_ch[4,pdbId_ch.length]
           dbData = PdbDatum.find_by(pdbId: pdbId)
-          if !dbData.nil? 
+          if !dbData.nil?
             info = JSON.parse(dbData.data)
           else
             file = SIFTSFile+pdbId.downcase[1..2]+"/"+pdbId.downcase+".xml.gz"
@@ -38,7 +38,7 @@ module AlignmentsManager
         elsif pdbId_ch =~ /interactome3d/ then
           rand, pdbId, ch = pdbId_ch.split("::")
           pdbId.gsub! '_dot_','.'
-          dbData = Interactome3dDatum.find_by(pdbId: pdbId) 
+          dbData = Interactome3dDatum.find_by(pdbId: pdbId)
           info = JSON.parse(dbData.data)
         else
           rand, pdb, ch = pdbId_ch.split("::")
@@ -46,32 +46,35 @@ module AlignmentsManager
           info  = info[pdb.gsub! '_dot_','.']
         end
 
-        __map = Array.new
-        info[ch].each do |uniprot,mapping|
-          __map = mapping["mapping"]
+        unless info[ch].nil?
+          __map = Array.new
+          info[ch].each do |uniprot,mapping|
+            __map = mapping["mapping"]
+          end
+
+          coverage = Array.new
+          __e = {"start"=>-1,"end"=>-1}
+          __n = 1
+          __map.each do |i|
+            if i.has_key?("pdbIndex")
+              if __e["start"]<0
+                __e = {"start"=>__n,"end"=>-1}
+              end
+            else
+              if __e["start"]>0
+                __e["end"] = __n-1
+                coverage.push(__e)
+                __e = {"start"=>-1,"end"=>-1}
+              end
+            end
+            __n += 1
+          end
+          if __e["start"]>0 &&  __e["end"]<0
+            __e["end"] = __n-1
+            coverage.push(__e)
+          end
         end
 
-        coverage = Array.new
-        __e = {"start"=>-1,"end"=>-1}
-        __n = 1
-        __map.each do |i|
-          if i.has_key?("pdbIndex")
-            if __e["start"]<0
-              __e = {"start"=>__n,"end"=>-1}
-            end
-          else
-            if __e["start"]>0
-              __e["end"] = __n-1
-              coverage.push(__e)
-              __e = {"start"=>-1,"end"=>-1}
-            end
-          end
-          __n += 1
-        end
-        if __e["start"]>0 &&  __e["end"]<0
-          __e["end"] = __n-1
-          coverage.push(__e)
-        end
         return { "Structure coverage"=>coverage }
       end
 

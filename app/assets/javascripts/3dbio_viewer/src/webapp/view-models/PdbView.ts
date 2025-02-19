@@ -11,6 +11,7 @@ import { BlockDef } from "../components/protvista/Protvista.types";
 import { Tooltip } from "../components/protvista/Tooltip";
 import { trackDefinitions } from "../../domain/definitions/tracks";
 import { getBlockTracks } from "../components/protvista/Protvista.helpers";
+import { Interval } from "../../domain/entities/Fragment2";
 import { Source } from "../../domain/entities/Source";
 
 // https://github.com/ebi-webcomponents/nightingale/tree/master/packages/protvista-track
@@ -79,9 +80,19 @@ export function getPdbView(
     const { block, showAllTracks = false, chainId, sources } = options;
     const data = showAllTracks ? pdb.tracks : getBlockTracks(pdb.tracks, block);
 
+    const structureCoverage = data.find(
+        track => track.id === trackDefinitions.structureCoverage.id
+    );
+    const structureCoverageSubtrack = structureCoverage && _.first(structureCoverage.subtracks);
+
+    const alignment: Interval[] =
+        structureCoverageSubtrack?.locations.flatMap(({ fragments }) =>
+            fragments.map(({ start, end }) => ({ start, end }))
+        ) ?? [];
+
     const tracks = _(data)
         .map((pdbTrack): TrackView | undefined => {
-            const subtracks = getSubtracks(pdb, pdbTrack, sources);
+            const subtracks = getSubtracks(pdb, pdbTrack, alignment, sources);
             if (_.isEmpty(subtracks)) return undefined;
 
             return {
@@ -125,13 +136,23 @@ function getVariants(pdb: Pdb): VariantsView | undefined {
     };
 }
 
-function getSubtracks(pdb: Pdb, track: Track, sources: Source[]): TrackView["data"] {
+function getSubtracks(
+    pdb: Pdb,
+    track: Track,
+    alignment: Interval[],
+    sources: Source[]
+): TrackView["data"] {
     return _.flatMap(track.subtracks, subtrack => {
-        return hasFragments(subtrack) ? [getSubtrack(pdb, subtrack, sources)] : [];
+        return hasFragments(subtrack) ? [getSubtrack(pdb, subtrack, alignment, sources)] : [];
     });
 }
 
-function getSubtrack(pdb: Pdb, subtrack: Subtrack, sources: Source[]): SubtrackView {
+function getSubtrack(
+    pdb: Pdb,
+    subtrack: Subtrack,
+    alignment: Interval[],
+    sources: Source[]
+): SubtrackView {
     const label = subtrack.subtype
         ? `[${subtrack.subtype.name}] ${subtrack.label}`
         : subtrack.label;
@@ -151,7 +172,7 @@ function getSubtrack(pdb: Pdb, subtrack: Subtrack, sources: Source[]): SubtrackV
                 ...fragment,
                 color: fragment.color || "black",
                 tooltipContent: renderToString(
-                    React.createElement(Tooltip, { pdb, subtrack, fragment, sources })
+                    React.createElement(Tooltip, { pdb, subtrack, fragment, alignment, sources })
                 ),
             })),
         })),

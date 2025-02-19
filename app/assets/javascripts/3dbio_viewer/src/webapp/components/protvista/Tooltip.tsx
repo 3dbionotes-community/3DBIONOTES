@@ -1,8 +1,17 @@
-import React from "react";
 import _ from "lodash";
+import React from "react";
+import styled from "styled-components";
+import { InfoOutlined as InfoOutlinedIcon } from "@material-ui/icons";
 import { Reference } from "../../../domain/entities/Evidence";
 import { Fragment, getFragmentToolsLink } from "../../../domain/entities/Fragment";
-import { Fragment2, getConflict } from "../../../domain/entities/Fragment2";
+import {
+    Fragment2,
+    Interval,
+    getConflict,
+    isCovered,
+    isNotCovered,
+    isPartiallyCovered,
+} from "../../../domain/entities/Fragment2";
 import { Pdb } from "../../../domain/entities/Pdb";
 import { Subtrack } from "../../../domain/entities/Track";
 import { renderJoin } from "../../utils/react";
@@ -10,12 +19,12 @@ import { Link } from "../Link";
 import { Protein } from "../../../domain/entities/Protein";
 import { getSource, Source as SourceEntity } from "../../../domain/entities/Source";
 import i18n from "../../utils/i18n";
-import styled from "styled-components";
 
 interface TooltipProps {
     pdb: Pdb;
     subtrack: Subtrack;
     fragment: FragmentP;
+    alignment: Interval[];
     sources: SourceEntity[];
 }
 
@@ -23,21 +32,47 @@ type FragmentP = Fragment | Fragment2;
 
 export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
     //cannot use sources from AppContext as context is not initalized
-    const { pdb, subtrack, fragment, sources } = props;
+    const { pdb, subtrack, fragment, alignment, sources } = props;
     const { description, alignmentScore } = fragment;
 
     //no react.memo as is finally rendered to string
     const nmrSource = getSource(sources, "NMR");
-    const score = alignmentScore ? alignmentScore + " %" : undefined;
+    const score = alignmentScore ? alignmentScore + " %" : undefined; // aligmentScore is never being set on code
     const isNMR = subtrack.accession === "nmr";
+
+    const covered = isCovered(alignment, fragment);
+    const partiallyCovered = isPartiallyCovered(alignment, fragment);
+    const notCovered = isNotCovered(alignment, fragment);
+    const coverageDetails = getCoverageDetails();
+
+    const coverage = [
+        { condition: notCovered, details: coverageDetails.notCovered },
+        {
+            condition: partiallyCovered && !covered,
+            details: coverageDetails.partiallyCovered,
+        },
+    ].find(item => item.condition)?.details;
 
     return (
         <TooltipTable>
+            {coverage && (
+                <TooltipRow
+                    title={i18n.t("Alignment")}
+                    value={coverage.value}
+                    className={coverage.className}
+                    object={{ title: coverage.title }}
+                >
+                    {info => <InfoOutlinedIcon fontSize="small" titleAccess={info.title} />}
+                </TooltipRow>
+            )}
+
             <TooltipRow title={i18n.t("Feature ID")} value={fragment.id} className="description" />
+
             <TooltipRow
                 title={isNMR ? i18n.t("Target") : i18n.t("Description")}
                 value={description}
             />
+
             <TooltipRow title={i18n.t("Alignment score")} value={score} className="description" />
             <TooltipRow title={i18n.t("Conflict")} value={getConflict(pdb.sequence, fragment)} />
             <Source subtrack={subtrack} />
@@ -45,23 +80,13 @@ export const Tooltip: React.FC<TooltipProps> = React.memo(props => {
             <CrossReferences fragment={fragment} />
             {pdb.protein && <Tools protein={pdb.protein} subtrack={subtrack} fragment={fragment} />}
             <Legend fragment={fragment} />
+
             {isNMR && nmrSource && (
                 <NMR start={fragment.start} end={fragment.end} nmrSource={nmrSource} />
             )}
         </TooltipTable>
     );
 });
-
-const styles = {
-    tooltip: {
-        borderColor: "black",
-        display: "inline-flex",
-        width: 10,
-        borderWidth: 1,
-        height: 10,
-        marginRight: 5,
-    },
-};
 
 const NMR: React.FC<{ start: number; end: number; nmrSource: SourceEntity }> = props => {
     const { nmrSource } = props;
@@ -224,3 +249,31 @@ const ButtonLink = styled.button`
     padding: 0;
     font-weight: normal;
 `;
+
+const getCoverageDetails = () => ({
+    notCovered: {
+        value: i18n.t("Not in Structure Coverage"),
+        className: "error",
+        title: i18n.t(
+            "This annotation is part of the full UniProt sequence but lies outside the region captured in the 3D structure (PDB) for this specific chain. It may correspond to a flexible, disordered, or missing part of the protein that was not resolved during structure determination."
+        ),
+    },
+    partiallyCovered: {
+        value: i18n.t("Partially in Structure Coverage"),
+        className: "warning",
+        title: i18n.t(
+            "This annotation is partially covered by the 3D structure (PDB) for this specific chain. The structure may capture part of this region, but additional functional or structural details extend beyond the resolved area."
+        ),
+    },
+});
+
+const styles = {
+    tooltip: {
+        borderColor: "black",
+        display: "inline-flex",
+        width: 10,
+        borderWidth: 1,
+        height: 10,
+        marginRight: 5,
+    },
+};

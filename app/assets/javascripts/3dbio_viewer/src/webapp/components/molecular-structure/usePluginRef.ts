@@ -39,6 +39,7 @@ type Options = {
     molstarState: React.MutableRefObject<MolstarState>;
     setPdbePlugin: React.Dispatch<React.SetStateAction<PDBeMolstarPlugin | undefined>>;
     setPluginLoad: React.Dispatch<React.SetStateAction<Date | undefined>>;
+    proteinId: Maybe<string>;
 };
 
 export function usePluginRef(options: Options) {
@@ -54,10 +55,10 @@ export function usePluginRef(options: Options) {
         extension,
         molstarState,
         setPdbePlugin,
+        proteinId,
     } = options;
 
-    // Set chain through molstar
-    const setChain = React.useCallback(
+    const setChainThroughMolstar = React.useCallback(
         (chainId: string) => {
             if (newSelection.ligandId !== undefined) {
                 console.debug("In ligand view. Not changing chain", newSelection.ligandId);
@@ -80,12 +81,16 @@ export function usePluginRef(options: Options) {
     ]);
 
     React.useEffect(() => {
-        if (pdbePlugin) pdbePlugin.visual.updateDependency.onChainUpdate(setChain);
-    }, [pdbePlugin, setChain]);
+        if (pdbePlugin) pdbePlugin.visual.updateDependency.onChainUpdate(setChainThroughMolstar);
+    }, [pdbePlugin, setChainThroughMolstar]);
 
     React.useEffect(() => {
         if (pdbePlugin) pdbePlugin.visual.updateDependency.isLigandView(getLigandViewState);
     }, [getLigandViewState, pdbePlugin]);
+
+    React.useEffect(() => {
+        if (pdbePlugin) pdbePlugin.updateState.proteinId(proteinId);
+    }, [proteinId, pdbePlugin]);
 
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
@@ -100,20 +105,26 @@ export function usePluginRef(options: Options) {
             if (!ligandChanged && !chainChanged && pluginAlreadyRendered) return;
 
             const plugin = pdbePlugin || new window.PDBeMolstarPlugin();
-            const initParams = getPdbePluginInitParams(newSelection, setChain, getLigandViewState);
+            const initParams = getPdbePluginInitParams(
+                newSelection,
+                setChainThroughMolstar,
+                getLigandViewState
+            );
             debugVariable({ pdbeMolstarPlugin: plugin });
             const mainPdb = getMainItem(newSelection, "pdb");
             const emdbId = getMainItem(newSelection, "emdb");
 
             function loadVoidMolstar(message: string) {
                 if (!element) return;
-                plugin.render(element, getVoidInitParams(setChain, getLigandViewState)).then(() =>
-                    plugin.canvas.showToast({
-                        title: i18n.t("Error"),
-                        message,
-                        key: "init",
-                    })
-                );
+                plugin
+                    .render(element, getVoidInitParams(setChainThroughMolstar, getLigandViewState))
+                    .then(() =>
+                        plugin.canvas.showToast({
+                            title: i18n.t("Error"),
+                            message,
+                            key: "init",
+                        })
+                    );
             }
 
             async function getPdbFromEmdb(emdbId: string) {
@@ -360,7 +371,7 @@ export function usePluginRef(options: Options) {
             prevSelectionRef,
             pdbePlugin,
             newSelection,
-            setChain,
+            setChainThroughMolstar,
             getLigandViewState,
             setPdbePlugin,
             updateLoader,

@@ -22,7 +22,7 @@ import { debugVariable } from "../../../utils/debug";
 import { useReference } from "../../hooks/use-reference";
 import { useAppContext } from "../AppContext";
 import { getCurrentItems, getLigands, loadEmdb, setEmdbOpacity } from "./molstar";
-import { PdbInfo } from "../../../domain/entities/PdbInfo";
+import { getDefaultChain, PdbInfo } from "../../../domain/entities/PdbInfo";
 import { Maybe } from "../../../utils/ts-utils";
 import { routes } from "../../../routes";
 import { getSelectedChain } from "../viewer-selector/ViewerSelector";
@@ -67,6 +67,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         onLigandsLoaded,
         updateLoader,
         loaderBusy,
+        proteinId,
     } = options;
     const { proteinNetwork } = options;
     const { compositionRoot } = useAppContext();
@@ -96,6 +97,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         molstarState,
         setPdbePlugin,
         setPluginLoad,
+        proteinId,
     });
 
     debugVariable({ molstarState });
@@ -112,6 +114,19 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         if (!pluginLoad || !pdbePlugin) return;
         highlight(pdbePlugin, chains, { chainId, ligandId }, molstarState, false);
     }
+
+    function setDefaultChainOnInitState() {
+        if (!pdbePlugin || _.isEmpty(chains)) return;
+        if (chainId === undefined && ligandId === undefined) {
+            const defaultChainId = getDefaultChain(chains);
+            if (defaultChainId) {
+                // This will propagate back onto the selection state through usePluginRef.setChainThroughMolstar()
+                pdbePlugin.visual.updateChain(defaultChainId.chainId);
+            }
+        }
+    }
+
+    React.useEffect(setDefaultChainOnInitState, [chainId, chains, ligandId, pdbePlugin]);
 
     React.useEffect(setLigandsFromMolstar, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection]);
     React.useEffect(applyHighlight, [

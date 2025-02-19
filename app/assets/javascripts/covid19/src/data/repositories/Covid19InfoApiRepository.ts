@@ -155,10 +155,11 @@ function buildStructure(pdbEntry: PdbEntry): Structure {
         hasIDR: l.well.length > 0,
     }));
 
-    const queryLink = `/${pdbEntry.dbId.toLowerCase()}${emdb ? emdb.dbId.toUpperCase() : ""}`;
-    const pdbQueryLink = `/${pdbEntry.dbId.toLowerCase()}${
-        emdb ? "+!" + emdb.dbId.toUpperCase() : ""
-    }`;
+    const pdbId = pdbEntry.dbId.toLowerCase();
+    const emdbId = emdb?.dbId.toUpperCase();
+    const queryLink = `/${pdbId}${emdbId ? "+" + emdbId : ""}`;
+    const pdbQueryLink = `/${pdbId}${emdbId ? "+!" + emdbId : ""}`;
+    const emdbQueryLink = `/!${pdbId}${emdbId ? "+" + emdbId : ""}`;
 
     return {
         id: pdbEntry.dbId,
@@ -176,9 +177,7 @@ function buildStructure(pdbEntry: PdbEntry): Structure {
         },
         emdb: emdb && {
             id: emdb.dbId,
-            queryLink: `/${
-                pdbEntry ? "!" + pdbEntry.dbId.toLowerCase() : ""
-            }+${emdb.dbId.toUpperCase()}`,
+            queryLink: emdbQueryLink,
             emMethod: emdb.emMethod,
             imageUrl:
                 emdb.imageLink ||
