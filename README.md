@@ -60,11 +60,14 @@ docker-compose -f docker-compose.yml -f docker-compose.development.yml up -d
 ```
 
 Re-build container:
+
 ```
-docker-compose -f docker-compose.yml -f docker-compose.development.yml up -d --build
+docker-compose --env-file .env -f docker-compose.yml -f docker-compose.development.yml up -d --build
+docker compose --env-file .env -f docker-compose.yml -f docker-compose.development-2.yml up --build # External database: /tank/services/dev/BNTS/databases
 ```
 
 Stop all containers:
+
 ```
 docker-compose -f docker-compose.yml -f docker-compose.development.yml down
 ```
@@ -131,6 +134,20 @@ To perform an app restart after a change, just run:
 
 ```
 $ touch tmp/restart.txt
+```
+
+## Deploy
+
+Depending on the environment some changes should be made in these files:
+
+-   config/environments/development.rb (config hostnames)
+-   config/settings.yml (base url)
+-   app/assets/javascripts/webserver/webserver_init.js (ga4 code)
+
+Alternatively, for the `webserver_init.js` file, a script could be executed:
+
+```
+$ bash scripts/deploy/set_ga_code.sh --environment [development|production]
 ```
 
 ## Delayed Jobs
