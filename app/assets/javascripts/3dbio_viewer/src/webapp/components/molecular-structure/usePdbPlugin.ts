@@ -531,6 +531,19 @@ export async function applySelectionChangesToPlugin(
 
     ([pdbRedo, cstf] as DbItem<RefinedModelType>[][]).forEach(items => loadRefinedItems(items));
 
+    // Remove unused elements
+    const itemsAfterUpdate = getCurrentItems(plugin);
+    const selectionIds = newItems.map(getId);
+    const danglingItems = itemsAfterUpdate.filter(item => !selectionIds.includes(item.id));
+
+    for (const item of danglingItems) {
+        plugin.visual.remove(getItemSelector(item));
+        molstarState.current = MolstarStateActions.updateItems(
+            molstarState.current,
+            _.differenceBy(oldItems(), [item], getId)
+        );
+    }
+
     if (added.length + removed.length) {
         plugin.visual.reset({ camera: true });
     }
