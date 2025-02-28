@@ -7,8 +7,8 @@ class DataFile < ActiveRecord::Base
 
   def self.save(upload,name,rand_path,post_info=nil)
     directory = LocalPath+'/'+rand_path
-    Dir.mkdir(directory) unless File.exists?(directory)
-    Dir.mkdir(directory+'/MODELS') unless File.exists?(directory+'/MODELS')
+    Dir.mkdir(directory) unless File.exist?(directory)
+    Dir.mkdir(directory+'/MODELS') unless File.exist?(directory+'/MODELS')
     # create the file path
     path = File.join(directory,name)
     # write the file
@@ -25,8 +25,8 @@ class DataFile < ActiveRecord::Base
 
   def self.save_string(content,name,rand_path,post_info=nil)
     directory = LocalPath+'/'+rand_path
-    Dir.mkdir(directory) unless File.exists?(directory)
-    Dir.mkdir(directory+'/MODELS') unless File.exists?(directory+'/MODELS')
+    Dir.mkdir(directory) unless File.exist?(directory)
+    Dir.mkdir(directory+'/MODELS') unless File.exist?(directory+'/MODELS')
     # create the file path
     path = File.join(directory,name)
     # write the file
