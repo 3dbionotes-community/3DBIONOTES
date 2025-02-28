@@ -138,7 +138,6 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     const chainId = selection.chainId;
     const prevChainId = React.useRef(chainId);
-    const chains = React.useMemo(() => pdbInfo?.chains ?? [], [pdbInfo?.chains]);
 
     React.useEffect(() => {
         if (pdbId && pdbId !== prevPdbId.current) resetLoaders(loadersInitialState);
@@ -181,7 +180,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             expanded={viewerSelectorExpanded}
                         />
                         <MolecularStructure
-                            chains={chains}
+                            pdbInfo={pdbInfo}
                             selection={selection}
                             onSelectionChange={setSelection}
                             onLigandsLoaded={setLigands}

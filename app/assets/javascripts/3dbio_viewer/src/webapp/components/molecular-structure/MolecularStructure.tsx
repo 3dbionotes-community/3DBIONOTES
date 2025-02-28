@@ -30,7 +30,7 @@ declare global {
  */
 
 export interface MolecularStructureProps {
-    chains: PdbInfo["chains"];
+    pdbInfo: Maybe<PdbInfo>;
     selection: Selection;
     onSelectionChange(newSelection: Selection): void;
     onLigandsLoaded(ligands: Ligand[]): void;
