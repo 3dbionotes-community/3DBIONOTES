@@ -92,7 +92,11 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     const { pdbInfoLoader, setLigands } = usePdbInfo({ selection, uploadData, onProcessDelay });
     const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfoLoader);
-    const pdbInfo = pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined;
+
+    const pdbInfo = React.useMemo(
+        () => (pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined),
+        [pdbInfoLoader]
+    );
 
     const uploadDataToken = selection.type === "uploadData" ? selection.token : undefined;
     const networkToken = selection.type === "network" ? selection.token : undefined;
@@ -134,6 +138,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     const chainId = selection.chainId;
     const prevChainId = React.useRef(chainId);
+    const chains = React.useMemo(() => pdbInfo?.chains ?? [], [pdbInfo?.chains]);
 
     React.useEffect(() => {
         if (pdbId && pdbId !== prevPdbId.current) resetLoaders(loadersInitialState);
@@ -176,7 +181,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
                             expanded={viewerSelectorExpanded}
                         />
                         <MolecularStructure
-                            pdbInfo={pdbInfo}
+                            chains={chains}
                             selection={selection}
                             onSelectionChange={setSelection}
                             onLigandsLoaded={setLigands}
