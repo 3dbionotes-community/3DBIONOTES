@@ -334,11 +334,11 @@ export function runAction(
             const newMain: FreeSelection["main"] =
                 item.type === "pdb"
                     ? {
-                          emdb: baseMain.emdb,
+                          emdb: undefined,
                           pdb: { type: "pdb", id: item.id, visible: true },
                       }
                     : {
-                          ...baseMain,
+                          pdb: undefined,
                           emdb: { type: "emdb", id: item.id, visible: true },
                       };
 
