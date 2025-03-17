@@ -40,6 +40,7 @@ type Options = {
     setPdbePlugin: React.Dispatch<React.SetStateAction<PDBeMolstarPlugin | undefined>>;
     setPluginLoad: React.Dispatch<React.SetStateAction<Date | undefined>>;
     proteinId: Maybe<string>;
+    setMolstarDefaultChain: () => void;
 };
 
 export function usePluginRef(options: Options) {
@@ -56,6 +57,7 @@ export function usePluginRef(options: Options) {
         molstarState,
         setPdbePlugin,
         proteinId,
+        setMolstarDefaultChain,
     } = options;
 
     const setChainThroughMolstar = React.useCallback(
@@ -91,6 +93,17 @@ export function usePluginRef(options: Options) {
     React.useEffect(() => {
         if (pdbePlugin) pdbePlugin.updateState.proteinId(proteinId);
     }, [proteinId, pdbePlugin]);
+
+    /* Using useRef for hot reload inside pluginRef() */
+    const sequenceCompletedRef = React.useRef(
+        pdbeMolstarSequenceEventCompletedWrapper(setMolstarDefaultChain)
+    );
+
+    React.useEffect(() => {
+        sequenceCompletedRef.current = pdbeMolstarSequenceEventCompletedWrapper(
+            setMolstarDefaultChain
+        );
+    }, [setMolstarDefaultChain]);
 
     const pluginRef = React.useCallback(
         async (element: HTMLDivElement | null) => {
@@ -160,6 +173,7 @@ export function usePluginRef(options: Options) {
                                     plugin,
                                     newSelection
                                 );
+                                //HERE sequenceCompletedRef.current(undefined);
                                 resolve();
                             } else reject(loaderErrors.pdbNotLoaded);
                         },
@@ -177,7 +191,7 @@ export function usePluginRef(options: Options) {
                 const sequenceComplete = new Promise<void>((resolve, reject) => {
                     plugin.events.sequenceComplete.subscribe({
                         next: sequence => {
-                            console.debug("molstar.events.sequenceComplete", sequence);
+                            sequenceCompletedRef.current(sequence);
                             resolve();
                         },
                         error: err => {
@@ -427,6 +441,13 @@ function updateSequenceView(args: {
             plugin.visual.updateChain(selection.chainId);
         }
     }
+}
+
+function pdbeMolstarSequenceEventCompletedWrapper(callback: () => void) {
+    return (sequence: any) => {
+        console.debug("molstar.events.sequenceComplete", sequence);
+        callback();
+    };
 }
 
 function getPdbePluginInitParams(

@@ -92,7 +92,11 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
 
     const { pdbInfoLoader, setLigands } = usePdbInfo({ selection, uploadData, onProcessDelay });
     const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfoLoader);
-    const pdbInfo = pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined;
+
+    const pdbInfo = React.useMemo(
+        () => (pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined),
+        [pdbInfoLoader]
+    );
 
     const uploadDataToken = selection.type === "uploadData" ? selection.token : undefined;
     const networkToken = selection.type === "network" ? selection.token : undefined;
