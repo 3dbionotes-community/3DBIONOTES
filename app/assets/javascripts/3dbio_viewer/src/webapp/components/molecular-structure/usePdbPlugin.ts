@@ -68,6 +68,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         updateLoader,
         loaderBusy,
         proteinId,
+        pdbInfo,
     } = options;
     const { proteinNetwork } = options;
     const { compositionRoot } = useAppContext();
@@ -77,7 +78,9 @@ export function usePdbePlugin(options: MolecularStructureProps) {
     const pdbePlugin = pdbePlugin0 && pluginLoad ? pdbePlugin0 : undefined;
     const chainId = newSelection.chainId;
     const ligandId = newSelection.ligandId;
-    const chains = React.useMemo(() => options.pdbInfo?.chains ?? [], [options.pdbInfo?.chains]);
+
+    const chains = React.useMemo(() => pdbInfo?.chains ?? [], [pdbInfo?.chains]);
+    const chainsRef = React.useRef<PdbInfo["chains"]>([]);
 
     // Keep a reference containing the previous value of selection. We need this value to diff
     // the new state against the old state and perform imperative operations (add/remove/update)
@@ -85,6 +88,35 @@ export function usePdbePlugin(options: MolecularStructureProps) {
     const [prevSelectionRef, setPrevSelection] = useReference<Selection>();
     const [uploadDataToken, extension] =
         newSelection.type === "uploadData" ? [newSelection.token, newSelection.extension] : [];
+
+    const setMolstarDefaultChain = React.useCallback(() => {
+        if (!pdbePlugin || _.isEmpty(chains)) return;
+        if (chainId === undefined && ligandId === undefined) {
+            const defaultChainId = getDefaultChain(chains);
+            // This will propagate back onto the selection state through usePluginRef.setChainThroughMolstar()
+            if (defaultChainId) pdbePlugin.visual.updateChain(defaultChainId.chainId);
+        }
+    }, [chainId, chains, ligandId, pdbePlugin]);
+
+    const setDefaultChainOnlyOnlyOnInitEffect = () => {
+        if (!pdbePlugin || !pdbInfo || pdbInfo.id !== getMainItem(newSelection, "pdb")) return;
+
+        // ChainsRef will only be empty on the first initial render
+        if (_.isEmpty(chainsRef.current) && !_.isEmpty(chains) && pdbePlugin) {
+            const defaultChainId = getDefaultChain(chains);
+            if (defaultChainId) pdbePlugin.visual.updateChain(defaultChainId.chainId);
+            chainsRef.current = chains;
+        } else if (!_.isEmpty(chains)) {
+            chainsRef.current = chains;
+        }
+    };
+
+    React.useEffect(setDefaultChainOnlyOnlyOnInitEffect, [
+        chains,
+        newSelection,
+        pdbInfo,
+        pdbePlugin,
+    ]);
 
     const { pluginRef } = usePluginRef({
         prevSelectionRef,
@@ -98,6 +130,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         setPdbePlugin,
         setPluginLoad,
         proteinId,
+        setMolstarDefaultChain,
     });
 
     debugVariable({ molstarState });
@@ -114,19 +147,6 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         if (!pluginLoad || !pdbePlugin) return;
         highlight(pdbePlugin, chains, { chainId, ligandId }, molstarState, false);
     }
-
-    function setDefaultChainOnInitState() {
-        if (!pdbePlugin || _.isEmpty(chains)) return;
-        if (chainId === undefined && ligandId === undefined) {
-            const defaultChainId = getDefaultChain(chains);
-            if (defaultChainId) {
-                // This will propagate back onto the selection state through usePluginRef.setChainThroughMolstar()
-                pdbePlugin.visual.updateChain(defaultChainId.chainId);
-            }
-        }
-    }
-
-    React.useEffect(setDefaultChainOnInitState, [chainId, chains, ligandId, pdbePlugin]);
 
     React.useEffect(setLigandsFromMolstar, [pluginLoad, pdbePlugin, onLigandsLoaded, newSelection]);
     React.useEffect(applyHighlight, [
@@ -223,8 +243,10 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         const { pdbId, emdbId } = getMainChanges(currentSelection, newSelection);
         if (pdbId) {
             compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(pdbEmdbId => {
-                if (emdbId !== pdbEmdbId)
+                if (emdbId !== pdbEmdbId || (pdbEmdbId === undefined && emdbId === undefined)) {
+                    // Explicitly check for undefined for those models where there is no emdbId
                     updateSelection(currentSelection, setMainItem(newSelection, pdbEmdbId, "emdb"));
+                }
             }, console.error);
         } else if (emdbId && getMainItem(currentSelection, "pdb") === undefined) {
             compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
@@ -234,12 +256,12 @@ export function usePdbePlugin(options: MolecularStructureProps) {
             updateSelection(currentSelection, newSelection);
         }
     }, [
-        compositionRoot,
         pdbePlugin,
-        newSelection,
+        loaderBusy,
         prevSelectionRef,
         setPrevSelection,
-        loaderBusy,
+        newSelection,
+        compositionRoot.getRelatedModels,
         updateSelection,
     ]);
 
@@ -508,6 +530,19 @@ export async function applySelectionChangesToPlugin(
     }
 
     ([pdbRedo, cstf] as DbItem<RefinedModelType>[][]).forEach(items => loadRefinedItems(items));
+
+    // Remove unused elements
+    const itemsAfterUpdate = getCurrentItems(plugin);
+    const selectionIds = newItems.map(getId);
+    const danglingItems = itemsAfterUpdate.filter(item => !selectionIds.includes(item.id));
+
+    for (const item of danglingItems) {
+        plugin.visual.remove(getItemSelector(item));
+        molstarState.current = MolstarStateActions.updateItems(
+            molstarState.current,
+            _.differenceBy(oldItems(), [item], getId)
+        );
+    }
 
     if (added.length + removed.length) {
         plugin.visual.reset({ camera: true });

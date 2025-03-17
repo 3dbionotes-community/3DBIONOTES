@@ -18,7 +18,7 @@ import { Dropdown, DropdownProps } from "../dropdown/Dropdown";
 import { ModelSearch, ModelSearchProps } from "../model-search/ModelSearch";
 import { SelectionItem } from "./SelectionItem";
 import { useUpdateActions } from "../../hooks/use-update-actions";
-import { PdbInfo } from "../../../domain/entities/PdbInfo";
+import { getDefaultChain, PdbInfo } from "../../../domain/entities/PdbInfo";
 import { sendAnalytics } from "../../utils/analytics";
 import { UploadData } from "../../../domain/entities/UploadData";
 import { Maybe } from "../../../utils/ts-utils";
@@ -182,7 +182,8 @@ export function getSelectedChain(
     chains: PdbInfo["chains"] | undefined,
     selectedChain: Maybe<string>
 ) {
-    return chains?.find(chain => chain.chainId === selectedChain);
+    if (!chains) return;
+    else return chains.find(chain => chain.chainId === selectedChain) ?? getDefaultChain(chains);
 }
 
 function useLigandsDropdown(options: ViewerSelectorProps): DropdownProps {

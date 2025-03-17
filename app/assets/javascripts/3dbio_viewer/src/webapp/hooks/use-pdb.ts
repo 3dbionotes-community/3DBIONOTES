@@ -15,9 +15,13 @@ export function usePdbLoader(
 ): [LoaderState<Pdb>, React.Dispatch<React.SetStateAction<LoaderState<Pdb>>>] {
     const { compositionRoot } = useAppContext();
     const [loader, setLoader] = useLoader<Pdb>();
-    const pdbInfo = pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined;
 
-    const pdbId = getMainItem(selection, "pdb");
+    const pdbInfo = React.useMemo(
+        () => (pdbInfoLoader.type === "loaded" ? pdbInfoLoader.data : undefined),
+        [pdbInfoLoader]
+    );
+
+    const pdbId = React.useMemo(() => getMainItem(selection, "pdb"), [selection]);
     const chainId = getChainId(selection);
     const chains = pdbInfo?.chains;
 
