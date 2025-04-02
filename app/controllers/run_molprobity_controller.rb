@@ -6,6 +6,11 @@ class RunMolprobityController < ApplicationController
   LocalScripts = Settings.GS_LocalScripts
   LocalMolProobity_tmp = Settings.GS_LocalMolProobity_tmp
 
+  def run(command)
+    pid = spawn(command)
+    Process.detach(pid)
+  end
+
   def get
     suffix = params[:name]
     data = nil
@@ -29,13 +34,13 @@ class RunMolprobityController < ApplicationController
       out = {'status'=>'running', 'id'=>suffix}
       if not File.exist?(directory)
         if suffix =~ /^\d{1}\w{3}$/ and suffix !~ /^\d{4}$/ then
-          system( LocalScripts+"/python3_run_molprobity "+suffix+" &" )
+          run( LocalScripts+"/python3_run_molprobity "+suffix)
         elsif suffix =~ /interactome3d:/ then
           FileUtils.mkdir_p directory
-          system( LocalScripts+"/run_molprobity "+i3d_pdb+" interactome3d >"+directory+"/stdout &>"+directory+"/stderr &")
+          run( LocalScripts+"/run_molprobity "+i3d_pdb+" interactome3d >"+directory+"/stdout &>"+directory+"/stderr")
         else
           Dir.mkdir(directory)
-          system( LocalScripts+"/run_molprobity "+suffix+" local >"+directory+"/stdout &>"+directory+"/stderr &")
+          run( LocalScripts+"/run_molprobity "+suffix+" local >"+directory+"/stdout &>"+directory+"/stderr")
         end
       else
         if File.exist?(directory+'/done') then
