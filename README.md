@@ -17,6 +17,8 @@
 
 Use rvm or rbenv to select the Ruby version specified in Gemfile and then run:
 
+*Note:* To install rvm on Ubuntu, follow the instructions on the [ubuntu rvm repository](https://github.com/rvm/ubuntu_rvm)
+
 ```
 $ rvm install ruby-3.3.1
 $ gem install bundler:2.5.10
@@ -53,7 +55,10 @@ $ bundle exec rails server
 ### Setup docker-compose
 
 1. Create .env file from .env.sample
-2. Start docker containers with following command
+2. Uncomment and fill the mandatory environment variables in the .env file, w: APP_BASE_PATH, APP_DATABASES_PATH, BLAST_BIN,BLAST_DATABASE and DB_EXT_DBS.
+Docker compose won't launch the containers otherwise or if they are empty. The value needed is a path to bind in your system.
+3. (Optional) Adapt the reamining environment, such as ports and database credentials
+3. Start docker containers with following command
 
 ```
 docker-compose -f docker-compose.yml -f docker-compose.development.yml up -d
