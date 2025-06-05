@@ -98,6 +98,7 @@ module GlobalTools
           begin
             _url = URI.parse(url)
             http = Net::HTTP.new(_url.host, _url.port)
+            http.use_ssl = (_url.scheme == "https") # Ensure HTTPS is used if needed
             request = Net::HTTP::Get.new(input, {'Content-Type' => 'application/json'})         
             response = http.request(request)
           rescue

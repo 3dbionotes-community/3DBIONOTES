@@ -12,10 +12,10 @@ module ProteinManager
         rand = (0...20).map { ('a'..'z').to_a[rand(26)] }.join.upcase
       end
 
-      File.write(LocalPath+"/"+rand+"_can_seq", uniprot_seq)
-      File.write(LocalPath+"/"+rand+"_trans_seq", transcript_seq)
+      File.write(LocalPath+rand+"_can_seq", uniprot_seq)
+      File.write(LocalPath+rand+"_trans_seq", transcript_seq)
     
-      cmd = "echo \"\n\" | water -asequence "+LocalPath+"/"+rand+"_can_seq -bsequence "+LocalPath+"/"+rand+"_trans_seq -gapopen 50 -gapextend 0 -datafile "+IdentityMatrix+" -aformat3 markx10 -stdout -aglobal3 Y -awidth3 1000000 2> /dev/null"
+      cmd = "echo \"\n\" | water -asequence "+LocalPath+rand+"_can_seq -bsequence "+LocalPath+rand+"_trans_seq -gapopen 50 -gapextend 0 -datafile "+IdentityMatrix+" -aformat3 markx10 -stdout -aglobal3 Y -awidth3 1000000 2> /dev/null"
       begin 
         ws  = `#{cmd}`
         align = ws.split(/\>\s\.\.\s/)
@@ -90,8 +90,8 @@ module ProteinManager
           trans2can[i] = -1
         end
     
-        system("rm "+LocalPath+"/"+rand+"_can_seq")
-        system("rm "+LocalPath+"/"+rand+"_trans_seq")
+        system("rm "+LocalPath+rand+"_can_seq")
+        system("rm "+LocalPath+rand+"_trans_seq")
     
         return [can2trans,trans2can,{'score'=>score,'identity'=>identity, 'pdb_seq'=>pdb_seq}]
       rescue Exception => e  

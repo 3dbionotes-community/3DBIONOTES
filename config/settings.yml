@@ -1,5 +1,5 @@
 GS_BaseUrl: "http://localhost:3000/"
-GS_EnsemblServer: "https://rest.ensembl.org/"
+GS_EnsemblServer: "https://rest.ensembl.org"
 GS_UniServer: "https://www.uniprot.org/"
 GS_SIFTSUrl: "https://ftp.ebi.ac.uk/pub/databases/msd/sifts/xml/"
 GS_PDBeServer: "https://www.ebi.ac.uk/pdbe/api/"
