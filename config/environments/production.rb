@@ -24,7 +24,8 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  # config.serve_static_files = true //DEPRECATED
+  config.public_file_server.enabled = false
 
   # Compress JavaScripts and CSS.
   # config.assets.css_compressor = :sass
@@ -34,7 +35,7 @@ Rails.application.configure do
 
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
-  config.assets.digest = false
+  # config.assets.digest = false
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
@@ -70,7 +71,7 @@ Rails.application.configure do
   config.i18n.fallbacks = true
 
   # Send deprecation notices to registered listeners.
-  config.active_support.deprecation = :notify
+  config.active_support.deprecation = :log
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
