@@ -10,7 +10,7 @@ import { getStorageCache, hashUrl, setStorageCache } from "./storage-cache";
 
 export type RequestError = { message: string };
 
-const timeout = 30e3;
+const timeout = 60e3;
 
 export function getFromUrl<Data>(url: string): Future<RequestError, Data> {
     return request<Data>({ method: "GET", url, timeout }).map(res => res.data);
