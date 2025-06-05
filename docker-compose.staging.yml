@@ -1,5 +1,6 @@
 name: '3dbionotes-ruby'
 services:
+  # Data Base
   db:
     image: mysql:8.0
     container_name: db
@@ -11,6 +12,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWD}
     volumes:
       - dbdata:/var/lib/mysql
+      - ${DB_EXT_DBS}:/media/databases
     expose:
       - "3306"
     deploy:
@@ -19,9 +21,12 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+    healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+        timeout: 20s
+        retries: 10
 
-  # Data Base web interface
-  # used during development for easy access to tables and data
+  # Data Base web interface used during development for easy access to tables and data
   pma:
     image: phpmyadmin/phpmyadmin
     environment:
@@ -32,10 +37,15 @@ services:
     ports:
       - "${PMA_EXT_PORT}:80"
     depends_on:
-            db:
-                condition: service_healthy
+      db:
+        condition: service_healthy
 
+  # Ruby on Rails
   web:
+    image: ${IMAGE_NAME}
+    build:
+      context: .
+    env_file: .env
     container_name: web-ruby
     tty: true
     command: 
@@ -45,7 +55,8 @@ services:
         RAILS_ENV=production bundle exec rake db:migrate &&
         RAILS_ENV=production bundle exec rails s -p 3000 -b '0.0.0.0'
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ${APP_BASE_PATH}:/services/bionotes
       - ${APP_DATABASES_PATH}:/services/bionotes/databases
@@ -78,6 +89,26 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
+  # blast:
+  #   image: ncbi/blast
+  #   command: "/bin/bash"
+  #   deploy:
+  #       restart_policy:
+  #         condition: on-failure
+  #         delay: 5s
+  #         max_attempts: 3
+  #         window: 120s
+  #   volumes:
+  #     - ${BLAST_DB}:/blast/blastdb
+  #     - ${BLAST_DB_CUSTOM}:/blast/blastdb_custom
+  #     - ${BLAST_QUERIES}:/blast/queries
+  #     - ${BLAST_RESULTS}:/blast/results
+
 volumes:
   dbdata: null
   public-assets:
+
+# networks:
+#   bnts-nw:
+#     name: ${APP_NETWORK_NAME}
+#     external: true
