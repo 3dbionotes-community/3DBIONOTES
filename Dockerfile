@@ -19,6 +19,9 @@ RUN cd app/assets/javascripts/covid19 && yarn install && yarn localize && yarn b
 # Precompile assets and move JS builds to public/assets
 RUN RAILS_ENV=production bundle exec rake assets:clobber
 RUN RAILS_ENV=production bundle exec rake assets:precompile
+# Ensure clean assets directory for 3dbio_viewer and covid19
+RUN rm -rf public/assets/3dbio_viewer
+RUN rm -rf public/assets/covid19
 RUN mkdir public/assets/3dbio_viewer
 RUN mkdir public/assets/covid19
 RUN cp -r app/assets/javascripts/3dbio_viewer/build public/assets/3dbio_viewer/build
