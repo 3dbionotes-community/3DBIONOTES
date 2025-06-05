@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
     if request.format != :js
       @error_short = exception.message
       @error_message = "\n\nEXCEPTION\n"+exception.message+"\n"+exception.backtrace.join("\n")+"\nEND exception\n\n"
+      @twitter_buttons = [:both]
       logger.warn( @error_message )
       respond_to do |format|
         format.html { render template: 'errors/global_exception', layout: "layouts/webserver", status: 500 }
