@@ -64,7 +64,7 @@ services:
       - bash
       - -c
       - |
-        sed "s/__BWS_API_PORT__/${BWS_API_PORT}/g" /etc/nginx/nginx.conf.template > /tmp/nginx.conf &&
+        sed "s/__BWS_API_PORT__/${BWS_API_PORT}/g; s/__LRS_API_PORT__/${LRS_API_PORT}/g" /etc/nginx/nginx.conf.template > /tmp/nginx.conf &&
         nginx -c /tmp/nginx.conf -g 'daemon off;'
     ports:
       - "${APP_EXT_PORT}:80"
