@@ -8,10 +8,10 @@ module MainManager
       def _fetch_uniprot_data(identifierName)
         @badName = false
         options = Hash.new
-        url = BaseUrl+"/api/mappings/Uniprot/PDB/"+identifierName
+        url = BaseUrl+"api/mappings/Uniprot/PDB/"+identifierName
         jsonData = getUrl(url)
         mappingData = JSON.parse(jsonData)
-        url = BaseUrl+"/api/lengths/UniprotMulti/"+identifierName
+        url = BaseUrl+"api/lengths/UniprotMulti/"+identifierName
         jsonData = getUrl(url)
         uniLength = JSON.parse(jsonData)
         if uniLength.length == 0

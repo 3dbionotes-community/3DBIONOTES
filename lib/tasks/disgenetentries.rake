@@ -43,10 +43,10 @@ namespace :disgenetentries do
               #puts "analyzinng "+t["Parent"]+"\t"+trans2acc[ t["Parent"] ]
               #puts "\t"+location
               uniprot_acc = trans2acc[ t["Parent"] ]
-              url = baseUrl+"/api/mappings/Uniprot/ENSEMBL/transcript/"+uniprot_acc
+              url = BaseUrl+"api/mappings/Uniprot/ENSEMBL/transcript/"+uniprot_acc
               data = data = Net::HTTP.get_response(URI.parse(url)).body
               ensembl_mapping = JSON.parse(data)
-              url = baseUrl+"/api/alignments/ENSEMBL/"+ensembl_mapping['gene']['id']+"/"+ensembl_mapping['transcript'][0]['id']+"/"+uniprot_acc
+              url = BaseUrl+"api/alignments/ENSEMBL/"+ensembl_mapping['gene']['id']+"/"+ensembl_mapping['transcript'][0]['id']+"/"+uniprot_acc
               data = data = Net::HTTP.get_response(URI.parse(url)).body
               alignment = json = JSON.parse(data)
               if alignment["gene"]['strand'] > 0 then
