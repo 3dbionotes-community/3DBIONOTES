@@ -1,6 +1,6 @@
 class AnnotationsPpiController < ApplicationController
   
-  skip_before_filter :verify_authenticity_token, :only => [:getPOST,:getComplexCustomData,:getComplexVariants]
+  skip_before_action :verify_authenticity_token, :only => [:getPOST,:getComplexCustomData,:getComplexVariants]
 
   include AnnotationPpiManager::FetchProteinData
   include AnnotationPpiManager::FetchNetworkData

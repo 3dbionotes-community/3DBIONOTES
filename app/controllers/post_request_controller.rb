@@ -1,5 +1,5 @@
 class PostRequestController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => [:upload]
+  skip_before_action :verify_authenticity_token, :only => [:upload]
 
   include GlobalTools::FetchParserTools
   include ProteinManager::BlastSearch
