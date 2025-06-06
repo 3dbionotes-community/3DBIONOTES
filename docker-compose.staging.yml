@@ -12,7 +12,7 @@ services:
             MYSQL_PASSWORD: ${DB_PASSWD}
         volumes:
             - dbdata:/var/lib/mysql
-            - ${DB_EXT_DBS}:/media/databases
+            - ${APP_DATABASES_PATH}:/media/databases
         expose:
             - "3306"
         deploy:
@@ -58,7 +58,8 @@ services:
             db:
                 condition: service_healthy
         volumes:
-            - ${APP_BASE_PATH}:/services/bionotes
+            - ${ROOT_BASE_PATH}:/services/bionotes
+            - ${APP_BASE_PATH}:/services/bionotes/apps/bionotes
             - ${APP_DATABASES_PATH}:/services/bionotes/databases
             - ${BLAST_BIN}:/external/ncbi-blast
             - ${BLAST_DATABASE}:/external/db-blast
@@ -81,11 +82,10 @@ services:
         ports:
             - "${APP_EXT_PORT}:80"
         volumes:
-            - ./nginx.conf:/etc/nginx/nginx.conf.template:ro
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf.template:ro
             - public-assets:/app/public:ro
         environment:
             - NGINX_PORT=80
-            - BWS_API_PORT=${BWS_API_PORT}
         extra_hosts:
             - "host.docker.internal:host-gateway"
 
@@ -107,7 +107,7 @@ services:
 volumes:
     dbdata: null
     public-assets:
-# networks:
-#   bnts-nw:
-#     name: ${APP_NETWORK_NAME}
-#     external: true
+
+networks:
+    bnts-nw:
+        external: true
