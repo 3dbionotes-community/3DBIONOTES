@@ -10,19 +10,25 @@ WORKDIR /app
 COPY Gemfile ./Gemfile
 COPY Gemfile.lock ./Gemfile.lock
 RUN bundle install
+
+# Install 3dbio_viewer and covid19 outside of the main app directory
+RUN mkdir -p /app/node-builds
+COPY app/assets/javascripts/3dbio_viewer/ /app/node-builds/
+COPY app/assets/javascripts/covid19/ /app/node-builds/
+RUN cd app/node-builds/3dbio_viewer && yarn install && yarn build
+RUN cd app/node-builds/covid19 && yarn install && yarn localize && yarn build
+
+# Copy main app files
 COPY . /app/
 COPY config/database.example.yml /app/config/database.yml
 COPY config/secrets.example.yml /app/config/secrets.yml
-RUN cd app/assets/javascripts/3dbio_viewer && yarn install && yarn build
-RUN cd app/assets/javascripts/covid19 && yarn install && yarn localize && yarn build
 
 # Precompile assets and move JS builds to public/assets
 RUN RAILS_ENV=production bundle exec rake assets:clobber
 RUN RAILS_ENV=production bundle exec rake assets:precompile
+
 # Ensure clean assets directory for 3dbio_viewer and covid19
-RUN rm -rf public/assets/3dbio_viewer
-RUN rm -rf public/assets/covid19
-RUN mkdir public/assets/3dbio_viewer
-RUN mkdir public/assets/covid19
-RUN cp -r app/assets/javascripts/3dbio_viewer/build public/assets/3dbio_viewer/build
-RUN cp -r app/assets/javascripts/covid19/build public/assets/covid19/build
+RUN rm -rf public/assets/3dbio_viewer && rm -rf public/assets/covid19
+RUN mkdir public/assets/3dbio_viewer && mkdir public/assets/covid19
+RUN cp -r app/node-builds/3dbio_viewer/build public/assets/3dbio_viewer/build
+RUN cp -r app/node-builds/covid19/build public/assets/covid19/build
