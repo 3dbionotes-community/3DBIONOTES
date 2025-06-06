@@ -97,6 +97,7 @@ volumes:
     bionotes-upload:
     bionotes-db:
     bionotes-databases:
+
 networks:
     bnts-network:
         driver: bridge
