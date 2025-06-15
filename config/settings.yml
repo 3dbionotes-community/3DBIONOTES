@@ -1,3 +1,5 @@
+APP_EXT_PORT: <%= ENV['APP_EXT_PORT'] %>
+
 GS_BaseUrl: "http://localhost:3000/"
 GS_EnsemblServer: "https://rest.ensembl.org"
 GS_UniServer: "https://www.uniprot.org/"
@@ -36,4 +38,3 @@ GS_LocalContingencyACC: "/compute/contingency/uniprot/"
 
 GS_IdentityMatrixFile: "/services/bionotes/apps/ENSEMBL/IDENTITY"
 GS_ElmScript: "/services/bionotes/apps/ELMDB/get_elm_data"
-

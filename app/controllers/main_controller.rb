@@ -1,4 +1,9 @@
 class MainController < ApplicationController
+  
+  if Rails.env.development?
+    skip_before_action :verify_authenticity_token, only: [:home]
+  end
+
   include GlobalTools::FetchParserTools
   include MainManager::MainTools
   include MainManager::ToolsMain::BuildAlignment
@@ -20,7 +25,9 @@ class MainController < ApplicationController
 
   def home
     if params[:queryId].blank? && params[:annotations_url].blank?
-      redirect_to ws_path
+      ws_path_uri = URI.parse(ws_path)
+      ws_path_uri.port = Settings.APP_EXT_PORT
+      redirect_to ws_path_uri.to_s
     end
     if request.referer
       logger.info("  HTTP Referer: #{request.referer}")
@@ -28,7 +35,9 @@ class MainController < ApplicationController
     identifierName = params[:queryId]
     if !identifierName.nil?
       identifierName.strip!
-      redirect_to ws_path + "/viewer/#/" + identifierName
+      ws_path_uri = URI.parse(ws_path) # Note: not sure why rails doesn't let me define ws_path_uri outside
+      ws_path_uri.port = Settings.APP_EXT_PORT
+      redirect_to ws_path_uri.to_s + "/viewer/#/" + identifierName
     end
   end
 

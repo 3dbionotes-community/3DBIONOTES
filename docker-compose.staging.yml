@@ -79,16 +79,10 @@ services:
         container_name: nginx-ruby
         depends_on:
             - web
-        command:
-            - bash
-            - -c
-            - |
-                sed "s/__BWS_API_PORT__/${BWS_API_PORT}/g; s/__LRS_API_PORT__/${LRS_API_PORT}/g" /etc/nginx/nginx.conf.template > /tmp/nginx.conf &&
-                nginx -c /tmp/nginx.conf -g 'daemon off;'
         ports:
             - "${APP_EXT_PORT}:80"
         volumes:
-            - ./nginx/nginx.conf:/etc/nginx/nginx.conf.template:ro
+            - ./nginx/staging.conf.template:/etc/nginx/templates/default.conf.template:ro
             - public-assets:/app/public:ro
         environment:
             - NGINX_PORT=80
