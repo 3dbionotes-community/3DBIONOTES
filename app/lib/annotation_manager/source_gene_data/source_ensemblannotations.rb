@@ -10,7 +10,7 @@ module AnnotationManager
           out = {'repeat'=>[],'simple'=>[],'constrained'=>[],'motif'=>[]}
           #returnValue = {}
           #begin
-          #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=repeat;content-type=application/json"))
+          #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"/overlap/id/"+ensembl_id+"?feature=repeat;content-type=application/json"))
           #rescue
           #  puts "Error: #{$!}"
           #end
@@ -22,7 +22,7 @@ module AnnotationManager
           #end
      
           #begin
-          #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=simple;content-type=application/json"))
+          #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"/overlap/id/"+ensembl_id+"?feature=simple;content-type=application/json"))
           #rescue
           #  puts "Error: #{$!}"
           #end
@@ -34,7 +34,7 @@ module AnnotationManager
           #end
 
           #begin
-          #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=constrained;content-type=application/json"))
+          #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"/overlap/id/"+ensembl_id+"?feature=constrained;content-type=application/json"))
           #rescue
           #  puts "Error: #{$!}"
           #end
@@ -46,7 +46,7 @@ module AnnotationManager
           #end
 
           #begin
-          #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=motif;content-type=application/json"))
+          #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"/overlap/id/"+ensembl_id+"?feature=motif;content-type=application/json"))
           #rescue
           #  puts "Error: #{$!}"
           #end
@@ -58,7 +58,7 @@ module AnnotationManager
           #end
 
           begin
-            data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=transcript;feature=exon;content-type=application/json"))
+            data = Net::HTTP.get_response(URI.parse(EnsemblURL+"/overlap/id/"+ensembl_id+"?feature=transcript;feature=exon;content-type=application/json"))
           rescue
             puts "Error: #{$!}"
           end

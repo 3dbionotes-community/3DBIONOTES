@@ -10,9 +10,13 @@ import { getStorageCache, hashUrl, setStorageCache } from "./storage-cache";
 
 export type RequestError = { message: string };
 
-const timeout = 30e3;
+const defaultTimeout = 45e3;
 
-export function getFromUrl<Data>(url: string): Future<RequestError, Data> {
+export function getFromUrl<Data>(
+    url: string,
+    options = { timeout: defaultTimeout }
+): Future<RequestError, Data> {
+    const { timeout } = options;
     return request<Data>({ method: "GET", url, timeout }).map(res => res.data);
 }
 
@@ -20,7 +24,7 @@ export function getTextFromUrl(url: string): Future<RequestError, string> {
     return request<string>({
         method: "GET",
         url,
-        timeout,
+        timeout: defaultTimeout,
         responseType: "text",
         transformResponse: [data => data],
     }).map(res => res.data);
@@ -30,8 +34,11 @@ export function getJSONData<Data>(url: string): FutureData<Data> {
     return getFromUrl<Data>(url);
 }
 
-export function getJSON<Data>(url: string): Future<RequestError, Maybe<Data>> {
-    const data$ = getFromUrl<Data>(url) as Future<RequestError, Maybe<Data>>;
+export function getJSON<Data>(
+    url: string,
+    options = { timeout: defaultTimeout }
+): Future<RequestError, Maybe<Data>> {
+    const data$ = getFromUrl<Data>(url, options) as Future<RequestError, Maybe<Data>>;
 
     return data$.flatMapError(_err => {
         console.debug(`Cannot get data: ${url}`);

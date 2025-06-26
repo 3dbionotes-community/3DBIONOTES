@@ -7,9 +7,8 @@ class ContingencyAnalysisController < ApplicationController
   include ContingencyAnalysisManager::FetchContingencyAnalysis
 
   require 'rubystats'
-  require 'gsl'
 
-  skip_before_filter :verify_authenticity_token, :only => [:analyse_uniprot,:analyse_pdb]
+  skip_before_action :verify_authenticity_token, :only => [:analyse_uniprot,:analyse_pdb]
 
   def analyse_uniprot
     acc = params[:acc]

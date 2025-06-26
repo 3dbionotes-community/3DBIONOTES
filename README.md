@@ -56,20 +56,19 @@ $ bundle exec rails server
 2. Start docker containers with following command
 
 ```
-docker-compose -f docker-compose.yml -f docker-compose.development.yml up -d
+docker compose --env-file .env -f docker-compose.development.yml up -d
 ```
 
 Re-build container:
 
 ```
-docker-compose --env-file .env -f docker-compose.yml -f docker-compose.development.yml up -d --build
-docker compose --env-file .env -f docker-compose.yml -f docker-compose.development-2.yml up --build # External database: /tank/services/dev/BNTS/databases
+docker compose --env-file .env -f docker-compose.development.yml up -d --build
 ```
 
 Stop all containers:
 
 ```
-docker-compose -f docker-compose.yml -f docker-compose.development.yml down
+docker compose -f docker-compose.development.yml down
 ```
 
 ### Setup Viewer

@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '3.3.1'
 
 gem 'rails', '7.1.3.2'
+gem 'net-ftp'
 
 #gem 'mysql2', '0.4.10'
 gem 'mysql2', '0.5.6'

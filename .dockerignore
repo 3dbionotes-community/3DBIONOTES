@@ -1,0 +1,54 @@
+# Ignore bundler config
+/.bundle
+
+# Ignore log files and temp files.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore Rails master key
+/config/master.key
+/config/credentials.yml.enc
+
+# Ignore node_modules in all subdirectories (including ./app/**)
+/node_modules
+/app/**/node_modules
+
+# Ignore yarn and npm logs
+yarn-debug.log*
+yarn-error.log*
+npm-debug.log*
+
+# Ignore byebug command history file.
+/.byebug_history
+
+# Ignore coverage reports
+/coverage/
+
+# Ignore system test files
+/spec/examples.txt
+
+# Ignore public assets that are compiled
+/public/assets
+
+# Ignore storage files
+/storage/*
+!/storage/.keep
+
+# Ignore database files
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Ignore environment files
+.env
+.env.*
+
+# Ignore Docker-related files
+Dockerfile*
+docker-compose*
+
+# Ignore Mac and Linux system files
+.DS_Store
+*.swp
+*~
