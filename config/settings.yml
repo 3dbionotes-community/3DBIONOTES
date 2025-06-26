@@ -1,5 +1,7 @@
-GS_BaseUrl: "https://3dbionotes.cnb.csic.es/"
-GS_EnsemblServer: "https://rest.ensembl.org/"
+APP_EXT_PORT: <%= ENV['APP_EXT_PORT'] %>
+
+GS_BaseUrl: "http://localhost:3000/"
+GS_EnsemblServer: "https://rest.ensembl.org"
 GS_UniServer: "https://www.uniprot.org/"
 GS_SIFTSUrl: "https://ftp.ebi.ac.uk/pub/databases/msd/sifts/xml/"
 GS_PDBeServer: "https://www.ebi.ac.uk/pdbe/api/"
@@ -36,4 +38,3 @@ GS_LocalContingencyACC: "/compute/contingency/uniprot/"
 
 GS_IdentityMatrixFile: "/services/bionotes/apps/ENSEMBL/IDENTITY"
 GS_ElmScript: "/services/bionotes/apps/ELMDB/get_elm_data"
-

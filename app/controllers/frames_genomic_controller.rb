@@ -11,7 +11,7 @@ class FramesGenomicController < ApplicationController
     if uniprot_acc.nil?
       @alignment = nil
     else
-      url = BaseUrl+"/api/mappings/Uniprot/ENSEMBL/transcript/"+uniprot_acc
+      url = BaseUrl+"api/mappings/Uniprot/ENSEMBL/transcript/"+uniprot_acc
       begin
         jsonData = JSON.parse(getUrl(url))
       rescue
@@ -19,7 +19,7 @@ class FramesGenomicController < ApplicationController
       end
       if !jsonData['gene'].nil?
         @ensembl_mapping = jsonData
-        url = BaseUrl+"/api/alignments/ENSEMBL/"+@ensembl_mapping['gene']['id']+"/"+@ensembl_mapping['transcript'][0]['id']+"/"+uniprot_acc
+        url = BaseUrl+"api/alignments/ENSEMBL/"+@ensembl_mapping['gene']['id']+"/"+@ensembl_mapping['transcript'][0]['id']+"/"+uniprot_acc
         jsonData = getUrl(url)
         @alignment = JSON.parse(jsonData)
         @ensembl_select_options = {}
@@ -28,12 +28,12 @@ class FramesGenomicController < ApplicationController
         end 
 
         @selected = @ensembl_mapping['gene']['id']+"/"+@ensembl_mapping['transcript'][0]['id']+"/"+uniprot_acc
-        url = BaseUrl+"/api/annotations/ENSEMBL/variation/"+@ensembl_mapping['gene']['id']
+        url = BaseUrl+"api/annotations/ENSEMBL/variation/"+@ensembl_mapping['gene']['id']
         jsonData = getUrl(url)
         @variations = JSON.parse(jsonData)
 
         @selected = @ensembl_mapping['gene']['id']+"/"+@ensembl_mapping['transcript'][0]['id']+"/"+uniprot_acc
-        url = BaseUrl+"/api/annotations/ENSEMBL/annotation/"+@ensembl_mapping['gene']['id']
+        url = BaseUrl+"api/annotations/ENSEMBL/annotation/"+@ensembl_mapping['gene']['id']
         jsonData = getUrl(url)
         annotations = JSON.parse(jsonData)
         annotations['transcripts']['other_coding']={}

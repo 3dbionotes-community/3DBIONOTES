@@ -10,7 +10,7 @@ module AnnotationManager
           out = {'variation'=>[],'somatic_variation'=>[]}
           returnValue = {}
           begin
-            data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=variation;feature=somatic_variation;feature=structural_variation;feature=somatic_structural_variation;content-type=application/json"))
+            data = Net::HTTP.get_response(URI.parse(EnsemblURL+"/overlap/id/"+ensembl_id+"?feature=variation;feature=somatic_variation;feature=structural_variation;feature=somatic_structural_variation;content-type=application/json"))
           rescue
             puts "Error: #{$!}"
           end
@@ -37,7 +37,7 @@ module AnnotationManager
           end
           #returnValue = {}
           #begin
-          #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"overlap/id/"+ensembl_id+"?feature=somatic_variation;content-type=application/json"))
+          #  data = Net::HTTP.get_response(URI.parse(EnsemblURL+"/overlap/id/"+ensembl_id+"?feature=somatic_variation;content-type=application/json"))
           #rescue
           #  puts "Error: #{$!}"
           #end

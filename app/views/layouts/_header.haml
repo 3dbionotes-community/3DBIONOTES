@@ -3,7 +3,7 @@
     .container-fluid
       #Logo.d-flex.align-items-center
         %a.navbar-brand{:href => ws_path}
-          = image_tag "3DBionotesLogo-small.jpg", {:height => "72", :style => "height: auto;width: 260px;"}
+          = image_tag "3DBionotesLogo-small.jpg", height: 72, style: "height: auto;width: 260px;"
         %button.navbar-toggler{"data-target" => "#navcol-1", "data-toggle" => "collapse"}
           %span.sr-only Toggle navigation
           %span.navbar-toggler-icon
@@ -26,12 +26,12 @@
       #partnersLogos.align-items-center
         %span Funded by:
         %a{:href=>"https://www.csic.es/", :target => "_blank", :title => "CSIC - Spanish National Research Council"}
-          %img{:height => "60", :src => "/assets/100_CSIC.jpg", :alt => "CSIC - Spanish National Research Council"}/
+          = image_tag "100_CSIC.jpg", height: 60, alt: "CSIC - Spanish National Research Council"
         %a{:href=>"http://www.cnb.csic.es/index.php/", :target => "_blank", :title => "CNB - Spanish National Centre for Biotechnology"}
-          %img{:height => "40", :src => "/assets/CNB_logo.jpg", :alt => "CNB - Spanish National Centre for Biotechnology"}/
+          = image_tag "CNB_logo.jpg", height: 40, alt: "CNB - Spanish National Centre for Biotechnology"
         %a{:href=>"https://instruct-eric.org/", :target => "_blank", :title => "Instruct-ERIC"}
-          %img{:height => "40", :src => "/assets/instruct-eric-logo-noline.png", :alt => "Instruct-ERIC", :style => "margin-left: 20px;"}/
+          = image_tag "instruct-eric-logo-noline.png", height: 40, alt: "Instruct-ERIC", style: "margin-left: 20px;"
         %a{:href=>"https://eoscfuture.eu/", :target => "_blank", :title => "EOSC Future"}
-          %img{:height => "48", :src => "/assets/eosc_future_logo.png", :alt => "EOSC Future", :style => "margin-left: 16px;"}/
+          = image_tag "eosc_future_logo.png", height: 48, alt: "EOSC Future", style: "margin-left: 16px;"
         %a{:href=>"https://inb-elixir.es/", :target => "_blank", :title => "INB - Spanish National Bioinformatics Institute"}
-          %img{:height => "48", :src => "/assets/inbelixir.png", :alt => "INB - Spanish National Bioinformatics Institute", :style => "margin-left: 16px;"}/
+          = image_tag "inbelixir.png", height: 48, alt: "INB - Spanish National Bioinformatics Institute", style: "margin-left: 16px;"

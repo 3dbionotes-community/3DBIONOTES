@@ -15,11 +15,11 @@
         .col-12.col-sm-10.col-lg-8.offset-sm-1.offset-lg-2.errorMain
           .row
             .col-12.col-sm-10.col-lg-8.offset-sm-1.offset-lg-2
+              %a.d-block{:href => "ws"}
+                = image_tag "3DBionotesLogo.jpg", class: "w-75"
               %h1.m-0 404
               %h5 The page you were looking for doesn't exist.
               %p You may have mistyped the address or the page may have moved.
               %p.small If you are the application owner check the logs for more information.
               %a.btn.btn-primary{:href => ws_home_path, :role => "button"} Take me to the Home Page
-              %a.d-block{:href => "ws"}
-                %img.w-75{:src => "assets/img/3DBionotesLogo.jpg"}/
           %div
