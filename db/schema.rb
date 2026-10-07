@@ -11,57 +11,57 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2019_01_23_152406) do
-  create_table "annotations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "annotations", force: :cascade do |t|
     t.string "proteinId"
     t.string "source"
     t.string "digest"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "biomutaentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "biomutaentries", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "resId"
     t.index ["proteinId"], name: "index_biomutaentries_on_proteinId"
   end
 
-  create_table "biopython_interactome3ds", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "biopython_interactome3ds", force: :cascade do |t|
     t.string "pdbId"
-    t.text "asa", size: :long
-    t.text "interface", size: :long
-    t.text "rri", size: :long
-    t.text "rri_raw", size: :long
-    t.text "rri_n", size: :long
+    t.text "asa", limit: 4294967295
+    t.text "interface", limit: 4294967295
+    t.text "rri", limit: 4294967295
+    t.text "rri_raw", limit: 4294967295
+    t.text "rri_n", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "biopython_interfaces", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "biopython_interfaces", force: :cascade do |t|
     t.string "pdbId"
-    t.text "asa", size: :long
-    t.text "interface", size: :long
-    t.text "rri", size: :long
+    t.text "asa", limit: 4294967295
+    t.text "interface", limit: 4294967295
+    t.text "rri", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "rri_raw", size: :long
-    t.text "rri_n", size: :long
+    t.text "rri_raw", limit: 4294967295
+    t.text "rri_n", limit: 4294967295
   end
 
-  create_table "dbptmentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "dbptmentries", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "delayed_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
-    t.text "handler", size: :long, null: false
+    t.text "handler", limit: 4294967295
     t.text "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
@@ -73,60 +73,60 @@ ActiveRecord::Schema[7.1].define(version: 2019_01_23_152406) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "dsysmapentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "dsysmapentries", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "ebifeaturesentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "ebifeaturesentries", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "features_type"
   end
 
-  create_table "elmdbentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "elmdbentries", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "ensembl_data", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "ensembl_data", force: :cascade do |t|
     t.string "geneId"
     t.string "transcriptId"
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "ensemblannotationentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "ensemblannotationentries", force: :cascade do |t|
     t.string "geneId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "ensemblvariantentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "ensemblvariantentries", force: :cascade do |t|
     t.string "geneId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "interactome3d_data", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "interactome3d_data", force: :cascade do |t|
     t.string "pdbId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["pdbId"], name: "index_interactome3d_data_on_pdbId"
   end
 
-  create_table "interactome3d_interactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "interactome3d_interactions", force: :cascade do |t|
     t.string "accA"
     t.string "accB"
     t.string "model_type"
@@ -138,7 +138,7 @@ ActiveRecord::Schema[7.1].define(version: 2019_01_23_152406) do
     t.index ["file"], name: "index_interactome3d_interactions_on_file"
   end
 
-  create_table "interactome3d_proteins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "interactome3d_proteins", force: :cascade do |t|
     t.string "acc"
     t.string "model_type"
     t.string "file"
@@ -151,99 +151,99 @@ ActiveRecord::Schema[7.1].define(version: 2019_01_23_152406) do
     t.index ["file"], name: "index_interactome3d_proteins_on_file"
   end
 
-  create_table "interpro_data", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "interpro_data", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "interproentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "interproentries", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "job_statuses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "job_statuses", force: :cascade do |t|
     t.string "jobId"
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "inputs", size: :long
-    t.text "outputs", size: :long
+    t.text "inputs", limit: 4294967295
+    t.text "outputs", limit: 4294967295
     t.integer "step"
     t.string "info"
   end
 
-  create_table "mobientries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "mobientries", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "molprobityentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "molprobityentries", force: :cascade do |t|
     t.string "pdbId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "pdb_data", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "pdb_data", force: :cascade do |t|
     t.string "pdbId"
     t.string "digest"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "pdbredoentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "pdbredoentries", force: :cascade do |t|
     t.string "pdbId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "pfamentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "pfamentries", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "phosphoentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "phosphoentries", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "smartentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "smartentries", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "swissvarentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "swissvarentries", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "uniprot_to_ensembl_transcripts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "uniprot_to_ensembl_transcripts", force: :cascade do |t|
     t.string "proteinId"
-    t.text "data", size: :long
+    t.text "data", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "uniprotmappingentries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "uniprotmappingentries", force: :cascade do |t|
     t.string "proteinId"
-    t.text "gene", size: :long
-    t.text "transcript", size: :long
+    t.text "gene", limit: 4294967295
+    t.text "transcript", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

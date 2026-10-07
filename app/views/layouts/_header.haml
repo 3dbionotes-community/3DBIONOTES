@@ -13,11 +13,12 @@
               #viewerMenuButton.nav-item.dropdown.btn-primary{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :style => "margin-right: 0px;margin-left: 0px;", :type => "button"}
                 %a.dropdown-toggle.active{"aria-expanded" => "false", :href => "#"} MENU
               .dropdown-menu
-                %a.dropdown-item.active{:href => ws_path} HOME
-                %a.dropdown-item{:href => ws_covid19_path} COVID-19 Structural Hub
-                %a.dropdown-item{:href => ws_viewer_path} VIEWER
-                %a.dropdown-item{:href => ws_api_path} API
-                %a.dropdown-item{:href => ws_help_path} HELP
+                .dropdown-menu
+                %a.dropdown-item{:class => ("active" if current_page?(ws_path)), :href => ws_path} HOME
+                %a.dropdown-item{:class => ("active" if current_page?(ws_covid19_path)), :href => ws_covid19_path} COVID-19 Structural Hub
+                %a.dropdown-item{:class => ("active" if current_page?(ws_viewer_path)), :href => ws_viewer_path} VIEWER
+                %a.dropdown-item{:class => ("active" if current_page?(ws_api_path)), :href => ws_api_path} API
+                %a.dropdown-item{:class => ("active" if current_page?(ws_help_path)), :href => ws_help_path} HELP
         #Slogan.text-left.d-sm-block.ml-4
           %span#viewerSlogan
             An ELIXIR Recommended
