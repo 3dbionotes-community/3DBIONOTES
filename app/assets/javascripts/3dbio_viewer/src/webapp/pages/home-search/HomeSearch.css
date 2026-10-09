@@ -1,0 +1,45 @@
+.home-search-container {
+    width: 100%;
+    max-width: 920px; /* Aumentado de 820px a 920px */
+    margin: 2.2rem auto 3rem auto; /* Más aire arriba y abajo */
+    display: flex;
+    justify-content: center;
+}
+
+.home-search-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px; /* Mayor separación entre lupa y texto */
+    padding: 20px 36px; /* Botón sustancialmente más alto y espacioso */
+    background-color: #1c3e4e; /* Azul corporativo de 3DBIONOTES */
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    /* Hover simple: solo cambia el color de fondo sin mover el botón */
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover simple y plano: oscurece el fondo sin saltos ni animaciones de elevación */
+.home-search-btn:hover {
+    background-color: #132c38;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.home-search-btn:active {
+    background-color: #0d1e26;
+}
+
+.home-search-btn-icon {
+    font-size: 1.45rem; /* Lupa de mayor tamaño */
+    color: #36b0b5; /* Turquesa corporativo */
+}
+
+.home-search-btn-text {
+    font-size: 1.3rem; /* Tipografía más grande y visible */
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}

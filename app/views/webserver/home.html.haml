@@ -25,14 +25,7 @@
 .d-flex.d-sm-flex.d-md-flex.d-lg-flex.d-xl-flex.justify-content-center.justify-content-sm-center.justify-content-md-center.justify-content-lg-center.justify-content-xl-center
   .container
     .searchBox
-      = form_tag({controller: "main", action: "home"}, {:method => :post, :class => "search_form"}) do
-        = hidden_field_tag(:viewer_type, @viewerType)
-        #mainSearch.input-group.form-control-lg.md-form.form-sm.form-2.pl-0.justify-content-center
-          %div.d-flex.justify-content-center.align-items-center.input-group-text
-            /%input#input-search.form-control.form-control-lg.my-0.amber-border{"aria-label" => "Search", :placeholder => "Uniprot accession, PDB ID, EMDB code", :name => "queryId"}/
-            %input#input-search.form-control.form-control-lg.my-0.amber-border{"aria-label" => "Search", :placeholder => "Search EMDB or PDB", :name => "queryId"}/
-            %button.btn.mt-0.py-2{:type => "submit", :title => "Search"}
-              %i.fa.fa-search.text-grey.searchIconMain{"aria-hidden" => "true"}
+      #home-react-search-root
     .contentBox
       .contentTitle
         %h4
@@ -82,3 +75,17 @@
           %p
             %em For interoperability purposes, 3DBionotes-WS counts with a limited, but expanding, Application Programming Interface (API). Its purpose is to provide a convenient way to access the information we produce and collect to be processed by other third-party tools. In this regard, we are guided by FAIR principles (Findability, Accessibility, Interoperability, and Reuse).
             %br/
+
+-# Estilos de React y fuentes de iconos EBI
+= stylesheet_link_tag("https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css")
+= stylesheet_link_tag('/assets/3dbio_viewer/build/app/main.chunk.css')
+
+-# Dependencias globales (por si App.tsx las evalúa al arrancar)
+= javascript_include_tag('//d3js.org/d3.v4.min.js')
+= javascript_include_tag('/assets/3dbio_viewer/build/protvista-pdb/protvista-pdb-2.0.1-est-3.js')
+= javascript_include_tag('/assets/3dbio_viewer/build/pdbe-molstar/pdbe-molstar-plugin-3.1.0-est-4.js')
+
+-# Bundles de la aplicación React
+= javascript_include_tag('/assets/3dbio_viewer/build/app/2.chunk.js')
+= javascript_include_tag('/assets/3dbio_viewer/build/app/main.chunk.js')
+= javascript_include_tag('/assets/3dbio_viewer/build/app/runtime-main.js')

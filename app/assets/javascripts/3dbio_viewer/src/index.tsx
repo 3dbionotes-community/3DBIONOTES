@@ -21,9 +21,29 @@ async function enableMocking() {
   });
 }
 
+import { HomeSearch } from "./webapp/pages/home-search/HomeSearch";
+
 enableMocking().then(() => {
+    const appRoot = document.getElementById("root");
+    const homeSearchRoot = document.getElementById("home-react-search-root");
+
+    // Si estamos en la página del visor, montamos la app completa
+    if (appRoot) {
+        ReactDOM.render(<App />, appRoot);
+    }
+
+    // Si estamos en la página de inicio, montamos solo el buscador
+    if (homeSearchRoot) {
+        ReactDOM.render(<HomeSearch />, homeSearchRoot);
+    }
+
+    reportWebVitals();
+    storageGarbageCollector();
+});
+
+/*enableMocking().then(() => {
   ReactDOM.render(<App />, document.getElementById("root"));
 
   reportWebVitals();
   storageGarbageCollector();
-});
+});*/

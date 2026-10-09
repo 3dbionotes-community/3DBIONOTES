@@ -31,6 +31,7 @@ export interface ModelSearchProps {
     title: string;
     onClose(): void;
     onSelect(actionType: ActionType, selected: DbItem<MainType>): void;
+    isOpenAsBlock?: boolean;
 }
 
 export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
