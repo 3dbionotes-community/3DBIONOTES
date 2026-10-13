@@ -13,15 +13,9 @@ export const HomeSearch: React.FC = () => {
 
     return (
         <div id="home-search-container" className="home-search-container">
-            <button
-                type="button"
-                className="home-search-btn"
-                onClick={() => setIsOpen(true)}
-            >
+            <button type="button" className="home-search-btn" onClick={() => setIsOpen(true)}>
                 <i className="fa fa-search home-search-btn-icon" aria-hidden="true" />
-                <span className="home-search-btn-text">
-                    {i18n.t("START BROWSING ENTRIES")}
-                </span>
+                <span className="home-search-btn-text">{i18n.t("START BROWSING ENTRIES")}</span>
             </button>
 
             {isOpen && (
@@ -29,6 +23,7 @@ export const HomeSearch: React.FC = () => {
                     title={i18n.t("Search EMDB or PDB")}
                     onClose={() => setIsOpen(false)}
                     onSelect={handleSelect}
+                    disableAppend={true}
                 />
             )}
         </div>

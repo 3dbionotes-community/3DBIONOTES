@@ -32,10 +32,11 @@ export interface ModelSearchProps {
     onClose(): void;
     onSelect(actionType: ActionType, selected: DbItem<MainType>): void;
     isOpenAsBlock?: boolean;
+    disableAppend?: boolean;
 }
 
 export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
-    const { title, onClose, onSelect } = props;
+    const { title, onClose, onSelect, disableAppend = false} = props;
 
     const [isUploadOpen, { open: openUpload, close: closeUpload }] = useBooleanState(false);
     const [formState, setFormState] = React.useState<FormState>(initialFormState);
@@ -61,8 +62,9 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
     }, [formState, filterTranslations]);
 
     const allItems = React.useMemo(() => {
-        const showAll = models.pdb === models.emdb;
-        return data.filter(item => showAll || models[item.type]);
+        if (!models.pdb && !models.emdb) return [];
+        if (models.pdb && models.emdb) return data;
+        return data.filter(item => models[item.type]);
     }, [data, models]);
 
     const visibleItems = React.useMemo(() => {
@@ -169,9 +171,13 @@ export const ModelSearch: React.FC<ModelSearchProps> = React.memo(props => {
                             loader={<p>{i18n.t("Loading")}....</p>}
                         >
                             {visibleItems.map((item, idx) => (
-                                <ModelSearchItem key={idx} item={item} onSelect={onSelect} />
+                                <ModelSearchItem
+                                    key={idx}
+                                    item={item}
+                                    onSelect={onSelect}
+                                    disableAppend={disableAppend}
+                                />
                             ))}
-                            {/* working on calling the search api when the user gets to the end */}
                         </InfiniteScroll>
                     )}
                 </div>

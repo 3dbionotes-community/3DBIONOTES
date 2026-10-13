@@ -11,10 +11,11 @@ import { Link } from "../Link";
 import { ModelSearchProps } from "./ModelSearch";
 
 export const ModelSearchItem: React.FC<{
+    disableAppend?: boolean;
     item: DbModel;
     onSelect: ModelSearchProps["onSelect"];
 }> = React.memo(props => {
-    const { item, onSelect } = props;
+    const { item, onSelect, disableAppend = false } = props;
     const [isMouseOver, { enable: setOver, disable: unsetOver }] = useBooleanState(false);
     const debounceMs = 50;
     const setMouseOverD = useDebounce(setOver, debounceMs);
@@ -38,7 +39,14 @@ export const ModelSearchItem: React.FC<{
             </ul>
 
             <div className="external-link">
-                <Link name={i18n.t("External link")} url={item.url} />
+                <Link
+                    name={i18n.t("External link")}
+                    url={
+                        item.id.toUpperCase().startsWith("EMD-")
+                            ? `https://www.ebi.ac.uk/pdbe/entry/emdb/${item.id}`
+                            : item.url || `https://www.ebi.ac.uk/pdbe/entry/pdb/${item.id}`
+                    }
+                />
             </div>
         </React.Fragment>
     );
@@ -68,9 +76,11 @@ export const ModelSearchItem: React.FC<{
                             {i18n.t("Select")}
                         </button>
 
-                        <button className="action" onClick={appendModel}>
-                            {i18n.t("Append")}
-                        </button>
+                        {!disableAppend && (
+                            <button className="action" onClick={appendModel}>
+                                {i18n.t("Append")}
+                            </button>
+                        )}
                     </div>
                 )}
             </div>

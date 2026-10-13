@@ -74,7 +74,7 @@ export const NMRDialog: React.FC<NMRDialogProps> = React.memo(props => {
                     </a>
                 </span>
             </ListItem>
-            <ListItem name={"Source"} value={nmrSource.description} />
+            <ListItem name={"Source"} value={nmrSource?.description} />
         </List>
     );
 

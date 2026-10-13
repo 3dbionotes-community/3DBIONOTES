@@ -102,12 +102,15 @@ export function getEntityLinks(pdb: Pdb, entity: PdbEntity): Link[] {
         case "pdb": {
             if (!pdb.id) return [];
             const pdbId = pdb.id.toUpperCase();
+            if (pdbId.startsWith("EMD-")) {
+                return [{ name: pdbId, url: `https://www.ebi.ac.uk/pdbe/entry/emdb{pdbId}` }];
+            }
             return [{ name: pdbId, url: `https://www.ebi.ac.uk/pdbe/entry/pdb/${pdbId}` }];
         }
         case "emdb": {
             return pdb.emdbs.map(emdb => ({
                 name: emdb.id,
-                url: `https://www.ebi.ac.uk/pdbe/entry/emdb/${emdb.id}`,
+                url: `https://www.ebi.ac.uk/pdbe/entry/emdb${emdb.id}`,
             }));
         }
     }
