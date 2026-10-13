@@ -81,6 +81,7 @@ export function usePdbePlugin(options: MolecularStructureProps) {
 
     const chains = React.useMemo(() => pdbInfo?.chains ?? [], [pdbInfo?.chains]);
     const chainsRef = React.useRef<PdbInfo["chains"]>([]);
+    const pendingUpdateRef = React.useRef(false);
 
     // Keep a reference containing the previous value of selection. We need this value to diff
     // the new state against the old state and perform imperative operations (add/remove/update)
@@ -228,7 +229,11 @@ export function usePdbePlugin(options: MolecularStructureProps) {
 
     const updatePluginOnNewSelection = React.useCallback(() => {
         if (!pdbePlugin) return _.noop;
-        if (loaderBusy) return _.noop;
+        if (loaderBusy) {
+            pendingUpdateRef.current = true;
+            return _.noop;
+        }
+        pendingUpdateRef.current = false;
 
         const currentSelection = prevSelectionRef.current || emptySelection;
 
@@ -267,6 +272,11 @@ export function usePdbePlugin(options: MolecularStructureProps) {
 
     const updatePluginOnNewSelectionEffect = updatePluginOnNewSelection;
     React.useEffect(updatePluginOnNewSelectionEffect, [updatePluginOnNewSelectionEffect]);
+    React.useEffect(() => {
+        if (!loaderBusy && pendingUpdateRef.current) {
+            updatePluginOnNewSelection();
+        }
+    }, [loaderBusy, updatePluginOnNewSelection]);
 
     React.useEffect(() => {
         if (!pdbePlugin) return;

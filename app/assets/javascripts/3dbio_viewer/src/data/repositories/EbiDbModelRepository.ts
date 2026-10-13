@@ -40,8 +40,10 @@ export class EbiDbModelRepository implements DbModelRepository {
         const searchAllTypes = !type;
         const searchPdb = searchAllTypes || type === "pdb";
         const searchEmdb = searchAllTypes || type === "emdb";
+        const isJustNumbers = /^\d+$/.test(query);
+        const emdbQuery = isJustNumbers ? `EMD-${query}` : query;
         const pdbResults$ = searchFor(searchPdb, limit, config.pdb, query);
-        const emdbResults$ = searchFor(searchEmdb, limit, config.emdb, query);
+        const emdbResults$ = searchFor(searchEmdb, limit, config.emdb, emdbQuery);
 
         return Future.join2(pdbResults$, emdbResults$).map(([pdbResults, emdbResults]) => {
             const items = _(pdbResults.items)
