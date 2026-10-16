@@ -7,7 +7,8 @@ import { Viewers } from "./viewers/Viewers";
 import { MolecularStructure } from "./molecular-structure/MolecularStructure";
 import { ViewerSelector } from "./viewer-selector/ViewerSelector";
 import { ViewerState } from "../view-models/ViewerState";
-import { useMultipleLoaders, usePdbInfo } from "../hooks/loader-hooks";
+import { useMultipleLoaders } from "../hooks/loader-hooks";
+import {usePdbInfoLoader} from "../hooks/use-pdb-info"
 import { useAppContext } from "./AppContext";
 import { UploadData } from "../../domain/entities/UploadData";
 import { setFromError } from "../utils/error";
@@ -90,7 +91,7 @@ export const RootViewerContents: React.FC<RootViewerContentsProps> = React.memo(
         [setLoader]
     );
 
-    const { pdbInfoLoader, setLigands } = usePdbInfo({ selection, uploadData, onProcessDelay });
+    const { pdbInfoLoader, setLigands } = usePdbInfoLoader({ selection, uploadData, onProcessDelay });
     const [pdbLoader, setPdbLoader] = usePdbLoader(selection, pdbInfoLoader);
 
     const pdbInfo = React.useMemo(

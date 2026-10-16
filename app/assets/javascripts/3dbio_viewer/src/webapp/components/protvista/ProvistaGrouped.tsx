@@ -5,7 +5,7 @@ import { testblock } from "./protvista-blocks";
 import { ViewerBlock } from "../ViewerBlock";
 import { ProtvistaPdb } from "./ProtvistaPdb";
 import { useViewerState } from "../viewer-selector/viewer-selector.hooks";
-import { usePdbInfo } from "../../hooks/loader-hooks";
+import { usePdbInfoLoader } from "../../hooks/use-pdb-info";
 import i18n from "../../utils/i18n";
 
 export interface ProtvistaGroupedProps {}
@@ -13,7 +13,7 @@ export interface ProtvistaGroupedProps {}
 export const ProtvistaGrouped: React.FC<ProtvistaGroupedProps> = React.memo(() => {
     const viewerState = useViewerState({ type: "selector" });
     const { selection } = viewerState;
-    const { pdbInfoLoader } = usePdbInfo({
+    const { pdbInfoLoader } = usePdbInfoLoader({
         selection,
         uploadData: undefined,
         onProcessDelay: () => {},
