@@ -3,7 +3,6 @@ import { DbModel } from "../domain/entities/DbModel";
 
 const baseUrl = process.env.REACT_APP_BWS || "https://3dbionotes.cnb.csic.es";
 
-// Tus datos falsos aquí...
 const mockDbModels: DbModel[] = [
     {
         id: "4HHB",
@@ -19,6 +18,13 @@ const mockDbModels: DbModel[] = [
     },
 ];
 
+const emptyPagination = {
+    count: 0,
+    next: null,
+    previous: null,
+    results: [],
+};
+
 export const handlers = [
     rest.get(`${baseUrl}/ws/api/search`, (req, res, ctx) => {
         const query = (req.url.searchParams.get("query") || "").toLowerCase();
@@ -32,7 +38,6 @@ export const handlers = [
         const pdbCount = filteredItems.filter(item => item.type === "pdb").length;
         const emdbCount = filteredItems.filter(item => item.type === "emdb").length;
 
-        // Sintaxis de respuesta en v1
         return res(
             ctx.delay(300),
             ctx.json({
@@ -43,5 +48,22 @@ export const handlers = [
                 items: filteredItems,
             })
         );
+    }),
+
+    // Mocks exclusivos para los 4 endpoints de BWS que devuelven 404 en local:
+    rest.get("*/bws/api/ontologies/", (_req, res, ctx) => {
+        return res(ctx.json(emptyPagination));
+    }),
+
+    rest.get("*/bws/api/ontologies/terms/", (_req, res, ctx) => {
+        return res(ctx.json(emptyPagination));
+    }),
+
+    rest.get("*/bws/api/organisms/", (_req, res, ctx) => {
+        return res(ctx.json(emptyPagination));
+    }),
+
+    rest.get("*/bws/api/nmr/source/", (_req, res, ctx) => {
+        return res(ctx.json(emptyPagination));
     }),
 ];

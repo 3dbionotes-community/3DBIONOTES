@@ -1,7 +1,8 @@
-import { Codec, GetType, array, number, string } from "purify-ts";
+import { Codec, GetType, array, number, string, nullable } from "purify-ts";
 import { maybe } from "./PdbLigands";
 import { PdbPublication } from "../domain/entities/Pdb";
 import _ from "lodash";
+
 
 export const publicationsCodec = array(
     //using so many "maybe" from examples: 7O7Z, 6ABA, 7SUB
@@ -9,7 +10,7 @@ export const publicationsCodec = array(
     //9zzz will return {}
     Codec.interface({
         doi: maybe(string),
-        title: string,
+        title: nullable(string),
         pubmed_id: maybe(string),
         type: string,
         associated_entries: maybe(string),
@@ -73,7 +74,7 @@ export function getPublications(publications: PublicationsCodec): PdbPublication
             ]).join(" "); //possibly "" if all are null
 
             return {
-                title,
+                title: title ?? "",
                 type,
                 doi: doi ?? undefined,
                 doiUrl: doi ? "//dx.doi.org/" + doi : undefined,
