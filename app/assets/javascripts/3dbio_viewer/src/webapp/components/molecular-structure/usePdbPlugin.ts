@@ -249,13 +249,16 @@ export function usePdbePlugin(options: MolecularStructureProps) {
         if (pdbId) {
             compositionRoot.getRelatedModels.emdbFromPdb(pdbId).run(pdbEmdbId => {
                 if (emdbId !== pdbEmdbId || (pdbEmdbId === undefined && emdbId === undefined)) {
-                    // Explicitly check for undefined for those models where there is no emdbId
-                    updateSelection(currentSelection, setMainItem(newSelection, pdbEmdbId, "emdb"));
+                    const nextSelection = setMainItem(newSelection, pdbEmdbId, "emdb");
+                    setPrevSelection(nextSelection);
+                    updateSelection(currentSelection, nextSelection);
                 }
             }, console.error);
-        } else if (emdbId && getMainItem(currentSelection, "pdb") === undefined) {
-            compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(pdbId => {
-                updateSelection(currentSelection, setMainItem(newSelection, pdbId, "pdb"));
+        } else if (emdbId) {
+            compositionRoot.getRelatedModels.pdbFromEmdb(emdbId).run(foundPdbId => {
+                const nextSelection = setMainItem(newSelection, foundPdbId, "pdb");
+                setPrevSelection(nextSelection);
+                updateSelection(currentSelection, nextSelection);
             }, console.error);
         } else {
             updateSelection(currentSelection, newSelection);
@@ -526,8 +529,8 @@ export async function applySelectionChangesToPlugin(
                             ? i18n.t(`Loading EMDB (${i + 1}/${emdbs.length})...`)
                             : i18n.t("Loading EMDB...")
                     );
-                    setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
                     setVisibility(plugin, item);
+                    setEmdbOpacity({ plugin, id: item.id, value: 0.5 });
                     updateItems(item);
                 } else
                     plugin.canvas.showToast({

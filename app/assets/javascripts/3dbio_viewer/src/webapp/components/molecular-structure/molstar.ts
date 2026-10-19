@@ -156,14 +156,14 @@ export function setEmdbOpacity(options: { plugin: PDBeMolstarPlugin; id: string;
     const { plugin, id, value } = options;
 
     const rootNode = buildRootNode(plugin);
-    const emdb = findNode(rootNode, node => Boolean(node.cell.obj?.label.includes(id)));
+    const emdb = findNode(rootNode, node =>
+        Boolean(node.cell.obj?.label?.toLowerCase().includes(id.toLowerCase()))
+    );
     const surface = findNode(emdb, node => node.cell.params?.values.type?.name === "isosurface");
-
-    if (!surface) return;
-
     const values = surface?.cell.params?.values;
-
-    if (!values) return;
+    if (!surface || !values) {
+        return;
+    }
 
     const valuesUpdated = _.set(_.cloneDeep(values), "type.params.alpha", value);
     plugin.plugin.state.updateTransform(plugin.state, surface.ref, valuesUpdated);

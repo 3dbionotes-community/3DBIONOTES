@@ -320,7 +320,6 @@ export function usePluginRef(options: Options) {
                     })
                     .catch(err => loadVoidMolstar(err));
             }
-
             async function initializePdbeMolstar(element: HTMLDivElement) {
                 subscribeSequenceComplete();
                 subscribeLoadComplete();
