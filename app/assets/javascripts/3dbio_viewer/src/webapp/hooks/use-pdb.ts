@@ -32,7 +32,16 @@ export function usePdbLoader(
 
     const pdbInfoLoaderMessage = pdbInfoLoader.type === "error" ? pdbInfoLoader.message : undefined;
 
-    React.useEffect(() => setLoader({ type: "loading" }), [pdbId, setLoader]);
+    React.useEffect(() => {
+        if (!pdbId) {
+            setLoader({
+                type: "error",
+                message: i18n.t("No PDB associated with this model."),
+            });
+            return;
+        }
+        setLoader({ type: "loading" });
+    }, [pdbId, setLoader]);
 
     React.useEffect(() => {
         if (pdbInfoLoader.type === "error" && pdbInfoLoaderMessage)

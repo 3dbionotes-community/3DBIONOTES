@@ -140,20 +140,22 @@ export function usePluginRef(options: Options) {
                     );
             }
 
-            async function getPdbFromEmdb(emdbId: string) {
-                await updateLoader(
+            async function getPdbFromEmdb(emdbId: string): Promise<boolean> {
+                return await updateLoader(
                     loaderKeys.getRelatedPdbModel,
-                    new Promise<void>((resolve, reject) => {
+                    new Promise<boolean>(resolve => {
                         compositionRoot.getRelatedModels
                             .pdbFromEmdb(emdbId)
                             .toPromise()
                             .then(pdbId => {
-                                if (!pdbId) reject(loaderErrors.pdbNotMatching);
-                                else {
+                                if (!pdbId) {
+                                    resolve(false);
+                                } else {
                                     setSelection(setMainItem(newSelection, pdbId, "pdb"));
-                                    resolve();
+                                    resolve(true);
                                 }
-                            });
+                            })
+                            .catch(() => resolve(false));
                     })
                 );
             }
@@ -321,13 +323,32 @@ export function usePluginRef(options: Options) {
                     .catch(err => loadVoidMolstar(err));
             }
             async function initializePdbeMolstar(element: HTMLDivElement) {
-                subscribeSequenceComplete();
-                subscribeLoadComplete();
                 const pdbId = initParams.moleculeId;
-                if (pdbId && emdbId) await loadWithBothPdbEmdb(pdbId, emdbId, element);
-                else if (pdbId) await loadFromPdb(pdbId, element);
-                else if (newSelection.type === "uploadData") await loadFromUploadData(element);
-                else loadVoidMolstar(loaderErrors.undefinedPdb);
+                if (pdbId && emdbId) {
+                    subscribeSequenceComplete();
+                    subscribeLoadComplete();
+                    await loadWithBothPdbEmdb(pdbId, emdbId, element);
+                } else if (pdbId) {
+                    subscribeSequenceComplete();
+                    subscribeLoadComplete();
+                    await loadFromPdb(pdbId, element);
+                } else if (newSelection.type === "uploadData") {
+                    subscribeSequenceComplete();
+                    subscribeLoadComplete();
+                    await loadFromUploadData(element);
+                } else if (emdbId) {
+                    const voidParams = getVoidInitParams(
+                        setChainThroughMolstar,
+                        getLigandViewState
+                    );
+                    await plugin
+                        .render(element, voidParams)
+                        .then(() => loadEmdbModel(emdbId, plugin))
+                        .then(() => setVisibilityAfterLoad(voidParams, plugin))
+                        .then(() => setPluginLoad(new Date()));
+                } else {
+                    loadVoidMolstar(loaderErrors.undefinedPdb);
+                }
             }
 
             function loadEmdbIfNotPresent(): Promise<void> {
@@ -373,11 +394,13 @@ export function usePluginRef(options: Options) {
             } else if (pluginAlreadyRendered) {
                 await mainModelChangedOrLigandView();
             } else if (!mainPdb && emdbId) {
-                await getPdbFromEmdb(emdbId);
+                const foundPdb = await getPdbFromEmdb(emdbId);
+                if (!foundPdb) {
+                    await initializePdbeMolstar(element);
+                }
             } else {
                 await initializePdbeMolstar(element);
             }
-
             setPdbePlugin(plugin);
         },
         [
