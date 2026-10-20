@@ -2,7 +2,7 @@ class FramesGenomicController < ApplicationController
 
   include GlobalTools::FetchParserTools
 
-  BaseUrl = Settings.GS_BaseUrl
+  BaseUrl = Settings.GS_BaseUrl.chomp('/')
 
   def genomicIFrame
     uniprot_acc = params[:uniprot_acc]
@@ -15,7 +15,8 @@ class FramesGenomicController < ApplicationController
       begin
         jsonData = JSON.parse(getUrl(url))
       rescue
-        raise url+" DID NOT RETURN A JSON OBJECT"
+        Rails.logger.warn("genomicIFrame error fetching #{url}: #{e.message}")
+        jsonData = {}
       end
       if !jsonData['gene'].nil?
         @ensembl_mapping = jsonData

@@ -96,9 +96,11 @@ module GlobalTools
           end
         else
           begin
-            _url = URI.parse(url)
+            url = URI.parse(url)
             http = Net::HTTP.new(_url.host, _url.port)
-            request = Net::HTTP::Get.new(input, {'Content-Type' => 'application/json'})         
+            http.use_ssl = (_url.scheme == "https")
+            clean_input = "/" + input.sub(/\A\/+/, "")
+            request = Net::HTTP::Get.new(clean_input, {'Content-Type' => 'application/json'})
             response = http.request(request)
           rescue
             puts "Error: #{$!}"
