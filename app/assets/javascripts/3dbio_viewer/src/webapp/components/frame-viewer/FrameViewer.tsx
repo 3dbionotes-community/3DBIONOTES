@@ -14,11 +14,12 @@ interface FrameViewerProps {
     ref?: React.MutableRefObject<HTMLIFrameElement | null>;
     height?: number;
     trackDef: TrackDef;
+    startExpanded?: boolean;
 }
 
 export const FrameViewer = React.forwardRef<HTMLIFrameElement, FrameViewerProps>((props, ref) => {
-    const { name, title, src, children, height, trackDef } = props;
-    const [expanded, { toggle: toggleFrame }] = useBooleanState(true);
+    const { name, title, src, children, height, trackDef, startExpanded = false } = props;
+    const [expanded, { toggle: toggleFrame }] = useBooleanState(startExpanded);
     const [defaultHeight, setDefaultHeight] = React.useState(0);
 
     const measuredHeight = React.useCallback((el: HTMLDivElement) => {
@@ -200,7 +201,7 @@ const StyledAccordionSummary = styled(AccordionSummary)`
     }
 
     .viewer-subtrack {
-        width: 100%%;
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
