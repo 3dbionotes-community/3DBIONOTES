@@ -43,9 +43,6 @@ export const FrameViewer = React.forwardRef<HTMLIFrameElement, FrameViewerProps>
                             {trackDef.subtracks.map((subtrack, idx) => (
                                 <div key={idx} className="viewer-subtrack">
                                     {subtrack.name}
-                                    <button className="subtrack-help" title={subtrack.description}>
-                                        <i className="icon icon-common icon-question" />
-                                    </button>
                                 </div>
                             ))}
                         </div>

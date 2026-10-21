@@ -44,6 +44,22 @@ export const ProtvistaViewer: React.FC<ProtvistaViewerProps> = props => {
         false
     );
 
+    React.useEffect(() => {
+        const handleScroll = () => {
+            const openMenus = document.querySelectorAll<HTMLElement>(
+                ".moreOptionsMenu.viewMenuBox, .infoTooltip.viewMenuBox, .settingsMenu.viewMenuBox, .viewRangeMenu.viewMenuBox, .highlightRangeMenu.viewMenuBox"
+            );
+
+            openMenus.forEach(menu => {
+                if (menu.style.display === "block") {
+                    menu.style.display = "none";
+                }
+            });
+        };
+        window.addEventListener("scroll", handleScroll, true);
+        return () => window.removeEventListener("scroll", handleScroll, true);
+    }, []);
+
     const protein = pdb.protein;
 
     const setBlockVisible = React.useCallback(
