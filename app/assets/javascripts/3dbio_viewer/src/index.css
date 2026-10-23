@@ -9,3 +9,14 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+/*Temporary patch for Mutagenesis Hide Section*/
+.pvHideOptionsTable tr.variationOption,
+.pvHideOptionsTable tr.scOption {
+    display: table-row !important;
+}
+
+.pvHideOptionsTable tr.variationOption > tr,
+.pvHideOptionsTable tr.scOption > tr {
+    display: contents !important;
+}

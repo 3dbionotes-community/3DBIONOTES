@@ -10,7 +10,7 @@
       var __selected_transcript = '#{ @ensembl_mapping['transcript'][0]['name'] }'
     %div
       %div.gene_title
-        %a{:class=>"nostyle menu", :target=>"_blank", :href=>"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=#{@alignment['gene']['id']}" }
+        %a{:class=>"nostyle menu", :target=>"_blank", :href=>"https://www.ensembl.org/id/#{@alignment['gene']['id']}" }
           #{ @alignment['gene']['display_name'] },
         %span{:class => "gene_title"}
           -if @alignment['gene'].key? 'description'
